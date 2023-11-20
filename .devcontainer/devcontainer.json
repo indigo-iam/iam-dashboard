@@ -10,5 +10,6 @@
 	"forwardPorts": [3000],
 	"postCreateCommand": "npm install && npm run dev",
 	// "customizations": {},
-	"remoteUser": "node"
+	"remoteUser": "node",
+	"runArgs": ["--env-file", ".devcontainer/devcontainer.env"]
 }

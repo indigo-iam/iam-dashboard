@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Secrets
+public/env.js
+.devcontainer/devcontainer.env

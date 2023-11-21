@@ -4,6 +4,7 @@ import { AuthProvider, type AuthProviderProps } from "react-oidc-context";
 import App from './App.tsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
+import { IAMProvider, IAMProviderProps } from './services/IAM';
 
 // Add `env` namespace to window
 interface EnvInterface {
@@ -26,10 +27,16 @@ const oidcConfig: AuthProviderProps = {
   redirect_uri: window.location.origin
 };
 
+const iamConfig: IAMProviderProps = {
+  endpoint: window.env.IAM_AUTHORITY
+};
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <AuthProvider {...oidcConfig}>
-      <App />
+      <IAMProvider {...iamConfig}>
+        <App />
+      </IAMProvider>
     </AuthProvider>
   </React.StrictMode>
 )

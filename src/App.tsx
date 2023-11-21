@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useAuth } from "react-oidc-context";
+import { useIAM } from './services/IAM';
 import { Button } from 'react-bootstrap';
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -7,6 +8,8 @@ import './App.css'
 
 function App() {
   const auth = useAuth();
+  const iam = useIAM();
+
   const [count, setCount] = useState(0);
 
   switch (auth.activeNavigator) {
@@ -22,6 +25,15 @@ function App() {
 
   if (auth.error) {
     return <div>Oops... {auth.error.message}</div>;
+  }
+
+  const fetchAndLogOpenIDConfiguration = async () => {
+    try {
+      const response = await iam.fetchOpenIDConfiguration();
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   if (auth.isAuthenticated) {
@@ -48,6 +60,11 @@ function App() {
           Click on the Vite and React logos to learn more
         </p>
         <div>
+          <Button onClick={() => fetchAndLogOpenIDConfiguration()}>
+            log openid-configuration to console
+          </Button>
+        </div>
+        <div className='mt-2'>
           <Button onClick={() => void auth.removeUser()}>Log out</Button>
         </div>
       </>

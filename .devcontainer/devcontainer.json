@@ -7,7 +7,6 @@
 	"features": {
 		"git": "os-provided"
 	},
-	"forwardPorts": [3000],
 	"postCreateCommand": "npm install && npm run dev",
 	// "customizations": {},
 	"remoteUser": "node",

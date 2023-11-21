@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useAuth } from "react-oidc-context";
+import { Button } from 'react-bootstrap';
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -36,9 +37,9 @@ function App() {
         </div>
         <h1>Hello, {auth.user?.profile.name}!</h1>
         <div className="card">
-          <button onClick={() => setCount((count) => count + 1)}>
+          <Button onClick={() => setCount((count) => count + 1)}>
             count is {count}
-          </button>
+          </Button>
           <p>
             Edit <code>src/App.tsx</code> and save to test HMR
           </p>
@@ -47,13 +48,13 @@ function App() {
           Click on the Vite and React logos to learn more
         </p>
         <div>
-          <button onClick={() => void auth.removeUser()}>Log out</button>
+          <Button onClick={() => void auth.removeUser()}>Log out</Button>
         </div>
       </>
     )
   }
 
-  return <button onClick={() => void auth.signinRedirect()}>Log in</button>;
+  return <Button onClick={() => void auth.signinRedirect()}>Log in</Button>;
 }
 
 export default App

@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { AuthProvider, type AuthProviderProps } from "react-oidc-context";
 import App from './App.tsx'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
 
 // Add `env` namespace to window

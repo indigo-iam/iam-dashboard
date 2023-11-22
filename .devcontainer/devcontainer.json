@@ -8,7 +8,13 @@
 		"git": "os-provided"
 	},
 	"postCreateCommand": "npm install && npm run dev",
-	// "customizations": {},
+	"customizations": {
+    "vscode": {
+      "extensions": [
+        "wayou.vscode-todo-highligh"
+      ]
+    }
+  },
 	"remoteUser": "node",
 	"runArgs": ["--env-file", ".devcontainer/devcontainer.env"]
 }

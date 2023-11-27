@@ -2,6 +2,10 @@ name: Build&Release
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+      - beta
 
 jobs:
   main:

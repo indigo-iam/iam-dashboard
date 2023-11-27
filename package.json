@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "release": {
+    "branches": ["main"]
+  },
   "scripts": {
     "dev": "./init_env.sh && vite",
     "build": "./init_env.sh && tsc && vite build",

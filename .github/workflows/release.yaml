@@ -1,15 +1,14 @@
-name: Build&Release
+name: Release
 
 on:
   workflow_dispatch:
   push:
     branches:
-      - main
-      - beta
+      - **
 
 jobs:
   main:
-    name: Build&Release
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

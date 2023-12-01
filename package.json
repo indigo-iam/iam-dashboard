@@ -15,7 +15,7 @@
         "name": "alpha",
         "prerelease": true
       }
-      ]
+    ]
   },
   "scripts": {
     "dev": "./init_env.sh && vite",

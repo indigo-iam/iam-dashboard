@@ -27,9 +27,9 @@ function App() {
     return <div>Oops... {auth.error.message}</div>;
   }
 
-  const fetchAndLogOpenIDConfiguration = async () => {
+  const fetchScimMe = async () => {
     try {
-      const response = await iam.fetchOpenIDConfiguration();
+      const response = await iam.fetchScimMe();
       console.log(response);
     } catch (error) {
       console.error(error);
@@ -60,7 +60,7 @@ function App() {
           Click on the Vite and React logos to learn more
         </p>
         <div>
-          <Button onClick={() => fetchAndLogOpenIDConfiguration()}>
+          <Button onClick={() => fetchScimMe()}>
             log openid-configuration to console
           </Button>
         </div>

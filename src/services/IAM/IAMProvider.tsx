@@ -15,17 +15,17 @@ export const IAMProvider = (props: IAMProviderProps): JSX.Element => {
   const auth = useAuth();
 
   /** Dummy example of authorized API */
-  const fetchOpenIDConfiguration = useCallback(async () => {
+  const fetchScimMe = useCallback(async () => {
     const token = auth.user?.access_token;
     if (token === undefined) {
       throw new Error("access token is undefined");
     }
 
-    const url = new URL(".well-known/openid-configuration", endpoint);
+    const url = new URL("/scim/Me", endpoint);
     const response = await fetch(url, {
-      // headers: {
-      // 	Authorization: `Bearer ${token}`,
-      // }
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
     });
     return await response.json();
   }, [endpoint, auth])
@@ -33,7 +33,7 @@ export const IAMProvider = (props: IAMProviderProps): JSX.Element => {
   return (
     <IAMContext.Provider
       value={{
-        fetchOpenIDConfiguration
+        fetchScimMe
       }}>
       {children}
     </IAMContext.Provider>

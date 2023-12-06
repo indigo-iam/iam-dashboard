@@ -11,7 +11,8 @@
 	"customizations": {
     "vscode": {
       "extensions": [
-        "wayou.vscode-todo-highligh"
+        "wayou.vscode-todo-highligh",
+        "github.vscode-github-actions"
       ]
     }
   },

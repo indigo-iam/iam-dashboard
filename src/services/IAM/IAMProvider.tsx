@@ -17,10 +17,9 @@ export const IAMProvider = (props: IAMProviderProps): JSX.Element => {
   /** Dummy example of authorized API */
   const fetchScimMe = useCallback(async () => {
     const token = auth.user?.access_token;
-    if (token === undefined) {
+    if (!token) {
       throw new Error("access token is undefined");
     }
-
     const url = new URL("/scim/Me", endpoint);
     const response = await fetch(url, {
       headers: {

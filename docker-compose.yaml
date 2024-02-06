@@ -1,0 +1,67 @@
+version: "3.9"
+services:
+  database:
+    container_name: iam-dashboard-database
+    image: mysql:latest
+    environment:
+      TZ: Europe/Rome
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_PASSWORD: pwd
+      MYSQL_USER: iam
+      MYSQL_PASSWORD: pwd
+      MYSQL_DATABASE: iam
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3306:3306"
+    restart: on-failure
+    volumes:
+      - data-dashboard:/var/lib/mysql
+
+  dashboard:
+    container_name: iam-dashboard
+    image: mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye
+    volumes:
+      - .:/workspace:cached
+    env_file:
+      - .devcontainer/devcontainer.env
+    command: sleep infinity
+    ports:
+      - "3000:3000"
+
+  server:
+    container_name: iam-dashboard-backend
+    image: indigoiam/iam-login-service:latest
+    restart: always
+    environment:
+      IAM_JAVA_OPTS: -Dspring.profiles.active=mysql-test,oidc,registration
+      TZ: Europe/Rome
+      IAM_HOST: localhost:8080/api
+      IAM_BASE_URL: http://localhost:8080/api
+      IAM_ISSUER: http://localhost:8080/api/
+      IAM_KEY_STORE_LOCATION: file:/kyes/json-keystore.jwks
+      IAM_DB_PORT: 3306
+      IAM_DB_USERNAME: iam
+      IAM_DB_PASSWORD: pwd
+      IAM_DB_HOST: database
+      IAM_DATABASE_SHOW_SQL: true
+      IAM_REGISTRATION_AUTHENTICATION_TYPE: oidc
+      IAM_REGISTRATION_OIDC_ISSUER: ${REGISTRATION_OIDC_ISSUER:-https://example.org}
+      IAM_ORGANISATION_NAME: iam-dev-dashboard
+    volumes:
+      - ./json-keystore.jwks:/kyes/json-keystore.jwks:ro
+
+  nginx:
+    image: nginx:alpine
+    container_name: iam-dashboard-nginx
+    environment:
+      TZ: Europe/Rome
+    restart: always
+    command: [ "nginx-debug", "-g", "daemon off;" ]
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./.devcontainer/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./.devcontainer/nginx:/var/log/nginx
+
+volumes:
+  data-dashboard:

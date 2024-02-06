@@ -1,20 +1,29 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
-	"name": "Node.js & TypeScript",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
+	"name": "IAM dashboard",
+	"dockerComposeFile": "../docker-compose.yaml",
+	"service": "dashboard",
+	"workspaceFolder": "/workspace",
 	"features": {
 		"git": "os-provided"
 	},
-	"postCreateCommand": "npm install && npm run dev",
+	"postCreateCommand": "npm i && npm run dev",
 	"customizations": {
-    "vscode": {
-      "extensions": [
-        "wayou.vscode-todo-highligh"
-      ]
-    }
-  },
-	"remoteUser": "node",
-	"runArgs": ["--env-file", ".devcontainer/devcontainer.env"]
+		"vscode": {
+			"settings": {
+				"remote.autoForwardPorts": false
+			},
+			"extensions": [
+				"wayou.vscode-todo-highligh",
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode",
+				"msjsdiag.vscode-react-native",
+				"ms-vscode.vscode-typescript-next",
+				"GitHub.vscode-github-actions"
+			]
+		}
+	},
+	"shutdownAction": "stopCompose",
+	"remoteUser": "node"
 }

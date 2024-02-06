@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useState } from "react";
 import { useAuth } from "react-oidc-context";
-import { useIAM } from './services/IAM';
-import { Button } from 'react-bootstrap';
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useIAM } from "./services/IAM";
+import { Button } from "react-bootstrap";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
 
 function App() {
   const auth = useAuth();
@@ -34,16 +34,16 @@ function App() {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   if (auth.isAuthenticated) {
     return (
       <>
         <div>
-          <a href="https://vitejs.dev" target="_blank">
+          <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
             <img src={viteLogo} className="logo" alt="Vite logo" />
           </a>
-          <a href="https://react.dev" target="_blank">
+          <a href="https://react.dev" target="_blank" rel="noreferrer">
             <img src={reactLogo} className="logo react" alt="React logo" />
           </a>
         </div>
@@ -64,14 +64,14 @@ function App() {
             log openid-configuration to console
           </Button>
         </div>
-        <div className='mt-2'>
+        <div className="mt-2">
           <Button onClick={() => void auth.removeUser()}>Log out</Button>
         </div>
       </>
-    )
+    );
   }
 
   return <Button onClick={() => void auth.signinRedirect()}>Log in</Button>;
 }
 
-export default App
+export default App;

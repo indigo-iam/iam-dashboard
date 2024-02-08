@@ -34,8 +34,33 @@ with
 ```bash
 docker compose up -d
 ```
-
 and then, in VSCode, attach the session with `Attach to Running Container...`
+
+### Start the development server
+
+After launching the services, from VSCode, **within** the `iam-dashboard`
+container, start the development server
+
+```bash
+npm run dev
+```
+
+Something similar to the following should be prompted:
+
+```bash
+node ➜ /workspace (main) $ npm run dev
+
+> iam-dashboard@0.0.0 dev
+> ./init_env.sh && vite
+
+Initialize environment variables
+
+  VITE v5.1.0  ready in 509 ms
+
+  ➜  Local:   http://localhost:3000/iam-dashboard
+  ➜  Network: http://172.18.0.4:3000/iam-dashboard
+  ➜  press h + enter to show help
+```
 
 ## Configuration (First Run)
 

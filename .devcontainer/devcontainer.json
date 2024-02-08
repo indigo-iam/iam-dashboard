@@ -8,7 +8,7 @@
   "features": {
     "git": "os-provided"
   },
-  "postCreateCommand": "npm i && npm run dev",
+  "postCreateCommand": "npm install",
   "customizations": {
     "vscode": {
       "settings": {

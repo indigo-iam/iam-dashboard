@@ -4,7 +4,7 @@ INDIGO IAM Dashboard is the web application of INDIGO IAM developed by INFN.
 
 ## Introduction
 
-The dashboard is implemented in [TypeScript](https://www.typescriptlang.org), 
+The dashboard is implemented in [TypeScript](https://www.typescriptlang.org),
 using [React](https://react.dev) and
 [React Bootstrap](https://react-bootstrap.github.io).
 The OpenID Connect authorization flow is handled by
@@ -39,7 +39,7 @@ and then, in VSCode, attach the session with `Attach to Running Container...`
 
 ## Configuration (First Run)
 
-The dashboard acts as client for IAM backend and thus, registering the client is 
+The dashboard acts as client for IAM backend and thus, registering the client is
 required. This step is required the first time only, and whenever the database
 volume is deleted/recreated.
 
@@ -67,7 +67,7 @@ In **Scopes**, assure that the following scopes are enabled
 
 In **Grant Types**, enable `authorization_code`.
 Finally, in the **Crypto** section enable PKCE with SHA-256 has algorithm.
-Save the client and copy `client_id` and `client_secret`, then edit the 
+Save the client and copy `client_id` and `client_secret`, then edit the
 `envs/dev.env` file replacing `IAM_CLIENT_ID` and `IAM_CLIENT_SECRET` with the
 correct values.
 
@@ -79,4 +79,3 @@ docker compose down && docker compose up -d
 
 Now it is possible to login and access to the new dashboard located at
 [http://localhost:8080/new-dashboard](http://localhost:8080/new-dashboard).
-

@@ -26,11 +26,11 @@ const oidcConfig: AuthProviderProps = {
   client_id: window.env.IAM_CLIENT_ID,
   client_secret: window.env.IAM_CLIENT_SECRET,
   scope: window.env.IAM_SCOPE,
-  redirect_uri: window.location.origin
+  redirect_uri: window.location.origin,
 };
 
 const iamConfig: IAMProviderProps = {
-  endpoint: window.env.IAM_AUTHORITY
+  endpoint: window.env.IAM_AUTHORITY,
 };
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -40,5 +40,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <App />
       </IAMProvider>
     </AuthProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

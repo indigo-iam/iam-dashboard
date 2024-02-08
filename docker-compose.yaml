@@ -11,7 +11,7 @@ services:
       MYSQL_USER: iam
       MYSQL_PASSWORD: pwd
       MYSQL_DATABASE: iam
-      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_HOST: "%"
     ports:
       - "3306:3306"
     restart: on-failure
@@ -51,7 +51,7 @@ services:
       IAM_DATABASE_SHOW_SQL: true
       IAM_REGISTRATION_AUTHENTICATION_TYPE: oidc
       IAM_REGISTRATION_OIDC_ISSUER: ${REGISTRATION_OIDC_ISSUER:-https://example.org}
-      IAM_ORGANISATION_NAME: cnafsd 
+      IAM_ORGANISATION_NAME: cnafsd
     volumes:
       - ./json-keystore.jwks:/keys/json-keystore.jwks:ro
 
@@ -65,7 +65,7 @@ services:
       - dashboard
     environment:
       TZ: Europe/Rome
-    command: [ "nginx-debug", "-g", "daemon off;" ]
+    command: ["nginx-debug", "-g", "daemon off;"]
     ports:
       - "8080:8080"
     volumes:

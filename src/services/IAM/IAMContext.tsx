@@ -1,7 +1,7 @@
 import { createContext } from "react";
 
 export interface IAMContextProps {
-	/** Dummy example of authorized API */
+  /** Dummy example of authorized API */
   fetchScimMe: () => Promise<JSON>;
 }
 

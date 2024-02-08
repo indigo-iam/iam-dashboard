@@ -14,7 +14,7 @@ export const IAMProvider = (props: IAMProviderProps): JSX.Element => {
   const { endpoint, children } = props;
   const auth = useAuth();
 
-  console.log("Server: "+endpoint)
+  console.log("Server: " + endpoint);
   /** Dummy example of authorized API */
   const fetchScimMe = useCallback(async () => {
     const token = auth.user?.access_token;
@@ -25,17 +25,18 @@ export const IAMProvider = (props: IAMProviderProps): JSX.Element => {
     const response = await fetch(url, {
       headers: {
         Authorization: `Bearer ${token}`,
-      }
+      },
     });
     return await response.json();
-  }, [endpoint, auth])
+  }, [endpoint, auth]);
 
   return (
     <IAMContext.Provider
       value={{
-        fetchScimMe
-      }}>
+        fetchScimMe,
+      }}
+    >
       {children}
     </IAMContext.Provider>
-  )
-}
+  );
+};

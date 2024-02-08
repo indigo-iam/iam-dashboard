@@ -1,31 +1,31 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
-	"name": "IAM dashboard",
-	"dockerComposeFile": "../docker-compose.yaml",
-	"service": "dashboard",
-	"workspaceFolder": "/workspace",
-	"features": {
-		"git": "os-provided"
-	},
-	"postCreateCommand": "npm i && npm run dev",
-	"customizations": {
-		"vscode": {
-			"settings": {
-				"remote.autoForwardPorts": false,
-        "extensions.verifySignature": false  // need for macOS users https://github.com/microsoft/vscode-remote-release/issues/8169
-			},
-			"extensions": [
-				"wayou.vscode-todo-highligh",
-				"dbaeumer.vscode-eslint",
-				"esbenp.prettier-vscode",
-				"msjsdiag.vscode-react-native",
-				"ms-vscode.vscode-typescript-next",
-				"GitHub.vscode-github-actions",
+  "name": "IAM dashboard",
+  "dockerComposeFile": "../docker-compose.yaml",
+  "service": "dashboard",
+  "workspaceFolder": "/workspace",
+  "features": {
+    "git": "os-provided"
+  },
+  "postCreateCommand": "npm i && npm run dev",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "remote.autoForwardPorts": false,
+        "extensions.verifySignature": false // need for macOS users https://github.com/microsoft/vscode-remote-release/issues/8169
+      },
+      "extensions": [
+        "wayou.vscode-todo-highligh",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "msjsdiag.vscode-react-native",
+        "ms-vscode.vscode-typescript-next",
+        "GitHub.vscode-github-actions",
         "streetsidesoftware.code-spell-checker"
-			]
-		}
-	},
-	"shutdownAction": "stopCompose",
-	"remoteUser": "node"
+      ]
+    }
+  },
+  "shutdownAction": "stopCompose",
+  "remoteUser": "node"
 }

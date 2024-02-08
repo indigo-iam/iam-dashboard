@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useAuth } from "react-oidc-context";
 import { useIAM } from "./services/IAM";
 import { Button } from "react-bootstrap";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import reactLogo from "/assets/react.svg";
+import viteLogo from "/assets/vite.svg";
 import "./App.css";
 
 function App() {

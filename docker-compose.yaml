@@ -1,0 +1,76 @@
+version: "3.9"
+services:
+  database:
+    container_name: iam-database
+    image: mysql:latest
+    platform: linux/amd64
+    environment:
+      TZ: Europe/Rome
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_PASSWORD: pwd
+      MYSQL_USER: iam
+      MYSQL_PASSWORD: pwd
+      MYSQL_DATABASE: iam
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3306:3306"
+    restart: on-failure
+    volumes:
+      - iam-db:/var/lib/mysql
+
+  dashboard:
+    container_name: iam-dashboard
+    image: mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye
+    platform: linux/amd64
+    depends_on:
+      - backend
+    volumes:
+      - .:/workspace:cached
+    env_file:
+      - ./envs/dev.env
+    command: sleep infinity
+
+  backend:
+    container_name: iam-backend
+    image: indigoiam/iam-login-service:latest
+    platform: linux/amd64
+    restart: unless-stopped
+    depends_on:
+      - database
+    environment:
+      IAM_JAVA_OPTS: -Dspring.profiles.active=mysql-test,oidc,registration
+      TZ: Europe/Rome
+      IAM_HOST: localhost:8080
+      IAM_BASE_URL: http://localhost:8080/
+      IAM_ISSUER: http://localhost:8080/
+      IAM_KEY_STORE_LOCATION: file:/keys/json-keystore.jwks
+      IAM_DB_PORT: 3306
+      IAM_DB_USERNAME: iam
+      IAM_DB_PASSWORD: pwd
+      IAM_DB_HOST: database
+      IAM_DATABASE_SHOW_SQL: true
+      IAM_REGISTRATION_AUTHENTICATION_TYPE: oidc
+      IAM_REGISTRATION_OIDC_ISSUER: ${REGISTRATION_OIDC_ISSUER:-https://example.org}
+      IAM_ORGANISATION_NAME: cnafsd 
+    volumes:
+      - ./json-keystore.jwks:/keys/json-keystore.jwks:ro
+
+  nginx:
+    image: nginx:alpine
+    container_name: iam-nginx
+    platform: linux/amd64
+    restart: unless-stopped
+    depends_on:
+      - backend
+      - dashboard
+    environment:
+      TZ: Europe/Rome
+    command: [ "nginx-debug", "-g", "daemon off;" ]
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/iam.conf:/etc/nginx/conf.d/iam.conf
+
+volumes:
+  iam-db:

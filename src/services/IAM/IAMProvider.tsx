@@ -14,6 +14,7 @@ export const IAMProvider = (props: IAMProviderProps): JSX.Element => {
   const { endpoint, children } = props;
   const auth = useAuth();
 
+  console.log("Server: "+endpoint)
   /** Dummy example of authorized API */
   const fetchScimMe = useCallback(async () => {
     const token = auth.user?.access_token;

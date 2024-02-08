@@ -19,6 +19,7 @@
   },
   "scripts": {
     "dev": "./init_env.sh && vite",
+    "test": "jest",
     "build": "./init_env.sh && tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -32,6 +33,7 @@
     "react-oidc-context": "^2.3.1"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.12",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
@@ -44,6 +46,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
     "prettier": "^3.2.5",
+    "ts-jest": "^29.1.2",
     "typescript": "5.2.2",
     "vite": "^5.0.0"
   }

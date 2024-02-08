@@ -56,8 +56,8 @@ up, it is possible to register a new client.
 To register a new client, go to
 [http://localhost:8080/dashboard](http://localhost/dashboard) to load the old
 dashboard. Login as admin and register a new client. Give it a name, such as
-`iam-dashboard` and add the [http://localhost:8080/](http://localhost:8080/)
-URL to the Redirect URIs.
+`iam-dashboard` and add the [http://localhost:8080](http://localhost:8080)
+(without the trailing `/`) URL to the Redirect URIs.
 In **Scopes**, assure that the following scopes are enabled
 
 - `email`

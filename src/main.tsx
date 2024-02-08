@@ -26,7 +26,7 @@ const oidcConfig: AuthProviderProps = {
   client_id: window.env.IAM_CLIENT_ID,
   client_secret: window.env.IAM_CLIENT_SECRET,
   scope: window.env.IAM_SCOPE,
-  redirect_uri: window.location.href,
+  redirect_uri: `${window.location.origin}/iam-dashboard`,
 };
 
 const iamConfig: IAMProviderProps = {

@@ -4,7 +4,6 @@ import { useIAM } from "./services/IAM";
 import { Button } from "react-bootstrap";
 import reactLogo from "/assets/react.svg";
 import viteLogo from "/assets/vite.svg";
-import "./App.css";
 
 function App() {
   const auth = useAuth();

@@ -12,7 +12,8 @@
 	"customizations": {
 		"vscode": {
 			"settings": {
-				"remote.autoForwardPorts": false
+				"remote.autoForwardPorts": false,
+        "extensions.verifySignature": false  // need for macOS users https://github.com/microsoft/vscode-remote-release/issues/8169
 			},
 			"extensions": [
 				"wayou.vscode-todo-highligh",
@@ -20,7 +21,8 @@
 				"esbenp.prettier-vscode",
 				"msjsdiag.vscode-react-native",
 				"ms-vscode.vscode-typescript-next",
-				"GitHub.vscode-github-actions"
+				"GitHub.vscode-github-actions",
+        "streetsidesoftware.code-spell-checker"
 			]
 		}
 	},

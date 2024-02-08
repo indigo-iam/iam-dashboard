@@ -26,5 +26,4 @@ dist-ssr
 # Secrets
 public/env.js
 .devcontainer/devcontainer.env
-.env
-json-keystore.jwks
+*.env

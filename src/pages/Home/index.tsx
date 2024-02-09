@@ -1,28 +1,36 @@
 import { Page } from "../../components";
-import { useIam } from "../../services/IAM";
+import { useIam, IamUser } from "../../services/IAM";
 
 export const Home = () => {
   const iam = useIam();
 
   const UserCard = (): JSX.Element => {
-    const User = () => {
-      if (!iam.user) {
-        return null;
-      }
+    if (!iam.user) {
+      return <></>;
+    }
+    const User = (props: { user: IamUser }) => {
+      const { user } = props;
       return (
-        <div>
-          <h3>{iam.user.name.formatted}</h3>
-          <br />
-          <p>Email: {iam.user.emails[0].value}</p>
-          <p>Status: {iam.user.active ? "active" : "disabled"}</p>
-          <p>Created: {iam.user.meta.created}</p>
-          <p>Last Modified: {iam.user.meta.lastModified}</p>
-        </div>
+        <ul>
+          <li>
+            <b>Email</b> {user.emails[0].value}
+          </li>
+          <li>
+            <b>Status</b> {user.active ? "active" : "disabled"}
+          </li>
+          <li>
+            <b>Created</b> {user.meta.created}
+          </li>
+          <li>
+            <b>Last Modified</b> {user.meta.lastModified}
+          </li>
+        </ul>
       );
     };
     return (
-      <div>
-        <User />
+      <div className="infn-card h-100">
+        <div className="infn-title">{iam.user.name.formatted}</div>
+        <User user={iam.user} />
       </div>
     );
   };
@@ -40,8 +48,8 @@ export const Home = () => {
       );
     };
     return (
-      <div>
-        <h3>Groups</h3>
+      <div className="infn-card">
+        <div className="infn-title">Groups</div>
         <Groups />
       </div>
     );
@@ -52,8 +60,8 @@ export const Home = () => {
       return "No requests found";
     };
     return (
-      <div>
-        <h3>Group Requests</h3>
+      <div className="infn-card">
+        <div className="infn-title">Group Requests</div>
         <RequestsCard />
       </div>
     );
@@ -69,20 +77,25 @@ export const Home = () => {
         <div>
           {samlIds.map(el => {
             return (
-              <div key={el.idpId}>
-                <p>{el.userId}</p>
-                <p>{el.idpId}</p>
-                <p>{el.attributeId}</p>
-                <br />
-              </div>
+              <ul key={el.idpId}>
+                <li>
+                  <b>User Id</b> {el.userId}
+                </li>
+                <li>
+                  <b>Idp Id</b> {el.idpId}
+                </li>
+                <li>
+                  <b>Attribute Id</b> {el.attributeId}
+                </li>
+              </ul>
             );
           })}
         </div>
       );
     };
     return (
-      <div>
-        <h3>Linked Accounts</h3>
+      <div className="infn-card">
+        <div className="infn-title">Linked Accounts</div>
         <LinkedAccounts />
       </div>
     );
@@ -90,35 +103,39 @@ export const Home = () => {
 
   const CertificatesCard = (): JSX.Element => {
     const Certificates = (): JSX.Element => {
+      const schema = "urn:indigo-dc:scim:schemas:IndigoUser";
       if (
         !iam.user ||
-        !iam.user["urn:indigo-dc:scim:schemas:IndigoUser"] ||
-        iam.user["urn:indigo-dc:scim:schemas:IndigoUser"].certificates.length ==
-          0
+        !iam.user[schema] ||
+        iam.user[schema].certificates.length == 0
       ) {
         return <>No certificates found</>;
       }
-      const { certificates } =
-        iam.user["urn:indigo-dc:scim:schemas:IndigoUser"];
+      const { certificates } = iam.user[schema];
 
       return (
         <>
           {certificates.map((cert, i) => {
             return (
-              <div key={i}>
-                <p>Subject: {cert.subjectDn}</p>
-                <p>Issuer: {cert.issuerDn}</p>
-                <p>Last Modified: {cert.lastModified}</p>
-                <br />
-              </div>
+              <ul key={i}>
+                <li>
+                  <b>Subject</b> {cert.subjectDn}
+                </li>
+                <li>
+                  <b>Issuer</b> {cert.issuerDn}
+                </li>
+                <li>
+                  <b>Last Modified</b> {cert.lastModified}
+                </li>
+              </ul>
             );
           })}
         </>
       );
     };
     return (
-      <div>
-        <h3>Certificates</h3>
+      <div className="infn-card">
+        <div className="infn-title">Certificates</div>
         <Certificates />
       </div>
     );
@@ -126,12 +143,28 @@ export const Home = () => {
 
   return (
     <Page id="home">
-      <div>
-        <UserCard />
-        <GroupsCard />
-        <GroupRequestsCard />
-        <LinkedAccountsCard />
-        <CertificatesCard />
+      <div className="w-100 container">
+        <div className="row p-4">
+          <div className="col mt-0">
+            <UserCard />
+          </div>
+          <div className="col">
+            <div className="row p-2">
+              <GroupsCard />
+            </div>
+            <div className="row p-2">
+              <GroupRequestsCard />
+            </div>
+          </div>
+        </div>
+        <div className="row p-4">
+          <div className="col">
+            <LinkedAccountsCard />
+          </div>
+          <div className="col">
+            <CertificatesCard />
+          </div>
+        </div>
       </div>
     </Page>
   );

@@ -7,32 +7,48 @@ interface IAMProviderBaseProps {
 }
 
 export interface IAMProviderProps extends IAMProviderBaseProps {
-  endpoint: string;
+  authority: string;
 }
 
 export const IAMProvider = (props: IAMProviderProps): JSX.Element => {
-  const { endpoint, children } = props;
+  const { authority, children } = props;
   const auth = useAuth();
 
-  console.log("Server: " + endpoint);
+  const get = useCallback(
+    async (endpoint: string) => {
+      const token = auth.user?.access_token;
+      if (!token) {
+        throw new Error("access token is undefined");
+      }
+      const url = new URL(endpoint, authority);
+      return await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    },
+    [authority, auth.user]
+  );
+
+  const logout = useCallback(async () => {
+    try {
+      const response = await get("/logout");
+      console.log("Goodbye!");
+      return response;
+    } catch (err) {
+      console.error("cannot log out:", err);
+    }
+  }, [get]);
+
   /** Dummy example of authorized API */
   const fetchScimMe = useCallback(async () => {
-    const token = auth.user?.access_token;
-    if (!token) {
-      throw new Error("access token is undefined");
-    }
-    const url = new URL("/scim/Me", endpoint);
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return await response.json();
-  }, [endpoint, auth]);
+    return (await get("/scim/Me")).json();
+  }, [get]);
 
   return (
     <IAMContext.Provider
       value={{
+        logout,
         fetchScimMe,
       }}
     >

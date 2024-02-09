@@ -1,7 +1,7 @@
 import { createContext } from "react";
 
 export interface IAMContextProps {
-  /** Dummy example of authorized API */
+  logout: () => Promise<Response | undefined>;
   fetchScimMe: () => Promise<JSON>;
 }
 

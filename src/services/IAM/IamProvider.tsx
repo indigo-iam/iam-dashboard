@@ -1,6 +1,9 @@
+import { useCallback, useEffect, useReducer } from "react";
 import { useAuth } from "react-oidc-context";
 import { IamContext } from "./IamContext";
-import { useCallback } from "react";
+import { makeIamUser } from "./IamUser";
+import { initialIamState } from "./IamState";
+import { reducer } from "./reducer";
 
 interface IamProviderBaseProps {
   children?: React.ReactNode;
@@ -12,6 +15,7 @@ export interface IamProviderProps extends IamProviderBaseProps {
 
 export const IamProvider = (props: IamProviderProps): JSX.Element => {
   const { authority, children } = props;
+  const [state, dispatch] = useReducer(reducer, initialIamState);
   const auth = useAuth();
 
   // HTTP GET
@@ -41,17 +45,26 @@ export const IamProvider = (props: IamProviderProps): JSX.Element => {
     }
   }, [get]);
 
-  /** Dummy example of authorized API */
   const fetchScimMe = useCallback(async () => {
     const response = await get("/scim/Me");
-    return response.json();
+    const json = await response.json();
+    const user = makeIamUser(JSON.stringify(json));
+    dispatch({ type: "UPDATE_SCIM_ME", user });
   }, [get]);
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      fetchScimMe();
+    }
+  }, [auth.isAuthenticated, fetchScimMe]);
+
+  const { user } = state;
 
   return (
     <IamContext.Provider
       value={{
         logout,
-        fetchScimMe,
+        user,
       }}
     >
       {children}

@@ -1,7 +1,7 @@
 import { Button } from "../../components";
 import { LogoHeader } from "..";
 import { useAuth } from "react-oidc-context";
-import { useIAM } from "../../services/IAM";
+import { useIam } from "../../services/IAM";
 
 export interface DrawerProps {
   drawerWidth: string;
@@ -10,7 +10,7 @@ export interface DrawerProps {
 export const Drawer = (props: DrawerProps): JSX.Element => {
   const { drawerWidth } = props;
   const auth = useAuth();
-  const iam = useIAM();
+  const iam = useIam();
 
   const Logout = () => {
     return (

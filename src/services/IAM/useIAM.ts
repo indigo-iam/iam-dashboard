@@ -1,13 +1,13 @@
 import { useContext } from "react";
-import { IAMContext, IAMContextProps } from "./IAMContext";
+import { IamContext, IamContextProps } from "./IamContext";
 
-export const useIAM = (): IAMContextProps => {
-  const context = useContext(IAMContext);
+export const useIam = (): IamContextProps => {
+  const context = useContext(IamContext);
   if (!context) {
     throw new Error(
-      "IAMProvider context is undefined, " +
+      "IamProvider context is undefined, " +
         "please verify you are calling useIAM " +
-        "as a child of <IAMProvider> component."
+        "as a child of <IamProvider> component."
     );
   }
   return context;

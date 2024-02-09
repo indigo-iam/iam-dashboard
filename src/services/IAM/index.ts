@@ -1,3 +1,3 @@
-export { withIAM } from "./withIAM";
-export { IAMProvider, type IAMProviderProps } from "./IAMProvider";
-export { useIAM } from "./useIAM";
+export { IamProvider, type IamProviderProps } from "./IamProvider";
+export { useIam } from "./useIam";
+export { withIam } from "./withIam";

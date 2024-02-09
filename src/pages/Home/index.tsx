@@ -4,12 +4,12 @@ import { Button } from "react-bootstrap";
 import reactLogo from "/assets/react.svg";
 import viteLogo from "/assets/vite.svg";
 import { Page } from "../../components";
-import { useIAM } from "../../services/IAM";
+import { useIam } from "../../services/IAM";
 
 export const Home = () => {
   const auth = useAuth();
   const [count, setCount] = useState(0);
-  const iam = useIAM();
+  const iam = useIam();
   return (
     <Page id="home">
       <div>

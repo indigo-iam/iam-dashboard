@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { AuthProvider, type AuthProviderProps } from "react-oidc-context";
+import { IamProvider, IamProviderProps } from "./services/IAM";
 import App from "./App.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
-import { IAMProvider, IAMProviderProps } from "./services/IAM";
 
 // Add `env` namespace to window
 interface EnvInterface {
@@ -33,16 +33,16 @@ const oidcConfig: AuthProviderProps = {
   },
 };
 
-const iamConfig: IAMProviderProps = {
+const iamConfig: IamProviderProps = {
   authority: window.env.IAM_AUTHORITY,
 };
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <AuthProvider {...oidcConfig}>
-      <IAMProvider {...iamConfig}>
+      <IamProvider {...iamConfig}>
         <App />
-      </IAMProvider>
+      </IamProvider>
     </AuthProvider>
   </React.StrictMode>
 );

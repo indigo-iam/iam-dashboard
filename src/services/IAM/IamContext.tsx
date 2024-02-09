@@ -1,8 +1,8 @@
 import { createContext } from "react";
 
-export interface IAMContextProps {
+export interface IamContextProps {
   logout: () => Promise<Response | undefined>;
   fetchScimMe: () => Promise<JSON>;
 }
 
-export const IAMContext = createContext<IAMContextProps | undefined>(undefined);
+export const IamContext = createContext<IamContextProps | undefined>(undefined);

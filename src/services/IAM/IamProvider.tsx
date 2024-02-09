@@ -1,16 +1,16 @@
 import { useAuth } from "react-oidc-context";
-import { IAMContext } from "./IAMContext";
+import { IamContext } from "./IamContext";
 import { useCallback } from "react";
 
-interface IAMProviderBaseProps {
+interface IamProviderBaseProps {
   children?: React.ReactNode;
 }
 
-export interface IAMProviderProps extends IAMProviderBaseProps {
+export interface IamProviderProps extends IamProviderBaseProps {
   authority: string;
 }
 
-export const IAMProvider = (props: IAMProviderProps): JSX.Element => {
+export const IamProvider = (props: IamProviderProps): JSX.Element => {
   const { authority, children } = props;
   const auth = useAuth();
 
@@ -41,19 +41,20 @@ export const IAMProvider = (props: IAMProviderProps): JSX.Element => {
     }
   }, [get]);
 
+  /** Dummy example of authorized API */
   const fetchScimMe = useCallback(async () => {
     const response = await get("/scim/Me");
     return response.json();
   }, [get]);
 
   return (
-    <IAMContext.Provider
+    <IamContext.Provider
       value={{
         logout,
         fetchScimMe,
       }}
     >
       {children}
-    </IAMContext.Provider>
+    </IamContext.Provider>
   );
 };

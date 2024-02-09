@@ -1,18 +1,18 @@
-import { IAMProvider, type IAMProviderProps } from "./IAMProvider";
+import { IamProvider, type IamProviderProps } from "./IamProvider";
 
 type Props = {
   Comp?: React.ComponentType;
 };
 
-export function withIAM(
+export function withIam(
   WrappedComponent: React.FunctionComponent<Props>,
-  iamConfig: IAMProviderProps
+  iamConfig: IamProviderProps
 ) {
   (props: Props) => {
     return (
-      <IAMProvider {...iamConfig}>
+      <IamProvider {...iamConfig}>
         <WrappedComponent {...props} />
-      </IAMProvider>
+      </IamProvider>
     );
   };
 }

@@ -1,3 +1,31 @@
-.infn-bg-color-primary {
+.infn-bg-primary {
   background-color: var(--infn-color-primary);
+}
+
+.infn-bg-secondary {
+  background-color: var(--infn-color-secondary);
+}
+
+.infn-bg-warning {
+  background-color: var(--infn-color-warning);
+}
+
+.infn-text-danger {
+  background-color: var(--infn-color-warning);
+}
+
+.infn-text-primary {
+  color: var(--infn-color-primary);
+}
+
+.infn-text-secondary {
+  color: var(--infn-color-secondary);
+}
+
+.infn-text-warning {
+  color: var(--infn-color-warning);
+}
+
+.infn-text-danger {
+  color: var(--infn-color-danger);
 }

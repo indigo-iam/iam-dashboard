@@ -26,11 +26,15 @@ const oidcConfig: AuthProviderProps = {
   client_id: window.env.IAM_CLIENT_ID,
   client_secret: window.env.IAM_CLIENT_SECRET,
   scope: window.env.IAM_SCOPE,
-  redirect_uri: `${window.location.origin}/iam-dashboard`,
+  redirect_uri: window.location.origin + window.location.pathname,
+  // https://github.com/authts/react-oidc-context/blob/f175dcba6ab09871b027d6a2f2224a17712b67c5/src/AuthProvider.tsx#L20-L30
+  onSigninCallback: () => {
+    window.history.replaceState({}, document.title, window.location.pathname);
+  },
 };
 
 const iamConfig: IAMProviderProps = {
-  endpoint: window.env.IAM_AUTHORITY,
+  authority: window.env.IAM_AUTHORITY,
 };
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

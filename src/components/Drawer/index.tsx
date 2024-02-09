@@ -1,6 +1,7 @@
 import { Button } from "../../components";
 import { LogoHeader } from "..";
 import { useAuth } from "react-oidc-context";
+import { useIAM } from "../../services/IAM";
 
 export interface DrawerProps {
   drawerWidth: string;
@@ -8,14 +9,18 @@ export interface DrawerProps {
 
 export const Drawer = (props: DrawerProps): JSX.Element => {
   const { drawerWidth } = props;
-  const { user, removeUser } = useAuth();
+  const auth = useAuth();
+  const iam = useIAM();
 
   const Logout = () => {
     return (
       <Button
         className="mt-auto mb-2 mx-auto"
         color="secondary"
-        onClick={() => removeUser()}
+        onClick={async () => {
+          await iam.logout();
+          auth.removeUser();
+        }}
       >
         Logout
       </Button>
@@ -49,7 +54,7 @@ export const Drawer = (props: DrawerProps): JSX.Element => {
           "flex-column p-2"
         }
       >
-        <LogoHeader username={user?.profile.name ?? "Unknown User"} />
+        <LogoHeader username={auth.user?.profile.name ?? "Unknown User"} />
         <Elements />
         <Logout />
       </div>

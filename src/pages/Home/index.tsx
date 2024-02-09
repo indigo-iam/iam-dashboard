@@ -4,10 +4,12 @@ import { Button } from "react-bootstrap";
 import reactLogo from "/assets/react.svg";
 import viteLogo from "/assets/vite.svg";
 import { Page } from "../../components";
+import { useIAM } from "../../services/IAM";
 
 export const Home = () => {
   const auth = useAuth();
   const [count, setCount] = useState(0);
+  const iam = useIAM();
   return (
     <Page id="home">
       <div>
@@ -22,7 +24,12 @@ export const Home = () => {
       <div className="mx-auto" style={{ marginTop: "120px" }}>
         <div>
           <div className="card mx-auto">
-            <Button onClick={() => setCount(count => count + 1)}>
+            <Button
+              onClick={async () => {
+                setCount(count => count + 1);
+                console.log(await iam.fetchScimMe());
+              }}
+            >
               count is {count}
             </Button>
             <p>

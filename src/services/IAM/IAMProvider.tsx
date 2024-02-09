@@ -14,6 +14,7 @@ export const IAMProvider = (props: IAMProviderProps): JSX.Element => {
   const { authority, children } = props;
   const auth = useAuth();
 
+  // HTTP GET
   const get = useCallback(
     async (endpoint: string) => {
       const token = auth.user?.access_token;
@@ -40,9 +41,9 @@ export const IAMProvider = (props: IAMProviderProps): JSX.Element => {
     }
   }, [get]);
 
-  /** Dummy example of authorized API */
   const fetchScimMe = useCallback(async () => {
-    return (await get("/scim/Me")).json();
+    const response = await get("/scim/Me");
+    return response.json();
   }, [get]);
 
   return (

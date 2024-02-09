@@ -20,7 +20,7 @@ export interface ButtonProps {
   onClick?: () => void;
 }
 
-export const Button = (props: ButtonProps) => {
+export const Button = (props: ButtonProps): JSX.Element => {
   const { type, className, children, color, icon, disabled, onClick } = props;
   return (
     <div className={className}>

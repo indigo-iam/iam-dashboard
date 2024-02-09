@@ -1,4 +1,4 @@
-import { useAuth } from "react-oidc-context";
+import { withAuthenticationRequired } from "react-oidc-context";
 import { Drawer } from "..";
 
 export interface PageProps {
@@ -6,27 +6,10 @@ export interface PageProps {
   children?: React.ReactNode;
 }
 
-export const Page = (props: PageProps): JSX.Element => {
-  const { id, children } = props;
-  const auth = useAuth();
-  const drawerWidth = "240px";
-
-  switch (auth.activeNavigator) {
-    case "signinSilent":
-      return <div>Signing you in...</div>;
-    case "signoutRedirect":
-      return <div>Signing you out...</div>;
-  }
-
-  if (auth.isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (auth.error) {
-    return <div>Oops... {auth.error.message}</div>;
-  }
-
-  if (auth.isAuthenticated) {
+export const Page = withAuthenticationRequired(
+  (props: PageProps): JSX.Element => {
+    const { id, children } = props;
+    const drawerWidth = "240px";
     return (
       <div className="d-flex">
         <Drawer drawerWidth={drawerWidth} />
@@ -39,8 +22,10 @@ export const Page = (props: PageProps): JSX.Element => {
         </div>
       </div>
     );
+  },
+  {
+    OnRedirecting: () => {
+      return <div>Redirecting to login page...</div>;
+    },
   }
-
-  auth.signinRedirect();
-  return <div>{"Oops... Don't know what to do :("}</div>;
-};
+);

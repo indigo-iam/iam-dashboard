@@ -63,7 +63,3 @@ export interface IamUser {
   groups?: Group[];
   "urn:indigo-dc:scim:schemas:IndigoUser": ScimSchema;
 }
-
-export function makeIamUser(payload: string): IamUser {
-  return JSON.parse(payload);
-}

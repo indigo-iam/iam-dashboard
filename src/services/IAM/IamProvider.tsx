@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useReducer } from "react";
 import { useAuth } from "react-oidc-context";
 import { IamContext } from "./IamContext";
-import { makeIamUser } from "./IamUser";
+import { IamUser } from "./IamUser";
 import { initialIamState } from "./IamState";
 import { reducer } from "./reducer";
 
@@ -35,6 +35,15 @@ export const IamProvider = (props: IamProviderProps): JSX.Element => {
     [authority, auth.user]
   );
 
+  type GetItem = <T>(endpoint: string) => Promise<Promise<T>>;
+  const getItem = useCallback<GetItem>(
+    async (endpoint: string) => {
+      const response = await get(endpoint);
+      return response.json();
+    },
+    [get]
+  );
+
   const logout = useCallback(async () => {
     try {
       const response = await get("/logout");
@@ -46,11 +55,9 @@ export const IamProvider = (props: IamProviderProps): JSX.Element => {
   }, [get]);
 
   const fetchScimMe = useCallback(async () => {
-    const response = await get("/scim/Me");
-    const json = await response.json();
-    const user = makeIamUser(JSON.stringify(json));
+    const user = await getItem<IamUser>("/scim/Me");
     dispatch({ type: "UPDATE_SCIM_ME", user });
-  }, [get]);
+  }, [getItem]);
 
   useEffect(() => {
     if (auth.isAuthenticated) {

@@ -8,7 +8,7 @@
   "features": {
     "git": "os-provided"
   },
-  "postCreateCommand": "npm install",
+  "postCreateCommand": "git config --global --add safe.directory /workspace && npm install",
   "customizations": {
     "vscode": {
       "settings": {

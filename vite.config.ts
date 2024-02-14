@@ -8,6 +8,9 @@ export default defineConfig({
   server: {
     port: 3000,
     host: true,
+    watch: {
+      usePolling: true,
+    },
     hmr: {
       path: "/ws",
       clientPort: 8080, // this MUST match the NGINX's listening port

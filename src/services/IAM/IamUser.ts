@@ -27,12 +27,12 @@ type Group = {
   $ref: string;
 };
 
-type OidcId = {
+export type OidcId = {
   issuer: string;
   subject: string;
 };
 
-type SamlId = {
+export type SamlId = {
   idpId: string;
   userId: string;
   attributeId: string;

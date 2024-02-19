@@ -20,7 +20,7 @@ services:
 
   dashboard:
     container_name: iam-dashboard
-    image: mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye
+    image: mcr.microsoft.com/devcontainers/typescript-node:1-20-bookworm
     platform: linux/amd64
     depends_on:
       - backend

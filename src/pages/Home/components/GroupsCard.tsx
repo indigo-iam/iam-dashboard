@@ -1,6 +1,7 @@
 import { Button } from "../../../components";
 import { useIam } from "../../../services/IAM";
 import { UserPlusIcon } from "@heroicons/react/16/solid";
+import { Card } from "./Card";
 
 export const GroupsCard = (): JSX.Element => {
   const iam = useIam();
@@ -50,9 +51,8 @@ export const GroupsCard = (): JSX.Element => {
     );
   };
   return (
-    <div className="infn-card">
-      <div className="infn-title text-center mb-2">Groups</div>
+    <Card title="Groups">
       <Groups />
-    </div>
+    </Card>
   );
 };

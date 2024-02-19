@@ -2,6 +2,7 @@ import { Button } from "../../../components";
 import { useIam } from "../../../services/IAM";
 import { OidcId, SamlId } from "../../../services/IAM/IamUser";
 import { XCircleIcon } from "@heroicons/react/16/solid";
+import { Card } from "./Card";
 
 export const LinkedAccountsCard = (): JSX.Element => {
   const LinkedAccounts = (): JSX.Element => {
@@ -78,10 +79,10 @@ export const LinkedAccountsCard = (): JSX.Element => {
       </div>
     );
   };
+
   return (
-    <div className="infn-card">
-      <div className="infn-title text-center">Linked Accounts</div>
+    <Card title="Linked Accounts">
       <LinkedAccounts />
-    </div>
+    </Card>
   );
 };

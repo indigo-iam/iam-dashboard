@@ -16,6 +16,7 @@ export interface ButtonProps {
   type?: "button" | "reset" | "submit";
   color?: ButtonColor;
   className?: string;
+  style?: React.CSSProperties;
   children: React.ReactNode;
   icon?: React.ReactNode;
   disabled?: boolean;
@@ -23,11 +24,13 @@ export interface ButtonProps {
 }
 
 export const Button = (props: ButtonProps): JSX.Element => {
-  const { type, className, children, color, icon, disabled, onClick } = props;
+  const { type, className, style, children, color, icon, disabled, onClick } =
+    props;
   const classColor = ` ${color ? `infn-btn-${color}` : "infn-btn-primary"}`;
   return (
     <button
       className={`infn-btn ${classColor} ${className}`}
+      style={style}
       type={type}
       onClick={onClick}
       disabled={disabled}

@@ -25,7 +25,7 @@ export const UserCard = (): JSX.Element => {
           <td>
             <b>{props.data[0]}</b>
           </td>
-          <td>{props.data[1]}</td>
+          <td className="text-end">{props.data[1]}</td>
         </tr>
       );
     };
@@ -57,8 +57,8 @@ export const UserCard = (): JSX.Element => {
     );
   };
   return (
-    <div className="infn-card h-100">
-      <div className="infn-title text-center mb-4">
+    <div className="infn-card">
+      <div className="infn-title text-center mb-2">
         {iam.user.name.formatted}
       </div>
       <User user={iam.user} />

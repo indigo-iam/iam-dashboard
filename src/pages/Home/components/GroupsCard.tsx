@@ -20,7 +20,9 @@ export const GroupsCard = (): JSX.Element => {
             <b>{props.title}</b>
           </td>
           <td className="d-flex flex-row-reverse">
-            <Button color="danger">Delete</Button>
+            <Button color="danger" style={{ height: "32px" }}>
+              Delete
+            </Button>
           </td>
         </tr>
       );
@@ -33,17 +35,17 @@ export const GroupsCard = (): JSX.Element => {
             {groups.map(group => {
               return <Row key={group.display} title={group.display} />;
             })}
-            <div className="container mt-4">
-              <div className="row">
-                <div className="col">
-                  <Button icon={<UserPlusIcon />} color="success">
-                    Add Group
-                  </Button>
-                </div>
-              </div>
-            </div>
           </tbody>
         </table>
+        <div className="container mt-4">
+          <div className="row">
+            <div className="col">
+              <Button icon={<UserPlusIcon />} color="success">
+                Add Group
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
     );
   };

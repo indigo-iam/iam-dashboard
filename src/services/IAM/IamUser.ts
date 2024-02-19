@@ -21,7 +21,11 @@ type Email = {
   primary: boolean;
 };
 
-type Group = string;
+type Group = {
+  display: string;
+  value: string;
+  $ref: string;
+};
 
 type OidcId = {
   issuer: string;

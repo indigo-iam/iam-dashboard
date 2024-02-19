@@ -1,4 +1,4 @@
-import { IamUser } from "./IamUser";
+import { IamUser } from "./models/IamUser";
 
 export interface IamState {
   user?: IamUser;

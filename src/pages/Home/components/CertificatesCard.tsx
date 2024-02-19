@@ -1,5 +1,4 @@
-import { useIam } from "../../../services/IAM";
-import { Certificate } from "../../../services/IAM/IamUser";
+import { useIam, Certificate } from "../../../services/IAM";
 import { Card } from "./Card";
 
 export const CertificatesCard = (): JSX.Element => {

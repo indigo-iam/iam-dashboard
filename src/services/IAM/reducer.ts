@@ -1,5 +1,5 @@
+import { IamUser } from "./models/IamUser";
 import { IamState } from "./IamState";
-import { IamUser } from "./IamUser";
 
 type Action = { type: "UPDATE_SCIM_ME"; user: IamUser };
 

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useReducer } from "react";
 import { useAuth } from "react-oidc-context";
 import { IamContext } from "./IamContext";
-import { IamUser } from "./IamUser";
+import { IamUser } from "./models/IamUser";
 import { initialIamState } from "./IamState";
 import { reducer } from "./reducer";
 

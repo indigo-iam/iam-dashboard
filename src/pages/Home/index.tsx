@@ -9,25 +9,26 @@ export const Home = () => {
   return (
     <Page id="home">
       <div className="w-100 container">
-        <div className="row p-4">
-          <div className="col mt-0">
-            <UserCard />
-          </div>
+        <div className="row">
           <div className="col">
-            <div className="row p-2">
+            <div className="row mb-4">
+              <UserCard />
+            </div>
+            <div className="row">
+              <LinkedAccountsCard />
+            </div>
+          </div>
+
+          <div className="col">
+            <div className="row mb-4">
               <GroupsCard />
             </div>
-            <div className="row p-2">
+            <div className="row mb-4">
               <GroupRequestsCard />
             </div>
-          </div>
-        </div>
-        <div className="row p-4">
-          <div className="col">
-            <LinkedAccountsCard />
-          </div>
-          <div className="col">
-            <CertificatesCard />
+            <div className="row mb-4">
+              <CertificatesCard />
+            </div>
           </div>
         </div>
       </div>

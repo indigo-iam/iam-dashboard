@@ -38,7 +38,7 @@ export type SamlId = {
   attributeId: string;
 };
 
-type Certificate = {
+export type Certificate = {
   primary: boolean;
   subjectDn: string;
   issuerDn: string;

@@ -1,4 +1,6 @@
 import { useIam } from "../../../services/IAM";
+import { Certificate } from "../../../services/IAM/IamUser";
+import { Card } from "./Card";
 
 export const CertificatesCard = (): JSX.Element => {
   const Certificates = (): JSX.Element => {
@@ -13,30 +15,29 @@ export const CertificatesCard = (): JSX.Element => {
     }
     const { certificates } = iam.user[schema];
 
+    const CertificateView = (props: { cert: Certificate }) => {
+      const { cert } = props;
+      return (
+        <div className="border-bottom pb-2">
+          <b>Subject</b>
+          {cert.subjectDn} <br />
+          <b>Issuer</b> {cert.issuerDn} <br />
+          <b>Last Modified</b> {cert.lastModified}
+        </div>
+      );
+    };
+
     return (
       <>
         {certificates.map((cert, i) => {
-          return (
-            <ul key={i}>
-              <li>
-                <b>Subject</b> {cert.subjectDn}
-              </li>
-              <li>
-                <b>Issuer</b> {cert.issuerDn}
-              </li>
-              <li>
-                <b>Last Modified</b> {cert.lastModified}
-              </li>
-            </ul>
-          );
+          return <CertificateView key={`cert-id-${i}`} cert={cert} />;
         })}
       </>
     );
   };
   return (
-    <div className="infn-card">
-      <div className="infn-title">Certificates</div>
+    <Card title="Certificates">
       <Certificates />
-    </div>
+    </Card>
   );
 };

@@ -4,6 +4,7 @@ import { IamContext } from "./IamContext";
 import { IamUser } from "./models/IamUser";
 import { initialIamState } from "./IamState";
 import { reducer } from "./reducer";
+import { IamGroupRequests } from "./models/GroupRequest";
 
 interface IamProviderBaseProps {
   children?: React.ReactNode;
@@ -59,19 +60,27 @@ export const IamProvider = (props: IamProviderProps): JSX.Element => {
     dispatch({ type: "UPDATE_SCIM_ME", user });
   }, [getItem]);
 
+  const fetchGroupRequests = useCallback(async () => {
+    const url = "/iam/group_requests?status=PENDING";
+    const groupRequests = await getItem<IamGroupRequests>(url);
+    dispatch({ type: "UPDATE_GROUP_REQUESTS", groupRequests });
+  }, [getItem]);
+
   useEffect(() => {
     if (auth.isAuthenticated) {
       fetchScimMe();
+      fetchGroupRequests();
     }
-  }, [auth.isAuthenticated, fetchScimMe]);
+  }, [auth.isAuthenticated, fetchScimMe, fetchGroupRequests]);
 
-  const { user } = state;
+  const { user, groupRequests } = state;
 
   return (
     <IamContext.Provider
       value={{
         logout,
         user,
+        groupRequests,
       }}
     >
       {children}

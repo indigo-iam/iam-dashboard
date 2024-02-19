@@ -3,97 +3,109 @@
 /* Roboto */
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('/fonts/Roboto/roboto-black-webfont.woff2') format('woff2'),
-       url('/fonts/Roboto/roboto-black-webfont.woff') format('woff');
+  font-family: "Roboto";
+  src:
+    url("/fonts/Roboto/roboto-black-webfont.woff2") format("woff2"),
+    url("/fonts/Roboto/roboto-black-webfont.woff") format("woff");
   font-weight: 900;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('/fonts/Roboto/roboto-blackitalic-webfont.woff2') format('woff2'),
-       url('/fonts/Roboto/roboto-blackitalic-webfont.woff') format('woff');
+  font-family: "Roboto";
+  src:
+    url("/fonts/Roboto/roboto-blackitalic-webfont.woff2") format("woff2"),
+    url("/fonts/Roboto/roboto-blackitalic-webfont.woff") format("woff");
   font-weight: 900;
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('/fonts/Roboto/roboto-bold-webfont.woff2') format('woff2'),
-       url('/fonts/Roboto/roboto-bold-webfont.woff') format('woff');
+  font-family: "Roboto";
+  src:
+    url("/fonts/Roboto/roboto-bold-webfont.woff2") format("woff2"),
+    url("/fonts/Roboto/roboto-bold-webfont.woff") format("woff");
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('/fonts/Roboto/roboto-bolditalic-webfont.woff2') format('woff2'),
-       url('/fonts/Roboto/roboto-bolditalic-webfont.woff') format('woff');
+  font-family: "Roboto";
+  src:
+    url("/fonts/Roboto/roboto-bolditalic-webfont.woff2") format("woff2"),
+    url("/fonts/Roboto/roboto-bolditalic-webfont.woff") format("woff");
   font-weight: 700;
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('/fonts/Roboto/roboto-medium-webfont.woff2') format('woff2'),
-       url('/fonts/Roboto/roboto-medium-webfont.woff') format('woff');
+  font-family: "Roboto";
+  src:
+    url("/fonts/Roboto/roboto-medium-webfont.woff2") format("woff2"),
+    url("/fonts/Roboto/roboto-medium-webfont.woff") format("woff");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('/fonts/Roboto/roboto-mediumitalic-webfont.woff2') format('woff2'),
-       url('/fonts/Roboto/roboto-mediumitalic-webfont.woff') format('woff');
+  font-family: "Roboto";
+  src:
+    url("/fonts/Roboto/roboto-mediumitalic-webfont.woff2") format("woff2"),
+    url("/fonts/Roboto/roboto-mediumitalic-webfont.woff") format("woff");
   font-weight: 500;
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('/fonts/Roboto/roboto-regular-webfont.woff2') format('woff2'),
-       url('/fonts/Roboto/roboto-regular-webfont.woff') format('woff');
+  font-family: "Roboto";
+  src:
+    url("/fonts/Roboto/roboto-regular-webfont.woff2") format("woff2"),
+    url("/fonts/Roboto/roboto-regular-webfont.woff") format("woff");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('/fonts/Roboto/roboto-italic-webfont.woff2') format('woff2'),
-       url('/fonts/Roboto/roboto-italic-webfont.woff') format('woff');
+  font-family: "Roboto";
+  src:
+    url("/fonts/Roboto/roboto-italic-webfont.woff2") format("woff2"),
+    url("/fonts/Roboto/roboto-italic-webfont.woff") format("woff");
   font-weight: 400;
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('/fonts/Roboto/roboto-light-webfont.woff2') format('woff2'),
-       url('/fonts/Roboto/roboto-light-webfont.woff') format('woff');
+  font-family: "Roboto";
+  src:
+    url("/fonts/Roboto/roboto-light-webfont.woff2") format("woff2"),
+    url("/fonts/Roboto/roboto-light-webfont.woff") format("woff");
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('/fonts/Roboto/roboto-lightitalic-webfont.woff2') format('woff2'),
-       url('/fonts/Roboto/roboto-lightitalic-webfont.woff') format('woff');
+  font-family: "Roboto";
+  src:
+    url("/fonts/Roboto/roboto-lightitalic-webfont.woff2") format("woff2"),
+    url("/fonts/Roboto/roboto-lightitalic-webfont.woff") format("woff");
   font-weight: 300;
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('/fonts/Roboto/roboto-thin-webfont.woff2') format('woff2'),
-       url('/fonts/Roboto/roboto-thin-webfont.woff') format('woff');
+  font-family: "Roboto";
+  src:
+    url("/fonts/Roboto/roboto-thin-webfont.woff2") format("woff2"),
+    url("/fonts/Roboto/roboto-thin-webfont.woff") format("woff");
   font-weight: 100;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('/fonts/Roboto/roboto-thinitalic-webfont.woff2') format('woff2'),
-       url('/fonts/Roboto/roboto-thinitalic-webfont.woff') format('woff');
+  font-family: "Roboto";
+  src:
+    url("/fonts/Roboto/roboto-thinitalic-webfont.woff2") format("woff2"),
+    url("/fonts/Roboto/roboto-thinitalic-webfont.woff") format("woff");
   font-weight: 100;
   font-style: italic;
 }
@@ -101,97 +113,109 @@
 /* Oswald */
 
 @font-face {
-  font-family: 'Oswald';
-  src: url('/fonts/Oswald/oswald-bold-webfont.woff2') format('woff2'),
-       url('/fonts/Oswald/oswald-bold-webfont.woff') format('woff');
+  font-family: "Oswald";
+  src:
+    url("/fonts/Oswald/oswald-bold-webfont.woff2") format("woff2"),
+    url("/fonts/Oswald/oswald-bold-webfont.woff") format("woff");
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Oswald';
-  src: url('/fonts/Oswald/oswald-bolditalic-webfont.woff2') format('woff2'),
-       url('/fonts/Oswald/oswald-bolditalic-webfont.woff') format('woff');
+  font-family: "Oswald";
+  src:
+    url("/fonts/Oswald/oswald-bolditalic-webfont.woff2") format("woff2"),
+    url("/fonts/Oswald/oswald-bolditalic-webfont.woff") format("woff");
   font-weight: 700;
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'Oswald';
-  src: url('/fonts/Oswald/oswald-demibold-webfont.woff2') format('woff2'),
-       url('/fonts/Oswald/oswald-demibold-webfont.woff') format('woff');
+  font-family: "Oswald";
+  src:
+    url("/fonts/Oswald/oswald-demibold-webfont.woff2") format("woff2"),
+    url("/fonts/Oswald/oswald-demibold-webfont.woff") format("woff");
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Oswald';
-  src: url('/fonts/Oswald/oswald-demi-bolditalic-webfont.woff2') format('woff2'),
-       url('/fonts/Oswald/oswald-demi-bolditalic-webfont.woff') format('woff');
+  font-family: "Oswald";
+  src:
+    url("/fonts/Oswald/oswald-demi-bolditalic-webfont.woff2") format("woff2"),
+    url("/fonts/Oswald/oswald-demi-bolditalic-webfont.woff") format("woff");
   font-weight: 600;
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'Oswald';
-  src: url('/fonts/Oswald/oswald-medium-webfont.woff2') format('woff2'),
-       url('/fonts/Oswald/oswald-medium-webfont.woff') format('woff');
+  font-family: "Oswald";
+  src:
+    url("/fonts/Oswald/oswald-medium-webfont.woff2") format("woff2"),
+    url("/fonts/Oswald/oswald-medium-webfont.woff") format("woff");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Oswald';
-  src: url('/fonts/Oswald/oswald-mediumitalic-webfont.woff2') format('woff2'),
-       url('/fonts/Oswald/oswald-mediumitalic-webfont.woff') format('woff');
+  font-family: "Oswald";
+  src:
+    url("/fonts/Oswald/oswald-mediumitalic-webfont.woff2") format("woff2"),
+    url("/fonts/Oswald/oswald-mediumitalic-webfont.woff") format("woff");
   font-weight: 500;
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'Oswald';
-  src: url('/fonts/Oswald/oswald-regular-webfont.woff2') format('woff2'),
-       url('/fonts/Oswald/oswald-regular-webfont.woff') format('woff');
+  font-family: "Oswald";
+  src:
+    url("/fonts/Oswald/oswald-regular-webfont.woff2") format("woff2"),
+    url("/fonts/Oswald/oswald-regular-webfont.woff") format("woff");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Oswald';
-  src: url('/fonts/Oswald/oswald-regularitalic-webfont.woff2') format('woff2'),
-       url('/fonts/Oswald/oswald-regularitalic-webfont.woff') format('woff');
+  font-family: "Oswald";
+  src:
+    url("/fonts/Oswald/oswald-regularitalic-webfont.woff2") format("woff2"),
+    url("/fonts/Oswald/oswald-regularitalic-webfont.woff") format("woff");
   font-weight: 400;
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'Oswald';
-  src: url('/fonts/Oswald/oswald-light-webfont.woff2') format('woff2'),
-       url('/fonts/Oswald/oswald-light-webfont.woff') format('woff');
+  font-family: "Oswald";
+  src:
+    url("/fonts/Oswald/oswald-light-webfont.woff2") format("woff2"),
+    url("/fonts/Oswald/oswald-light-webfont.woff") format("woff");
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Oswald';
-  src: url('/fonts/Oswald/oswald-lightitalic-webfont.woff2') format('woff2'),
-       url('/fonts/Oswald/oswald-lightitalic-webfont.woff') format('woff');
+  font-family: "Oswald";
+  src:
+    url("/fonts/Oswald/oswald-lightitalic-webfont.woff2") format("woff2"),
+    url("/fonts/Oswald/oswald-lightitalic-webfont.woff") format("woff");
   font-weight: 300;
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'Oswald';
-  src: url('/fonts/Oswald/oswald-extralight-webfont.woff2') format('woff2'),
-       url('/fonts/Oswald/oswald-extralight-webfont.woff') format('woff');
+  font-family: "Oswald";
+  src:
+    url("/fonts/Oswald/oswald-extralight-webfont.woff2") format("woff2"),
+    url("/fonts/Oswald/oswald-extralight-webfont.woff") format("woff");
   font-weight: 200;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Oswald';
-  src: url('/fonts/Oswald/oswald-extra-lightitalic-webfont.woff2') format('woff2'),
-       url('/fonts/Oswald/oswald-extra-lightitalic-webfont.woff') format('woff');
+  font-family: "Oswald";
+  src:
+    url("/fonts/Oswald/oswald-extra-lightitalic-webfont.woff2") format("woff2"),
+    url("/fonts/Oswald/oswald-extra-lightitalic-webfont.woff") format("woff");
   font-weight: 200;
   font-style: italic;
 }
@@ -199,29 +223,29 @@
 /* COLORS */
 
 :root {
-  --infn-color-primary: #002A48;
-  --infn-color-primary-50: #002A4880;
+  --infn-color-primary: #002a48;
+  --infn-color-primary-50: #002a4880;
   --infn-color-primary-hover: #20385a;
-  
+
   --infn-color-secondary: #fefefe;
   --infn-color-secondary-50: #fefefe80;
   --infn-color-secondary-hover: #fefefedd;
 
-  --infn-color-success: #35DE23;
-  --infn-color-success-50: #35DE2380;
+  --infn-color-success: #35de23;
+  --infn-color-success-50: #35de2380;
   /* this is random... */
-  --infn-color-success-hover: #22f30c; 
-  
+  --infn-color-success-hover: #22f30c;
+
   --infn-color-danger: #de2335;
   --infn-color-danger-50: #de233580;
   --infn-color-danger-hover: #ed2639;
-  
+
   --infn-color-warning: #ffc107;
   --infn-color-warning-50: #ffc10780;
   --infn-color-warning-hover: #ffc822;
 
   --infn-border-radius: 25px;
-  
+
   --infn-box-shadow: -3px 3px 8px #00000020;
   --infn-box-shadow-light: -3px 3px 8px -3px #00000020;
 }
@@ -275,7 +299,7 @@
 /* BODY */
 
 body {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 16px;
   color: var(--infn-color-primary);
 }
@@ -290,7 +314,11 @@ input {
 /* BUTTONS */
 
 .infn-btn {
-  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  transition:
+    color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
   border-radius: var(--infn-border-radius);
   padding: 4px 16px;
   font-weight: 500;
@@ -305,7 +333,8 @@ input {
   width: fit-content;
 }
 
-.infn-btn:focus-visible, .infn.btn:focus {
+.infn-btn:focus-visible,
+.infn.btn:focus {
   outline: 3px solid var(--infn-color-primary-50);
 }
 
@@ -494,14 +523,14 @@ input {
   font-size: 32px;
   font-weight: 500;
   color: var(--infn-color-primary);
-  font-family: 'Oswald';
+  font-family: "Oswald";
 }
 
 .infn-subtitle {
   font-size: 24px;
   font-weight: 500;
   color: var(--infn-color-primary);
-  font-family: 'Oswald';
+  font-family: "Oswald";
 }
 
 .infn-section-title {
@@ -509,17 +538,19 @@ input {
   text-transform: uppercase;
   font-weight: bold;
   color: var(--infn-color-primary);
-  font-family: 'Oswald';
+  font-family: "Oswald";
 }
 
 .infn-section-subtitle {
   font-weight: 600;
   font-size: 16px;
   text-transform: uppercase;
-  opacity: .9;
+  opacity: 0.9;
   color: var(--infn-color-primary);
-  font-family: 'Oswald';
+  font-family: "Oswald";
 }
+
+.infn-card-title 
 
 /* INPUT */
 
@@ -546,7 +577,7 @@ input {
   top: 15px;
   left: 24px;
   color: var(--infn-color-primary);
-  opacity: .5;
+  opacity: 0.5;
 }
 
 /* Form group */
@@ -566,7 +597,9 @@ input {
   display: block;
   border: 1px solid #ced4da;
   margin-top: 6px;
-  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
 }
 
 .infn-form-group-input:focus-visible {
@@ -605,7 +638,7 @@ input {
 }
 
 .infn-counter > div {
-  opacity: .7;
+  opacity: 0.7;
 }
 
 .infn-counter-text {
@@ -621,4 +654,22 @@ input {
 .disabled {
   pointer-events: none;
   opacity: 0.5;
+}
+
+/* TABLES */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }

@@ -9,26 +9,51 @@ export const UserCard = (): JSX.Element => {
   }
   const User = (props: { user: IamUser }) => {
     const { user } = props;
+    const data = [
+      {
+        key: "Email",
+        value: user.emails[0].value,
+      },
+      {
+        key: "Status",
+        value: user.active ? "active" : "disabled",
+      },
+      {
+        key: "Created",
+        value: user.meta.created,
+      },
+      {
+        key: "Last Modified",
+        value: user.meta.lastModified,
+      },
+    ];
+
+    const Row = (props: { title: string; value: string | undefined }) => {
+      return (
+        <tr>
+          <td>
+            <b>{props.title}</b>
+          </td>
+          <td>{props.value}</td>
+        </tr>
+      );
+    };
+
     return (
-      <ul>
-        <li>
-          <b>Email</b> {user.emails[0].value}
-        </li>
-        <li>
-          <b>Status</b> {user.active ? "active" : "disabled"}
-        </li>
-        <li>
-          <b>Created</b> {user.meta.created}
-        </li>
-        <li>
-          <b>Last Modified</b> {user.meta.lastModified}
-        </li>
-      </ul>
+      <table className="w-100">
+        <tbody>
+          {data.map(row => (
+            <Row key={row.key} title={row.key} value={row.value} />
+          ))}
+        </tbody>
+      </table>
     );
   };
   return (
     <div className="infn-card h-100">
-      <div className="infn-title">{iam.user.name.formatted}</div>
+      <div className="infn-title text-center mb-4">
+        {iam.user.name.formatted}
+      </div>
       <User user={iam.user} />
     </div>
   );

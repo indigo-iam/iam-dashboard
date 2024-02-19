@@ -5,6 +5,8 @@ export type ButtonColor =
   | "primary-outline"
   | "secondary"
   | "secondary-outline"
+  | "success"
+  | "success-outline"
   | "danger"
   | "danger-outline"
   | "danger"
@@ -22,19 +24,22 @@ export interface ButtonProps {
 
 export const Button = (props: ButtonProps): JSX.Element => {
   const { type, className, children, color, icon, disabled, onClick } = props;
+  const classColor = ` ${color ? `infn-btn-${color}` : "infn-btn-primary"}`;
   return (
-    <div className={className}>
-      <button
-        className={`infn-btn ${color ?? "infn-btn-primary"}`}
-        type={type}
-        onClick={onClick}
-        disabled={disabled}
-      >
-        <div className="d-flex d-justify-center w-100">
-          {icon ? <div className="w-5 mr-4 my-auto">{icon}</div> : null}
-          {children}
-        </div>
-      </button>
-    </div>
+    <button
+      className={`infn-btn ${classColor} ${className}`}
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      <div className="d-flex d-justify-center w-100">
+        {icon ? (
+          <div className="me-2 my-auto" style={{ width: "24px" }}>
+            {icon}
+          </div>
+        ) : null}
+        {children}
+      </div>
+    </button>
   );
 };

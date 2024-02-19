@@ -12,42 +12,30 @@ export const UserCard = (): JSX.Element => {
   const User = (props: { user: IamUser }) => {
     const { user } = props;
     const data = [
-      {
-        key: "Email",
-        value: user.emails[0].value,
-      },
-      {
-        key: "Status",
-        value: user.active ? "active" : "disabled",
-      },
-      {
-        key: "Created",
-        value: user.meta.created,
-      },
-      {
-        key: "Last Modified",
-        value: user.meta.lastModified,
-      },
+      ["User Id", user.id],
+      ["Email", user.emails[0].value],
+      ["Status", user.active ? "active" : "disabled"],
+      ["Created", user.meta.created ?? "N/A"],
+      ["Last Modified", user.meta.lastModified ?? "N/A"],
     ];
 
-    const Row = (props: { title: string; value: string | undefined }) => {
+    const Row = (props: { data: string[] }) => {
       return (
         <tr>
           <td>
-            <b>{props.title}</b>
+            <b>{props.data[0]}</b>
           </td>
-          <td>{props.value}</td>
+          <td>{props.data[1]}</td>
         </tr>
       );
     };
 
     return (
       <div>
-        <p>{user.id}</p>
         <table className="w-100">
           <tbody>
             {data.map(row => (
-              <Row key={row.key} title={row.key} value={row.value} />
+              <Row key={row[0]} data={row} />
             ))}
           </tbody>
         </table>

@@ -50,7 +50,7 @@ export const Drawer = (props: DrawerProps): JSX.Element => {
     >
       <div
         className={
-          "infn-bg-primary infn-text-secondary h-100 d-flex align-items-start " +
+          "infn-bg-primary infn-txt-secondary h-100 d-flex align-items-start " +
           "flex-column p-2"
         }
       >

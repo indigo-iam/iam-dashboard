@@ -6,7 +6,7 @@ export const LogoHeader = (props: LogoHeaderProps): JSX.Element => {
   const { username } = props;
   return (
     <div id="logo-header" className="d-flex w-100">
-      <div className="infn-text-secondary h3 m-auto">{username}</div>
+      <div className="infn-txt-secondary h3 m-auto">{username}</div>
       <div
         className="m-auto"
         style={{

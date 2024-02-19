@@ -1,63 +1,4 @@
-/* COLORS */
-:root {
-  --infn-color-primary: #002A48;
-  --infn-color-primary-50: #002A4880;
-  --infn-color-primary-hover: #20385a;
-  
-  --infn-color-secondary: #fefefe;
-  --infn-color-secondary-50: #fefefe80;
-  --infn-color-secondary-hover: #fefefedd;
-  
-  --infn-color-danger: #de2335;
-  --infn-color-danger-50: #de233580;
-  --infn-color-danger-hover: #ed2639;
-  
-  --infn-color-warning: #ffc107;
-  --infn-color-warning-50: #ffc10780;
-  --infn-color-warning-hover: #ffc822;
-
-  --infn-border-radius: 25px;
-  
-  --infn-box-shadow: -3px 3px 8px #00000020;
-  --infn-box-shadow-light: -3px 3px 8px -3px #00000020;
-}
-
-/* Background colors */
-.infn-bg-primary {
-  background-color: var(--infn-color-primary);
-}
-
-.infn-bg-secondary {
-  background-color: var(--infn-color-secondary);
-}
-
-.infn-bg-warning {
-  background-color: var(--infn-color-warning);
-}
-
-/* Text */
-.infn-text-danger {
-  background-color: var(--infn-color-warning);
-}
-
-.infn-text-primary {
-  color: var(--infn-color-primary);
-}
-
-.infn-text-secondary {
-  color: var(--infn-color-secondary);
-}
-
-.infn-text-warning {
-  color: var(--infn-color-warning);
-}
-
-.infn-text-danger {
-  color: var(--infn-color-danger);
-}
-
-
-/* # FONTS */
+/*  FONTS */
 
 /* Roboto */
 
@@ -255,8 +196,83 @@
   font-style: italic;
 }
 
+/* COLORS */
 
-/* # BODY */
+:root {
+  --infn-color-primary: #002A48;
+  --infn-color-primary-50: #002A4880;
+  --infn-color-primary-hover: #20385a;
+  
+  --infn-color-secondary: #fefefe;
+  --infn-color-secondary-50: #fefefe80;
+  --infn-color-secondary-hover: #fefefedd;
+
+  --infn-color-success: #35DE23;
+  --infn-color-success-50: #35DE2380;
+  /* this is random... */
+  --infn-color-success-hover: #22f30c; 
+  
+  --infn-color-danger: #de2335;
+  --infn-color-danger-50: #de233580;
+  --infn-color-danger-hover: #ed2639;
+  
+  --infn-color-warning: #ffc107;
+  --infn-color-warning-50: #ffc10780;
+  --infn-color-warning-hover: #ffc822;
+
+  --infn-border-radius: 25px;
+  
+  --infn-box-shadow: -3px 3px 8px #00000020;
+  --infn-box-shadow-light: -3px 3px 8px -3px #00000020;
+}
+
+/* Background colors */
+.infn-bg-primary {
+  background-color: var(--infn-color-primary);
+}
+
+.infn-bg-secondary {
+  background-color: var(--infn-color-secondary);
+}
+
+.infn-bg-success {
+  background-color: var(--infn-color-success);
+}
+
+.infn-bg-warning {
+  background-color: var(--infn-color-warning);
+}
+
+.infn-bg-danger {
+  background-color: var(--infn-color-danger);
+}
+
+/* Text */
+.infn-txt-danger {
+  background-color: var(--infn-color-warning);
+}
+
+.infn-txt-primary {
+  color: var(--infn-color-primary);
+}
+
+.infn-txt-secondary {
+  color: var(--infn-color-secondary);
+}
+
+.infn-txt-success {
+  color: var(--infn-color-success);
+}
+
+.infn-txt-warning {
+  color: var(--infn-color-warning);
+}
+
+.infn-txt-danger {
+  color: var(--infn-color-danger);
+}
+
+/* BODY */
 
 body {
   font-family: 'Roboto';
@@ -271,7 +287,7 @@ input {
   line-height: inherit;
 }
 
-/* # BUTTONS */
+/* BUTTONS */
 
 .infn-btn {
   transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
@@ -305,7 +321,6 @@ input {
 }
 
 /* Primary */
-
 .infn-btn-primary {
   background: var(--infn-color-primary);
   color: var(--infn-color-secondary);
@@ -336,40 +351,64 @@ input {
   outline: 2px solid var(--infn-color-primary);
 }
 
-/* Danger */
+/* Secondary */
+.infn-btn-secondary {
+  background: var(--infn-color-secondary);
+  color: var(--infn-color-primary);
+  border: 2px solid var(--infn-color-secondary);
+}
 
-.infn-btn-danger {
-  background: var(--infn-color-danger);
+.infn-btn-secondary:hover {
+  background: var(--infn-color-secondary-hover);
+}
+
+.infn-btn-secondary-outline {
+  background: trasparent;
   color: var(--infn-color-secondary);
-  border: 2px solid var(--infn-color-danger);
+  border: 2px solid (var--infn-color-secondary);
 }
 
-.infn-btn-danger:hover {
-  background: var(--infn-color-danger-hover);
+.infn-btn-secondary-outline:hover {
+  background: var(--infn-color-secondary);
+  color: var(--infn-color-primary);
 }
 
-.infn-btn-danger-outline {
+.infn-btn-secondary-outline-no-border:hover {
+  outline: 2pix solid var(--infn-color-secondary);
+}
+
+/* Success */
+.infn-btn-success {
+  background: var(--infn-color-success);
+  color: #212529;
+  border: 2px solid var(--infn-color-success);
+}
+
+.infn-btn-success:hover {
+  background: var(--infn-color-success-hover);
+}
+
+.infn-btn-success-outline {
   background: transparent;
-  color: var(--infn-color-danger);
-  border: 2px solid var(--infn-color-danger);
+  color: var(--infn-color-success);
+  border: 2px solid var(--infn-color-success);
 }
 
-.infn-btn-danger-outline:hover {
-  background: var(--infn-color-danger);
-  color: var(--infn-color-secondary);
+.infn-btn-success-outline:hover {
+  background: var(--infn-color-success);
+  color: #212529;
 }
 
-.infn-btn-danger-outline-no-border {
+.infn-btn-success-outline-no-border {
   background: transparent;
-  color: var(--infn-color-danger);
+  color: var(--infn-color-success);
 }
 
-.infn-btn-danger-outline-no-border:hover {
-  outline: 2px solid var(--infn-color-danger);
+.infn-btn-success-outline-no-border:hover {
+  outline: 2px solid var(--infn-color-success);
 }
 
 /* Warning */
-
 .infn-btn-warning {
   background: var(--infn-color-warning);
   color: #212529;
@@ -400,6 +439,38 @@ input {
   outline: 2px solid var(--infn-color-warning);
 }
 
+/* Danger */
+.infn-btn-danger {
+  background: var(--infn-color-danger);
+  color: var(--infn-color-secondary);
+  border: 2px solid var(--infn-color-danger);
+}
+
+.infn-btn-danger:hover {
+  background: var(--infn-color-danger-hover);
+}
+
+.infn-btn-danger-outline {
+  background: transparent;
+  color: var(--infn-color-danger);
+  border: 2px solid var(--infn-color-danger);
+}
+
+.infn-btn-danger-outline:hover {
+  background: var(--infn-color-danger);
+  color: var(--infn-color-secondary);
+}
+
+.infn-btn-danger-outline-no-border {
+  background: transparent;
+  color: var(--infn-color-danger);
+}
+
+.infn-btn-danger-outline-no-border:hover {
+  outline: 2px solid var(--infn-color-danger);
+}
+
+/* Round Button*/
 .infn-btn-round {
   font-size: initial;
   width: 40px;
@@ -417,7 +488,7 @@ input {
   background: #162d4d25;
 }
 
-/* # TEXT */
+/* TEXT */
 
 .infn-title {
   font-size: 32px;
@@ -502,7 +573,7 @@ input {
   outline: 2px solid var(--infn-color-primary-50);
 }
 
-/*  CARDS */
+/* CARDS */
 
 .infn-card {
   transition: transform 300ms;

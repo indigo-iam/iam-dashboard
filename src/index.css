@@ -231,10 +231,10 @@
   --infn-color-secondary-50: #fefefe80;
   --infn-color-secondary-hover: #fefefedd;
 
-  --infn-color-success: #35de23;
+  --infn-color-success: #3DA657;
   --infn-color-success-50: #35de2380;
   /* this is random... */
-  --infn-color-success-hover: #22f30c;
+  --infn-color-success-hover: #3DA657;
 
   --infn-color-danger: #de2335;
   --infn-color-danger-50: #de233580;
@@ -409,7 +409,7 @@ input {
 /* Success */
 .infn-btn-success {
   background: var(--infn-color-success);
-  color: #212529;
+  color: var(--infn-color-secondary);
   border: 2px solid var(--infn-color-success);
 }
 

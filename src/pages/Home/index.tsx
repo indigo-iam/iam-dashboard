@@ -10,7 +10,7 @@ export const Home = () => {
     <Page id="home">
       <div className="w-100 container">
         <div className="row">
-          <div className="col">
+          <div className="col p-4">
             <div className="row mb-4">
               <UserCard />
             </div>
@@ -18,8 +18,7 @@ export const Home = () => {
               <LinkedAccountsCard />
             </div>
           </div>
-
-          <div className="col">
+          <div className="col p-4">
             <div className="row mb-4">
               <GroupsCard />
             </div>

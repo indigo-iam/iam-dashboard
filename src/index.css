@@ -518,6 +518,23 @@ input {
   background: #162d4d25;
 }
 
+.infn-btn-close {
+  font-size: initial;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 13px;
+  border: none;
+  transition: all 300ms;
+  background: #c7c7c7;
+}
+
+.infn-btn-close:hover {
+  background: #dddddd;
+}
+
 /* TEXT */
 
 .infn-title {
@@ -673,4 +690,70 @@ th {
 
 tr:nth-child(even) {
   background-color: #dddddd;
+}
+
+/* MODALS */
+
+.infn-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+}
+
+.infn-modal.show {
+  visibility: visible;
+  background: rgb(0, 0, 0, 0.65);
+  transition:
+    visibility 0s,
+    background 0.25s;
+}
+
+.infn-modal.hide {
+  visibility: hidden;
+  background: rgb(0, 0, 0, 0);
+  transition:
+    background 0.25s,
+    visibility 0.25s;
+}
+
+.infn-modal-content {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: var(--infn-border-radius);
+  background-color: var(--infn-color-secondary);
+  width: 40%;
+  padding: 8px;
+  z-index: 50;
+}
+
+.infn-modal-content.show {
+  top: 140px;
+  transition: top 250ms ease-out;
+}
+
+.infn-modal-content.hide {
+  top: -50%;
+  transition: top 250ms ease-in;
+}
+
+.infn-modal-header {
+  padding: 8px;
+  border-bottom: 2px solid #dddddd;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.infn-modal-body {
+  padding: 16px;
+  width: 100%;
+  border-bottom: 2px solid #dddddd;
+  min-height: 120px;
+}
+
+.infn-modal-footer {
+  padding: 8px;
+  bottom: 0;
+  min-height: 32px;
 }

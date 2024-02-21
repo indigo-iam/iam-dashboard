@@ -231,10 +231,10 @@
   --infn-color-secondary-50: #fefefe80;
   --infn-color-secondary-hover: #fefefedd;
 
-  --infn-color-success: #3DA657;
+  --infn-color-success: #3da657;
   --infn-color-success-50: #35de2380;
   /* this is random... */
-  --infn-color-success-hover: #3DA657;
+  --infn-color-success-hover: #3da657;
 
   --infn-color-danger: #de2335;
   --infn-color-danger-50: #de233580;
@@ -300,7 +300,8 @@
 
 body {
   font-family: "Roboto";
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: 300;
   color: var(--infn-color-primary);
 }
 
@@ -321,7 +322,7 @@ input {
     box-shadow 0.15s ease-in-out;
   border-radius: var(--infn-border-radius);
   padding: 4px 16px;
-  font-weight: 500;
+  font-weight: 300;
   cursor: pointer;
   white-space: nowrap;
   overflow: hidden;
@@ -521,16 +522,16 @@ input {
 
 .infn-title {
   font-size: 32px;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--infn-color-primary);
-  font-family: "Oswald";
+  font-family: "Roboto";
 }
 
 .infn-subtitle {
   font-size: 24px;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--infn-color-primary);
-  font-family: "Oswald";
+  font-family: "Roboto";
 }
 
 .infn-section-title {
@@ -538,7 +539,7 @@ input {
   text-transform: uppercase;
   font-weight: bold;
   color: var(--infn-color-primary);
-  font-family: "Oswald";
+  font-family: "Roboto";
 }
 
 .infn-section-subtitle {
@@ -547,7 +548,7 @@ input {
   text-transform: uppercase;
   opacity: 0.9;
   color: var(--infn-color-primary);
-  font-family: "Oswald";
+  font-family: "Roboto";
 }
 
 .infn-card-title 

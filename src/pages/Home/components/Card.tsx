@@ -11,9 +11,9 @@ export const Card = (props: CardProps) => {
   const { title, children, footer } = props;
   return (
     <div className="infn-card">
-      <div className="infn-subtitle text-center mb-2">{title}</div>
-      {children}
-      <div>{footer}</div>
+      <div className="infn-subtitle text-center mb">{title}</div>
+      <div className="infn-card-body">{children}</div>
+      <div className="infn-card-footer">{footer}</div>
     </div>
   );
 };

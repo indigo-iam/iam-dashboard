@@ -38,20 +38,22 @@ export const GroupsCard = (): JSX.Element => {
             })}
           </tbody>
         </table>
-        <div className="container mt-4">
-          <div className="row">
-            <div className="col">
-              <Button icon={<UserPlusIcon />} color="success">
-                Add Group
-              </Button>
-            </div>
-          </div>
-        </div>
       </div>
     );
   };
+
+  const Footer = () => {
+    return (
+      <div>
+        <Button icon={<UserPlusIcon />} color="success">
+          Add Group
+        </Button>
+      </div>
+    );
+  };
+
   return (
-    <Card title="Groups">
+    <Card title="Groups" footer={<Footer />}>
       <Groups />
     </Card>
   );

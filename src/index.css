@@ -644,6 +644,18 @@ input {
   box-shadow: var(--infn-box-shadow);
 }
 
+.infn-card-body {
+  padding: 16px;
+  padding-bottom: 32px;
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  min-height: 32px;
+}
+
+.infn-card-footer {
+  margin-top: 16px;
+}
+
 .infn-counter {
   display: flex;
   align-items: center;

@@ -86,7 +86,7 @@ const ChangePasswordModal = (props: { show: boolean; onClose: () => void }) => {
 const Footer = (props: { onClickChangePassword: () => void }) => {
   const { onClickChangePassword } = props;
   return (
-    <div className="d-flex mt-4">
+    <div className="d-flex">
       <Button icon={<PencilIcon />}>Edit Details</Button>
       <div style={{ width: "8px" }} />
       <Button

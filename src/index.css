@@ -572,8 +572,6 @@ input {
   font-family: "Roboto";
 }
 
-.infn-card-title 
-
 /* INPUT */
 
 /* Search bar */
@@ -644,9 +642,22 @@ input {
   box-shadow: var(--infn-box-shadow);
 }
 
+.infn-card-title {
+  text-align: center;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: var(--infn-color-primary);
+  font-family: "Roboto";
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+
 .infn-card-body {
-  padding: 16px;
+  padding-top: 32px;
   padding-bottom: 32px;
+  padding-left: 16px;
+  padding-right: 16px;
   width: 100%;
   border-bottom: 1px solid #eee;
   min-height: 32px;

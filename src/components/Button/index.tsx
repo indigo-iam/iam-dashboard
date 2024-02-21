@@ -7,6 +7,8 @@ export type ButtonColor =
   | "secondary-outline"
   | "success"
   | "success-outline"
+  | "warning"
+  | "warning-outline"
   | "danger"
   | "danger-outline"
   | "danger"

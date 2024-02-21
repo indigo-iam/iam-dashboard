@@ -86,24 +86,16 @@ const ChangePasswordModal = (props: { show: boolean; onClose: () => void }) => {
 const Footer = (props: { onClickChangePassword: () => void }) => {
   const { onClickChangePassword } = props;
   return (
-    <div className="container justify-content-center mt-4">
-      <div className="row align-items-center">
-        <div className="col">
-          <Button className="mx-auto" icon={<PencilIcon />}>
-            Edit Details
-          </Button>
-        </div>
-        <div className="col">
-          <Button
-            className="mx-auto"
-            icon={<KeyIcon />}
-            color="success"
-            onClick={onClickChangePassword}
-          >
-            Change Password
-          </Button>
-        </div>
-      </div>
+    <div className="d-flex mt-4">
+      <Button icon={<PencilIcon />}>Edit Details</Button>
+      <div style={{ width: "8px" }} />
+      <Button
+        icon={<KeyIcon />}
+        color="success"
+        onClick={onClickChangePassword}
+      >
+        Change Password
+      </Button>
     </div>
   );
 };

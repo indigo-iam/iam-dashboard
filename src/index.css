@@ -519,16 +519,20 @@ input {
 }
 
 .infn-btn-close {
-  font-size: initial;
-  width: 25px;
-  height: 25px;
+  font-size: 24px;
+  font-weight: 200;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 13px;
+  border-radius: 14px;
   border: none;
+  margin-top: auto;
+  margin-bottom: auto;
   transition: all 300ms;
-  background: #c7c7c7;
+  background: #eee;
+  color: #666666;
 }
 
 .infn-btn-close:hover {
@@ -692,7 +696,7 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 
-/* MODALS */
+/* MODAL */
 
 .infn-modal {
   position: fixed;
@@ -739,7 +743,8 @@ tr:nth-child(even) {
 
 .infn-modal-header {
   padding: 8px;
-  border-bottom: 2px solid #dddddd;
+  padding-left: 16px;
+  border-bottom: 1px solid #eee;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -748,7 +753,7 @@ tr:nth-child(even) {
 .infn-modal-body {
   padding: 16px;
   width: 100%;
-  border-bottom: 2px solid #dddddd;
+  border-bottom: 1px solid #eee;
   min-height: 120px;
 }
 

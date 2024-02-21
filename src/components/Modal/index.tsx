@@ -1,3 +1,4 @@
+import { XMarkIcon } from "@heroicons/react/16/solid";
 import React from "react";
 
 export interface ModalProps {
@@ -23,14 +24,14 @@ export const Modal = (props: ModalProps) => {
           onClick={e => e.stopPropagation()}
         >
           <div className="infn-modal-header">
-            <div className="infn-title">{title}</div>
+            <div className="infn-subtitle">{title}</div>
             <button
               type="button"
-              className="infn-btn-close my-auto"
+              className="infn-btn-close"
               aria-label="Close"
               onClick={close}
             >
-              <span aria-hidden="true">&times;</span>
+              <XMarkIcon />
             </button>
           </div>
           <div className="infn-modal-body">{body}</div>

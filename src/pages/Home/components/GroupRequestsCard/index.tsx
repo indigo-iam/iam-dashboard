@@ -14,16 +14,29 @@ export const GroupRequestsCard = (): JSX.Element => {
     const GroupRequest = (props: { resource: IamGroupRequestResource }) => {
       const { resource } = props;
       const { userFullName, username, uuid, groupName, groupUuid } = resource;
+
+      const Row = (props: { title: string; value: string }) => {
+        const { title, value } = props;
+        return (
+          <div className="row">
+            <div className="col-2">
+              <b>{title}</b>
+            </div>
+            <div className="col">{value}</div>
+          </div>
+        );
+      };
+
       return (
         <div className="container border-bottom p-2 mt-2">
           <div className="row">
-            <div className="col col-md-auto">
-              <b>Username</b> {userFullName ?? username} <br />
-              <b>User Id</b> {uuid} <br />
-              <b>Group</b> {groupName} <br />
-              <b>Group Id</b> {groupUuid}
+            <div className="col">
+              <Row title="Username" value={userFullName ?? username} />
+              <Row title="User ID" value={uuid} />
+              <Row title="Group" value={groupName} />
+              <Row title="Group ID" value={groupUuid} />
             </div>
-            <div className="col d-flex flex-row-reverse">
+            <div className="col-auto d-flex flex-row-reverse">
               <Button
                 color="danger"
                 className="my-auto"

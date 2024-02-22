@@ -727,17 +727,26 @@ label {
 table {
   border-collapse: collapse;
   width: 100%;
+  border: 1px solid #eee;
 }
 
 td,
 th {
-  border: 1px solid #dddddd;
+  border: 0 px solid #eee;
   text-align: left;
   padding: 8px;
 }
 
+tr {
+  height: 44px;
+}
+
+tr:hover {
+  background-color: #ddd !important;
+}
+
 tr:nth-child(even) {
-  background-color: #dddddd;
+  background-color: #eee;
 }
 
 /* MODAL */

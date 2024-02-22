@@ -85,11 +85,37 @@ const ChangePasswordModal = (props: { show: boolean; onClose: () => void }) => {
   );
 };
 
-const Footer = (props: { onClickChangePassword: () => void }) => {
-  const { onClickChangePassword } = props;
+const EditDetailsModal = (props: { show: boolean; onClose: () => void }) => {
+  const { show, onClose } = props;
+  const Body = () => {
+    return <div></div>;
+  };
+
+  const Footer = () => {
+    return <div></div>;
+  };
+
+  return (
+    <Modal
+      show={show}
+      onClose={onClose}
+      title="Edit Details"
+      body={<Body />}
+      footer={<Footer />}
+    />
+  );
+};
+
+const Footer = (props: {
+  onClickEditDetails: () => void;
+  onClickChangePassword: () => void;
+}) => {
+  const { onClickEditDetails, onClickChangePassword } = props;
   return (
     <div className="d-flex mt-3">
-      <Button icon={<PencilIcon />}>Edit Details</Button>
+      <Button icon={<PencilIcon />} onClick={onClickEditDetails}>
+        Edit Details
+      </Button>
       <div style={{ width: "8px" }} />
       <Button
         icon={<KeyIcon />}
@@ -105,6 +131,7 @@ const Footer = (props: { onClickChangePassword: () => void }) => {
 export const UserCard = (): JSX.Element => {
   const iam = useIam();
   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
+  const [showEditDetailsModal, setShowEditDetailsModal] = useState(false);
 
   if (!iam.user) {
     return <></>;
@@ -142,6 +169,14 @@ export const UserCard = (): JSX.Element => {
     );
   };
 
+  const showEditDetails = () => {
+    setShowEditDetailsModal(true);
+  };
+
+  const hideEditDetails = () => {
+    setShowEditDetailsModal(false);
+  };
+
   const showChangePassword = () => {
     setShowChangePasswordModal(true);
   };
@@ -152,13 +187,19 @@ export const UserCard = (): JSX.Element => {
 
   return (
     <div>
+      <EditDetailsModal show={showEditDetailsModal} onClose={hideEditDetails} />
       <ChangePasswordModal
         show={showChangePasswordModal}
         onClose={hideChangePassword}
       />
       <Card
         title={iam.user.name.formatted}
-        footer={<Footer onClickChangePassword={showChangePassword} />}
+        footer={
+          <Footer
+            onClickEditDetails={showEditDetails}
+            onClickChangePassword={showChangePassword}
+          />
+        }
       >
         <User user={iam.user} />
       </Card>

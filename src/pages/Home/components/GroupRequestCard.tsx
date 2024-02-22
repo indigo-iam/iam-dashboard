@@ -29,7 +29,7 @@ export const GroupRequestsCard = (): JSX.Element => {
                 color="danger"
                 className="my-auto"
                 icon={<XCircleIcon />}
-                style={{ height: "32px" }}
+                small={true}
               >
                 Unlink
               </Button>

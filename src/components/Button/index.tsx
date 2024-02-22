@@ -22,29 +22,47 @@ export interface ButtonProps {
   children: React.ReactNode;
   icon?: React.ReactNode;
   disabled?: boolean;
+  small?: boolean;
   onClick?: () => void;
 }
 
 export const Button = (props: ButtonProps): JSX.Element => {
-  const { type, className, style, children, color, icon, disabled, onClick } =
-    props;
-  const classColor = ` ${color ? `infn-btn-${color}` : "infn-btn-primary"}`;
+  const {
+    type,
+    className,
+    style,
+    children,
+    color,
+    icon,
+    disabled,
+    small,
+    onClick,
+  } = props;
+  const classColor = `infn-btn infn-btn-${color ?? "primary"}`;
   return (
-    <button
-      className={`infn-btn ${classColor} ${className}`}
-      style={style}
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-    >
-      <div className="d-flex d-justify-center w-100">
-        {icon ? (
-          <div className="me-2 my-auto" style={{ width: "24px" }}>
-            {icon}
-          </div>
-        ) : null}
-        {children}
-      </div>
-    </button>
+    <div className={className}>
+      <button
+        className={`infn-btn ${classColor} ${small ? "infn-btn-sm" : ""}`}
+        style={style}
+        type={type}
+        onClick={onClick}
+        disabled={disabled}
+      >
+        <div className="d-flex">
+          {icon ? (
+            <div
+              className="me-2 my-auto"
+              style={{
+                width: small ? "16px" : "24px",
+                height: small ? "16px" : "24px",
+              }}
+            >
+              {icon}
+            </div>
+          ) : null}
+          <div className="my-auto">{children}</div>
+        </div>
+      </button>
+    </div>
   );
 };

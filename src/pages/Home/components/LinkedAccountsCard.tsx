@@ -24,8 +24,8 @@ export const LinkedAccountsCard = (): JSX.Element => {
               <Button
                 color="danger"
                 className="my-auto"
+                small={true}
                 icon={<XCircleIcon />}
-                style={{ height: "32px" }}
               >
                 Unlink
               </Button>
@@ -48,10 +48,10 @@ export const LinkedAccountsCard = (): JSX.Element => {
             </div>
             <div className="col d-flex flex-row-reverse">
               <Button
-                color="danger"
                 className="my-auto"
+                color="danger"
+                small={true}
                 icon={<XCircleIcon />}
-                style={{ height: "32px" }}
               >
                 Unlink
               </Button>
@@ -65,16 +65,22 @@ export const LinkedAccountsCard = (): JSX.Element => {
       iam.user["urn:indigo-dc:scim:schemas:IndigoUser"];
     return (
       <div>
-        <b>OpenID Connect</b>
-        <br />
-        {oidcIds.map(oidcId => (
-          <OidcIdView key={oidcId.subject} id={oidcId} />
-        ))}
-        <b>SAML</b>
-        <br />
-        {samlIds.map((samlId, i) => (
-          <SamlIdView key={`saml-id-${i}`} id={samlId} />
-        ))}
+        <div>
+          <div>
+            <b>OpenID Connect</b>
+          </div>
+          {oidcIds.map(oidcId => (
+            <OidcIdView key={oidcId.subject} id={oidcId} />
+          ))}
+        </div>
+        <div>
+          <div className="pt-3">
+            <b>SAML</b>
+          </div>
+          {samlIds.map((samlId, i) => (
+            <SamlIdView key={`saml-id-${i}`} id={samlId} />
+          ))}
+        </div>
       </div>
     );
   };

@@ -1,6 +1,7 @@
 import { Button } from "../../../components";
 import { useIam } from "../../../services/IAM";
-import { UserPlusIcon } from "@heroicons/react/16/solid";
+import { UserPlusIcon } from "@heroicons/react/24/solid";
+import { XCircleIcon } from "@heroicons/react/16/solid";
 import { Card } from "./Card";
 
 export const GroupsCard = (): JSX.Element => {
@@ -21,7 +22,7 @@ export const GroupsCard = (): JSX.Element => {
             <b>{props.title}</b>
           </td>
           <td className="d-flex flex-row-reverse">
-            <Button color="danger" style={{ height: "32px" }}>
+            <Button color="danger" small={true} icon={<XCircleIcon />}>
               Delete
             </Button>
           </td>

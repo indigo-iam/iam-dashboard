@@ -353,6 +353,14 @@ input {
   font-size: 12px;
 }
 
+.infn-btn.icon {
+  border: none !important;
+  padding: 8px !important;
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 24px !important;
+}
+
 svg {
   vertical-align: unset;
 }
@@ -644,7 +652,6 @@ label {
 
 .infn-card {
   transition: transform 300ms;
-  cursor: pointer;
   border-radius: var(--infn-border-radius);
   box-shadow: var(--infn-box-shadow-light);
   background: white;
@@ -850,7 +857,14 @@ tr:nth-child(even) {
   background: var(--infn-color-primary-hover);
 }
 
-.infn-user-logo {
+.infn-logo-indigo {
+  width: 33%;
+  margin-top: auto;
+  margin-bottom: auto;
+  padding: 16px;
+}
+
+.infn-logo-user {
   display: flex;
   width: 100%;
   color: var(--infn-color-secondary);

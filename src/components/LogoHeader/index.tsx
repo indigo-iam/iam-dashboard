@@ -1,16 +1,89 @@
-import { UserCircleIcon } from "@heroicons/react/24/solid";
-export interface LogoHeaderProps {
-  username: string;
-}
+import {
+  ArrowRightEndOnRectangleIcon,
+  BellIcon,
+  UserCircleIcon,
+  WrenchIcon,
+} from "@heroicons/react/24/solid";
+import { useIam } from "@services/IAM";
+import { ReactNode } from "react";
+import { useAuth } from "react-oidc-context";
+import indigoLogo from "../../../public/assets/cloud.png";
 
-export const LogoHeader = (props: LogoHeaderProps): JSX.Element => {
+const LogoIam = () => {
+  return (
+    <div className="d-flex">
+      <img src={indigoLogo} className="infn-logo-indigo" />
+      <div className="infn-subtitle infn-txt-secondary">
+        INDIGO IAM for <br /> cnafsd
+      </div>
+    </div>
+  );
+};
+
+const UserLogo = (props: { username: string }) => {
   const { username } = props;
   return (
-    <div id="logo-header" className="infn-user-logo">
+    <div className="infn-logo-user">
       <div style={{ width: "48px" }}>
         <UserCircleIcon />
       </div>
       <div className="h3 px-4 my-auto">{username}</div>
+    </div>
+  );
+};
+
+interface ItemButtonProps {
+  icon: ReactNode;
+  title?: string;
+  onClick: () => void;
+}
+
+const ItemButton = (props: ItemButtonProps) => {
+  const { icon, title, onClick } = props;
+  return (
+    <button
+      className="infn-btn icon infn-btn-primary"
+      onClick={onClick}
+      title={title}
+    >
+      <div style={{ width: "24px", height: "24px" }}>{icon}</div>
+    </button>
+  );
+};
+
+export const LogoHeader = (): JSX.Element => {
+  const auth = useAuth();
+  const iam = useIam();
+  const username = auth.user?.profile.name ?? "Unknown User";
+
+  const logout = async () => {
+    await iam.logout();
+    auth.removeUser();
+  };
+
+  const Buttons = () => {
+    return (
+      <div className="d-flex justify-content-around px-4">
+        <ItemButton
+          icon={<BellIcon />}
+          title="Notifications"
+          onClick={logout}
+        />
+        <ItemButton icon={<WrenchIcon />} title="Settings" onClick={logout} />
+        <ItemButton
+          icon={<ArrowRightEndOnRectangleIcon />}
+          title="Logout"
+          onClick={logout}
+        />
+      </div>
+    );
+  };
+
+  return (
+    <div id="logo-header">
+      <LogoIam />
+      <UserLogo username={username} />
+      <Buttons />
     </div>
   );
 };

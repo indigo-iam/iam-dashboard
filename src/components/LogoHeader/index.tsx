@@ -1,3 +1,4 @@
+import { UserCircleIcon } from "@heroicons/react/24/solid";
 export interface LogoHeaderProps {
   username: string;
 }
@@ -5,18 +6,11 @@ export interface LogoHeaderProps {
 export const LogoHeader = (props: LogoHeaderProps): JSX.Element => {
   const { username } = props;
   return (
-    <div id="logo-header" className="d-flex w-100">
-      <div className="infn-txt-secondary h3 m-auto">{username}</div>
-      <div
-        className="m-auto"
-        style={{
-          backgroundColor: "gray",
-          border: "solid 2px darkgray",
-          width: "40px",
-          height: "40px",
-          borderRadius: "20px",
-        }}
-      ></div>
+    <div id="logo-header" className="infn-user-logo">
+      <div style={{ width: "48px" }}>
+        <UserCircleIcon />
+      </div>
+      <div className="h3 px-4 my-auto">{username}</div>
     </div>
   );
 };

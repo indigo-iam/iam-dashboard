@@ -1,8 +1,5 @@
-import { Button } from "@components";
-import { LogoHeader } from "..";
-import { useAuth } from "react-oidc-context";
-import { useIam } from "@services/IAM";
 import { ReactNode } from "react";
+
 export const DrawerLink = (props: { title: string; icon: JSX.Element }) => {
   const { title, icon } = props;
   return (
@@ -40,40 +37,18 @@ interface DrawerBodyProps {
 
 const DrawerBody = (props: DrawerBodyProps) => {
   const { children } = props;
-  return <div>{children}</div>;
+  return <div className="infn-drawer-body">{children}</div>;
 };
 
 export interface DrawerProps {
-  drawerWidth: string;
+  width: string;
   children: ReactNode;
 }
 export const Drawer = (props: DrawerProps): JSX.Element => {
-  const { drawerWidth, children } = props;
-  const auth = useAuth();
-  const iam = useIam();
-
-  const Logout = () => {
-    return (
-      <Button
-        className="mt-auto mb-2 mx-auto"
-        color="secondary"
-        onClick={async () => {
-          await iam.logout();
-          auth.removeUser();
-        }}
-      >
-        Logout
-      </Button>
-    );
-  };
-
+  const { width, children } = props;
   return (
-    <div id="drawer" className="infn-drawer" style={{ width: drawerWidth }}>
-      <div className={"h-100 d-flex align-items-start flex-column"}>
-        <LogoHeader username={auth.user?.profile.name ?? "Unknown User"} />
-        <DrawerBody>{children}</DrawerBody>
-        <Logout />
-      </div>
+    <div id="drawer" className="infn-drawer" style={{ width: width }}>
+      <DrawerBody>{children}</DrawerBody>
     </div>
   );
 };

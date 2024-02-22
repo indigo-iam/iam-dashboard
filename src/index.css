@@ -811,7 +811,14 @@ tr:nth-child(even) {
   bottom: 0;
   position: fixed;
   background-color: var(--infn-color-primary);
-  color: var(--infn-color-primary)
+  color: var(--infn-color-primary);
+}
+
+.infn-drawer-body {
+  height: 100% !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  flex-direction: column !important;
 }
 
 .infn-drawer-content {
@@ -841,4 +848,11 @@ tr:nth-child(even) {
 
 .infn-drawer-link:hover {
   background: var(--infn-color-primary-hover);
+}
+
+.infn-user-logo {
+  display: flex;
+  width: 100%;
+  color: var(--infn-color-secondary);
+  padding: 24px;
 }

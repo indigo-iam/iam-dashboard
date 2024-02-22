@@ -769,6 +769,7 @@ tr:nth-child(even) {
 .infn-modal-content.hide {
   top: -50%;
   transition: top 250ms ease-in;
+  max-width: 720px;
 }
 
 .infn-modal-header {

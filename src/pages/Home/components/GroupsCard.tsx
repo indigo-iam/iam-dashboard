@@ -1,9 +1,9 @@
-import { Button, Modal } from "../../../components";
-import { IamUser, useIam } from "../../../services/IAM";
+import { useState } from "react";
+import { Button, Modal } from "@components";
+import { IamUser, useIam } from "@services/IAM";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/16/solid";
 import { Card } from "./Card";
-import { useState } from "react";
 
 const AddGroupModal = (props: { show: boolean; onClose: () => void }) => {
   const { show, onClose } = props;

@@ -1,9 +1,11 @@
-import { Page } from "../../components";
-import { CertificatesCard } from "./components/CertificatesCard";
-import { GroupRequestsCard } from "./components/GroupRequestCard";
-import { GroupsCard } from "./components/GroupsCard";
-import { LinkedAccountsCard } from "./components/LinkedAccountsCard";
-import { UserCard } from "./components/UserCard";
+import { Page } from "@components";
+import {
+  CertificatesCard,
+  GroupRequestsCard,
+  GroupsCard,
+  LinkedAccountsCard,
+  UserCard,
+} from "./components";
 
 export const Home = () => {
   return (

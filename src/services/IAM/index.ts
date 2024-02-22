@@ -8,3 +8,4 @@ export {
   type SamlId,
   type Certificate,
 } from "./models/IamUser";
+export { type IamGroupRequestResource } from "./models/GroupRequest";

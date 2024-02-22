@@ -7,7 +7,9 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "src/*": ["src/*"]
+      "src/*": ["src/*"],
+      "@components": ["src/components/index.ts"],
+      "@services/*": ["src/services/*"]
     },
 
     /* Bundler mode */

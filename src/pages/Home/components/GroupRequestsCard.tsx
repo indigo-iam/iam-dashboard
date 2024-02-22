@@ -1,7 +1,6 @@
+import { useIam, IamGroupRequestResource } from "@services/IAM";
 import { XCircleIcon } from "@heroicons/react/16/solid";
-import { Button } from "../../../components";
-import { useIam } from "../../../services/IAM";
-import { IamGroupRequestResource } from "../../../services/IAM/models/GroupRequest";
+import { Button } from "@components";
 import { Card } from "./Card";
 
 export const GroupRequestsCard = (): JSX.Element => {

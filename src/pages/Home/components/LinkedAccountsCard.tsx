@@ -1,6 +1,6 @@
-import { useIam, OidcId, SamlId } from "../../../services/IAM";
 import { XCircleIcon } from "@heroicons/react/16/solid";
-import { Button } from "../../../components";
+import { useIam, OidcId, SamlId } from "@services/IAM";
+import { Button } from "@components";
 import { Card } from "./Card";
 
 export const LinkedAccountsCard = (): JSX.Element => {

@@ -13,28 +13,41 @@ export const ChangePasswordModal = (props: {
 
   const Body = () => {
     return (
-      <div className="my-auto">
-        <div className="container">
-          <div className="row p-2">
-            <div className="infn-section-subtitle col my-auto">
-              Current Password
-            </div>
-            <input className="infn-input-search col"></input>
-          </div>
-          <div className="row p-2">
-            <div className="infn-section-subtitle col my-auto">
-              New Password
-            </div>
-            <input className="infn-input-search col"></input>
-          </div>
-          <div className="row p-2">
-            <div className="infn-section-subtitle col my-auto">
-              Repeat New Password
-            </div>
-            <input className="infn-input-search col"></input>
-          </div>
+      <form className="row">
+        <div className="row">
+          <label className="col-4 my-auto" htmlFor="current-password">
+            Current Password
+          </label>
+          <input
+            className="infn-input-search col"
+            type="search"
+            name="current-password"
+            id="current-password"
+          />
         </div>
-      </div>
+        <div className="row gy-2">
+          <label className="col-4 my-auto" htmlFor="new-password">
+            New Password
+          </label>
+          <input
+            className="infn-input-search col"
+            type="search"
+            name="new-password"
+            id="new-password"
+          />
+        </div>
+        <div className="row gy-2">
+          <label className="col-4 my-auto" htmlFor="repeat-password">
+            Repeat New Password
+          </label>
+          <input
+            className="infn-input-search col"
+            type="search"
+            name="repeat-password"
+            id="repeat-password"
+          />
+        </div>
+      </form>
     );
   };
 

@@ -10,7 +10,7 @@ import {
   ArrowUpTrayIcon,
   ArrowUturnLeftIcon,
   XMarkIcon,
-} from "@heroicons/react/16/solid";
+} from "@heroicons/react/24/solid";
 
 const ChangePasswordModal = (props: { show: boolean; onClose: () => void }) => {
   const { show, onClose } = props;
@@ -45,28 +45,30 @@ const ChangePasswordModal = (props: { show: boolean; onClose: () => void }) => {
   const Footer = () => {
     return (
       <div className="d-flex justify-content-end p-2">
-        <div className="p-1">
-          <Button
-            className="my-auto"
-            color="primary"
-            icon={<ArrowUpTrayIcon />}
-          >
-            Update Password
-          </Button>
-        </div>
-        <div className="p-1">
-          <Button
-            className="my-auto"
-            color="warning"
-            icon={<ArrowUturnLeftIcon />}
-          >
-            Reset
-          </Button>
-        </div>
-        <div className="p-1">
-          <Button className="my-auto" color="danger" icon={<XMarkIcon />}>
-            Cancel
-          </Button>
+        <div className="row">
+          <div className="col p-1">
+            <Button
+              className="my-auto"
+              color="primary"
+              icon={<ArrowUpTrayIcon />}
+            >
+              Update Password
+            </Button>
+          </div>
+          <div className="col p-1">
+            <Button
+              className="my-auto"
+              color="warning"
+              icon={<ArrowUturnLeftIcon />}
+            >
+              Reset
+            </Button>
+          </div>
+          <div className="col p-1">
+            <Button className="my-auto" color="danger" icon={<XMarkIcon />}>
+              Cancel
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -86,7 +88,7 @@ const ChangePasswordModal = (props: { show: boolean; onClose: () => void }) => {
 const Footer = (props: { onClickChangePassword: () => void }) => {
   const { onClickChangePassword } = props;
   return (
-    <div className="d-flex">
+    <div className="d-flex mt-3">
       <Button icon={<PencilIcon />}>Edit Details</Button>
       <div style={{ width: "8px" }} />
       <Button

@@ -1,7 +1,7 @@
 import { useIam, IamGroupRequestResource } from "@services/IAM";
 import { XCircleIcon } from "@heroicons/react/16/solid";
 import { Button } from "@components";
-import { Card } from "./Card";
+import { Card } from "../Card";
 
 export const GroupRequestsCard = (): JSX.Element => {
   const { groupRequests } = useIam();

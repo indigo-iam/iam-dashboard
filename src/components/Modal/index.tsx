@@ -31,7 +31,7 @@ export const Modal = (props: ModalProps) => {
               aria-label="Close"
               onClick={close}
             >
-              <XMarkIcon />
+              <XMarkIcon style={{ width: "16px" }} />
             </button>
           </div>
           <div className="infn-modal-body">{body}</div>

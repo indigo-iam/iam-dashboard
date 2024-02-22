@@ -759,6 +759,7 @@ tr:nth-child(even) {
   width: 40%;
   padding: 8px;
   z-index: 50;
+  max-width: 720px;
 }
 
 .infn-modal-content.show {
@@ -769,7 +770,6 @@ tr:nth-child(even) {
 .infn-modal-content.hide {
   top: -50%;
   transition: top 250ms ease-in;
-  max-width: 720px;
 }
 
 .infn-modal-header {

@@ -579,6 +579,14 @@ svg {
   font-family: "Roboto";
 }
 
+/* LABELS */
+label {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--infn-color-primary);
+  font-family: "Roboto";
+}
+
 /* INPUT */
 
 /* Search bar */
@@ -590,7 +598,7 @@ svg {
 .infn-input-search {
   width: 100%;
   box-sizing: border-box;
-  padding: 12px 52px;
+  padding: 8px 32px;
   border-radius: var(--infn-border-radius);
   border: none;
   background: #eee;

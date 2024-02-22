@@ -58,17 +58,14 @@ export const GroupsCard = (): JSX.Element => {
   };
 
   const hideAddGroup = () => {
-    console.log("hello?")
     setShowAddGroupModal(false);
   };
 
   const Footer = () => {
     return (
-      <div>
-        <Button icon={<UserPlusIcon />} color="success" onClick={showAddGroup}>
-          Add Group
-        </Button>
-      </div>
+      <Button icon={<UserPlusIcon />} color="success" onClick={showAddGroup}>
+        Add Group
+      </Button>
     );
   };
 

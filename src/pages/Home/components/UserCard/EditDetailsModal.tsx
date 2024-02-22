@@ -13,7 +13,7 @@ export const EditDetailsModal = (props: {
   const Body = () => {
     return (
       <form className="row">
-        <div className="row gy-2">
+        <div className="row">
           <label className="col-3 my-auto" htmlFor="name">
             Name
           </label>

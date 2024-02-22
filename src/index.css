@@ -350,6 +350,15 @@ input {
   text-transform: uppercase;
 }
 
+.infn-btn-sm {
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+svg {
+  vertical-align: unset;
+}
+
 /* Primary */
 .infn-btn-primary {
   background: var(--infn-color-primary);

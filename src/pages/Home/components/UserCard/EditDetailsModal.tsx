@@ -95,7 +95,12 @@ export const EditDetailsModal = (props: {
             </Button>
           </div>
           <div className="col p-1">
-            <Button className="my-auto" color="danger" icon={<XMarkIcon />}>
+            <Button
+              className="my-auto"
+              color="danger"
+              onClick={onClose}
+              icon={<XMarkIcon />}
+            >
               Cancel
             </Button>
           </div>

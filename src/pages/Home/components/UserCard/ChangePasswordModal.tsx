@@ -1,4 +1,4 @@
-import { Button, Modal } from "@components";
+import { Button, Modal, Form, Input } from "@components";
 import {
   ArrowUpTrayIcon,
   ArrowUturnLeftIcon,
@@ -13,41 +13,11 @@ export const ChangePasswordModal = (props: {
 
   const Body = () => {
     return (
-      <form className="row">
-        <div className="row">
-          <label className="col-4 my-auto" htmlFor="current-password">
-            Current Password
-          </label>
-          <input
-            className="infn-input-search col"
-            type="search"
-            name="current-password"
-            id="current-password"
-          />
-        </div>
-        <div className="row gy-2">
-          <label className="col-4 my-auto" htmlFor="new-password">
-            New Password
-          </label>
-          <input
-            className="infn-input-search col"
-            type="search"
-            name="new-password"
-            id="new-password"
-          />
-        </div>
-        <div className="row gy-2">
-          <label className="col-4 my-auto" htmlFor="repeat-password">
-            Repeat New Password
-          </label>
-          <input
-            className="infn-input-search col"
-            type="search"
-            name="repeat-password"
-            id="repeat-password"
-          />
-        </div>
-      </form>
+      <Form>
+        <Input type="password" id="current-password" title="Current Password" />
+        <Input type="password" id="new-password" title="New Password" />
+        <Input type="password" id="repeat-password" title="Repeat Password" />
+      </Form>
     );
   };
 

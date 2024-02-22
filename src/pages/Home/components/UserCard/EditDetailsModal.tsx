@@ -1,4 +1,4 @@
-import { Button, Modal } from "@components";
+import { Button, Modal, Form, Input } from "@components";
 import {
   ArrowUpTrayIcon,
   ArrowUturnLeftIcon,
@@ -12,63 +12,13 @@ export const EditDetailsModal = (props: {
   const { show, onClose } = props;
   const Body = () => {
     return (
-      <form className="row">
-        <div className="row">
-          <label className="col-3 my-auto" htmlFor="name">
-            Name
-          </label>
-          <input
-            className="col infn-input-search"
-            type="search"
-            name="name"
-            id="name"
-          />
-        </div>
-        <div className="row gy-2">
-          <label className="col-3 my-auto" htmlFor="surname">
-            Surname
-          </label>
-          <input
-            className="col infn-input-search"
-            type="search"
-            name="surname"
-            id="surname"
-          />
-        </div>
-        <div className="row gy-2">
-          <label className="col-3 my-auto" htmlFor="email">
-            Email
-          </label>
-          <input
-            className="col infn-input-search"
-            type="email"
-            name="email"
-            id="email"
-          />
-        </div>
-        <div className="row gy-2">
-          <label className="col-3 my-auto" htmlFor="username">
-            Username
-          </label>
-          <input
-            className="col infn-input-search"
-            type="search"
-            name="username"
-            id="username"
-          />
-        </div>
-        <div className="row gy-2">
-          <label className="col-3 my-auto" htmlFor="picture">
-            Picture
-          </label>
-          <input
-            className="col infn-input-search"
-            type="search"
-            name="picture"
-            id="picture"
-          />
-        </div>
-      </form>
+      <Form>
+        <Input type="search" id="name" title="Name" />
+        <Input type="search" id="surname" title="Surname" />
+        <Input type="email" id="email" title="Email" />
+        <Input type="search" id="username" title="Username" />
+        <Input type="search" id="picture" title="Picture" />
+      </Form>
     );
   };
 

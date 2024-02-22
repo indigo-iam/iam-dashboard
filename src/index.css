@@ -584,6 +584,7 @@ label {
   font-size: 16px;
   font-weight: bold;
   color: var(--infn-color-primary);
+  padding: 0 0;
   font-family: "Roboto";
 }
 
@@ -767,6 +768,7 @@ tr:nth-child(even) {
   width: 40%;
   padding: 8px;
   z-index: 50;
+  min-width: 320px;
   max-width: 720px;
 }
 

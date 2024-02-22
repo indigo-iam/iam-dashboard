@@ -39,12 +39,19 @@ export const UserCard = (): JSX.Element => {
 
   const User = (props: { user: IamUser }) => {
     const { user } = props;
+    const created = user.meta.created
+      ? new Date(user.meta.created).toHuman()
+      : "N/A";
+    const lastModified = user.meta.lastModified
+      ? new Date(user.meta.lastModified).toHuman()
+      : "N/A";
+
     const data = [
       ["User Id", user.id],
       ["Email", user.emails[0].value],
       ["Status", user.active ? "active" : "disabled"],
-      ["Created", user.meta.created ?? "N/A"],
-      ["Last Modified", user.meta.lastModified ?? "N/A"],
+      ["Created", created],
+      ["Last Modified", lastModified],
     ];
 
     const Row = (props: { data: string[] }) => {

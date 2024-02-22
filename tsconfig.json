@@ -9,7 +9,8 @@
     "paths": {
       "src/*": ["src/*"],
       "@components": ["src/components/index.ts"],
-      "@services/*": ["src/services/*"]
+      "@services/*": ["src/services/*"],
+      "@utils/*": ["src/utils/*"]
     },
 
     /* Bundler mode */

@@ -1,7 +1,7 @@
-import { Button } from "../../components";
+import { Button } from "@components";
 import { LogoHeader } from "..";
 import { useAuth } from "react-oidc-context";
-import { useIam } from "../../services/IAM";
+import { useIam } from "@services/IAM";
 
 export interface DrawerProps {
   drawerWidth: string;

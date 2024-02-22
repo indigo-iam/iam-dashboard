@@ -2,13 +2,53 @@ import { Button } from "@components";
 import { LogoHeader } from "..";
 import { useAuth } from "react-oidc-context";
 import { useIam } from "@services/IAM";
+import { ReactNode } from "react";
+export const DrawerLink = (props: { title: string; icon: JSX.Element }) => {
+  const { title, icon } = props;
+  return (
+    <button className="infn-drawer-link row">
+      <div className="d-flex">
+        <div className="me-2" style={{ width: "20px" }}>
+          {icon}
+        </div>
+        {title}
+      </div>
+    </button>
+  );
+};
+
+interface DrawerSectionProps {
+  title: string;
+  children?: ReactNode;
+}
+
+export const DrawerSection = (props: DrawerSectionProps) => {
+  const { title, children } = props;
+  return (
+    <div className="infn-drawer-section">
+      <div className="infn-section-subtitle infn-txt-secondary p-4">
+        {title}
+      </div>
+      <div className="px-4">{children}</div>
+    </div>
+  );
+};
+
+interface DrawerBodyProps {
+  children?: ReactNode;
+}
+
+const DrawerBody = (props: DrawerBodyProps) => {
+  const { children } = props;
+  return <div>{children}</div>;
+};
 
 export interface DrawerProps {
   drawerWidth: string;
+  children: ReactNode;
 }
-
 export const Drawer = (props: DrawerProps): JSX.Element => {
-  const { drawerWidth } = props;
+  const { drawerWidth, children } = props;
   const auth = useAuth();
   const iam = useIam();
 
@@ -27,35 +67,11 @@ export const Drawer = (props: DrawerProps): JSX.Element => {
     );
   };
 
-  const elements = ["Users", "Groups", "Clients", "Tokens"];
-  const Elements = () => {
-    return (
-      <div>
-        {elements.map(e => {
-          return (
-            <div style={{ height: "32px" }} key={e}>
-              {e}
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
-
   return (
-    <div
-      id="drawer"
-      className="z-1 left-0 top-0 bottom-0 position-fixed"
-      style={{ width: drawerWidth }}
-    >
-      <div
-        className={
-          "infn-bg-primary infn-txt-secondary h-100 d-flex align-items-start " +
-          "flex-column p-2"
-        }
-      >
+    <div id="drawer" className="infn-drawer" style={{ width: drawerWidth }}>
+      <div className={"h-100 d-flex align-items-start flex-column"}>
         <LogoHeader username={auth.user?.profile.name ?? "Unknown User"} />
-        <Elements />
+        <DrawerBody>{children}</DrawerBody>
         <Logout />
       </div>
     </div>

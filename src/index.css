@@ -245,6 +245,7 @@
   --infn-color-warning-hover: #ffc822;
 
   --infn-border-radius: 25px;
+  --infn-border-radius-half: 12.5px;
 
   --infn-box-shadow: -3px 3px 8px #00000020;
   --infn-box-shadow-light: -3px 3px 8px -3px #00000020;
@@ -272,28 +273,25 @@
 }
 
 /* Text */
-.infn-txt-danger {
-  background-color: var(--infn-color-warning);
-}
 
 .infn-txt-primary {
-  color: var(--infn-color-primary);
+  color: var(--infn-color-primary) !important;
 }
 
 .infn-txt-secondary {
-  color: var(--infn-color-secondary);
+  color: var(--infn-color-secondary) !important;
 }
 
 .infn-txt-success {
-  color: var(--infn-color-success);
+  color: var(--infn-color-success) !important;
 }
 
 .infn-txt-warning {
-  color: var(--infn-color-warning);
+  color: var(--infn-color-warning) !important;
 }
 
 .infn-txt-danger {
-  color: var(--infn-color-danger);
+  color: var(--infn-color-danger) !important;
 }
 
 /* BODY */
@@ -802,4 +800,45 @@ tr:nth-child(even) {
   padding: 8px;
   bottom: 0;
   min-height: 32px;
+}
+
+/* DRAWER */
+
+.infn-drawer {
+  z-index: 1;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  position: fixed;
+  background-color: var(--infn-color-primary);
+  color: var(--infn-color-primary)
+}
+
+.infn-drawer-content {
+  padding: 16px;
+  width: 100%;
+}
+
+.infn-drawer-section {
+  font-size: medium;
+  width: 100%;
+}
+
+.infn-drawer-link {
+  transition:
+    color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+  border-radius: var(--infn-border-radius-half);
+  padding: 8px 16px;
+  font-weight: 300;
+  border: none;
+  width: 100%;
+  background: none;
+  color: var(--infn-color-secondary);
+}
+
+.infn-drawer-link:hover {
+  background: var(--infn-color-primary-hover);
 }

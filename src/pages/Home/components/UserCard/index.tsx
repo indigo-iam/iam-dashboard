@@ -1,10 +1,11 @@
-import { useState } from "react";
 import { Button } from "@components";
 import { useIam, IamUser } from "@services/IAM";
 import { Card } from "../Card";
 import { EditDetailsModal } from "./EditDetailsModal";
 import { ChangePasswordModal } from "./ChangePasswordModal";
 import { PencilIcon, KeyIcon } from "@heroicons/react/24/solid";
+import { reducer, initialState } from "./reducer";
+import { useReducer } from "react";
 
 const Footer = (props: {
   onClickEditDetails: () => void;
@@ -30,8 +31,7 @@ const Footer = (props: {
 
 export const UserCard = (): JSX.Element => {
   const iam = useIam();
-  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
-  const [showEditDetailsModal, setShowEditDetailsModal] = useState(false);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   if (!iam.user) {
     return <></>;
@@ -70,26 +70,29 @@ export const UserCard = (): JSX.Element => {
   };
 
   const showEditDetails = () => {
-    setShowEditDetailsModal(true);
+    dispatch({ type: "SHOW_EDIT_DETAILS" });
   };
 
   const hideEditDetails = () => {
-    setShowEditDetailsModal(false);
+    dispatch({ type: "HIDE_EDIT_DETAILS" });
   };
 
   const showChangePassword = () => {
-    setShowChangePasswordModal(true);
+    dispatch({ type: "SHOW_CHANGE_PASSWORD" });
   };
 
   const hideChangePassword = () => {
-    setShowChangePasswordModal(false);
+    dispatch({ type: "HIDE_CHANGE_PASSWORD" });
   };
 
   return (
     <div>
-      <EditDetailsModal show={showEditDetailsModal} onClose={hideEditDetails} />
+      <EditDetailsModal
+        show={state.showEditDetails}
+        onClose={hideEditDetails}
+      />
       <ChangePasswordModal
-        show={showChangePasswordModal}
+        show={state.showChangePassword}
         onClose={hideChangePassword}
       />
       <Card

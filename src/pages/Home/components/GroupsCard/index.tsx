@@ -1,30 +1,10 @@
 import { useState } from "react";
-import { Button, Modal } from "@components";
+import { Button } from "@components";
 import { IamUser, useIam } from "@services/IAM";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/16/solid";
-import { Card } from "./Card";
-
-const AddGroupModal = (props: { show: boolean; onClose: () => void }) => {
-  const { show, onClose } = props;
-  const Body = () => {
-    return <div></div>;
-  };
-
-  const Footer = () => {
-    return <div></div>;
-  };
-
-  return (
-    <Modal
-      show={show}
-      onClose={onClose}
-      title="Add Group"
-      body={<Body />}
-      footer={<Footer />}
-    />
-  );
-};
+import { Card } from "../Card";
+import { AddGroupModal } from "./AddGroupModal";
 
 const Groups = (props: { user?: IamUser; deleteGroup: () => void }) => {
   const { user, deleteGroup } = props;
@@ -78,6 +58,7 @@ export const GroupsCard = (): JSX.Element => {
   };
 
   const hideAddGroup = () => {
+    console.log("hello?")
     setShowAddGroupModal(false);
   };
 

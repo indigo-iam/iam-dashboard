@@ -10,13 +10,11 @@ pipeline {
         }
       }
       steps {
-        script {
-          sh 'npm ci'
-          sh 'npm run test'
-          sh 'npm run build'
-          sh 'chown -R 1007:1007 dist'
-          stash includes: 'dist/**/*', name: 'artifact'
-        }
+        sh 'npm ci'
+        sh 'npm run test'
+        sh 'npm run build'
+        sh 'chown -R 1007:1007 dist'
+        stash includes: 'dist/**/*', name: 'artifact'
       }
     }
     stage('Docker build') {

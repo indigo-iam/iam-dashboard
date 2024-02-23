@@ -9,8 +9,22 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'npm ci'
-        sh 'npm run build'
+        script{
+          sh 'npm ci'
+          sh 'npm run test'
+          sh 'npm run build'
+          stash includes: 'dist/**', name: 'artifact'
+        }
+      }
+    }
+    stage('Docker build') {
+      steps {
+        script {
+          unstash 'artifact'
+          def context = 'docker'
+          def dockerImage = 'indigoiam/dashboard:latest'
+          docker.build(dockerImage, context)
+        }
       }
     }
   }

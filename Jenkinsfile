@@ -1,29 +1,33 @@
 pipeline {
-  agent { 
-     docker { 
-      image 'node:20-alpine'
-      label 'docker'
-      args '-u root:root'
-    }
-  }
+  agent none
   stages {
     stage('Build') {
+      agent { 
+         docker { 
+          image 'node:20-alpine'
+          label 'docker'
+          args '-u root:root'
+        }
+      }
       steps {
-        script{
+        script {
           sh 'npm ci'
           sh 'npm run test'
           sh 'npm run build'
-          stash includes: 'dist/**', name: 'artifact'
+          sh 'chown -R 1007:1007 dist'
+          stash includes: 'dist/**/*', name: 'artifact'
         }
       }
     }
     stage('Docker build') {
+      agent { 
+        label 'docker'
+      }
       steps {
         script {
           unstash 'artifact'
-          def context = 'docker'
           def dockerImage = 'indigoiam/dashboard:latest'
-          docker.build(dockerImage, context)
+          docker.build(dockerImage)
         }
       }
     }

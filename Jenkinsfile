@@ -8,7 +8,8 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'node --version'
+        sh 'npm ci'
+        sh 'npm run build'
       }
     }
   }

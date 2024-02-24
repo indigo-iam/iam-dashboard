@@ -17,15 +17,17 @@ pipeline {
         stash includes: 'dist/**/*', name: 'artifact'
       }
     }
-    stage('Docker build') {
+    stage('Docker Build & Push') {
       agent { 
         label 'docker'
       }
       steps {
         script {
           unstash 'artifact'
-          def dockerImage = 'indigoiam/dashboard:latest'
-          docker.build(dockerImage)
+          docker.withRegistry('https://registry-1.docker.io', 'docker-cnafsoftwaredevel') {
+            def dockerImage = docker.build('cnafsoftwaredevel/iam-dashboard')
+            dockerImage.push('latest')
+          }
         }
       }
     }

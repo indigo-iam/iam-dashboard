@@ -45,15 +45,17 @@ export const IamProvider = (props: IamProviderProps): JSX.Element => {
     [get]
   );
 
-  const logout = useCallback(async () => {
+  const logout = async () => {
     try {
-      const response = await get("/logout");
+      const response = await fetch(new URL("/logout", authority), {
+        credentials: "include",
+      });
       console.log("Goodbye!");
       return response;
     } catch (err) {
       console.error("cannot log out:", err);
     }
-  }, [get]);
+  };
 
   const fetchScimMe = useCallback(async () => {
     const user = await getItem<IamUser>("/scim/Me");

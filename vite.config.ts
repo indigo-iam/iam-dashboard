@@ -5,16 +5,11 @@ import path from "path";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "/iam-dashboard",
   server: {
     port: 3000,
     host: true,
     watch: {
       usePolling: true,
-    },
-    hmr: {
-      path: "/ws",
-      clientPort: 8080, // this MUST match the NGINX's listening port
     },
   },
   resolve: {

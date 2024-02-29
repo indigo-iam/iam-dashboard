@@ -18,9 +18,9 @@
     ]
   },
   "scripts": {
-    "dev": "./init_env.sh && vite",
+    "dev": "vite",
     "test": "jest",
-    "build": "./init_env.sh && tsc && vite build",
+    "build": "vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

@@ -226,6 +226,8 @@
   --infn-color-primary: #002a48;
   --infn-color-primary-50: #002a4880;
   --infn-color-primary-hover: #20385a;
+  --infn-color-primary-light: #4196B4;
+  --infn-color-primary-light-hover: #347890;
 
   --infn-color-secondary: #fefefe;
   --infn-color-secondary-50: #fefefe80;
@@ -828,6 +830,9 @@ tr:nth-child(even) {
   position: fixed;
   background-color: var(--infn-color-primary);
   color: var(--infn-color-primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .infn-drawer-body {
@@ -835,6 +840,7 @@ tr:nth-child(even) {
   display: flex !important;
   align-items: flex-start !important;
   flex-direction: column !important;
+  overflow: auto;
 }
 
 .infn-drawer-content {
@@ -845,6 +851,35 @@ tr:nth-child(even) {
 .infn-drawer-section {
   font-size: medium;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.infn-drawer-section:last-child {
+  overflow: auto;
+}
+
+.infn-drawer-section-list{
+  overflow-y: scroll;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.infn-drawer-section-list::-webkit-scrollbar {
+  width: 12px;
+}
+
+.infn-drawer-section-list::-webkit-scrollbar-track {
+  border-radius: 5px;
+}
+ 
+.infn-drawer-section-list::-webkit-scrollbar-thumb {
+  background: var(--infn-color-primary-light);
+  border-radius: 5px;
+}
+
+.infn-drawer-section-list::-webkit-scrollbar-thumb:hover {
+  background: var(--infn-color-primary-light-hover); 
 }
 
 .infn-drawer-link {
@@ -870,12 +905,36 @@ tr:nth-child(even) {
   width: 33%;
   margin-top: auto;
   margin-bottom: auto;
-  padding: 16px;
+  padding-left: 16px;
 }
 
 .infn-logo-user {
   display: flex;
   width: 100%;
   color: var(--infn-color-secondary);
-  padding: 24px;
+  padding: 16px;
+}
+
+.infn-divider{
+  width: 100%;
+  height: 2px;
+  background-color: white
+}
+
+.infn-drawer-footer {
+  margin-top: 12px;
+}
+
+.infn-drawer-footer-link {
+  padding: 8px 24px;
+  font-weight: 600;
+}
+
+.infn-version {
+  width: 100%;
+  height: 20px;
+  background-color: var(--infn-color-primary-light);
+  font-size: small;
+  text-align: center;
+  color: white;
 }

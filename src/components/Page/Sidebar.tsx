@@ -1,10 +1,20 @@
-import { Drawer, DrawerLink, DrawerSection, LogoHeader } from "..";
+import {
+  Drawer,
+  DrawerLink,
+  DrawerFooterLink,
+  DrawerSection,
+  LogoHeader,
+  DrawerBody,
+  DrawerFooter,
+} from "..";
 import {
   HomeIcon,
   KeyIcon,
   RocketLaunchIcon,
   UserGroupIcon,
   UserIcon,
+  ShieldCheckIcon,
+  InformationCircleIcon,
 } from "@heroicons/react/20/solid";
 
 const AccountManagement = () => {
@@ -26,6 +36,29 @@ const OrganizationManagement = () => {
   );
 };
 
+const Body = () => {
+  return (
+    <DrawerBody>
+      <LogoHeader />
+      <AccountManagement />
+      <OrganizationManagement />
+    </DrawerBody>
+  );
+};
+
+const Footer = () => {
+  return (
+    <DrawerFooter>
+      <DrawerFooterLink title="Privacy Policy" icon={<ShieldCheckIcon />} />
+      <DrawerFooterLink
+        title="IAM Documentation"
+        icon={<InformationCircleIcon />}
+      />
+      <div className="infn-version">v1.0</div>
+    </DrawerFooter>
+  );
+};
+
 export interface SidebarProps {
   width: string;
 }
@@ -35,9 +68,8 @@ export const Sidebar = (props: SidebarProps) => {
 
   return (
     <Drawer width={width}>
-      <LogoHeader />
-      <AccountManagement />
-      <OrganizationManagement />
+      <Body />
+      <Footer />
     </Drawer>
   );
 };

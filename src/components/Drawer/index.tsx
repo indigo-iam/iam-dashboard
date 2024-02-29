@@ -1,9 +1,13 @@
 import { ReactNode } from "react";
 
-export const DrawerLink = (props: { title: string; icon: JSX.Element }) => {
-  const { title, icon } = props;
+const DrawerLinkBase = (props: {
+  title: string;
+  icon: JSX.Element;
+  extraClass: string;
+}) => {
+  const { title, icon, extraClass } = props;
   return (
-    <button className="infn-drawer-link row">
+    <button className={"infn-drawer-link " + extraClass}>
       <div className="d-flex">
         <div className="me-2" style={{ width: "20px" }}>
           {icon}
@@ -11,6 +15,25 @@ export const DrawerLink = (props: { title: string; icon: JSX.Element }) => {
         {title}
       </div>
     </button>
+  );
+};
+
+export const DrawerLink = (props: { title: string; icon: JSX.Element }) => {
+  const { title, icon } = props;
+  return <DrawerLinkBase title={title} icon={icon} extraClass="row" />;
+};
+
+export const DrawerFooterLink = (props: {
+  title: string;
+  icon: JSX.Element;
+}) => {
+  const { title, icon } = props;
+  return (
+    <DrawerLinkBase
+      title={title}
+      icon={icon}
+      extraClass="infn-drawer-footer-link"
+    />
   );
 };
 
@@ -23,10 +46,10 @@ export const DrawerSection = (props: DrawerSectionProps) => {
   const { title, children } = props;
   return (
     <div className="infn-drawer-section">
-      <div className="infn-section-subtitle infn-txt-secondary p-4">
+      <div className="infn-section-subtitle infn-txt-secondary p-4 pb-2">
         {title}
       </div>
-      <div className="px-4">{children}</div>
+      <div className="infn-drawer-section-list">{children}</div>
     </div>
   );
 };
@@ -35,9 +58,18 @@ interface DrawerBodyProps {
   children?: ReactNode;
 }
 
-const DrawerBody = (props: DrawerBodyProps) => {
+export const DrawerBody = (props: DrawerBodyProps) => {
   const { children } = props;
   return <div className="infn-drawer-body">{children}</div>;
+};
+
+interface DrawerFooterProps {
+  children?: ReactNode;
+}
+
+export const DrawerFooter = (props: DrawerFooterProps) => {
+  const { children } = props;
+  return <div className="infn-drawer-footer">{children}</div>;
 };
 
 export interface DrawerProps {
@@ -48,7 +80,7 @@ export const Drawer = (props: DrawerProps): JSX.Element => {
   const { width, children } = props;
   return (
     <div id="drawer" className="infn-drawer" style={{ width: width }}>
-      <DrawerBody>{children}</DrawerBody>
+      {children}
     </div>
   );
 };

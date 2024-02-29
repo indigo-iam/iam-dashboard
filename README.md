@@ -1,5 +1,7 @@
 # INDIGO IAM Dashboard
 
+[![github-build-status](https://github.com/indigo-iam/iam-dashboard/actions/workflows/release.yaml/badge.svg?branch=main&event=push)](https://github.com/indigo-iam/iam-dashboard/actions/workflows/release.yaml)
+
 INDIGO IAM Dashboard is the web application of INDIGO IAM developed by INFN.
 
 ## Introduction

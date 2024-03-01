@@ -50,9 +50,9 @@ export type Certificate = {
 };
 
 type ScimSchema = {
-  oidcIds: OidcId[];
-  samlIds: SamlId[];
-  certificates: Certificate[];
+  oidcIds?: OidcId[];
+  samlIds?: SamlId[];
+  certificates?: Certificate[];
 };
 
 export interface IamUser {

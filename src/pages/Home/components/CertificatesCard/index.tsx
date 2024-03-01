@@ -8,7 +8,7 @@ export const CertificatesCard = (): JSX.Element => {
     if (
       !iam.user ||
       !iam.user[schema] ||
-      iam.user[schema].certificates.length == 0
+      iam.user[schema]?.certificates?.length == 0
     ) {
       return <>No certificates found</>;
     }
@@ -28,7 +28,7 @@ export const CertificatesCard = (): JSX.Element => {
 
     return (
       <>
-        {certificates.map((cert, i) => {
+        {certificates?.map((cert, i) => {
           return <CertificateView key={`cert-id-${i}`} cert={cert} />;
         })}
       </>

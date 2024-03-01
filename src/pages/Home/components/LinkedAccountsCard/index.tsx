@@ -69,17 +69,21 @@ export const LinkedAccountsCard = (): JSX.Element => {
           <div>
             <b>OpenID Connect</b>
           </div>
-          {oidcIds.map(oidcId => (
-            <OidcIdView key={oidcId.subject} id={oidcId} />
-          ))}
+          {oidcIds
+            ? oidcIds.map(oidcId => (
+                <OidcIdView key={oidcId.subject} id={oidcId} />
+              ))
+            : null}
         </div>
         <div>
           <div className="pt-3">
             <b>SAML</b>
           </div>
-          {samlIds.map((samlId, i) => (
-            <SamlIdView key={`saml-id-${i}`} id={samlId} />
-          ))}
+          {samlIds
+            ? samlIds.map((samlId, i) => (
+                <SamlIdView key={`saml-id-${i}`} id={samlId} />
+              ))
+            : null}
         </div>
       </div>
     );

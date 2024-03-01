@@ -31,5 +31,17 @@ pipeline {
         }
       }
     }
+    stage('K8s Restart Deployment') {
+      agent any
+      steps {
+        script {
+          sh 'curl -sOL https://dl.k8s.io/release/v1.29.2/bin/linux/amd64/kubectl'
+          sh 'chmod u+x ./kubectl'
+          withCredentials([file(credentialsId: 'kubeconfig-jgasparetto', variable: 'kubeconfig')]) {
+            sh './kubectl rollout restart deployment -n dev iam-dashboard --kubeconfig $kubeconfig'
+          }
+        }
+      }
+    }
   }
 }

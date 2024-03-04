@@ -6,6 +6,27 @@ import { XCircleIcon } from "@heroicons/react/16/solid";
 import { Card } from "../Card";
 import { AddGroupModal } from "./AddGroupModal";
 
+const Row = (props: { title: string; deleteGroup: () => void }) => {
+  const { title, deleteGroup } = props;
+  return (
+    <tr>
+      <td>
+        <b>{title}</b>
+      </td>
+      <td className="d-flex flex-row-reverse">
+        <Button
+          color="danger"
+          small={true}
+          onClick={deleteGroup}
+          icon={<XCircleIcon />}
+        >
+          Delete
+        </Button>
+      </td>
+    </tr>
+  );
+};
+
 const Groups = (props: { user?: IamUser; deleteGroup: () => void }) => {
   const { user, deleteGroup } = props;
   if (!user) {
@@ -15,37 +36,31 @@ const Groups = (props: { user?: IamUser; deleteGroup: () => void }) => {
   if (!groups) {
     return <p>No groups found</p>;
   }
-
-  const Row = (props: { title: string }) => {
-    return (
-      <tr>
-        <td>
-          <b>{props.title}</b>
-        </td>
-        <td className="d-flex flex-row-reverse">
-          <Button
-            color="danger"
-            small={true}
-            onClick={deleteGroup}
-            icon={<XCircleIcon />}
-          >
-            Delete
-          </Button>
-        </td>
-      </tr>
-    );
-  };
-
   return (
     <div>
       <table>
         <tbody>
           {groups.map(group => {
-            return <Row key={group.display} title={group.display} />;
+            return (
+              <Row
+                key={group.display}
+                title={group.display}
+                deleteGroup={deleteGroup}
+              />
+            );
           })}
         </tbody>
       </table>
     </div>
+  );
+};
+
+const Footer = (props: { showAddGroup: () => void }) => {
+  const { showAddGroup } = props;
+  return (
+    <Button icon={<UserPlusIcon />} color="success" onClick={showAddGroup}>
+      Add Group
+    </Button>
   );
 };
 
@@ -61,18 +76,10 @@ export const GroupsCard = (): JSX.Element => {
     setShowAddGroupModal(false);
   };
 
-  const Footer = () => {
-    return (
-      <Button icon={<UserPlusIcon />} color="success" onClick={showAddGroup}>
-        Add Group
-      </Button>
-    );
-  };
-
   return (
     <div>
       <AddGroupModal show={showAddGroupModal} onClose={hideAddGroup} />
-      <Card title="Groups" footer={<Footer />}>
+      <Card title="Groups" footer={<Footer showAddGroup={showAddGroup} />}>
         <Groups
           user={iam.user}
           deleteGroup={() => console.log("delete group")}

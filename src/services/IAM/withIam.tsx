@@ -8,11 +8,12 @@ export function withIam(
   WrappedComponent: React.FunctionComponent<Props>,
   iamConfig: IamProviderProps
 ) {
-  (props: Props) => {
+  const component = (props: Props) => {
     return (
       <IamProvider {...iamConfig}>
         <WrappedComponent {...props} />
       </IamProvider>
     );
   };
+  return component;
 }

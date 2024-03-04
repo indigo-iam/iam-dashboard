@@ -12,7 +12,11 @@ import { useAuth } from "react-oidc-context";
 const LogoIam = () => {
   return (
     <div className="d-flex">
-      <img src={indigoLogo} className="infn-logo-indigo" />
+      <img
+        alt="INDIGO IAM Logo"
+        src={indigoLogo}
+        className="infn-logo-indigo"
+      />
       <div className="infn-subtitle infn-txt-secondary px-4 py-2">
         INDIGO IAM for <br /> cnafsd
       </div>

@@ -74,7 +74,8 @@ services:
     volumes:
       - ./nginx/entrypoint.sh:/entrypoint.sh
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./nginx/conf.d/dev/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/conf.d/env/:/etc/nginx/conf.d/env/
 
 volumes:
   iam-db:

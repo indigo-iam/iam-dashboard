@@ -4,10 +4,10 @@ import {
   UserCircleIcon,
   WrenchIcon,
 } from "@heroicons/react/24/solid";
+import indigoLogo from "@assets/cloud.png";
 import { useIam } from "@services/IAM";
 import { ReactNode } from "react";
 import { useAuth } from "react-oidc-context";
-import indigoLogo from "/assets/cloud.png";
 
 const LogoIam = () => {
   return (

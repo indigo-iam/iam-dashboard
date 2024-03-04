@@ -10,8 +10,6 @@ export type ButtonColor =
   | "warning"
   | "warning-outline"
   | "danger"
-  | "danger-outline"
-  | "danger"
   | "danger-outline";
 
 export interface ButtonProps {

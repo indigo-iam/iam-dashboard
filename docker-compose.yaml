@@ -57,7 +57,7 @@ services:
       - ./json-keystore.jwks:/keys/json-keystore.jwks:ro
 
   nginx:
-    image: nginx:alpine
+    image: nginx:1.24.0
     container_name: iam-nginx
     platform: linux/amd64
     restart: unless-stopped

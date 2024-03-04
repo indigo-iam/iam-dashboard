@@ -59,6 +59,21 @@ const ItemButton = (props: ItemButtonProps) => {
   );
 };
 
+const Buttons = (props: { logout: () => void }) => {
+  const { logout } = props;
+  return (
+    <div className="d-flex justify-content-around px-4 pb-1">
+      <ItemButton icon={<BellIcon />} title="Notifications" onClick={logout} />
+      <ItemButton icon={<WrenchIcon />} title="Settings" onClick={logout} />
+      <ItemButton
+        icon={<ArrowRightEndOnRectangleIcon />}
+        title="Logout"
+        onClick={logout}
+      />
+    </div>
+  );
+};
+
 export const LogoHeader = (): JSX.Element => {
   const auth = useAuth();
   const iam = useIam();
@@ -69,29 +84,11 @@ export const LogoHeader = (): JSX.Element => {
     auth.removeUser();
   };
 
-  const Buttons = () => {
-    return (
-      <div className="d-flex justify-content-around px-4 pb-1">
-        <ItemButton
-          icon={<BellIcon />}
-          title="Notifications"
-          onClick={logout}
-        />
-        <ItemButton icon={<WrenchIcon />} title="Settings" onClick={logout} />
-        <ItemButton
-          icon={<ArrowRightEndOnRectangleIcon />}
-          title="Logout"
-          onClick={logout}
-        />
-      </div>
-    );
-  };
-
   return (
     <div id="logo-header">
       <LogoIam />
       <UserLogo username={username} />
-      <Buttons />
+      <Buttons logout={logout} />
       <Divider />
     </div>
   );

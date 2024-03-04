@@ -28,8 +28,10 @@ const Certificates = (): JSX.Element => {
   const { certificates } = iam.user[schema];
   return (
     <>
-      {certificates?.map((cert, i) => {
-        return <CertificateView key={`cert-id-${i}`} cert={cert} />;
+      {certificates?.map(cert => {
+        return (
+          <CertificateView key={cert.subjectDn + cert.issuerDn} cert={cert} />
+        );
       })}
     </>
   );

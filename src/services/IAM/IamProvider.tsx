@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useReducer } from "react";
+import { useCallback, useEffect, useMemo, useReducer } from "react";
 import { useAuth } from "react-oidc-context";
 import { IamContext } from "./IamContext";
 import { IamUser } from "./models/IamUser";
@@ -45,7 +45,7 @@ export const IamProvider = (props: IamProviderProps): JSX.Element => {
     [get]
   );
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     try {
       const response = await fetch(new URL("/logout", authority), {
         credentials: "include",
@@ -55,7 +55,7 @@ export const IamProvider = (props: IamProviderProps): JSX.Element => {
     } catch (err) {
       console.error("cannot log out:", err);
     }
-  };
+  }, [authority]);
 
   const fetchScimMe = useCallback(async () => {
     const user = await getItem<IamUser>("/scim/Me");
@@ -76,16 +76,14 @@ export const IamProvider = (props: IamProviderProps): JSX.Element => {
   }, [auth.isAuthenticated, fetchScimMe, fetchGroupRequests]);
 
   const { user, groupRequests } = state;
-
-  return (
-    <IamContext.Provider
-      value={{
-        logout,
-        user,
-        groupRequests,
-      }}
-    >
-      {children}
-    </IamContext.Provider>
+  const value = useMemo(
+    () => ({
+      logout,
+      user,
+      groupRequests,
+    }),
+    [groupRequests, logout, user]
   );
+
+  return <IamContext.Provider value={value}>{children}</IamContext.Provider>;
 };

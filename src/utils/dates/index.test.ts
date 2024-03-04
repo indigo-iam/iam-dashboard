@@ -1,9 +1,9 @@
-import "./index";
+import { dateToHuman } from ".";
 
 test("To Human", () => {
   let d = new Date();
-  expect(d.toHuman()).toBe("Today");
+  expect(dateToHuman(d)).toBe("Today");
 
   d = new Date("2020-01-01");
-  expect(d.toHuman()).toBe("Long time ago...");
+  expect(dateToHuman(d)).toBe("Long time ago...");
 });

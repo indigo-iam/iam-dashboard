@@ -1,5 +1,6 @@
 import { Button } from "@components";
 import { useIam, IamUser } from "@services/IAM";
+import { dateToHuman } from "@utils/dates";
 import { Card } from "../Card";
 import { EditDetailsModal } from "./EditDetailsModal";
 import { ChangePasswordModal } from "./ChangePasswordModal";
@@ -43,10 +44,10 @@ const Row = (props: { data: string[] }) => {
 const User = (props: { user: IamUser }) => {
   const { user } = props;
   const created = user.meta.created
-    ? new Date(user.meta.created).toHuman()
+    ? dateToHuman(new Date(user.meta.created))
     : "N/A";
   const lastModified = user.meta.lastModified
-    ? new Date(user.meta.lastModified).toHuman()
+    ? dateToHuman(new Date(user.meta.lastModified))
     : "N/A";
 
   const data = [

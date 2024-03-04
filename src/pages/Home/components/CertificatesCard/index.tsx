@@ -16,13 +16,15 @@ const CertificateView = (props: { cert: Certificate }) => {
 const Certificates = (): JSX.Element => {
   const iam = useIam();
   const schema = "urn:indigo-dc:scim:schemas:IndigoUser";
-  if (
-    !iam.user ||
-    !iam.user[schema] ||
-    iam.user[schema]?.certificates?.length == 0
-  ) {
+
+  if (!iam.user) {
+    return <div />;
+  }
+
+  if (iam.user[schema].certificates?.length == 0) {
     return <>No certificates found</>;
   }
+
   const { certificates } = iam.user[schema];
   return (
     <>

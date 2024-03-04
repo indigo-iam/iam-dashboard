@@ -48,8 +48,8 @@ const GroupRequests = (props: { groupRequests: IamGroupRequests }) => {
   const { groupRequests } = props;
   return (
     <div>
-      {groupRequests.Resources.map((resource, i) => {
-        return <GroupRequest key={`group-request-${i}`} resource={resource} />;
+      {groupRequests.Resources.map(resource => {
+        return <GroupRequest key={resource.uuid} resource={resource} />;
       })}
     </div>
   );

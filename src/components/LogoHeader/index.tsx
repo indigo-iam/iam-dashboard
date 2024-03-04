@@ -7,7 +7,7 @@ import {
 import { useIam } from "@services/IAM";
 import { ReactNode } from "react";
 import { useAuth } from "react-oidc-context";
-import indigoLogo from "../../../public/assets/cloud.png";
+import indigoLogo from "/assets/cloud.png";
 
 const LogoIam = () => {
   return (

@@ -1,13 +1,9 @@
-type Id = string;
-
 type Meta = {
   created?: string;
   lastModified?: string;
   location: string;
   resourceType: string;
 };
-
-type Schema = string;
 
 type Name = {
   familyName?: string;
@@ -56,9 +52,9 @@ type ScimSchema = {
 };
 
 export interface IamUser {
-  id: Id;
+  id: string;
   meta: Meta;
-  schemas: Schema[];
+  schemas: string[];
   userName: string;
   name: Name;
   displayName?: string;

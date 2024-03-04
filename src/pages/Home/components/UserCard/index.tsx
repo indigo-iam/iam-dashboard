@@ -29,6 +29,45 @@ const Footer = (props: {
   );
 };
 
+const Row = (props: { data: string[] }) => {
+  return (
+    <tr>
+      <td>
+        <b>{props.data[0]}</b>
+      </td>
+      <td className="text-end">{props.data[1]}</td>
+    </tr>
+  );
+};
+
+const User = (props: { user: IamUser }) => {
+  const { user } = props;
+  const created = user.meta.created
+    ? new Date(user.meta.created).toHuman()
+    : "N/A";
+  const lastModified = user.meta.lastModified
+    ? new Date(user.meta.lastModified).toHuman()
+    : "N/A";
+
+  const data = [
+    ["User Id", user.id],
+    ["Email", user.emails[0].value],
+    ["Status", user.active ? "active" : "disabled"],
+    ["Created", created],
+    ["Last Modified", lastModified],
+  ];
+
+  return (
+    <table className="w-100">
+      <tbody>
+        {data.map(row => (
+          <Row key={row[0]} data={row} />
+        ))}
+      </tbody>
+    </table>
+  );
+};
+
 export const UserCard = (): JSX.Element => {
   const iam = useIam();
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -36,45 +75,6 @@ export const UserCard = (): JSX.Element => {
   if (!iam.user) {
     return <></>;
   }
-
-  const User = (props: { user: IamUser }) => {
-    const { user } = props;
-    const created = user.meta.created
-      ? new Date(user.meta.created).toHuman()
-      : "N/A";
-    const lastModified = user.meta.lastModified
-      ? new Date(user.meta.lastModified).toHuman()
-      : "N/A";
-
-    const data = [
-      ["User Id", user.id],
-      ["Email", user.emails[0].value],
-      ["Status", user.active ? "active" : "disabled"],
-      ["Created", created],
-      ["Last Modified", lastModified],
-    ];
-
-    const Row = (props: { data: string[] }) => {
-      return (
-        <tr>
-          <td>
-            <b>{props.data[0]}</b>
-          </td>
-          <td className="text-end">{props.data[1]}</td>
-        </tr>
-      );
-    };
-
-    return (
-      <table className="w-100">
-        <tbody>
-          {data.map(row => (
-            <Row key={row[0]} data={row} />
-          ))}
-        </tbody>
-      </table>
-    );
-  };
 
   const showEditDetails = () => {
     dispatch({ type: "SHOW_EDIT_DETAILS" });

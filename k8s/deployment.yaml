@@ -36,6 +36,7 @@ spec:
             limits:
               cpu: 1
               memory: 2G
+              ephemeral-storage: 2G
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           env:
@@ -55,6 +56,7 @@ spec:
         - name: iam-tls
           secret:
             secretName: iam-dashboard-tls
+      automountServiceAccountToken: false
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler

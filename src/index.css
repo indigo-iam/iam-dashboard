@@ -226,7 +226,7 @@
   --infn-color-primary: #002a48;
   --infn-color-primary-50: #002a4880;
   --infn-color-primary-hover: #20385a;
-  --infn-color-primary-light: #4196B4;
+  --infn-color-primary-light: #4196b4;
   --infn-color-primary-light-hover: #347890;
 
   --infn-color-secondary: #fefefe;
@@ -299,7 +299,7 @@
 /* BODY */
 
 body {
-  font-family: "Roboto";
+  font-family: Roboto, sans-serif;
   font-size: 14px;
   font-weight: 300;
   color: var(--infn-color-primary);
@@ -421,7 +421,7 @@ svg {
 }
 
 .infn-btn-secondary-outline-no-border:hover {
-  outline: 2pix solid var(--infn-color-secondary);
+  outline: 2px solid var(--infn-color-secondary);
 }
 
 /* Success */
@@ -560,14 +560,14 @@ svg {
   font-size: 32px;
   font-weight: 400;
   color: var(--infn-color-primary);
-  font-family: "Roboto";
+  font-family: Roboto, sans-serif;
 }
 
 .infn-subtitle {
   font-size: 24px;
   font-weight: 400;
   color: var(--infn-color-primary);
-  font-family: "Roboto";
+  font-family: Roboto, sans-serif;
 }
 
 .infn-section-title {
@@ -575,7 +575,7 @@ svg {
   text-transform: uppercase;
   font-weight: bold;
   color: var(--infn-color-primary);
-  font-family: "Roboto";
+  font-family: Roboto, sans-serif;
 }
 
 .infn-section-subtitle {
@@ -584,7 +584,7 @@ svg {
   text-transform: uppercase;
   opacity: 0.9;
   color: var(--infn-color-primary);
-  font-family: "Roboto";
+  font-family: Roboto, sans-serif;
 }
 
 /* LABELS */
@@ -593,7 +593,7 @@ label {
   font-weight: bold;
   color: var(--infn-color-primary);
   padding: 0 0;
-  font-family: "Roboto";
+  font-family: Roboto, sans-serif;
 }
 
 /* INPUT */
@@ -671,7 +671,7 @@ label {
   text-transform: uppercase;
   font-weight: bold;
   color: var(--infn-color-primary);
-  font-family: "Roboto";
+  font-family: Roboto, sans-serif;
   padding-bottom: 8px;
   border-bottom: 1px solid #eee;
 }
@@ -859,7 +859,7 @@ tr:nth-child(even) {
   overflow: auto;
 }
 
-.infn-drawer-section-list{
+.infn-drawer-section-list {
   overflow-y: scroll;
   padding-left: 16px;
   padding-right: 16px;
@@ -872,14 +872,14 @@ tr:nth-child(even) {
 .infn-drawer-section-list::-webkit-scrollbar-track {
   border-radius: 5px;
 }
- 
+
 .infn-drawer-section-list::-webkit-scrollbar-thumb {
   background: var(--infn-color-primary-light);
   border-radius: 5px;
 }
 
 .infn-drawer-section-list::-webkit-scrollbar-thumb:hover {
-  background: var(--infn-color-primary-light-hover); 
+  background: var(--infn-color-primary-light-hover);
 }
 
 .infn-drawer-link {
@@ -915,10 +915,10 @@ tr:nth-child(even) {
   padding: 16px;
 }
 
-.infn-divider{
+.infn-divider {
   width: 100%;
   height: 2px;
-  background-color: white
+  background-color: white;
 }
 
 .infn-drawer-footer {

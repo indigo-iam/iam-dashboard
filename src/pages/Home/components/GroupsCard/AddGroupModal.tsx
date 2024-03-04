@@ -1,6 +1,5 @@
 import { Button, Modal } from "@components";
-import { XMarkIcon } from "@heroicons/react/24/solid";
-import { ArrowUpTrayIcon } from "@heroicons/react/24/solid";
+import { XMarkIcon, ArrowUpTrayIcon } from "@heroicons/react/24/solid";
 
 export const AddGroupModal = (props: {
   show: boolean;

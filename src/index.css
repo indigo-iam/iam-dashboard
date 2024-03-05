@@ -616,6 +616,11 @@ label {
   outline: none;
 }
 
+.infn-input-search:disabled {
+  background: #aaa !important;
+  color: #666 !important;
+}
+
 .infn-input-search-container > i {
   position: absolute;
   top: 15px;

@@ -12,47 +12,29 @@ export type ButtonColor =
   | "danger"
   | "danger-outline";
 
-export interface ButtonProps {
+interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
   type?: "button" | "reset" | "submit";
-  color?: ButtonColor;
-  className?: string;
-  style?: React.CSSProperties;
-  children: React.ReactNode;
   icon?: React.ReactNode;
-  disabled?: boolean;
-  small?: boolean;
-  onClick?: () => void;
+  isSmall?: boolean;
 }
 
 export const Button = (props: ButtonProps): JSX.Element => {
-  const {
-    type,
-    className,
-    style,
-    children,
-    color,
-    icon,
-    disabled,
-    small,
-    onClick,
-  } = props;
+  const { className, children, color, icon, isSmall, ...buttonProps } = props;
   const classColor = `infn-btn infn-btn-${color ?? "primary"}`;
+
   return (
     <div className={className}>
       <button
-        className={`infn-btn ${classColor} ${small ? "infn-btn-sm" : ""}`}
-        style={style}
-        type={type}
-        onClick={onClick}
-        disabled={disabled}
+        {...buttonProps}
+        className={`infn-btn ${classColor} ${isSmall ? "infn-btn-sm" : ""}`}
       >
         <div className="d-flex">
           {icon ? (
             <div
               className="me-2 my-auto"
               style={{
-                width: small ? "16px" : "24px",
-                height: small ? "16px" : "24px",
+                width: isSmall ? "16px" : "24px",
+                height: isSmall ? "16px" : "24px",
               }}
             >
               {icon}

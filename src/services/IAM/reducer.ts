@@ -1,14 +1,13 @@
-import { IamUser } from "./models/IamUser";
-import { IamGroupRequests } from "./models/GroupRequest";
+import { Me, GroupRequests } from "./models/me";
 import { IamState } from "./IamState";
 
 type Action =
-  | { type: "UPDATE_SCIM_ME"; user: IamUser }
-  | { type: "UPDATE_GROUP_REQUESTS"; groupRequests: IamGroupRequests };
+  | { type: "UPDATE_ME"; user: Me }
+  | { type: "UPDATE_GROUP_REQUESTS"; groupRequests: GroupRequests };
 
 export const reducer = (state: IamState, action: Action) => {
   switch (action.type) {
-    case "UPDATE_SCIM_ME": {
+    case "UPDATE_ME": {
       const { user } = action;
       return { ...state, user };
     }

@@ -1,9 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { AuthProvider, type AuthProviderProps } from "react-oidc-context";
-import { IamProvider, IamProviderProps } from "@services/IAM";
+import { IamProvider } from "@services/IAM";
 import App from "./App.tsx";
-import "@utils/dates";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 
@@ -34,14 +33,10 @@ const oidcConfig: AuthProviderProps = {
   },
 };
 
-const iamConfig: IamProviderProps = {
-  authority: window.env.IAM_AUTHORITY,
-};
-
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <AuthProvider {...oidcConfig}>
-      <IamProvider {...iamConfig}>
+      <IamProvider>
         <App />
       </IamProvider>
     </AuthProvider>

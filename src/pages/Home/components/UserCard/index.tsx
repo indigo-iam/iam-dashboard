@@ -1,5 +1,4 @@
 import { Button } from "@components";
-import { useIam, IamUser } from "@services/IAM";
 import { dateToHuman } from "@utils/dates";
 import { Card } from "../Card";
 import { EditDetailsModal } from "./EditDetailsModal";
@@ -7,6 +6,7 @@ import { ChangePasswordModal } from "./ChangePasswordModal";
 import { PencilIcon, KeyIcon } from "@heroicons/react/24/solid";
 import { reducer, initialState } from "./reducer";
 import { useReducer } from "react";
+import { useMe } from "@services/Me";
 
 const Footer = (props: {
   onClickEditDetails: () => void;
@@ -41,19 +41,22 @@ const Row = (props: { data: string[] }) => {
   );
 };
 
-const User = (props: { user: IamUser }) => {
-  const { user } = props;
-  const created = user.meta.created
-    ? dateToHuman(new Date(user.meta.created))
+const User = () => {
+  const { me } = useMe();
+  if (!me) {
+    return null;
+  }
+  const created = me.meta.created
+    ? dateToHuman(new Date(me.meta.created))
     : "N/A";
-  const lastModified = user.meta.lastModified
-    ? dateToHuman(new Date(user.meta.lastModified))
+  const lastModified = me.meta.lastModified
+    ? dateToHuman(new Date(me.meta.lastModified))
     : "N/A";
 
   const data = [
-    ["User Id", user.id],
-    ["Email", user.emails[0].value],
-    ["Status", user.active ? "active" : "disabled"],
+    ["User Id", me.id],
+    ["Email", me.emails[0].value],
+    ["Status", me.active ? "active" : "disabled"],
     ["Created", created],
     ["Last Modified", lastModified],
   ];
@@ -69,13 +72,9 @@ const User = (props: { user: IamUser }) => {
   );
 };
 
-export const UserCard = (): JSX.Element => {
-  const iam = useIam();
+export const UserCard = () => {
+  const { me } = useMe();
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  if (!iam.user) {
-    return <></>;
-  }
 
   const showEditDetails = () => {
     dispatch({ type: "SHOW_EDIT_DETAILS" });
@@ -104,7 +103,7 @@ export const UserCard = (): JSX.Element => {
         onClose={hideChangePassword}
       />
       <Card
-        title={iam.user.name.formatted}
+        title={me?.name.formatted}
         footer={
           <Footer
             onClickEditDetails={showEditDetails}
@@ -112,7 +111,7 @@ export const UserCard = (): JSX.Element => {
           />
         }
       >
-        <User user={iam.user} />
+        <User />
       </Card>
     </div>
   );

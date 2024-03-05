@@ -1,5 +1,6 @@
-import { useIam, Certificate } from "@services/IAM";
+import { Certificate } from "@models/Me";
 import { Card } from "../Card";
+import { useMe } from "@services/Me";
 
 const CertificateView = (props: { cert: Certificate }) => {
   const { cert } = props;
@@ -13,19 +14,19 @@ const CertificateView = (props: { cert: Certificate }) => {
   );
 };
 
-const Certificates = (): JSX.Element => {
-  const iam = useIam();
-  const schema = "urn:indigo-dc:scim:schemas:IndigoUser";
+const Certificates = () => {
+  const { me } = useMe();
 
-  if (!iam.user) {
-    return <div />;
+  if (!me) {
+    return null;
   }
 
-  if (iam.user[schema].certificates?.length == 0) {
-    return <>No certificates found</>;
+  const { certificates } = me["urn:indigo-dc:scim:schemas:IndigoUser"];
+
+  if (certificates && certificates?.length == 0) {
+    return "No certificates found";
   }
 
-  const { certificates } = iam.user[schema];
   return (
     <>
       {certificates?.map(cert => {

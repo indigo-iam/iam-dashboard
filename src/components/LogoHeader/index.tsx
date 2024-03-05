@@ -5,9 +5,9 @@ import {
   WrenchIcon,
 } from "@heroicons/react/24/solid";
 import indigoLogo from "@assets/cloud.png";
-import { useIam } from "@services/IAM";
 import { ReactNode } from "react";
 import { useAuth } from "react-oidc-context";
+import { useLogout } from "@services/Logout";
 
 const LogoIam = () => {
   return (
@@ -76,13 +76,8 @@ const Buttons = (props: { logout: () => void }) => {
 
 export const LogoHeader = (): JSX.Element => {
   const auth = useAuth();
-  const iam = useIam();
   const username = auth.user?.profile.name ?? "Unknown User";
-
-  const logout = async () => {
-    await iam.logout();
-    auth.removeUser();
-  };
+  const { logout } = useLogout();
 
   return (
     <div id="logo-header">

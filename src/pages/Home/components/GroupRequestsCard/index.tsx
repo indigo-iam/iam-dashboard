@@ -1,8 +1,8 @@
-import { useIam, IamGroupRequestResource } from "@services/IAM";
 import { XCircleIcon } from "@heroicons/react/16/solid";
 import { Button } from "@components";
 import { Card } from "../Card";
-import { IamGroupRequests } from "src/services/IAM/models/GroupRequest";
+import { GroupRequestResource } from "@models/Me";
+import { useMe } from "@services/Me";
 
 const Row = (props: { title: string; value: string }) => {
   const { title, value } = props;
@@ -16,7 +16,7 @@ const Row = (props: { title: string; value: string }) => {
   );
 };
 
-const GroupRequest = (props: { resource: IamGroupRequestResource }) => {
+const GroupRequest = (props: { resource: GroupRequestResource }) => {
   const { resource } = props;
   const { userFullName, username, uuid, groupName, groupUuid } = resource;
 
@@ -44,8 +44,12 @@ const GroupRequest = (props: { resource: IamGroupRequestResource }) => {
   );
 };
 
-const GroupRequests = (props: { groupRequests: IamGroupRequests }) => {
-  const { groupRequests } = props;
+const GroupRequests = () => {
+  const { groupRequests } = useMe();
+  if (!groupRequests) {
+    return "No Request Found";
+  }
+
   return (
     <div>
       {groupRequests.Resources.map(resource => {
@@ -56,14 +60,9 @@ const GroupRequests = (props: { groupRequests: IamGroupRequests }) => {
 };
 
 export const GroupRequestsCard = (): JSX.Element => {
-  const { groupRequests } = useIam();
-  if (!groupRequests) {
-    return <Card title="Group Requests">No Request Found</Card>;
-  }
-
   return (
     <Card title="Group Requests">
-      <GroupRequests groupRequests={groupRequests} />
+      <GroupRequests />
     </Card>
   );
 };

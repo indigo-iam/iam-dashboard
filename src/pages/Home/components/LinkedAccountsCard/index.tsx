@@ -1,5 +1,6 @@
 import { XCircleIcon } from "@heroicons/react/16/solid";
-import { useIam, OidcId, SamlId } from "@services/IAM";
+import { OidcId, SamlId } from "@models/Me";
+import { useMe } from "@services/Me";
 import { Button } from "@components";
 import { Card } from "../Card";
 
@@ -55,12 +56,11 @@ const SamlIdView = (props: { id: SamlId }) => {
 };
 
 const LinkedAccounts = (): JSX.Element => {
-  const iam = useIam();
-  if (!iam.user) {
+  const { me } = useMe();
+  if (!me) {
     return <></>;
   }
-  const { oidcIds, samlIds } =
-    iam.user["urn:indigo-dc:scim:schemas:IndigoUser"];
+  const { oidcIds, samlIds } = me["urn:indigo-dc:scim:schemas:IndigoUser"];
   return (
     <div>
       <div>

@@ -7,8 +7,8 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "src/*": ["src/*"],
       "@assets": ["assets/*"],
+      "@models/*": ["src/models/*"],
       "@components": ["src/components/index.ts"],
       "@services/*": ["src/services/*"],
       "@utils/*": ["src/utils/*"]

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@components";
-import { IamUser, useIam } from "@services/IAM";
+import { useMe } from "@services/Me";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/16/solid";
 import { Card } from "../Card";
@@ -27,15 +27,16 @@ const Row = (props: { title: string; deleteGroup: () => void }) => {
   );
 };
 
-const Groups = (props: { user?: IamUser; deleteGroup: () => void }) => {
-  const { user, deleteGroup } = props;
-  if (!user) {
+const Groups = () => {
+  const { me } = useMe();
+  if (!me) {
     return null;
   }
-  const { groups } = user;
+  const { groups } = me;
   if (!groups) {
     return <p>No groups found</p>;
   }
+  const deleteGroup = () => console.log("fake delete group!");
   return (
     <div>
       <table>
@@ -65,7 +66,6 @@ const Footer = (props: { showAddGroup: () => void }) => {
 };
 
 export const GroupsCard = (): JSX.Element => {
-  const iam = useIam();
   const [showAddGroupModal, setShowAddGroupModal] = useState(false);
 
   const showAddGroup = () => {
@@ -80,10 +80,7 @@ export const GroupsCard = (): JSX.Element => {
     <div>
       <AddGroupModal show={showAddGroupModal} onClose={hideAddGroup} />
       <Card title="Groups" footer={<Footer showAddGroup={showAddGroup} />}>
-        <Groups
-          user={iam.user}
-          deleteGroup={() => console.log("delete group")}
-        />
+        <Groups />
       </Card>
     </div>
   );

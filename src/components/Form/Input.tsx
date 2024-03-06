@@ -1,4 +1,4 @@
-interface InputProps extends React.HTMLProps<HTMLInputElement> {}
+export interface InputProps extends React.HTMLProps<HTMLInputElement> {}
 
 export const Input = (props: InputProps) => {
   const { id, title, type } = props;

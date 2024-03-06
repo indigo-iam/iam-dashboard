@@ -618,6 +618,9 @@ label {
 
 .infn-input-search:disabled {
   background: #aaa !important;
+}
+
+.infn-input-search:disabled::placeholder {
   color: #666 !important;
 }
 

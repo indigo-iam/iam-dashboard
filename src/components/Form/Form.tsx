@@ -1,6 +1,8 @@
 import React from "react";
 
-export const Form = (props: { children?: React.ReactNode }) => {
-  const { children } = props;
-  return <form className="container">{children}</form>;
+export interface FormProps extends React.HTMLProps<HTMLFormElement> {}
+
+export const Form = (props: FormProps) => {
+  const { children, ...formProps } = props;
+  return <form {...formProps}>{children}</form>;
 };

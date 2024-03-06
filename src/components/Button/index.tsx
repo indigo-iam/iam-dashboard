@@ -12,7 +12,7 @@ export type ButtonColor =
   | "danger"
   | "danger-outline";
 
-interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
+export interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
   type?: "button" | "reset" | "submit";
   icon?: React.ReactNode;
   isSmall?: boolean;

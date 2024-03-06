@@ -16,7 +16,7 @@ const Row = (props: { title: string; deleteGroup: () => void }) => {
       <td className="d-flex flex-row-reverse">
         <Button
           color="danger"
-          small={true}
+          isSmall={true}
           onClick={deleteGroup}
           icon={<XCircleIcon />}
         >

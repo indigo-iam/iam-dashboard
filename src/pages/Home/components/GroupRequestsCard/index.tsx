@@ -34,7 +34,7 @@ const GroupRequest = (props: { resource: GroupRequestResource }) => {
             color="danger"
             className="my-auto"
             icon={<XCircleIcon />}
-            small={true}
+            isSmall={true}
           >
             Unlink
           </Button>

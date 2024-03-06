@@ -18,7 +18,7 @@ const OidcIdView = (props: { id: OidcId }) => {
           <Button
             color="danger"
             className="my-auto"
-            small={true}
+            isSmall={true}
             icon={<XCircleIcon />}
           >
             Unlink
@@ -44,7 +44,7 @@ const SamlIdView = (props: { id: SamlId }) => {
           <Button
             className="my-auto"
             color="danger"
-            small={true}
+            isSmall={true}
             icon={<XCircleIcon />}
           >
             Unlink

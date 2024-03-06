@@ -1,24 +1,29 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useAuth } from "react-oidc-context";
 
 export function useFetch() {
   const auth = useAuth();
   const authority = window.env.IAM_AUTHORITY;
 
+  const Authorization = useMemo(() => {
+    if (!auth.user) {
+      return "";
+    }
+    const { access_token } = auth.user;
+    return `Bearer ${access_token}`;
+  }, [auth.user]);
+
   const get = useCallback(
     async (endpoint: string) => {
-      const token = auth.user?.access_token;
-      if (!token) {
-        throw new Error("access token is undefined");
-      }
       const url = new URL(endpoint, authority);
       return await fetch(url, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization,
         },
       });
     },
-    [authority, auth.user]
+    [authority, Authorization]
+  );
   );
 
   type GetItem = <T>(endpoint: string) => Promise<Promise<T>>;

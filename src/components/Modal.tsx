@@ -1,16 +1,25 @@
 import { XMarkIcon } from "@heroicons/react/16/solid";
-import React from "react";
+import { ReactNode } from "react";
 
 export interface ModalProps {
   title?: string;
-  body?: React.ReactNode;
-  footer?: React.ReactNode;
+  children?: ReactNode;
   show: boolean;
   onClose?: () => void;
 }
 
+export const ModalBody = (props: { children?: ReactNode }) => {
+  const { children } = props;
+  return <div className="infn-modal-body">{children}</div>;
+};
+
+export const ModalFooter = (props: { children?: ReactNode }) => {
+  const { children } = props;
+  return <div className="infn-modal-footer">{children}</div>;
+};
+
 export const Modal = (props: ModalProps) => {
-  const { title, body, footer, show, onClose } = props;
+  const { title, show, children, onClose } = props;
 
   const close = () => {
     onClose?.();
@@ -38,8 +47,7 @@ export const Modal = (props: ModalProps) => {
             <XMarkIcon style={{ width: "16px" }} />
           </button>
         </div>
-        <div className="infn-modal-body">{body}</div>
-        <div className="infn-modal-footer">{footer}</div>
+        {children}
       </div>
     </div>
   );

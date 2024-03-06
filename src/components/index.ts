@@ -8,7 +8,8 @@ export {
   DrawerFooter,
   type DrawerProps,
 } from "./Drawer";
-export { Form, Input, type InputProps } from "./Form";
+export { Form } from "./Form";
 export { LogoHeader } from "./LogoHeader";
-export { Modal, type ModalProps } from "./Modal";
+export { Input, type InputProps } from "./Input";
+export { Modal, ModalBody, ModalFooter, type ModalProps } from "./Modal";
 export { Page, type PageProps } from "./Page";

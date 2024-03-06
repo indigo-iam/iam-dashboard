@@ -6,7 +6,7 @@ import {
   LogoHeader,
   DrawerBody,
   DrawerFooter,
-} from "..";
+} from ".";
 import {
   HomeIcon,
   KeyIcon,

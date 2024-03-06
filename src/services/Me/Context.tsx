@@ -4,7 +4,7 @@ import { GroupRequests, Me } from "@models/Me";
 
 export interface MeContextProps extends State {
   me: Me;
-  groupRequest: GroupRequests;
+  groupRequests: GroupRequests;
 }
 
 export const MeContext = createContext<MeContextProps | undefined>(undefined);

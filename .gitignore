@@ -24,6 +24,6 @@ dist-ssr
 *.sw?
 
 # Secrets
-public/env.js
 .devcontainer/devcontainer.env
 *.env
+nginx/conf.d/env/*.conf

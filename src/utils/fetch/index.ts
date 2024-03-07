@@ -24,7 +24,6 @@ export function useFetch() {
     },
     [authority, Authorization]
   );
-  );
 
   type GetItem = <T>(endpoint: string) => Promise<Promise<T>>;
   const getItem = useCallback<GetItem>(

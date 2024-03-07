@@ -20,7 +20,7 @@ export interface MeProviderProps extends MeProviderBaseProps {}
 
 export const MeProvider = (props: MeProviderBaseProps) => {
   const { children } = props;
-  const { getItem } = useFetch();
+  const { getItem, post } = useFetch();
   const [state, dispatch] = useReducer(reducer, initialState);
   const auth = useAuth();
   const didLoad = useRef(false);
@@ -29,6 +29,13 @@ export const MeProvider = (props: MeProviderBaseProps) => {
     const me = await getItem<Me>("/scim/Me");
     dispatch({ type: "UPDATE_ME", me });
   }, [getItem]);
+
+  const updatePassword = useCallback(
+    async (updatePasswordRequest: FormData) => {
+      return post("/iam/password-update", updatePasswordRequest);
+    },
+    [post]
+  );
 
   const fetchGroupRequests = useCallback(async () => {
     const groupRequests = await getItem<GroupRequests>(
@@ -54,8 +61,10 @@ export const MeProvider = (props: MeProviderBaseProps) => {
     () => ({
       me,
       groupRequests,
+      fetchMe,
+      updatePassword,
     }),
-    [me, groupRequests]
+    [me, groupRequests, fetchMe, updatePassword]
   );
 
   return <MeContext.Provider value={value}>{children}</MeContext.Provider>;

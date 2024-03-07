@@ -83,3 +83,8 @@ export interface GroupRequests {
   startIndex: number;
   Resources: GroupRequestResource[];
 }
+
+export interface UpdatePasswordRequest {
+  currentPassword: string;
+  updatedPassword: string;
+}

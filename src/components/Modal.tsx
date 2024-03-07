@@ -21,14 +21,10 @@ export const ModalFooter = (props: { children?: ReactNode }) => {
 export const Modal = (props: ModalProps) => {
   const { title, show, children, onClose } = props;
 
-  const close = () => {
-    onClose?.();
-  };
-
   return (
     <div
       className={`infn-modal ${show ? "show" : "hide"}`}
-      onClick={close}
+      onClick={onClose}
       aria-hidden="true" // make sonarlint happy
     >
       <div
@@ -42,7 +38,7 @@ export const Modal = (props: ModalProps) => {
             type="button"
             className="infn-btn-close"
             aria-label="Close"
-            onClick={close}
+            onClick={onClose}
           >
             <XMarkIcon style={{ width: "16px" }} />
           </button>

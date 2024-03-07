@@ -21,7 +21,7 @@
     "dev": "vite",
     "test": "jest",
     "build": "vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "tsc --project ./tsconfig.json --noEmit && eslint . --ext ts,tsx,js --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -33,12 +33,12 @@ function checkRepeatPassword(updatedPassword: string, repeatPassword: string) {
   if (repeatPassword.length === 0) {
     return;
   }
-  const passwordMismatch = "Password doesn't match";
+  const passwordMismatchError = "Password doesn't match";
   let errorMessage = checkPassword(repeatPassword);
   if (updatedPassword !== repeatPassword) {
     errorMessage = errorMessage
-      ? `${errorMessage}\n${passwordMismatch}`
-      : passwordMismatch;
+      ? `${errorMessage}\n${passwordMismatchError}`
+      : passwordMismatchError;
   }
   return errorMessage;
 }

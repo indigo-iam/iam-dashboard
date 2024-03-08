@@ -46,8 +46,6 @@ spec:
               value: "openid email profile offline_access scim:read"
             - name: IAM_CLIENT_ID
               value: "b43fb06e-9f73-43f8-b75c-0edc9c868bd7"
-            - name: IAM_CLIENT_SECRET
-              value: "AOPE5b9NagCIEp1xmcezuFPaKbiQXkOzKZblzrpCTYRio4F5HcMMyshMpiRtMYipr6zC_rrzy1QhWthi8L4GC3M"
           volumeMounts:
             - name: iam-tls
               mountPath: /etc/nginx/certs/

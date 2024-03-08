@@ -20,7 +20,7 @@ export interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
 
 export const Button = (props: ButtonProps): JSX.Element => {
   const { className, children, color, icon, isSmall, ...buttonProps } = props;
-  const classColor = `infn-btn infn-btn-${color ?? "primary"}`;
+  const classColor = `infn-btn-${color ?? "primary"}`;
 
   return (
     <div className={className}>

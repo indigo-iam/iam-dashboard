@@ -378,6 +378,11 @@ svg {
   background: var(--infn-color-primary-hover);
 }
 
+.infn-btn-primary:disabled {
+  opacity: 0.25;
+  background: var(--infn-color-primary) !important;
+}
+
 .infn-btn-primary-outline {
   background: transparent;
   color: var(--infn-color-primary);
@@ -410,7 +415,7 @@ svg {
 }
 
 .infn-btn-secondary-outline {
-  background: trasparent;
+  background: transparent;
   color: var(--infn-color-secondary);
   border: 2px solid (var--infn-color-secondary);
 }

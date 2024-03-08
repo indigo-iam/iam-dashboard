@@ -42,8 +42,8 @@ services:
       TZ: Europe/Rome
       IAM_PORT: 8081
       IAM_HOST: localhost
-      IAM_BASE_URL: http://localhost:8081/
-      IAM_ISSUER: http://localhost:8081/
+      IAM_BASE_URL: http://localhost:8081
+      IAM_ISSUER: http://localhost:8081
       IAM_KEY_STORE_LOCATION: file:/keys/json-keystore.jwks
       IAM_DB_PORT: 3306
       IAM_DB_USERNAME: iam

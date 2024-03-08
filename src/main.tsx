@@ -10,7 +10,6 @@ import "./index.css";
 interface EnvInterface {
   IAM_AUTHORITY: string;
   IAM_CLIENT_ID: string;
-  IAM_CLIENT_SECRET?: string;
   IAM_SCOPE: string;
   IAM_AUDIENCE: string;
 }
@@ -24,7 +23,6 @@ declare global {
 const oidcConfig: AuthProviderProps = {
   authority: window.env.IAM_AUTHORITY,
   client_id: window.env.IAM_CLIENT_ID,
-  client_secret: window.env.IAM_CLIENT_SECRET,
   scope: window.env.IAM_SCOPE,
   redirect_uri: window.location.origin + window.location.pathname,
   // https://github.com/authts/react-oidc-context/blob/f175dcba6ab09871b027d6a2f2224a17712b67c5/src/AuthProvider.tsx#L20-L30

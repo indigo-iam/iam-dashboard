@@ -7,8 +7,9 @@ type Meta = {
 
 type Name = {
   familyName?: string;
-  formatted?: string;
   givenName?: string;
+  middleName?: string;
+  formatted?: string;
 };
 
 type Email = {

@@ -11,6 +11,7 @@ import { MeContext } from "./Context";
 import { useFetch } from "@utils/fetch";
 import { GroupRequests, Me } from "@models/Me";
 import { useAuth } from "react-oidc-context";
+import { ScimRequest } from "@models/Scim";
 
 interface MeProviderBaseProps {
   children?: ReactNode;
@@ -20,7 +21,7 @@ export interface MeProviderProps extends MeProviderBaseProps {}
 
 export const MeProvider = (props: MeProviderBaseProps) => {
   const { children } = props;
-  const { getItem, post } = useFetch();
+  const { getItem, post, patch } = useFetch();
   const [state, dispatch] = useReducer(reducer, initialState);
   const auth = useAuth();
   const didLoad = useRef(false);
@@ -35,6 +36,18 @@ export const MeProvider = (props: MeProviderBaseProps) => {
       return post("/iam/password-update", updatePasswordRequest);
     },
     [post]
+  );
+
+  // https://www.rfc-editor.org/rfc/rfc7644.html#section-8.1
+  const updateMe = useCallback(
+    async (patchOp: ScimRequest) => {
+      return patch(
+        "/scim/Me",
+        JSON.stringify(patchOp),
+        "application/scim+json"
+      );
+    },
+    [patch]
   );
 
   const fetchGroupRequests = useCallback(async () => {
@@ -62,9 +75,10 @@ export const MeProvider = (props: MeProviderBaseProps) => {
       me,
       groupRequests,
       fetchMe,
+      updateMe,
       updatePassword,
     }),
-    [me, groupRequests, fetchMe, updatePassword]
+    [me, groupRequests, fetchMe, updateMe, updatePassword]
   );
 
   return <MeContext.Provider value={value}>{children}</MeContext.Provider>;

@@ -95,7 +95,7 @@ In **Scopes**, assure that the following scopes are enabled
 In **Grant Types**, enable `authorization_code`.
 Finally, in the **Crypto** section enable PKCE with SHA-256 has algorithm.
 Save the client and copy `client_id` and `client_secret`, then edit the
-`envs/dev.env` file replacing `IAM_CLIENT_ID` and `IAM_CLIENT_SECRET` with the
+`envs/dev.env` file replacing `IAM_CLIENT_ID` with the
 correct values.
 
 To load the modified environment file, recreate the deployment with

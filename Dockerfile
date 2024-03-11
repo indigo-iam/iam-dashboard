@@ -1,9 +1,13 @@
 FROM nginx:1.24.0
 
-ENV NGINX_ENVSUBST_OUTPUT_DIR /etc/nginx/conf.d/env/
+ENV NGINX_ENVSUBST_OUTPUT_DIR /etc/nginx/conf.d/env
 
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./nginx/conf.d/prod/default.conf /etc/nginx/conf.d/default.conf
 COPY ./nginx/conf.d/env/env.conf.template /etc/nginx/templates/env.conf.template
-COPY ./dist/ /usr/share/nginx/html
+COPY ./dist/ /usr/share/nginx/html/
 
-RUN mkdir /etc/nginx/conf.d/env/
+RUN mkdir /etc/nginx/conf.d/env && \
+    chown -R nginx:nginx /etc/nginx/conf.d/ /usr/share/nginx/html/
+
+USER nginx

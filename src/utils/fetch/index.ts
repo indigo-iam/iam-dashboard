@@ -43,11 +43,11 @@ export function useFetch() {
     [authority, Authorization]
   );
 
-  type GetItem = <T>(endpoint: string) => Promise<Promise<T>>;
+  type GetItem = <T>(endpoint: string) => Promise<T>;
   const getItem = useCallback<GetItem>(
     async (endpoint: string) => {
       const response = await get(endpoint);
-      return response.json();
+      return await response.json();
     },
     [get]
   );

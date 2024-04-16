@@ -66,7 +66,7 @@ export function useFetch() {
   const getItem = useCallback<GetItem>(
     async (endpoint: string) => {
       const response = await get(endpoint);
-      return response.json();
+      return await response.json();
     },
     [get]
   );

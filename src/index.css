@@ -951,3 +951,44 @@ tr:nth-child(even) {
   text-align: center;
   color: white;
 }
+
+/* MultiChoice Dropdown */
+
+.infn-multichoice-dropdown {
+}
+
+.infn-dropdown {
+  height: 200px;
+  z-index: 1;
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  padding: 8px 1px 8px 1px;
+  border-radius: var(--infn-border-radius-half);
+  background: var(--infn-color-secondary);
+  box-shadow: var(--infn-box-shadow);
+}
+
+.infn-dropdown.show {
+  visibility: visible;
+}
+
+.infn-dropdown.hide {
+  visibility: hidden;
+}
+
+.infn-dropdown-content {
+  overflow-y: auto;
+  position: relative;
+  height: 100%;
+}
+
+.infn-dropdown-item {
+  margin: 0 8px 0 8px;
+  padding: 8px;
+}
+
+.infn-dropdown-item:hover {
+  background: #eee !important;
+  border-radius: var(--infn-border-radius-half);
+}

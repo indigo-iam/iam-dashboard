@@ -1,7 +1,22 @@
-import { Button, Modal, ModalBody, ModalFooter } from "@components";
+import {
+  Button,
+  Form,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalProps,
+  MultiChoiceDropdown,
+  MultiChoiceItem,
+  MultiChoiceItemI,
+} from "@components";
 import { XMarkIcon, ArrowUpTrayIcon } from "@heroicons/react/24/solid";
+import { useGroups } from "@services/Groups";
+import { useCallback, useMemo, useState } from "react";
 
-const Body = () => {
+const Body = (props: {
+  items: MultiChoiceItemI[];
+  selected: MultiChoiceItemI[];
+}) => {
   return (
     <ModalBody>
       <p>
@@ -13,10 +28,9 @@ const Body = () => {
         Type more characters to refine the group search.
       </p>
       <div>
-        <input
-          type="search"
-          className="infn-input-search"
+        <MultiChoiceDropdown
           placeholder="Type in the group name or press enter..."
+          {...props}
         />
       </div>
     </ModalBody>
@@ -54,15 +68,59 @@ const Footer = (props: { onClose: () => void }) => {
   );
 };
 
-export const AddGroupModal = (props: {
-  show: boolean;
-  onClose: () => void;
-}) => {
-  const { show, onClose } = props;
+const AddGroupForm = (props: { onClose: () => void }) => {
+  const { onClose } = props;
+  const { groups } = useGroups();
+  const [choices, setChoices] = useState<MultiChoiceItemI[]>([]);
+
+  const addChoice = useCallback(
+    (item: MultiChoiceItemI) => {
+      console.log(item, choices);
+      const found = choices.find(el => el.key === item.key);
+      if (!found) {
+        const update = [...choices].concat(item);
+        setChoices(update);
+      }
+    },
+    [choices]
+  );
+
+  const items: MultiChoiceItem[] = useMemo(
+    () =>
+      groups?.map(group => {
+        const onSelect = (item: MultiChoiceItemI) => addChoice(item);
+        return new MultiChoiceItem(
+          group.id,
+          group.displayName,
+          group["urn:indigo-dc:scim:schemas:IndigoGroup"].description,
+          onSelect
+        );
+      }) ?? [],
+    [groups, addChoice]
+  );
+
+  const handleReset = () => {
+    setChoices([]);
+  };
+
   return (
-    <Modal show={show} onClose={onClose} title="Add Group">
-      <Body />
+    <Form id="add-group-form" onReset={handleReset}>
+      <Body items={items} selected={choices} />
       <Footer onClose={onClose} />
+    </Form>
+  );
+};
+
+export const AddGroupModal = (props: ModalProps) => {
+  const onClose = () => {
+    const form = document.getElementById("add-group-form") as HTMLFormElement;
+    form.reset();
+    props.onClose?.();
+  };
+  const modalProps = { ...props, onClose };
+  return (
+    <Modal {...modalProps}>
+      <AddGroupForm onClose={onClose} />
     </Modal>
   );
 };

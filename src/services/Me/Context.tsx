@@ -7,6 +7,7 @@ export interface MeContextProps extends State {
   me?: Me;
   groupRequests?: GroupRequests;
   fetchMe: () => void;
+  updatePassword: (passwordRequest: FormData) => Promise<Response>;
   updateMe: (patchOp: ScimRequest) => Promise<Response>;
 }
 

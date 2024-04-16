@@ -25,8 +25,13 @@ export function useFetch() {
     [authority, Authorization]
   );
 
-  const patch = useCallback(
-    async (endpoint: string, body: BodyInit, contentType?: string) => {
+  const rawUpdate = useCallback(
+    async (
+      endpoint: string,
+      method: string,
+      body?: BodyInit,
+      contentType?: string
+    ) => {
       const url = new URL(endpoint, authority);
       const headers = {
         Authorization,
@@ -35,12 +40,26 @@ export function useFetch() {
         Object.assign(headers, { "Content-Type": contentType });
       }
       return fetch(url, {
-        method: "PATCH",
+        method,
         headers,
         body,
       });
     },
     [authority, Authorization]
+  );
+
+  const post = useCallback(
+    async (endpoint: string, body?: BodyInit, contentType?: string) => {
+      return await rawUpdate(endpoint, "POST", body, contentType);
+    },
+    [rawUpdate]
+  );
+
+  const patch = useCallback(
+    async (endpoint: string, body?: BodyInit, contentType?: string) => {
+      return await rawUpdate(endpoint, "PATCH", body, contentType);
+    },
+    [rawUpdate]
   );
 
   type GetItem = <T>(endpoint: string) => Promise<Promise<T>>;
@@ -55,6 +74,7 @@ export function useFetch() {
   return {
     get,
     getItem,
+    post,
     patch,
   };
 }

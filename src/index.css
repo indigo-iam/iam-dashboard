@@ -250,7 +250,7 @@
   --infn-border-radius-half: 12.5px;
 
   --infn-box-shadow: -3px 3px 8px #00000020;
-  --infn-box-shadow-light: -3px 3px 8px -3px #00000020;
+  --infn-box-shadow-light: 1px 1px 10px 1px #00000020;
 }
 
 /* Background colors */
@@ -671,11 +671,6 @@ label {
   box-shadow: var(--infn-box-shadow-light);
   background: white;
   padding: 32px;
-}
-
-.infn-card:hover {
-  transform: scale(1.005);
-  box-shadow: var(--infn-box-shadow);
 }
 
 .infn-card-title {

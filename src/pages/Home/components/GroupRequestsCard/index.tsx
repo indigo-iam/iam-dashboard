@@ -46,8 +46,8 @@ const GroupRequest = (props: { resource: GroupRequestResource }) => {
 
 const GroupRequests = () => {
   const { groupRequests } = useMe();
-  if (!groupRequests) {
-    return "No Request Found";
+  if (!groupRequests || groupRequests.Resources.length == 0) {
+    return <p>No request found</p>;
   }
 
   return (

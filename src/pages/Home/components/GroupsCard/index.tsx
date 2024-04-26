@@ -60,7 +60,7 @@ const Footer = (props: { showAddGroup: () => void }) => {
   const { showAddGroup } = props;
   return (
     <Button icon={<UserPlusIcon />} color="success" onClick={showAddGroup}>
-      Add Group
+      Add to group
     </Button>
   );
 };
@@ -77,11 +77,11 @@ export const GroupsCard = (): JSX.Element => {
   };
 
   return (
-    <div>
+    <>
       <AddGroupModal show={showAddGroupModal} onClose={hideAddGroup} />
       <Card title="Groups" footer={<Footer showAddGroup={showAddGroup} />}>
         <Groups />
       </Card>
-    </div>
+    </>
   );
 };

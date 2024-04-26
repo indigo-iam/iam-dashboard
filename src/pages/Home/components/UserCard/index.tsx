@@ -54,6 +54,7 @@ const User = () => {
     : "N/A";
 
   const data = [
+    ["User Name", me.userName],
     ["User Id", me.id],
     ["Email", me.emails[0].value],
     ["Status", me.active ? "active" : "disabled"],
@@ -93,7 +94,7 @@ export const UserCard = () => {
   };
 
   return (
-    <div>
+    <>
       <EditDetailsModal
         show={state.showEditDetails}
         onClose={hideEditDetails}
@@ -113,6 +114,6 @@ export const UserCard = () => {
       >
         <User />
       </Card>
-    </div>
+    </>
   );
 };

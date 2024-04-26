@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { XCircleIcon } from "@heroicons/react/16/solid";
 import { OidcId, SamlId } from "@models/Me";
 import { useMe } from "@services/Me";
 import { Button } from "@components";
 import { Card } from "../Card";
+import { LinkIcon } from "@heroicons/react/24/solid";
+import { LinkExternalAccount } from "./LinkExternalAccount";
 
 const OidcIdView = (props: { id: OidcId }) => {
   return (
@@ -61,6 +64,10 @@ const LinkedAccounts = (): JSX.Element => {
     return <></>;
   }
   const { oidcIds, samlIds } = me["urn:indigo-dc:scim:schemas:IndigoUser"];
+  if (!oidcIds || oidcIds?.length == 0) {
+    return <p>No linked accounts found</p>;
+  }
+
   return (
     <div>
       <div>
@@ -87,10 +94,39 @@ const LinkedAccounts = (): JSX.Element => {
   );
 };
 
-export const LinkedAccountsCard = (): JSX.Element => {
+const Footer = (props: { showExternalAccount: () => void }) => {
+  const { showExternalAccount } = props;
   return (
-    <Card title="Linked Accounts">
-      <LinkedAccounts />
-    </Card>
+    <Button icon={<LinkIcon />} color="success" onClick={showExternalAccount}>
+      Link external account
+    </Button>
+  );
+};
+
+export const LinkedAccountsCard = (): JSX.Element => {
+  const [showExternalAccountModal, setShowExternalAccountModal] =
+    useState(false);
+
+  const showExternalAccount = () => {
+    setShowExternalAccountModal(true);
+  };
+
+  const hidexternalAccount = () => {
+    setShowExternalAccountModal(false);
+  };
+
+  return (
+    <>
+      <LinkExternalAccount
+        show={showExternalAccountModal}
+        onClose={hidexternalAccount}
+      />
+      <Card
+        title="Linked Accounts"
+        footer={<Footer showExternalAccount={showExternalAccount} />}
+      >
+        <LinkedAccounts />
+      </Card>
+    </>
   );
 };

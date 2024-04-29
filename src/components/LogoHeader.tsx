@@ -1,21 +1,26 @@
+"use server";
 import {
   ArrowRightEndOnRectangleIcon,
   BellIcon,
   UserCircleIcon,
   WrenchIcon,
 } from "@heroicons/react/24/solid";
-import indigoLogo from "@assets/cloud.png";
 import { ReactNode } from "react";
-import { useAuth } from "react-oidc-context";
-import { useLogout } from "@services/Logout";
+import { useMe } from "@/services";
+import { signOut } from "@/auth";
+import Image from "next/image";
 
 const LogoIam = () => {
   return (
-    <div className="d-flex">
-      <img
-        alt="INDIGO IAM Logo"
-        src={indigoLogo}
-        className="infn-logo-indigo"
+    <div className="flex">
+      <Image
+        src="/cloud.png"
+        width="0"
+        height="0"
+        sizes="100vw"
+        className="w-28 my-auto"
+        alt="INFN Cloud"
+        priority={true}
       />
       <div className="infn-subtitle infn-txt-secondary px-4 py-2">
         INDIGO IAM for <br /> cnafsd
@@ -40,50 +45,58 @@ const Divider = () => {
   return <div className="infn-divider" />;
 };
 
-interface ItemButtonProps {
+interface ItemButtonProps extends React.HTMLProps<HTMLButtonElement> {
+  type?: "button" | "reset" | "submit";
   icon: ReactNode;
-  title?: string;
-  onClick: () => void;
 }
 
 const ItemButton = (props: ItemButtonProps) => {
-  const { icon, title, onClick } = props;
+  const { icon, ...buttonProps } = props;
+  buttonProps.className = "infn-btn icon infn-btn-primary";
   return (
-    <button
-      className="infn-btn icon infn-btn-primary"
-      onClick={onClick}
-      title={title}
-    >
+    <button {...buttonProps}>
       <div style={{ width: "24px", height: "24px" }}>{icon}</div>
     </button>
   );
 };
 
-const Buttons = (props: { logout: () => void }) => {
-  const { logout } = props;
+const Buttons = () => {
+  const logout = async () => {
+    "use server";
+    await signOut();
+  };
   return (
-    <div className="d-flex justify-content-around px-4 pb-1">
-      <ItemButton icon={<BellIcon />} title="Notifications" onClick={logout} />
-      <ItemButton icon={<WrenchIcon />} title="Settings" onClick={logout} />
-      <ItemButton
-        icon={<ArrowRightEndOnRectangleIcon />}
-        title="Logout"
-        onClick={logout}
-      />
+    <div className="flex justify-around px-4 pb-1">
+      <form action={logout}>
+        <ItemButton
+          icon={<BellIcon />}
+          title="Notifications"
+          onClick={logout}
+        />
+        <ItemButton icon={<WrenchIcon />} title="Settings" onClick={logout} />
+        <ItemButton
+          icon={<ArrowRightEndOnRectangleIcon />}
+          title="Logout"
+          onClick={logout}
+          type="submit"
+        />
+      </form>
     </div>
   );
 };
 
-export const LogoHeader = (): JSX.Element => {
-  const auth = useAuth();
-  const username = auth.user?.profile.name ?? "Unknown User";
-  const { logout } = useLogout();
-
+export const LogoHeader = async () => {
+  const { fetchMe } = useMe();
+  const username = await (async () => {
+    const me = await fetchMe();
+    const { name } = me;
+    return name.formatted ?? "Unknown User";
+  })();
   return (
-    <div id="logo-header">
+    <div id="logo-header" className="w-full p-2">
       <LogoIam />
       <UserLogo username={username} />
-      <Buttons logout={logout} />
+      <Buttons />
       <Divider />
     </div>
   );

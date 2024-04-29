@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 
 export type MultiChoiceItemI = {
@@ -117,7 +118,7 @@ export const MultiChoiceDropdown = (props: MultiChoiceDropdownProps) => {
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
       />
-      <div className="d-flex">
+      <div className="flex">
         {selected.map(el => {
           return <div key={el.key}>{el.title}</div>;
         })}

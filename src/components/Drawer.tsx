@@ -8,7 +8,7 @@ const DrawerLinkBase = (props: {
   const { title, icon, extraClass } = props;
   return (
     <button className={"infn-drawer-link " + extraClass}>
-      <div className="d-flex">
+      <div className="flex">
         <div className="me-2" style={{ width: "20px" }}>
           {icon}
         </div>

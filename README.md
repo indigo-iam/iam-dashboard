@@ -68,8 +68,16 @@ npm run dev
 Something similar to the following should be prompted:
 
 ```bash
-node ➜ /workspace (main) $ npm run dev
-```
+> iam-dashboard@0.1.0 dev
+> next dev -p 8080
+
+  ▲ Next.js 14.2.2
+  - Local:        http://localhost:8080
+  - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 9.5s
+ ```
 
 ## IAM Client Configuration
 

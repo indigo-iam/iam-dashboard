@@ -74,6 +74,7 @@ export const GroupsCard = (props: { me: Me; groups: Group[] }): JSX.Element => {
   const hideAddGroup = () => {
     setShowAddGroupModal(false);
   };
+  const modalTitle = `Add user ${me.name.formatted} to group(s)?`;
 
   return (
     <div>
@@ -81,6 +82,7 @@ export const GroupsCard = (props: { me: Me; groups: Group[] }): JSX.Element => {
         groups={groups}
         show={showAddGroupModal}
         onClose={hideAddGroup}
+        title={modalTitle}
       />
       <Card title="Groups" footer={<Footer showAddGroup={showAddGroup} />}>
         <Groups me={me} />

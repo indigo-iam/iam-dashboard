@@ -20,15 +20,13 @@ const Body = (props: {
 }) => {
   return (
     <ModalBody>
-      <p>
-        <b>Select one or more groups</b>
-      </p>
-      <p>
-        Only one groups that user is not already a member will be shown.
-        <br />
-        Type more characters to refine the group search.
-      </p>
-      <div>
+      <div className="space-y-3">
+        <h3>Select one or more groups</h3>
+        <p>
+          Only one groups that user is not already a member will be shown.
+          <br />
+          Type more characters to refine the group search.
+        </p>
         <MultiChoiceDropdown
           placeholder="Type in the group name or press enter..."
           {...props}

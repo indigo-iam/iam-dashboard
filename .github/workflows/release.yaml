@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - "**"
+    paths-ignore:
+      - README.md
+      - LICENSE
 
 jobs:
   main:

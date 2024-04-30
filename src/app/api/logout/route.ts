@@ -1,14 +1,14 @@
 import { signOut } from "@/auth";
+import { unstable_noStore as noStore } from "next/cache";
+import getConfig from "@/utils/config";
 
-export const GET = async (req: Request) => {
-  console.log("Logout", req.credentials);
-  const resp = await fetch(
-    new URL("/logout", process.env.IAM_AUTHORITY_URL),
-    {
-      credentials: "include",
-    }
-  );
-  console.log(resp.status);
-  // await signOut();
-  return Response.json({ "message": "ciao" });
+const { BASE_URL } = getConfig();
+
+export const GET = async () => {
+  noStore();
+  const url = `${BASE_URL}/logout`;
+  await fetch(url, {
+    credentials: "include",
+  });
+  await signOut();
 };

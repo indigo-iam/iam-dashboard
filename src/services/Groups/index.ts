@@ -1,11 +1,12 @@
 import { GroupsSearchResponse } from "@/models/Groups";
 import { getItem } from "@/utils/fetch";
+import getConfig from "@/utils/config";
 
-const BASE_URL = process.env.IAM_AUTHORITY_URL;
+const { BASE_URL } = getConfig();
 
 export const useGroups = () => {
   const fetchGroups = async () => {
-    let url = new URL("/iam/group/search", BASE_URL);
+    let url = `${BASE_URL}/iam/group/search`;
     const response = await getItem<GroupsSearchResponse>(url);
     const { totalResults, itemsPerPage, startIndex } = response;
     const pages = Math.floor(totalResults / itemsPerPage);
@@ -14,7 +15,7 @@ export const useGroups = () => {
     const requests: Promise<GroupsSearchResponse>[] = [];
     for (let page = 1; page <= pages; ++page) {
       const index = itemsPerPage * page + startIndex;
-      url = new URL(`/iam/group/search?startIndex=${index}`, BASE_URL);
+      url = `${BASE_URL}/iam/group/search?startIndex=${index}`;
       const req = getItem<GroupsSearchResponse>(url);
       requests.push(req);
     }

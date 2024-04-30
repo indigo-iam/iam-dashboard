@@ -125,13 +125,15 @@ To start the application then run
 docker run -p <some-port>:80 --env-file=prod.env cnafsoftwaredevel/iam-dashboard:latest
 ```
 
-# TODOs
+## TODOs
 
-## General
+### General
+
 - [ ] Sudo mode (panic!)
 - [ ] Add Table component
 
-## Home page
+### Home page
+
 - [ ] Validate password before submission
 - [ ] Whats happen if I change password when there is no password at all?
 - [ ] Finish the "Add to group" functionality
@@ -143,28 +145,32 @@ docker run -p <some-port>:80 --env-file=prod.env cnafsoftwaredevel/iam-dashboard
 - [ ] Add "Add ssh key"
 - [ ] Add "Set attribute"
 
-## Users Page
+### Users Page
+
 - [ ] Create the users table
 - [ ] Add "Delete user" button per each row
 - [ ] Maybe add a multiple selection to delete multiple users in bulk
 
-## Groups Page
+### Groups Page
+
 - [ ] Create the groups page
 - [ ] Add "Add Root Group" feature
 - [ ] Add "Add Subgroup" button per each row (?!)
 - [ ] Add "Delete Group" button per each row
 
-## Requests Page
+### Requests Page
 
 - [ ] Create "Registration Request" tab
 - [ ] Create "Group requests" tab
 
-## AUP Page
+### AUP Page
+
 - [ ] Add "Edit AUP"
 - [ ] Add "Request AUP Signature"
 - [ ] Add "Delete AUP"
 
-## Clients Page
+### Clients Page
+
 - [ ] Add Clients table
 - [ ] Add "New Client"
 - [ ] Add "Edit client" per each row
@@ -179,10 +185,12 @@ docker run -p <some-port>:80 --env-file=prod.env cnafsoftwaredevel/iam-dashboard
   - [ ] Other info (Homepage URL, ToS, Policy)
   - [ ] Owners (Show owners, assign owner)
 
-## Tokens Page
+### Tokens Page
+
 - [ ] ???
 
-## Scopes
+### Scopes
+
 - [ ] Add Scopes table
 - [ ] Add "Edit Scope" button per each row (Description, default scope, restricted)
 - [ ] Add "Delete scope" button per each row

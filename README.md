@@ -170,7 +170,7 @@ docker run -p <some-port>:80 --env-file=prod.env cnafsoftwaredevel/iam-dashboard
 - [ ] Add "Edit client" per each row
 - [ ] Add "Delete client" per each row
 - [ ] Add Client "edit" page with tabs:
-  - [ ]Main (client name, client id, client description, redirect URIs, contacts, etc)
+  - [ ] Main (client name, client id, client description, redirect URIs, contacts, etc)
   - [ ] Credentials (Token endpoint auth method, client secret, registration access token, regenerate registration a.c., Public key set, JWK URI)
   - [ ] Scopes (System scope, Custom scope)
   - [ ] Grant types

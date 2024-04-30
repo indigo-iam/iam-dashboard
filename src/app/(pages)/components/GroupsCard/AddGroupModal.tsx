@@ -42,27 +42,25 @@ const Footer = (props: { onClose: () => void }) => {
   const { onClose } = props;
   return (
     <ModalFooter>
-      <div className="flex justify-content-end p-2">
-        <div className="row">
-          <div className="col p-1">
-            <Button
-              className="my-auto"
-              color="primary"
-              icon={<ArrowUpTrayIcon />}
-            >
-              Add group(s)
-            </Button>
-          </div>
-          <div className="col p-1">
-            <Button
-              className="my-auto"
-              color="danger"
-              onClick={onClose}
-              icon={<XMarkIcon />}
-            >
-              Cancel
-            </Button>
-          </div>
+      <div className="flex justify-end p-2">
+        <div className="col p-1">
+          <Button
+            className="my-auto"
+            color="primary"
+            icon={<ArrowUpTrayIcon />}
+          >
+            Add group(s)
+          </Button>
+        </div>
+        <div className="col p-1">
+          <Button
+            className="my-auto"
+            color="danger"
+            onClick={onClose}
+            icon={<XMarkIcon />}
+          >
+            Cancel
+          </Button>
         </div>
       </div>
     </ModalFooter>

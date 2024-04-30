@@ -1,14 +1,7 @@
-"use server";
-import {
-  ArrowRightEndOnRectangleIcon,
-  BellIcon,
-  UserCircleIcon,
-  WrenchIcon,
-} from "@heroicons/react/24/solid";
-import { ReactNode } from "react";
+import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { useMe } from "@/services";
-import { signOut } from "@/auth";
 import Image from "next/image";
+import { DrawerButtons } from "./DrawerButtons";
 
 const LogoIam = () => {
   return (
@@ -45,46 +38,6 @@ const Divider = () => {
   return <div className="infn-divider" />;
 };
 
-interface ItemButtonProps extends React.HTMLProps<HTMLButtonElement> {
-  type?: "button" | "reset" | "submit";
-  icon: ReactNode;
-}
-
-const ItemButton = (props: ItemButtonProps) => {
-  const { icon, ...buttonProps } = props;
-  buttonProps.className = "infn-btn icon infn-btn-primary";
-  return (
-    <button {...buttonProps}>
-      <div style={{ width: "24px", height: "24px" }}>{icon}</div>
-    </button>
-  );
-};
-
-const Buttons = () => {
-  const logout = async () => {
-    "use server";
-    await signOut();
-  };
-  return (
-    <div className="flex justify-around px-4 pb-1">
-      <form action={logout}>
-        <ItemButton
-          icon={<BellIcon />}
-          title="Notifications"
-          onClick={logout}
-        />
-        <ItemButton icon={<WrenchIcon />} title="Settings" onClick={logout} />
-        <ItemButton
-          icon={<ArrowRightEndOnRectangleIcon />}
-          title="Logout"
-          onClick={logout}
-          type="submit"
-        />
-      </form>
-    </div>
-  );
-};
-
 export const LogoHeader = async () => {
   const { fetchMe } = useMe();
   const username = await (async () => {
@@ -96,7 +49,7 @@ export const LogoHeader = async () => {
     <div id="logo-header" className="w-full p-2">
       <LogoIam />
       <UserLogo username={username} />
-      <Buttons />
+      <DrawerButtons />
       <Divider />
     </div>
   );

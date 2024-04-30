@@ -1,5 +1,5 @@
-"use server";
-import { signOut } from "@/auth";
+"use client";
+import { signOut } from "next-auth/react";
 import {
   ArrowRightEndOnRectangleIcon,
   BellIcon,
@@ -16,7 +16,7 @@ const ItemButton = (props: ItemButtonProps) => {
   const { icon, ...buttonProps } = props;
   buttonProps.className = "infn-btn icon infn-btn-primary";
   return (
-    <button {...props}>
+    <button {...buttonProps}>
       <div style={{ width: "24px", height: "24px" }}>{icon}</div>
     </button>
   );
@@ -24,12 +24,10 @@ const ItemButton = (props: ItemButtonProps) => {
 
 export const DrawerButtons = () => {
   const logout = async () => {
-    "use server";
-    console.log("logout");
     await signOut();
   };
   return (
-    <div className="flex justify-around px-4 pb-1">
+    <div className="flex justify-around px-4">
       <ItemButton icon={<BellIcon />} title="Notifications" />
       <ItemButton icon={<WrenchIcon />} title="Settings" />
       <ItemButton

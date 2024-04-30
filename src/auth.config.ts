@@ -45,7 +45,6 @@ const IamProvider: OIDCConfig<Profile> = {
 
 export const authConfig: NextAuthConfig = {
   providers: [IamProvider],
-  basePath: "/api/auth",
   pages: {
     signIn: "/signin",
   },

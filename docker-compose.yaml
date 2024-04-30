@@ -29,7 +29,7 @@ services:
 
   backend:
     container_name: iam-backend
-    image: iam-arm64
+    image: indigoiam/iam-login-service:latest
     restart: unless-stopped
     depends_on:
       - database

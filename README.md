@@ -124,3 +124,65 @@ To start the application then run
 ```bash
 docker run -p <some-port>:80 --env-file=prod.env cnafsoftwaredevel/iam-dashboard:latest
 ```
+
+# TODOs
+
+## General
+- [ ] Sudo mode (panic!)
+- [ ] Add Table component
+
+## Home page
+- [ ] Validate password before submission
+- [ ] Whats happen if I change password when there is no password at all?
+- [ ] Finish the "Add to group" functionality
+- [ ] Add "Change membership end time"
+- [ ] Add "Link external account" feature
+- [ ] Add "Link Certificate"
+- [ ] Add "Request Certificate"
+- [ ] Add "Add managed proxy certificate"
+- [ ] Add "Add ssh key"
+- [ ] Add "Set attribute"
+
+## Users Page
+- [ ] Create the users table
+- [ ] Add "Delete user" button per each row
+- [ ] Maybe add a multiple selection to delete multiple users in bulk
+
+## Groups Page
+- [ ] Create the groups page
+- [ ] Add "Add Root Group" feature
+- [ ] Add "Add Subgroup" button per each row (?!)
+- [ ] Add "Delete Group" button per each row
+
+## Requests Page
+
+- [ ] Create "Registration Request" tab
+- [ ] Create "Group requests" tab
+
+## AUP Page
+- [ ] Add "Edit AUP"
+- [ ] Add "Request AUP Signature"
+- [ ] Add "Delete AUP"
+
+## Clients Page
+- [ ] Add Clients table
+- [ ] Add "New Client"
+- [ ] Add "Edit client" per each row
+- [ ] Add "Delete client" per each row
+- [ ] Add Client "edit" page with tabs:
+  - [ ]Main (client name, client id, client description, redirect URIs, contacts, etc)
+  - [ ] Credentials (Token endpoint auth method, client secret, registration access token, regenerate registration a.c., Public key set, JWK URI)
+  - [ ] Scopes (System scope, Custom scope)
+  - [ ] Grant types
+  - [ ] Tokens (A.T. timeout, ID T. timeout, R.T settings & timeout, Device code timeout)
+  - [ ] Crypto (PKCE settings)
+  - [ ] Other info (Homepage URL, ToS, Policy)
+  - [ ] Owners (Show owners, assign owner)
+
+## Tokens Page
+- [ ] ???
+
+## Scopes
+- [ ] Add Scopes table
+- [ ] Add "Edit Scope" button per each row (Description, default scope, restricted)
+- [ ] Add "Delete scope" button per each row

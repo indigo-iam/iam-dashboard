@@ -1,9 +1,7 @@
-version: "3.9"
 services:
   database:
     container_name: iam-database
     image: mysql:latest
-    platform: linux/amd64
     environment:
       TZ: Europe/Rome
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
@@ -21,19 +19,17 @@ services:
   dashboard:
     container_name: iam-dashboard
     image: mcr.microsoft.com/devcontainers/typescript-node:1-20-bookworm
-    platform: linux/amd64
     depends_on:
       - backend
     volumes:
       - .:/workspace:cached
-    env_file:
-      - ./envs/dev.env
     command: sleep infinity
+    environment:
+      - NEXT_TELEMETRY_DISABLED=1
 
   backend:
     container_name: iam-backend
-    image: indigoiam/iam-login-service:latest
-    platform: linux/amd64
+    image: iam-arm64
     restart: unless-stopped
     depends_on:
       - database
@@ -59,25 +55,17 @@ services:
   nginx:
     image: nginx:1.24.0
     container_name: iam-nginx
-    platform: linux/amd64
     restart: unless-stopped
     depends_on:
       - backend
       - dashboard
-    env_file:
-      - ./envs/dev.env
-    environment:
-      - NGINX_ENVSUBST_OUTPUT_DIR=/tmp
     command: ["nginx-debug", "-g", "daemon off;"]
     ports:
       - "8080:8080"
       - "8081:8081"
-    environment:
-      - NGINX_ENVSUBST_OUTPUT_DIR=/tmp
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/conf.d/dev/default.conf:/etc/nginx/conf.d/default.conf
-      - ./nginx/conf.d/env/env.conf.template:/etc/nginx/templates/env.conf.template
+      - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
 
 volumes:
   iam-db:

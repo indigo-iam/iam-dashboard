@@ -28,7 +28,7 @@ export const Button = (props: ButtonProps): JSX.Element => {
         {...buttonProps}
         className={`infn-btn ${classColor} ${isSmall ? "infn-btn-sm" : ""}`}
       >
-        <div className="d-flex">
+        <div className="flex">
           {icon ? (
             <div
               className="me-2 my-auto"

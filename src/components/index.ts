@@ -17,4 +17,3 @@ export {
   type MultiChoiceItemI,
 } from "./MultiChoiceDropdown";
 export { Modal, ModalBody, ModalFooter, type ModalProps } from "./Modal";
-export { Page, type PageProps } from "./Page";

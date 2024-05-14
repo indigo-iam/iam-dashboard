@@ -955,6 +955,16 @@ tr:nth-child(even) {
 /* MultiChoice Dropdown */
 
 .infn-multichoice-dropdown {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  padding: 8px 32px;
+  border-radius: var(--infn-border-radius);
+  border: none;
+  background: #eee;
+  font-weight: 500;
+  color: var(--infn-color-primary);
+  outline: none;
 }
 
 .infn-dropdown {
@@ -964,6 +974,7 @@ tr:nth-child(even) {
   left: 16px;
   right: 16px;
   padding: 8px 1px 8px 1px;
+  margin-top: 16px;
   border-radius: var(--infn-border-radius-half);
   background: var(--infn-color-secondary);
   box-shadow: var(--infn-box-shadow);
@@ -991,4 +1002,16 @@ tr:nth-child(even) {
 .infn-dropdown-item:hover {
   background: #eee !important;
   border-radius: var(--infn-border-radius-half);
+}
+
+.infn-dropdown-search-bar {
+  /* padding: 0px 16px 0px 16px; */
+}
+
+.infn-dropdown-capsule {
+  background: #ccc !important;
+  padding: 4px 8px 4px 8px;
+  margin: 4px 0px 4px 0px;
+  border-radius: var(--infn-border-radius);
+  display: flex
 }

@@ -79,6 +79,7 @@ export const GroupsCard = (props: { me: Me; groups: Group[] }): JSX.Element => {
   return (
     <>
       <AddGroupModal
+        me={me}
         groups={groups}
         show={showAddGroupModal}
         onClose={hideAddGroup}

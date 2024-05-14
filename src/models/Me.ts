@@ -85,6 +85,12 @@ export interface GroupRequests {
   Resources: GroupRequestResource[];
 }
 
+export interface JoinGroupRequest {
+  notes: string;
+  username: string;
+  groupName: string;
+}
+
 export interface UpdatePasswordRequest {
   currentPassword: string;
   updatedPassword: string;

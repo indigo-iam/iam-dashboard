@@ -13,11 +13,17 @@ import {
 import { XMarkIcon, ArrowUpTrayIcon } from "@heroicons/react/24/solid";
 import { useCallback, useState } from "react";
 import { Group } from "@/models/Groups";
+import { JoinGroupRequest, Me } from "@/models/Me";
 
 const Body = (props: {
   items: MultiChoiceItemI[];
   selected: MultiChoiceItemI[];
+  onDeselect: (item: MultiChoiceItem) => void;
+  setNotes: (notes: string) => void;
 }) => {
+  const { setNotes, ...dropdownProps } = props;
+  setNotes("test notes");
+
   return (
     <ModalBody>
       <div className="space-y-3">
@@ -29,7 +35,7 @@ const Body = (props: {
         </p>
         <MultiChoiceDropdown
           placeholder="Type in the group name or press enter..."
-          {...props}
+          {...dropdownProps}
         />
       </div>
     </ModalBody>
@@ -43,6 +49,7 @@ const Footer = (props: { onClose: () => void }) => {
       <div className="flex justify-end p-2">
         <div className="col p-1">
           <Button
+            type="button"
             className="my-auto"
             color="primary"
             icon={<ArrowUpTrayIcon />}
@@ -52,6 +59,7 @@ const Footer = (props: { onClose: () => void }) => {
         </div>
         <div className="col p-1">
           <Button
+            type="button"
             className="my-auto"
             color="danger"
             onClick={onClose}
@@ -65,9 +73,14 @@ const Footer = (props: { onClose: () => void }) => {
   );
 };
 
-const AddGroupForm = (props: { groups: Group[]; onClose: () => void }) => {
-  const { groups, onClose } = props;
+const AddGroupForm = (props: {
+  me: Me;
+  groups: Group[];
+  onClose: () => void;
+}) => {
+  const { me, groups, onClose } = props;
   const [choices, setChoices] = useState<MultiChoiceItemI[]>([]);
+  let notes = "";
 
   const addChoice = useCallback(
     (item: MultiChoiceItemI) => {
@@ -80,6 +93,8 @@ const AddGroupForm = (props: { groups: Group[]; onClose: () => void }) => {
     [choices]
   );
 
+  const setNotes = (newNotes: string) => (notes = newNotes);
+
   const items: MultiChoiceItem[] =
     groups.map(group => {
       const onSelect = (item: MultiChoiceItemI) => addChoice(item);
@@ -91,19 +106,47 @@ const AddGroupForm = (props: { groups: Group[]; onClose: () => void }) => {
       );
     }) ?? [];
 
+  const deselectItem = (item: MultiChoiceItem) => {
+    setChoices(choices.filter(el => item.key !== el.key));
+  };
+
   const handleReset = () => {
     setChoices([]);
   };
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const joinGroupRequests = choices.map(choice => {
+      const groupName = choice.title;
+      const req: JoinGroupRequest = {
+        notes,
+        username: me.userName,
+        groupName,
+      };
+      return fetch("/api/groupRequests", {
+        method: "POST",
+        body: JSON.stringify(req),
+      });
+    });
+    await Promise.all(joinGroupRequests);
+    props.onClose?.();
+  };
+
   return (
-    <Form id="add-group-form" onReset={handleReset}>
-      <Body items={items} selected={choices} />
+    <Form id="add-group-form" onSubmit={handleSubmit} onReset={handleReset}>
+      <Body
+        items={items}
+        selected={choices}
+        onDeselect={deselectItem}
+        setNotes={setNotes}
+      />
       <Footer onClose={onClose} />
     </Form>
   );
 };
 
 export interface AddGroupModalProps extends ModalProps {
+  me: Me;
   groups: Group[];
 }
 
@@ -114,11 +157,11 @@ export const AddGroupModal = (props: AddGroupModalProps) => {
     props.onClose?.();
   };
 
-  let { groups, ...modalProps } = props;
+  let { me, groups, ...modalProps } = props;
   modalProps = { ...modalProps, onClose };
   return (
     <Modal {...modalProps}>
-      <AddGroupForm groups={groups} onClose={onClose} />
+      <AddGroupForm me={me} groups={groups} onClose={onClose} />
     </Modal>
   );
 };

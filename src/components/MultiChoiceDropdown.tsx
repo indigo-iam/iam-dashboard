@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { XCircleIcon } from "@heroicons/react/16/solid";
 
 export type MultiChoiceItemI = {
   key: string;
@@ -31,9 +32,27 @@ export class MultiChoiceItem implements MultiChoiceItemI {
   }
 }
 
+const Capsule = (props: { title: string; onDeselect?: () => void }) => {
+  const { title, onDeselect } = props;
+  return (
+    <span className="infn-dropdown-capsule">
+      {title}
+      <button
+        type="button"
+        color="danger"
+        className="my-auto ml-2 w-5"
+        onClick={onDeselect}
+      >
+        <XCircleIcon />
+      </button>
+    </span>
+  );
+};
+
 interface MultiChoiceDropdownProps {
   items: MultiChoiceItemI[];
   selected: MultiChoiceItemI[];
+  onDeselect?: (item: MultiChoiceItemI) => void;
   placeholder?: string;
 }
 
@@ -88,8 +107,9 @@ export const Dropdown = (props: {
 };
 
 export const MultiChoiceDropdown = (props: MultiChoiceDropdownProps) => {
-  const { items, selected, placeholder } = props;
+  const { items, selected, onDeselect, placeholder } = props;
   const [show, setShow] = useState(false);
+  const [userInput, setUserInput] = useState("");
 
   const handleOnFocus = () => {
     if (!show) {
@@ -109,21 +129,37 @@ export const MultiChoiceDropdown = (props: MultiChoiceDropdownProps) => {
       setShow(false);
     };
   }, []);
+
+  const handleUserInputChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+    setUserInput(value);
+  };
+
+  const filteredItems = items.filter(item => item.title.includes(userInput));
+
   return (
     <div className="infn-multichoice-dropdown">
       <input
         type="search"
-        className="infn-input-search"
+        className="w-full infn-dropdown-search-bar"
+        style={{ background: "transparent" }}
         placeholder={placeholder}
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
+        onChange={handleUserInputChanged}
       />
-      <div className="flex">
+      <div className="flex flex-wrap space-x-1.5">
         {selected.map(el => {
-          return <div key={el.key}>{el.title}</div>;
+          return (
+            <Capsule
+              key={el.key}
+              title={el.title}
+              onDeselect={() => onDeselect?.(el)}
+            />
+          );
         })}
       </div>
-      <Dropdown show={show} items={items} />
+      <Dropdown show={show} items={filteredItems} />
     </div>
   );
 };

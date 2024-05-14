@@ -11,12 +11,11 @@ import {
   MultiChoiceItemI,
 } from "@/components";
 import { XMarkIcon, ArrowUpTrayIcon } from "@heroicons/react/24/solid";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useTransition } from "react";
 import { Group } from "@/models/Groups";
 import { Me } from "@/models/Me";
 import { JoinGroupRequest } from "@/models/group-requests";
 import { submitGroupRequest } from "@/services/group-requests";
-import { useTransition } from "react";
 
 const Body = (props: {
   items: MultiChoiceItemI[];
@@ -126,7 +125,6 @@ const AddGroupForm = (props: {
 
   const handleSubmit = async () => {
     startTransition(async () => {
-
       const joinGroupRequests = choices.map(choice => {
         const groupName = choice.title;
         const req: JoinGroupRequest = {

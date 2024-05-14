@@ -5,14 +5,16 @@ import getConfig from "@/utils/config";
 import { revalidatePath } from "next/cache";
 
 const { BASE_URL } = getConfig();
-const url = new URL(`${BASE_URL}/iam/group_requests`);
 
 export const fetchGroupsRequests = async () => {
-  return await getItem<GroupRequests>(`${url}?status=PENDING`);
+  return await getItem<GroupRequests>(
+    `${BASE_URL}/iam/group_requests?status=PENDING`
+  );
 };
 
 export const abortGroupRequest = async (req: GroupRequestResource) => {
-  const response = await authFetch(`${url}/${req.uuid}`, {
+  const url = `${BASE_URL}/iam/group_requests/${req.uuid}`;
+  const response = await authFetch(url, {
     method: "DELETE",
   });
   if (response.ok) {

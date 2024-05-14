@@ -1,7 +1,7 @@
 import { UserCircleIcon } from "@heroicons/react/24/solid";
-import { useMe } from "@/services";
 import Image from "next/image";
 import { DrawerButtons } from "./DrawerButtons";
+import { fetchMe } from "@/services/me";
 
 const LogoIam = () => {
   return (
@@ -39,7 +39,6 @@ const Divider = () => {
 };
 
 export const LogoHeader = async () => {
-  const { fetchMe } = useMe();
   const username = await (async () => {
     const me = await fetchMe();
     const { name } = me;

@@ -1,6 +1,6 @@
 import { Certificate } from "@/models/Me";
 import { Card } from "../Card";
-import { useMe } from "@/services";
+import { fetchMe } from "@/services/me";
 
 const CertificateView = (props: { cert: Certificate }) => {
   const { cert } = props;
@@ -14,9 +14,7 @@ const CertificateView = (props: { cert: Certificate }) => {
 };
 
 const Certificates = async () => {
-  const { fetchMe } = useMe();
   const me = await fetchMe();
-
   if (!me) {
     return null;
   }

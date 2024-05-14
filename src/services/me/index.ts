@@ -4,9 +4,4 @@ import getConfig from "@/utils/config";
 
 const { BASE_URL } = getConfig();
 
-export const useMe = () => {
-  const fetchMe = async () => getItem<Me>(`${BASE_URL}/scim/Me`);
-  return {
-    fetchMe,
-  };
-};
+export const fetchMe = async () => getItem<Me>(`${BASE_URL}/scim/Me`);

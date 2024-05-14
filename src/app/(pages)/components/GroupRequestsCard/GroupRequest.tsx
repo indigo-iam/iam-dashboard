@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/Button";
-import { GroupRequestResource } from "@/models/Me";
+import { GroupRequest } from "@/models/group-requests";
 import { abortGroupRequest } from "@/services/group-requests";
 import { XCircleIcon } from "@heroicons/react/16/solid";
 import { useTransition } from "react";
@@ -17,7 +17,7 @@ const Row = (props: { title: string; value: string }) => {
   );
 };
 
-export const GroupRequest = (props: { resource: GroupRequestResource }) => {
+export const GroupRequestView = (props: { resource: GroupRequest }) => {
   const { resource } = props;
   const { userFullName, username, uuid, groupName, groupUuid } = resource;
   const [isPending, startTransition] = useTransition();

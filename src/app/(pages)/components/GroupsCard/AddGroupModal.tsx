@@ -13,7 +13,10 @@ import {
 import { XMarkIcon, ArrowUpTrayIcon } from "@heroicons/react/24/solid";
 import { useCallback, useState } from "react";
 import { Group } from "@/models/Groups";
-import { JoinGroupRequest, Me } from "@/models/Me";
+import { Me } from "@/models/Me";
+import { JoinGroupRequest } from "@/models/group-requests";
+import { submitGroupRequest } from "@/services/group-requests";
+import { useTransition } from "react";
 
 const Body = (props: {
   items: MultiChoiceItemI[];
@@ -42,8 +45,12 @@ const Body = (props: {
   );
 };
 
-const Footer = (props: { onClose: () => void }) => {
-  const { onClose } = props;
+const Footer = (props: {
+  onSubmit: () => void;
+  isPending: boolean;
+  onClose: () => void;
+}) => {
+  const { onSubmit, onClose, isPending } = props;
   return (
     <ModalFooter>
       <div className="flex justify-end p-2">
@@ -53,6 +60,8 @@ const Footer = (props: { onClose: () => void }) => {
             className="my-auto"
             color="primary"
             icon={<ArrowUpTrayIcon />}
+            onClick={onSubmit}
+            disabled={isPending}
           >
             Add group(s)
           </Button>
@@ -80,7 +89,8 @@ const AddGroupForm = (props: {
 }) => {
   const { me, groups, onClose } = props;
   const [choices, setChoices] = useState<MultiChoiceItemI[]>([]);
-  let notes = "";
+  const [isPending, startTransition] = useTransition();
+  let notes = ""; // TODO: add notes field
 
   const addChoice = useCallback(
     (item: MultiChoiceItemI) => {
@@ -114,22 +124,26 @@ const AddGroupForm = (props: {
     setChoices([]);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const joinGroupRequests = choices.map(choice => {
-      const groupName = choice.title;
-      const req: JoinGroupRequest = {
-        notes,
-        username: me.userName,
-        groupName,
-      };
-      return fetch("/api/groupRequests", {
-        method: "POST",
-        body: JSON.stringify(req),
+  const handleSubmit = async () => {
+    startTransition(async () => {
+
+      const joinGroupRequests = choices.map(choice => {
+        const groupName = choice.title;
+        const req: JoinGroupRequest = {
+          notes,
+          username: me.userName,
+          groupName,
+        };
+        return submitGroupRequest(req);
       });
+      const results = await Promise.all(joinGroupRequests);
+      results.forEach(error => {
+        if (error) {
+          console.error(`Failed to submit request with status: ${error}`);
+        }
+      });
+      props.onClose?.();
     });
-    await Promise.all(joinGroupRequests);
-    props.onClose?.();
   };
 
   return (
@@ -140,7 +154,7 @@ const AddGroupForm = (props: {
         onDeselect={deselectItem}
         setNotes={setNotes}
       />
-      <Footer onClose={onClose} />
+      <Footer onSubmit={handleSubmit} isPending={isPending} onClose={onClose} />
     </Form>
   );
 };

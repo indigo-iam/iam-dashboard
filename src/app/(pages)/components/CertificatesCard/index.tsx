@@ -1,4 +1,4 @@
-import { Certificate } from "@/models/Me";
+import { Certificate } from "@/models/me";
 import { Card } from "../Card";
 import { fetchMe } from "@/services/me";
 

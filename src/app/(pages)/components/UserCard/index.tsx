@@ -7,7 +7,7 @@ import { ChangePasswordModal } from "./ChangePasswordModal";
 import { PencilIcon, KeyIcon } from "@heroicons/react/24/solid";
 import { reducer, initialState } from "./reducer";
 import { useReducer } from "react";
-import type { Me } from "@/models/Me";
+import type { Me } from "@/models/me";
 
 const Footer = (props: {
   onClickEditDetails: () => void;

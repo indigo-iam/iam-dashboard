@@ -1,4 +1,4 @@
-import { GroupsSearchResponse } from "@/models/Groups";
+import { GroupsSearchResponse } from "@/models/groups";
 import { getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
 

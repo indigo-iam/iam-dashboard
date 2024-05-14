@@ -1,5 +1,5 @@
 import { XCircleIcon } from "@heroicons/react/16/solid";
-import { OidcId, SamlId } from "@/models/Me";
+import { OidcId, SamlId } from "@/models/me";
 import { fetchMe } from "@/services/me";
 import { Button } from "@/components";
 import { Card } from "../Card";

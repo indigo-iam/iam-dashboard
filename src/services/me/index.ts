@@ -1,8 +1,8 @@
 "use server";
-import { Me } from "@/models/Me";
+import { Me } from "@/models/me";
 import { authFetch, getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
-import { ScimOp, ScimRequest } from "@/models/Scim";
+import { ScimOp, ScimRequest } from "@/models/scim";
 import { revalidatePath } from "next/cache";
 
 const { BASE_URL } = getConfig();

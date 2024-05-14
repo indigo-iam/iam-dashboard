@@ -12,8 +12,8 @@ import {
 } from "@/components";
 import { XMarkIcon, ArrowUpTrayIcon } from "@heroicons/react/24/solid";
 import { useCallback, useState, useTransition } from "react";
-import { Group } from "@/models/Groups";
-import { Me } from "@/models/Me";
+import { Group } from "@/models/groups";
+import { Me } from "@/models/me";
 import { JoinGroupRequest } from "@/models/group-requests";
 import { submitGroupRequest } from "@/services/group-requests";
 

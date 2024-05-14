@@ -13,7 +13,7 @@ import {
   ArrowUturnLeftIcon,
 } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import type { Me } from "@/models/Me";
+import type { Me } from "@/models/me";
 import { patchMe } from "@/services/me";
 import React, { useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";

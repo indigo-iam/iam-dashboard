@@ -13,10 +13,10 @@ import {
   ArrowUturnLeftIcon,
 } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { ScimOp, ScimRequest } from "@/models/Scim";
 import type { Me } from "@/models/Me";
+import { patchMe } from "@/services/me";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useFormState, useFormStatus } from "react-dom";
 
 const Body = (props: { me: Me }) => {
   const { me } = props;
@@ -64,6 +64,8 @@ const Body = (props: { me: Me }) => {
 
 const Footer = (props: { canSubmit: boolean; onClose?: () => void }) => {
   const { canSubmit, onClose } = props;
+  const { pending } = useFormStatus();
+
   return (
     <ModalFooter>
       <div className="flex justify-end p-2">
@@ -73,7 +75,7 @@ const Footer = (props: { canSubmit: boolean; onClose?: () => void }) => {
             color="primary"
             icon={<ArrowUpTrayIcon />}
             type="submit"
-            disabled={!canSubmit}
+            disabled={!canSubmit && !pending}
           >
             Update
           </Button>
@@ -106,9 +108,9 @@ const Footer = (props: { canSubmit: boolean; onClose?: () => void }) => {
 
 const EditDetailsForm = (props: { me: Me; onClose?: () => void }) => {
   const [canSubmit, setCanSubmit] = useState(false);
-  const router = useRouter();
+  const [formError, formAction] = useFormState(patchMe, undefined);
+
   const handleChange = (e: React.FormEvent<HTMLFormElement>) => {
-    
     const form = e.currentTarget as HTMLFormElement;
     const formData = new FormData(form);
 
@@ -121,76 +123,25 @@ const EditDetailsForm = (props: { me: Me; onClose?: () => void }) => {
     setCanSubmit(false);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const formData = new FormData(form);
-
-    const op: ScimRequest = {
-      schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
-      operations: [],
-    };
-
-    const givenName = formData.get("givenName") as string | undefined;
-    const familyName = formData.get("familyName") as string | undefined;
-    const middleName = formData.get("middleName") as string | undefined;
-
-    if (givenName || familyName) {
-      const userOp: ScimOp = {
-        op: "replace",
-        value: {
-          displayName: `${givenName} ${familyName}`,
-          name: {
-            givenName,
-            familyName,
-            middleName,
-          },
-        },
-      };
-      op.operations.push(userOp);
-    }
-
-    const email = formData.get("email") as string | undefined;
-    if (email) {
-      const mailOp: ScimOp = {
-        op: "replace",
-        value: {
-          emails: [
-            {
-              type: "work",
-              value: email,
-              primary: true,
-            },
-          ],
-        },
-      };
-      op.operations.push(mailOp);
-    }
-    try {
-      await fetch("/api/Me", {
-        body: JSON.stringify(op),
-        method: "PATCH",
-      });
-      console.log("Submitted!");
-      router.refresh();
-      props.onClose?.();
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
   const handleReset = () => {
     setCanSubmit(false);
   };
+
+  if (formError) {
+    console.error(formError);
+  }
 
   const { me, ...others } = props;
   const footerProps = { ...others, canSubmit };
 
   return (
     <Form
+      action={async (formData: FormData) => {
+        props.onClose?.();
+        formAction(formData);
+      }}
       id="edit-details-form"
       onChange={handleChange}
-      onSubmit={handleSubmit}
       onReset={handleReset}
     >
       <Body me={me} />

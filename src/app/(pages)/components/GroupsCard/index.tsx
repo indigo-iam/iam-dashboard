@@ -58,7 +58,7 @@ const Footer = (props: { showAddGroup: () => void }) => {
   const { showAddGroup } = props;
   return (
     <Button icon={<UserPlusIcon />} color="success" onClick={showAddGroup}>
-      Add Group
+      Add to Group(s)
     </Button>
   );
 };
@@ -66,6 +66,7 @@ const Footer = (props: { showAddGroup: () => void }) => {
 export const GroupsCard = (props: { me: Me; groups: Group[] }): JSX.Element => {
   const { me, groups } = props;
   const [showAddGroupModal, setShowAddGroupModal] = useState(false);
+  const modalTitle = `Add user ${me.name.formatted} to group(s)?`;
 
   const showAddGroup = () => {
     setShowAddGroupModal(true);
@@ -76,15 +77,17 @@ export const GroupsCard = (props: { me: Me; groups: Group[] }): JSX.Element => {
   };
 
   return (
-    <div>
+    <>
       <AddGroupModal
+        me={me}
         groups={groups}
         show={showAddGroupModal}
         onClose={hideAddGroup}
+        title={modalTitle}
       />
       <Card title="Groups" footer={<Footer showAddGroup={showAddGroup} />}>
         <Groups me={me} />
       </Card>
-    </div>
+    </>
   );
 };

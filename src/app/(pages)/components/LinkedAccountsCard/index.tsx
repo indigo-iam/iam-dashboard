@@ -1,6 +1,6 @@
 import { XCircleIcon } from "@heroicons/react/16/solid";
-import { OidcId, SamlId } from "@/models/Me";
-import { useMe } from "@/services/Me";
+import { OidcId, SamlId } from "@/models/me";
+import { fetchMe } from "@/services/me";
 import { Button } from "@/components";
 import { Card } from "../Card";
 
@@ -56,7 +56,6 @@ const SamlIdView = (props: { id: SamlId }) => {
 };
 
 const LinkedAccounts = async () => {
-  const { fetchMe } = useMe();
   const me = await fetchMe();
   if (!me) {
     return <></>;

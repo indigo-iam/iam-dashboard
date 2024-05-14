@@ -1,4 +1,5 @@
-import { useGroups, useMe } from "@/services";
+import { fetchGroups } from "@/services/groups";
+import { fetchMe } from "@/services/me";
 import {
   CertificatesCard,
   GroupRequestsCard,
@@ -10,8 +11,6 @@ import { auth, signIn } from "@/auth";
 
 export default async function Home() {
   const session = await auth();
-  const { fetchMe } = useMe();
-  const { fetchGroups } = useGroups();
 
   if (session?.error === "RefreshAccessTokenError") {
     console.error("Failed to refresh token");

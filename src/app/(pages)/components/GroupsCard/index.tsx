@@ -4,9 +4,9 @@ import { UserPlusIcon } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/16/solid";
 import { Card } from "../Card";
 import { AddGroupModal } from "./AddGroupModal";
-import { Me } from "@/models/Me";
+import { Me } from "@/models/me";
 import { useState } from "react";
-import { Group } from "@/models/Groups";
+import { Group } from "@/models/groups";
 
 const Row = (props: { title: string; deleteGroup: () => void }) => {
   const { title, deleteGroup } = props;

@@ -65,32 +65,6 @@ export interface Me {
   "urn:indigo-dc:scim:schemas:IndigoUser": ScimSchema;
 }
 
-export interface GroupRequestResource {
-  uuid: string;
-  userUuid: string;
-  userFullName?: string;
-  username: string;
-  status: string;
-  notes?: string;
-  groupName: string;
-  groupUuid: string;
-  creationTime: number;
-  latestUpdateTime: number;
-}
-
-export interface GroupRequests {
-  totalResults: number;
-  itemsPerPage: number;
-  startIndex: number;
-  Resources: GroupRequestResource[];
-}
-
-export interface JoinGroupRequest {
-  notes: string;
-  username: string;
-  groupName: string;
-}
-
 export interface UpdatePasswordRequest {
   currentPassword: string;
   updatedPassword: string;

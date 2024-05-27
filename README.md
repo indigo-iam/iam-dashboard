@@ -8,42 +8,80 @@ INDIGO IAM Dashboard is the web application of INDIGO IAM developed by INFN.
 
 The dashboard is implemented in [TypeScript](https://www.typescriptlang.org),
 using [React](https://react.dev) and [Next.js](https://nextjs.org).
-The OpenID Connect authorization flow is handled by [Auth.js](https://authjs.dev)
+The OpenID Connect authorization flow is handled by [Auth.js](https://authjs.dev).
+
+In order to run the web application, **working INDIGO IAM instance is required**.
+It is possible to run the dashboard against both a remote IAM instance or, 
+a local IAM instance using Docker containers.
+This project is shipped with a [`docker-compose.yaml`](docker-compose.yaml)
+that runs a local instance of INDIGO IAM. See the following sections for 
+instructions.
+
+## IAM Client Configuration
+
+The dashboard acts as client for IAM backend and thus, registering the client is
+required. This step is required the first time only (or whenever the local 
+database volume is deleted/recreated).
+
+To register a new client, go to the chosen IAM instance
+([http://localhost:8081/](http://localhost:8081) for the local instance).
+Login as admin, register a new client and configure it as described below.
+
+### Redirect URIs
+
+In the client main page, add all needed redirect uris, in the form of
+`<IAM_URL>/auth/callback/indigo-iam`
+(without the trailing `/`).
+
+To be able to develop the dashboard on your local machine, the redirect uri must
+be
+
+```shell
+http://localhost:8080/auth/callback/indigo-iam
+```
+
+For a production deployment, the redirect uri will be, for example
+
+```shell
+https://iam-dashboard.cloud.cnaf.infn.it/auth/callback/indigo-iam
+```
+
+where [https://iam-dashboard.cloud.cnaf.infn.it](https://iam-dashboard.cloud.cnaf.infn.it)
+is the URL where the dashboard is located.
+
+### Scopes
+
+In the *Scopes* tab, assure that the following scopes are enabled
+
+- `email`
+- `openid`
+- `profile`
+- `scim:read`
+- `scim:write`
+
+### Grant Types
+
+In the *Grant Types* tab, enable `authorization_code`.
+Finally, in the **Crypto** section enable PKCE with SHA-256 has algorithm.
 
 ## Development
 
-Even though not strictly necessary, it is highly recommended to use VSCode with
-the [Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers)
-integration.
+To launch the development environment, an installation of
+[Node.js](https://nodejs.org/en) is the only mandatory requirement.
+This project currently relies upon Node 20 LTS.
 
-This project is provided with a [`docker-compose.yaml`](docker-compose.yaml)
-which runs the following services
+Regardless the chosen method, an environment file is required to the dashboard
+about which IAM it should use.
 
-- `iam-backend`: INDIGO IAM backend (and old dashboard)
-- `iam-database`: MySQL instance for IAM backend
-- `iam-dashboard`: the new dashboard (core of this project)
-- `iam-nginx`: NGINX proxy pass instance which route the traffic between services
+### Create the `.env` file
 
-### Start the services
-
-It is possible to start all services from within VSCode, launching the command
-`Reopen in Container`. Otherwise, it is possible to manually start the services
-with
-
-```bash
-docker compose up -d
-```
-and then, in VSCode, attach the session with `Attach to Running Container...`
-
-### Prepare the environment
-
-The application needs `.env` file to setup some configuration variables.
-For development define the following variables:
+Create a file named `.env` located to the root directory of this repository and
+define the following variables:
 
 ```shell
 # .env
 NODE_ENV=debug
-IAM_AUTHORITY_URL=https://iam-dev.cloud.cnaf.infn.it # or http://localhost:8080
+IAM_AUTHORITY_URL=https://iam-dev.cloud.cnaf.infn.it # or http://localhost:8081
 IAM_CLIENT_ID=<your_client_id>
 IAM_CLIENT_SECRET=<your_client_secret>
 AUTH_SECRET=<authentication_secret>                  # see below
@@ -56,12 +94,24 @@ authentication. You could generate a secret running
 openssl rand -base64 32
 ```
 
-### Start the development server
+> **Note:** If you want to use the local IAM instance, and thus you don't have a
+> client yet, start the services (see below), create a new clint (see above) and
+> finally create the `.env` file with the proper values.
 
-After launching the services, from VSCode, **within** the `iam-dashboard`
-container, start the development server
+### Local development (remote IAM only)
 
-```bash
+The simplest way to quick start the application requires Node.js only.
+Be aware that with this method *a remote INDIGO IAM instance is required*.
+
+First install the required dependencies with
+
+```shell
+npm run install
+```
+
+and then start the Next.js development server running
+
+```shell
 npm run dev
 ```
 
@@ -79,35 +129,80 @@ Something similar to the following should be prompted:
  ✓ Ready in 9.5s
  ```
 
-## IAM Client Configuration
+The dashboard is then available at [http://localhost:8080](http://localhost:8080).
 
-The dashboard acts as client for IAM backend and thus, registering the client is
-required. This step is required the first time only, and whenever the database
-volume is deleted/recreated.
+### Dev Containers
 
-To register a new client, go to
-[http://localhost:8081/](http://localhost:8081) to load the old dashboard, or go
-to your production IAM instance.
-Login as admin and register a new client. Give it a name, such as
-`iam-dashboard` and add the
-[\<IAM_URL\>/auth/callback/indigo-iam](\<IAM_URL\>/auth/callback/indigo-iam)
+Even though not strictly necessary, it is highly recommended to use
+Visual Studio Code with the [Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers)
+integration.
 
+This project is provided with a [`docker-compose.yaml`](docker-compose.yaml)
+that spawns the following services
 
-(without the trailing `/`) URL to the Redirect URIs.
-In **Scopes**, assure that the following scopes are enabled
+- `iam-backend`: INDIGO IAM backend (and old dashboard)
+- `iam-database`: MySQL instance for IAM backend
+- `iam-dashboard`: the new dashboard (core of this project)
+- `iam-nginx`: NGINX proxy pass instance which route the traffic between services
 
-- `email`
-- `offline_access`
-- `openid`
-- `profile`
-- `scim:read`
-- `scim:write`
+#### Start the services
 
-In **Grant Types**, enable `authorization_code`.
-Finally, in the **Crypto** section enable PKCE with SHA-256 has algorithm.
-Save the client and copy `client_id` and `client_secret`, then edit the
-`envs/dev.env` file replacing `IAM_CLIENT_ID` with the
-correct values.
+If you open this project with Visual Studio Code, it should automatically
+suggest to reopen the project using the containers functionality.
+
+If this is not the case, it is possible to start all services from within Visual
+Studio Code, launching the command `Reopen in Container`.
+Otherwise, it is possible to manually start the services with
+
+```bash
+docker compose up -d
+```
+and then, in Visual Studio Code, attach the session with
+`Attach to Running Container...`
+
+#### Start the Next.js development server
+
+After launching the services, from **inside** the
+`iam-dashboard` container, start the development server
+
+```bash
+npm run dev
+```
+
+The dashboard is then available at
+[http://localhost:8080](http://localhost:8080), while the INDIGO IAM instance
+is located at [http://localhost:8081](http://localhost:8081).
+
+#### Docker compose
+
+This method is very similar to the Dev Containers method, since they share
+the same [`docker-compose.yaml`](docker-compose.yaml) file to declare all the
+services. This method has just few caveats, compared to Dev Containers that
+require a couple of additional steps.
+
+#### Start the Next.js development server
+
+As first step, start the services with `docker compose` as shown before
+
+```shell
+docker compose up -d
+```
+
+Now you have to enter the container interactively with
+
+```shell
+docker exec -it iam-dashboard bash
+```
+
+Navigate to the `/workspace` directory. This directory is mounted to
+your local project directory. From here, install the dependencies and 
+start the Next.js development server with
+
+```shell
+# in /workspace dir
+npm run install     # not required with dev containers
+npm run dev
+```
 
 ## Deployment
 
@@ -121,7 +216,7 @@ Create the following environment file, giving your preferred name, for example
 
 ```bash
 # prod.env
-IAM_AUTHORITY_URL=https://iam-dev.cloud.cnaf.infn.it # or http://localhost:8080
+IAM_AUTHORITY_URL=https://iam-dev.cloud.cnaf.infn.it
 IAM_CLIENT_ID=<your_client_id>
 IAM_CLIENT_SECRET=<your_client_secret>
 AUTH_SECRET=<authentication_secret>

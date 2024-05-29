@@ -57,6 +57,7 @@ const User = (props: { me: Me }) => {
     ["Status", me.active ? "active" : "disabled"],
     ["Created", created],
     ["Last Modified", lastModified],
+    ["AUP expired at", lastModified],
   ];
 
   return (

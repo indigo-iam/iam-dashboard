@@ -15,6 +15,7 @@ import {
   UserIcon,
   ShieldCheckIcon,
   InformationCircleIcon,
+  DocumentTextIcon,
 } from "@heroicons/react/20/solid";
 
 const AccountManagement = () => {
@@ -30,6 +31,7 @@ const OrganizationManagement = () => {
     <DrawerSection title="Organization Management">
       <DrawerLink title="Users" href="/users" icon={<UserIcon />} />
       <DrawerLink title="Groups" href="/groups" icon={<UserGroupIcon />} />
+      <DrawerLink title="AUP" href="/aup" icon={<DocumentTextIcon />} />
       <DrawerLink title="Clients" href="/clients" icon={<RocketLaunchIcon />} />
       <DrawerLink title="Tokens" href="/tokens" icon={<KeyIcon />} />
     </DrawerSection>

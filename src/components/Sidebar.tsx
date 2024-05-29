@@ -20,7 +20,7 @@ import {
 const AccountManagement = () => {
   return (
     <DrawerSection title="Account Management">
-      <DrawerLink title="Home" icon={<HomeIcon />} />
+      <DrawerLink title="Home" href="/" icon={<HomeIcon />} />
     </DrawerSection>
   );
 };
@@ -28,10 +28,10 @@ const AccountManagement = () => {
 const OrganizationManagement = () => {
   return (
     <DrawerSection title="Organization Management">
-      <DrawerLink title="Users" icon={<UserIcon />} />
-      <DrawerLink title="Groups" icon={<UserGroupIcon />} />
-      <DrawerLink title="Clients" icon={<RocketLaunchIcon />} />
-      <DrawerLink title="Tokens" icon={<KeyIcon />} />
+      <DrawerLink title="Users" href="/users" icon={<UserIcon />} />
+      <DrawerLink title="Groups" href="/groups" icon={<UserGroupIcon />} />
+      <DrawerLink title="Clients" href="/clients" icon={<RocketLaunchIcon />} />
+      <DrawerLink title="Tokens" href="/tokens" icon={<KeyIcon />} />
     </DrawerSection>
   );
 };
@@ -49,9 +49,14 @@ const Body = () => {
 const Footer = () => {
   return (
     <DrawerFooter>
-      <DrawerFooterLink title="Privacy Policy" icon={<ShieldCheckIcon />} />
+      <DrawerFooterLink
+        title="Privacy Policy"
+        href="/privacy"
+        icon={<ShieldCheckIcon />}
+      />
       <DrawerFooterLink
         title="IAM Documentation"
+        href="/docs"
         icon={<InformationCircleIcon />}
       />
       <div className="infn-version">v1.0</div>

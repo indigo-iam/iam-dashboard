@@ -1,40 +1,41 @@
+import Link from "next/link";
 import { ReactNode } from "react";
 
 const DrawerLinkBase = (props: {
   title: string;
   icon: JSX.Element;
   extraClass: string;
+  href: string;
 }) => {
-  const { title, icon, extraClass } = props;
+  const { title, href, icon, extraClass } = props;
   return (
-    <button className={"infn-drawer-link " + extraClass}>
-      <div className="flex">
-        <div className="me-2" style={{ width: "20px" }}>
-          {icon}
+    <Link href={href}>
+      <button className={"infn-drawer-link " + extraClass}>
+        <div className="flex">
+          <div className="me-2" style={{ width: "20px" }}>
+            {icon}
+          </div>
+          {title}
         </div>
-        {title}
-      </div>
-    </button>
+      </button>
+    </Link>
   );
 };
 
-export const DrawerLink = (props: { title: string; icon: JSX.Element }) => {
-  const { title, icon } = props;
-  return <DrawerLinkBase title={title} icon={icon} extraClass="row" />;
+export const DrawerLink = (props: {
+  title: string;
+  href: string;
+  icon: JSX.Element;
+}) => {
+  return <DrawerLinkBase {...props} extraClass="row" />;
 };
 
 export const DrawerFooterLink = (props: {
   title: string;
+  href: string;
   icon: JSX.Element;
 }) => {
-  const { title, icon } = props;
-  return (
-    <DrawerLinkBase
-      title={title}
-      icon={icon}
-      extraClass="infn-drawer-footer-link"
-    />
-  );
+  return <DrawerLinkBase {...props} extraClass="infn-drawer-footer-link" />;
 };
 
 interface DrawerSectionProps {

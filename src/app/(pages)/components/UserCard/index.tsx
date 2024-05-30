@@ -52,6 +52,7 @@ const User = (props: { me: Me }) => {
     : "N/A";
 
   const data = [
+    ["User Name", me.userName],
     ["User Id", me.id],
     ["Email", me.emails[0].value],
     ["Status", me.active ? "active" : "disabled"],

@@ -12,12 +12,14 @@ export default auth(req => {
   if (sessionExpired) {
     console.log("Session expired");
     const newUrl = new URL("/signout", req.nextUrl);
-    return NextResponse.redirect(newUrl);
+    // use 301 to convert POSTs to GETs. This avoid the server to fail the POST
+    // following the redirect
+    return NextResponse.redirect(newUrl, 301);
   }
   const sessionNotFound = !session && req.nextUrl.pathname !== "/signin";
   if (sessionNotFound) {
     console.log("Session not found");
     const newUrl = new URL("/signin", req.nextUrl.origin);
-    return Response.redirect(newUrl);
+    return Response.redirect(newUrl, 301);
   }
 });

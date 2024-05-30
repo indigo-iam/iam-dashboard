@@ -17,6 +17,7 @@ import type { Me } from "@/models/me";
 import { patchMe } from "@/services/me";
 import React, { useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
+import { useRouter } from "next/navigation";
 
 const Body = (props: { me: Me }) => {
   const { me } = props;
@@ -108,7 +109,7 @@ const Footer = (props: { canSubmit: boolean; onClose?: () => void }) => {
 
 const EditDetailsForm = (props: { me: Me; onClose?: () => void }) => {
   const [canSubmit, setCanSubmit] = useState(false);
-  const [formError, formAction] = useFormState(patchMe, undefined);
+  const router = useRouter();
 
   const handleChange = (e: React.FormEvent<HTMLFormElement>) => {
     const form = e.currentTarget as HTMLFormElement;
@@ -127,19 +128,22 @@ const EditDetailsForm = (props: { me: Me; onClose?: () => void }) => {
     setCanSubmit(false);
   };
 
-  if (formError) {
-    console.error(formError);
-  }
-
   const { me, ...others } = props;
   const footerProps = { ...others, canSubmit };
 
+  const action = async (formData: FormData) => {
+    try {
+      await patchMe(formData);
+      router.refresh();
+    } catch (err) {
+      console.log("Patch failed because of an error:", err);
+    }
+    // router.refresh();
+  };
+
   return (
     <Form
-      action={async (formData: FormData) => {
-        props.onClose?.();
-        formAction(formData);
-      }}
+      action={action}
       id="edit-details-form"
       onChange={handleChange}
       onReset={handleReset}

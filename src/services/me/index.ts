@@ -3,13 +3,12 @@ import { Me } from "@/models/me";
 import { authFetch, getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
 import { ScimOp, ScimRequest } from "@/models/scim";
-import { revalidatePath } from "next/cache";
 
 const { BASE_URL } = getConfig();
 
 export const fetchMe = async () => getItem<Me>(`${BASE_URL}/scim/Me`);
 
-export const patchMe = async (_: string | undefined, formData: FormData) => {
+export const patchMe = async (formData: FormData) => {
   const op: ScimRequest = {
     schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
     operations: [],
@@ -58,10 +57,9 @@ export const patchMe = async (_: string | undefined, formData: FormData) => {
   });
 
   if (response.ok) {
-    revalidatePath("/");
     return "";
   } else {
-    const msg = await response.text()
+    const msg = await response.text();
     return `Patch Me failed with status ${response.status} ${msg}`;
   }
 };

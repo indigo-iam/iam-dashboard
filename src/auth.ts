@@ -51,7 +51,7 @@ export const authConfig: NextAuthConfig = {
   callbacks: {
     authorized({ auth }) {
       let authorized = false;
-      if (auth && auth.access_token) {
+      if (auth?.access_token) {
         authorized = auth.expires_at < Date.now();
       }
       return authorized;

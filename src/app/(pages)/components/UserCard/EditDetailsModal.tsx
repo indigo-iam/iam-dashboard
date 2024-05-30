@@ -16,7 +16,7 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 import type { Me } from "@/models/me";
 import { patchMe } from "@/services/me";
 import React, { useState } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 import { useRouter } from "next/navigation";
 
 const Body = (props: { me: Me }) => {
@@ -138,7 +138,6 @@ const EditDetailsForm = (props: { me: Me; onClose?: () => void }) => {
     } catch (err) {
       console.log("Patch failed because of an error:", err);
     }
-    // router.refresh();
   };
 
   return (

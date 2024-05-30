@@ -1,7 +1,6 @@
 "use client";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useEffect, useRef } from "react";
-import { signOut } from "next-auth/react";
 
 export default function SignOut() {
   const { status } = useSession();

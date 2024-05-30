@@ -673,11 +673,6 @@ label {
   padding: 32px;
 }
 
-/* .infn-card:hover {
-  transform: scale(1.005);
-  box-shadow: var(--infn-box-shadow);
-} */
-
 .infn-card-title {
   text-align: center;
   font-size: 18px;

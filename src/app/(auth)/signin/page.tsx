@@ -15,7 +15,7 @@ export default function SignIn() {
         case "unauthenticated":
           if (!signingIn.current) {
             console.debug("signing in, redirecting to IAM login service...");
-            await signIn("indigo-iam");
+            await signIn("indigo-iam", { callbackUrl: "/" });
             signingIn.current = true;
           }
           break;

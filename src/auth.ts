@@ -45,9 +45,9 @@ const IamProvider: OIDCConfig<Profile> = {
 
 export const authConfig: NextAuthConfig = {
   providers: [IamProvider],
-  pages: {
-    signIn: "/signin",
-  },
+  // pages: {
+  //   signIn: "/signin",
+  // },
   callbacks: {
     authorized({ auth }) {
       let authorized = false;

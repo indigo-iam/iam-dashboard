@@ -16,7 +16,6 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 import type { Me } from "@/models/me";
 import { patchMe } from "@/services/me";
 import React, { useState } from "react";
-import { useFormStatus } from "react-dom";
 import { useRouter } from "next/navigation";
 
 const Body = (props: { me: Me }) => {
@@ -65,7 +64,6 @@ const Body = (props: { me: Me }) => {
 
 const Footer = (props: { canSubmit: boolean; onClose?: () => void }) => {
   const { canSubmit, onClose } = props;
-  const { pending } = useFormStatus();
 
   return (
     <ModalFooter>
@@ -76,7 +74,7 @@ const Footer = (props: { canSubmit: boolean; onClose?: () => void }) => {
             color="primary"
             icon={<ArrowUpTrayIcon />}
             type="submit"
-            disabled={!canSubmit && !pending}
+            disabled={!canSubmit}
           >
             Update
           </Button>
@@ -134,7 +132,7 @@ const EditDetailsForm = (props: { me: Me; onClose?: () => void }) => {
   const action = async (formData: FormData) => {
     try {
       await patchMe(formData);
-      router.refresh();
+      router.back();
     } catch (err) {
       console.log("Patch failed because of an error:", err);
     }
@@ -163,7 +161,6 @@ export const EditDetailsModal = (props: EditDetailsModalProps) => {
       "edit-details-form"
     ) as HTMLFormElement;
     form.reset();
-    props.onClose?.();
   };
   const { me, ...modalProps } = { ...props, onClose };
   const formProps = { me, onClose };

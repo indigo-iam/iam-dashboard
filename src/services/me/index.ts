@@ -1,5 +1,5 @@
 "use server";
-import { Me } from "@/models/me";
+import { Me, MeClients } from "@/models/me";
 import { authFetch, getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
 import { ScimOp, ScimRequest } from "@/models/scim";
@@ -7,6 +7,11 @@ import { ScimOp, ScimRequest } from "@/models/scim";
 const { BASE_URL } = getConfig();
 
 export const fetchMe = async () => getItem<Me>(`${BASE_URL}/scim/Me`);
+
+export const fetchClients = async (startIndex: number) =>
+  getItem<MeClients>(
+    `${BASE_URL}/iam/account/me/clients?startIndex=${startIndex}`
+  );
 
 export const patchMe = async (formData: FormData) => {
   const op: ScimRequest = {

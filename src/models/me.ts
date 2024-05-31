@@ -69,3 +69,22 @@ export interface UpdatePasswordRequest {
   currentPassword: string;
   updatedPassword: string;
 }
+
+export interface MeClient {
+  client_id: string;
+  redirect_uris: string[];
+  client_name: string;
+  contacts: string[];
+  token_endpoint_auth_method: string;
+  scope: string;
+  grant_types: string[];
+  response_types: string[];
+  created_at: number;
+}
+
+export interface MeClients {
+  totalResults: number;
+  itemsPerPage: number;
+  startIndex: number;
+  Resources: MeClient[];
+}

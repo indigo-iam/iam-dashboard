@@ -16,7 +16,6 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 import type { Me } from "@/models/me";
 import { patchMe } from "@/services/me";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 
 const Body = (props: { me: Me }) => {
   const { me } = props;
@@ -107,7 +106,6 @@ const Footer = (props: { canSubmit: boolean; onClose?: () => void }) => {
 
 const EditDetailsForm = (props: { me: Me; onClose?: () => void }) => {
   const [canSubmit, setCanSubmit] = useState(false);
-  const router = useRouter();
 
   const handleChange = (e: React.FormEvent<HTMLFormElement>) => {
     const form = e.currentTarget as HTMLFormElement;

@@ -1,5 +1,4 @@
 import { auth } from "@/auth";
-import { redirect } from "next/navigation";
 
 export async function authFetch(info: RequestInfo | URL, init?: RequestInit) {
   const session = await auth();

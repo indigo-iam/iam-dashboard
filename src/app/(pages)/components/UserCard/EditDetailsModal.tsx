@@ -132,7 +132,6 @@ const EditDetailsForm = (props: { me: Me; onClose?: () => void }) => {
   const action = async (formData: FormData) => {
     try {
       await patchMe(formData);
-      router.back();
     } catch (err) {
       console.log("Patch failed because of an error:", err);
     }

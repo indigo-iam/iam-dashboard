@@ -1,19 +1,32 @@
 "use client";
-import { useSession, signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
-export default function SignOut() {
+export default function Logout() {
   const { status } = useSession();
-  const signingOut = useRef(false);
+  const router = useRouter();
+  const signingOutRef = useRef(false);
+
   useEffect(() => {
-    const logout = async () => {
-      if (status === "authenticated" && !signingOut.current) {
-        console.log("signing out...");
-        await signOut({ redirect: true, callbackUrl: "/" });
-        signingOut.current = true;
-      }
-    };
-    logout();
-  }, [status]);
-  return <div>Logging out...</div>;
+    switch (status) {
+      case "authenticated":
+        if (!signingOutRef.current) {
+          console.log("signing out...");
+          signOut();
+          signingOutRef.current = true;
+        }
+        break;
+      case "unauthenticated":
+        router.push("/");
+        break;
+      case "loading":
+        console.log("loading");
+        break;
+      default:
+    }
+  });
+  return (
+    <h1>Logout Page</h1>
+  )
 }

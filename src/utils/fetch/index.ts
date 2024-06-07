@@ -7,11 +7,6 @@ export async function authFetch(info: RequestInfo | URL, init?: RequestInit) {
     throw Error("Session not ready");
   }
 
-  if (session.expires_at < Date.now()) {
-    console.log("JWT expired");
-    redirect("/signout");
-  }
-
   const { access_token } = session;
   const options: RequestInit = init ?? {};
   let { headers } = options;

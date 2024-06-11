@@ -40,22 +40,7 @@ const Divider = () => {
 
 export const LogoHeader = async () => {
   const me = await fetchMe();
-
-  if (!me) {
-    return (
-      <div id="logo-header" className="w-full p-2">
-        <LogoIam />
-        <UserLogo username={"Unknown User"} />
-        <DrawerButtons />
-        <Divider />
-      </div>
-    );
-  }
-
-  const username = await (async () => {
-    const { name } = me;
-    return name.formatted ?? "Unknown User";
-  })();
+  let username = me.name.formatted ? me.name.formatted : "Unknown User";
   return (
     <div id="logo-header" className="w-full p-2">
       <LogoIam />

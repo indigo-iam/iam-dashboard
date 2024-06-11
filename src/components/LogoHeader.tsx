@@ -39,11 +39,8 @@ const Divider = () => {
 };
 
 export const LogoHeader = async () => {
-  const username = await (async () => {
-    const me = await fetchMe();
-    const { name } = me;
-    return name.formatted ?? "Unknown User";
-  })();
+  const me = await fetchMe();
+  let username = me.name.formatted ? me.name.formatted : "Unknown User";
   return (
     <div id="logo-header" className="w-full p-2">
       <LogoIam />

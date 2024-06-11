@@ -16,7 +16,6 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 import type { Me } from "@/models/me";
 import { patchMe } from "@/services/me";
 import React, { useState } from "react";
-import { useFormState, useFormStatus } from "react-dom";
 
 const Body = (props: { me: Me }) => {
   const { me } = props;
@@ -64,7 +63,6 @@ const Body = (props: { me: Me }) => {
 
 const Footer = (props: { canSubmit: boolean; onClose?: () => void }) => {
   const { canSubmit, onClose } = props;
-  const { pending } = useFormStatus();
 
   return (
     <ModalFooter>
@@ -75,7 +73,7 @@ const Footer = (props: { canSubmit: boolean; onClose?: () => void }) => {
             color="primary"
             icon={<ArrowUpTrayIcon />}
             type="submit"
-            disabled={!canSubmit && !pending}
+            disabled={!canSubmit}
           >
             Update
           </Button>
@@ -108,7 +106,6 @@ const Footer = (props: { canSubmit: boolean; onClose?: () => void }) => {
 
 const EditDetailsForm = (props: { me: Me; onClose?: () => void }) => {
   const [canSubmit, setCanSubmit] = useState(false);
-  const [formError, formAction] = useFormState(patchMe, undefined);
 
   const handleChange = (e: React.FormEvent<HTMLFormElement>) => {
     const form = e.currentTarget as HTMLFormElement;
@@ -127,19 +124,20 @@ const EditDetailsForm = (props: { me: Me; onClose?: () => void }) => {
     setCanSubmit(false);
   };
 
-  if (formError) {
-    console.error(formError);
-  }
-
   const { me, ...others } = props;
   const footerProps = { ...others, canSubmit };
 
+  const action = async (formData: FormData) => {
+    try {
+      await patchMe(formData);
+    } catch (err) {
+      console.log("Patch failed because of an error:", err);
+    }
+  };
+
   return (
     <Form
-      action={async (formData: FormData) => {
-        props.onClose?.();
-        formAction(formData);
-      }}
+      action={action}
       id="edit-details-form"
       onChange={handleChange}
       onReset={handleReset}
@@ -160,7 +158,6 @@ export const EditDetailsModal = (props: EditDetailsModalProps) => {
       "edit-details-form"
     ) as HTMLFormElement;
     form.reset();
-    props.onClose?.();
   };
   const { me, ...modalProps } = { ...props, onClose };
   const formProps = { me, onClose };

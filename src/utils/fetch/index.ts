@@ -5,6 +5,7 @@ export async function authFetch(info: RequestInfo | URL, init?: RequestInit) {
   if (!session) {
     throw Error("Session not ready");
   }
+
   const { access_token } = session;
   const options: RequestInit = init ?? {};
   let { headers } = options;

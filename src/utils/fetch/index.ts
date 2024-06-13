@@ -21,3 +21,6 @@ export const getItem: GetItem = async (endpoint: string | URL) => {
   const response = await authFetch(endpoint);
   return response.json();
 };
+
+// type PatchItem = <T>(endpoint: string | URL, body: T) => Promise<T>;
+// export const patchItem: PatchItem = async (body: T) => {};

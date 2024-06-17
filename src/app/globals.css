@@ -32,6 +32,18 @@
   h3 {
     @apply text-lg font-bold;
   }
+  table {
+    @apply border-collapse border-2 border-secondary-100;
+  }
+
+  td,
+  th {
+    @apply border-0 p-2 text-left;
+  }
+
+  tr {
+    @apply h-12 even:bg-secondary-100 hover:bg-secondary-200;
+  }
 }
 
 @layer components {

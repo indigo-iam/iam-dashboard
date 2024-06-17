@@ -5,8 +5,7 @@ import { dateToHuman } from "@/utils/dates";
 import { EditDetailsModal } from "./EditDetailsModal";
 import { ChangePasswordModal } from "./ChangePasswordModal";
 import { PencilIcon, KeyIcon } from "@heroicons/react/24/solid";
-import { reducer, initialState } from "./reducer";
-import { useReducer } from "react";
+import { useState } from "react";
 import type { Me } from "@/models/me";
 
 const Footer = (props: {
@@ -72,41 +71,27 @@ const User = (props: { me: Me }) => {
 
 export const UserCard = (props: { me: Me }) => {
   const { me } = props;
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  const showEditDetails = () => {
-    dispatch({ type: "SHOW_EDIT_DETAILS" });
-  };
-
-  const hideEditDetails = () => {
-    dispatch({ type: "HIDE_EDIT_DETAILS" });
-  };
-
-  const showChangePassword = () => {
-    dispatch({ type: "SHOW_CHANGE_PASSWORD" });
-  };
-
-  const hideChangePassword = () => {
-    dispatch({ type: "HIDE_CHANGE_PASSWORD" });
-  };
+  const [showEditDetails, setShowEditDetails] = useState(false);
+  const [showChangePassword, setShowChangePassword] = useState(false);
 
   return (
     <div>
       <EditDetailsModal
-        show={state.showEditDetails}
-        onClose={hideEditDetails}
+        show={showEditDetails}
+        onClose={() => setShowEditDetails(false)}
         me={me}
+        title="Edit your details"
       />
       <ChangePasswordModal
-        show={state.showChangePassword}
-        onClose={hideChangePassword}
+        show={showChangePassword}
+        onClose={() => setShowChangePassword(false)}
       />
       <Card
         title={me?.name.formatted}
         footer={
           <Footer
-            onClickEditDetails={showEditDetails}
-            onClickChangePassword={showChangePassword}
+            onClickEditDetails={() => setShowEditDetails(true)}
+            onClickChangePassword={() => setShowChangePassword(true)}
           />
         }
       >

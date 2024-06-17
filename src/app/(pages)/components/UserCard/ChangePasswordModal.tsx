@@ -1,13 +1,6 @@
 "use client";
-import {
-  Button,
-  Modal,
-  Form,
-  Input,
-  ModalProps,
-  ModalBody,
-  ModalFooter,
-} from "@/components";
+import { Button, Form, Input } from "@/components";
+import Modal, { ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import {
   ArrowUpTrayIcon,
   ArrowUturnLeftIcon,
@@ -93,11 +86,7 @@ const Footer = (props: { isValid: boolean; onClose?: () => void }) => {
           </Button>
         </div>
         <div className="col p-1">
-          <Button
-            action="warning"
-            icon={<ArrowUturnLeftIcon />}
-            type="reset"
-          >
+          <Button action="warning" icon={<ArrowUturnLeftIcon />} type="reset">
             Reset
           </Button>
         </div>

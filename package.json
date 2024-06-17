@@ -24,6 +24,7 @@
     "lint": "tsc --project ./tsconfig.json --noEmit && eslint . --ext ts,tsx,js --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
+    "@headlessui/react": "^2",
     "@heroicons/react": "^2.1.1",
     "next": "14.2.2",
     "next-auth": "^5.0.0-beta.17",

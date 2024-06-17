@@ -1,13 +1,6 @@
 "use client";
-import {
-  Button,
-  Modal,
-  Form,
-  Input,
-  ModalBody,
-  ModalFooter,
-  ModalProps,
-} from "@/components";
+import { Button, Form, Input } from "@/components";
+import Modal, { ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import {
   ArrowUpTrayIcon,
   ArrowUturnLeftIcon,
@@ -78,11 +71,7 @@ const Footer = (props: { canSubmit: boolean; onClose?: () => void }) => {
           </Button>
         </div>
         <div className="col p-1">
-          <Button
-            action="warning"
-            icon={<ArrowUturnLeftIcon />}
-            type="reset"
-          >
+          <Button action="warning" icon={<ArrowUturnLeftIcon />} type="reset">
             Reset
           </Button>
         </div>
@@ -150,14 +139,17 @@ export interface EditDetailsModalProps extends ModalProps {
 }
 
 export const EditDetailsModal = (props: EditDetailsModalProps) => {
-  const onClose = () => {
-    const form = document.getElementById(
-      "edit-details-form"
-    ) as HTMLFormElement;
-    form.reset();
+  const { me, ...modalProps } = props;
+  const formProps = {
+    me,
+    onClose: () => {
+      const form = document.getElementById(
+        "edit-details-form"
+      ) as HTMLFormElement;
+      form.reset();
+      props.onClose();
+    },
   };
-  const { me, ...modalProps } = { ...props, onClose };
-  const formProps = { me, onClose };
   return (
     <Modal {...modalProps}>
       <EditDetailsForm {...formProps} />

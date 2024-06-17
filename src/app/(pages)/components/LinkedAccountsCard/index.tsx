@@ -2,7 +2,7 @@ import { XCircleIcon } from "@heroicons/react/16/solid";
 import { OidcId, SamlId } from "@/models/me";
 import { fetchMe } from "@/services/me";
 import { Button } from "@/components";
-import { Card } from "../Card";
+import Card from "@/components/Card";
 
 const OidcIdView = (props: { id: OidcId }) => {
   return (
@@ -15,11 +15,7 @@ const OidcIdView = (props: { id: OidcId }) => {
           {props.id.subject}
         </div>
         <div className="col flex flex-row-reverse">
-          <Button
-            action="danger"
-            isSmall={true}
-            icon={<XCircleIcon />}
-          >
+          <Button action="danger" isSmall={true} icon={<XCircleIcon />}>
             Unlink
           </Button>
         </div>
@@ -40,11 +36,7 @@ const SamlIdView = (props: { id: SamlId }) => {
           {props.id.userId}
         </div>
         <div className="col flex flex-row-reverse">
-          <Button
-            action="danger"
-            isSmall={true}
-            icon={<XCircleIcon />}
-          >
+          <Button action="danger" isSmall={true} icon={<XCircleIcon />}>
             Unlink
           </Button>
         </div>

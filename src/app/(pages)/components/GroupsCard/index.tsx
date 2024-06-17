@@ -1,8 +1,8 @@
 "use client";
+import Card from "@/components/Card";
 import { Button } from "@/components";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/16/solid";
-import { Card } from "../Card";
 import { AddGroupModal } from "./AddGroupModal";
 import { Me } from "@/models/me";
 import { useState } from "react";

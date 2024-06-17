@@ -1,7 +1,7 @@
 "use client";
+import Card from "@/components/Card";
 import { Button } from "@/components";
 import { dateToHuman } from "@/utils/dates";
-import { Card } from "../Card";
 import { EditDetailsModal } from "./EditDetailsModal";
 import { ChangePasswordModal } from "./ChangePasswordModal";
 import { PencilIcon, KeyIcon } from "@heroicons/react/24/solid";

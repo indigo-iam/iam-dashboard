@@ -58,7 +58,7 @@ const Footer = () => {
         href="/docs"
         icon={<InformationCircleIcon />}
       />
-      <div className="bg-primary-light h-4 w-full text-center">v1.0</div>
+      <p className="bg-primary-light w-full text-center align-middle">v1.0</p>
     </DrawerFooter>
   );
 };

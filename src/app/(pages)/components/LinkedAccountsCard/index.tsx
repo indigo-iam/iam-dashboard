@@ -6,7 +6,7 @@ import { Card } from "../Card";
 
 const OidcIdView = (props: { id: OidcId }) => {
   return (
-    <div className="container border-bottom p-2">
+    <div className="border-bottom container p-2">
       <div className="row">
         <div className="col">
           <b>Issuer:</b> {props.id.issuer}
@@ -16,8 +16,7 @@ const OidcIdView = (props: { id: OidcId }) => {
         </div>
         <div className="col flex flex-row-reverse">
           <Button
-            color="danger"
-            className="my-auto"
+            action="danger"
             isSmall={true}
             icon={<XCircleIcon />}
           >
@@ -31,7 +30,7 @@ const OidcIdView = (props: { id: OidcId }) => {
 
 const SamlIdView = (props: { id: SamlId }) => {
   return (
-    <div className="container border-bottom p-2">
+    <div className="border-bottom container p-2">
       <div className="row">
         <div className="col">
           {props.id.idpId}
@@ -42,8 +41,7 @@ const SamlIdView = (props: { id: SamlId }) => {
         </div>
         <div className="col flex flex-row-reverse">
           <Button
-            className="my-auto"
-            color="danger"
+            action="danger"
             isSmall={true}
             icon={<XCircleIcon />}
           >

@@ -56,8 +56,7 @@ const Footer = (props: {
         <div className="col p-1">
           <Button
             type="button"
-            className="my-auto"
-            color="primary"
+            action="primary"
             icon={<ArrowUpTrayIcon />}
             onClick={onSubmit}
             disabled={isPending}
@@ -68,8 +67,7 @@ const Footer = (props: {
         <div className="col p-1">
           <Button
             type="button"
-            className="my-auto"
-            color="danger"
+            action="danger"
             onClick={onClose}
             icon={<XMarkIcon />}
           >

@@ -16,33 +16,29 @@ export interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
   type?: "button" | "reset" | "submit";
   icon?: React.ReactNode;
   isSmall?: boolean;
+  action?: ButtonColor;
 }
 
 export const Button = (props: ButtonProps): JSX.Element => {
-  const { className, children, color, icon, isSmall, ...buttonProps } = props;
-  const classColor = `infn-btn-${color ?? "primary"}`;
+  const { children, icon, isSmall, action, ...buttonProps } = props;
+  const className = `btn-${action ?? "primary"}`;
 
   return (
-    <div className={className}>
-      <button
-        {...buttonProps}
-        className={`infn-btn ${classColor} ${isSmall ? "infn-btn-sm" : ""}`}
-      >
-        <div className="flex">
-          {icon ? (
-            <div
-              className="me-2 my-auto"
-              style={{
-                width: isSmall ? "16px" : "24px",
-                height: isSmall ? "16px" : "24px",
-              }}
-            >
-              {icon}
-            </div>
-          ) : null}
-          <div className="my-auto">{children}</div>
-        </div>
-      </button>
-    </div>
+    <button {...buttonProps} className={className}>
+      <div className="flex">
+        {icon ? (
+          <div
+            className="my-auto me-2"
+            style={{
+              width: isSmall ? "16px" : "24px",
+              height: isSmall ? "16px" : "24px",
+            }}
+          >
+            {icon}
+          </div>
+        ) : null}
+        <small className="my-auto">{children}</small>
+      </div>
+    </button>
   );
 };

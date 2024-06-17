@@ -82,11 +82,10 @@ const Footer = (props: { isValid: boolean; onClose?: () => void }) => {
   const { isValid, onClose } = props;
   return (
     <ModalFooter>
-      <div className="flex justify-content-end p-2">
+      <div className="justify-content-end flex p-2">
         <div className="col p-1">
           <Button
-            className="my-auto"
-            color="primary"
+            action="primary"
             icon={<ArrowUpTrayIcon />}
             disabled={!isValid}
           >
@@ -95,8 +94,7 @@ const Footer = (props: { isValid: boolean; onClose?: () => void }) => {
         </div>
         <div className="col p-1">
           <Button
-            className="my-auto"
-            color="warning"
+            action="warning"
             icon={<ArrowUturnLeftIcon />}
             type="reset"
           >
@@ -105,8 +103,7 @@ const Footer = (props: { isValid: boolean; onClose?: () => void }) => {
         </div>
         <div className="col p-1">
           <Button
-            className="my-auto"
-            color="danger"
+            action="danger"
             onClick={onClose}
             icon={<XMarkIcon />}
             type="button"

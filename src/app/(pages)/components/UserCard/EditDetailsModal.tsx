@@ -69,8 +69,7 @@ const Footer = (props: { canSubmit: boolean; onClose?: () => void }) => {
       <div className="flex justify-end p-2">
         <div className="col p-1">
           <Button
-            className="my-auto"
-            color="primary"
+            action="primary"
             icon={<ArrowUpTrayIcon />}
             type="submit"
             disabled={!canSubmit}
@@ -80,8 +79,7 @@ const Footer = (props: { canSubmit: boolean; onClose?: () => void }) => {
         </div>
         <div className="col p-1">
           <Button
-            className="my-auto"
-            color="warning"
+            action="warning"
             icon={<ArrowUturnLeftIcon />}
             type="reset"
           >
@@ -90,8 +88,7 @@ const Footer = (props: { canSubmit: boolean; onClose?: () => void }) => {
         </div>
         <div className="col p-1">
           <Button
-            className="my-auto"
-            color="danger"
+            action="danger"
             onClick={onClose}
             icon={<XMarkIcon />}
             type="button"

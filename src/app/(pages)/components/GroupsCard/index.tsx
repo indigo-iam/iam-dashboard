@@ -17,7 +17,7 @@ const Row = (props: { title: string; deleteGroup: () => void }) => {
       </td>
       <td className="flex flex-row-reverse">
         <Button
-          color="danger"
+          action="danger"
           isSmall={true}
           onClick={deleteGroup}
           icon={<XCircleIcon />}
@@ -57,7 +57,7 @@ const Groups = (props: { me: Me }) => {
 const Footer = (props: { showAddGroup: () => void }) => {
   const { showAddGroup } = props;
   return (
-    <Button icon={<UserPlusIcon />} color="success" onClick={showAddGroup}>
+    <Button icon={<UserPlusIcon />} action="success" onClick={showAddGroup}>
       Add to Group(s)
     </Button>
   );

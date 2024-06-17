@@ -15,14 +15,13 @@ const Footer = (props: {
 }) => {
   const { onClickEditDetails, onClickChangePassword } = props;
   return (
-    <div className="flex mt-3">
+    <div className="mt-3 flex space-x-2">
       <Button icon={<PencilIcon />} onClick={onClickEditDetails}>
         Edit Details
       </Button>
-      <div style={{ width: "8px" }} />
       <Button
         icon={<KeyIcon />}
-        color="success"
+        action="success"
         onClick={onClickChangePassword}
       >
         Change Password

@@ -11,11 +11,11 @@ const LogoIam = () => {
         width="0"
         height="0"
         sizes="100vw"
-        className="w-28 my-auto"
+        className="my-auto w-28"
         alt="INFN Cloud"
         priority={true}
       />
-      <div className="infn-subtitle infn-txt-secondary px-4 py-2">
+      <div className="px-4 py-2 text-2xl font-bold text-secondary">
         INDIGO IAM for <br /> cnafsd
       </div>
     </div>
@@ -25,17 +25,11 @@ const LogoIam = () => {
 const UserLogo = (props: { username: string }) => {
   const { username } = props;
   return (
-    <div className="infn-logo-user">
-      <div style={{ width: "48px", display: "flex" }}>
-        <UserCircleIcon />
-      </div>
-      <div className="h5 px-4 my-auto">{username}</div>
+    <div className="flex">
+      <UserCircleIcon className="w-16" />
+      <h2 className="my-auto px-4">{username}</h2>
     </div>
   );
-};
-
-const Divider = () => {
-  return <div className="infn-divider" />;
 };
 
 export const LogoHeader = async () => {
@@ -46,7 +40,7 @@ export const LogoHeader = async () => {
       <LogoIam />
       <UserLogo username={username} />
       <DrawerButtons />
-      <Divider />
+      <hr className="bg-secondary" />
     </div>
   );
 };

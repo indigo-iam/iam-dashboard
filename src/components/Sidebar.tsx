@@ -1,7 +1,6 @@
 import {
   Drawer,
   DrawerLink,
-  DrawerFooterLink,
   DrawerSection,
   LogoHeader,
   DrawerBody,
@@ -49,17 +48,17 @@ const Body = () => {
 const Footer = () => {
   return (
     <DrawerFooter>
-      <DrawerFooterLink
+      <DrawerLink
         title="Privacy Policy"
         href="/privacy"
         icon={<ShieldCheckIcon />}
       />
-      <DrawerFooterLink
+      <DrawerLink
         title="IAM Documentation"
         href="/docs"
         icon={<InformationCircleIcon />}
       />
-      <div className="infn-version">v1.0</div>
+      <div className="bg-primary-light h-4 w-full text-center">v1.0</div>
     </DrawerFooter>
   );
 };

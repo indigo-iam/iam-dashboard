@@ -1,41 +1,21 @@
 import Link from "next/link";
 import { ReactNode } from "react";
 
-const DrawerLinkBase = (props: {
-  title: string;
-  icon: JSX.Element;
-  extraClass: string;
-  href: string;
-}) => {
-  const { title, href, icon, extraClass } = props;
-  return (
-    <Link href={href}>
-      <button className={"infn-drawer-link " + extraClass}>
-        <div className="flex">
-          <div className="me-2" style={{ width: "20px" }}>
-            {icon}
-          </div>
-          {title}
-        </div>
-      </button>
-    </Link>
-  );
-};
-
 export const DrawerLink = (props: {
   title: string;
-  href: string;
   icon: JSX.Element;
-}) => {
-  return <DrawerLinkBase {...props} extraClass="row" />;
-};
-
-export const DrawerFooterLink = (props: {
-  title: string;
   href: string;
-  icon: JSX.Element;
 }) => {
-  return <DrawerLinkBase {...props} extraClass="infn-drawer-footer-link" />;
+  const { title, href, icon } = props;
+  return (
+    <Link
+      className="hover:bg-primary-hover flex rounded-lg p-2 transition ease-in-out"
+      href={href}
+    >
+      <div className="me-2 w-6">{icon}</div>
+      {title}
+    </Link>
+  );
 };
 
 interface DrawerSectionProps {
@@ -46,12 +26,12 @@ interface DrawerSectionProps {
 export const DrawerSection = (props: DrawerSectionProps) => {
   const { title, children } = props;
   return (
-    <div className="infn-drawer-section">
-      <div className="infn-section-subtitle infn-txt-secondary p-4 pb-2">
+    <>
+      <p className="p-4 pb-2 text-lg font-bold uppercase text-secondary">
         {title}
-      </div>
-      <div className="infn-drawer-section-list">{children}</div>
-    </div>
+      </p>
+      <div className="px-4 text-lg">{children}</div>
+    </>
   );
 };
 
@@ -61,7 +41,7 @@ interface DrawerBodyProps {
 
 export const DrawerBody = (props: DrawerBodyProps) => {
   const { children } = props;
-  return <div className="infn-drawer-body">{children}</div>;
+  return <div className="h-full">{children}</div>;
 };
 
 interface DrawerFooterProps {
@@ -70,7 +50,7 @@ interface DrawerFooterProps {
 
 export const DrawerFooter = (props: DrawerFooterProps) => {
   const { children } = props;
-  return <div className="infn-drawer-footer">{children}</div>;
+  return <div className="absolute bottom-0 w-full">{children}</div>;
 };
 
 export interface DrawerProps {
@@ -80,7 +60,11 @@ export interface DrawerProps {
 export const Drawer = (props: DrawerProps): JSX.Element => {
   const { width, children } = props;
   return (
-    <div id="drawer" className="infn-drawer" style={{ width: width }}>
+    <div
+      id="drawer"
+      className="fixed inset-0 z-10 bg-primary text-secondary"
+      style={{ width: width }} // FIXME: use responsive layout
+    >
       {children}
     </div>
   );

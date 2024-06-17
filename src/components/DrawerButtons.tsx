@@ -5,19 +5,23 @@ import {
   BellIcon,
   WrenchIcon,
 } from "@heroicons/react/24/solid";
-import { ReactNode } from "react";
 
-interface ItemButtonProps extends React.HTMLProps<HTMLButtonElement> {
-  type?: "button" | "reset" | "submit";
-  icon: ReactNode;
-}
+type ItemButtonProps = {
+  icon: React.ReactNode;
+  title: string;
+  onClick?: () => void;
+};
 
-const ItemButton = (props: ItemButtonProps) => {
-  const { icon, ...buttonProps } = props;
-  buttonProps.className = "infn-btn icon infn-btn-primary";
+const ItemButton = (props: Readonly<ItemButtonProps>) => {
+  const { icon, title, onClick } = props;
   return (
-    <button {...buttonProps}>
-      <div style={{ width: "24px", height: "24px" }}>{icon}</div>
+    <button
+      className="hover:bg-primary-hover rounded-full p-4"
+      title={title}
+      onClick={onClick}
+      type="button"
+    >
+      <div className="h-8 w-8">{icon}</div>
     </button>
   );
 };

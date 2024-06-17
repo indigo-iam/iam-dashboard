@@ -1,6 +1,7 @@
 "use client";
-import { Button, Form, Input } from "@/components";
+import { Button, Form } from "@/components";
 import Modal, { ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
+import Input from "@/components/Input";
 import {
   ArrowUpTrayIcon,
   ArrowUturnLeftIcon,

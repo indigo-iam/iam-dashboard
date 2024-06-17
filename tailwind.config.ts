@@ -18,6 +18,7 @@ const config: Config = {
         primary: {
           DEFAULT: "#002A44",
           hover: "#20385A",
+          light: "#4196B4",
           50: "#B4E2FF",
           100: "#A0DBFF",
           200: "#77CBFF",

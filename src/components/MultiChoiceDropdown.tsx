@@ -35,8 +35,8 @@ export class MultiChoiceItem implements MultiChoiceItemI {
 const Capsule = (props: { title: string; onDeselect?: () => void }) => {
   const { title, onDeselect } = props;
   return (
-    <span className="infn-dropdown-capsule">
-      {title}
+    <span className="my-auto flex rounded-full bg-secondary-300 px-2 py-1">
+      <small className="my-auto">{title}</small>
       <button
         type="button"
         color="danger"
@@ -72,7 +72,7 @@ const ItemView = (props: { item: MultiChoiceItemI }) => {
 
   return (
     <div
-      className="infn-dropdown-item"
+      className="mx-2 p-2 hover:rounded-xl hover:bg-secondary-200"
       tabIndex={0}
       onFocus={handleOnFocus}
       onClick={handleClick}
@@ -86,7 +86,7 @@ const ItemView = (props: { item: MultiChoiceItemI }) => {
 const DropdownContent = (props: { items: MultiChoiceItemI[] }) => {
   const { items } = props;
   return (
-    <div className="infn-dropdown-content">
+    <div className="relative mr-2 h-full overflow-y-auto">
       {items.map(item => {
         return <ItemView key={item.key} item={item} />;
       })}
@@ -100,7 +100,10 @@ export const Dropdown = (props: {
 }) => {
   const { show, ...other } = props;
   return (
-    <div className={`infn-dropdown ${show ? "show" : "hide"}`}>
+    <div
+      hidden={!!!show}
+      className={"absolute mx-auto mt-2 h-96 rounded-xl bg-secondary shadow-lg"}
+    >
       <DropdownContent {...other} />
     </div>
   );
@@ -138,11 +141,10 @@ export const MultiChoiceDropdown = (props: MultiChoiceDropdownProps) => {
   const filteredItems = items.filter(item => item.title.includes(userInput));
 
   return (
-    <div className="infn-multichoice-dropdown">
+    <div className="h-100 relative rounded-3xl border bg-secondary-200 px-4 py-2">
       <input
         type="search"
-        className="w-full infn-dropdown-search-bar"
-        style={{ background: "transparent" }}
+        className="w-full bg-transparent"
         placeholder={placeholder}
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}

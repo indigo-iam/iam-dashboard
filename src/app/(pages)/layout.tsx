@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "../globals.css";
-import "../infn.css";
+import { Roboto } from "next/font/google";
+import "@/app/globals.css";
 import { Sidebar } from "@/components/Sidebar";
 
-const inter = Inter({ subsets: ["latin"] });
+const font = Roboto({ weight: "300", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "INDIGO IAM",
@@ -20,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`text-primary ${font.className}`}>
         <Sidebar width={drawerWidth} />
         <div className="p-4" style={{ marginLeft: drawerWidth }}>
           {children}

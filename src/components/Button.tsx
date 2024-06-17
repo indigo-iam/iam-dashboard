@@ -21,7 +21,34 @@ export interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
 
 export const Button = (props: ButtonProps): JSX.Element => {
   const { children, icon, isSmall, action, ...buttonProps } = props;
-  const className = `btn-${action ?? "primary"}`;
+  let className = "btn-primary";
+  switch (action) {
+    case "primary":
+      className = "btn-primary";
+      break;
+    case "primary-outline":
+      className = "btn-primary-outline";
+      break;
+    case "success":
+      className = "btn-success";
+      break;
+    case "success-outline":
+      className = "btn-success-outline";
+      break;
+    case "warning":
+      className = "btn-warning";
+      break;
+    case "warning-outline":
+      className = "btn-warning-outline";
+      break;
+    case "danger":
+      className = "btn-danger";
+      break;
+    case "danger-outline":
+      className = "btn-danger-outline";
+      break;
+    default:
+  }
 
   return (
     <button {...buttonProps} className={className}>

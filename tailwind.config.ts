@@ -17,6 +17,7 @@ const config: Config = {
         // generated with https://www.tailwindshades.com
         primary: {
           DEFAULT: "#002A44",
+          hover: "#20385A",
           50: "#B4E2FF",
           100: "#A0DBFF",
           200: "#77CBFF",

@@ -1,24 +1,7 @@
-import Link from "next/link";
 import { ReactNode } from "react";
 import Header from "./Header";
 import "./drawer.css";
-
-export const DrawerLink = (props: {
-  title: string;
-  icon: JSX.Element;
-  href: string;
-}) => {
-  const { title, href, icon } = props;
-  return (
-    <Link
-      className="hover:bg-primary-hover flex rounded-lg p-2 transition ease-in-out"
-      href={href}
-    >
-      <div className="me-2 w-6">{icon}</div>
-      {title}
-    </Link>
-  );
-};
+import DismissButton from "./DismissButton";
 
 interface DrawerSectionProps {
   title: string;
@@ -64,13 +47,14 @@ export default function Drawer(props: Readonly<DrawerProps>): JSX.Element {
   const { children, id } = props;
   return (
     <>
-      <Header sidebarId={id} />
+      <Header drawerId={id} />
       <aside
         id={id}
-        className="fixed inset-0 z-10 mt-16 w-80 -translate-x-full bg-primary text-secondary transition-transform lg:translate-x-0"
+        className="fixed inset-0 z-30 mt-16 w-80 -translate-x-full bg-primary text-secondary transition-transform lg:translate-x-0"
       >
         {children}
       </aside>
+      <DismissButton drawerId={id} />
     </>
   );
 }

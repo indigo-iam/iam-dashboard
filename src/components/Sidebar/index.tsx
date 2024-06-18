@@ -1,5 +1,4 @@
 import Drawer, {
-  DrawerLink,
   DrawerSection,
   DrawerBody,
   DrawerFooter,
@@ -14,11 +13,24 @@ import {
   ShieldCheckIcon,
   InformationCircleIcon,
 } from "@heroicons/react/20/solid";
+import Link from "./Link";
+
+const LEFT_SIDEBAR_ID = "left-sidebar";
+
+type SidebarLinkProps = {
+  title: string;
+  icon: JSX.Element;
+  href: string;
+};
+
+const SidebarLink = (props: SidebarLinkProps) => {
+  return <Link sidebarId={LEFT_SIDEBAR_ID} {...props} />;
+};
 
 const AccountManagement = () => {
   return (
     <DrawerSection title="Account Management">
-      <DrawerLink title="Home" href="/" icon={<HomeIcon />} />
+      <SidebarLink title="Home" href="/" icon={<HomeIcon />} />
     </DrawerSection>
   );
 };
@@ -26,10 +38,16 @@ const AccountManagement = () => {
 const OrganizationManagement = () => {
   return (
     <DrawerSection title="Organization Management">
-      <DrawerLink title="Users" href="/users" icon={<UserIcon />} />
-      <DrawerLink title="Groups" href="/groups" icon={<UserGroupIcon />} />
-      <DrawerLink title="Clients" href="/clients" icon={<RocketLaunchIcon />} />
-      <DrawerLink title="Tokens" href="/tokens" icon={<KeyIcon />} />
+      <nav>
+        <SidebarLink title="Users" href="/users" icon={<UserIcon />} />
+        <SidebarLink title="Groups" href="/groups" icon={<UserGroupIcon />} />
+        <SidebarLink
+          title="Clients"
+          href="/clients"
+          icon={<RocketLaunchIcon />}
+        />
+        <SidebarLink title="Tokens" href="/tokens" icon={<KeyIcon />} />
+      </nav>
     </DrawerSection>
   );
 };
@@ -47,12 +65,12 @@ const Body = () => {
 const Footer = () => {
   return (
     <DrawerFooter>
-      <DrawerLink
+      <SidebarLink
         title="Privacy Policy"
         href="/privacy"
         icon={<ShieldCheckIcon />}
       />
-      <DrawerLink
+      <SidebarLink
         title="IAM Documentation"
         href="/docs"
         icon={<InformationCircleIcon />}
@@ -64,7 +82,7 @@ const Footer = () => {
 
 export default function Sidebar() {
   return (
-    <Drawer id="left-sidebar">
+    <Drawer id={LEFT_SIDEBAR_ID}>
       <Body />
       <Footer />
     </Drawer>

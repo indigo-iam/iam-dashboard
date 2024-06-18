@@ -51,16 +51,13 @@ export default function Button(props: ButtonProps): JSX.Element {
   }
 
   return (
-    <button {...buttonProps} className={className}>
+    <button
+      {...buttonProps}
+      className={className + `${isSmall ? " !px-1.5 !py-0.5" : ""}`}
+    >
       <div className="flex">
         {icon ? (
-          <div
-            className="my-auto me-2"
-            style={{
-              width: isSmall ? "16px" : "24px",
-              height: isSmall ? "16px" : "24px",
-            }}
-          >
+          <div className={`my-auto me-2 ${isSmall ? "h-3 w-3" : "h-5 w-5"}`}>
             {icon}
           </div>
         ) : null}

@@ -1,6 +1,6 @@
 "use client";
 import Card from "@/components/Card";
-import { Button } from "@/components";
+import Button from "@/components/Button";
 import { dateToHuman } from "@/utils/dates";
 import { EditDetailsModal } from "./EditDetailsModal";
 import { ChangePasswordModal } from "./ChangePasswordModal";

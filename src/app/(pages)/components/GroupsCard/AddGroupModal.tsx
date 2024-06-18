@@ -1,11 +1,10 @@
 "use client";
-import {
-  Button,
-  Form,
-  MultiChoiceDropdown,
+import Button from "@/components/Button";
+import Form from "@/components/Form";
+import MultiChoiceDropdown, {
   MultiChoiceItem,
   MultiChoiceItemI,
-} from "@/components";
+} from "@/components/MultiChoiceDropdown";
 import { XMarkIcon, ArrowUpTrayIcon } from "@heroicons/react/24/solid";
 import { useCallback, useState, useTransition } from "react";
 import { Group } from "@/models/groups";

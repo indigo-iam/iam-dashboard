@@ -109,7 +109,7 @@ export const Dropdown = (props: {
   );
 };
 
-export const MultiChoiceDropdown = (props: MultiChoiceDropdownProps) => {
+export default function MultiChoiceDropdown(props: MultiChoiceDropdownProps) {
   const { items, selected, onDeselect, placeholder } = props;
   const [show, setShow] = useState(false);
   const [userInput, setUserInput] = useState("");
@@ -164,4 +164,4 @@ export const MultiChoiceDropdown = (props: MultiChoiceDropdownProps) => {
       <Dropdown show={show} items={filteredItems} />
     </div>
   );
-};
+}

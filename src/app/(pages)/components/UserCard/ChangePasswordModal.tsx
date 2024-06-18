@@ -1,5 +1,6 @@
 "use client";
-import { Button, Form } from "@/components";
+import Button from "@/components/Button";
+import Form from "@/components/Form";
 import Modal, { ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import Input from "@/components/Input";
 import {

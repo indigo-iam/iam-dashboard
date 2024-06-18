@@ -1,6 +1,6 @@
 "use client";
 import Card from "@/components/Card";
-import { Button } from "@/components";
+import Button from "@/components/Button";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/16/solid";
 import { AddGroupModal } from "./AddGroupModal";

@@ -1,5 +1,6 @@
 "use client";
-import { Button, Paginator } from "@/components";
+import Button from "@/components/Button";
+import Paginator from "@/components/Paginator";
 import { MeClient, MeClients } from "@/models/me";
 import { deleteClient } from "@/services/clients";
 import { fetchClients } from "@/services/me";

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "@/components";
+import  Button  from "@/components/Button";
 import { ClientsTable } from "./components";
 import { PlusIcon } from "@heroicons/react/16/solid";
 import { fetchClients } from "@/services/me";

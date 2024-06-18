@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components";
+import Button  from "@/components/Button";
 import { ClientRequest, Scope } from "@/models/client";
 import { Me } from "@/models/me";
 import { PlusIcon } from "@heroicons/react/16/solid";

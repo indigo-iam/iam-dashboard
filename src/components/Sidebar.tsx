@@ -1,11 +1,10 @@
-import {
-  Drawer,
+import Drawer, {
   DrawerLink,
   DrawerSection,
-  LogoHeader,
   DrawerBody,
   DrawerFooter,
-} from ".";
+} from "@/components/Drawer";
+import { LogoHeader } from "@/components/LogoHeader";
 import {
   HomeIcon,
   KeyIcon,
@@ -63,17 +62,11 @@ const Footer = () => {
   );
 };
 
-export interface SidebarProps {
-  width: string;
-}
-
-export const Sidebar = (props: SidebarProps) => {
-  const { width } = props;
-
+export default function Sidebar() {
   return (
-    <Drawer width={width}>
+    <Drawer id="left-sidebar">
       <Body />
       <Footer />
     </Drawer>
   );
-};
+}

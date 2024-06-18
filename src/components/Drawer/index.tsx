@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { ReactNode } from "react";
+import Header from "./Header";
+import "./drawer.css";
 
 export const DrawerLink = (props: {
   title: string;
@@ -54,18 +56,21 @@ export const DrawerFooter = (props: DrawerFooterProps) => {
 };
 
 export interface DrawerProps {
-  width: string;
   children: ReactNode;
+  id: string;
 }
-export const Drawer = (props: DrawerProps): JSX.Element => {
-  const { width, children } = props;
+
+export default function Drawer(props: Readonly<DrawerProps>): JSX.Element {
+  const { children, id } = props;
   return (
-    <div
-      id="drawer"
-      className="fixed inset-0 z-10 bg-primary text-secondary"
-      style={{ width: width }} // FIXME: use responsive layout
-    >
-      {children}
-    </div>
+    <>
+      <Header sidebarId={id} />
+      <aside
+        id={id}
+        className="fixed inset-0 z-10 mt-16 w-80 -translate-x-full bg-primary text-secondary transition-transform lg:translate-x-0"
+      >
+        {children}
+      </aside>
+    </>
   );
-};
+}

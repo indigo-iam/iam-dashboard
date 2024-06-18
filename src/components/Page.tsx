@@ -1,5 +1,5 @@
 export type PageProps = {
-  title: string;
+  title?: string;
   children?: React.ReactNode;
 };
 
@@ -7,8 +7,8 @@ export default function Page(props: Readonly<PageProps>) {
   const { title, children } = props;
 
   return (
-    <div id={title}>
-      <h1>{title} </h1>
+    <div className="mt-16 lg:mt-0" id={title}>
+      <h1>{title ?? "Unknown Client"} </h1>
       <hr />
       {children}
     </div>

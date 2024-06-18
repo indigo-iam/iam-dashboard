@@ -12,10 +12,8 @@ const Row = (props: { title: string; deleteGroup: () => void }) => {
   const { title, deleteGroup } = props;
   return (
     <tr>
-      <td>
-        <b>{title}</b>
-      </td>
-      <td className="flex flex-row-reverse">
+      <td>{title}</td>
+      <td className="w-0">
         <Button
           action="danger"
           isSmall={true}
@@ -36,21 +34,19 @@ const Groups = (props: { me: Me }) => {
   }
   const deleteGroup = () => console.log("fake delete group!");
   return (
-    <div>
-      <table>
-        <tbody>
-          {groups.map(group => {
-            return (
-              <Row
-                key={group.display}
-                title={group.display}
-                deleteGroup={deleteGroup}
-              />
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+    <table className="w-full table-auto">
+      <tbody>
+        {groups.map(group => {
+          return (
+            <Row
+              key={group.display}
+              title={group.display}
+              deleteGroup={deleteGroup}
+            />
+          );
+        })}
+      </tbody>
+    </table>
   );
 };
 

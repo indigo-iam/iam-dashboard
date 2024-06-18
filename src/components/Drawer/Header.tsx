@@ -12,7 +12,7 @@ const LogoIam = () => (
       alt="INFN Cloud"
       priority={true}
     />
-    <div className="my-auto px-4 py-2 text-2xl font-bold text-secondary">
+    <div className="my-auto px-4 py-1 text-2xl font-bold text-secondary">
       INDIGO IAM for cnafsd
     </div>
   </div>

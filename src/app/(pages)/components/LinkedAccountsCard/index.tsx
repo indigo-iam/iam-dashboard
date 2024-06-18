@@ -26,53 +26,55 @@ const OidcIdView = (props: { id: OidcId }) => {
 
 const SamlIdView = (props: { id: SamlId }) => {
   return (
-    <div className="border-bottom container p-2">
-      <div className="row">
-        <div className="col">
-          {props.id.idpId}
-          <br />
-          {props.id.attributeId}
-          <br />
-          {props.id.userId}
-        </div>
-        <div className="col flex flex-row-reverse">
-          <Button action="danger" isSmall={true} icon={<XCircleIcon />}>
-            Unlink
-          </Button>
-        </div>
+    <div className="flex flex-wrap">
+      <div className="max-w-60">
+        <p className="break-all">{props.id.idpId}</p>
+        <p className="break-all"> {props.id.attributeId}</p>
+        <p className="break-all">{props.id.userId}</p>
+      </div>
+      <div className="ml-auto mr-0">
+        <Button action="danger" isSmall={true} icon={<XCircleIcon />}>
+          Unlink
+        </Button>
       </div>
     </div>
   );
 };
 
+function OidcAccounts(props: { oidcIds?: OidcId[] }) {
+  const { oidcIds } = props;
+  return (
+    <>
+      <p className="font-bold">OpenID Connect</p>
+
+      {oidcIds
+        ? oidcIds.map(oidcId => <OidcIdView key={oidcId.subject} id={oidcId} />)
+        : null}
+    </>
+  );
+}
+
+function SamlAccounts(props: { samlIds?: SamlId[] }) {
+  const { samlIds } = props;
+  return (
+    <>
+      <p className="font-bold">SAML</p>
+      {samlIds
+        ? samlIds.map(samlId => (
+            <SamlIdView key={samlId.attributeId} id={samlId} />
+          ))
+        : null}
+    </>
+  );
+}
+
 const LinkedAccounts = async () => {
   const me = await fetchMe();
-  if (!me) {
-    return <></>;
-  }
   const { oidcIds, samlIds } = me["urn:indigo-dc:scim:schemas:IndigoUser"];
   return (
-    <div>
-      <div>
-        <div>
-          <b>OpenID Connect</b>
-        </div>
-        {oidcIds
-          ? oidcIds.map(oidcId => (
-              <OidcIdView key={oidcId.subject} id={oidcId} />
-            ))
-          : null}
-      </div>
-      <div>
-        <div className="pt-3">
-          <b>SAML</b>
-        </div>
-        {samlIds
-          ? samlIds.map(samlId => (
-              <SamlIdView key={samlId.attributeId} id={samlId} />
-            ))
-          : null}
-      </div>
+    <div className="space-y-2">
+      <OidcAccounts oidcIds={oidcIds} />
+      <SamlAccounts samlIds={samlIds} />
     </div>
   );
 };

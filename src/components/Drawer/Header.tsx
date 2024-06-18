@@ -18,7 +18,7 @@ const LogoIam = () => (
   </div>
 );
 
-export default function Header(props: { drawerId: string }) {
+export default function Header(props: Readonly<{ drawerId: string }>) {
   const { drawerId } = props;
   return (
     <header className="fixed left-0 top-0 z-30 h-16 w-screen bg-primary lg:w-80">

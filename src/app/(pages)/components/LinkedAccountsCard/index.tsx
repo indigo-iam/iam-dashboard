@@ -41,7 +41,7 @@ const SamlIdView = (props: { id: SamlId }) => {
   );
 };
 
-function OidcAccounts(props: { oidcIds?: OidcId[] }) {
+function OidcAccounts(props: Readonly<{ oidcIds?: OidcId[] }>) {
   const { oidcIds } = props;
   return (
     <>
@@ -54,7 +54,7 @@ function OidcAccounts(props: { oidcIds?: OidcId[] }) {
   );
 }
 
-function SamlAccounts(props: { samlIds?: SamlId[] }) {
+function SamlAccounts(props: Readonly<{ samlIds?: SamlId[] }>) {
   const { samlIds } = props;
   return (
     <>
@@ -68,7 +68,7 @@ function SamlAccounts(props: { samlIds?: SamlId[] }) {
   );
 }
 
-const LinkedAccounts = async () => {
+async function LinkedAccounts() {
   const me = await fetchMe();
   const { oidcIds, samlIds } = me["urn:indigo-dc:scim:schemas:IndigoUser"];
   return (
@@ -77,7 +77,7 @@ const LinkedAccounts = async () => {
       <SamlAccounts samlIds={samlIds} />
     </div>
   );
-};
+}
 
 export const LinkedAccountsCard = (): JSX.Element => {
   return (

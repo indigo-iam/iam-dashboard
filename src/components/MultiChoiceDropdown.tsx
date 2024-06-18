@@ -101,7 +101,7 @@ export const Dropdown = (props: {
   const { show, ...other } = props;
   return (
     <div
-      hidden={!!!show}
+      hidden={show === false}
       className={"absolute mx-auto mt-2 h-96 rounded-xl bg-secondary shadow-lg"}
     >
       <DropdownContent {...other} />
@@ -109,7 +109,9 @@ export const Dropdown = (props: {
   );
 };
 
-export default function MultiChoiceDropdown(props: MultiChoiceDropdownProps) {
+export default function MultiChoiceDropdown(
+  props: Readonly<MultiChoiceDropdownProps>
+) {
   const { items, selected, onDeselect, placeholder } = props;
   const [show, setShow] = useState(false);
   const [userInput, setUserInput] = useState("");

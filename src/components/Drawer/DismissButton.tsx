@@ -1,6 +1,6 @@
 "use client";
 
-export default function DismissButton(props: { drawerId: string }) {
+export default function DismissButton(props: Readonly<{ drawerId: string }>) {
   const { drawerId } = props;
   const dismissButtonId = `${drawerId}-dismiss-btn`;
   function closeSidebar() {

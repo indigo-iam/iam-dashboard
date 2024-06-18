@@ -1,7 +1,7 @@
 "use client";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 
-export default function BurgerButton(props: { drawerId: string }) {
+export default function BurgerButton(props: Readonly<{ drawerId: string }>) {
   const { drawerId } = props;
 
   function toggleSidebar() {

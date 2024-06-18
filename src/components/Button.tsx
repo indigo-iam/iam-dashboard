@@ -19,9 +19,9 @@ export interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
   action?: ButtonColor;
 }
 
-export default function Button(props: ButtonProps): JSX.Element {
+export default function Button(props: Readonly<ButtonProps>): JSX.Element {
   const { children, icon, isSmall, action, ...buttonProps } = props;
-  let className = "btn-primary";
+  let className = "";
   switch (action) {
     case "primary":
       className = "btn-primary";
@@ -48,6 +48,7 @@ export default function Button(props: ButtonProps): JSX.Element {
       className = "btn-danger-outline";
       break;
     default:
+      className = "btn-primary";
   }
 
   return (

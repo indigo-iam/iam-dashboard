@@ -2,7 +2,7 @@ export interface InputProps extends React.HTMLProps<HTMLInputElement> {
   errorMessage?: string;
 }
 
-export default function Input(props: InputProps) {
+export default function Input(props: Readonly<InputProps>) {
   const { id, title } = props;
   const { errorMessage, ...inputProps } = props;
   return (

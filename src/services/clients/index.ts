@@ -1,7 +1,7 @@
 "use server";
 import getConfig from "@/utils/config";
-import { ClientRequest } from "@/models/client";
-import { authFetch } from "@/utils/fetch";
+import { Client, ClientRequest } from "@/models/client";
+import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
 
 const { BASE_URL } = getConfig();
@@ -36,4 +36,8 @@ export const deleteClient = async (clientId: string) => {
     const msg = await response.text();
     throw Error(`Delete Client failed with status ${response.status} ${msg}`);
   }
+};
+
+export const getClient = async (clientId: string) => {
+  return await getItem<Client>(`${BASE_URL}/iam/api/clients/${clientId}`);
 };

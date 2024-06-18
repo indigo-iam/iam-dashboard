@@ -1,13 +1,8 @@
 "use client";
-import {
-  Button,
-  Modal,
-  Form,
-  Input,
-  ModalProps,
-  ModalBody,
-  ModalFooter,
-} from "@/components";
+import Button from "@/components/Button";
+import Form from "@/components/Form";
+import Modal, { ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
+import Input from "@/components/Input";
 import {
   ArrowUpTrayIcon,
   ArrowUturnLeftIcon,
@@ -82,11 +77,10 @@ const Footer = (props: { isValid: boolean; onClose?: () => void }) => {
   const { isValid, onClose } = props;
   return (
     <ModalFooter>
-      <div className="flex justify-content-end p-2">
+      <div className="justify-content-end flex p-2">
         <div className="col p-1">
           <Button
-            className="my-auto"
-            color="primary"
+            action="primary"
             icon={<ArrowUpTrayIcon />}
             disabled={!isValid}
           >
@@ -94,19 +88,13 @@ const Footer = (props: { isValid: boolean; onClose?: () => void }) => {
           </Button>
         </div>
         <div className="col p-1">
-          <Button
-            className="my-auto"
-            color="warning"
-            icon={<ArrowUturnLeftIcon />}
-            type="reset"
-          >
+          <Button action="warning" icon={<ArrowUturnLeftIcon />} type="reset">
             Reset
           </Button>
         </div>
         <div className="col p-1">
           <Button
-            className="my-auto"
-            color="danger"
+            action="danger"
             onClick={onClose}
             icon={<XMarkIcon />}
             type="button"

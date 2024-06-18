@@ -22,15 +22,70 @@
   }
 }
 
-
 @layer base {
   h1 {
-    @apply text-2xl;
+    @apply text-2xl font-bold;
   }
   h2 {
-    @apply text-xl;
+    @apply text-xl font-bold;
   }
   h3 {
-    @apply text-lg;
+    @apply text-lg font-bold;
+  }
+  table {
+    @apply border-collapse border-2 border-secondary-100;
+  }
+
+  td,
+  th {
+    @apply border-0 p-2 text-left;
+  }
+
+  tr {
+    @apply h-12 even:bg-secondary-100 hover:bg-secondary-200;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply rounded-full px-2 py-1.5;
+  }
+  .btn-primary {
+    @apply btn border border-primary bg-primary text-secondary hover:bg-primary-900 dark:border-secondary;
+  }
+  .btn-primary-outline {
+    @apply btn border border-primary bg-secondary text-primary hover:bg-primary-900 hover:text-secondary dark:border-secondary dark:bg-primary dark:text-secondary;
+  }
+
+  .btn-secondary {
+    @apply btn border border-secondary-200 bg-secondary-200 text-primary hover:border-secondary-400 hover:bg-secondary-400 hover:text-secondary;
+  }
+
+  .btn-secondary-outline {
+    @apply btn border border-secondary-200 hover:bg-secondary-200;
+  }
+
+  .btn-success {
+    @apply btn border border-success bg-success text-secondary hover:bg-success-600;
+  }
+
+  .btn-success-outline {
+    @apply btn border border-success bg-secondary text-success hover:bg-success hover:text-secondary;
+  }
+
+  .btn-warning {
+    @apply btn bg-warning text-secondary hover:bg-warning-300;
+  }
+
+  .btn-warning-outline {
+    @apply btn border border-warning bg-secondary text-warning hover:bg-warning hover:text-secondary;
+  }
+
+  .btn-danger {
+    @apply btn bg-danger text-secondary hover:bg-danger-700;
+  }
+
+  .btn-danger-outline {
+    @apply btn border border-danger bg-secondary text-danger hover:bg-danger hover:text-secondary dark:bg-primary;
   }
 }

@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/Button";
+import Button from "@/components/Button";
 import { GroupRequest } from "@/models/group-requests";
 import { abortGroupRequest } from "@/services/group-requests";
 import { XCircleIcon } from "@heroicons/react/16/solid";
@@ -32,7 +32,7 @@ export const GroupRequestView = (props: { resource: GroupRequest }) => {
   };
 
   return (
-    <form className="container border-bottom p-2 mt-2">
+    <form className="border-bottom container mt-2 p-2">
       <div className="row">
         <div className="col">
           <Row title="Username" value={userFullName ?? username} />
@@ -42,7 +42,7 @@ export const GroupRequestView = (props: { resource: GroupRequest }) => {
         </div>
         <div className="col-auto flex flex-row-reverse">
           <Button
-            color="danger"
+            action="danger"
             className="my-auto"
             icon={<XCircleIcon />}
             isSmall={true}

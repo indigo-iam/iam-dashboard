@@ -1,8 +1,8 @@
 "use client";
-import { Button } from "@/components";
+import Card from "@/components/Card";
+import Button from "@/components/Button";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/16/solid";
-import { Card } from "../Card";
 import { AddGroupModal } from "./AddGroupModal";
 import { Me } from "@/models/me";
 import { useState } from "react";
@@ -12,12 +12,10 @@ const Row = (props: { title: string; deleteGroup: () => void }) => {
   const { title, deleteGroup } = props;
   return (
     <tr>
-      <td>
-        <b>{title}</b>
-      </td>
-      <td className="flex flex-row-reverse">
+      <td>{title}</td>
+      <td className="w-0">
         <Button
-          color="danger"
+          action="danger"
           isSmall={true}
           onClick={deleteGroup}
           icon={<XCircleIcon />}
@@ -36,28 +34,26 @@ const Groups = (props: { me: Me }) => {
   }
   const deleteGroup = () => console.log("fake delete group!");
   return (
-    <div>
-      <table>
-        <tbody>
-          {groups.map(group => {
-            return (
-              <Row
-                key={group.display}
-                title={group.display}
-                deleteGroup={deleteGroup}
-              />
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+    <table className="w-full table-auto">
+      <tbody>
+        {groups.map(group => {
+          return (
+            <Row
+              key={group.display}
+              title={group.display}
+              deleteGroup={deleteGroup}
+            />
+          );
+        })}
+      </tbody>
+    </table>
   );
 };
 
 const Footer = (props: { showAddGroup: () => void }) => {
   const { showAddGroup } = props;
   return (
-    <Button icon={<UserPlusIcon />} color="success" onClick={showAddGroup}>
+    <Button icon={<UserPlusIcon />} action="success" onClick={showAddGroup}>
       Add to Group(s)
     </Button>
   );

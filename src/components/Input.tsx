@@ -2,25 +2,21 @@ export interface InputProps extends React.HTMLProps<HTMLInputElement> {
   errorMessage?: string;
 }
 
-export const Input = (props: InputProps) => {
-  const { id, title, type } = props;
+export default function Input(props: Readonly<InputProps>) {
+  const { id, title } = props;
   const { errorMessage, ...inputProps } = props;
-
-  const className =
-    type === "search" || type === "email" || type === "password"
-      ? "infn-input-search"
-      : "";
   return (
-    <div className="row p-1">
-      <label className="col col-lg-6 col-xl-5 col-xxl-4 my-auto" htmlFor={id}>
+    <div className="flex flex-col">
+      <label className="text-lg font-bold text-primary" htmlFor={id}>
         {title}
       </label>
-      <input className={`col-1 col-lg ${className}`} {...inputProps} />
+      <input
+        className="rounded-full bg-secondary-100 px-4 py-2 disabled:bg-secondary-300 placeholder:disabled:text-secondary-600"
+        {...inputProps}
+      />
       {errorMessage ? (
-        <small className="infn-txt-danger" style={{ whiteSpace: "pre-line" }}>
-          {errorMessage}
-        </small>
+        <small className="text-danger">{errorMessage}</small>
       ) : null}
     </div>
   );
-};
+}

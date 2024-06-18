@@ -1,6 +1,6 @@
 import { fetchGroupsRequests } from "@/services/group-requests";
-import { Card } from "../Card";
 import { GroupRequestView } from "./GroupRequest";
+import Card from "@/components/Card";
 
 export const GroupRequests = async () => {
   const groupRequests = await fetchGroupsRequests();
@@ -11,17 +11,11 @@ export const GroupRequests = async () => {
   return (
     <div>
       {groupRequests.Resources.map(resource => {
-        return (
-          <GroupRequestView
-            key={resource.uuid}
-            resource={resource}
-          />
-        );
+        return <GroupRequestView key={resource.uuid} resource={resource} />;
       })}
     </div>
   );
 };
-
 
 export const GroupRequestsCard = (): JSX.Element => {
   return (

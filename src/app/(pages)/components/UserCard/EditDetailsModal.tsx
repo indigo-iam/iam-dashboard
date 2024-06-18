@@ -1,13 +1,8 @@
 "use client";
-import {
-  Button,
-  Modal,
-  Form,
-  Input,
-  ModalBody,
-  ModalFooter,
-  ModalProps,
-} from "@/components";
+import Button from "@/components/Button";
+import Form from "@/components/Form";
+import Modal, { ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
+import Input from "@/components/Input";
 import {
   ArrowUpTrayIcon,
   ArrowUturnLeftIcon,
@@ -69,8 +64,7 @@ const Footer = (props: { canSubmit: boolean; onClose?: () => void }) => {
       <div className="flex justify-end p-2">
         <div className="col p-1">
           <Button
-            className="my-auto"
-            color="primary"
+            action="primary"
             icon={<ArrowUpTrayIcon />}
             type="submit"
             disabled={!canSubmit}
@@ -79,19 +73,13 @@ const Footer = (props: { canSubmit: boolean; onClose?: () => void }) => {
           </Button>
         </div>
         <div className="col p-1">
-          <Button
-            className="my-auto"
-            color="warning"
-            icon={<ArrowUturnLeftIcon />}
-            type="reset"
-          >
+          <Button action="warning" icon={<ArrowUturnLeftIcon />} type="reset">
             Reset
           </Button>
         </div>
         <div className="col p-1">
           <Button
-            className="my-auto"
-            color="danger"
+            action="danger"
             onClick={onClose}
             icon={<XMarkIcon />}
             type="button"
@@ -153,14 +141,17 @@ export interface EditDetailsModalProps extends ModalProps {
 }
 
 export const EditDetailsModal = (props: EditDetailsModalProps) => {
-  const onClose = () => {
-    const form = document.getElementById(
-      "edit-details-form"
-    ) as HTMLFormElement;
-    form.reset();
+  const { me, ...modalProps } = props;
+  const formProps = {
+    me,
+    onClose: () => {
+      const form = document.getElementById(
+        "edit-details-form"
+      ) as HTMLFormElement;
+      form.reset();
+      props.onClose();
+    },
   };
-  const { me, ...modalProps } = { ...props, onClose };
-  const formProps = { me, onClose };
   return (
     <Modal {...modalProps}>
       <EditDetailsForm {...formProps} />

@@ -11,7 +11,7 @@ import {
 export default async function Home() {
   const [me, groups] = await Promise.all([fetchMe(), fetchGroups()]);
   return (
-    <div className="w-full p-8 grid grid-cols-2 gap-8">
+    <div className="grid w-full grid-cols-1 gap-8 p-8 xl:grid-cols-2">
       <UserCard me={me} />
       <LinkedAccountsCard />
       <GroupsCard me={me} groups={groups} />

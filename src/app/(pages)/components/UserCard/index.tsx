@@ -1,12 +1,11 @@
 "use client";
-import { Button } from "@/components";
+import Card from "@/components/Card";
+import Button from "@/components/Button";
 import { dateToHuman } from "@/utils/dates";
-import { Card } from "../Card";
 import { EditDetailsModal } from "./EditDetailsModal";
 import { ChangePasswordModal } from "./ChangePasswordModal";
 import { PencilIcon, KeyIcon } from "@heroicons/react/24/solid";
-import { reducer, initialState } from "./reducer";
-import { useReducer } from "react";
+import { useState } from "react";
 import type { Me } from "@/models/me";
 
 const Footer = (props: {
@@ -15,14 +14,13 @@ const Footer = (props: {
 }) => {
   const { onClickEditDetails, onClickChangePassword } = props;
   return (
-    <div className="flex mt-3">
+    <div className="mt-3 flex space-x-2">
       <Button icon={<PencilIcon />} onClick={onClickEditDetails}>
         Edit Details
       </Button>
-      <div style={{ width: "8px" }} />
       <Button
         icon={<KeyIcon />}
-        color="success"
+        action="success"
         onClick={onClickChangePassword}
       >
         Change Password
@@ -73,41 +71,27 @@ const User = (props: { me: Me }) => {
 
 export const UserCard = (props: { me: Me }) => {
   const { me } = props;
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  const showEditDetails = () => {
-    dispatch({ type: "SHOW_EDIT_DETAILS" });
-  };
-
-  const hideEditDetails = () => {
-    dispatch({ type: "HIDE_EDIT_DETAILS" });
-  };
-
-  const showChangePassword = () => {
-    dispatch({ type: "SHOW_CHANGE_PASSWORD" });
-  };
-
-  const hideChangePassword = () => {
-    dispatch({ type: "HIDE_CHANGE_PASSWORD" });
-  };
+  const [showEditDetails, setShowEditDetails] = useState(false);
+  const [showChangePassword, setShowChangePassword] = useState(false);
 
   return (
     <div>
       <EditDetailsModal
-        show={state.showEditDetails}
-        onClose={hideEditDetails}
+        show={showEditDetails}
+        onClose={() => setShowEditDetails(false)}
         me={me}
+        title="Edit your details"
       />
       <ChangePasswordModal
-        show={state.showChangePassword}
-        onClose={hideChangePassword}
+        show={showChangePassword}
+        onClose={() => setShowChangePassword(false)}
       />
       <Card
         title={me?.name.formatted}
         footer={
           <Footer
-            onClickEditDetails={showEditDetails}
-            onClickChangePassword={showChangePassword}
+            onClickEditDetails={() => setShowEditDetails(true)}
+            onClickChangePassword={() => setShowChangePassword(true)}
           />
         }
       >

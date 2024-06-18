@@ -1,6 +1,6 @@
 import { Certificate } from "@/models/me";
-import { Card } from "../Card";
 import { fetchMe } from "@/services/me";
+import Card from "@/components/Card";
 
 const CertificateView = (props: { cert: Certificate }) => {
   const { cert } = props;

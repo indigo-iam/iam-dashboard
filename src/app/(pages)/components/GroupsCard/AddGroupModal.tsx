@@ -1,21 +1,17 @@
 "use client";
-import {
-  Button,
-  Form,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalProps,
-  MultiChoiceDropdown,
+import Button from "@/components/Button";
+import Form from "@/components/Form";
+import MultiChoiceDropdown, {
   MultiChoiceItem,
   MultiChoiceItemI,
-} from "@/components";
+} from "@/components/MultiChoiceDropdown";
 import { XMarkIcon, ArrowUpTrayIcon } from "@heroicons/react/24/solid";
 import { useCallback, useState, useTransition } from "react";
 import { Group } from "@/models/groups";
 import { Me } from "@/models/me";
 import { JoinGroupRequest } from "@/models/group-requests";
 import { submitGroupRequest } from "@/services/group-requests";
+import Modal, { ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 
 const Body = (props: {
   items: MultiChoiceItemI[];
@@ -56,8 +52,7 @@ const Footer = (props: {
         <div className="col p-1">
           <Button
             type="button"
-            className="my-auto"
-            color="primary"
+            action="primary"
             icon={<ArrowUpTrayIcon />}
             onClick={onSubmit}
             disabled={isPending}
@@ -68,8 +63,7 @@ const Footer = (props: {
         <div className="col p-1">
           <Button
             type="button"
-            className="my-auto"
-            color="danger"
+            action="danger"
             onClick={onClose}
             icon={<XMarkIcon />}
           >

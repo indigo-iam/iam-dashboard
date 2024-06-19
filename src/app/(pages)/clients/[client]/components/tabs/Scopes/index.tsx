@@ -23,8 +23,22 @@ const SystemScopes = (props: { scopes: Scope[] }) => {
     ));
 };
 
-export default async function Scopes() {
+type ScopesProps = {
+  scope?: string;
+};
+
+export default async function Scopes(props: Readonly<ScopesProps>) {
   const scopes = await fetchScopes();
+
+  // If the client has scopes, use them to determine the selection state
+  if (props.scope) {
+    const client_scopes = props.scope.split(" ");
+    scopes.forEach(scope => {
+      scope.defaultScope =
+        client_scopes.findIndex(cs => cs === scope.value) > 0;
+    });
+  }
+
   return (
     <TabPanel>
       <FormSection htmlFor="system-scopes-radio" title="System Scopes">

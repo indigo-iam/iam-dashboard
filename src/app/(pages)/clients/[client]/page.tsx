@@ -50,7 +50,7 @@ export default async function Client(props: Readonly<ClientPageProps>) {
             contacts={client.contacts}
           />
           <Credentials />
-          <Scopes />
+          <Scopes scope={client.scope} />
           <GrantTypes />
           <Tokens />
           <Crypto />

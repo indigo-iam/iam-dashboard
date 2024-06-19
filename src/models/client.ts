@@ -18,6 +18,20 @@ export interface ClientRequest {
   response_types: string[];
 }
 
+export interface ClientBase {
+  created_at?: number;
+  client_id: string;
+  client_name?: string;
+  client_description?: string;
+  redirect_uris?: string;
+  dynamically_registered: boolean;
+  contacts?: string;
+  active: boolean;
+  allow_introspection: boolean;
+  status_changed_on?: number;
+  error?: string;
+}
+
 export type TokenEndpointAuthMethod =
   | "client_secret_basic"
   | "client_secret_post"
@@ -25,26 +39,39 @@ export type TokenEndpointAuthMethod =
   | "private_key_jwt"
   | "none";
 
-export type Client = {
-  client_id: string;
-  client_secret?: string;
-  client_name?: string;
-  client_description?: string;
-  redirect_uris?: string[];
-  contacts?: string[];
-  grant_types?: string[];
+export interface ClientCredentials {
   token_endpoint_auth_method?: TokenEndpointAuthMethod;
+}
+
+export interface ClientScopes {
   scope?: string;
+}
+
+export interface ClientGrantTypes {
+  grant_types?: string[];
+}
+
+export interface AccessTokenSettings {
   access_token_validity_seconds: number;
   id_token_validity_seconds: number;
-  device_code_validity_seconds: number;
-  reuse_refresh_token: boolean;
-  dynamically_registered: boolean;
-  allow_introspection: boolean;
-  clear_access_tokens_on_refresh: boolean;
   require_auth_time: boolean;
-  created_at?: number;
-  active: boolean;
-  status_changed_on?: number;
-  error?: string;
-};
+}
+
+export interface RefreshTokenSettings {
+  refresh_token_validity_second: number;
+  reuse_refresh_token: boolean;
+  clear_access_tokens_on_refresh: boolean;
+}
+
+export interface DeviceCodeSettings {
+  device_code_validity_seconds: number;
+}
+
+export interface Client
+  extends ClientBase,
+    ClientCredentials,
+    ClientScopes,
+    ClientGrantTypes,
+    AccessTokenSettings,
+    RefreshTokenSettings,
+    DeviceCodeSettings {}

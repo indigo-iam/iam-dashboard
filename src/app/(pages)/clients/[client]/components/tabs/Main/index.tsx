@@ -3,15 +3,9 @@ import { TabPanel } from "@/components/Tabs";
 import RedirectUris from "./RedirectUris";
 import Contacts from "./Contacts";
 import { FormSection } from "@/components/Form";
+import { ClientBase } from "@/models/client";
 
-type MainProps = {
-  client_name?: string;
-  client_id: string;
-  client_description?: string;
-  redirect_uris?: string[];
-  dynamically_registered: boolean;
-  contacts?: string[];
-};
+interface MainProps extends ClientBase {}
 
 export default function Main(props: Readonly<MainProps>) {
   const {

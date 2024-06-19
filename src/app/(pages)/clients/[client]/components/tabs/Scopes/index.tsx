@@ -1,6 +1,6 @@
 import { Form, FormSection } from "@/components/Form";
 import { TabPanel } from "@/components/Tabs";
-import { Scope } from "@/models/client";
+import { ClientScopes, Scope } from "@/models/client";
 import { fetchScopes } from "@/services/scopes";
 
 const SystemScopes = (props: { scopes: Scope[] }) => {
@@ -23,9 +23,7 @@ const SystemScopes = (props: { scopes: Scope[] }) => {
     ));
 };
 
-type ScopesProps = {
-  scope?: string;
-};
+interface ScopesProps extends ClientScopes {}
 
 export default async function Scopes(props: Readonly<ScopesProps>) {
   const scopes = await fetchScopes();

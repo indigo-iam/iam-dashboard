@@ -1,10 +1,9 @@
 import { FormSection } from "@/components/Form";
 import { TabPanel } from "@/components/Tabs";
+import { ClientGrantTypes } from "@/models/client";
 import { fetchOpenIdConfiguration } from "@/services/openid-configuration";
 
-type GrantTypesProps = {
-  grant_types?: string[];
-};
+interface GrantTypesProps extends ClientGrantTypes {}
 
 export default async function GrantTypes(props: Readonly<GrantTypesProps>) {
   const openIdConfiguration = await fetchOpenIdConfiguration();

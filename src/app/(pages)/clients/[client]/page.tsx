@@ -41,18 +41,10 @@ export default async function Client(props: Readonly<ClientPageProps>) {
           <Tab>Owners</Tab>
         </TabList>
         <TabPanels>
-          <Main
-            client_id={client.client_id}
-            client_name={client.client_name}
-            client_description={client.client_description}
-            redirect_uris={client.redirect_uris}
-            dynamically_registered={client.dynamically_registered}
-            contacts={client.contacts}
-          />
-          <Credentials />
-          <Scopes scope={client.scope} />
-          <GrantTypes grant_types={client.grant_types} />
-          <Tokens />
+          <Main {...client} />
+          <Credentials {...client} />
+          <Scopes {...client} />
+          <GrantTypes {...client} />
           <Crypto />
           <OtherInfo />
           <Owners />

@@ -51,7 +51,7 @@ export default async function Client(props: Readonly<ClientPageProps>) {
           />
           <Credentials />
           <Scopes scope={client.scope} />
-          <GrantTypes />
+          <GrantTypes grant_types={client.grant_types} />
           <Tokens />
           <Crypto />
           <OtherInfo />

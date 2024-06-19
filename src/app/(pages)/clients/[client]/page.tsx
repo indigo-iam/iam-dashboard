@@ -47,7 +47,7 @@ export default async function Client(props: Readonly<ClientPageProps>) {
           <GrantTypes {...client} />
           <Tokens {...client} />
           <Crypto {...client} />
-          <OtherInfo />
+          <OtherInfo {...client} />
           <Owners />
         </TabPanels>
       </TabGroup>

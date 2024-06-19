@@ -73,6 +73,12 @@ export interface ClientCodeChallenge {
   code_challenge_method?: CodeChallengeMethod;
 }
 
+export interface ClientOtherInfo {
+  client_uri?: string;
+  policy_uri?: string;
+  tos_uri?: string;
+}
+
 export interface Client
   extends ClientBase,
     ClientCredentials,
@@ -81,4 +87,5 @@ export interface Client
     AccessTokenSettings,
     RefreshTokenSettings,
     DeviceCodeSettings,
-    ClientCodeChallenge {}
+    ClientCodeChallenge,
+    ClientOtherInfo {}

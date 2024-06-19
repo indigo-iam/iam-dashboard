@@ -106,8 +106,6 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
     token_endpoint_auth_method = "none";
   }
 
-  console.log(token_endpoint_auth_method)
-
   return (
     <TabPanel>
       <FormSection

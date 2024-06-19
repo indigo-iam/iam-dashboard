@@ -35,7 +35,7 @@ export default async function Client(props: Readonly<ClientPageProps>) {
           <Tab>Credentials</Tab>
           <Tab>Scopes</Tab>
           <Tab>Grant Types</Tab>
-          <Tab>Scopes</Tab>
+          <Tab>Tokens</Tab>
           <Tab>Crypto</Tab>
           <Tab>Other Info</Tab>
           <Tab>Owners</Tab>
@@ -45,6 +45,7 @@ export default async function Client(props: Readonly<ClientPageProps>) {
           <Credentials {...client} />
           <Scopes {...client} />
           <GrantTypes {...client} />
+          <Tokens {...client} />
           <Crypto />
           <OtherInfo />
           <Owners />

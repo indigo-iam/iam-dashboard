@@ -67,6 +67,12 @@ export interface DeviceCodeSettings {
   device_code_validity_seconds: number;
 }
 
+export type CodeChallengeMethod = "none" | "plain" | "S256";
+
+export interface ClientCodeChallenge {
+  code_challenge_method?: CodeChallengeMethod;
+}
+
 export interface Client
   extends ClientBase,
     ClientCredentials,
@@ -74,4 +80,5 @@ export interface Client
     ClientGrantTypes,
     AccessTokenSettings,
     RefreshTokenSettings,
-    DeviceCodeSettings {}
+    DeviceCodeSettings,
+    ClientCodeChallenge {}

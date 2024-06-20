@@ -274,18 +274,18 @@ docker run -p <some-port>:80 --env-file=prod.env cnafsoftwaredevel/iam-dashboard
 
 ### Clients Page
 
-- [ ] Add Clients table
-- [ ] Add "New Client"
-- [ ] Add "Edit client" per each row
+- [x] Add Clients table
+- [x] Add "New Client"
+- [x] Add "Edit client" per each row
 - [ ] Add "Delete client" per each row
-- [ ] Add Client "edit" page with tabs:
-  - [ ] Main (client name, client id, client description, redirect URIs, contacts, etc)
-  - [ ] Credentials (Token endpoint auth method, client secret, registration access token, regenerate registration a.c., Public key set, JWK URI)
-  - [ ] Scopes (System scope, Custom scope)
-  - [ ] Grant types
-  - [ ] Tokens (A.T. timeout, ID T. timeout, R.T settings & timeout, Device code timeout)
-  - [ ] Crypto (PKCE settings)
-  - [ ] Other info (Homepage URL, ToS, Policy)
+- [ ] Add Client "edit" page with tabs (todo, form submission):
+  - [x] Main (client name, client id, client description, redirect URIs, contacts, etc)
+  - [x] Credentials (Token endpoint auth method, client secret, registration access token, regenerate registration a.c., Public key set, JWK URI)
+  - [x] Scopes (System scope, Custom scope)
+  - [x] Grant types
+  - [x] Tokens (A.T. timeout, ID T. timeout, R.T settings & timeout, Device code timeout)
+  - [x] Crypto (PKCE settings)
+  - [x] Other info (Homepage URL, ToS, Policy)
   - [ ] Owners (Show owners, assign owner)
 
 ### Tokens Page

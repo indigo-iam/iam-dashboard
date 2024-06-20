@@ -4,6 +4,7 @@ import { Client, ClientRequest } from "@/models/client";
 import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
 import { User, UserPage } from "@/models/user";
+import { Paginated } from "@/models/pagination";
 
 const { BASE_URL } = getConfig();
 
@@ -37,6 +38,12 @@ export const deleteClient = async (clientId: string) => {
     const msg = await response.text();
     throw Error(`Delete Client failed with status ${response.status} ${msg}`);
   }
+};
+
+export const getClientsPage = async (count: number, startIndex: number = 1) => {
+  return await getItem<Paginated<Client>>(
+    `${BASE_URL}/iam/api/clients?count=${count}&startIndex=${startIndex}`
+  );
 };
 
 export const getClient = async (clientId: string) => {

@@ -4,7 +4,7 @@ import { ClientCodeChallenge } from "@/models/client";
 
 export interface PKCEProps extends ClientCodeChallenge {}
 
-function PKCE(props: Readonly<PKCEProps>) {
+function PKCEView(props: Readonly<PKCEProps>) {
   let { code_challenge_method } = props;
   if (code_challenge_method === undefined) {
     code_challenge_method = "none";
@@ -35,7 +35,7 @@ export interface CryptoProps extends PKCEProps {}
 export default function Crypto(props: Readonly<CryptoProps>) {
   return (
     <TabPanel>
-      <PKCE {...props} />
+      <PKCEView {...props} />
     </TabPanel>
   );
 }

@@ -1,3 +1,6 @@
+import Paginator from "@/components/Paginator";
+import { getClientsPage } from "@/services/clients";
+import { getClientsPage as getMeClientsPage } from "@/services/me";
 import { Client } from "@/models/client";
 import Button from "@/components/Button";
 import Link from "next/link";
@@ -38,12 +41,12 @@ function Row(props: Readonly<RowProps>) {
   );
 }
 
-type ClientsTableProps = {
+type TableProps = {
   clients: Client[];
   children?: React.ReactNode;
 };
 
-export default async function ClientsTable(props: Readonly<ClientsTableProps>) {
+function Table(props: Readonly<TableProps>) {
   const { clients, children } = props;
   return (
     <div className="w-full space-y-4 rounded-xl border bg-secondary p-2 shadow-xl">
@@ -63,5 +66,22 @@ export default async function ClientsTable(props: Readonly<ClientsTableProps>) {
       </table>
       {children}
     </div>
+  );
+}
+
+type ClientsTableProps = { count?: string; page?: string; me?: boolean };
+
+export default async function ClientsTable(props: Readonly<ClientsTableProps>) {
+  const { count, page, me } = props;
+  const itemsPerPage = count ? parseInt(count) : 10;
+  const currentPage = page ? parseInt(page) + 1 : 1;
+  const response = me
+    ? await getMeClientsPage(itemsPerPage, currentPage)
+    : await getClientsPage(itemsPerPage, currentPage);
+  const { totalResults } = response;
+  return (
+    <Table clients={response.Resources}>
+      <Paginator numberOfPages={totalResults} />
+    </Table>
   );
 }

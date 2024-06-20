@@ -2,21 +2,7 @@ import Link from "next/link";
 import Button from "@/components/Button";
 import { PlusIcon } from "@heroicons/react/16/solid";
 import ClientsTable from "@/app/(pages)/clients/components/ClientsTable";
-import { getClientsPage } from "@/services/me";
-import Paginator from "@/components/Paginator";
 import Page from "@/components/Page";
-
-async function AsyncTable(props: Readonly<{ count?: string; page?: string }>) {
-  const itemsPerPage = props.count ? parseInt(props.count) : 10;
-  const currentPage = props.page ? parseInt(props.page) + 1 : 1;
-  const response = await getClientsPage(itemsPerPage, currentPage);
-  const { totalResults } = response;
-  return (
-    <ClientsTable clients={response.Resources}>
-      <Paginator numberOfPages={totalResults} />
-    </ClientsTable>
-  );
-}
 
 type MeClientsProps = {
   searchParams?: {
@@ -37,7 +23,7 @@ export default async function MeClients(props: Readonly<MeClientsProps>) {
         </Link>
         <Button color="secondary">Redeem client</Button>
       </div>
-      <AsyncTable {...searchParams} />
+      <ClientsTable {...searchParams} />
     </Page>
   );
 }

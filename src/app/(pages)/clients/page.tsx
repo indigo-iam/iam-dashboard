@@ -16,14 +16,15 @@ async function AsyncTable(props: { count?: string; page?: string }) {
   );
 }
 
-export default function Clients({
-  searchParams,
-}: {
+type ClientsProps = {
   searchParams?: {
     count?: string;
     page?: string;
   };
-}) {
+};
+
+export default function Clients(props: Readonly<ClientsProps>) {
+  const { searchParams } = props;
   return (
     <Page title="Clients">
       <Suspense fallback={"Loading..."}>

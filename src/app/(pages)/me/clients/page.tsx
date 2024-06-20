@@ -17,14 +17,15 @@ async function AsyncTable(props: { count?: string; page?: string }) {
   );
 }
 
-export default async function MeClients({
-  searchParams,
-}: {
+type MeClientsProps = {
   searchParams?: {
     count?: string;
     page?: string;
   };
-}) {
+};
+
+export default async function MeClients(props: Readonly<MeClientsProps>) {
+  const { searchParams } = props;
   return (
     <div className="flex flex-col gap-2">
       <h1>My Clients</h1>

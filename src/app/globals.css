@@ -51,7 +51,7 @@
     @apply rounded-full px-2 py-1.5;
   }
   .btn-primary {
-    @apply btn border border-primary bg-primary text-secondary hover:bg-primary-900 dark:border-secondary;
+    @apply btn border border-primary bg-primary text-secondary hover:bg-primary-900 disabled:border-primary/50 disabled:bg-primary/50 dark:border-secondary;
   }
   .btn-primary-outline {
     @apply btn border border-primary bg-secondary text-primary hover:bg-primary-900 hover:text-secondary dark:border-secondary dark:bg-primary dark:text-secondary;

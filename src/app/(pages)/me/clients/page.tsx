@@ -1,14 +1,20 @@
 import Link from "next/link";
-import  Button  from "@/components/Button";
-import { ClientsTable } from "./components";
+import Button from "@/components/Button";
 import { PlusIcon } from "@heroicons/react/16/solid";
-import { fetchClients } from "@/services/me";
+import ClientsTable from "@/app/(pages)/clients/components/ClientsTable";
+import Page from "@/components/Page";
 
-export default async function MyClient() {
-  const meClients = await fetchClients(1);
+type MeClientsProps = {
+  searchParams?: {
+    count?: string;
+    page?: string;
+  };
+};
+
+export default async function MeClients(props: Readonly<MeClientsProps>) {
+  const { searchParams } = props;
   return (
-    <div className="flex flex-col gap-2">
-      <h1>My Clients</h1>
+    <Page title="My Clients">
       <div className="flex flex-row gap-2">
         <Link href="/clients/new">
           <Button color="primary" icon={<PlusIcon />}>
@@ -17,7 +23,7 @@ export default async function MyClient() {
         </Link>
         <Button color="secondary">Redeem client</Button>
       </div>
-      <ClientsTable meClients={meClients} />
-    </div>
+      <ClientsTable {...searchParams} />
+    </Page>
   );
 }

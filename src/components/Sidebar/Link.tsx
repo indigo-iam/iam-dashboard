@@ -12,7 +12,6 @@ export default function Link(props: Readonly<SidebarLinkProps>) {
   const { sidebarId, title, href, icon } = props;
   const hideSidebar = () => {
     const dismissButton = document.getElementById(`${sidebarId}-dismiss-btn`);
-    console.log(dismissButton);
     dismissButton?.click();
   };
   return (

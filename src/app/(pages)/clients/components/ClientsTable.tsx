@@ -1,8 +1,6 @@
 import { Client } from "@/models/client";
 import Button from "@/components/Button";
 import Link from "next/link";
-import { getClientsPage as getMyClientsPage } from "@/services/me";
-import { getClientsPage } from "@/services/clients";
 import React from "react";
 
 type RowProps = {

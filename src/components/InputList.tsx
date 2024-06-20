@@ -44,7 +44,12 @@ export default function InputList(props: Readonly<InputListProps>) {
           className="w-full border p-2"
           {...inputProps}
         />
-        <Button type="button" icon={<PlusIcon />} onClick={handleClick}>
+        <Button
+          type="button"
+          icon={<PlusIcon />}
+          onClick={handleClick}
+          disabled={value.length === 0}
+        >
           Add
         </Button>
       </div>

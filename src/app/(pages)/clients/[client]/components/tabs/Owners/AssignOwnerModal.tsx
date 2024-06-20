@@ -26,9 +26,9 @@ function ResultsDropDown(props: Readonly<ResultsDropDownProps>) {
             key={el.id}
             className="p-2 text-sm first:rounded-t-xl last:rounded-b-xl hover:cursor-pointer hover:bg-primary-700 hover:text-secondary"
           >
-            <a onClick={() => onClick(el)}>
+            <button onClick={() => onClick(el)}>
               <b>{el.name.formatted}</b> ({el.displayName})
-            </a>
+            </button>
           </li>
         );
       })}

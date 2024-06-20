@@ -30,7 +30,7 @@ export const ModalFooter = (props: { children?: ReactNode }) => {
   );
 };
 
-export default function Modal(props: Readonly<ModalProps>) {
+export function Modal(props: Readonly<ModalProps>) {
   const { title, children, show, onClose } = props;
 
   return (

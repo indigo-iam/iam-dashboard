@@ -1,6 +1,6 @@
 "use client";
 import Button from "@/components/Button";
-import Form from "@/components/Form";
+import { Form } from "@/components/Form";
 import MultiChoiceDropdown, {
   MultiChoiceItem,
   MultiChoiceItemI,
@@ -11,7 +11,7 @@ import { Group } from "@/models/groups";
 import { Me } from "@/models/me";
 import { JoinGroupRequest } from "@/models/group-requests";
 import { submitGroupRequest } from "@/services/group-requests";
-import Modal, { ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
+import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 
 const Body = (props: {
   items: MultiChoiceItemI[];

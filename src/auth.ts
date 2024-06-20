@@ -27,7 +27,7 @@ const IamProvider: OIDCConfig<Profile> = {
   clientSecret: process.env.IAM_CLIENT_SECRET,
   authorization: {
     params: {
-      scope: "openid email profile scim:read scim:write",
+      scope: process.env.IAM_SCOPES,
     },
   },
   checks: ["pkce", "state"],

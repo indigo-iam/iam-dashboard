@@ -23,9 +23,9 @@ export interface ClientBase {
   client_id: string;
   client_name?: string;
   client_description?: string;
-  redirect_uris?: string;
+  redirect_uris?: string[];
   dynamically_registered: boolean;
-  contacts?: string;
+  contacts?: string[];
   active: boolean;
   allow_introspection: boolean;
   status_changed_on?: number;

@@ -46,10 +46,10 @@ export default function Main(props: Readonly<MainProps>) {
         <p>{dynamically_registered === true ? "true" : "false"}</p>
       </FormSection>
       <FormSection htmlFor="redirect-uris" title="Redirect URIs">
-        <RedirectUris redirect_uris={redirect_uris} />
+        <RedirectUris redirect_uris={redirect_uris?.split(" ")} />
       </FormSection>
       <FormSection htmlFor="contacts-input" title="Contacts">
-        <Contacts contacts={contacts} />
+        <Contacts contacts={contacts?.split(" ")} />
       </FormSection>
     </TabPanel>
   );

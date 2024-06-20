@@ -20,7 +20,7 @@ function Row(props: Readonly<RowProps>) {
   };
 
   return (
-    <tr key={client_id}>
+    <tr key={client_id} className="text-sm">
       <td>{client_name}</td>
       <td>
         <Link
@@ -50,7 +50,7 @@ function Table(props: Readonly<TableProps>) {
   const { clients, children } = props;
   return (
     <div className="w-full space-y-4 rounded-xl border bg-secondary p-2 shadow-xl">
-      <table className="w-full table-auto border-0">
+      <table className="w-full table-auto border-0 ">
         <thead>
           <tr className="hover:bg-secondary">
             <th>Name</th>

@@ -10,7 +10,11 @@ export default function Contacts(props: Readonly<ContactsProps>) {
   const [contacts, setContacts] = useState(props.contacts ?? []);
 
   const addRedirectUri = (contact: string) => {
-    setContacts([...contacts, contact]);
+    if (!contacts.find(c => c === contact)) {
+      setContacts([...contacts, contact]);
+    } else {
+      console.warn("address already present");
+    }
   };
   const removeRedirectUri = (index: number) => {
     setContacts(contacts.toSpliced(index, 1));

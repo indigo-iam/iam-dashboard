@@ -1,5 +1,5 @@
 "use server";
-import { Me, MeClients } from "@/models/me";
+import { Me } from "@/models/me";
 import { authFetch, getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
 import { ScimOp, ScimRequest } from "@/models/scim";

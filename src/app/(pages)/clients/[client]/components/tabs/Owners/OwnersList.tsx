@@ -13,10 +13,6 @@ export default function OwnersList(props: Readonly<OwnersListProps>) {
   const [items, setItems] = useState(props.owners.map(o => o.name.formatted));
   const [show, setShow] = useState(false);
 
-  const addItem = (item: string) => {
-    setItems([...items, item]);
-  };
-
   const removeItem = (index: number) => {
     setItems(items.toSpliced(index, 1));
   };

@@ -17,8 +17,8 @@ export default function OtherInfo(props: Readonly<OtherInfoProps>) {
           defaultValue={client_uri}
         />
         <p className="mt-2 text-sm text-secondary-400">
-          URL for the client's home page, which will be displayed to the user in
-          the consent page.
+          URL for the client&apos; s home page, which will be displayed to the
+          user in the consent page.
         </p>
       </FormSection>
       <FormSection htmlFor="tos-uri-input" title="Terms of Service">

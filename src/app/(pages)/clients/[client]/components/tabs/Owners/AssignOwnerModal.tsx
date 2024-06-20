@@ -6,12 +6,12 @@ import { User } from "@/models/user";
 import { searchUser } from "@/services/users";
 import { useRef, useState } from "react";
 
-interface AssignOwnerModal extends ModalProps {}
-
-function ResultsDropDown(props: {
+type ResultsDropDownProps = {
   results: User[];
   onClick: (user: User) => void;
-}) {
+};
+
+function ResultsDropDown(props: Readonly<ResultsDropDownProps>) {
   const { results, onClick } = props;
 
   if (results.length === 0) {
@@ -34,6 +34,8 @@ function ResultsDropDown(props: {
     </ul>
   );
 }
+
+interface AssignOwnerModal extends ModalProps {}
 
 export default function AssignOwnerModal(props: Readonly<AssignOwnerModal>) {
   const timeoutRef = useRef<number | null>();

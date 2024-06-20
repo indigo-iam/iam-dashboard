@@ -11,7 +11,11 @@ export default function RedirectUris(props: Readonly<RedirectUrisProps>) {
     props.redirect_uris ?? ["http://localhost/example"]
   );
   const addRedirectUri = (redirectUri: string) => {
-    setRedirectUris([...redirectUris, redirectUri]);
+    if (!redirectUris.find(uri => uri === redirectUri)) {
+      setRedirectUris([...redirectUris, redirectUri]);
+    } else {
+      console.warn("Redirect URI already present");
+    }
   };
   const removeRedirectUri = (index: number) => {
     setRedirectUris(redirectUris.toSpliced(index, 1));

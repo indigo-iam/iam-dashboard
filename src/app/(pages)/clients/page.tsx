@@ -4,7 +4,7 @@ import ClientsTable from "./components/ClientsTable";
 import { getClientsPage } from "@/services/clients";
 import Paginator from "@/components/Paginator";
 
-async function AsyncTable(props: { count?: string; page?: string }) {
+async function AsyncTable(props: Readonly<{ count?: string; page?: string }>) {
   const itemsPerPage = props.count ? parseInt(props.count) : 10;
   const currentPage = props.page ? parseInt(props.page) + 1 : 1;
   const response = await getClientsPage(itemsPerPage, currentPage);

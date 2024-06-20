@@ -4,21 +4,28 @@ import Paginator from "@/components/Paginator";
 import { MeClient, MeClients } from "@/models/me";
 import { deleteClient } from "@/services/clients";
 import { fetchClients } from "@/services/me";
+import Link from "next/link";
 import { useState } from "react";
 
 const ClientRow = (props: {
   client: MeClient;
   deleteClient: (client_id: string) => void;
 }) => {
+  const { client_id, client_name } = props.client;
+
   return (
-    <tr key={props.client.client_id}>
-      <td>{props.client.client_name}</td>
-      <td>{props.client.client_id}</td>
+    <tr key={client_id}>
+      <td>{client_name}</td>
       <td>
-        <Button
-          color="danger"
-          onClick={() => props.deleteClient(props.client.client_id)}
+        <Link
+          href={`/clients/${client_id}`}
+          className="text-primary-600 underline"
         >
+          {client_id}
+        </Link>
+      </td>
+      <td>
+        <Button action="danger" onClick={() => props.deleteClient(client_id)}>
           Delete
         </Button>
       </td>

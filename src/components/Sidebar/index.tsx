@@ -31,6 +31,11 @@ const AccountManagement = () => {
   return (
     <DrawerSection title="Account Management">
       <SidebarLink title="Home" href="/" icon={<HomeIcon />} />
+      <SidebarLink
+        title="My Clients"
+        href="/me/clients"
+        icon={<RocketLaunchIcon />}
+      />
     </DrawerSection>
   );
 };
@@ -75,7 +80,7 @@ const Footer = () => {
         href="/docs"
         icon={<InformationCircleIcon />}
       />
-      <p className="bg-primary-light w-full text-center align-middle">v1.0</p>
+      <p className="w-full bg-primary-light text-center align-middle">v1.0</p>
     </DrawerFooter>
   );
 };

@@ -17,39 +17,45 @@ const Body = (props: { me: Me }) => {
   return (
     <ModalBody>
       <Input
-        type="search"
+        type="text"
         id="name"
         title="Name"
         name="givenName"
-        placeholder={me?.name.givenName}
+        defaultValue={me?.name.givenName}
+        minLength={2}
+        maxLength={64}
+        required
       />
       <Input
-        type="search"
+        type="text"
         id="surname"
         title="Surname"
         name="familyName"
-        placeholder={me?.name.familyName}
+        defaultValue={me?.name.familyName}
+        minLength={2}
+        maxLength={64}
+        required
       />
       <Input
-        type="search"
+        type="text"
         id="middleName"
         title="Middle Name"
         name="middleName"
-        placeholder={me?.name.middleName}
+        defaultValue={me?.name.middleName}
       />
       <Input
         type="email"
         id="email"
         title="Email"
         name="email"
-        placeholder={me?.emails[0].value}
+        defaultValue={me?.emails[0].value}
       />
       <Input
-        type="search"
+        type="text"
         id="username"
         title="Username"
         name="username"
-        placeholder={me?.userName}
+        defaultValue={me?.userName}
         disabled={true}
       />
     </ModalBody>

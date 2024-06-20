@@ -55,8 +55,8 @@ export default function AssignOwnerModal(props: Readonly<AssignOwnerModal>) {
   const delayedSearch = (filter: string) => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
-      timeoutRef.current = window.setTimeout(() => searchCallback(filter), 150);
     }
+    timeoutRef.current = window.setTimeout(() => searchCallback(filter), 150);
   };
 
   const addOwner = (user: User) => {

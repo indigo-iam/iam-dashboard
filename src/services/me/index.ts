@@ -3,15 +3,18 @@ import { Me, MeClients } from "@/models/me";
 import { authFetch, getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
 import { ScimOp, ScimRequest } from "@/models/scim";
+import { Paginated } from "@/models/pagination";
+import { Client } from "@/models/client";
 
 const { BASE_URL } = getConfig();
 
 export const fetchMe = async () => getItem<Me>(`${BASE_URL}/scim/Me`);
 
-export const fetchClients = async (startIndex: number) =>
-  getItem<MeClients>(
-    `${BASE_URL}/iam/account/me/clients?startIndex=${startIndex}`
+export const getClientsPage = async (count: number, startIndex: number = 1) => {
+  return await getItem<Paginated<Client>>(
+    `${BASE_URL}/iam/account/me/clients?count=${count}&startIndex=${startIndex}`
   );
+};
 
 export const patchMe = async (formData: FormData) => {
   const op: ScimRequest = {

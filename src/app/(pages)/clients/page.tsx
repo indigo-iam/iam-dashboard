@@ -10,7 +10,7 @@ async function AsyncTable(props: { count?: string; page?: string }) {
   const response = await getClientsPage(itemsPerPage, currentPage);
   const { totalResults } = response;
   return (
-    <ClientsTable page={currentPage} elementsPerPage={itemsPerPage}>
+    <ClientsTable clients={response.Resources}>
       <Paginator numberOfPages={totalResults} />
     </ClientsTable>
   );

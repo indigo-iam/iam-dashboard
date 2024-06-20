@@ -1,6 +1,7 @@
 import { Client } from "@/models/client";
 import Button from "@/components/Button";
 import Link from "next/link";
+import { getClientsPage as getMyClientsPage } from "@/services/me";
 import { getClientsPage } from "@/services/clients";
 import React from "react";
 
@@ -40,21 +41,17 @@ function Row(props: Readonly<RowProps>) {
 }
 
 type ClientsTableProps = {
-  page: number;
-  elementsPerPage: number;
+  clients: Client[];
   children?: React.ReactNode;
 };
 
 export default async function ClientsTable(props: Readonly<ClientsTableProps>) {
-  const { page, elementsPerPage, children } = props;
-  const clientsPage = await getClientsPage(elementsPerPage, page);
-  const clients = clientsPage.Resources;
-
+  const { clients, children } = props;
   return (
-    <div className="w-full rounded-xl border bg-secondary p-2 shadow-xl space-y-4">
+    <div className="w-full space-y-4 rounded-xl border bg-secondary p-2 shadow-xl">
       <table className="w-full table-auto border-0">
         <thead>
-          <tr>
+          <tr className="hover:bg-secondary">
             <th>Name</th>
             <th>Client Id</th>
             <th></th>

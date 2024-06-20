@@ -69,17 +69,7 @@ export const ClientsTable = (props: { meClients: MeClients }) => {
       <table>
         <tbody>{rows}</tbody>
       </table>
-      {showPaginator && (
-        <Paginator
-          currentPage={currentPage}
-          numberOfPages={numberOfPages}
-          onChangePage={async page => {
-            const newMeClients = await fetchClients(page * itemsPerPage + 1);
-            setMeClients(newMeClients);
-            setCurrentPage(page);
-          }}
-        />
-      )}
+      {showPaginator && <Paginator numberOfPages={numberOfPages} />}
     </>
   );
 };

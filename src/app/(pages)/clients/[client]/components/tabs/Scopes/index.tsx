@@ -1,4 +1,4 @@
-import { Form, FormSection } from "@/components/Form";
+import { FormSection } from "@/components/Form";
 import { TabPanel } from "@/components/Tabs";
 import { ClientScopes, Scope } from "@/models/client";
 import { fetchScopes } from "@/services/scopes";

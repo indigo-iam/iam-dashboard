@@ -4,6 +4,7 @@ import { PlusIcon } from "@heroicons/react/16/solid";
 import ClientsTable from "@/app/(pages)/clients/components/ClientsTable";
 import { getClientsPage } from "@/services/me";
 import Paginator from "@/components/Paginator";
+import Page from "@/components/Page";
 
 async function AsyncTable(props: { count?: string; page?: string }) {
   const itemsPerPage = props.count ? parseInt(props.count) : 10;
@@ -27,8 +28,7 @@ type MeClientsProps = {
 export default async function MeClients(props: Readonly<MeClientsProps>) {
   const { searchParams } = props;
   return (
-    <div className="flex flex-col gap-2">
-      <h1>My Clients</h1>
+    <Page title="My Clients">
       <div className="flex flex-row gap-2">
         <Link href="/clients/new">
           <Button color="primary" icon={<PlusIcon />}>
@@ -38,6 +38,6 @@ export default async function MeClients(props: Readonly<MeClientsProps>) {
         <Button color="secondary">Redeem client</Button>
       </div>
       <AsyncTable {...searchParams} />
-    </div>
+    </Page>
   );
 }

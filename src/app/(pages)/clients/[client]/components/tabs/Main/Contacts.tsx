@@ -22,7 +22,7 @@ export default function Contacts(props: Readonly<ContactsProps>) {
   return (
     <InputList
       id="contacts_input"
-      name="contacts_input"
+      name="contacts"
       items={contacts}
       type="email"
       placeholder="admin@example.com"

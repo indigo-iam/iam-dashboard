@@ -74,10 +74,11 @@ type ClientsTableProps = { count?: string; page?: string; me?: boolean };
 export default async function ClientsTable(props: Readonly<ClientsTableProps>) {
   const { count, page, me } = props;
   const itemsPerPage = count ? parseInt(count) : 10;
-  const currentPage = page ? parseInt(page) + 1 : 1;
+  const currentPage = page ? parseInt(page) - 1 : 0;
+  const startIndex = currentPage * itemsPerPage + 1;
   const response = me
-    ? await getMeClientsPage(itemsPerPage, currentPage)
-    : await getClientsPage(itemsPerPage, currentPage);
+    ? await getMeClientsPage(itemsPerPage, startIndex)
+    : await getClientsPage(itemsPerPage, startIndex);
   const { totalResults } = response;
   const numberOfPages = Math.ceil(totalResults / itemsPerPage);
   return (

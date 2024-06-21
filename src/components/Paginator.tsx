@@ -35,7 +35,7 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
   };
 
   const onChangeItemsPerPage = (count: number) => {
-    router.push(createPageURL(currentPage, count));
+    router.push(createPageURL(1, count));
   };
 
   return (
@@ -63,7 +63,7 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
         <li>
           <Link
             title="First Page"
-            className={`${buttonStyle} rounded-l-lg`}
+            className={`${buttonStyle} rounded-l-lg ${currentPage === 1 ? "pointer-events-none opacity-30" : ""}`}
             href={createPageURL(1)}
           >
             <ChevronDoubleLeftIcon className="m-auto w-5" />
@@ -72,8 +72,8 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
         <li>
           <Link
             title="Previous Page"
-            className={`${buttonStyle}`}
-            href={createPageURL(Math.max(1, currentPage - 1))}
+            className={`${buttonStyle} ${currentPage === 1 ? "pointer-events-none opacity-30" : ""}`}
+            href={createPageURL(currentPage - 1)}
           >
             <ChevronLeftIcon className="m-auto w-5" />
           </Link>
@@ -81,8 +81,8 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
         <li>
           <Link
             title="Next Page"
-            className={`${buttonStyle}`}
-            href={createPageURL(Math.min(numberOfPages - 1, currentPage + 1))}
+            className={`${buttonStyle} ${currentPage === numberOfPages ? "pointer-events-none opacity-30" : ""}`}
+            href={createPageURL(currentPage + 1)}
           >
             <ChevronRightIcon className="m-auto w-5" />
           </Link>
@@ -90,8 +90,8 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
         <li>
           <Link
             title="Last Page"
-            className={`${buttonStyle} rounded-r-lg`}
-            href={createPageURL(numberOfPages - 1)}
+            className={`${buttonStyle} rounded-r-lg ${currentPage === numberOfPages ? "pointer-events-none opacity-30" : ""}`}
+            href={createPageURL(numberOfPages)}
           >
             <ChevronDoubleRightIcon className="m-auto w-5" />
           </Link>

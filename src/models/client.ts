@@ -90,3 +90,18 @@ export interface Client
     DeviceCodeSettings,
     ClientCodeChallenge,
     ClientOtherInfo {}
+
+
+export const defaultClientState: Client = {
+  client_id: "",
+  dynamically_registered: false,
+  active: false,
+  allow_introspection: false,
+  access_token_validity_seconds: 0,
+  id_token_validity_seconds: 0,
+  require_auth_time: false,
+  refresh_token_validity_seconds: 0,
+  reuse_refresh_token: false,
+  clear_access_tokens_on_refresh: false,
+  device_code_validity_seconds: 0,
+};

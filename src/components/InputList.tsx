@@ -24,7 +24,7 @@ export default function InputList(props: Readonly<InputListProps>) {
         <XMarkIcon />
       </button>
       <input
-        value={item}
+        defaultValue={item}
         name={name}
         contentEditable={false}
         type={inputProps.type}

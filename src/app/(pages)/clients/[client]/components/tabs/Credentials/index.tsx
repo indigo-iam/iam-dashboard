@@ -41,7 +41,7 @@ function TokenEndpointAuthMethodRadios(
         type="radio"
         id={method.value}
         name="token_endpoint_auth_method"
-        value={method.value}
+        defaultValue={method.value}
         defaultChecked={method.value === defaultChecked}
       />
       <label htmlFor={method.value}>{method.label}</label>

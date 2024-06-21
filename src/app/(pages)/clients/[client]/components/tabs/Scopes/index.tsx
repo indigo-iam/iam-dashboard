@@ -16,7 +16,7 @@ const SystemScopes = (props: { scopes: ActiveScope[] }) => {
           type="checkbox"
           id={scope.value}
           name="scope"
-          value={scope.value}
+          defaultValue={scope.value}
           defaultChecked={scope.active}
         />
         <label htmlFor={scope.value}>

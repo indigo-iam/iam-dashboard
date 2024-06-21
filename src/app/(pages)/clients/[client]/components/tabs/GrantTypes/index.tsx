@@ -19,14 +19,13 @@ export default async function GrantTypes(props: Readonly<GrantTypesProps>) {
   return (
     <TabPanel unmount={false}>
       <FormSection htmlFor="grant-types-radio" title="Grant Types">
-        
         {grant_types.map(gt => (
           <div key={gt.name} className="flex flex-row gap-1 py-0.5">
             <input
               type="checkbox"
               id={gt.name}
               name="grant_types"
-              value={gt.name}
+              defaultValue={gt.name}
               defaultChecked={gt.value}
             />
             <label htmlFor={gt.name}>{gt.name}</label>

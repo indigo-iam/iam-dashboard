@@ -30,7 +30,11 @@ export default function Main(props: Readonly<MainProps>) {
         />
       </FormSection>
       <FormSection htmlFor="client-id" title="Client ID">
-        <p>{client_id}</p>
+        <input
+          name="client_id"
+          defaultValue={client_id}
+          contentEditable={false}
+        />
       </FormSection>
       <FormSection htmlFor="client-description" title="Client description">
         <textarea

@@ -3,7 +3,11 @@ import { TabPanel } from "@/components/Tabs";
 import { ClientScopes, Scope } from "@/models/client";
 import { fetchScopes } from "@/services/scopes";
 
-const SystemScopes = (props: { scopes: Scope[] }) => {
+interface ActiveScope extends Scope {
+  active: boolean;
+}
+
+const SystemScopes = (props: { scopes: ActiveScope[] }) => {
   return props.scopes
     .filter(scope => !scope.restricted)
     .map(scope => (
@@ -13,7 +17,7 @@ const SystemScopes = (props: { scopes: Scope[] }) => {
           id={scope.value}
           name="scope"
           value={scope.value}
-          defaultChecked={scope.defaultScope}
+          defaultChecked={scope.active}
         />
         <label htmlFor={scope.value}>
           {scope.value}
@@ -26,14 +30,17 @@ const SystemScopes = (props: { scopes: Scope[] }) => {
 interface ScopesProps extends ClientScopes {}
 
 export default async function Scopes(props: Readonly<ScopesProps>) {
-  const scopes = await fetchScopes();
+  const clientScopes = props.scope?.split(" ");
+  const allScopes = await fetchScopes();
+
+  let scopes: ActiveScope[] = allScopes.map(s => {
+    return { ...s, active: s.defaultScope };
+  });
 
   // If the client has scopes, use them to determine the selection state
-  if (props.scope) {
-    const client_scopes = props.scope.split(" ");
+  if (clientScopes) {
     scopes.forEach(scope => {
-      scope.defaultScope =
-        client_scopes.findIndex(cs => cs === scope.value) > 0;
+      scope.active = clientScopes.findIndex(cs => cs === scope.value) > -1;
     });
   }
 

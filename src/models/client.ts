@@ -23,11 +23,12 @@ export interface ClientBase {
   client_id: string;
   client_name?: string;
   client_description?: string;
+  client_secret?: string;
   redirect_uris?: string[];
   dynamically_registered: boolean;
   contacts?: string[];
   active: boolean;
-  allow_introspection: boolean;
+  allow_introspection: boolean; // FIXME: where is it?
   status_changed_on?: number;
   error?: string;
 }

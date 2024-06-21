@@ -1,11 +1,12 @@
-export function formDataToJSON(formData: FormData) {
-  const json: { [key: string]: string | File | string[] | File[] } = {};
+export const formDataToJSON = <T>(formData: FormData) => {
+  const json: { [key: string]: string | File | boolean | string[] | File[] } =
+    {};
   for (const [key, value] of formData.entries()) {
     if (formData.getAll(key).length > 1) {
       json[key] = formData.getAll(key) as string[];
-    } else {
-      json[key] = value;
+    } else if (value) {
+      json[key] = value === "on" ? true : value;
     }
   }
-  return JSON.stringify(json);
-}
+  return json as T;
+};

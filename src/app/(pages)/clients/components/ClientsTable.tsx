@@ -50,7 +50,7 @@ function Table(props: Readonly<TableProps>) {
   const { clients, children } = props;
   return (
     <div className="w-full space-y-4 rounded-xl border bg-secondary p-2 shadow-xl">
-      <table className="w-full table-auto border-0 ">
+      <table className="w-full table-auto border-0">
         <thead>
           <tr className="hover:bg-secondary">
             <th>Name</th>
@@ -79,9 +79,10 @@ export default async function ClientsTable(props: Readonly<ClientsTableProps>) {
     ? await getMeClientsPage(itemsPerPage, currentPage)
     : await getClientsPage(itemsPerPage, currentPage);
   const { totalResults } = response;
+  const numberOfPages = Math.ceil(totalResults / itemsPerPage);
   return (
     <Table clients={response.Resources}>
-      <Paginator numberOfPages={totalResults} />
+      <Paginator numberOfPages={numberOfPages} />
     </Table>
   );
 }

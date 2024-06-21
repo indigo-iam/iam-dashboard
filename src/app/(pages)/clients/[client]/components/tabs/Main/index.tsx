@@ -23,7 +23,7 @@ export default function Main(props: Readonly<MainProps>) {
         <Input
           type="text"
           id="client-name"
-          name="client-name"
+          name="client_name"
           defaultValue={client_name}
           minLength={4}
           required
@@ -34,7 +34,8 @@ export default function Main(props: Readonly<MainProps>) {
       </FormSection>
       <FormSection htmlFor="client-description" title="Client description">
         <textarea
-          name="client-description"
+          id="client-description"
+          name="client_description"
           className="w-full border p-2"
           defaultValue={client_description}
         />

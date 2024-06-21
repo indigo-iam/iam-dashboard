@@ -22,7 +22,7 @@ function AccessToken(props: Readonly<AccessTokenProps>) {
         title="Access Token timeout (seconds)"
       >
         <Input
-          name="access-token-validity-input"
+          name="access_token_validity_seconds"
           id="access-token-validity-input"
           defaultValue={access_token_validity_seconds}
         />
@@ -32,7 +32,7 @@ function AccessToken(props: Readonly<AccessTokenProps>) {
         title="ID Token timeout (seconds)"
       >
         <Input
-          name="id-token-validity-input"
+          name="id_token_validity_seconds"
           id="id-token-validity-input"
           defaultValue={id_token_validity_seconds}
         />
@@ -41,7 +41,7 @@ function AccessToken(props: Readonly<AccessTokenProps>) {
         <input
           type="checkbox"
           id="require-auth-time-checkbox"
-          name="require-auth-time-checkbox"
+          name="require_auth_time"
           defaultChecked={require_auth_time}
         />
         <label className="text-sm" htmlFor={"require-auth-time-checkbox"}>
@@ -68,7 +68,7 @@ function RefreshToken(props: Readonly<RefreshTokenProps>) {
       >
         <Input
           id="refresh-token-validity-input"
-          name="refresh-token-validity-input"
+          name="refresh_token_validity_second"
           defaultValue={refresh_token_validity_second}
         />
       </FormSection>
@@ -76,7 +76,7 @@ function RefreshToken(props: Readonly<RefreshTokenProps>) {
         <input
           type="checkbox"
           id="reuse-refresh-tokens-checkbox"
-          name="reuse-refresh-token-checkbox"
+          name="reuse_refresh_token"
           defaultChecked={reuse_refresh_token}
         />
         <label className="text-sm" htmlFor={"require-auth-time-checkbox"}>
@@ -113,7 +113,7 @@ function DeviceCode(props: Readonly<DeviceCodeProps>) {
       >
         <Input
           id="device-code-validity-input"
-          name="device-code-validity-input"
+          name="device_code_validity_seconds"
           defaultValue={device_code_validity_seconds}
         />
         <p className="mt-2 text-sm text-secondary-400">

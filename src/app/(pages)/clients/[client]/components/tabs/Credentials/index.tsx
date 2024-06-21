@@ -40,7 +40,7 @@ function TokenEndpointAuthMethodRadios(
       <input
         type="radio"
         id={method.value}
-        name="tokenEndpointAuthMethod"
+        name="token_endpoint_auth_method"
         value={method.value}
         defaultChecked={method.value === defaultChecked}
       />

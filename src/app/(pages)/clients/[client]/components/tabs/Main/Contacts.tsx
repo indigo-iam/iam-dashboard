@@ -21,8 +21,8 @@ export default function Contacts(props: Readonly<ContactsProps>) {
   };
   return (
     <InputList
-      id="contacts-input"
-      name="contacts-input"
+      id="contacts_input"
+      name="contacts_input"
       items={contacts}
       type="url"
       placeholder="admin@example.com"

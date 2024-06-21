@@ -25,6 +25,7 @@ function AccessToken(props: Readonly<AccessTokenProps>) {
         <Input
           name="access_token_validity_seconds"
           id="access-token-validity-input"
+          type="number"
           defaultValue={access_token_validity_seconds}
         />
       </FormSection>
@@ -35,6 +36,7 @@ function AccessToken(props: Readonly<AccessTokenProps>) {
         <Input
           name="id_token_validity_seconds"
           id="id-token-validity-input"
+          type="number"
           defaultValue={id_token_validity_seconds}
         />
       </FormSection>
@@ -92,6 +94,7 @@ function DeviceCode(props: Readonly<DeviceCodeProps>) {
         title="Device Code timeout (seconds)"
       >
         <Input
+          type="number"
           id="device-code-validity-input"
           name="device_code_validity_seconds"
           defaultValue={device_code_validity_seconds}

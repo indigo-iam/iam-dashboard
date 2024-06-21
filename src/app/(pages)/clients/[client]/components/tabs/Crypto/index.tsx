@@ -19,6 +19,7 @@ function PKCEView(props: Readonly<PKCEProps>) {
         defaultValue={code_challenge_method}
         className="border bg-transparent p-2"
         id="pkce-method-select"
+        name="code_challenge_method"
       >
         <option value="none">No code challenge</option>
         <option value="plain">Plain code challenge</option>

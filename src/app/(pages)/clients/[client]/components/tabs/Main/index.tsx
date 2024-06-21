@@ -14,6 +14,7 @@ export default function Main(props: Readonly<MainProps>) {
     client_id,
     client_secret,
     client_description,
+    allow_introspection,
     redirect_uris,
     dynamically_registered,
     contacts,
@@ -25,7 +26,7 @@ export default function Main(props: Readonly<MainProps>) {
       <input name="client_secret" defaultValue={client_secret} hidden={true} />
       <input
         name="allow_introspection"
-        defaultValue={client_secret}
+        defaultValue={`${allow_introspection}`}
         hidden={true}
       />
       <FormSection htmlFor="creation-date-input" title="Created at">

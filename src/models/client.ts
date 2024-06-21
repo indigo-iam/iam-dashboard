@@ -58,7 +58,7 @@ export interface AccessTokenSettings {
 }
 
 export interface RefreshTokenSettings {
-  refresh_token_validity_second: number;
+  refresh_token_validity_seconds: number;
   reuse_refresh_token: boolean;
   clear_access_tokens_on_refresh: boolean;
 }

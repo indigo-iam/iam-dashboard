@@ -56,7 +56,7 @@ interface RefreshTokenProps extends RefreshTokenSettings {}
 
 function RefreshToken(props: Readonly<RefreshTokenProps>) {
   const {
-    refresh_token_validity_second,
+    refresh_token_validity_seconds,
     reuse_refresh_token,
     clear_access_tokens_on_refresh,
   } = props;
@@ -68,8 +68,8 @@ function RefreshToken(props: Readonly<RefreshTokenProps>) {
       >
         <Input
           id="refresh-token-validity-input"
-          name="refresh_token_validity_second"
-          defaultValue={refresh_token_validity_second}
+          name="refresh_token_validity_seconds"
+          defaultValue={refresh_token_validity_seconds}
         />
       </FormSection>
       <div className="mt-4 flex flex-row gap-1">

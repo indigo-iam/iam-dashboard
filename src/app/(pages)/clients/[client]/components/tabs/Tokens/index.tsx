@@ -1,4 +1,5 @@
 import { FormSection } from "@/components/Form";
+import Checkbox from "@/components/Form/Checkbox";
 import Input from "@/components/Input";
 import { TabPanel } from "@/components/Tabs";
 import {
@@ -37,17 +38,11 @@ function AccessToken(props: Readonly<AccessTokenProps>) {
           defaultValue={id_token_validity_seconds}
         />
       </FormSection>
-      <div className="mt-4 flex flex-row gap-1">
-        <input
-          type="checkbox"
-          id="require-auth-time-checkbox"
-          name="require_auth_time"
-          defaultChecked={require_auth_time}
-        />
-        <label className="text-sm" htmlFor={"require-auth-time-checkbox"}>
-          Always require authentication time in ID tokens
-        </label>
-      </div>
+      <Checkbox
+        name="require_auth_time"
+        defaultChecked={require_auth_time}
+        label="Always require authentication time in ID tokens"
+      />
     </div>
   );
 }
@@ -72,31 +67,16 @@ function RefreshToken(props: Readonly<RefreshTokenProps>) {
           defaultValue={refresh_token_validity_seconds}
         />
       </FormSection>
-      <div className="mt-4 flex flex-row gap-1">
-        <input
-          type="checkbox"
-          id="reuse-refresh-tokens-checkbox"
-          name="reuse_refresh_token"
-          defaultChecked={reuse_refresh_token}
-        />
-        <label className="text-sm" htmlFor={"require-auth-time-checkbox"}>
-          Reuse Refresh Token
-        </label>
-      </div>
-      <div className="mt-4 flex flex-row gap-1">
-        <input
-          type="checkbox"
-          id="clear-access-tokens-on-refresh-checkbox"
-          name="clear_access_tokens_on_refresh"
-          defaultChecked={clear_access_tokens_on_refresh}
-        />
-        <label
-          className="text-sm"
-          htmlFor={"clear-access-tokens-on-refresh-checkbox"}
-        >
-          Clear Access Tokens on refresh
-        </label>
-      </div>
+      <Checkbox
+        name="reuse_refresh_token"
+        defaultChecked={reuse_refresh_token}
+        label="Reuse Refresh Token"
+      />
+      <Checkbox
+        name="clear_access_tokens_on_refresh"
+        defaultChecked={clear_access_tokens_on_refresh}
+        label="Clear Access Tokens on refresh"
+      />
     </div>
   );
 }

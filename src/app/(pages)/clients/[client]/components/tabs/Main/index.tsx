@@ -18,7 +18,7 @@ export default function Main(props: Readonly<MainProps>) {
   } = props;
 
   return (
-    <TabPanel>
+    <TabPanel unmount={false}>
       <FormSection htmlFor="client-name" title="Client Name">
         <Input
           type="text"

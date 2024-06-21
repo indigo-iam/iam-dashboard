@@ -107,7 +107,7 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
   }
 
   return (
-    <TabPanel>
+    <TabPanel unmount={false}>
       <FormSection
         htmlFor="token-endpoint-auth-method-radio"
         title="Token Endpoint Authentication Method"

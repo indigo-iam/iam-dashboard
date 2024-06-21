@@ -34,7 +34,7 @@ export interface CryptoProps extends PKCEProps {}
 
 export default function Crypto(props: Readonly<CryptoProps>) {
   return (
-    <TabPanel>
+    <TabPanel unmount={false}>
       <PKCEView {...props} />
     </TabPanel>
   );

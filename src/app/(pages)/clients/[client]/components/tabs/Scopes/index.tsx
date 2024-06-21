@@ -38,7 +38,7 @@ export default async function Scopes(props: Readonly<ScopesProps>) {
   }
 
   return (
-    <TabPanel>
+    <TabPanel unmount={false}>
       <FormSection htmlFor="system-scopes-radio" title="System Scopes">
         <SystemScopes scopes={scopes} />
       </FormSection>

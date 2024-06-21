@@ -132,7 +132,7 @@ interface TokensProps
 
 export default function Tokens(props: Readonly<TokensProps>) {
   return (
-    <TabPanel className="gap-4 divide-y-2">
+    <TabPanel unmount={false} className="gap-4 divide-y-2">
       <AccessToken {...props} />
       <RefreshToken {...props} />
       <DeviceCode {...props} />

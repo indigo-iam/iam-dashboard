@@ -24,7 +24,7 @@ export default function Contacts(props: Readonly<ContactsProps>) {
       id="contacts_input"
       name="contacts_input"
       items={contacts}
-      type="url"
+      type="email"
       placeholder="admin@example.com"
       addItem={addRedirectUri}
       removeItem={removeRedirectUri}

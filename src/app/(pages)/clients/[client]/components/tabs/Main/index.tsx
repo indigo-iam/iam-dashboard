@@ -9,8 +9,10 @@ interface MainProps extends ClientBase {}
 
 export default function Main(props: Readonly<MainProps>) {
   const {
+    created_at,
     client_name,
     client_id,
+    client_secret,
     client_description,
     redirect_uris,
     dynamically_registered,
@@ -19,6 +21,20 @@ export default function Main(props: Readonly<MainProps>) {
 
   return (
     <TabPanel unmount={false}>
+      {/* Add hidden inputs to not overwrite the db entries with null values */}
+      <input name="client_secret" defaultValue={client_secret} hidden={true} />
+      <input
+        name="allow_introspection"
+        defaultValue={client_secret}
+        hidden={true}
+      />
+      <FormSection htmlFor="creation-date-input" title="Created at">
+        <input
+          name="created_at"
+          defaultValue={created_at}
+          contentEditable={false}
+        />
+      </FormSection>
       <FormSection htmlFor="client-name" title="Client Name">
         <Input
           type="text"
@@ -48,7 +64,11 @@ export default function Main(props: Readonly<MainProps>) {
         htmlFor="dynamically-registered"
         title="Dynamically Registered"
       >
-        <p>{dynamically_registered === true ? "true" : "false"}</p>
+        <input
+          id="dynamically-registered-input"
+          name="dynamically_registered"
+          defaultValue={String(dynamically_registered)}
+        />
       </FormSection>
       <FormSection htmlFor="redirect-uris" title="Redirect URIs">
         <RedirectUris redirect_uris={redirect_uris} />

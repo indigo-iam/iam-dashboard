@@ -14,12 +14,14 @@ import {
 } from "./components/tabs";
 import FormButtons from "./components/tabs/form-buttons";
 import { Form } from "@/components/Form";
+import { auth } from "@/auth";
 
 type ClientPageProps = {
   params: { client: string };
 };
 
 export default async function Client(props: Readonly<ClientPageProps>) {
+  const session = await auth();
   const { params } = props;
   const clientId = params.client;
 
@@ -40,7 +42,7 @@ export default async function Client(props: Readonly<ClientPageProps>) {
             <Tab>Tokens</Tab>
             <Tab>Crypto</Tab>
             <Tab>Other Info</Tab>
-            <Tab>Owners</Tab>
+            {session?.is_admin ? <Tab>Owners</Tab> : null}
           </TabList>
           <TabPanels>
             <Main {...client} />
@@ -50,7 +52,7 @@ export default async function Client(props: Readonly<ClientPageProps>) {
             <Tokens {...client} />
             <Crypto {...client} />
             <OtherInfo {...client} />
-            <Owners {...client} />
+            {session?.is_admin ? <Owners {...client} /> : null}
           </TabPanels>
         </TabGroup>
         <FormButtons />

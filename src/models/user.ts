@@ -50,6 +50,7 @@ type ScimSchema = {
   oidcIds?: OidcId[];
   samlIds?: SamlId[];
   certificates?: Certificate[];
+  authorities?: string[];
 };
 
 export interface User {

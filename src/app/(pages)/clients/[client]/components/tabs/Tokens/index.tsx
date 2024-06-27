@@ -1,4 +1,5 @@
 import { FormSection } from "@/components/Form";
+import Checkbox from "@/components/Form/Checkbox";
 import Input from "@/components/Input";
 import { TabPanel } from "@/components/Tabs";
 import {
@@ -22,8 +23,9 @@ function AccessToken(props: Readonly<AccessTokenProps>) {
         title="Access Token timeout (seconds)"
       >
         <Input
-          name="access-token-validity-input"
+          name="access_token_validity_seconds"
           id="access-token-validity-input"
+          type="number"
           defaultValue={access_token_validity_seconds}
         />
       </FormSection>
@@ -32,22 +34,17 @@ function AccessToken(props: Readonly<AccessTokenProps>) {
         title="ID Token timeout (seconds)"
       >
         <Input
-          name="id-token-validity-input"
+          name="id_token_validity_seconds"
           id="id-token-validity-input"
+          type="number"
           defaultValue={id_token_validity_seconds}
         />
       </FormSection>
-      <div className="mt-4 flex flex-row gap-1">
-        <input
-          type="checkbox"
-          id="require-auth-time-checkbox"
-          name="require-auth-time-checkbox"
-          defaultChecked={require_auth_time}
-        />
-        <label className="text-sm" htmlFor={"require-auth-time-checkbox"}>
-          Always require authentication time in ID tokens
-        </label>
-      </div>
+      <Checkbox
+        name="require_auth_time"
+        defaultChecked={require_auth_time}
+        label="Always require authentication time in ID tokens"
+      />
     </div>
   );
 }
@@ -56,7 +53,7 @@ interface RefreshTokenProps extends RefreshTokenSettings {}
 
 function RefreshToken(props: Readonly<RefreshTokenProps>) {
   const {
-    refresh_token_validity_second,
+    refresh_token_validity_seconds,
     reuse_refresh_token,
     clear_access_tokens_on_refresh,
   } = props;
@@ -68,35 +65,20 @@ function RefreshToken(props: Readonly<RefreshTokenProps>) {
       >
         <Input
           id="refresh-token-validity-input"
-          name="refresh-token-validity-input"
-          defaultValue={refresh_token_validity_second}
+          name="refresh_token_validity_seconds"
+          defaultValue={refresh_token_validity_seconds}
         />
       </FormSection>
-      <div className="mt-4 flex flex-row gap-1">
-        <input
-          type="checkbox"
-          id="reuse-refresh-tokens-checkbox"
-          name="reuse-refresh-token-checkbox"
-          defaultChecked={reuse_refresh_token}
-        />
-        <label className="text-sm" htmlFor={"require-auth-time-checkbox"}>
-          Reuse Refresh Token
-        </label>
-      </div>
-      <div className="mt-4 flex flex-row gap-1">
-        <input
-          type="checkbox"
-          id="clear-access-tokens-on-refresh-checkbox"
-          name="clear_access_tokens_on_refresh"
-          defaultChecked={clear_access_tokens_on_refresh}
-        />
-        <label
-          className="text-sm"
-          htmlFor={"clear-access-tokens-on-refresh-checkbox"}
-        >
-          Clear Access Tokens on refresh
-        </label>
-      </div>
+      <Checkbox
+        name="reuse_refresh_token"
+        defaultChecked={reuse_refresh_token}
+        label="Reuse Refresh Token"
+      />
+      <Checkbox
+        name="clear_access_tokens_on_refresh"
+        defaultChecked={clear_access_tokens_on_refresh}
+        label="Clear Access Tokens on refresh"
+      />
     </div>
   );
 }
@@ -112,8 +94,9 @@ function DeviceCode(props: Readonly<DeviceCodeProps>) {
         title="Device Code timeout (seconds)"
       >
         <Input
+          type="number"
           id="device-code-validity-input"
-          name="device-code-validity-input"
+          name="device_code_validity_seconds"
           defaultValue={device_code_validity_seconds}
         />
         <p className="mt-2 text-sm text-secondary-400">
@@ -132,7 +115,7 @@ interface TokensProps
 
 export default function Tokens(props: Readonly<TokensProps>) {
   return (
-    <TabPanel className="gap-4 divide-y-2">
+    <TabPanel unmount={false} className="gap-4 divide-y-2">
       <AccessToken {...props} />
       <RefreshToken {...props} />
       <DeviceCode {...props} />

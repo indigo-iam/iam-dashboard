@@ -3,12 +3,16 @@ import { TabPanel as HeadlessUITabPanel } from "@headlessui/react";
 type TapPanelProps = {
   children: React.ReactNode;
   className?: string;
+  unmount?: boolean;
 };
 
 export default function TabPanel(props: Readonly<TapPanelProps>) {
-  const { children, className } = props;
+  const { children, className, unmount } = props;
   return (
-    <HeadlessUITabPanel className={"rounded-lg p-4 shadow " + className}>
+    <HeadlessUITabPanel
+      unmount={unmount}
+      className={"rounded-lg p-4 shadow " + className}
+    >
       {children}
     </HeadlessUITabPanel>
   );

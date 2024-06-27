@@ -1,5 +1,5 @@
 "use client";
-import Button  from "@/components/Button";
+import Button from "@/components/Button";
 import { ClientRequest, Scope } from "@/models/client";
 import { Me } from "@/models/me";
 import { PlusIcon } from "@heroicons/react/16/solid";
@@ -15,7 +15,7 @@ const List = (props: {
 }) => {
   const [value, setValue] = useState("");
   const listItems = props.items.map((item, index) => (
-    <li key={item} className="flex flex-row gap-2 items-center">
+    <li key={item} className="flex flex-row items-center gap-2">
       {item}
       <Button type="button" onClick={() => props.removeItem(index)}>
         Remove
@@ -25,7 +25,7 @@ const List = (props: {
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-row gap-2 items-center">
+      <div className="flex flex-row items-center gap-2">
         <input
           type={props.type}
           onChange={event => setValue(event.target.value)}
@@ -73,7 +73,7 @@ const TokenEndpointAuthRadios = () => {
         type="radio"
         id={tokenEndpointAuthValue.value}
         name="tokenEndpointAuthMethod"
-        value={tokenEndpointAuthValue.value}
+        defaultValue={tokenEndpointAuthValue.value}
         defaultChecked={index == 0}
       />
       <label htmlFor={tokenEndpointAuthValue.value}>
@@ -92,7 +92,7 @@ const ScopesCheckboxes = (props: { scopes: Scope[] }) => {
           type="checkbox"
           id={scope.value}
           name="scopes"
-          value={scope.value}
+          defaultValue={scope.value}
           defaultChecked={scope.defaultScope}
         />
         <label htmlFor={scope.value}>
@@ -110,7 +110,7 @@ const GrantTypesCheckboxes = (props: { grantTypes: string[] }) => {
         type="checkbox"
         id={grantType}
         name="grantTypes"
-        value={grantType}
+        defaultValue={grantType}
         defaultChecked={index == 0}
       />
       <label htmlFor={grantType}>{grantType}</label>

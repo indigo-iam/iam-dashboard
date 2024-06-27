@@ -23,7 +23,7 @@ export default async function MeClients(props: Readonly<MeClientsProps>) {
         </Link>
         <Button color="secondary">Redeem client</Button>
       </div>
-      <ClientsTable {...searchParams} />
+      <ClientsTable {...searchParams} me={true} />
     </Page>
   );
 }

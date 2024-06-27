@@ -40,8 +40,8 @@ function TokenEndpointAuthMethodRadios(
       <input
         type="radio"
         id={method.value}
-        name="tokenEndpointAuthMethod"
-        value={method.value}
+        name="token_endpoint_auth_method"
+        defaultValue={method.value}
         defaultChecked={method.value === defaultChecked}
       />
       <label htmlFor={method.value}>{method.label}</label>
@@ -107,7 +107,7 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
   }
 
   return (
-    <TabPanel>
+    <TabPanel unmount={false}>
       <FormSection
         htmlFor="token-endpoint-auth-method-radio"
         title="Token Endpoint Authentication Method"

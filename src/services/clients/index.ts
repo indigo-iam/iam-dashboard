@@ -1,10 +1,11 @@
 "use server";
 import getConfig from "@/utils/config";
-import { Client, ClientRequest } from "@/models/client";
+import { Client, ClientRequest, defaultClientState } from "@/models/client";
 import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
 import { User, UserPage } from "@/models/user";
 import { Paginated } from "@/models/pagination";
+import { formDataToJSON } from "@/utils/misc";
 
 const { BASE_URL } = getConfig();
 
@@ -37,6 +38,34 @@ export const deleteClient = async (clientId: string) => {
   } else {
     const msg = await response.text();
     throw Error(`Delete Client failed with status ${response.status} ${msg}`);
+  }
+};
+
+export const editClient = async (formData: FormData) => {
+  const client_id = formData.get("client_id");
+  if (!client_id) {
+    throw Error("cannot update client: 'client_id' not found");
+  }
+
+  const scope = formData.getAll("scope").join(" ");
+  formData.set("scope", scope);
+
+  const body: Client = {
+    ...defaultClientState,
+    ...formDataToJSON<Client>(formData),
+  };
+
+  const response = await authFetch(`${BASE_URL}/iam/api/clients/${client_id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  if (response.ok) {
+    revalidatePath(`/clients/${client_id}`);
+  } else {
+    const msg = await response.text();
+    throw Error(`Update Client failed with status ${response.status} ${msg}`);
   }
 };
 

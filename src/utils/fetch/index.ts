@@ -19,5 +19,11 @@ export async function authFetch(info: RequestInfo | URL, init?: RequestInit) {
 type GetItem = <T>(endpoint: string | URL) => Promise<T>;
 export const getItem: GetItem = async (endpoint: string | URL) => {
   const response = await authFetch(endpoint);
-  return response.json();
+  if (response.ok) {
+    return response.json();
+  } else {
+    const error = await response.text();
+    const status = response.status;
+    throw Error(`getItem failed with status ${status}: ${error}`);
+  }
 };

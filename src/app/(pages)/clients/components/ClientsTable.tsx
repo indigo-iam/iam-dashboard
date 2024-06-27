@@ -2,6 +2,7 @@ import Paginator from "@/components/Paginator";
 import { getClientsPage } from "@/services/clients";
 import { getClientsPage as getMeClientsPage } from "@/services/me";
 import { Client } from "@/models/client";
+import { Paginated } from "@/models/pagination";
 import Button from "@/components/Button";
 import Link from "next/link";
 import React from "react";
@@ -80,11 +81,21 @@ export default async function ClientsTable(props: Readonly<ClientsTableProps>) {
   currentPage = page ? parseInt(page) - 1 || currentPage : currentPage;
 
   const startIndex = currentPage * itemsPerPage + 1;
-  const response = me
-    ? await getMeClientsPage(itemsPerPage, startIndex)
-    : await getClientsPage(itemsPerPage, startIndex);
-  const { totalResults } = response;
-  const numberOfPages = Math.ceil(totalResults / itemsPerPage);
+
+  let response: Paginated<Client>;
+  let numberOfPages = 0;
+
+  try {
+    response = me
+      ? await getMeClientsPage(itemsPerPage, startIndex)
+      : await getClientsPage(itemsPerPage, startIndex);
+    const { totalResults } = response;
+    numberOfPages = Math.ceil(totalResults / itemsPerPage);
+  } catch (err) {
+    console.error(err);
+    return <h1>{`${err}`}</h1>;
+  }
+
   return (
     <Table clients={response.Resources}>
       <Paginator numberOfPages={numberOfPages} />

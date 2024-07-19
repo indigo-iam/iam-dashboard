@@ -129,8 +129,6 @@ export const editClient = async (formData: FormData, isAdmin = false) => {
     body = { ...body, device_code_validity_seconds };
   }
 
-  console.log(body);
-
   const url = isAdmin
     ? `${BASE_URL}/iam/api/clients/${client_id}`
     : `${BASE_URL}/iam/api/client-registration/${client_id}`;

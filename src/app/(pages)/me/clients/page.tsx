@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Button from "@/components/Button";
 import { PlusIcon } from "@heroicons/react/16/solid";
-import ClientsTable from "@/app/(pages)/clients/components/ClientsTable";
+import ClientsTable from "@/components/ClientsTable";
 import Page from "@/components/Page";
 
 type MeClientsProps = {
@@ -23,7 +23,7 @@ export default async function MeClients(props: Readonly<MeClientsProps>) {
         </Link>
         <Button color="secondary">Redeem client</Button>
       </div>
-      <ClientsTable {...searchParams} me={true} />
+      <ClientsTable {...searchParams} isAdmin={false} />
     </Page>
   );
 }

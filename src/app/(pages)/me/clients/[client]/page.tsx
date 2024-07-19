@@ -10,7 +10,7 @@ export default async function Client(props: Readonly<ClientPageProps>) {
   const { params } = props;
   const clientId = params.client;
 
-  const client = await getClient(clientId, true);
+  const client = await getClient(clientId, false);
   if (client.error) {
     throw Error(client.error);
   }
@@ -20,7 +20,7 @@ export default async function Client(props: Readonly<ClientPageProps>) {
       <ClientForm
         client={client}
         editClientAction={editClient}
-        isAdmin={true}
+        isAdmin={false}
       />
     </Page>
   );

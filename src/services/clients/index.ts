@@ -1,11 +1,15 @@
 "use server";
 import getConfig from "@/utils/config";
-import { Client, ClientRequest, defaultClientState } from "@/models/client";
+import {
+  Client,
+  ClientRequest,
+  CodeChallengeMethod,
+  TokenEndpointAuthMethod,
+} from "@/models/client";
 import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
 import { User, UserPage } from "@/models/user";
 import { Paginated } from "@/models/pagination";
-import { formDataToJSON } from "@/utils/misc";
 
 const { BASE_URL } = getConfig();
 
@@ -25,6 +29,15 @@ export const registerClient = async (client: ClientRequest) => {
   }
 };
 
+export const getClient = async (clientId: string, isAdmin = false) => {
+  const url = isAdmin
+    ? `${BASE_URL}/iam/api/clients/${clientId}`
+    : `${BASE_URL}/iam/api/client-registration/${clientId}`;
+  const client = await getItem<Client>(url);
+  console.log(client);
+  return client;
+};
+
 export const deleteClient = async (clientId: string) => {
   const response = await authFetch(
     `${BASE_URL}/iam/api/client-registration/${clientId}`,
@@ -41,42 +54,112 @@ export const deleteClient = async (clientId: string) => {
   }
 };
 
-export const editClient = async (formData: FormData) => {
+export const editClient = async (formData: FormData, isAdmin = false) => {
   const client_id = formData.get("client_id");
   if (!client_id) {
     throw Error("cannot update client: 'client_id' not found");
   }
 
-  const scope = formData.getAll("scope").join(" ");
-  formData.set("scope", scope);
+  let body: Client = {
+    active: formData.get("active") === "on",
+    client_id: formData.get("client_id") as string,
+    client_description: formData.get("client_description") as string,
+    client_name: formData.get("client_name") as string,
+    client_secret: formData.get("client_secret") as string,
+    clear_access_tokens_on_refresh:
+      formData.get("clear_access_tokens_on_refresh") === "on",
+    code_challenge_method: formData.get(
+      "code_challenge_method"
+    ) as CodeChallengeMethod,
+    contacts: formData.getAll("contacts") as string[],
+    created_at: parseInt(formData.get("created_at")!.toString()),
+    grant_types: formData.getAll("grant_types") as string[],
+    dynamically_registered: formData.get("dynamically_registered") === "on",
+    require_auth_time: formData.get("require_auth_time") === "on",
+    redirect_uris: formData.getAll("redirect_uris") as string[],
 
-  const body: Client = {
-    ...defaultClientState,
-    ...formDataToJSON<Client>(formData),
+    token_endpoint_auth_method: formData.get(
+      "token_endpoint_auth_method"
+    ) as TokenEndpointAuthMethod,
   };
 
-  const response = await authFetch(`${BASE_URL}/iam/api/clients/${client_id}`, {
+  // optionals
+  const scope = formData.getAll("scopes").join(" ");
+  if (scope) {
+    body = { ...body, scope };
+  }
+
+  if (formData.has("allow_introspection")) {
+    // TODO: check if it is correct
+    const allow_introspection = formData.get("allow_introspection") === "on";
+    body = { ...body, allow_introspection };
+  }
+
+  if (formData.has("access_token_validity_seconds")) {
+    const access_token_validity_seconds = parseInt(
+      formData.get("access_token_validity_seconds")!.toString()
+    );
+    body = { ...body, access_token_validity_seconds };
+  }
+
+  if (formData.has("id_token_validity_seconds")) {
+    const id_token_validity_seconds = parseInt(
+      formData.get("id_token_validity_seconds")!.toString()
+    );
+    body = { ...body, id_token_validity_seconds };
+  }
+
+  if (formData.has("refresh_token_validity_seconds")) {
+    const refresh_token_validity_seconds = parseInt(
+      formData.get("refresh_token_validity_seconds")!.toString()
+    );
+    body = { ...body, refresh_token_validity_seconds };
+  }
+
+  if (formData.has("reuse_refresh_token")) {
+    // TODO: check if it is correct
+    const reuse_refresh_token = formData.get("reuse_refresh_token") === "on";
+    body = { ...body, reuse_refresh_token };
+  }
+
+  if (formData.has("device_code_validity_seconds")) {
+    const device_code_validity_seconds = parseInt(
+      formData.get("device_code_validity_seconds")!.toString()
+    );
+    body = { ...body, device_code_validity_seconds };
+  }
+
+  console.log(body);
+
+  const url = isAdmin
+    ? `${BASE_URL}/iam/api/clients/${client_id}`
+    : `${BASE_URL}/iam/api/client-registration/${client_id}`;
+
+  const response = await authFetch(url, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
 
   if (response.ok) {
-    revalidatePath(`/clients/${client_id}`);
+    isAdmin
+      ? revalidatePath(`/clients/${client_id}`)
+      : revalidatePath(`/me/clients/${client_id}`);
   } else {
     const msg = await response.text();
     throw Error(`Update Client failed with status ${response.status} ${msg}`);
   }
 };
 
-export const getClientsPage = async (count: number, startIndex: number = 1) => {
-  return await getItem<Paginated<Client>>(
-    `${BASE_URL}/iam/api/clients?count=${count}&startIndex=${startIndex}`
-  );
-};
-
-export const getClient = async (clientId: string) => {
-  return await getItem<Client>(`${BASE_URL}/iam/api/clients/${clientId}`);
+export const getClientsPage = async (
+  count: number,
+  startIndex: number = 1,
+  isAdmin: boolean = false
+) => {
+  const url = isAdmin
+    ? `${BASE_URL}/iam/api/clients?count=${count}&startIndex=${startIndex}`
+    : `${BASE_URL}/iam/account/me/clients?count=${count}&startIndex=${startIndex}`;
+  return await getItem<Paginated<Client>>(url);
 };
 
 export const getClientOwnersPage = async (

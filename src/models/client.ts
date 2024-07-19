@@ -19,16 +19,16 @@ export interface ClientRequest {
 }
 
 export interface ClientBase {
-  created_at?: number;
-  client_id: string;
-  client_name?: string;
-  client_description?: string;
-  client_secret?: string;
-  redirect_uris?: string[];
-  dynamically_registered: boolean;
-  contacts?: string[];
   active: boolean;
-  allow_introspection: boolean; // FIXME: where is it?
+  allow_introspection?: boolean; // admin
+  client_description: string;
+  client_id: string;
+  client_name: string;
+  client_secret: string;
+  contacts: string[];
+  created_at: number;
+  redirect_uris: string[];
+  dynamically_registered: boolean;
   status_changed_on?: number;
   error?: string;
 }
@@ -41,7 +41,7 @@ export type TokenEndpointAuthMethod =
   | "none";
 
 export interface ClientCredentials {
-  token_endpoint_auth_method?: TokenEndpointAuthMethod;
+  token_endpoint_auth_method: TokenEndpointAuthMethod;
 }
 
 export interface ClientScopes {
@@ -49,29 +49,29 @@ export interface ClientScopes {
 }
 
 export interface ClientGrantTypes {
-  grant_types?: string[];
+  grant_types: string[];
 }
 
 export interface AccessTokenSettings {
-  access_token_validity_seconds: number;
-  id_token_validity_seconds: number;
-  require_auth_time: boolean;
+  access_token_validity_seconds?: number; // admin
+  id_token_validity_seconds?: number;     // admin
+  require_auth_time: boolean; // FIXME: this should be optional and admin only
 }
 
 export interface RefreshTokenSettings {
-  refresh_token_validity_seconds: number;
-  reuse_refresh_token: boolean;
-  clear_access_tokens_on_refresh: boolean;
+  refresh_token_validity_seconds?: number; // admin
+  reuse_refresh_token?: boolean;           // admin
+  clear_access_tokens_on_refresh: boolean; // FIXME: this should be optional and admin only
 }
 
 export interface DeviceCodeSettings {
-  device_code_validity_seconds: number;
+  device_code_validity_seconds?: number; // admin
 }
 
 export type CodeChallengeMethod = "none" | "plain" | "S256";
 
 export interface ClientCodeChallenge {
-  code_challenge_method?: CodeChallengeMethod;
+  code_challenge_method: CodeChallengeMethod;
 }
 
 export interface ClientOtherInfo {
@@ -90,18 +90,3 @@ export interface Client
     DeviceCodeSettings,
     ClientCodeChallenge,
     ClientOtherInfo {}
-
-
-export const defaultClientState: Client = {
-  client_id: "",
-  dynamically_registered: false,
-  active: false,
-  allow_introspection: false,
-  access_token_validity_seconds: 0,
-  id_token_validity_seconds: 0,
-  require_auth_time: false,
-  refresh_token_validity_seconds: 0,
-  reuse_refresh_token: false,
-  clear_access_tokens_on_refresh: false,
-  device_code_validity_seconds: 0,
-};

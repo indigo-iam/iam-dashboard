@@ -33,9 +33,7 @@ export const getClient = async (clientId: string, isAdmin = false) => {
   const url = isAdmin
     ? `${BASE_URL}/iam/api/clients/${clientId}`
     : `${BASE_URL}/iam/api/client-registration/${clientId}`;
-  const client = await getItem<Client>(url);
-  console.log(client);
-  return client;
+  return await getItem<Client>(url);
 };
 
 export const deleteClient = async (clientId: string) => {
@@ -84,7 +82,7 @@ export const editClient = async (formData: FormData, isAdmin = false) => {
   };
 
   // optionals
-  const scope = formData.getAll("scopes").join(" ");
+  const scope = formData.getAll("scope").join(" ");
   if (scope) {
     body = { ...body, scope };
   }

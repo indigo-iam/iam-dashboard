@@ -70,11 +70,11 @@ function PublicKeySet() {
     <>
       <div className="flex gap-2">
         <div className="space-x-1">
-          <input type="radio" id="by-uri-radio" name="by-uri-radio" />
+          <input type="radio" id="by-uri-radio" name="public-keyset" />
           <label htmlFor="by-uri-radio">By URI</label>
         </div>
         <div className="space-x-1">
-          <input type="radio" id="by-value-radio" name="by-value-radio" />
+          <input type="radio" id="by-value-radio" name="public-keyset" />
           <label htmlFor="by-value-radio">By value</label>
         </div>
       </div>

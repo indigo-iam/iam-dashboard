@@ -15,11 +15,15 @@ export default async function Client(props: Readonly<ClientPageProps>) {
     throw Error(client.error);
   }
 
+  const editAdminClient = async (formData: FormData) => {
+    "use server";
+    editClient(formData, true);
+  };
   return (
     <Page title={client.client_name}>
       <ClientForm
         client={client}
-        editClientAction={editClient}
+        editClientAction={editAdminClient}
         isAdmin={true}
       />
     </Page>

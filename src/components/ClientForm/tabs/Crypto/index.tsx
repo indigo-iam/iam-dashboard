@@ -15,16 +15,15 @@ function PKCEView(props: Readonly<PKCEProps>) {
       htmlFor="pkce-method-select"
       title="Proof Key for Code Exchange (PKCE) challenge method"
     >
-      <select className="border bg-transparent p-2" id="pkce-method-select">
-        <option value="none" selected={code_challenge_method === "none"}>
-          No code challenge
-        </option>
-        <option value="plain" selected={code_challenge_method === "plain"}>
-          Plain code challenge
-        </option>
-        <option value="S256" selected={code_challenge_method === "S256"}>
-          SHA-256 hash algorithm
-        </option>
+      <select
+        defaultValue={code_challenge_method}
+        className="border bg-transparent p-2"
+        id="pkce-method-select"
+        name="code_challenge_method"
+      >
+        <option value="none">No code challenge</option>
+        <option value="plain">Plain code challenge</option>
+        <option value="S256">SHA-256 hash algorithm</option>
       </select>
     </FormSection>
   );
@@ -34,7 +33,7 @@ export interface CryptoProps extends PKCEProps {}
 
 export default function Crypto(props: Readonly<CryptoProps>) {
   return (
-    <TabPanel>
+    <TabPanel unmount={false}>
       <PKCEView {...props} />
     </TabPanel>
   );

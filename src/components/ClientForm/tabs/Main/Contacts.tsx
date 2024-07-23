@@ -21,10 +21,10 @@ export default function Contacts(props: Readonly<ContactsProps>) {
   };
   return (
     <InputList
-      id="contacts-input"
-      name="contacts-input"
+      id="contacts_input"
+      name="contacts"
       items={contacts}
-      type="url"
+      type="email"
       placeholder="admin@example.com"
       addItem={addRedirectUri}
       removeItem={removeRedirectUri}

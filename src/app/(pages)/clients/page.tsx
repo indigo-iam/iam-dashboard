@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import Page from "@/components/Page";
-import ClientsTable from "./components/ClientsTable";
+import ClientsTable from "@/components/ClientsTable";
 
 type ClientsProps = {
   searchParams?: {
@@ -14,7 +14,7 @@ export default function Clients(props: Readonly<ClientsProps>) {
   return (
     <Page title="Clients">
       <Suspense fallback={"Loading..."}>
-        <ClientsTable {...searchParams} />
+        <ClientsTable {...searchParams} isAdmin={true} />
       </Suspense>
     </Page>
   );

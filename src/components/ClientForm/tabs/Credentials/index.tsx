@@ -40,8 +40,8 @@ function TokenEndpointAuthMethodRadios(
       <input
         type="radio"
         id={method.value}
-        name="tokenEndpointAuthMethod"
-        value={method.value}
+        name="token_endpoint_auth_method"
+        defaultValue={method.value}
         defaultChecked={method.value === defaultChecked}
       />
       <label htmlFor={method.value}>{method.label}</label>
@@ -70,11 +70,11 @@ function PublicKeySet() {
     <>
       <div className="flex gap-2">
         <div className="space-x-1">
-          <input type="radio" id="by-uri-radio" name="by-uri-radio" />
+          <input type="radio" id="by-uri-radio" name="public-keyset" />
           <label htmlFor="by-uri-radio">By URI</label>
         </div>
         <div className="space-x-1">
-          <input type="radio" id="by-value-radio" name="by-value-radio" />
+          <input type="radio" id="by-value-radio" name="public-keyset" />
           <label htmlFor="by-value-radio">By value</label>
         </div>
       </div>
@@ -107,7 +107,7 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
   }
 
   return (
-    <TabPanel>
+    <TabPanel unmount={false}>
       <FormSection
         htmlFor="token-endpoint-auth-method-radio"
         title="Token Endpoint Authentication Method"

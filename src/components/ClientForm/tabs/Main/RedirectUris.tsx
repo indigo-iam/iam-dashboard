@@ -23,7 +23,7 @@ export default function RedirectUris(props: Readonly<RedirectUrisProps>) {
   return (
     <InputList
       id="redirect-uris-input"
-      name="redirect-uris-input"
+      name="redirect_uris"
       placeholder="http://example.com"
       items={redirectUris}
       type="url"

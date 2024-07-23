@@ -8,7 +8,7 @@ interface OtherInfoProps extends ClientOtherInfo {}
 export default function OtherInfo(props: Readonly<OtherInfoProps>) {
   const { client_uri, tos_uri, policy_uri } = props;
   return (
-    <TabPanel>
+    <TabPanel unmount={false}>
       <FormSection htmlFor="client-uri-input" title="Home page">
         <Input
           id="client-uri-input"

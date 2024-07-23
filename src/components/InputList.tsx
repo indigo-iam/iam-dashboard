@@ -9,7 +9,7 @@ interface InputListProps extends React.HTMLProps<HTMLInputElement> {
 }
 
 export default function InputList(props: Readonly<InputListProps>) {
-  const { items, addItem, removeItem, ...inputProps } = props;
+  const { items, addItem, removeItem, name, ...inputProps } = props;
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState("");
@@ -23,7 +23,13 @@ export default function InputList(props: Readonly<InputListProps>) {
       >
         <XMarkIcon />
       </button>
-      {item}
+      <input
+        className="w-full"
+        defaultValue={item}
+        name={name}
+        contentEditable={false}
+        type={inputProps.type}
+      />
     </li>
   ));
 

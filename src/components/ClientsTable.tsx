@@ -1,22 +1,24 @@
 import Paginator from "@/components/Paginator";
 import { getClientsPage } from "@/services/clients";
-import { getClientsPage as getMeClientsPage } from "@/services/me";
 import { Client } from "@/models/client";
+import { Paginated } from "@/models/pagination";
 import Button from "@/components/Button";
 import Link from "next/link";
 import React from "react";
 
 type RowProps = {
   client: Client;
-  deleteClient?: (client: Client) => void;
+  baseUrl: string;
+  deleteClient?: (clientId: string) => void;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const { client_id, client_name } = props.client;
+  const { client, baseUrl, deleteClient } = props;
+  const { client_id, client_name } = client;
 
   const action = async () => {
     "use server";
-    console.log(`$(fake) delete client with id '${client_id}'`);
+    deleteClient?.(client_id);
   };
 
   return (
@@ -24,7 +26,7 @@ function Row(props: Readonly<RowProps>) {
       <td>{client_name}</td>
       <td>
         <Link
-          href={`/clients/${client_id}`}
+          href={`${baseUrl}/${client_id}`}
           className="text-primary-600 underline"
         >
           {client_id}
@@ -43,11 +45,13 @@ function Row(props: Readonly<RowProps>) {
 
 type TableProps = {
   clients: Client[];
+  isAdmin: boolean;
   children?: React.ReactNode;
 };
 
 function Table(props: Readonly<TableProps>) {
-  const { clients, children } = props;
+  const { clients, children, isAdmin } = props;
+  const baseUrl = isAdmin ? "/clients" : "/me/clients";
   return (
     <div className="w-full space-y-4 rounded-xl border bg-secondary p-2 shadow-xl">
       <table className="w-full table-auto border-0">
@@ -60,7 +64,7 @@ function Table(props: Readonly<TableProps>) {
         </thead>
         <tbody>
           {clients.map(client => (
-            <Row key={client.client_id} client={client} />
+            <Row key={client.client_id} client={client} baseUrl={baseUrl} />
           ))}
         </tbody>
       </table>
@@ -69,19 +73,32 @@ function Table(props: Readonly<TableProps>) {
   );
 }
 
-type ClientsTableProps = { count?: string; page?: string; me?: boolean };
+type ClientsTableProps = { count?: string; page?: string; isAdmin: boolean };
 
 export default async function ClientsTable(props: Readonly<ClientsTableProps>) {
-  const { count, page, me } = props;
-  const itemsPerPage = count ? parseInt(count) : 10;
-  const currentPage = page ? parseInt(page) + 1 : 1;
-  const response = me
-    ? await getMeClientsPage(itemsPerPage, currentPage)
-    : await getClientsPage(itemsPerPage, currentPage);
-  const { totalResults } = response;
-  const numberOfPages = Math.ceil(totalResults / itemsPerPage);
+  const { count, page, isAdmin } = props;
+  let itemsPerPage = 10;
+  let currentPage = 0;
+
+  itemsPerPage = count ? parseInt(count) || itemsPerPage : itemsPerPage;
+  currentPage = page ? parseInt(page) - 1 || currentPage : currentPage;
+
+  const startIndex = currentPage * itemsPerPage + 1;
+
+  let response: Paginated<Client>;
+  let numberOfPages = 0;
+
+  try {
+    response = await getClientsPage(itemsPerPage, startIndex, isAdmin);
+    const { totalResults } = response;
+    numberOfPages = Math.ceil(totalResults / itemsPerPage);
+  } catch (err) {
+    console.error(err);
+    return <h1>{`${err}`}</h1>;
+  }
+
   return (
-    <Table clients={response.Resources}>
+    <Table clients={response.Resources} isAdmin={isAdmin}>
       <Paginator numberOfPages={numberOfPages} />
     </Table>
   );

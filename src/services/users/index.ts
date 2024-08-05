@@ -43,5 +43,14 @@ export const addUser = async (user: ScimUser) => {
 };
 
 export const deleteUser = async (user: User) => {
-  console.log("Delete user", user.name.formatted);
+  const url = `${BASE_URL}/scim/Users/${user.id}`;
+  const response = await authFetch(url, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    revalidatePath("/users");
+  } else {
+    const msg = await response.text();
+    throw Error(`Delete User failed with status ${response.status} ${msg}`);
+  }
 };

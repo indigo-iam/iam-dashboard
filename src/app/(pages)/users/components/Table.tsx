@@ -12,10 +12,9 @@ function ActiveIcon(props: Readonly<{ active: boolean }>) {
   );
 }
 
-function DeleteUserButton(props: Readonly<{ user: User }>) {
-  const { user } = props;
+function DeleteUserButton(props: Readonly<{ onDeleteUser: () => void }>) {
   const action = () => {
-    deleteUser(user);
+    props.onDeleteUser();
   };
 
   return (
@@ -32,10 +31,16 @@ function DeleteUserButton(props: Readonly<{ user: User }>) {
 
 type RowProps = {
   user: User;
+  onDeleteUser?: (user: User) => void;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const { user } = props;
+  const { user, onDeleteUser } = props;
+
+  const deleteUser = () => {
+    onDeleteUser?.(user);
+  };
+
   const created = user.meta.created
     ? dateToHuman(new Date(user.meta.created))
     : "N/A";
@@ -48,7 +53,7 @@ function Row(props: Readonly<RowProps>) {
         <ActiveIcon active={user.active} />
       </td>
       <td className="text-center">
-        <DeleteUserButton user={user} />
+        <DeleteUserButton onDeleteUser={deleteUser} />
       </td>
     </tr>
   );
@@ -56,11 +61,12 @@ function Row(props: Readonly<RowProps>) {
 
 type TableProps = {
   users: User[];
+  onDeleteUser?: (user: User) => void;
   children?: React.ReactNode;
 };
 
 export default function Table(props: Readonly<TableProps>) {
-  const { users, children } = props;
+  const { users, onDeleteUser, children } = props;
   return (
     <div className="w-full space-y-4 rounded-xl border bg-secondary p-2 shadow-xl">
       <table className="w-full table-auto border-0">
@@ -75,7 +81,7 @@ export default function Table(props: Readonly<TableProps>) {
         </thead>
         <tbody>
           {users.map(user => (
-            <Row key={user.id} user={user} />
+            <Row key={user.id} user={user} onDeleteUser={onDeleteUser} />
           ))}
         </tbody>
       </table>

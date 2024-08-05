@@ -1,8 +1,9 @@
 "use server";
 import { Group, GroupsSearchResponse } from "@/models/groups";
-import { getItem } from "@/utils/fetch";
+import { authFetch, getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
 import { Paginated } from "@/models/pagination";
+import { revalidatePath } from "next/cache";
 
 const { BASE_URL } = getConfig();
 
@@ -36,4 +37,39 @@ export const getGroupsPage = async (
     url += `&filter=${filter}`;
   }
   return await getItem<Paginated<Group>>(url);
+};
+
+export const addRootGroup = async (groupName: string) => {
+  const body = {
+    displayName: groupName,
+    schemas: [
+      "urn:ietf:params:scim:schemas:core:2.0:Group",
+      "urn:indigo-dc:scim:schemas:IndigoGroup",
+    ],
+  };
+  const url = `${BASE_URL}/scim/Groups`;
+  const response = await authFetch(url, {
+    body: JSON.stringify(body),
+    method: "POST",
+    headers: { "content-type": "application/scim+json" },
+  });
+  if (response.ok) {
+    revalidatePath("/groups");
+  } else {
+    const msg = await response.text();
+    throw Error(`Add RootGroup failed with status ${response.status} ${msg}`);
+  }
+};
+
+export const deleteRootGroup = async (groupId: string) => {
+  const url = `${BASE_URL}/scim/Groups/${groupId}`;
+  const response = await authFetch(url, { method: "DELETE" });
+  if (response.ok) {
+    revalidatePath("/groups");
+  } else {
+    const msg = await response.text();
+    throw Error(
+      `Delete RootGroup failed with status ${response.status} ${msg}`
+    );
+  }
 };

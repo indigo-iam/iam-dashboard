@@ -56,7 +56,7 @@ function Row(props: Readonly<RowProps>) {
       <td>{group.displayName}</td>
       <td>{strLabels}</td>
       <td className="flex">
-        <div className="flex mx-auto gap-1">
+        <div className="mx-auto flex gap-1">
           <DeleteGroupButton onDeleteGroup={deleteGroup} />
           <AddSubGroup onAddSubGroup={() => group} />
         </div>
@@ -68,10 +68,11 @@ function Row(props: Readonly<RowProps>) {
 type TableProps = {
   groups: Group[];
   children: React.ReactNode;
+  onDeleteGroup?: (group: Group) => void;
 };
 
 export default function Table(props: Readonly<TableProps>) {
-  const { groups, children } = props;
+  const {  children, groups, onDeleteGroup } = props;
   return (
     <div className="w-full space-y-4 rounded-xl border bg-secondary p-2 shadow-xl">
       <table className="w-full table-auto border-0">
@@ -84,7 +85,11 @@ export default function Table(props: Readonly<TableProps>) {
         </thead>
         <tbody>
           {groups.map(group => (
-            <Row key={group.displayName} group={group} />
+            <Row
+              key={group.displayName}
+              group={group}
+              onDeleteGroup={onDeleteGroup}
+            />
           ))}
         </tbody>
       </table>

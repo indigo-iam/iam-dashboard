@@ -5,6 +5,8 @@ import { getGroupsPage } from "@/services/groups";
 import { useEffect, useState } from "react";
 import Table from "./Table";
 import SearchFilter from "@/components/SearchFilter";
+import AddRootGroup from "./AddRootGroup";
+import DeleteRootGroup from "./DeleteRootGroup";
 
 type GroupsTableProps = {
   count?: string;
@@ -25,13 +27,14 @@ export default function GroupsTable(props: Readonly<GroupsTableProps>) {
 
   const startIndex = currentPage * itemsPerPage + 1;
 
+  const fetchGroups = async () => {
+    const page = await getGroupsPage(itemsPerPage, startIndex, filter);
+    const { totalResults } = page;
+    setNumberOfPages(Math.ceil(totalResults / itemsPerPage));
+    setGroups(page.Resources);
+  };
+
   useEffect(() => {
-    const fetchGroups = async () => {
-      const page = await getGroupsPage(itemsPerPage, startIndex, filter);
-      const { totalResults } = page;
-      setNumberOfPages(Math.ceil(totalResults / itemsPerPage));
-      setGroups(page.Resources);
-    };
     fetchGroups();
   }, [itemsPerPage, startIndex, filter]);
 
@@ -43,15 +46,30 @@ export default function GroupsTable(props: Readonly<GroupsTableProps>) {
     setFilter(undefined);
   };
 
+  const openDeleteGroupModal = (group: Group) => {
+    setGroupToDelete(group);
+  };
+
+  const closeDeleteGroupModal = () => {
+    setGroupToDelete(undefined);
+  };
+
   return (
     <div className="space-y-3">
       <SearchFilter
         onFilter={handleFilterChange}
         onFilterClear={handleFilterClear}
       />
-      <Table groups={groups}>
+      <Table groups={groups} onDeleteGroup={openDeleteGroupModal}>
         <Paginator numberOfPages={numberOfPages} />
       </Table>
+      <AddRootGroup onRootGroupAdded={fetchGroups} />
+      <DeleteRootGroup
+        show={!!groupToDelete}
+        onClose={closeDeleteGroupModal}
+        onDeleted={fetchGroups}
+        group={groupToDelete}
+      />
     </div>
   );
 }

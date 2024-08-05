@@ -6,6 +6,7 @@ import Table from "./Table";
 import { useEffect, useState } from "react";
 import Paginator from "@/components/Paginator";
 import DeleteUser from "./DeleteUser";
+import AddUser from "./AddUser";
 
 type UsersTableProps = { count?: string; page?: string };
 export default function UsersTable(props: Readonly<UsersTableProps>) {
@@ -23,13 +24,14 @@ export default function UsersTable(props: Readonly<UsersTableProps>) {
 
   const startIndex = currentPage * itemsPerPage + 1;
 
+  const fetchUsers = async () => {
+    const page = await getUsersPage(itemsPerPage, startIndex, filter);
+    const { totalResults } = page;
+    setNumberOfPages(Math.ceil(totalResults / itemsPerPage));
+    setUsers(page.Resources);
+  };
+
   useEffect(() => {
-    const fetchUsers = async () => {
-      const page = await getUsersPage(itemsPerPage, startIndex, filter);
-      const { totalResults } = page;
-      setNumberOfPages(Math.ceil(totalResults / itemsPerPage));
-      setUsers(page.Resources);
-    };
     fetchUsers();
   }, [itemsPerPage, startIndex, filter]);
 
@@ -59,11 +61,13 @@ export default function UsersTable(props: Readonly<UsersTableProps>) {
       <DeleteUser
         show={!!userToDelete}
         onClose={closeDeleteUserModal}
+        onUserDeleted={fetchUsers}
         user={userToDelete}
       />
       <Table users={users} onDeleteUser={openDeleteUserModal}>
         <Paginator numberOfPages={numberOfPages} />
       </Table>
+      <AddUser onUserAdded={fetchUsers} />
     </div>
   );
 }

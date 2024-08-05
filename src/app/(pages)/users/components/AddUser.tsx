@@ -11,9 +11,10 @@ import { useState } from "react";
 
 type AddUserFormProps = {
   onClose?: () => void;
+  onUserAdded?: () => void;
 };
 function AddUserForm(props: Readonly<AddUserFormProps>) {
-  const { onClose } = props;
+  const { onClose, onUserAdded } = props;
   const handleSubmit = async (formData: FormData) => {
     const firstName = toTitleCase(formData.get("name") as string);
     const surname = toTitleCase(formData.get("surname") as string);
@@ -31,6 +32,7 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
       schemas: ["urn:ietf:params:scim:schemas:core:2.0:User"],
     };
     addUser(user);
+    onUserAdded?.();
     onClose?.();
   };
   return (
@@ -77,17 +79,22 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
 }
 
 interface AddUserModalProps extends ModalProps {
-  onClose: () => void;
+  onUserAdded?: () => void;
 }
 function AddUserModal(props: Readonly<AddUserModalProps>) {
+  const { onUserAdded, ...modalProps } = props;
   return (
-    <Modal {...props}>
-      <AddUserForm onClose={props.onClose} />
+    <Modal {...modalProps}>
+      <AddUserForm onClose={modalProps.onClose} onUserAdded={onUserAdded} />
     </Modal>
   );
 }
 
-export default function AddUser() {
+type AddUserProps = {
+  onUserAdded?: () => void;
+};
+export default function AddUser(props: Readonly<AddUserProps>) {
+  const { onUserAdded } = props;
   const [show, setShow] = useState(false);
 
   const open = () => {
@@ -100,7 +107,12 @@ export default function AddUser() {
 
   return (
     <>
-      <AddUserModal show={show} onClose={close} title="Add User" />
+      <AddUserModal
+        show={show}
+        onClose={close}
+        onUserAdded={onUserAdded}
+        title="Add User"
+      />
       <Button icon={<UserIcon />} onClick={open}>
         Add User
       </Button>

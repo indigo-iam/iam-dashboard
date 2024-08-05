@@ -1,6 +1,5 @@
 import Page from "@/components/Page";
 import UsersTable from "./components/UsersTable";
-import AddUser from "./components/AddUser";
 
 type UsersProps = {
   searchParams?: {
@@ -14,7 +13,6 @@ export default async function Users(props: Readonly<UsersProps>) {
   return (
     <Page title="Users">
       <UsersTable {...searchParams} />
-      <AddUser />
     </Page>
   );
 }

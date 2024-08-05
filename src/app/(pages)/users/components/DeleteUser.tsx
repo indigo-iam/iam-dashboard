@@ -6,14 +6,16 @@ import { deleteUser } from "@/services/users";
 
 interface DeleteUserProps extends ModalProps {
   user?: User;
+  onUserDeleted?: () => void;
 }
 
 export default function DeleteUser(props: Readonly<DeleteUserProps>) {
-  const { user, ...modalProps } = props;
+  const { user, onUserDeleted, ...modalProps } = props;
 
   const action = async () => {
     if (user) {
       deleteUser(user);
+      onUserDeleted?.();
       modalProps.onClose();
     }
   };

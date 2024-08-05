@@ -1,4 +1,3 @@
-import Paginator from "@/components/Paginator";
 import { User } from "@/models/user";
 import { deleteUser } from "@/services/users";
 import { dateToHuman } from "@/utils/dates";

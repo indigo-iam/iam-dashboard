@@ -19,13 +19,15 @@ export interface ScimUser {
   timezone?: string;
   active?: boolean;
   password?: string;
+  schemas?: string[];
+  emails?: ScimEmail[];
 }
 
 // https://www.rfc-editor.org/rfc/rfc7643#section-4.1.2
 export interface ScimEmail {
   value: string;
-  type?: "home" | "work" | "other";
-  primary?: boolean;
+  type: "home" | "work" | "other";
+  primary: boolean;
 }
 
 type ScimEmails = {

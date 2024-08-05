@@ -3,7 +3,7 @@ import { User } from "@/models/user";
 import { getUsersPage } from "@/services/users";
 import SearchFilter from "@/components/SearchFilter";
 import Table from "./Table";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Paginator from "@/components/Paginator";
 import DeleteUser from "./DeleteUser";
 import AddUser from "./AddUser";
@@ -24,16 +24,16 @@ export default function UsersTable(props: Readonly<UsersTableProps>) {
 
   const startIndex = currentPage * itemsPerPage + 1;
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     const page = await getUsersPage(itemsPerPage, startIndex, filter);
     const { totalResults } = page;
     setNumberOfPages(Math.ceil(totalResults / itemsPerPage));
     setUsers(page.Resources);
-  };
+  }, [itemsPerPage, startIndex, filter]);
 
   useEffect(() => {
     fetchUsers();
-  }, [itemsPerPage, startIndex, filter]);
+  }, [fetchUsers]);
 
   const handleFilterChange = (filter: string) => {
     setFilter(filter);

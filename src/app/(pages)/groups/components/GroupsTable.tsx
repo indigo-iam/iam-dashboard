@@ -4,6 +4,7 @@ import { Group } from "@/models/groups";
 import { getGroupsPage } from "@/services/groups";
 import { useEffect, useState } from "react";
 import Table from "./Table";
+import SearchFilter from "@/components/SearchFilter";
 
 type GroupsTableProps = {
   count?: string;
@@ -34,9 +35,23 @@ export default function GroupsTable(props: Readonly<GroupsTableProps>) {
     fetchGroups();
   }, [itemsPerPage, startIndex, filter]);
 
+  const handleFilterChange = (filter: string) => {
+    setFilter(filter);
+  };
+
+  const handleFilterClear = () => {
+    setFilter(undefined);
+  };
+
   return (
-    <Table groups={groups}>
-      <Paginator numberOfPages={numberOfPages} />
-    </Table>
+    <div className="space-y-3">
+      <SearchFilter
+        onFilter={handleFilterChange}
+        onFilterClear={handleFilterClear}
+      />
+      <Table groups={groups}>
+        <Paginator numberOfPages={numberOfPages} />
+      </Table>
+    </div>
   );
 }

@@ -250,8 +250,8 @@ docker run -p <some-port>:80 --env-file=prod.env cnafsoftwaredevel/iam-dashboard
 
 ### Users Page
 
-- [ ] Create the users table
-- [ ] Add "Delete user" button per each row
+- [x] Create the users table
+- [x] Add "Delete user" button per each row
 - [ ] Maybe add a multiple selection to delete multiple users in bulk
 
 ### Groups Page

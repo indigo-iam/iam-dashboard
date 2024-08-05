@@ -13,8 +13,15 @@ export const searchUser = async (filter: string) => {
   return response.Resources;
 };
 
-export const getUsersPage = async (count: number, startIndex: number = 1) => {
-  const url = `${BASE_URL}/iam/account/search?count=${count}&startIndex=${startIndex}`;
+export const getUsersPage = async (
+  count: number,
+  startIndex: number = 1,
+  filter?: string
+) => {
+  let url = `${BASE_URL}/iam/account/search?count=${count}&startIndex=${startIndex}`;
+  if (filter) {
+    url += `&filter=${filter}`;
+  }
   return await getItem<Paginated<User>>(url);
 };
 

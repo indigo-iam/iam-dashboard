@@ -1,7 +1,7 @@
 "use client";
 import { User } from "@/models/user";
 import { getUsersPage } from "@/services/users";
-import SearchUser from "./SearchUser";
+import SearchFilter from "@/components/SearchFilter";
 import Table from "./Table";
 import { useEffect, useState } from "react";
 import Paginator from "@/components/Paginator";
@@ -52,7 +52,7 @@ export default function UsersTable(props: Readonly<UsersTableProps>) {
 
   return (
     <div className="space-y-3">
-      <SearchUser
+      <SearchFilter
         onFilter={handleFilterChange}
         onFilterClear={handleFilterClear}
       />

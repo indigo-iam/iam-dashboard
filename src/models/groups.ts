@@ -10,8 +10,14 @@ export interface Group {
   "urn:indigo-dc:scim:schemas:IndigoGroup": {
     parentGroup: string | null;
     description: string | null;
-    labels: string | null;
+    labels: GroupLabel[] | null;
   };
+}
+
+export interface GroupLabel {
+  prefix?: string;
+  name: string;
+  value?: string;
 }
 
 export interface GroupsSearchResponse {

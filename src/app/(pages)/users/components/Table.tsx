@@ -1,5 +1,4 @@
 import { User } from "@/models/user";
-import { deleteUser } from "@/services/users";
 import { dateToHuman } from "@/utils/dates";
 import { XMarkIcon } from "@heroicons/react/16/solid";
 

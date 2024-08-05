@@ -1,6 +1,8 @@
-import { GroupsSearchResponse } from "@/models/groups";
+"use server";
+import { Group, GroupsSearchResponse } from "@/models/groups";
 import { getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
+import { Paginated } from "@/models/pagination";
 
 const { BASE_URL } = getConfig();
 
@@ -22,4 +24,16 @@ export const fetchGroups = async () => {
   const results = await Promise.all(requests);
   groups = groups.concat(results.flatMap(r => r.Resources));
   return groups;
+};
+
+export const getGroupsPage = async (
+  count: number,
+  startIndex: number = 1,
+  filter?: string
+) => {
+  let url = `${BASE_URL}/iam/group/search?count=${count}&startIndex=${startIndex}`;
+  if (filter) {
+    url += `&filter=${filter}`;
+  }
+  return await getItem<Paginated<Group>>(url);
 };

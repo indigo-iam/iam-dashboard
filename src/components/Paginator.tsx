@@ -15,7 +15,7 @@ export interface PaginatorProps {
 export default function Paginator(props: Readonly<PaginatorProps>) {
   const textStyle = "leading-tight text-gray-500 hover:text-gray-700";
   const buttonStyle =
-    "flex w-8 h-8 ml-0 bg-white border border-gray-300 hover:bg-gray-100";
+    "flex p-0.5 ml-0 bg-white text-gray-400 border border-gray-300 hover:bg-gray-100";
 
   const { numberOfPages } = props;
   const pathname = usePathname();

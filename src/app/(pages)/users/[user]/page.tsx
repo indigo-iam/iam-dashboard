@@ -5,6 +5,7 @@ import UserInfo from "@/components/User/Info";
 import Section from "@/components/Section";
 import { GroupRequests, Groups, LinkedAccounts } from "@/components/User";
 import { Certificates } from "@/components/User/Certificates";
+import { fetchMe } from "@/services/me";
 
 type UserPageProps = {
   params: { user: string };
@@ -12,8 +13,8 @@ type UserPageProps = {
 
 export default async function UserPage(props: Readonly<UserPageProps>) {
   const { params } = props;
-  const userId = params.user;
-  const user = await fetchUser(userId);
+  const userID = params.user;
+  const user = userID === "me" ? await fetchMe() : await fetchUser(userID);
 
   if (!user) {
     return <h1>User not found</h1>;

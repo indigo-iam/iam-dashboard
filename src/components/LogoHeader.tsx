@@ -6,7 +6,7 @@ const UserLogo = (props: { username: string }) => {
   const { username } = props;
   return (
     <div className="flex justify-center px-2">
-      <UserCircleIcon className="w-16" />
+      <UserCircleIcon className="w-12" />
       <h2 className="my-auto px-4">{username}</h2>
     </div>
   );

@@ -12,7 +12,7 @@ export const DrawerSection = (props: DrawerSectionProps) => {
   const { title, children } = props;
   return (
     <>
-      <p className="p-4 pb-2 text-lg font-bold uppercase text-secondary">
+      <p className="p-4 pb-2 text-md font-bold uppercase text-secondary">
         {title}
       </p>
       <div className="px-4 text-lg">{children}</div>

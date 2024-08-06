@@ -16,12 +16,12 @@ const ItemButton = (props: Readonly<ItemButtonProps>) => {
   const { icon, title, onClick } = props;
   return (
     <button
-      className="hover:bg-primary-hover rounded-full p-4"
+      className="hover:bg-primary-hover rounded-full p-3"
       title={title}
       onClick={onClick}
       type="button"
     >
-      <div className="h-8 w-8">{icon}</div>
+      <div className="h-6 w-6">{icon}</div>
     </button>
   );
 };
@@ -31,7 +31,7 @@ export const DrawerButtons = () => {
     await signOut();
   };
   return (
-    <div className="flex justify-around px-4">
+    <div className="flex justify-around p-4">
       <ItemButton icon={<BellIcon />} title="Notifications" />
       <ItemButton icon={<WrenchIcon />} title="Settings" />
       <ItemButton

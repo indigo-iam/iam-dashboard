@@ -23,7 +23,7 @@ export const Certificates = async (props: Readonly<CertificateProps>) => {
   }
 
   if (certificates && certificates?.length == 0) {
-    return <p>"No certificates found"</p>;
+    return <p>No certificates found.</p>;
   }
 
   return (

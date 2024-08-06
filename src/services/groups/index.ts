@@ -4,7 +4,7 @@ import { authFetch, getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
 import { Paginated } from "@/models/pagination";
 import { revalidatePath } from "next/cache";
-import { ScimGroup, ScimReference } from "@/models/scim";
+import { ScimReference } from "@/models/scim";
 
 const { BASE_URL } = getConfig();
 
@@ -19,7 +19,7 @@ export const fetchSubgroupsPage = async (
   startIndex: number = 1
 ) => {
   let url = `${BASE_URL}/scim/Groups/${groupID}/subgroups?count=${count}&startIndex=${startIndex}`;
-  return await getItem<Paginated<ScimGroup>>(url);
+  return await getItem<Paginated<ScimReference>>(url);
 };
 
 export const fetchGroupMembersPage = async (

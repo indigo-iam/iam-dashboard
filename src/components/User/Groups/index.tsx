@@ -5,7 +5,7 @@ import { XCircleIcon } from "@heroicons/react/16/solid";
 // import { AddGroupModal } from "./AddGroupModal";
 // import { useState } from "react";
 // import { Group } from "@/models/groups";
-import { ScimGroup, ScimUser } from "@/models/scim";
+import { ScimReference, ScimUser } from "@/models/scim";
 import {
   Table,
   TableBody,
@@ -16,7 +16,7 @@ import {
 } from "@/components/Table";
 import Link from "next/link";
 
-const Row = (props: { group: ScimGroup; deleteGroup: () => void }) => {
+const Row = (props: { group: ScimReference; deleteGroup: () => void }) => {
   const { group, deleteGroup } = props;
   return (
     <TableRow>

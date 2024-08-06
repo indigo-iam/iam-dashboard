@@ -1,6 +1,6 @@
 // https://www.rfc-editor.org/rfc/rfc7643#section-4.1
 export interface ScimUser {
-  id: string;
+  id?: string;
   userName?: string;
   name?: {
     formatted?: string;
@@ -22,6 +22,7 @@ export interface ScimUser {
   password?: string;
   schemas?: string[];
   emails?: ScimEmail[];
+  groups?: ScimGroup[];
   meta?: {
     created?: string;
     lastModified?: string;
@@ -39,6 +40,12 @@ export interface ScimEmail {
   type: "home" | "work" | "other";
   primary: boolean;
 }
+
+type ScimGroup = {
+  display: string;
+  value: string;
+  $ref: string;
+};
 
 type ScimEmails = {
   emails: ScimEmail[];

@@ -2,13 +2,13 @@
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
-import { User } from "@/models/user";
+import { ScimUser } from "@/models/scim";
 import { searchUser } from "@/services/users";
 import { useRef, useState } from "react";
 
 type ResultsDropDownProps = {
-  results: User[];
-  onClick: (user: User) => void;
+  results: ScimUser[];
+  onClick: (user: ScimUser) => void;
 };
 
 function ResultsDropDown(props: Readonly<ResultsDropDownProps>) {
@@ -27,7 +27,7 @@ function ResultsDropDown(props: Readonly<ResultsDropDownProps>) {
             className="p-2 text-sm first:rounded-t-xl last:rounded-b-xl hover:cursor-pointer hover:bg-primary-700 hover:text-secondary"
           >
             <button onClick={() => onClick(el)}>
-              <b>{el.name.formatted}</b> ({el.displayName})
+              <b>{el.name?.formatted}</b> ({el.displayName})
             </button>
           </li>
         );
@@ -40,8 +40,8 @@ interface AssignOwnerModal extends ModalProps {}
 
 export default function AssignOwnerModal(props: Readonly<AssignOwnerModal>) {
   const timeoutRef = useRef<number | null>();
-  const [results, setResults] = useState<User[]>([]);
-  const [selectedUser, setSelectedUser] = useState<User>();
+  const [results, setResults] = useState<ScimUser[]>([]);
+  const [selectedUser, setSelectedUser] = useState<ScimUser>();
 
   const searchCallback = async (filter: string) => {
     if (filter.length > 2) {
@@ -59,7 +59,7 @@ export default function AssignOwnerModal(props: Readonly<AssignOwnerModal>) {
     timeoutRef.current = window.setTimeout(() => searchCallback(filter), 150);
   };
 
-  const addOwner = (user: User) => {
+  const addOwner = (user: ScimUser) => {
     setResults([]);
     setSelectedUser(user);
     console.log(user);
@@ -88,7 +88,7 @@ export default function AssignOwnerModal(props: Readonly<AssignOwnerModal>) {
         <div hidden={!selectedUser}>
           <p>Selected user: </p>
           <b>Name</b>
-          <p>{selectedUser?.name.formatted}</p>
+          <p>{selectedUser?.name?.formatted}</p>
           <b>Username</b>
           <p>{selectedUser?.userName}</p>
         </div>

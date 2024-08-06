@@ -1,8 +1,7 @@
 import { XCircleIcon } from "@heroicons/react/16/solid";
 import { OidcId, SamlId } from "@/models/scim";
-import { fetchMe } from "@/services/me";
 import Button from "@/components/Button";
-import Card from "@/components/Card";
+import { ScimUser } from "@/models/scim";
 
 const OidcIdView = (props: { id: OidcId }) => {
   return (
@@ -68,13 +67,17 @@ function SamlAccounts(props: Readonly<{ samlIds?: SamlId[] }>) {
   );
 }
 
-async function LinkedAccounts() {
-  const me = await fetchMe();
-  let oidcIds: OidcId[] | undefined;
-  let samlIds: SamlId[] | undefined;
-  if (me["urn:indigo-dc:scim:schemas:IndigoUser"]) {
-    oidcIds = me["urn:indigo-dc:scim:schemas:IndigoUser"].oidcIds;
-    samlIds = me["urn:indigo-dc:scim:schemas:IndigoUser"].samlIds;
+type LinkedAccountsProps = {
+  user: ScimUser;
+};
+async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
+  const { user } = props;
+  let oidcIds: OidcId[] | undefined = undefined;
+  let samlIds: SamlId[] | undefined = undefined;
+
+  if (user["urn:indigo-dc:scim:schemas:IndigoUser"]) {
+    oidcIds = user["urn:indigo-dc:scim:schemas:IndigoUser"].oidcIds;
+    samlIds = user["urn:indigo-dc:scim:schemas:IndigoUser"].samlIds;
   }
   return (
     <div className="space-y-2">
@@ -83,11 +86,3 @@ async function LinkedAccounts() {
     </div>
   );
 }
-
-export const LinkedAccountsCard = (): JSX.Element => {
-  return (
-    <Card title="Linked Accounts">
-      <LinkedAccounts />
-    </Card>
-  );
-};

@@ -1,4 +1,4 @@
-import { User } from "@/models/user";
+import { ScimUser } from "@/models/scim";
 import { dateToHuman } from "@/utils/dates";
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
@@ -30,8 +30,8 @@ function DeleteUserButton(props: Readonly<{ onDeleteUser: () => void }>) {
 }
 
 type RowProps = {
-  user: User;
-  onDeleteUser?: (user: User) => void;
+  user: ScimUser;
+  onDeleteUser?: (user: ScimUser) => void;
 };
 
 function Row(props: Readonly<RowProps>) {
@@ -41,20 +41,20 @@ function Row(props: Readonly<RowProps>) {
     onDeleteUser?.(user);
   };
 
-  const created = user.meta.created
+  const created = user.meta?.created
     ? dateToHuman(new Date(user.meta.created))
     : "N/A";
   return (
     <tr className="text-sm">
       <td>
         <Link href={`/users/${user.id}`} className="text-primary-600 underline">
-          {user.name.formatted}
+          {user.name?.formatted}
         </Link>
       </td>
-      <td>{user.emails[0].value}</td>
+      <td>{user.emails?.[0].value}</td>
       <td>{created}</td>
       <td>
-        <ActiveIcon active={user.active} />
+        <ActiveIcon active={!!user.active} />
       </td>
       <td className="text-center">
         <DeleteUserButton onDeleteUser={deleteUser} />
@@ -64,8 +64,8 @@ function Row(props: Readonly<RowProps>) {
 }
 
 type TableProps = {
-  users: User[];
-  onDeleteUser?: (user: User) => void;
+  users: ScimUser[];
+  onDeleteUser?: (user: ScimUser) => void;
   children?: React.ReactNode;
 };
 

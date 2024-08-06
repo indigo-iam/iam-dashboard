@@ -1,7 +1,6 @@
 "use server";
 import { authFetch, getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
-import { User, UserPage } from "@/models/user";
 import { Paginated } from "@/models/pagination";
 import { ScimUser } from "@/models/scim";
 import { revalidatePath } from "next/cache";
@@ -12,7 +11,7 @@ export const fetchUser = async (uuid: string) =>
   await getItem<ScimUser>(`${BASE_URL}/scim/Users/${uuid}`);
 
 export const searchUser = async (filter: string) => {
-  const response = await getItem<UserPage>(
+  const response = await getItem<Paginated<ScimUser>>(
     `${BASE_URL}/iam/account/search?count=100&startIndex=0&filter=${filter}`
   );
   return response.Resources;
@@ -27,7 +26,7 @@ export const getUsersPage = async (
   if (filter) {
     url += `&filter=${filter}`;
   }
-  return await getItem<Paginated<User>>(url);
+  return await getItem<Paginated<ScimUser>>(url);
 };
 
 export const addUser = async (user: ScimUser) => {
@@ -45,7 +44,7 @@ export const addUser = async (user: ScimUser) => {
   }
 };
 
-export const deleteUser = async (user: User) => {
+export const deleteUser = async (user: ScimUser) => {
   const url = `${BASE_URL}/scim/Users/${user.id}`;
   const response = await authFetch(url, {
     method: "DELETE",

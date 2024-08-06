@@ -42,17 +42,17 @@ const Row = (props: { data: string[] }) => {
 
 const User = (props: { me: Me }) => {
   const { me } = props;
-  const created = me.meta.created
-    ? dateToHuman(new Date(me.meta.created))
+  const created = me.meta?.created
+    ? dateToHuman(new Date(me.meta?.created))
     : "N/A";
-  const lastModified = me.meta.lastModified
-    ? dateToHuman(new Date(me.meta.lastModified))
+  const lastModified = me.meta?.lastModified
+    ? dateToHuman(new Date(me.meta?.lastModified))
     : "N/A";
 
   const data = [
-    ["User Name", me.userName],
-    ["User Id", me.id],
-    ["Email", me.emails[0].value],
+    ["User Name", me.userName ?? "Unknown username"],
+    ["User Id", me.id ?? "N/A"],
+    ["Email", me.emails?.[0].value ?? "N/A"],
     ["Status", me.active ? "active" : "disabled"],
     ["Created", created],
     ["Last Modified", lastModified],
@@ -87,7 +87,7 @@ export const UserCard = (props: { me: Me }) => {
         onClose={() => setShowChangePassword(false)}
       />
       <Card
-        title={me?.name.formatted}
+        title={me?.name?.formatted}
         footer={
           <Footer
             onClickEditDetails={() => setShowEditDetails(true)}

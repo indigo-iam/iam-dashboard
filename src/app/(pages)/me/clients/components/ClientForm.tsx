@@ -124,7 +124,7 @@ export const ClientForm = (props: {
   grantTypes: string[];
 }) => {
   const router = useRouter();
-  const meEmails = props.me.emails.map(email => email.value);
+  const meEmails = props.me.emails?.map(email => email.value) ?? [];
   const [emails, setEmails] = useState(meEmails);
   const addEmail = (email: string) => {
     setEmails([...emails, email]);

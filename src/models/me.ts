@@ -1,7 +1,6 @@
-import { User } from "./user";
+import { ScimUser } from "./scim";
 
-export interface Me extends User {}
-
+export interface Me extends ScimUser {}
 export interface UpdatePasswordRequest {
   currentPassword: string;
   updatedPassword: string;

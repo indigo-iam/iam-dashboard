@@ -1,11 +1,11 @@
 import Button from "@/components/Button";
 import { Form } from "@/components/Form";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
-import { User } from "@/models/user";
+import { ScimUser } from "@/models/scim";
 import { deleteUser } from "@/services/users";
 
 interface DeleteUserProps extends ModalProps {
-  user?: User;
+  user?: ScimUser;
   onUserDeleted?: () => void;
 }
 
@@ -32,7 +32,7 @@ export default function DeleteUser(props: Readonly<DeleteUserProps>) {
     );
   };
 
-  const createdAt = user?.meta.created
+  const createdAt = user?.meta?.created
     ? new Date(user?.meta.created).toLocaleDateString()
     : "N/A";
 
@@ -42,15 +42,15 @@ export default function DeleteUser(props: Readonly<DeleteUserProps>) {
 
   return (
     <Form id="delete-user-form">
-      <Modal {...modalProps} title={`Delete user '${user?.name.formatted}'`}>
+      <Modal {...modalProps} title={`Delete user '${user?.name?.formatted}'`}>
         <ModalBody>
           <p className="py-2">The following user will be deleted:</p>
           <table className="border-0 text-sm">
             <tbody>
-              <Row title="Name" value={user?.name.formatted} />
+              <Row title="Name" value={user?.name?.formatted} />
               <Row title="Username" value={user?.userName} />
               <Row title="UUID" value={user?.id} />
-              <Row title="E-mail" value={user?.emails[0].value} />
+              <Row title="E-mail" value={user?.emails?.[0].value} />
               <Row title="Created at" value={createdAt} />
               <Row title="Groups" value={groups} />
             </tbody>

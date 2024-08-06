@@ -14,7 +14,7 @@ const UserLogo = (props: { username: string }) => {
 
 export const LogoHeader = async () => {
   const me = await fetchMe();
-  let username = me.name.formatted ? me.name.formatted : "Unknown User";
+  let username = me.name?.formatted ? me.name.formatted : "Unknown User";
   return (
     <div id="logo-header" className="mt-8 w-full p-2">
       <UserLogo username={username} />

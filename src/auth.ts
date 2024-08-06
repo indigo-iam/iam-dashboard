@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import type { DefaultSession, NextAuthConfig } from "next-auth";
 import type { DefaultJWT } from "next-auth/jwt";
 import type { Profile, User, Awaitable, TokenSet } from "@auth/core/types";
-import type { User as IamUser } from "@/models/user";
+import type { ScimUser as IamUser } from "@/models/scim";
 import type { OIDCConfig } from "next-auth/providers";
 import getConfig from "./utils/config";
 
@@ -67,7 +67,7 @@ export const authConfig: NextAuthConfig = {
         token.expires_at = (account.expires_at ?? 0) * 1000;
         const me = await fetchMe(access_token);
         token.is_admin =
-          me["urn:indigo-dc:scim:schemas:IndigoUser"].authorities?.includes(
+          me["urn:indigo-dc:scim:schemas:IndigoUser"]?.authorities?.includes(
             "ROLE_ADMIN"
           ) ?? false;
       }

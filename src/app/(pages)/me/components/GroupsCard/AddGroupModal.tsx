@@ -123,7 +123,7 @@ const AddGroupForm = (props: {
         const groupName = choice.title;
         const req: JoinGroupRequest = {
           notes,
-          username: me.userName,
+          username: me.userName ?? "Unknown username",
           groupName,
         };
         return submitGroupRequest(req);

@@ -21,7 +21,7 @@ const Body = (props: { me: Me }) => {
         id="name"
         title="Name"
         name="givenName"
-        defaultValue={me?.name.givenName}
+        defaultValue={me?.name?.givenName}
         minLength={2}
         maxLength={64}
         required
@@ -31,7 +31,7 @@ const Body = (props: { me: Me }) => {
         id="surname"
         title="Surname"
         name="familyName"
-        defaultValue={me?.name.familyName}
+        defaultValue={me?.name?.familyName}
         minLength={2}
         maxLength={64}
         required
@@ -41,14 +41,14 @@ const Body = (props: { me: Me }) => {
         id="middleName"
         title="Middle Name"
         name="middleName"
-        defaultValue={me?.name.middleName}
+        defaultValue={me?.name?.middleName}
       />
       <Input
         type="email"
         id="email"
         title="Email"
         name="email"
-        defaultValue={me?.emails[0].value}
+        defaultValue={me?.emails?.[0].value}
       />
       <Input
         type="text"

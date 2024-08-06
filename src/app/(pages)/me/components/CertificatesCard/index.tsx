@@ -1,4 +1,4 @@
-import { Certificate } from "@/models/user";
+import { Certificate } from "@/models/scim";
 import { fetchMe } from "@/services/me";
 import Card from "@/components/Card";
 
@@ -18,8 +18,10 @@ const Certificates = async () => {
   if (!me) {
     return null;
   }
-
-  const { certificates } = me["urn:indigo-dc:scim:schemas:IndigoUser"];
+  let certificates: Certificate[] | undefined;
+  if (me["urn:indigo-dc:scim:schemas:IndigoUser"]) {
+    certificates = me["urn:indigo-dc:scim:schemas:IndigoUser"].certificates;
+  }
 
   if (certificates && certificates?.length == 0) {
     return "No certificates found";

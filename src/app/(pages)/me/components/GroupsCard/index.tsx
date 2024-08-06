@@ -62,7 +62,8 @@ const Footer = (props: { showAddGroup: () => void }) => {
 export const GroupsCard = (props: { me: Me; groups: Group[] }): JSX.Element => {
   const { me, groups } = props;
   const [showAddGroupModal, setShowAddGroupModal] = useState(false);
-  const modalTitle = `Add user ${me.name.formatted} to group(s)?`;
+  const name = me.name?.formatted ?? "unknown";
+  const modalTitle = `Add user '${name}' to group(s)?`;
 
   const showAddGroup = () => {
     setShowAddGroupModal(true);

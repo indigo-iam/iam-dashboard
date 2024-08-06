@@ -1,16 +1,16 @@
 "use client";
 import Button from "@/components/Button";
-import { User } from "@/models/user";
+import { ScimUser } from "@/models/scim";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
 import AssignOwnerModal from "./AssignOwnerModal";
 
 type OwnersListProps = {
-  owners: User[];
+  owners: ScimUser[];
 };
 
 export default function OwnersList(props: Readonly<OwnersListProps>) {
-  const [items, setItems] = useState(props.owners.map(o => o.name.formatted));
+  const [items, setItems] = useState(props.owners.map(o => o.name?.formatted));
   const [show, setShow] = useState(false);
 
   const removeItem = (index: number) => {

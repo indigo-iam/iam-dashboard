@@ -2,72 +2,72 @@ import { XCircleIcon } from "@heroicons/react/16/solid";
 import { OidcId, SamlId } from "@/models/scim";
 import Button from "@/components/Button";
 import { ScimUser } from "@/models/scim";
+import { Subsection } from "@/components/Section";
 
 const OidcIdView = (props: { id: OidcId }) => {
   return (
-    <div className="border-bottom container p-2">
-      <div className="row">
-        <div className="col">
-          <b>Issuer:</b> {props.id.issuer}
-          <br />
-          <b>Subject:</b>
-          {props.id.subject}
-        </div>
-        <div className="col flex flex-row-reverse">
-          <Button action="danger" isSmall={true} icon={<XCircleIcon />}>
-            Unlink
-          </Button>
-        </div>
-      </div>
-    </div>
+    <tr>
+      <td className="p-2">
+        <b>Issuer:</b> {props.id.issuer}
+        <br />
+        <b>Subject:</b>
+        {props.id.subject}
+      </td>
+      <td className="text-right">
+        <Button action="danger" isSmall={true} icon={<XCircleIcon />}>
+          Unlink
+        </Button>
+      </td>
+    </tr>
   );
 };
 
 const SamlIdView = (props: { id: SamlId }) => {
   return (
-    <div className="flex flex-wrap">
-      <div className="max-w-60">
+    <tr>
+      <td className="p-2">
         <p className="break-all">{props.id.idpId}</p>
         <p className="break-all"> {props.id.attributeId}</p>
         <p className="break-all">{props.id.userId}</p>
-      </div>
-      <div className="ml-auto mr-0">
+      </td>
+      <td className="text-right">
         <Button action="danger" isSmall={true} icon={<XCircleIcon />}>
           Unlink
         </Button>
-      </div>
-    </div>
+      </td>
+    </tr>
   );
 };
 
 function OidcAccounts(props: Readonly<{ oidcIds?: OidcId[] }>) {
   const { oidcIds } = props;
+  if (!oidcIds || oidcIds.length === 0) {
+    return <p className="p-2">No OpenID connect linked accounts found.</p>;
+  }
   return (
-    <>
-      <p className="font-bold">OpenID Connect</p>
-
-      {oidcIds ? (
-        oidcIds.map(oidcId => <OidcIdView key={oidcId.subject} id={oidcId} />)
-      ) : (
-        <p>No OpenID connect linked accounts found.</p>
-      )}
-    </>
+    <table className="w-full">
+      <tbody>
+        {oidcIds.map(oidcId => (
+          <OidcIdView key={oidcId.subject} id={oidcId} />
+        ))}
+      </tbody>
+    </table>
   );
 }
 
 function SamlAccounts(props: Readonly<{ samlIds?: SamlId[] }>) {
   const { samlIds } = props;
+  if (!samlIds || samlIds.length === 0) {
+    return <p className="p-2">No linked SAML accounts found.</p>;
+  }
   return (
-    <>
-      <p className="font-bold">SAML</p>
-      {samlIds ? (
-        samlIds.map(samlId => (
+    <table className="w-full">
+      <tbody>
+        {samlIds.map(samlId => (
           <SamlIdView key={samlId.attributeId} id={samlId} />
-        ))
-      ) : (
-        <p>No linked SAML accounts found.</p>
-      )}
-    </>
+        ))}
+      </tbody>
+    </table>
   );
 }
 
@@ -84,9 +84,13 @@ export async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
     samlIds = user["urn:indigo-dc:scim:schemas:IndigoUser"].samlIds;
   }
   return (
-    <div className="space-y-2">
-      <OidcAccounts oidcIds={oidcIds} />
-      <SamlAccounts samlIds={samlIds} />
+    <div className="space-y-4">
+      <Subsection title="OpenID Connect">
+        <OidcAccounts oidcIds={oidcIds} />
+      </Subsection>
+      <Subsection title="SAML">
+        <SamlAccounts samlIds={samlIds} />
+      </Subsection>
     </div>
   );
 }

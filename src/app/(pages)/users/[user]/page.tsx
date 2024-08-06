@@ -3,7 +3,7 @@ import { fetchUser } from "@/services/users";
 import Panel from "@/components/Panel";
 import UserInfo from "@/components/User/Info";
 import Section from "@/components/Section";
-import { GroupRequests, Groups } from "@/components/User";
+import { GroupRequests, Groups, LinkedAccounts } from "@/components/User";
 
 type UserPageProps = {
   params: { user: string };
@@ -29,6 +29,9 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
         </Section>
         <Section title="Group Requests">
           <GroupRequests />
+        </Section>
+        <Section title="Linked Accounts">
+          <LinkedAccounts user={user} />
         </Section>
       </Panel>
     </Page>

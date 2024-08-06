@@ -46,9 +46,11 @@ function OidcAccounts(props: Readonly<{ oidcIds?: OidcId[] }>) {
     <>
       <p className="font-bold">OpenID Connect</p>
 
-      {oidcIds
-        ? oidcIds.map(oidcId => <OidcIdView key={oidcId.subject} id={oidcId} />)
-        : null}
+      {oidcIds ? (
+        oidcIds.map(oidcId => <OidcIdView key={oidcId.subject} id={oidcId} />)
+      ) : (
+        <p>No OpenID connect linked accounts found.</p>
+      )}
     </>
   );
 }
@@ -58,11 +60,13 @@ function SamlAccounts(props: Readonly<{ samlIds?: SamlId[] }>) {
   return (
     <>
       <p className="font-bold">SAML</p>
-      {samlIds
-        ? samlIds.map(samlId => (
-            <SamlIdView key={samlId.attributeId} id={samlId} />
-          ))
-        : null}
+      {samlIds ? (
+        samlIds.map(samlId => (
+          <SamlIdView key={samlId.attributeId} id={samlId} />
+        ))
+      ) : (
+        <p>No linked SAML accounts found.</p>
+      )}
     </>
   );
 }
@@ -70,7 +74,7 @@ function SamlAccounts(props: Readonly<{ samlIds?: SamlId[] }>) {
 type LinkedAccountsProps = {
   user: ScimUser;
 };
-async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
+export async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
   const { user } = props;
   let oidcIds: OidcId[] | undefined = undefined;
   let samlIds: SamlId[] | undefined = undefined;

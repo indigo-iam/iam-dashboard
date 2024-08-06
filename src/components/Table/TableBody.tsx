@@ -11,13 +11,16 @@ type TableRowProps = {
 };
 export function TableRow(props: Readonly<TableRowProps>) {
   const { children } = props;
-  return <tr>{children}</tr>;
+  return (
+    <tr className="even:bg-secondary-100 hover:bg-secondary-200">{children}</tr>
+  );
 }
 
 type TableCellProps = {
   children?: React.ReactNode;
+  className?: string;
 };
 export function TableCell(props: Readonly<TableCellProps>) {
-  const { children } = props;
-  return <td>{children}</td>;
+  const { children, className } = props;
+  return <td className={`p-1 ${className}`}>{children}</td>;
 }

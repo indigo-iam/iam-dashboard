@@ -1,5 +1,5 @@
 import Page from "@/components/Page";
-import GroupsTable from "./components/GroupsTable";
+import { Groups } from "./components/Groups";
 
 type GroupsProps = {
   searchParams?: {
@@ -8,11 +8,11 @@ type GroupsProps = {
   };
 };
 
-export default async function Groups(props: Readonly<GroupsProps>) {
+export default async function GroupsPage(props: Readonly<GroupsProps>) {
   const { searchParams } = props;
   return (
     <Page title="Groups">
-      <GroupsTable {...searchParams} />
+      <Groups {...searchParams} />
     </Page>
   );
 }

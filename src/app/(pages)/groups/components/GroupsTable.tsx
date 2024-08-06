@@ -1,95 +1,116 @@
-"use client";
-import Paginator from "@/components/Paginator";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableHeaderCell,
+  TableRow,
+} from "@/components/Table";
 import { Group } from "@/models/groups";
-import { getGroupsPage } from "@/services/groups";
-import { useCallback, useEffect, useState } from "react";
-import Table from "./Table";
-import SearchFilter from "@/components/SearchFilter";
-import AddRootGroup from "./AddRootGroup";
-import DeleteRootGroup from "./DeleteRootGroup";
-import AddSubgroup from "./AddSubgroup";
+import { XMarkIcon } from "@heroicons/react/16/solid";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
-type GroupsTableProps = {
-  count?: string;
-  page?: string;
-};
-export default function GroupsTable(props: Readonly<GroupsTableProps>) {
-  const { count, page } = props;
-  const [filter, setFilter] = useState<string>();
-  const [groups, setGroups] = useState<Group[]>([]);
-  const [numberOfPages, setNumberOfPages] = useState(0);
-  const [groupToDelete, setGroupToDelete] = useState<Group>();
-  const [groupToExtend, setGroupToExtend] = useState<Group>();
-
-  let itemsPerPage = 10;
-  let currentPage = 0;
-
-  itemsPerPage = count ? parseInt(count) || itemsPerPage : itemsPerPage;
-  currentPage = page ? parseInt(page) - 1 || currentPage : currentPage;
-
-  const startIndex = currentPage * itemsPerPage + 1;
-
-  const fetchGroups = useCallback(async () => {
-    const page = await getGroupsPage(itemsPerPage, startIndex, filter);
-    const { totalResults } = page;
-    setNumberOfPages(Math.ceil(totalResults / itemsPerPage));
-    setGroups(page.Resources);
-  }, [itemsPerPage, startIndex, filter]);
-
-  useEffect(() => {
-    fetchGroups();
-  }, [fetchGroups]);
-
-  const handleFilterChange = (filter: string) => {
-    setFilter(filter);
-  };
-
-  const handleFilterClear = () => {
-    setFilter(undefined);
-  };
-
-  const openDeleteGroupModal = (group: Group) => {
-    setGroupToDelete(group);
-  };
-
-  const closeDeleteGroupModal = () => {
-    setGroupToDelete(undefined);
-  };
-
-  const openAddSubgroupModal = (group: Group) => {
-    setGroupToExtend(group);
-  };
-
-  const closeAddSubgroupModal = () => {
-    setGroupToExtend(undefined);
+function AddSubgroup(props: Readonly<{ onAddSubgroup: () => void }>) {
+  const action = () => {
+    props.onAddSubgroup();
   };
 
   return (
-    <div className="space-y-3">
-      <SearchFilter
-        onFilter={handleFilterChange}
-        onFilterClear={handleFilterClear}
-      />
-      <Table
-        groups={groups}
-        onDeleteGroup={openDeleteGroupModal}
-        onAddSubgroup={openAddSubgroupModal}
+    <form action={action}>
+      <button
+        type="submit"
+        className="mx-auto w-5 rounded-md bg-success p-0.5 text-secondary"
       >
-        <Paginator numberOfPages={numberOfPages} />
-      </Table>
-      <AddRootGroup onRootGroupAdded={fetchGroups} />
-      <DeleteRootGroup
-        show={!!groupToDelete}
-        onClose={closeDeleteGroupModal}
-        onDeleted={fetchGroups}
-        group={groupToDelete}
-      />
-      <AddSubgroup
-        show={!!groupToExtend}
-        onClose={closeAddSubgroupModal}
-        onSubgroupAdded={fetchGroups}
-        rootGroup={groupToExtend}
-      />
-    </div>
+        <PlusIcon />
+      </button>
+    </form>
+  );
+}
+
+function DeleteGroup(props: Readonly<{ onDeleteGroup: () => void }>) {
+  const action = () => {
+    props.onDeleteGroup();
+  };
+
+  return (
+    <form action={action}>
+      <button
+        type="submit"
+        className="mx-auto w-5 rounded-md bg-danger p-0.5 text-secondary"
+      >
+        <XMarkIcon />
+      </button>
+    </form>
+  );
+}
+
+type RowProps = {
+  group: Group;
+  onAddSubgroup?: (rootGroup: Group) => void;
+  onDeleteGroup?: (group: Group) => void;
+};
+
+function Row(props: Readonly<RowProps>) {
+  const { group, onAddSubgroup, onDeleteGroup } = props;
+
+  const addSubgroup = () => {
+    onAddSubgroup?.(group);
+  };
+
+  const deleteGroup = () => {
+    onDeleteGroup?.(group);
+  };
+
+  let { labels } = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
+  const strLabels = labels ? labels.map(l => l.name).join(" ") : " ";
+
+  return (
+    <TableRow>
+      <TableCell>
+        <Link
+          href={`/groups/${group.id}`}
+          className="text-primary-600 underline"
+        >
+          {group.displayName}
+        </Link>
+      </TableCell>
+      <TableCell>{strLabels}</TableCell>
+      <TableCell className="flex">
+        <div className="mx-auto flex gap-1">
+          <DeleteGroup onDeleteGroup={deleteGroup} />
+          <AddSubgroup onAddSubgroup={addSubgroup} />
+        </div>
+      </TableCell>
+    </TableRow>
+  );
+}
+
+type TableProps = {
+  groups: Group[];
+  onDeleteGroup?: (group: Group) => void;
+  onAddSubgroup?: (rootGroup: Group) => void;
+};
+
+export default function GroupsTable(props: Readonly<TableProps>) {
+  const { groups, onDeleteGroup, onAddSubgroup } = props;
+  return (
+    <Table>
+      <TableHeader>
+        <TableHeaderCell>Name</TableHeaderCell>
+        <TableHeaderCell>Labels</TableHeaderCell>
+        <TableHeaderCell>Actions</TableHeaderCell>
+      </TableHeader>
+      <TableBody>
+        {groups.map(group => (
+          <Row
+            key={group.displayName}
+            group={group}
+            onDeleteGroup={onDeleteGroup}
+            onAddSubgroup={onAddSubgroup}
+          />
+        ))}
+      </TableBody>
+    </Table>
   );
 }

@@ -5,7 +5,7 @@ type TableHeaderProps = {
 export function TableHeader(props: Readonly<TableHeaderProps>) {
   const { children } = props;
   return (
-    <thead className="bg-secondary-100/30">
+    <thead className="border-b bg-transparent">
       <tr>{children}</tr>
     </thead>
   );

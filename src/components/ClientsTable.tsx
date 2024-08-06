@@ -1,7 +1,6 @@
 import Paginator from "@/components/Paginator";
 import { getClientsPage } from "@/services/clients";
 import { Client } from "@/models/client";
-import { Paginated } from "@/models/pagination";
 import Button from "@/components/Button";
 import Link from "next/link";
 import React from "react";

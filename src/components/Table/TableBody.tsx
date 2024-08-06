@@ -3,7 +3,7 @@ type TableBodyProps = {
 };
 export function TableBody(props: Readonly<TableBodyProps>) {
   const { children } = props;
-  return <tbody>{children}</tbody>;
+  return <tbody className="before:block before:leading-4">{children}</tbody>;
 }
 
 type TableRowProps = {
@@ -12,7 +12,7 @@ type TableRowProps = {
 export function TableRow(props: Readonly<TableRowProps>) {
   const { children } = props;
   return (
-    <tr className="even:bg-secondary-100 hover:bg-secondary-200">{children}</tr>
+    <tr className="odd:bg-secondary-100 hover:bg-secondary-200">{children}</tr>
   );
 }
 
@@ -22,5 +22,5 @@ type TableCellProps = {
 };
 export function TableCell(props: Readonly<TableCellProps>) {
   const { children, className } = props;
-  return <td className={`p-1 ${className}`}>{children}</td>;
+  return <td className={`p-2 ${className}`}>{children}</td>;
 }

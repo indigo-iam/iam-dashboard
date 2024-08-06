@@ -12,9 +12,12 @@ export function TableHeader(props: Readonly<TableHeaderProps>) {
 }
 
 type TableHeaderCellProps = {
+  className?: string;
   children?: React.ReactNode;
 };
 export function TableHeaderCell(props: Readonly<TableHeaderCellProps>) {
-  const { children } = props;
-  return <th>{children}</th>;
+  const { className, children } = props;
+  return (
+    <th className={`${className ? className : "text-left"} p-2`}>{children}</th>
+  );
 }

@@ -15,7 +15,7 @@ export interface ScimUser {
   password?: string;
   schemas?: string[];
   emails?: Email[];
-  groups?: Group[];
+  groups?: ScimGroup[];
   meta?: {
     created?: string;
     lastModified?: string;
@@ -40,11 +40,13 @@ export interface Email {
   primary: boolean;
 }
 
-type Group = {
+export type ScimReference = {
   display: string;
   value: string;
   $ref: string;
 };
+
+export type ScimGroup = ScimReference;
 
 export type OidcId = {
   issuer: string;

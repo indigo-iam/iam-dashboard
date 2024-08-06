@@ -4,9 +4,24 @@ const CertificateView = (props: { cert: Certificate }) => {
   const { cert } = props;
   return (
     <div className="border-bottom pb-2">
-      <b>Subject</b> {cert.subjectDn} <br />
-      <b>Issuer</b> {cert.issuerDn} <br />
-      <b>Last Modified</b> {cert.lastModified}
+      <div className="flex">
+        <div className="min-w-28">
+          <b>Subject</b>
+        </div>
+        <div>{cert.subjectDn}</div>
+      </div>
+      <div className="flex">
+        <div className="min-w-28">
+          <b>Issuer</b>
+        </div>
+        <div>{cert.issuerDn}</div>
+      </div>
+      <div className="flex">
+        <div className="min-w-28">
+          <b>Last Modified</b>
+        </div>
+        <div>{cert.lastModified}</div>
+      </div>
     </div>
   );
 };

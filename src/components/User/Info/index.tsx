@@ -1,5 +1,6 @@
 import { ScimUser } from "@/models/scim";
 import OptionsDropdown from "./OptionsDropdown";
+import { dateToHuman } from "@/utils/dates";
 
 type RowProps = {
   title: string;
@@ -22,6 +23,18 @@ type UserInfoProps = {
 };
 export default function UserInfo(props: Readonly<UserInfoProps>) {
   const { user } = props;
+  const created = user.meta?.created
+    ? dateToHuman(new Date(user.meta?.created))
+    : "N/A";
+  const lastModified = user.meta?.lastModified
+    ? dateToHuman(new Date(user.meta?.lastModified))
+    : "N/A";
+  const signedAup = user["urn:indigo-dc:scim:schemas:IndigoUser"]
+    ?.aupSignatureTime
+    ? dateToHuman(
+        new Date(user["urn:indigo-dc:scim:schemas:IndigoUser"].aupSignatureTime)
+      )
+    : "N/A";
   return (
     <div className="flex">
       <table className="table-auto border-0">
@@ -30,15 +43,9 @@ export default function UserInfo(props: Readonly<UserInfoProps>) {
           <Row title="User ID" value={user.id ?? "N/A"} />
           <Row title="Email" value={user.emails?.[0].value ?? "N/A"} />
           <Row title="Status" value={user.active ? "Active" : "Inactive"} />
-          <Row title="Created" value={user.meta?.created ?? "N/A"} />
-          <Row title="Last Modified" value={user.meta?.created ?? "N/A"} />
-          <Row
-            title="Signed AUP"
-            value={
-              user["urn:indigo-dc:scim:schemas:IndigoUser"]?.aupSignatureTime ??
-              "N/A"
-            }
-          />
+          <Row title="Created" value={created} />
+          <Row title="Last Modified" value={lastModified} />
+          <Row title="Signed AUP" value={signedAup} />
         </tbody>
       </table>
       <div className="mb-auto ml-auto mr-0 mt-0">

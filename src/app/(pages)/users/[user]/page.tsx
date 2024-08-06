@@ -37,6 +37,12 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
         <Section title="X509 Certificates">
           <Certificates user={user} />
         </Section>
+        <Section title="SSH Keys">
+          <p>To be implemented</p>
+        </Section>
+        <Section title="Attributes">
+          <p>To be implemented</p>
+        </Section>
       </Panel>
     </Page>
   );

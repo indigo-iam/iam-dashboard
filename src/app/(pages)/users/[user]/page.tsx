@@ -4,6 +4,7 @@ import Panel from "@/components/Panel";
 import UserInfo from "@/components/User/Info";
 import Section from "@/components/Section";
 import { GroupRequests, Groups, LinkedAccounts } from "@/components/User";
+import { Certificates } from "@/components/User/Certificates";
 
 type UserPageProps = {
   params: { user: string };
@@ -32,6 +33,9 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
         </Section>
         <Section title="Linked Accounts">
           <LinkedAccounts user={user} />
+        </Section>
+        <Section title="X509 Certificates">
+          <Certificates user={user} />
         </Section>
       </Panel>
     </Page>

@@ -7,6 +7,11 @@ import { revalidatePath } from "next/cache";
 
 const { BASE_URL } = getConfig();
 
+export const fetchGroup = async (groupID: string) => {
+  let url = `${BASE_URL}/scim/Groups/${groupID}`;
+  return await getItem<Group>(url);
+};
+
 export const fetchGroups = async () => {
   let url = `${BASE_URL}/iam/group/search`;
   const response = await getItem<GroupsSearchResponse>(url);

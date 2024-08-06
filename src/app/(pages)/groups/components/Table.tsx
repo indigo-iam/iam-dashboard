@@ -1,6 +1,7 @@
 import { Group } from "@/models/groups";
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import { PlusIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 function AddSubgroup(props: Readonly<{ onAddSubgroup: () => void }>) {
   const action = () => {
@@ -47,7 +48,7 @@ function Row(props: Readonly<RowProps>) {
 
   const addSubgroup = () => {
     onAddSubgroup?.(group);
-  }
+  };
 
   const deleteGroup = () => {
     onDeleteGroup?.(group);
@@ -58,7 +59,14 @@ function Row(props: Readonly<RowProps>) {
 
   return (
     <tr className="text-sm">
-      <td>{group.displayName}</td>
+      <td>
+        <Link
+          href={`/groups/${group.id}`}
+          className="text-primary-600 underline"
+        >
+          {group.displayName}
+        </Link>
+      </td>
       <td>{strLabels}</td>
       <td className="flex">
         <div className="mx-auto flex gap-1">

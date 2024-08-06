@@ -1,6 +1,7 @@
 import { User } from "@/models/user";
 import { dateToHuman } from "@/utils/dates";
 import { XMarkIcon } from "@heroicons/react/16/solid";
+import Link from "next/link";
 
 function ActiveIcon(props: Readonly<{ active: boolean }>) {
   const { active } = props;
@@ -45,7 +46,11 @@ function Row(props: Readonly<RowProps>) {
     : "N/A";
   return (
     <tr className="text-sm">
-      <td>{user.name.formatted}</td>
+      <td>
+        <Link href={`/users/${user.id}`} className="text-primary-600 underline">
+          {user.name.formatted}
+        </Link>
+      </td>
       <td>{user.emails[0].value}</td>
       <td>{created}</td>
       <td>

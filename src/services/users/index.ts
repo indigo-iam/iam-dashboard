@@ -8,6 +8,9 @@ import { revalidatePath } from "next/cache";
 
 const { BASE_URL } = getConfig();
 
+export const fetchUser = async (uuid: string) =>
+  await getItem<ScimUser>(`${BASE_URL}/scim/Users/${uuid}`);
+
 export const searchUser = async (filter: string) => {
   const response = await getItem<UserPage>(
     `${BASE_URL}/iam/account/search?count=100&startIndex=0&filter=${filter}`

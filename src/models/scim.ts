@@ -1,5 +1,6 @@
 // https://www.rfc-editor.org/rfc/rfc7643#section-4.1
 export interface ScimUser {
+  id: string;
   userName?: string;
   name?: {
     formatted?: string;
@@ -21,6 +22,15 @@ export interface ScimUser {
   password?: string;
   schemas?: string[];
   emails?: ScimEmail[];
+  meta?: {
+    created?: string;
+    lastModified?: string;
+    location?: string;
+  };
+  "urn:indigo-dc:scim:schemas:IndigoUser"?: {
+    aupSignatureTime?: string;
+    authorities?: string[];
+  };
 }
 
 // https://www.rfc-editor.org/rfc/rfc7643#section-4.1.2

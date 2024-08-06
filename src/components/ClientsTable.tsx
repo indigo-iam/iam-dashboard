@@ -5,6 +5,14 @@ import { Paginated } from "@/models/pagination";
 import Button from "@/components/Button";
 import Link from "next/link";
 import React from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableHeaderCell,
+  TableRow,
+} from "@/components/Table";
 
 type RowProps = {
   client: Client;
@@ -22,54 +30,24 @@ function Row(props: Readonly<RowProps>) {
   };
 
   return (
-    <tr key={client_id} className="text-sm">
-      <td>{client_name}</td>
-      <td>
+    <TableRow>
+      <TableCell>{client_name}</TableCell>
+      <TableCell>
         <Link
           href={`${baseUrl}/${client_id}`}
           className="text-primary-600 underline"
         >
           {client_id}
         </Link>
-      </td>
-      <td>
+      </TableCell>
+      <TableCell>
         <form action={action}>
           <Button action="danger" type="submit">
             Delete
           </Button>
         </form>
-      </td>
-    </tr>
-  );
-}
-
-type TableProps = {
-  clients: Client[];
-  isAdmin: boolean;
-  children?: React.ReactNode;
-};
-
-function Table(props: Readonly<TableProps>) {
-  const { clients, children, isAdmin } = props;
-  const baseUrl = isAdmin ? "/clients" : "/me/clients";
-  return (
-    <div className="w-full space-y-4 rounded-xl border bg-secondary p-2 shadow-xl">
-      <table className="w-full table-auto border-0">
-        <thead>
-          <tr className="hover:bg-secondary">
-            <th>Name</th>
-            <th>Client Id</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {clients.map(client => (
-            <Row key={client.client_id} client={client} baseUrl={baseUrl} />
-          ))}
-        </tbody>
-      </table>
-      {children}
-    </div>
+      </TableCell>
+    </TableRow>
   );
 }
 
@@ -85,21 +63,27 @@ export default async function ClientsTable(props: Readonly<ClientsTableProps>) {
 
   const startIndex = currentPage * itemsPerPage + 1;
 
-  let response: Paginated<Client>;
-  let numberOfPages = 0;
+  const response = await getClientsPage(itemsPerPage, startIndex, isAdmin);
+  const { totalResults } = response;
+  const numberOfPages = Math.ceil(totalResults / itemsPerPage);
 
-  try {
-    response = await getClientsPage(itemsPerPage, startIndex, isAdmin);
-    const { totalResults } = response;
-    numberOfPages = Math.ceil(totalResults / itemsPerPage);
-  } catch (err) {
-    console.error(err);
-    return <h1>{`${err}`}</h1>;
-  }
-
+  const baseUrl = isAdmin ? "/clients" : "/me/clients";
+  const clients = response.Resources;
   return (
-    <Table clients={response.Resources} isAdmin={isAdmin}>
+    <>
+      <Table>
+        <TableHeader>
+          <TableHeaderCell>Name</TableHeaderCell>
+          <TableHeaderCell>Client Id</TableHeaderCell>
+          <TableHeaderCell>Actions</TableHeaderCell>
+        </TableHeader>
+        <TableBody>
+          {clients.map(client => (
+            <Row key={client.client_id} client={client} baseUrl={baseUrl} />
+          ))}
+        </TableBody>
+      </Table>
       <Paginator numberOfPages={numberOfPages} />
-    </Table>
+    </>
   );
 }

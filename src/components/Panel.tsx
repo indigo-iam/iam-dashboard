@@ -4,5 +4,7 @@ type PanelProps = {
 
 export default function Panel(props: Readonly<PanelProps>) {
   const { children } = props;
-  return <div className="rounded-xl p-8 text-sm shadow-xl space-y-6">{children}</div>;
+  return (
+    <div className="space-y-6 rounded-xl p-4 text-sm shadow">{children}</div>
+  );
 }

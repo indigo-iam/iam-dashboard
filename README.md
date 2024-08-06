@@ -256,10 +256,10 @@ docker run -p <some-port>:80 --env-file=prod.env cnafsoftwaredevel/iam-dashboard
 
 ### Groups Page
 
-- [ ] Create the groups page
-- [ ] Add "Add Root Group" feature
-- [ ] Add "Add Subgroup" button per each row (?!)
-- [ ] Add "Delete Group" button per each row
+- [x] Create the groups page
+- [x] Add "Add Root Group" feature
+- [x] Add "Add Subgroup" button per each row
+- [x] Add "Delete Group" button per each row
 
 ### Requests Page
 

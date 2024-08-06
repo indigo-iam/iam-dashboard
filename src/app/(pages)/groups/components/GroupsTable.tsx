@@ -7,6 +7,7 @@ import Table from "./Table";
 import SearchFilter from "@/components/SearchFilter";
 import AddRootGroup from "./AddRootGroup";
 import DeleteRootGroup from "./DeleteRootGroup";
+import AddSubgroup from "./AddSubgroup";
 
 type GroupsTableProps = {
   count?: string;
@@ -18,6 +19,7 @@ export default function GroupsTable(props: Readonly<GroupsTableProps>) {
   const [groups, setGroups] = useState<Group[]>([]);
   const [numberOfPages, setNumberOfPages] = useState(0);
   const [groupToDelete, setGroupToDelete] = useState<Group>();
+  const [groupToExtend, setGroupToExtend] = useState<Group>();
 
   let itemsPerPage = 10;
   let currentPage = 0;
@@ -54,13 +56,25 @@ export default function GroupsTable(props: Readonly<GroupsTableProps>) {
     setGroupToDelete(undefined);
   };
 
+  const openAddSubgroupModal = (group: Group) => {
+    setGroupToExtend(group);
+  };
+
+  const closeAddSubgroupModal = () => {
+    setGroupToExtend(undefined);
+  };
+
   return (
     <div className="space-y-3">
       <SearchFilter
         onFilter={handleFilterChange}
         onFilterClear={handleFilterClear}
       />
-      <Table groups={groups} onDeleteGroup={openDeleteGroupModal}>
+      <Table
+        groups={groups}
+        onDeleteGroup={openDeleteGroupModal}
+        onAddSubgroup={openAddSubgroupModal}
+      >
         <Paginator numberOfPages={numberOfPages} />
       </Table>
       <AddRootGroup onRootGroupAdded={fetchGroups} />
@@ -69,6 +83,12 @@ export default function GroupsTable(props: Readonly<GroupsTableProps>) {
         onClose={closeDeleteGroupModal}
         onDeleted={fetchGroups}
         group={groupToDelete}
+      />
+      <AddSubgroup
+        show={!!groupToExtend}
+        onClose={closeAddSubgroupModal}
+        onSubgroupAdded={fetchGroups}
+        rootGroup={groupToExtend}
       />
     </div>
   );

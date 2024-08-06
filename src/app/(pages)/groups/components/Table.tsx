@@ -2,9 +2,9 @@ import { Group } from "@/models/groups";
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
-function AddSubGroup(props: Readonly<{ onAddSubGroup: () => void }>) {
+function AddSubgroup(props: Readonly<{ onAddSubgroup: () => void }>) {
   const action = () => {
-    props.onAddSubGroup();
+    props.onAddSubgroup();
   };
 
   return (
@@ -19,7 +19,7 @@ function AddSubGroup(props: Readonly<{ onAddSubGroup: () => void }>) {
   );
 }
 
-function DeleteGroupButton(props: Readonly<{ onDeleteGroup: () => void }>) {
+function DeleteGroup(props: Readonly<{ onDeleteGroup: () => void }>) {
   const action = () => {
     props.onDeleteGroup();
   };
@@ -38,11 +38,16 @@ function DeleteGroupButton(props: Readonly<{ onDeleteGroup: () => void }>) {
 
 type RowProps = {
   group: Group;
+  onAddSubgroup?: (rootGroup: Group) => void;
   onDeleteGroup?: (group: Group) => void;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const { group, onDeleteGroup } = props;
+  const { group, onAddSubgroup, onDeleteGroup } = props;
+
+  const addSubgroup = () => {
+    onAddSubgroup?.(group);
+  }
 
   const deleteGroup = () => {
     onDeleteGroup?.(group);
@@ -57,8 +62,8 @@ function Row(props: Readonly<RowProps>) {
       <td>{strLabels}</td>
       <td className="flex">
         <div className="mx-auto flex gap-1">
-          <DeleteGroupButton onDeleteGroup={deleteGroup} />
-          <AddSubGroup onAddSubGroup={() => group} />
+          <DeleteGroup onDeleteGroup={deleteGroup} />
+          <AddSubgroup onAddSubgroup={addSubgroup} />
         </div>
       </td>
     </tr>
@@ -69,10 +74,11 @@ type TableProps = {
   groups: Group[];
   children: React.ReactNode;
   onDeleteGroup?: (group: Group) => void;
+  onAddSubgroup?: (rootGroup: Group) => void;
 };
 
 export default function Table(props: Readonly<TableProps>) {
-  const {  children, groups, onDeleteGroup } = props;
+  const { children, groups, onDeleteGroup, onAddSubgroup } = props;
   return (
     <div className="w-full space-y-4 rounded-xl border bg-secondary p-2 shadow-xl">
       <table className="w-full table-auto border-0">
@@ -89,6 +95,7 @@ export default function Table(props: Readonly<TableProps>) {
               key={group.displayName}
               group={group}
               onDeleteGroup={onDeleteGroup}
+              onAddSubgroup={onAddSubgroup}
             />
           ))}
         </tbody>

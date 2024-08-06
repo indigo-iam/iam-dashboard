@@ -70,3 +70,30 @@ export const deleteRootGroup = async (groupId: string) => {
     );
   }
 };
+
+export const addSubgroup = async (groupName: string, parentGroup: Group) => {
+  const body = {
+    displayName: groupName,
+    schemas: ["urn:ietf:params:scim:schemas:core:2.0:Group"],
+
+    "urn:indigo-dc:scim:schemas:IndigoGroup": {
+      parentGroup: {
+        $ref: `${BASE_URL}/scim/Groups/${parentGroup.id}`,
+        display: parentGroup.displayName,
+        value: parentGroup.id,
+      },
+    },
+  };
+  const url = `${BASE_URL}/scim/Groups`;
+  const response = await authFetch(url, {
+    body: JSON.stringify(body),
+    method: "POST",
+    headers: { "content-type": "application/scim+json" },
+  });
+  if (response.ok) {
+    revalidatePath("/groups");
+  } else {
+    const msg = await response.text();
+    throw Error(`Add Subgroup failed with status ${response.status} ${msg}`);
+  }
+};

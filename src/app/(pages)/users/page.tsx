@@ -1,5 +1,5 @@
 import Page from "@/components/Page";
-import UsersTable from "./components/UsersTable";
+import Users from "./components/Users";
 
 type UsersProps = {
   searchParams?: {
@@ -8,11 +8,11 @@ type UsersProps = {
   };
 };
 
-export default async function Users(props: Readonly<UsersProps>) {
+export default async function UsersPage(props: Readonly<UsersProps>) {
   const { searchParams } = props;
   return (
     <Page title="Users">
-      <UsersTable {...searchParams} />
+      <Users {...searchParams} />
     </Page>
   );
 }

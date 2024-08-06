@@ -1,73 +1,97 @@
-"use client";
 import { ScimUser } from "@/models/scim";
-import { getUsersPage } from "@/services/users";
-import SearchFilter from "@/components/SearchFilter";
-import Table from "./Table";
-import { useCallback, useEffect, useState } from "react";
-import Paginator from "@/components/Paginator";
-import DeleteUser from "./DeleteUser";
-import AddUser from "./AddUser";
+import { dateToHuman } from "@/utils/dates";
+import { XMarkIcon } from "@heroicons/react/16/solid";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableHeaderCell,
+  TableRow,
+} from "@/components/Table";
+import Link from "next/link";
 
-type UsersTableProps = { count?: string; page?: string };
-export default function UsersTable(props: Readonly<UsersTableProps>) {
-  const { count, page } = props;
-  const [filter, setFilter] = useState<string>();
-  const [users, setUsers] = useState<ScimUser[]>([]);
-  const [numberOfPages, setNumberOfPages] = useState(0);
-  const [userToDelete, setUserToDelete] = useState<ScimUser>();
+function ActiveIcon(props: Readonly<{ active: boolean }>) {
+  const { active } = props;
+  return (
+    <div
+      className={`${active ? "bg-success" : "bg-danger"} mx-auto h-3 w-3 rounded-full`}
+    />
+  );
+}
 
-  let itemsPerPage = 10;
-  let currentPage = 0;
-
-  itemsPerPage = count ? parseInt(count) || itemsPerPage : itemsPerPage;
-  currentPage = page ? parseInt(page) - 1 || currentPage : currentPage;
-
-  const startIndex = currentPage * itemsPerPage + 1;
-
-  const fetchUsers = useCallback(async () => {
-    const page = await getUsersPage(itemsPerPage, startIndex, filter);
-    const { totalResults } = page;
-    setNumberOfPages(Math.ceil(totalResults / itemsPerPage));
-    setUsers(page.Resources);
-  }, [itemsPerPage, startIndex, filter]);
-
-  useEffect(() => {
-    fetchUsers();
-  }, [fetchUsers]);
-
-  const handleFilterChange = (filter: string) => {
-    setFilter(filter);
-  };
-
-  const handleFilterClear = () => {
-    setFilter(undefined);
-  };
-
-  const openDeleteUserModal = (user: ScimUser) => {
-    setUserToDelete(user);
-  };
-
-  const closeDeleteUserModal = () => {
-    setUserToDelete(undefined);
-    setFilter(undefined);
+function DeleteUserButton(props: Readonly<{ onDeleteUser: () => void }>) {
+  const action = () => {
+    props.onDeleteUser();
   };
 
   return (
-    <div className="space-y-3">
-      <SearchFilter
-        onFilter={handleFilterChange}
-        onFilterClear={handleFilterClear}
-      />
-      <DeleteUser
-        show={!!userToDelete}
-        onClose={closeDeleteUserModal}
-        onUserDeleted={fetchUsers}
-        user={userToDelete}
-      />
-      <Table users={users} onDeleteUser={openDeleteUserModal}>
-        <Paginator numberOfPages={numberOfPages} />
-      </Table>
-      <AddUser onUserAdded={fetchUsers} />
-    </div>
+    <form action={action}>
+      <button
+        type="submit"
+        className="mx-auto w-5 rounded-md bg-danger p-0.5 text-secondary"
+      >
+        <XMarkIcon />
+      </button>
+    </form>
+  );
+}
+
+type RowProps = {
+  user: ScimUser;
+  onDeleteUser?: (user: ScimUser) => void;
+};
+
+function Row(props: Readonly<RowProps>) {
+  const { user, onDeleteUser } = props;
+
+  const deleteUser = () => {
+    onDeleteUser?.(user);
+  };
+
+  const created = user.meta?.created
+    ? dateToHuman(new Date(user.meta.created))
+    : "N/A";
+  return (
+    <TableRow>
+      <TableCell>
+        <Link href={`/users/${user.id}`} className="text-primary-600 underline">
+          {user.name?.formatted}
+        </Link>
+      </TableCell>
+      <TableCell>{user.emails?.[0].value}</TableCell>
+      <TableCell>{created}</TableCell>
+      <TableCell>
+        <ActiveIcon active={!!user.active} />
+      </TableCell>
+      <TableCell className="text-center">
+        <DeleteUserButton onDeleteUser={deleteUser} />
+      </TableCell>
+    </TableRow>
+  );
+}
+
+type UsersTableProps = {
+  users: ScimUser[];
+  onDeleteUser?: (user: ScimUser) => void;
+};
+
+export default function UsersTable(props: Readonly<UsersTableProps>) {
+  const { users, onDeleteUser } = props;
+  return (
+    <Table>
+      <TableHeader>
+        <TableHeaderCell>Name</TableHeaderCell>
+        <TableHeaderCell>Email</TableHeaderCell>
+        <TableHeaderCell>Created</TableHeaderCell>
+        <TableHeaderCell className="text-center">Active</TableHeaderCell>
+        <TableHeaderCell className="text-center">Actions</TableHeaderCell>
+      </TableHeader>
+      <TableBody>
+        {users.map(user => (
+          <Row key={user.id} user={user} onDeleteUser={onDeleteUser} />
+        ))}
+      </TableBody>
+    </Table>
   );
 }

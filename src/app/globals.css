@@ -33,16 +33,16 @@
     @apply text-lg font-bold;
   }
   table {
-    @apply border-collapse border-2 border-secondary-100;
+    @apply border-2 border-none bg-secondary;
   }
 
   td,
   th {
-    @apply border-0 p-2 text-left;
+    @apply border-none px-2 text-left;
   }
 
   tr {
-    @apply h-12 even:bg-secondary-100 hover:bg-secondary-200;
+    @apply h-8 even:bg-secondary-100 hover:bg-secondary-200;
   }
 }
 

@@ -42,10 +42,7 @@ export const getGroupsPage = async (
 export const addRootGroup = async (groupName: string) => {
   const body = {
     displayName: groupName,
-    schemas: [
-      "urn:ietf:params:scim:schemas:core:2.0:Group",
-      "urn:indigo-dc:scim:schemas:IndigoGroup",
-    ],
+    schemas: ["urn:ietf:params:scim:schemas:core:2.0:Group"],
   };
   const url = `${BASE_URL}/scim/Groups`;
   const response = await authFetch(url, {

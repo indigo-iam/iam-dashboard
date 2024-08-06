@@ -1,7 +1,7 @@
 import Page from "@/components/Page";
 import { fetchUser } from "@/services/users";
 import Panel from "@/components/Panel";
-import UserInfo from "./components/UserInfo";
+import UserInfo from "@/components/User/Info";
 import Section from "@/components/Section";
 import { Groups } from "@/components/User";
 

@@ -28,7 +28,7 @@ const Row = (props: { group: ScimReference; deleteGroup: () => void }) => {
           {group.display}
         </Link>
       </TableCell>
-      <TableCell>
+      <TableCell className="text-right">
         <Button
           action="danger"
           isSmall={true}
@@ -53,7 +53,7 @@ const GroupsTable = (props: { user: ScimUser }) => {
     <Table>
       <TableHeader>
         <TableHeaderCell>Group</TableHeaderCell>
-        <TableHeaderCell>Actions</TableHeaderCell>
+        <TableHeaderCell className="text-right">Actions</TableHeaderCell>
       </TableHeader>
       <TableBody>
         {groups.map(group => {

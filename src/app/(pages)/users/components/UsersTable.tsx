@@ -11,10 +11,11 @@ import {
 } from "@/components/Table";
 import Link from "next/link";
 
-function ActiveIcon(props: Readonly<{ active: boolean }>) {
+function StatusIcon(props: Readonly<{ active: boolean }>) {
   const { active } = props;
   return (
     <div
+      title={`${active ? "Enabled" : "Disabled"}`}
       className={`${active ? "bg-success" : "bg-danger"} mx-auto h-3 w-3 rounded-full`}
     />
   );
@@ -30,6 +31,7 @@ function DeleteUserButton(props: Readonly<{ onDeleteUser: () => void }>) {
       <button
         type="submit"
         className="mx-auto w-5 rounded-md bg-danger p-0.5 text-secondary"
+        title="Delete client"
       >
         <XMarkIcon />
       </button>
@@ -62,7 +64,7 @@ function Row(props: Readonly<RowProps>) {
       <TableCell>{user.emails?.[0].value}</TableCell>
       <TableCell>{created}</TableCell>
       <TableCell>
-        <ActiveIcon active={!!user.active} />
+        <StatusIcon active={!!user.active} />
       </TableCell>
       <TableCell className="text-center">
         <DeleteUserButton onDeleteUser={deleteUser} />
@@ -84,7 +86,7 @@ export default function UsersTable(props: Readonly<UsersTableProps>) {
         <TableHeaderCell>Name</TableHeaderCell>
         <TableHeaderCell>Email</TableHeaderCell>
         <TableHeaderCell>Created</TableHeaderCell>
-        <TableHeaderCell className="text-center">Active</TableHeaderCell>
+        <TableHeaderCell className="text-center">Status</TableHeaderCell>
         <TableHeaderCell className="text-center">Actions</TableHeaderCell>
       </TableHeader>
       <TableBody>

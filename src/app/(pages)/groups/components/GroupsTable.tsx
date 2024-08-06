@@ -21,6 +21,7 @@ function AddSubgroup(props: Readonly<{ onAddSubgroup: () => void }>) {
       <button
         type="submit"
         className="mx-auto w-5 rounded-md bg-success p-0.5 text-secondary"
+        title="Add Subgroup"
       >
         <PlusIcon />
       </button>
@@ -38,6 +39,7 @@ function DeleteGroup(props: Readonly<{ onDeleteGroup: () => void }>) {
       <button
         type="submit"
         className="mx-auto w-5 rounded-md bg-danger p-0.5 text-secondary"
+        title="Delete Group"
       >
         <XMarkIcon />
       </button>
@@ -99,7 +101,7 @@ export default function GroupsTable(props: Readonly<TableProps>) {
       <TableHeader>
         <TableHeaderCell>Name</TableHeaderCell>
         <TableHeaderCell>Labels</TableHeaderCell>
-        <TableHeaderCell>Actions</TableHeaderCell>
+        <TableHeaderCell className="text-center">Actions</TableHeaderCell>
       </TableHeader>
       <TableBody>
         {groups.map(group => (

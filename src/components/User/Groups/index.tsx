@@ -5,7 +5,7 @@ import { XCircleIcon } from "@heroicons/react/16/solid";
 // import { AddGroupModal } from "./AddGroupModal";
 // import { useState } from "react";
 // import { Group } from "@/models/groups";
-import { ScimUser } from "@/models/scim";
+import { ScimGroup, ScimUser } from "@/models/scim";
 import {
   Table,
   TableBody,
@@ -14,12 +14,20 @@ import {
   TableHeaderCell,
   TableRow,
 } from "@/components/Table";
+import Link from "next/link";
 
-const Row = (props: { title: string; deleteGroup: () => void }) => {
-  const { title, deleteGroup } = props;
+const Row = (props: { group: ScimGroup; deleteGroup: () => void }) => {
+  const { group, deleteGroup } = props;
   return (
     <TableRow>
-      <TableCell>{title}</TableCell>
+      <TableCell>
+        <Link
+          href={`/groups/${group.value}`}
+          className="text-primary-600 underline"
+        >
+          {group.display}
+        </Link>
+      </TableCell>
       <TableCell>
         <Button
           action="danger"
@@ -50,11 +58,7 @@ const GroupsTable = (props: { user: ScimUser }) => {
       <TableBody>
         {groups.map(group => {
           return (
-            <Row
-              key={group.display}
-              title={group.display}
-              deleteGroup={deleteGroup}
-            />
+            <Row key={group.value} group={group} deleteGroup={deleteGroup} />
           );
         })}
       </TableBody>

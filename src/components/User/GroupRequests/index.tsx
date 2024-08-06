@@ -4,7 +4,7 @@ import { GroupRequestView } from "./GroupRequest";
 export const GroupRequests = async () => {
   const groupRequests = await fetchGroupsRequests();
   if (!groupRequests || groupRequests.Resources.length === 0) {
-    return "No Request Found";
+    return "No requests found.";
   }
 
   return (

@@ -16,7 +16,7 @@ export default function DeleteRootGroup(props: Readonly<DeleteRootGroupProps>) {
       onDeleted?.();
       modalProps.onClose();
     } else {
-      console.warn("group do delete is undefined");
+      console.warn("group to delete is undefined");
     }
   };
   return (

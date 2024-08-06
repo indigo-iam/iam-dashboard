@@ -22,7 +22,7 @@ export const Certificates = async (props: Readonly<CertificateProps>) => {
     certificates = user["urn:indigo-dc:scim:schemas:IndigoUser"].certificates;
   }
 
-  if (certificates && certificates?.length == 0) {
+  if (!certificates || certificates?.length == 0) {
     return <p>No certificates found.</p>;
   }
 

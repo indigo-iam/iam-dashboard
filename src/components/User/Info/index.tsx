@@ -9,11 +9,11 @@ type RowProps = {
 function Row(props: Readonly<RowProps>) {
   const { title, value } = props;
   return (
-    <tr className="!h-0 !bg-secondary text-sm">
-      <td className="!py-0.5">
+    <tr className="!bg-secondary text-sm">
+      <td className="min-w-48 p-1">
         <b>{title}</b>
       </td>
-      <td className="!py-0.5">{value}</td>
+      <td>{value}</td>
     </tr>
   );
 }

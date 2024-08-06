@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { FormSection } from "@/components/Form";
 import { TabPanel } from "@/components/Tabs";
 import { ClientScopes, Scope } from "@/models/client";
@@ -7,24 +8,24 @@ interface ActiveScope extends Scope {
   active: boolean;
 }
 
-const SystemScopes = (props: { scopes: ActiveScope[] }) => {
-  return props.scopes
-    .filter(scope => !scope.restricted)
-    .map(scope => (
-      <div key={scope.value} className="flex flex-row gap-1 py-0.5">
-        <input
-          type="checkbox"
-          id={scope.value}
-          name="scope"
-          defaultValue={scope.value}
-          defaultChecked={scope.active}
-        />
-        <label htmlFor={scope.value}>
-          {scope.value}
-          {scope.description && ` (${scope.description})`}
-        </label>
-      </div>
-    ));
+const SystemScopes = async (props: { scopes: ActiveScope[] }) => {
+  const session = await auth();
+  return props.scopes.map(scope => (
+    <div key={scope.value} className="flex flex-row gap-1 py-0.5">
+      <input
+        type="checkbox"
+        id={scope.value}
+        name="scope"
+        defaultValue={scope.value}
+        defaultChecked={scope.active}
+        disabled={scope.restricted && !session?.is_admin}
+      />
+      <label htmlFor={scope.value}>
+        {scope.value}
+        {scope.description && ` (${scope.description})`}
+      </label>
+    </div>
+  ));
 };
 
 interface ScopesProps extends ClientScopes {}

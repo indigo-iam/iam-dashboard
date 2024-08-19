@@ -1,7 +1,7 @@
 import { XCircleIcon } from "@heroicons/react/16/solid";
 import { OidcId, SamlId } from "@/models/scim";
 import { fetchMe } from "@/services/me";
-import Button from "@/components/Button";
+import { Button } from "@/components/Buttons";
 import Card from "@/components/Card";
 
 const OidcIdView = (props: { id: OidcId }) => {

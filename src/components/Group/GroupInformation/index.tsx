@@ -2,11 +2,6 @@ import { Group } from "@/models/groups";
 import { dateToHuman } from "@/utils/dates";
 import InfoTable from "@/components/InfoTable";
 
-type RowProps = {
-  title: string;
-  value: string;
-};
-
 type GroupInformationProps = {
   group: Group;
 };

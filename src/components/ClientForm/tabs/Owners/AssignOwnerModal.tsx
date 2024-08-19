@@ -1,5 +1,5 @@
 "use client";
-import Button from "@/components/Button";
+import { Button } from "@/components/Buttons";
 import Input from "@/components/Input";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import { ScimUser } from "@/models/scim";

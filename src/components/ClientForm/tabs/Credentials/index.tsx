@@ -1,4 +1,4 @@
-import Button from "@/components/Button";
+import { Button } from "@/components/Buttons";
 import Input from "@/components/Input";
 import { FormSection } from "@/components/Form";
 import { TabPanel } from "@/components/Tabs";

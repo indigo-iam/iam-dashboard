@@ -1,4 +1,4 @@
-import Button from "@/components/Button";
+import { Button } from "@/components/Buttons";
 import { Form } from "@/components/Form";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import { ScimUser } from "@/models/scim";

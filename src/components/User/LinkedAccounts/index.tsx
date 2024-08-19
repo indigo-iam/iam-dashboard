@@ -1,7 +1,6 @@
 import { XCircleIcon } from "@heroicons/react/16/solid";
-import { OidcId, SamlId } from "@/models/scim";
-import Button from "@/components/Button";
-import { ScimUser } from "@/models/scim";
+import { OidcId, SamlId, ScimUser } from "@/models/scim";
+import { Button } from "@/components/Buttons";
 import { Subsection } from "@/components/Section";
 
 const OidcIdView = (props: { id: OidcId }) => {

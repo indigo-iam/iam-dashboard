@@ -1,7 +1,7 @@
 import Paginator from "@/components/Paginator";
 import { getClientsPage } from "@/services/clients";
 import { Client } from "@/models/client";
-import Button from "@/components/Button";
+import { Button } from "@/components/Buttons";
 import Link from "next/link";
 import React from "react";
 import {

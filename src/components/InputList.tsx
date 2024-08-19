@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/16/solid";
-import Button from "@/components/Button";
+import { Button } from "@/components/Buttons";
 
 interface InputListProps extends React.HTMLProps<HTMLInputElement> {
   items: string[];

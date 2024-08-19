@@ -35,7 +35,6 @@ export default async function SubgroupsTable(
       </TableHeader>
       <TableBody>
         {subgroups.map(group => {
-          const g = {};
           return (
             <TableRow key={group.value}>
               <TableCell>

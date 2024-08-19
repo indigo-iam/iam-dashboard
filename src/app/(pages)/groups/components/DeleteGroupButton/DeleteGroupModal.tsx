@@ -27,7 +27,7 @@ export default function DeleteGroupModal(
       onConfirm={handleConfirm}
       title="Delete Group"
     >
-      Are you sure you want to delete group <b>{`${group?.display}`}</b>?
+      Are you sure you want to delete group <b>{group?.display}</b>?
     </ConfirmModal>
   );
 }

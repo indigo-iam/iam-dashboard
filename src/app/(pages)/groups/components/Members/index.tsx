@@ -9,6 +9,7 @@ import {
   TableCell,
 } from "@/components/Table";
 import Link from "next/link";
+import UnlinkMemberButton from "./UnlinkMemberButton";
 
 type MembersProps = {
   group: Group;
@@ -40,7 +41,9 @@ export default async function Members(props: Readonly<MembersProps>) {
                   {member.display}
                 </Link>
               </TableCell>
-              <TableCell>Unlink button here</TableCell>
+              <TableCell>
+                <UnlinkMemberButton user={member} group={group} />
+              </TableCell>
             </TableRow>
           );
         })}

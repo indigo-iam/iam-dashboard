@@ -99,7 +99,6 @@ export const addSubgroup = async (groupName: string, parentGroup: Group) => {
   const body = {
     displayName: groupName,
     schemas: ["urn:ietf:params:scim:schemas:core:2.0:Group"],
-
     "urn:indigo-dc:scim:schemas:IndigoGroup": {
       parentGroup: {
         $ref: `${BASE_URL}/scim/Groups/${parentGroup.id}`,
@@ -119,5 +118,35 @@ export const addSubgroup = async (groupName: string, parentGroup: Group) => {
   } else {
     const msg = await response.text();
     throw Error(`Add Subgroup failed with status ${response.status} ${msg}`);
+  }
+};
+
+export const removeUserFromGroup = async (
+  groupId: string,
+  user: ScimReference
+) => {
+  const body = {
+    operations: [
+      {
+        op: "remove",
+        path: "members",
+        value: [{ ...user, $ref: `${BASE_URL}/scim/Users/${user.value}` }],
+      },
+    ],
+    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
+  };
+  const url = `${BASE_URL}/scim/Groups/${groupId}`;
+  const response = await authFetch(url, {
+    body: JSON.stringify(body),
+    method: "PATCH",
+    headers: { "content-type": "application/scim+json" },
+  });
+  if (response.ok) {
+    revalidatePath(`/groups/${groupId}`);
+  } else {
+    const msg = await response.text();
+    throw Error(
+      `Remove user membership failed with status ${response.status} ${msg}`
+    );
   }
 };

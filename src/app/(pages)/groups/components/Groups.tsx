@@ -1,6 +1,6 @@
 "use client";
 import Paginator from "@/components/Paginator";
-import SearchFilter from "@/components/SearchFilter";
+import InputSearch from "@/components/SearchFilter";
 import Panel from "@/components/Panel";
 import { Group } from "@/models/groups";
 import { getGroupsPage } from "@/services/groups";
@@ -48,9 +48,9 @@ export function Groups(props: Readonly<GroupsProps>) {
   return (
     <>
       <Panel>
-        <SearchFilter
-          onFilter={handleFilterChange}
-          onFilterClear={handleFilterClear}
+        <InputSearch
+          onChange={handleFilterChange}
+          onClear={handleFilterClear}
         />
         <GroupsTable
           groups={groups}

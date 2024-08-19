@@ -2,16 +2,16 @@
 import Input from "@/components/Input";
 import { useRef } from "react";
 
-type SearchUserProps = {
-  onFilter: (filter: string) => void;
-  onFilterClear: () => void;
+type InputSearchProps = {
+  onChange: (filter: string) => void;
+  onClear: () => void;
 };
 
-export default function SearchUser(props: Readonly<SearchUserProps>) {
-  const { onFilter, onFilterClear } = props;
+export default function InputSearch(props: Readonly<InputSearchProps>) {
+  const { onChange, onClear } = props;
   const searchCallback = async (filter: string) => {
     if (filter.length > 2) {
-      onFilter(filter);
+      onChange(filter);
     }
   };
 
@@ -21,7 +21,7 @@ export default function SearchUser(props: Readonly<SearchUserProps>) {
       clearTimeout(timeoutRef.current);
     }
     timeoutRef.current = window.setTimeout(() => {
-      filter ? searchCallback(filter) : onFilterClear();
+      filter ? searchCallback(filter) : onClear();
     }, 150);
   };
 

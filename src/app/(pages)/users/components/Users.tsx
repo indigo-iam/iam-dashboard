@@ -55,10 +55,7 @@ export default function Users(props: Readonly<UsersProps>) {
 
   return (
     <div className="space-y-3">
-      <SearchFilter
-        onFilter={handleFilterChange}
-        onFilterClear={handleFilterClear}
-      />
+      <SearchFilter onChange={handleFilterChange} onClear={handleFilterClear} />
       <DeleteUser
         show={!!userToDelete}
         onClose={closeDeleteUserModal}

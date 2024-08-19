@@ -1,6 +1,11 @@
 import { Group } from "@/models/groups";
-import { Subsection } from "@/components/Section";
 import { dateToHuman } from "@/utils/dates";
+import InfoTable from "@/components/InfoTable";
+
+type RowProps = {
+  title: string;
+  value: string;
+};
 
 type GroupInformationProps = {
   group: Group;
@@ -9,16 +14,16 @@ export default function GroupInformation(
   props: Readonly<GroupInformationProps>
 ) {
   const { group } = props;
-  return (
-    <>
-      <Subsection title="Group Name">{group.displayName}</Subsection>
-      <Subsection title="Group Description">
-        {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description ??
-          "No description."}
-      </Subsection>
-      <Subsection title="Created">
-        {group.meta.created ? dateToHuman(new Date(group.meta.created)) : "N/A"}
-      </Subsection>
-    </>
-  );
+  const description =
+    group["urn:indigo-dc:scim:schemas:IndigoGroup"].description;
+  const created = group.meta.created
+    ? dateToHuman(new Date(group.meta.created))
+    : "N/A";
+
+  const data = [
+    { name: "Group Name", value: group.displayName },
+    { name: "Group Description", value: description ?? "No description." },
+    { name: "Created", value: created },
+  ];
+  return <InfoTable data={data} />;
 }

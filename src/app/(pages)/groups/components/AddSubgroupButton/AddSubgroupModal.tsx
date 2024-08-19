@@ -7,17 +7,17 @@ import { addSubgroup } from "@/services/groups";
 
 interface AddSubgroupModalProps extends ModalProps {
   rootGroup?: Group;
-  onSubgroupAdded?: () => void;
+  onAdded?: () => void;
 }
 export default function AddSubgroupModal(
   props: Readonly<AddSubgroupModalProps>
 ) {
-  const { rootGroup, onSubgroupAdded, ...modalProps } = props;
+  const { rootGroup, onAdded, ...modalProps } = props;
   const action = async (formData: FormData) => {
     const name = formData.get("name") as string;
     if (rootGroup) {
       await addSubgroup(name, rootGroup);
-      onSubgroupAdded?.();
+      onAdded?.();
       modalProps.onClose();
     } else {
       console.warn("group do delete is undefined");

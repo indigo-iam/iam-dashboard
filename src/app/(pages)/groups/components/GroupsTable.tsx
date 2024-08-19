@@ -1,4 +1,3 @@
-import { AddButton, DeleteButton } from "@/components/Buttons";
 import {
   Table,
   TableBody,
@@ -8,51 +7,29 @@ import {
   TableRow,
 } from "@/components/Table";
 import { Group } from "@/models/groups";
+
 import Link from "next/link";
-
-function AddSubgroup(props: Readonly<{ onAddSubgroup: () => void }>) {
-  const action = () => {
-    props.onAddSubgroup();
-  };
-
-  return (
-    <form action={action}>
-      <AddButton type="submit" title="Add Subgroup" />
-    </form>
-  );
-}
-
-function DeleteGroup(props: Readonly<{ onDeleteGroup: () => void }>) {
-  const action = () => {
-    props.onDeleteGroup();
-  };
-
-  return (
-    <form action={action}>
-      <DeleteButton type="submit" title="Delete Group" />
-    </form>
-  );
-}
+import AddSubgroupButton from "./AddSubgroupButton";
+import DeleteGroupButton from "./DeleteGroupButton";
+import { ScimReference } from "@/models/scim";
 
 type RowProps = {
   group: Group;
-  onAddSubgroup?: (rootGroup: Group) => void;
-  onDeleteGroup?: (group: Group) => void;
+  onGroupDeleted?: () => void;
+  onSubgroupAdded?: () => void;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const { group, onAddSubgroup, onDeleteGroup } = props;
-
-  const addSubgroup = () => {
-    onAddSubgroup?.(group);
-  };
-
-  const deleteGroup = () => {
-    onDeleteGroup?.(group);
-  };
+  const { group, onGroupDeleted, onSubgroupAdded } = props;
 
   let { labels } = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
   const strLabels = labels ? labels.map(l => l.name).join(" ") : " ";
+
+  const groupRef: ScimReference = {
+    display: group.displayName,
+    value: group.id,
+    $ref: `/groups/${group.id}`,
+  };
 
   return (
     <TableRow>
@@ -67,8 +44,8 @@ function Row(props: Readonly<RowProps>) {
       <TableCell>{strLabels}</TableCell>
       <TableCell className="flex">
         <div className="mx-auto flex gap-1">
-          <DeleteGroup onDeleteGroup={deleteGroup} />
-          <AddSubgroup onAddSubgroup={addSubgroup} />
+          <DeleteGroupButton group={groupRef} onDeleted={onGroupDeleted} />
+          <AddSubgroupButton rootGroup={group} onAdded={onSubgroupAdded} />
         </div>
       </TableCell>
     </TableRow>
@@ -77,12 +54,12 @@ function Row(props: Readonly<RowProps>) {
 
 type TableProps = {
   groups: Group[];
-  onDeleteGroup?: (group: Group) => void;
-  onAddSubgroup?: (rootGroup: Group) => void;
+  onGroupDeleted?: () => void;
+  onSubgroupAdded?: () => void;
 };
 
 export default function GroupsTable(props: Readonly<TableProps>) {
-  const { groups, onDeleteGroup, onAddSubgroup } = props;
+  const { groups, onGroupDeleted, onSubgroupAdded } = props;
   return (
     <Table>
       <TableHeader>
@@ -95,8 +72,8 @@ export default function GroupsTable(props: Readonly<TableProps>) {
           <Row
             key={group.displayName}
             group={group}
-            onDeleteGroup={onDeleteGroup}
-            onAddSubgroup={onAddSubgroup}
+            onGroupDeleted={onGroupDeleted}
+            onSubgroupAdded={onSubgroupAdded}
           />
         ))}
       </TableBody>

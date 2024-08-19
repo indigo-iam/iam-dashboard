@@ -42,10 +42,11 @@ function AddGroupForm(props: Readonly<AddGroupFormProps>) {
   );
 }
 
-type AddGroupModalProps = {
+type AddGroupButtonProps = {
   onGroupAdded?: () => void;
 };
-export default function AddGroupModal(props: Readonly<AddGroupModalProps>) {
+
+export default function AddGroupButton(props: Readonly<AddGroupButtonProps>) {
   const { onGroupAdded } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);

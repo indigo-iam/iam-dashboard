@@ -1,11 +1,11 @@
 import { Button } from "@/components/Buttons";
 import { Form } from "@/components/Form";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
-import { Group } from "@/models/groups";
+import { ScimReference } from "@/models/scim";
 import { deleteGroup } from "@/services/groups";
 
 interface DeleteGroupModalProps extends ModalProps {
-  group?: Group;
+  group: ScimReference;
   onDeleted?: () => void;
 }
 export default function DeleteGroupModal(
@@ -14,7 +14,7 @@ export default function DeleteGroupModal(
   const { group, onDeleted, ...modalProps } = props;
   const action = async (_: FormData) => {
     if (group) {
-      await deleteGroup(group?.id);
+      await deleteGroup(group?.value);
       onDeleted?.();
       modalProps.onClose();
     } else {
@@ -26,8 +26,7 @@ export default function DeleteGroupModal(
       <Form id="delete-group-form" action={action}>
         <ModalBody>
           <p className="py-2">
-            Are you sure you want to delete group{" "}
-            <b>{`${group?.displayName}`}</b>?
+            Are you sure you want to delete group <b>{`${group?.display}`}</b>?
           </p>
         </ModalBody>
         <ModalFooter>

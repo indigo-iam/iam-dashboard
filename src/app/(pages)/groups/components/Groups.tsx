@@ -4,9 +4,7 @@ import SearchFilter from "@/components/SearchFilter";
 import Panel from "@/components/Panel";
 import { Group } from "@/models/groups";
 import { getGroupsPage } from "@/services/groups";
-import AddGroupModal from "./AddGroupModal";
-import AddSubgroupModal from "./AddSubgroupModal";
-import DeleteGroupModal from "./DeleteGroupModal";
+import AddGroupButton from "./AddGroupButton";
 import GroupsTable from "./GroupsTable";
 import { useCallback, useEffect, useState } from "react";
 
@@ -19,8 +17,6 @@ export function Groups(props: Readonly<GroupsProps>) {
   const [filter, setFilter] = useState<string>();
   const [groups, setGroups] = useState<Group[]>([]);
   const [numberOfPages, setNumberOfPages] = useState(0);
-  const [groupToDelete, setGroupToDelete] = useState<Group>();
-  const [groupToExtend, setGroupToExtend] = useState<Group>();
 
   let itemsPerPage = 10;
   let currentPage = 0;
@@ -49,22 +45,6 @@ export function Groups(props: Readonly<GroupsProps>) {
     setFilter(undefined);
   };
 
-  const openDeleteGroupModal = (group: Group) => {
-    setGroupToDelete(group);
-  };
-
-  const closeDeleteGroupModal = () => {
-    setGroupToDelete(undefined);
-  };
-
-  const openAddSubgroupModal = (group: Group) => {
-    setGroupToExtend(group);
-  };
-
-  const closeAddSubgroupModal = () => {
-    setGroupToExtend(undefined);
-  };
-
   return (
     <>
       <Panel>
@@ -74,24 +54,12 @@ export function Groups(props: Readonly<GroupsProps>) {
         />
         <GroupsTable
           groups={groups}
-          onDeleteGroup={openDeleteGroupModal}
-          onAddSubgroup={openAddSubgroupModal}
+          onGroupDeleted={fetchGroups}
+          onSubgroupAdded={fetchGroups}
         ></GroupsTable>
         <Paginator numberOfPages={numberOfPages} />
       </Panel>
-      <AddGroupModal onGroupAdded={fetchGroups} />
-      <DeleteGroupModal
-        show={!!groupToDelete}
-        onClose={closeDeleteGroupModal}
-        onDeleted={fetchGroups}
-        group={groupToDelete}
-      />
-      <AddSubgroupModal
-        show={!!groupToExtend}
-        onClose={closeAddSubgroupModal}
-        onSubgroupAdded={fetchGroups}
-        rootGroup={groupToExtend}
-      />
+      <AddGroupButton onGroupAdded={fetchGroups} />
     </>
   );
 }

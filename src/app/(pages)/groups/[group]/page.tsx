@@ -1,7 +1,7 @@
 import Page from "@/components/Page";
 import Panel from "@/components/Panel";
 import Section from "@/components/Section";
-import Subgroups from "../components/Subgroups";
+import SubgroupsTable from "../components/Subgroups/Table";
 import GroupInformation from "../components/GroupInformation";
 import Members from "../components/Members";
 import { fetchGroup } from "@/services/groups";
@@ -22,7 +22,7 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
           <GroupInformation group={group} />
         </Section>
         <Section title="Subgroups">
-          <Subgroups group={group} />
+          <SubgroupsTable group={group} />
         </Section>
         <Section title="Managers">
           <p>To be implemented</p>

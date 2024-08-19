@@ -9,12 +9,15 @@ import {
   TableCell,
 } from "@/components/Table";
 import Link from "next/link";
+import DeleteGroupButton from "../DeleteGroupButton";
 
-type SubgroupsProps = {
+type SubgroupsTableProps = {
   group: Group;
 };
 
-export default async function Subgroups(props: Readonly<SubgroupsProps>) {
+export default async function SubgroupsTable(
+  props: Readonly<SubgroupsTableProps>
+) {
   const { group } = props;
   // TODO: pagination
   const firstPage = await fetchSubgroupsPage(group.id);
@@ -32,6 +35,7 @@ export default async function Subgroups(props: Readonly<SubgroupsProps>) {
       </TableHeader>
       <TableBody>
         {subgroups.map(group => {
+          const g = {};
           return (
             <TableRow key={group.value}>
               <TableCell>
@@ -42,7 +46,9 @@ export default async function Subgroups(props: Readonly<SubgroupsProps>) {
                   {group.display}
                 </Link>
               </TableCell>
-              <TableCell>Unlink button here</TableCell>
+              <TableCell>
+                <DeleteGroupButton group={group} />
+              </TableCell>
             </TableRow>
           );
         })}

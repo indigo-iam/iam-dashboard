@@ -1,5 +1,5 @@
 "use client";
-import Button from "@/components/Button";
+import { Button } from "@/components/Buttons";
 import { GroupRequest } from "@/models/group-requests";
 import { abortGroupRequest } from "@/services/group-requests";
 import { XCircleIcon } from "@heroicons/react/16/solid";

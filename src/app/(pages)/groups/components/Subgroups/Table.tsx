@@ -31,7 +31,7 @@ export default async function SubgroupsTable(
     <Table>
       <TableHeader>
         <TableHeaderCell>Group</TableHeaderCell>
-        <TableHeaderCell>Actions</TableHeaderCell>
+        <TableHeaderCell className="text-center">Actions</TableHeaderCell>
       </TableHeader>
       <TableBody>
         {subgroups.map(group => {
@@ -45,7 +45,7 @@ export default async function SubgroupsTable(
                   {group.display}
                 </Link>
               </TableCell>
-              <TableCell>
+              <TableCell className="text-center">
                 <DeleteGroupButton group={group} />
               </TableCell>
             </TableRow>

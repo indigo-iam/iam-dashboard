@@ -5,6 +5,7 @@ import SubgroupsTable from "./components/Subgroups/Table";
 import GroupInfo from "./components/GroupInfo";
 import Members from "./components/Members";
 import { fetchGroup } from "@/services/groups";
+import Managers from "./components/Managers";
 
 type GroupPageProps = {
   params: { group: string };
@@ -25,7 +26,7 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
           <SubgroupsTable group={group} />
         </Section>
         <Section title="Managers">
-          <p>To be implemented</p>
+          <Managers group={group} />
         </Section>
         <Section title="Members">
           <Members group={group} />

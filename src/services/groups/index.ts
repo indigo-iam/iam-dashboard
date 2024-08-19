@@ -4,7 +4,7 @@ import { authFetch, getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
 import { Paginated } from "@/models/pagination";
 import { revalidatePath } from "next/cache";
-import { ScimReference } from "@/models/scim";
+import { ScimReference, ScimUser } from "@/models/scim";
 
 const { BASE_URL } = getConfig();
 
@@ -147,6 +147,27 @@ export const removeUserFromGroup = async (
     const msg = await response.text();
     throw Error(
       `Remove user membership failed with status ${response.status} ${msg}`
+    );
+  }
+};
+
+// for some reason this API is not paginated
+export const fetchGroupManagers = (groupId: string) => {
+  const url = `${BASE_URL}/iam/group/${groupId}/group-managers`;
+  return getItem<ScimUser[]>(url);
+};
+
+export const revokeGroupManager = async (groupId: string, userId: string) => {
+  const url = `${BASE_URL}/iam/account/${userId}/managed-groups/${groupId}`;
+  const response = await authFetch(url, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    revalidatePath(`/groups/${groupId}`);
+  } else {
+    const msg = await response.text();
+    throw Error(
+      `Revoke group manager failed with status ${response.status} ${msg}`
     );
   }
 };

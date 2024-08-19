@@ -1,3 +1,4 @@
+import { AddButton, DeleteButton } from "@/components/Buttons";
 import {
   Table,
   TableBody,
@@ -7,8 +8,6 @@ import {
   TableRow,
 } from "@/components/Table";
 import { Group } from "@/models/groups";
-import { XMarkIcon } from "@heroicons/react/16/solid";
-import { PlusIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 function AddSubgroup(props: Readonly<{ onAddSubgroup: () => void }>) {
@@ -18,13 +17,7 @@ function AddSubgroup(props: Readonly<{ onAddSubgroup: () => void }>) {
 
   return (
     <form action={action}>
-      <button
-        type="submit"
-        className="mx-auto w-5 rounded-md bg-success p-0.5 text-secondary"
-        title="Add Subgroup"
-      >
-        <PlusIcon />
-      </button>
+      <AddButton type="submit" title="Add Subgroup" />
     </form>
   );
 }
@@ -36,13 +29,7 @@ function DeleteGroup(props: Readonly<{ onDeleteGroup: () => void }>) {
 
   return (
     <form action={action}>
-      <button
-        type="submit"
-        className="mx-auto w-5 rounded-md bg-danger p-0.5 text-secondary"
-        title="Delete Group"
-      >
-        <XMarkIcon />
-      </button>
+      <DeleteButton type="submit" title="Delete Group" />
     </form>
   );
 }

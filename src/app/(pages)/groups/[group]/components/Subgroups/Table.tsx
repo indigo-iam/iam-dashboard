@@ -9,7 +9,7 @@ import {
   TableCell,
 } from "@/components/Table";
 import Link from "next/link";
-import DeleteGroupButton from "../DeleteGroupButton";
+import DeleteGroupButton from "../../../components/DeleteGroupButton";
 
 type SubgroupsTableProps = {
   group: Group;

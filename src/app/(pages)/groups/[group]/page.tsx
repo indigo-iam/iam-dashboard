@@ -1,9 +1,9 @@
 import Page from "@/components/Page";
 import Panel from "@/components/Panel";
 import Section from "@/components/Section";
-import SubgroupsTable from "../components/Subgroups/Table";
-import GroupInformation from "../components/GroupInformation";
-import Members from "../components/Members";
+import SubgroupsTable from "./components/Subgroups/Table";
+import GroupInfo from "./components/GroupInfo";
+import Members from "./components/Members";
 import { fetchGroup } from "@/services/groups";
 
 type GroupPageProps = {
@@ -19,7 +19,7 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
     <Page title={group.displayName}>
       <Panel>
         <Section title="Group Information">
-          <GroupInformation group={group} />
+          <GroupInfo group={group} />
         </Section>
         <Section title="Subgroups">
           <SubgroupsTable group={group} />

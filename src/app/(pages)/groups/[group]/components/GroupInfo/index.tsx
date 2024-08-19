@@ -2,11 +2,11 @@ import { Group } from "@/models/groups";
 import { dateToHuman } from "@/utils/dates";
 import InfoTable from "@/components/InfoTable";
 
-type GroupInformationProps = {
+type GroupInfoProps = {
   group: Group;
 };
-export default function GroupInformation(
-  props: Readonly<GroupInformationProps>
+export default function GroupInfo(
+  props: Readonly<GroupInfoProps>
 ) {
   const { group } = props;
   const description =

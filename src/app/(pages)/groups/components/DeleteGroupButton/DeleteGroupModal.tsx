@@ -1,43 +1,33 @@
-import { Button } from "@/components/Buttons";
-import { Form } from "@/components/Form";
-import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
+import ConfirmModal from "@/components/ConfirmModal";
 import { ScimReference } from "@/models/scim";
 import { deleteGroup } from "@/services/groups";
 
-interface DeleteGroupModalProps extends ModalProps {
+interface DeleteGroupModalProps {
   group: ScimReference;
+  show: boolean;
+  onClose: () => void;
   onDeleted?: () => void;
 }
 export default function DeleteGroupModal(
   props: Readonly<DeleteGroupModalProps>
 ) {
-  const { group, onDeleted, ...modalProps } = props;
-  const action = async (_: FormData) => {
-    if (group) {
-      await deleteGroup(group?.value);
-      onDeleted?.();
-      modalProps.onClose();
-    } else {
-      console.warn("group to delete is undefined");
-    }
+  const { group, show, onClose, onDeleted } = props;
+
+  const handleConfirm = async () => {
+    await deleteGroup(group.value);
+    onClose();
+    onDeleted?.();
   };
+
   return (
-    <Modal {...modalProps} title="Delete group">
-      <Form id="delete-group-form" action={action}>
-        <ModalBody>
-          <p className="py-2">
-            Are you sure you want to delete group <b>{`${group?.display}`}</b>?
-          </p>
-        </ModalBody>
-        <ModalFooter>
-          <Button action="danger" type="submit">
-            Delete Group
-          </Button>
-          <Button type="button" onClick={modalProps.onClose}>
-            Cancel
-          </Button>
-        </ModalFooter>
-      </Form>
-    </Modal>
+    <ConfirmModal
+      show={show}
+      onClose={onClose}
+      confirmButtonText="Delete Group"
+      onConfirm={handleConfirm}
+      title="Delete Group"
+    >
+      Are you sure you want to delete group <b>{`${group?.display}`}</b>?
+    </ConfirmModal>
   );
 }

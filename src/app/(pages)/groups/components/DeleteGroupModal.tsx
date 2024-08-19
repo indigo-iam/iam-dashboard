@@ -2,17 +2,19 @@ import { Button } from "@/components/Buttons";
 import { Form } from "@/components/Form";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import { Group } from "@/models/groups";
-import { deleteRootGroup } from "@/services/groups";
+import { deleteGroup } from "@/services/groups";
 
-interface DeleteRootGroupProps extends ModalProps {
+interface DeleteGroupModalProps extends ModalProps {
   group?: Group;
   onDeleted?: () => void;
 }
-export default function DeleteRootGroup(props: Readonly<DeleteRootGroupProps>) {
+export default function DeleteGroupModal(
+  props: Readonly<DeleteGroupModalProps>
+) {
   const { group, onDeleted, ...modalProps } = props;
   const action = async (_: FormData) => {
     if (group) {
-      await deleteRootGroup(group?.id);
+      await deleteGroup(group?.id);
       onDeleted?.();
       modalProps.onClose();
     } else {
@@ -21,10 +23,11 @@ export default function DeleteRootGroup(props: Readonly<DeleteRootGroupProps>) {
   };
   return (
     <Modal {...modalProps} title="Delete group">
-      <Form id="delete-root-group-form" action={action}>
+      <Form id="delete-group-form" action={action}>
         <ModalBody>
           <p className="py-2">
-            Are you sure you want to delete group {`${group?.displayName}`}?
+            Are you sure you want to delete group{" "}
+            <b>{`${group?.displayName}`}</b>?
           </p>
         </ModalBody>
         <ModalFooter>

@@ -1,14 +1,14 @@
 "use client";
 import Paginator from "@/components/Paginator";
+import SearchFilter from "@/components/SearchFilter";
+import Panel from "@/components/Panel";
 import { Group } from "@/models/groups";
 import { getGroupsPage } from "@/services/groups";
-import { useCallback, useEffect, useState } from "react";
+import AddGroupModal from "./AddGroupModal";
+import AddSubgroupModal from "./AddSubgroupModal";
+import DeleteGroupModal from "./DeleteGroupModal";
 import GroupsTable from "./GroupsTable";
-import SearchFilter from "@/components/SearchFilter";
-import AddRootGroup from "./AddRootGroup";
-import DeleteRootGroup from "./DeleteRootGroup";
-import AddSubgroup from "./AddSubgroup";
-import Panel from "@/components/Panel";
+import { useCallback, useEffect, useState } from "react";
 
 type GroupsProps = {
   count?: string;
@@ -79,14 +79,14 @@ export function Groups(props: Readonly<GroupsProps>) {
         ></GroupsTable>
         <Paginator numberOfPages={numberOfPages} />
       </Panel>
-      <AddRootGroup onRootGroupAdded={fetchGroups} />
-      <DeleteRootGroup
+      <AddGroupModal onGroupAdded={fetchGroups} />
+      <DeleteGroupModal
         show={!!groupToDelete}
         onClose={closeDeleteGroupModal}
         onDeleted={fetchGroups}
         group={groupToDelete}
       />
-      <AddSubgroup
+      <AddSubgroupModal
         show={!!groupToExtend}
         onClose={closeAddSubgroupModal}
         onSubgroupAdded={fetchGroups}

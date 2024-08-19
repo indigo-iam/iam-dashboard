@@ -1,10 +1,10 @@
-import Subgroups from "@/components/Group/Subgroups";
-import GroupInformation from "@/components/Group/GroupInformation";
 import Page from "@/components/Page";
 import Panel from "@/components/Panel";
 import Section from "@/components/Section";
+import Subgroups from "../components/Subgroups";
+import GroupInformation from "../components/GroupInformation";
+import Members from "../components/Members";
 import { fetchGroup } from "@/services/groups";
-import Members from "@/components/Group/Members";
 
 type GroupPageProps = {
   params: { group: string };

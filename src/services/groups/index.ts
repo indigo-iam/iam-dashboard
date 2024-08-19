@@ -63,7 +63,7 @@ export const getGroupsPage = async (
   return await getItem<Paginated<Group>>(url);
 };
 
-export const addRootGroup = async (groupName: string) => {
+export const addGroup = async (groupName: string) => {
   const body = {
     displayName: groupName,
     schemas: ["urn:ietf:params:scim:schemas:core:2.0:Group"],
@@ -82,7 +82,7 @@ export const addRootGroup = async (groupName: string) => {
   }
 };
 
-export const deleteRootGroup = async (groupId: string) => {
+export const deleteGroup = async (groupId: string) => {
   const url = `${BASE_URL}/scim/Groups/${groupId}`;
   const response = await authFetch(url, { method: "DELETE" });
   if (response.ok) {

@@ -2,23 +2,23 @@
 import { Button } from "@/components/Buttons";
 import { Form } from "@/components/Form";
 import Input from "@/components/Input";
-import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
-import { addRootGroup } from "@/services/groups";
+import { Modal, ModalBody, ModalFooter } from "@/components/Modal";
+import { addGroup } from "@/services/groups";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
-type AddRootGroupFormProps = {
+type AddGroupFormProps = {
   onClose?: () => void;
-  onRootGroupAdded?: () => void;
+  onGroupAdded?: () => void;
 };
-function AddRootGroupForm(props: Readonly<AddRootGroupFormProps>) {
-  const { onClose, onRootGroupAdded } = props;
+function AddGroupForm(props: Readonly<AddGroupFormProps>) {
+  const { onClose, onGroupAdded } = props;
 
   const handleSubmit = async (formData: FormData) => {
     const name = formData.get("groupName") as string;
-    await addRootGroup(name);
+    await addGroup(name);
     onClose?.();
-    onRootGroupAdded?.();
+    onGroupAdded?.();
   };
   return (
     <Form id="add-root-group-form" action={handleSubmit}>
@@ -42,39 +42,21 @@ function AddRootGroupForm(props: Readonly<AddRootGroupFormProps>) {
   );
 }
 
-interface AddRootGroupModalProps extends ModalProps {
-  onRootGroupAdded?: () => void;
-}
-function AddRootGroupModal(props: Readonly<AddRootGroupModalProps>) {
-  const { onRootGroupAdded, ...modalProps } = props;
-  return (
-    <Modal {...modalProps}>
-      <AddRootGroupForm
-        onClose={modalProps.onClose}
-        onRootGroupAdded={onRootGroupAdded}
-      />
-    </Modal>
-  );
-}
-
-type AddRootGroupProps = {
-  onRootGroupAdded?: () => void;
+type AddGroupModalProps = {
+  onGroupAdded?: () => void;
 };
-export default function AddRootGroup(props: Readonly<AddRootGroupProps>) {
-  const { onRootGroupAdded } = props;
+export default function AddGroupModal(props: Readonly<AddGroupModalProps>) {
+  const { onGroupAdded } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
   return (
     <>
-      <AddRootGroupModal
-        show={show}
-        onClose={close}
-        title="Add Root Group"
-        onRootGroupAdded={onRootGroupAdded}
-      />
+      <Modal show={show} onClose={close} title="Add Group">
+        <AddGroupForm onClose={close} onGroupAdded={onGroupAdded} />
+      </Modal>
       <Button icon={<PlusIcon />} onClick={open}>
-        Add Root Group
+        Add Group
       </Button>
     </>
   );

@@ -5,11 +5,13 @@ import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import { Group } from "@/models/groups";
 import { addSubgroup } from "@/services/groups";
 
-interface AddSubgroupProps extends ModalProps {
+interface AddSubgroupModalProps extends ModalProps {
   rootGroup?: Group;
   onSubgroupAdded?: () => void;
 }
-export default function AddSubgroup(props: Readonly<AddSubgroupProps>) {
+export default function AddSubgroupModal(
+  props: Readonly<AddSubgroupModalProps>
+) {
   const { rootGroup, onSubgroupAdded, ...modalProps } = props;
   const action = async (formData: FormData) => {
     const name = formData.get("name") as string;

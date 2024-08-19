@@ -27,7 +27,7 @@ export default async function Members(props: Readonly<MembersProps>) {
     <Table>
       <TableHeader>
         <TableHeaderCell>User</TableHeaderCell>
-        <TableHeaderCell>Actions</TableHeaderCell>
+        <TableHeaderCell className="text-center">Actions</TableHeaderCell>
       </TableHeader>
       <TableBody>
         {members.map(member => {
@@ -41,7 +41,7 @@ export default async function Members(props: Readonly<MembersProps>) {
                   {member.display}
                 </Link>
               </TableCell>
-              <TableCell>
+              <TableCell className="text-center">
                 <UnlinkMemberButton user={member} group={group} />
               </TableCell>
             </TableRow>

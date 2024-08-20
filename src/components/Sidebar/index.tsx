@@ -30,7 +30,7 @@ const SidebarLink = (props: SidebarLinkProps) => {
 const AccountManagement = () => {
   return (
     <DrawerSection title="Account Management">
-      <SidebarLink title="Home" href="/" icon={<HomeIcon />} />
+      <SidebarLink title="Home" href="/users/me" icon={<HomeIcon />} />
       <SidebarLink
         title="My Clients"
         href="/me/clients"

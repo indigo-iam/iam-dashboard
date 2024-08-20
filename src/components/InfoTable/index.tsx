@@ -1,6 +1,6 @@
 type RowProps = {
   name: string;
-  value?: string;
+  value?: string | React.ReactNode;
 };
 function Row(props: Readonly<RowProps>) {
   const { name, value } = props;

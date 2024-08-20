@@ -38,7 +38,7 @@ export default async function Members(props: Readonly<MembersProps>) {
               <TableCell>
                 <Link
                   href={`/users/${member.value}`}
-                  className="text-primary-600 underline"
+                  className="text-primary-800 underline"
                 >
                   {member.display}
                 </Link>

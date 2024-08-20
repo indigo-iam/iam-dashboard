@@ -36,7 +36,7 @@ function Row(props: Readonly<RowProps>) {
       <TableCell>
         <Link
           href={`/groups/${group.id}`}
-          className="text-primary-600 underline"
+          className="text-primary-800 underline"
         >
           {group.displayName}
         </Link>

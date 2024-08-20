@@ -36,7 +36,7 @@ export default function ManagersTable(props: Readonly<MembersTableProps>) {
               <TableCell>
                 <Link
                   href={`/users/${m.id}`}
-                  className="text-primary-600 underline"
+                  className="text-primary-800 underline"
                 >
                   {m.name?.formatted}
                 </Link>

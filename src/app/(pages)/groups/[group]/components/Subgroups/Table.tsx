@@ -40,7 +40,7 @@ export default async function SubgroupsTable(
               <TableCell>
                 <Link
                   href={`/groups/${group.value}`}
-                  className="text-primary-600 underline"
+                  className="text-primary-800 underline"
                 >
                   {group.display}
                 </Link>

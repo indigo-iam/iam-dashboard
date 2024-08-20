@@ -57,7 +57,7 @@ function Row(props: Readonly<RowProps>) {
   return (
     <TableRow>
       <TableCell>
-        <Link href={`/users/${user.id}`} className="text-primary-600 underline">
+        <Link href={`/users/${user.id}`} className="text-primary-800 underline">
           {user.name?.formatted}
         </Link>
       </TableCell>

@@ -25,7 +25,7 @@ const Row = (props: Readonly<RowProps>) => {
       <TableCell className="grow">
         <Link
           href={`/groups/${groupRef.value}`}
-          className="text-primary-600 underline"
+          className="text-primary-800 underline"
         >
           {groupRef.display}
         </Link>

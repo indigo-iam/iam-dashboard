@@ -34,7 +34,7 @@ function Row(props: Readonly<RowProps>) {
       <TableCell>
         <Link
           href={`${baseUrl}/${client_id}`}
-          className="text-primary-600 underline"
+          className="text-primary-800 underline"
         >
           {client_id}
         </Link>

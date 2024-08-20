@@ -15,7 +15,7 @@ function Row(props: Readonly<RowProps>) {
 }
 
 type InfoTableProps = {
-  data: { name: string; value?: string }[];
+  data: { name: string; value?: string | React.ReactNode }[];
   className?: string;
 };
 

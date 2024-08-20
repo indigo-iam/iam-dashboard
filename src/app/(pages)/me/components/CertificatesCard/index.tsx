@@ -1,4 +1,4 @@
-import { Certificate } from "@/models/scim";
+import { Certificate } from "@/models/indigo-user";
 import { fetchMe } from "@/services/me";
 import Card from "@/components/Card";
 

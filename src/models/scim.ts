@@ -1,3 +1,5 @@
+import { IndigoUser } from "./indigo-user";
+
 // https://www.rfc-editor.org/rfc/rfc7643#section-4.1
 export interface ScimUser {
   id?: string;
@@ -21,7 +23,7 @@ export interface ScimUser {
     lastModified?: string;
     location?: string;
   };
-  "urn:indigo-dc:scim:schemas:IndigoUser"?: ScimSchema;
+  "urn:indigo-dc:scim:schemas:IndigoUser"?: IndigoUser;
 }
 
 type Name = {
@@ -44,36 +46,6 @@ export type ScimReference = {
   display: string;
   value: string;
   $ref: string;
-};
-
-export type OidcId = {
-  issuer: string;
-  subject: string;
-};
-
-export type SamlId = {
-  idpId: string;
-  userId: string;
-  attributeId: string;
-};
-
-export type Certificate = {
-  primary: boolean;
-  subjectDn: string;
-  issuerDn: string;
-  pemEncodedCertificate: string;
-  display?: string;
-  created?: string;
-  lastModified?: string;
-  hasProxyCertificate: boolean;
-};
-
-type ScimSchema = {
-  aupSignatureTime?: string;
-  oidcIds?: OidcId[];
-  samlIds?: SamlId[];
-  certificates?: Certificate[];
-  authorities?: string[];
 };
 
 export interface ScimOp {

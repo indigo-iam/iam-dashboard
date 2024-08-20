@@ -1,5 +1,6 @@
 import { XCircleIcon } from "@heroicons/react/16/solid";
-import { OidcId, SamlId, ScimUser } from "@/models/scim";
+import { OidcId, SamlId } from "@/models/indigo-user";
+import { ScimUser } from "@/models/scim";
 import { Button } from "@/components/Buttons";
 import { Subsection } from "@/components/Section";
 

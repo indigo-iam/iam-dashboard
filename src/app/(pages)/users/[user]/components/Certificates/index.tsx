@@ -1,4 +1,5 @@
-import { Certificate, ScimUser } from "@/models/scim";
+import { ScimUser } from "@/models/scim";
+import { Certificate } from "@/models/indigo-user";
 
 const CertificateView = (props: { cert: Certificate }) => {
   const { cert } = props;

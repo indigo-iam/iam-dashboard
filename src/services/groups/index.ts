@@ -121,6 +121,33 @@ export const addSubgroup = async (groupName: string, parentGroup: Group) => {
   }
 };
 
+export const addUserToGroup = async (groupId: string, user: ScimReference) => {
+  const body = {
+    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
+    operations: [
+      {
+        op: "add",
+        path: "members",
+        value: [{ ...user, $ref: `${BASE_URL}/scim/Users/${user.value}` }],
+      },
+    ],
+  };
+  const url = `${BASE_URL}/scim/Groups/${groupId}`;
+  const response = await authFetch(url, {
+    body: JSON.stringify(body),
+    method: "PATCH",
+    headers: { "content-type": "application/scim+json" },
+  });
+  if (response.ok) {
+    revalidatePath(`/groups/${groupId}`);
+  } else {
+    const msg = await response.text();
+    throw Error(
+      `Add user to group failed with status ${response.status} ${msg}`
+    );
+  }
+};
+
 export const removeUserFromGroup = async (
   groupId: string,
   user: ScimReference

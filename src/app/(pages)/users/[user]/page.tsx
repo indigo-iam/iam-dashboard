@@ -9,6 +9,7 @@ import { LinkedAccounts } from "./components/LinkedAccounts";
 import { fetchMe } from "@/services/me";
 import Section from "@/components/Section";
 import SSHKeys from "./components/SSHKeys";
+import { auth } from "@/auth";
 
 type UserPageProps = {
   params: { user: string };
@@ -17,6 +18,8 @@ type UserPageProps = {
 export default async function UserPage(props: Readonly<UserPageProps>) {
   const { params } = props;
   const userID = params.user;
+  const session = await auth();
+  const isAdmin = session?.is_admin ?? false;
   const user = userID === "me" ? await fetchMe() : await fetchUser(userID);
 
   if (!user) {
@@ -32,7 +35,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
       </Panel>
       <Panel>
         <Section title="Groups">
-          <Groups user={user} />
+          <Groups user={user} isAdmin={isAdmin} />
         </Section>
       </Panel>
       <Panel>

@@ -1,4 +1,3 @@
-import { DeleteButton } from "@/components/Buttons";
 import InfoTable from "@/components/InfoTable";
 import { SSHKey } from "@/models/indigo-user";
 import { ScimUser } from "@/models/scim";

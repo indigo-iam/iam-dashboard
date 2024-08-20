@@ -13,6 +13,13 @@ export const fetchGroup = async (groupID: string) => {
   return await getItem<Group>(url);
 };
 
+export const searchGroup = async (filter: string) => {
+  const response = await getItem<Paginated<Group>>(
+    `${BASE_URL}/iam/group/search?count=100&startIndex=0&filter=${filter}`
+  );
+  return response.Resources;
+};
+
 export const fetchSubgroupsPage = async (
   groupID: string,
   count: number = 10,
@@ -121,14 +128,17 @@ export const addSubgroup = async (groupName: string, parentGroup: Group) => {
   }
 };
 
-export const addUserToGroup = async (groupId: string, user: ScimReference) => {
+export const addUserToGroup = async (
+  groupId: string,
+  userRef: ScimReference
+) => {
   const body = {
     schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
     operations: [
       {
         op: "add",
         path: "members",
-        value: [{ ...user, $ref: `${BASE_URL}/scim/Users/${user.value}` }],
+        value: [userRef],
       },
     ],
   };

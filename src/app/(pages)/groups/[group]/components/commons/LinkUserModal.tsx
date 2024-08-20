@@ -5,6 +5,9 @@ import SearchUser from "@/components/SearchUser";
 import { Group } from "@/models/groups";
 import { ScimReference, ScimUser } from "@/models/scim";
 import { useState } from "react";
+import getConfig from "@/utils/config";
+
+const { BASE_URL } = getConfig();
 
 interface LinkUserModalProps extends ModalProps {
   group: Group;
@@ -30,7 +33,7 @@ export default function LinkUserModal(props: Readonly<LinkUserModalProps>) {
   const fromAction = async () => {
     if (selectedUser?.id) {
       const userRef: ScimReference = {
-        $ref: "",
+        $ref: `${BASE_URL}/scim/Users/${selectedUser.id!}`,
         display: selectedUser.userName!,
         value: selectedUser.id,
       };

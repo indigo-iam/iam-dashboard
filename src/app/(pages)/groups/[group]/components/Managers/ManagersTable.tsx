@@ -18,6 +18,11 @@ type MembersTableProps = {
 
 export default function ManagersTable(props: Readonly<MembersTableProps>) {
   const { group, managers } = props;
+
+  if (managers.length === 0) {
+    return <p>This group has no managers.</p>;
+  }
+
   return (
     <Table>
       <TableHeader>

@@ -157,6 +157,21 @@ export const fetchGroupManagers = (groupId: string) => {
   return getItem<ScimUser[]>(url);
 };
 
+export const assignGroupManager = async (groupId: string, userId: string) => {
+  const url = `${BASE_URL}/iam/account/${userId}/managed-groups/${groupId}`;
+  const response = await authFetch(url, {
+    method: "POST",
+  });
+  if (response.ok) {
+    revalidatePath(`/groups/${groupId}`);
+  } else {
+    const msg = await response.text();
+    throw Error(
+      `Assign group manager failed with status ${response.status} ${msg}`
+    );
+  }
+};
+
 export const revokeGroupManager = async (groupId: string, userId: string) => {
   const url = `${BASE_URL}/iam/account/${userId}/managed-groups/${groupId}`;
   const response = await authFetch(url, {

@@ -4,15 +4,19 @@ import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import SearchUser from "@/components/SearchUser";
 import { Group } from "@/models/groups";
 import { ScimReference, ScimUser } from "@/models/scim";
-import { addUserToGroup } from "@/services/groups";
 import { useState } from "react";
 
-interface AddMemberModalProps extends ModalProps {
+interface LinkUserModalProps extends ModalProps {
   group: Group;
+  action: (groupId: string, userRef: ScimReference) => Promise<void>;
+  confirmButtonText?: string;
+  cancelButtonText?: string;
 }
 
-export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
-  const { group, ...modalProps } = props;
+export default function LinkUserModal(props: Readonly<LinkUserModalProps>) {
+  const { group, action, confirmButtonText, cancelButtonText, ...modalProps } =
+    props;
+
   const [selectedUser, setSelectedUser] = useState<ScimUser | null>(null);
   const selectUser = (user: ScimUser) => {
     setSelectedUser(user);
@@ -23,14 +27,14 @@ export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
     setTimeout(() => setSelectedUser(null), 500);
   };
 
-  const action = async () => {
+  const fromAction = async () => {
     if (selectedUser?.id) {
       const userRef: ScimReference = {
         $ref: "",
         display: selectedUser.userName!,
         value: selectedUser.id,
       };
-      await addUserToGroup(group.id, userRef);
+      await action(group.id, userRef);
       clearAndClose();
     }
   };
@@ -49,10 +53,10 @@ export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
       </ModalBody>
       <ModalFooter>
         <Button type="button" action="danger" onClick={clearAndClose}>
-          Cancel
+          {cancelButtonText}
         </Button>
-        <form action={action}>
-          <Button type="submit">Add Group Member</Button>
+        <form action={fromAction}>
+          <Button type="submit">{confirmButtonText}</Button>
         </form>
       </ModalFooter>
     </Modal>

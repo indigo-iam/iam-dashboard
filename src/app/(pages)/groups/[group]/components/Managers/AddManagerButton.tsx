@@ -1,8 +1,7 @@
-"use client";
-import { Button } from "@/components/Buttons";
-import ManagerModal from "./AddManagerModal";
-import { useState } from "react";
 import { Group } from "@/models/groups";
+import { assignGroupManager } from "@/services/groups";
+import { ScimReference } from "@/models/scim";
+import LinkUserButton from "../commons/LinkUserButton";
 
 type AddManagersButtonProps = {
   group: Group;
@@ -12,19 +11,19 @@ export default function AddManagersButton(
   props: Readonly<AddManagersButtonProps>
 ) {
   const { group } = props;
-  const [show, setShow] = useState(false);
-  const openModal = () => setShow(true);
-  const closeModal = () => setShow(false);
+
+  const action = async (groupId: string, userRef: ScimReference) => {
+    "use server";
+    await assignGroupManager(groupId, userRef.value);
+  };
 
   return (
-    <>
-      <Button onClick={openModal}>Add Group Manager</Button>
-      <ManagerModal
-        show={show}
-        onClose={closeModal}
-        title="Add Group Manager Privileges"
-        group={group}
-      />
-    </>
+    <LinkUserButton
+      group={group}
+      buttonText="Add Group Manager"
+      confirmButtonText="Add Group Manager"
+      cancelButtonText="Cancel"
+      action={action}
+    />
   );
 }

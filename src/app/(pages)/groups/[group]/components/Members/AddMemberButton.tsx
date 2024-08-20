@@ -1,8 +1,7 @@
-"use client";
-import { Button } from "@/components/Buttons";
-import AddMemberModal from "./AddMemberModal";
-import { useState } from "react";
 import { Group } from "@/models/groups";
+import { addUserToGroup } from "@/services/groups";
+import { ScimReference } from "@/models/scim";
+import LinkUserButton from "../commons/LinkUserButton";
 
 type AddMemberButtonProps = {
   group: Group;
@@ -10,19 +9,19 @@ type AddMemberButtonProps = {
 
 export default function AddMemberButton(props: Readonly<AddMemberButtonProps>) {
   const { group } = props;
-  const [show, setShow] = useState(false);
-  const openModal = () => setShow(true);
-  const closeModal = () => setShow(false);
+
+  const action = async (groupId: string, userRef: ScimReference) => {
+    "use server";
+    await addUserToGroup(groupId, userRef);
+  };
 
   return (
-    <>
-      <Button onClick={openModal}>Add Group Member</Button>
-      <AddMemberModal
-        show={show}
-        onClose={closeModal}
-        title="Add Group Member"
-        group={group}
-      />
-    </>
+    <LinkUserButton
+      group={group}
+      buttonText="Add Member"
+      confirmButtonText="Add Member to Group"
+      cancelButtonText="Cancel"
+      action={action}
+    />
   );
 }

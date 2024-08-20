@@ -1,5 +1,5 @@
 import { Group } from "@/models/groups";
-import { fetchGroupManagers, fetchGroupMembersPage } from "@/services/groups";
+import { fetchGroupMembersPage } from "@/services/groups";
 import MembersTable from "./MembersTable";
 import AddMemberButton from "./AddMemberButton";
 

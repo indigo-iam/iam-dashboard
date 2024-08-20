@@ -20,10 +20,20 @@ export type Certificate = {
   hasProxyCertificate: boolean;
 };
 
+export type SSHKey = {
+  display: string;
+  value: string;
+  primary?: boolean;
+  fingerprint?: string;
+  created?: string;
+  lastModified?: string;
+};
+
 export type IndigoUser = {
   aupSignatureTime?: string;
   oidcIds?: OidcId[];
   samlIds?: SamlId[];
   certificates?: Certificate[];
   authorities?: string[];
+  sshKeys?: SSHKey[];
 };

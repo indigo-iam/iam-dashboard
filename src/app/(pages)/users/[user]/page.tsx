@@ -8,6 +8,7 @@ import { Groups } from "./components/Groups";
 import { LinkedAccounts } from "./components/LinkedAccounts";
 import { fetchMe } from "@/services/me";
 import Section from "@/components/Section";
+import SSHKeys from "./components/SSHKeys";
 
 type UserPageProps = {
   params: { user: string };
@@ -51,7 +52,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
       </Panel>
       <Panel>
         <Section title="SSH Keys">
-          <p>To be implemented</p>
+          <SSHKeys user={user} />
         </Section>
       </Panel>
       <Panel>

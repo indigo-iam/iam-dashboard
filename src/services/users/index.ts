@@ -4,6 +4,7 @@ import getConfig from "@/utils/config";
 import { Paginated } from "@/models/pagination";
 import { ScimUser } from "@/models/scim";
 import { revalidatePath } from "next/cache";
+import { SSHKey } from "@/models/indigo-user";
 
 const { BASE_URL } = getConfig();
 
@@ -54,5 +55,63 @@ export const deleteUser = async (user: ScimUser) => {
   } else {
     const msg = await response.text();
     throw Error(`Delete User failed with status ${response.status} ${msg}`);
+  }
+};
+
+export const addSSHKey = async (userId: string, sshKey: SSHKey) => {
+  const body = {
+    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
+    operations: [
+      {
+        op: "add",
+        value: {
+          "urn:indigo-dc:scim:schemas:IndigoUser": {
+            sshKeys: [sshKey],
+          },
+        },
+      },
+    ],
+  };
+
+  const url = `${BASE_URL}/scim/Users/${userId}`;
+  const response = await authFetch(url, {
+    body: JSON.stringify(body),
+    method: "PATCH",
+    headers: { "content-type": "application/scim+json" },
+  });
+  if (response.ok) {
+    revalidatePath(`/users/${userId}`);
+  } else {
+    const msg = await response.text();
+    throw Error(`Add SSH key failed with status ${response.status} ${msg}`);
+  }
+};
+
+export const deleteSSHKey = async (userId: string, sshKey: SSHKey) => {
+  const body = {
+    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
+    operations: [
+      {
+        op: "remove",
+        value: {
+          "urn:indigo-dc:scim:schemas:IndigoUser": {
+            sshKeys: [sshKey],
+          },
+        },
+      },
+    ],
+  };
+
+  const url = `${BASE_URL}/scim/Users/${userId}`;
+  const response = await authFetch(url, {
+    body: JSON.stringify(body),
+    method: "PATCH",
+    headers: { "content-type": "application/scim+json" },
+  });
+  if (response.ok) {
+    revalidatePath(`/users/${userId}`);
+  } else {
+    const msg = await response.text();
+    throw Error(`Delete SSH key failed with status ${response.status} ${msg}`);
   }
 };

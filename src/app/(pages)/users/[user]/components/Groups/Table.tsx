@@ -22,7 +22,7 @@ const Row = (props: Readonly<RowProps>) => {
   const { groupRef, userRef } = props;
   return (
     <TableRow>
-      <TableCell>
+      <TableCell className="grow">
         <Link
           href={`/groups/${groupRef.value}`}
           className="text-primary-600 underline"
@@ -30,7 +30,7 @@ const Row = (props: Readonly<RowProps>) => {
           {groupRef.display}
         </Link>
       </TableCell>
-      <TableCell className="text-right">
+      <TableCell className="text-center">
         <UnlinkMemberButton
           userRef={userRef}
           groupId={groupRef.value}
@@ -63,7 +63,7 @@ export default function GroupsTable(props: Readonly<GroupsTableProps>) {
     <Table>
       <TableHeader>
         <TableHeaderCell>Group</TableHeaderCell>
-        <TableHeaderCell className="text-right">Actions</TableHeaderCell>
+        <TableHeaderCell className="text-center w-1/12">Actions</TableHeaderCell>
       </TableHeader>
       <TableBody>
         {groups.map(group => {

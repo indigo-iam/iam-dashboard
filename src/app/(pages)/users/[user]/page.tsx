@@ -1,9 +1,11 @@
 import Page from "@/components/Page";
 import { fetchUser } from "@/services/users";
 import Panel from "@/components/Panel";
-import UserInfo from "@/components/User/Info";
-import { GroupRequests, Groups, LinkedAccounts } from "@/components/User";
-import { Certificates } from "@/components/User/Certificates";
+import UserInfo from "./components/Info";
+import { Certificates } from "./components/Certificates";
+import { GroupRequests } from "./components/GroupRequests";
+import { Groups } from "./components/Groups";
+import { LinkedAccounts } from "./components/LinkedAccounts";
 import { fetchMe } from "@/services/me";
 import Section from "@/components/Section";
 

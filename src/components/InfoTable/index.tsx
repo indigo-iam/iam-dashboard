@@ -1,12 +1,12 @@
 type RowProps = {
   name: string;
-  value: string;
+  value?: string;
 };
 function Row(props: Readonly<RowProps>) {
   const { name, value } = props;
   return (
     <tr className="!bg-secondary text-sm">
-      <td className="min-w-36 p-1">
+      <td className="px-2 py-0.5">
         <b>{name}</b>
       </td>
       <td>{value}</td>
@@ -15,18 +15,21 @@ function Row(props: Readonly<RowProps>) {
 }
 
 type InfoTableProps = {
-  data: { name: string; value: string }[];
+  data: { name: string; value?: string }[];
+  className?: string;
 };
 
 export default function InfoTable(props: Readonly<InfoTableProps>) {
-  const { data } = props;
+  const { data, className } = props;
   return (
-    <table className="table-auto">
-      <tbody>
-        {data.map(el => (
-          <Row {...el} key={el.name} />
-        ))}
-      </tbody>
-    </table>
+    <div className={className}>
+      <table className="table-auto">
+        <tbody>
+          {data.map(el => (
+            <Row {...el} key={el.name} />
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

@@ -65,7 +65,7 @@ export function Modal(props: Readonly<ModalProps>) {
               leaveFrom="opacity-100 transform-[scale(100%)]"
               leaveTo="opacity-0 transform-[scale(95%)]"
             >
-              <DialogPanel className="z-50 w-full max-w-lg divide-y rounded-2xl bg-secondary p-4 text-primary shadow-lg dark:bg-slate-800 dark:text-secondary">
+              <DialogPanel className="z-50 w-full max-w-xl divide-y rounded-2xl bg-secondary p-4 text-primary shadow-lg dark:bg-slate-800 dark:text-secondary">
                 <DialogTitle as="h2" className="pb-2 text-xl font-bold">
                   <div className="flex">
                     {title}

@@ -23,6 +23,7 @@ export default function AddManagersButton(
       buttonText="Add Group Manager"
       confirmButtonText="Add Group Manager"
       cancelButtonText="Cancel"
+      modalTitle="Add Group Manager Privileges"
       action={action}
     />
   );

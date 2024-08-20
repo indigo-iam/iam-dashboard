@@ -21,6 +21,7 @@ export default function AddMemberButton(props: Readonly<AddMemberButtonProps>) {
       buttonText="Add Member"
       confirmButtonText="Add Member to Group"
       cancelButtonText="Cancel"
+      modalTitle="Add Member to Group"
       action={action}
     />
   );

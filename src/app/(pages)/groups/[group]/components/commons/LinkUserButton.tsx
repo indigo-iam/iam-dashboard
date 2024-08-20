@@ -10,11 +10,19 @@ type LinkUserButtonProps = {
   buttonText: string;
   confirmButtonText: string;
   cancelButtonText: string;
+  modalTitle: string;
   action: (groupId: string, userRef: ScimReference) => Promise<void>;
 };
 
 export default function LinkUserButton(props: Readonly<LinkUserButtonProps>) {
-  const { group, buttonText, confirmButtonText, cancelButtonText, action } = props;
+  const {
+    group,
+    buttonText,
+    confirmButtonText,
+    cancelButtonText,
+    modalTitle,
+    action,
+  } = props;
 
   const [show, setShow] = useState(false);
   const openModal = () => setShow(true);
@@ -30,7 +38,7 @@ export default function LinkUserButton(props: Readonly<LinkUserButtonProps>) {
       <LinkUserModal
         show={show}
         onClose={closeModal}
-        title="Add Group Manager Privileges"
+        title={modalTitle}
         group={group}
         action={_action}
         confirmButtonText={confirmButtonText}

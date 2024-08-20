@@ -150,14 +150,14 @@ export const addUserToGroup = async (groupId: string, user: ScimReference) => {
 
 export const removeUserFromGroup = async (
   groupId: string,
-  user: ScimReference
+  userRef: ScimReference
 ) => {
   const body = {
     operations: [
       {
         op: "remove",
         path: "members",
-        value: [{ ...user, $ref: `${BASE_URL}/scim/Users/${user.value}` }],
+        value: [userRef],
       },
     ],
     schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
@@ -169,7 +169,10 @@ export const removeUserFromGroup = async (
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
-    revalidatePath(`/groups/${groupId}`);
+    // This function can be called from /users/me, /users/<userId> or
+    // /group/<groupId>. For some unknown reason, cache revalidation works
+    // for any string, even random characters. Keep '/' for the moment.
+    revalidatePath("/");
   } else {
     const msg = await response.text();
     throw Error(

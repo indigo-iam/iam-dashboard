@@ -9,7 +9,7 @@ import {
   TableCell,
 } from "@/components/Table";
 import Link from "next/link";
-import UnlinkMemberButton from "./UnlinkMemberButton";
+import { UnlinkMemberButton } from "@/components/Buttons";
 import { ScimReference } from "@/models/scim";
 
 type MembersProps = {
@@ -44,7 +44,11 @@ export default async function Members(props: Readonly<MembersProps>) {
                 </Link>
               </TableCell>
               <TableCell className="text-center">
-                <UnlinkMemberButton user={member} group={group} />
+                <UnlinkMemberButton
+                  userRef={member}
+                  groupId={group.id}
+                  groupName={group.displayName}
+                />
               </TableCell>
             </TableRow>
           );

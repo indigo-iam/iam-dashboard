@@ -1,19 +1,19 @@
 "use client";
 import { DeleteButton } from "@/components/Buttons";
-import { Group } from "@/models/groups";
 import { ScimReference } from "@/models/scim";
 import { useState } from "react";
 import ConfirmUnlinkUserModal from "./ConfirmModal";
 
 type UnlinkMemberButtonProps = {
-  user: ScimReference;
-  group: Group;
+  userRef: ScimReference;
+  groupId: string;
+  groupName: string;
 };
 
 export default function UnlinkMemberButton(
   props: Readonly<UnlinkMemberButtonProps>
 ) {
-  const { user, group } = props;
+  const { userRef, groupId, groupName } = props;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -28,8 +28,9 @@ export default function UnlinkMemberButton(
         <DeleteButton type="submit" title="Remove Membership" />
       </form>
       <ConfirmUnlinkUserModal
-        user={user}
-        group={group}
+        userRef={userRef}
+        groupId={groupId}
+        groupName={groupName}
         show={isModalOpen}
         onClose={closeModal}
       />

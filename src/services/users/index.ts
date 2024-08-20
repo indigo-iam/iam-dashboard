@@ -30,88 +30,69 @@ export const getUsersPage = async (
   return await getItem<Paginated<ScimUser>>(url);
 };
 
-export const addUser = async (user: ScimUser) => {
-  const url = `${BASE_URL}/scim/Users`;
+const manageUser = async (user: ScimUser, op: "add" | "delete") => {
+  let url = `${BASE_URL}/scim/Users`;
+  if (op === "delete") {
+    url = `${url}/${user.id!}`
+  }
   const response = await authFetch(url, {
     body: JSON.stringify(user),
-    method: "POST",
+    method: op === "add" ? "POST" : "DELETE",
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
     revalidatePath("/users");
   } else {
     const msg = await response.text();
-    throw Error(`Add User failed with status ${response.status} ${msg}`);
+    throw Error(`${op} user failed with status ${response.status} ${msg}`);
   }
 };
 
+export const addUser = async (user: ScimUser) => {
+  await manageUser(user, "add");
+};
+
 export const deleteUser = async (user: ScimUser) => {
-  const url = `${BASE_URL}/scim/Users/${user.id}`;
+  await manageUser(user, "delete");
+};
+
+const patchUserSSHKey = async (
+  userId: string,
+  sshKey: SSHKey,
+  op: "add" | "remove"
+) => {
+  const body = {
+    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
+    operations: [
+      {
+        op: op,
+        value: {
+          "urn:indigo-dc:scim:schemas:IndigoUser": {
+            sshKeys: [sshKey],
+          },
+        },
+      },
+    ],
+  };
+
+  const url = `${BASE_URL}/scim/Users/${userId}`;
   const response = await authFetch(url, {
-    method: "DELETE",
+    body: JSON.stringify(body),
+    method: "PATCH",
+    headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
-    revalidatePath("/users");
+    revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();
-    throw Error(`Delete User failed with status ${response.status} ${msg}`);
+    throw Error(`${op} SSH key failed with status ${response.status} ${msg}`);
   }
 };
 
 export const addSSHKey = async (userId: string, sshKey: SSHKey) => {
-  const body = {
-    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
-    operations: [
-      {
-        op: "add",
-        value: {
-          "urn:indigo-dc:scim:schemas:IndigoUser": {
-            sshKeys: [sshKey],
-          },
-        },
-      },
-    ],
-  };
-
-  const url = `${BASE_URL}/scim/Users/${userId}`;
-  const response = await authFetch(url, {
-    body: JSON.stringify(body),
-    method: "PATCH",
-    headers: { "content-type": "application/scim+json" },
-  });
-  if (response.ok) {
-    revalidatePath(`/users/${userId}`);
-  } else {
-    const msg = await response.text();
-    throw Error(`Add SSH key failed with status ${response.status} ${msg}`);
-  }
+  await patchUserSSHKey(userId, sshKey, "add");
 };
 
 export const deleteSSHKey = async (userId: string, sshKey: SSHKey) => {
-  const body = {
-    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
-    operations: [
-      {
-        op: "remove",
-        value: {
-          "urn:indigo-dc:scim:schemas:IndigoUser": {
-            sshKeys: [sshKey],
-          },
-        },
-      },
-    ],
-  };
-
-  const url = `${BASE_URL}/scim/Users/${userId}`;
-  const response = await authFetch(url, {
-    body: JSON.stringify(body),
-    method: "PATCH",
-    headers: { "content-type": "application/scim+json" },
-  });
-  if (response.ok) {
-    revalidatePath(`/users/${userId}`);
-  } else {
-    const msg = await response.text();
-    throw Error(`Delete SSH key failed with status ${response.status} ${msg}`);
-  }
+  await patchUserSSHKey(userId, sshKey, "remove");
 };

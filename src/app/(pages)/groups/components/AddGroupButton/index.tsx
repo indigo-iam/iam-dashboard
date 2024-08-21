@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/Buttons";
 import { Form } from "@/components/Form";
-import Input from "@/components/Input";
+import { Input } from "@/components/Inputs";
 import { Modal, ModalBody, ModalFooter } from "@/components/Modal";
 import { addGroup } from "@/services/groups";
 import { PlusIcon } from "@heroicons/react/24/outline";

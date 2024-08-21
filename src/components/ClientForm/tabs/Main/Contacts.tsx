@@ -1,5 +1,5 @@
 "use client";
-import InputList from "@/components/InputList";
+import { InputList } from "@/components/Inputs";
 import { useState } from "react";
 
 type ContactsProps = {

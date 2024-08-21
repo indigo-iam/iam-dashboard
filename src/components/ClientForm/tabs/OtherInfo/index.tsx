@@ -1,5 +1,5 @@
 import { FormSection } from "@/components/Form";
-import Input from "@/components/Input";
+import { Input } from "@/components/Inputs";
 import { TabPanel } from "@/components/Tabs";
 import { ClientOtherInfo } from "@/models/client";
 

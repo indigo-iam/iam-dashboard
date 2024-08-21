@@ -1,5 +1,5 @@
 import { Button } from "@/components/Buttons";
-import Input from "@/components/Input";
+import { Input } from "@/components/Inputs";
 import { FormSection } from "@/components/Form";
 import { TabPanel } from "@/components/Tabs";
 import { ClientCredentials, TokenEndpointAuthMethod } from "@/models/client";

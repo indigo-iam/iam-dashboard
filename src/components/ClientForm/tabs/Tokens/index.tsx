@@ -1,6 +1,6 @@
 import { FormSection } from "@/components/Form";
 import Checkbox from "@/components/Form/Checkbox";
-import Input from "@/components/Input";
+import { Input } from "@/components/Inputs";
 import { TabPanel } from "@/components/Tabs";
 import {
   AccessTokenSettings,

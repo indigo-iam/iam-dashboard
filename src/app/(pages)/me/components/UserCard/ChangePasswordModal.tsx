@@ -2,7 +2,7 @@
 import { Button } from "@/components/Buttons";
 import { Form } from "@/components/Form";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
-import Input from "@/components/Input";
+import { Input } from "@/components/Inputs";
 import {
   ArrowUpTrayIcon,
   ArrowUturnLeftIcon,

@@ -1,5 +1,5 @@
 "use client";
-import Input from "@/components/Input";
+import { Input } from "@/components/Inputs";
 import { useRef } from "react";
 
 type InputSearchProps = {

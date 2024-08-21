@@ -1,6 +1,6 @@
 import { Button } from "@/components/Buttons";
 import { Form } from "@/components/Form";
-import Input from "@/components/Input";
+import { Input } from "@/components/Inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import { Group } from "@/models/groups";
 import { addSubgroup } from "@/services/groups";

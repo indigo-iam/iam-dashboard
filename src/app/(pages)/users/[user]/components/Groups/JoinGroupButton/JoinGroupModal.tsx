@@ -6,11 +6,11 @@ import { Group } from "@/models/groups";
 import { JoinGroupRequest } from "@/models/group-requests";
 import { submitGroupRequest } from "@/services/group-requests";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
-import { ScimReference, ScimUser } from "@/models/scim";
+import { ScimUser } from "@/models/scim";
 import SearchGroup from "@/components/SearchGroup";
 import { useState } from "react";
 import { addUserToGroup } from "@/services/groups";
-import Input from "@/components/Input";
+import { Input } from "@/components/Inputs";
 import { makeScimReferenceFromUser } from "@/utils/scim";
 
 export interface JoinGroupModalProps extends ModalProps {

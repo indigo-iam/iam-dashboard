@@ -13,7 +13,7 @@ export default function Table(props: Readonly<TableProps>) {
   const indigoUser = user["urn:indigo-dc:scim:schemas:IndigoUser"];
   let sshKeys: SSHKey[] = [];
 
-  if (indigoUser && indigoUser.sshKeys) {
+  if (indigoUser?.sshKeys) {
     sshKeys = indigoUser.sshKeys;
   }
 

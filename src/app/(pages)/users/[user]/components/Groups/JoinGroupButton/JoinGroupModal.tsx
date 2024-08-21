@@ -10,10 +10,8 @@ import { ScimReference, ScimUser } from "@/models/scim";
 import SearchGroup from "@/components/SearchGroup";
 import { useState } from "react";
 import { addUserToGroup } from "@/services/groups";
-import getConfig from "@/utils/config";
 import Input from "@/components/Input";
-
-const { BASE_URL } = getConfig();
+import { makeScimReferenceFromUser } from "@/utils/scim";
 
 export interface JoinGroupModalProps extends ModalProps {
   user: ScimUser;
@@ -31,7 +29,7 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
 
   const labels = (() => {
     const indigoGroup = selected?.["urn:indigo-dc:scim:schemas:IndigoGroup"];
-    if (indigoGroup && indigoGroup.labels) {
+    if (indigoGroup?.labels) {
       return indigoGroup.labels.map(l => l.name).join(" ");
     }
     return "";
@@ -43,13 +41,9 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
   };
 
   const action = async (formData: FormData) => {
-    if (isAdmin) {
-      const userRef: ScimReference = {
-        display: user.name?.formatted!,
-        value: user.id!,
-        $ref: `${BASE_URL}/scim/Users/${user.id}`,
-      };
-      await addUserToGroup(selected?.id!, userRef);
+    if (isAdmin && selected) {
+      const userRef = makeScimReferenceFromUser(user);
+      await addUserToGroup(selected.id, userRef);
     } else {
       const req: JoinGroupRequest = {
         notes: formData.get("group-request-notes") as string,

@@ -15,12 +15,11 @@ import {
 
 type RowProps = {
   client: Client;
-  baseUrl: string;
   deleteClient?: (clientId: string) => void;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const { client, baseUrl, deleteClient } = props;
+  const { client, deleteClient } = props;
   const { client_id, client_name } = client;
 
   const action = async () => {
@@ -33,7 +32,7 @@ function Row(props: Readonly<RowProps>) {
       <TableCell>{client_name}</TableCell>
       <TableCell>
         <Link
-          href={`${baseUrl}/${client_id}`}
+          href={`/clients/${client_id}`}
           className="text-primary-800 underline"
         >
           {client_id}
@@ -50,10 +49,10 @@ function Row(props: Readonly<RowProps>) {
   );
 }
 
-type ClientsTableProps = { count?: string; page?: string; isAdmin: boolean };
+type ClientsTableProps = { count?: string; page?: string; me?: boolean };
 
 export default async function ClientsTable(props: Readonly<ClientsTableProps>) {
-  const { count, page, isAdmin } = props;
+  const { count, page, me } = props;
   let itemsPerPage = 10;
   let currentPage = 0;
 
@@ -62,12 +61,11 @@ export default async function ClientsTable(props: Readonly<ClientsTableProps>) {
 
   const startIndex = currentPage * itemsPerPage + 1;
 
-  const response = await getClientsPage(itemsPerPage, startIndex, isAdmin);
+  const response = await getClientsPage(itemsPerPage, startIndex, me);
   const { totalResults } = response;
   const numberOfPages = Math.ceil(totalResults / itemsPerPage);
-
-  const baseUrl = isAdmin ? "/clients" : "/me/clients";
   const clients = response.Resources;
+
   return (
     <>
       <Table>
@@ -78,7 +76,7 @@ export default async function ClientsTable(props: Readonly<ClientsTableProps>) {
         </TableHeader>
         <TableBody>
           {clients.map(client => (
-            <Row key={client.client_id} client={client} baseUrl={baseUrl} />
+            <Row key={client.client_id} client={client} />
           ))}
         </TableBody>
       </Table>

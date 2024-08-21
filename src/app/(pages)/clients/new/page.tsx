@@ -1,4 +1,3 @@
-import { ClientForm } from "../components";
 import { fetchMe } from "@/services/me";
 import { fetchOpenIdConfiguration } from "@/services/openid-configuration";
 import { fetchScopes } from "@/services/scopes";
@@ -11,7 +10,6 @@ export default async function NewClient() {
   return (
     <div className="flex flex-col gap-2">
       <h1>New Clients</h1>
-      <ClientForm me={me} scopes={scopes} grantTypes={grantTypes} />
     </div>
   );
 }

@@ -150,11 +150,12 @@ export const editClient = async (formData: FormData, isAdmin = false) => {
 export const getClientsPage = async (
   count: number,
   startIndex: number = 1,
-  isAdmin: boolean = false
+  me: boolean = false
 ) => {
-  const url = isAdmin
-    ? `${BASE_URL}/iam/api/clients?count=${count}&startIndex=${startIndex}`
-    : `${BASE_URL}/iam/account/me/clients?count=${count}&startIndex=${startIndex}`;
+  const searchParams = `count=${count}&startIndex=${startIndex}`;
+  const url = me
+    ? `${BASE_URL}/iam/account/me/clients?${searchParams}`
+    : `${BASE_URL}/iam/api/clients?${searchParams}`;
   return await getItem<Paginated<Client>>(url);
 };
 

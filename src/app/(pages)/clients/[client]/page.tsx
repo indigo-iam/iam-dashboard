@@ -1,6 +1,7 @@
 import { Page } from "@/components/Layout";
-import ClientForm from "@/components/ClientForm";
+import ClientForm from "./components/Form";
 import { editClient, getClient } from "@/services/clients";
+import { auth } from "@/auth";
 
 type ClientPageProps = {
   params: { client: string };
@@ -9,6 +10,9 @@ type ClientPageProps = {
 export default async function Client(props: Readonly<ClientPageProps>) {
   const { params } = props;
   const clientId = params.client;
+
+  const session = await auth();
+  const isAdmin = session?.is_admin ?? false;
 
   const client = await getClient(clientId, true);
   if (client.error) {
@@ -24,7 +28,7 @@ export default async function Client(props: Readonly<ClientPageProps>) {
       <ClientForm
         client={client}
         editClientAction={editAdminClient}
-        isAdmin={true}
+        isAdmin={isAdmin}
       />
     </Page>
   );

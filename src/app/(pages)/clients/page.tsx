@@ -1,6 +1,5 @@
-import { Suspense } from "react";
-import { Page, Panel } from "@/components/Layout";
-import ClientsTable from "@/components/ClientsTable";
+import { Page } from "@/components/Layout";
+import Clients from "@/components/Clients";
 
 type ClientsProps = {
   searchParams?: {
@@ -9,15 +8,11 @@ type ClientsProps = {
   };
 };
 
-export default function Clients(props: Readonly<ClientsProps>) {
+export default function ClientsPage(props: Readonly<ClientsProps>) {
   const { searchParams } = props;
   return (
     <Page title="Clients">
-      <Panel>
-        <Suspense fallback={"Loading..."}>
-          <ClientsTable {...searchParams} isAdmin={true} />
-        </Suspense>
-      </Panel>
+      <Clients searchParams={searchParams} />
     </Page>
   );
 }

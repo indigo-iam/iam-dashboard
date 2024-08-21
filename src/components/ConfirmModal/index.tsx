@@ -30,9 +30,7 @@ export default function ConfirmModal(props: Readonly<ConfirmModal>) {
   return (
     <Modal {...modalProps}>
       <Form action={action}>
-        <ModalBody>
-          <p className="py-2">{children}</p>
-        </ModalBody>
+        <ModalBody>{children}</ModalBody>
         <ModalFooter>
           <Button action="danger" type="submit">
             {confirmText}

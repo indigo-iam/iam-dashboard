@@ -27,20 +27,18 @@ export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
     <Modal {...modalProps} title="Add SSH Key">
       <Form action={action}>
         <ModalBody>
-          <div className="space-y-2">
-            <Input
-              id="ssh-label"
-              name="ssh-label"
-              title="Label"
-              required={true}
-            />
-            <TextArea
-              id="ssh-key"
-              name="ssh-key"
-              title="SSH Key"
-              required={true}
-            />
-          </div>
+          <Input
+            id="ssh-label"
+            name="ssh-label"
+            title="Label"
+            required={true}
+          />
+          <TextArea
+            id="ssh-key"
+            name="ssh-key"
+            title="SSH Key"
+            required={true}
+          />
         </ModalBody>
         <ModalFooter>
           <Button type="submit">Add SSH Key</Button>

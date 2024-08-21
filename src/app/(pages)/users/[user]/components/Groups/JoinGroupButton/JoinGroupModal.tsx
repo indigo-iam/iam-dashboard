@@ -66,44 +66,42 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
       <Form action={action}>
         <ModalBody>
           <ModalBody>
-            <div className="flex flex-col gap-4">
+            <section>
+              <h4>Select a Group to join</h4>
+              <SearchGroup
+                className="mt-2"
+                onClick={selectGroup}
+                hidden={!!selected}
+              />
+              <div hidden={!selected}>
+                <p>
+                  Do you want to join group<b> {selected?.displayName}</b>?
+                </p>
+                <br />
+                <b>Name</b>
+                <p>{selected?.displayName}</p>
+                <b>UUID</b>
+                <p>{selected?.id}</p>
+                <b>Labels</b>
+                <p>{labels}</p>
+              </div>
+            </section>
+            {!isAdmin ? (
               <section>
-                <h4>Select a Group to join</h4>
-                <SearchGroup
+                <h4> Provide a motivation for your request</h4>
+                <p>
+                  This motivation will be show to the administrators that will
+                  manage your request.
+                </p>
+                <Input
+                  id="group-request-notes"
+                  name="group-request-notes"
+                  placeholder="Explain why you want to be a member of group..."
                   className="mt-2"
-                  onClick={selectGroup}
-                  hidden={!!selected}
+                  required={!isAdmin}
                 />
-                <div hidden={!selected}>
-                  <p>
-                    Do you want to join group<b> {selected?.displayName}</b>?
-                  </p>
-                  <br />
-                  <b>Name</b>
-                  <p>{selected?.displayName}</p>
-                  <b>UUID</b>
-                  <p>{selected?.id}</p>
-                  <b>Labels</b>
-                  <p>{labels}</p>
-                </div>
               </section>
-              {!isAdmin ? (
-                <section>
-                  <h4> Provide a motivation for your request</h4>
-                  <p>
-                    This motivation will be show to the administrators that will
-                    manage your request.
-                  </p>
-                  <Input
-                    id="group-request-notes"
-                    name="group-request-notes"
-                    placeholder="Explain why you want to be a member of group..."
-                    className="mt-2"
-                    required={!isAdmin}
-                  />
-                </section>
-              ) : null}
-            </div>
+            ) : null}
           </ModalBody>
         </ModalBody>
         <ModalFooter>

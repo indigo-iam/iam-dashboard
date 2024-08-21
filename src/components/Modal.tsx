@@ -18,7 +18,7 @@ export interface ModalProps {
 
 export const ModalBody = (props: { children?: ReactNode }) => {
   const { children } = props;
-  return <div className="p-4">{children}</div>;
+  return <div className="p-4 space-y-4">{children}</div>;
 };
 
 export const ModalFooter = (props: { children?: ReactNode }) => {

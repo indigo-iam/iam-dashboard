@@ -1,4 +1,3 @@
-import Paginator from "@/components/Paginator";
 import { getClientsPage } from "@/services/clients";
 import { Client } from "@/models/client";
 import { Button } from "@/components/Buttons";
@@ -11,6 +10,7 @@ import {
   TableHeader,
   TableHeaderCell,
   TableRow,
+  Paginator,
 } from "@/components/Table";
 
 type RowProps = {

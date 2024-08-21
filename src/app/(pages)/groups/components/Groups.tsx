@@ -1,5 +1,5 @@
 "use client";
-import Paginator from "@/components/Paginator";
+import { Paginator } from "@/components/Table";
 import InputSearch from "@/components/SearchFilter";
 import Panel from "@/components/Panel";
 import { Group } from "@/models/groups";

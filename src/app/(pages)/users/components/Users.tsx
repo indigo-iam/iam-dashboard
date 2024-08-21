@@ -4,7 +4,7 @@ import { getUsersPage } from "@/services/users";
 import SearchFilter from "@/components/SearchFilter";
 import UsersTable from "./UsersTable";
 import { useCallback, useEffect, useState } from "react";
-import Paginator from "@/components/Paginator";
+import { Paginator } from "@/components/Table";
 import DeleteUser from "./DeleteUser";
 import AddUser from "./AddUser";
 import Panel from "@/components/Panel";

@@ -8,7 +8,7 @@ import {
 } from "@/components/Table";
 import { ScimUser } from "@/models/scim";
 import Link from "next/link";
-import RevokeManagerButton from "./RevokeManagerButton";
+import RevokeManagerButton from "./RevokeButton";
 import { Group } from "@/models/groups";
 
 type MembersTableProps = {

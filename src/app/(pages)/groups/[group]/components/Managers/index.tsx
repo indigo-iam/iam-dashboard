@@ -1,7 +1,7 @@
 import { Group } from "@/models/groups";
 import { fetchGroupManagers } from "@/services/groups";
-import ManagersTable from "./ManagersTable";
-import AssignGroupManagerButton from "./AssignManagerButton";
+import ManagersTable from "./Table";
+import AssignGroupManagerButton from "./AssignButton";
 
 type ManagersProps = {
   group: Group;

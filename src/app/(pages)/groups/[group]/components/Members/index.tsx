@@ -1,7 +1,7 @@
 import { Group } from "@/models/groups";
 import { fetchGroupMembersPage } from "@/services/groups";
-import MembersTable from "./MembersTable";
-import AddMemberButton from "./AddMemberButton";
+import MembersTable from "./Table";
+import AddMemberButton from "./AddButton";
 
 type ManagersProps = {
   group: Group;

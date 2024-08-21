@@ -1,3 +1,4 @@
+"use client";
 import { useRef, useState } from "react";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import { Button } from "@/components/Buttons";

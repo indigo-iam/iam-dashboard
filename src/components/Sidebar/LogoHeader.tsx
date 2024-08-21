@@ -1,5 +1,5 @@
 import { UserCircleIcon } from "@heroicons/react/24/solid";
-import { DrawerButtons } from "./Drawer/Buttons";
+import { DrawerButtons } from "../Drawer/Buttons";
 import { fetchMe } from "@/services/me";
 
 const UserLogo = (props: { username: string }) => {
@@ -12,7 +12,7 @@ const UserLogo = (props: { username: string }) => {
   );
 };
 
-export const LogoHeader = async () => {
+export default async function LogoHeader() {
   const me = await fetchMe();
   let username = me.name?.formatted ? me.name.formatted : "Unknown User";
   return (
@@ -22,4 +22,4 @@ export const LogoHeader = async () => {
       <hr className="bg-secondary" />
     </div>
   );
-};
+}

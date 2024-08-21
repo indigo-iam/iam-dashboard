@@ -3,7 +3,6 @@ import Drawer, {
   DrawerBody,
   DrawerFooter,
 } from "@/components/Drawer";
-import { LogoHeader } from "@/components/LogoHeader";
 import {
   HomeIcon,
   KeyIcon,
@@ -13,6 +12,7 @@ import {
   ShieldCheckIcon,
   InformationCircleIcon,
 } from "@heroicons/react/20/solid";
+import LogoHeader  from "./LogoHeader";
 import Link from "./Link";
 
 const LEFT_SIDEBAR_ID = "left-sidebar";

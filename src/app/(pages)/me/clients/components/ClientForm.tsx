@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/Buttons";
 import { ClientRequest, Scope } from "@/models/client";
-import { Me } from "@/models/me";
+import { ScimUser } from "@/models/scim";
 import { PlusIcon } from "@heroicons/react/16/solid";
 import { registerClient } from "@/services/clients";
 import { useRouter } from "next/navigation";
@@ -119,7 +119,7 @@ const GrantTypesCheckboxes = (props: { grantTypes: string[] }) => {
 };
 
 export const ClientForm = (props: {
-  me: Me;
+  me: ScimUser;
   scopes: Scope[];
   grantTypes: string[];
 }) => {

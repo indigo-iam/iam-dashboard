@@ -59,3 +59,8 @@ export interface ScimRequest {
   operations: ScimOp[];
   path?: string;
 }
+
+export interface UpdatePasswordRequest {
+  currentPassword: string;
+  updatedPassword: string;
+}

@@ -8,7 +8,7 @@ import MultiChoiceDropdown, {
 import { XMarkIcon, ArrowUpTrayIcon } from "@heroicons/react/24/solid";
 import { useCallback, useState, useTransition } from "react";
 import { Group } from "@/models/groups";
-import { Me } from "@/models/me";
+import { ScimUser } from "@/models/scim";
 import { JoinGroupRequest } from "@/models/group-requests";
 import { submitGroupRequest } from "@/services/group-requests";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
@@ -76,7 +76,7 @@ const Footer = (props: {
 };
 
 const AddGroupForm = (props: {
-  me: Me;
+  me: ScimUser;
   groups: Group[];
   onClose: () => void;
 }) => {
@@ -152,7 +152,7 @@ const AddGroupForm = (props: {
 };
 
 export interface AddGroupModalProps extends ModalProps {
-  me: Me;
+  me: ScimUser;
   groups: Group[];
 }
 

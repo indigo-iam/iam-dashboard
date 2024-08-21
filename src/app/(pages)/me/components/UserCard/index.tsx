@@ -6,7 +6,7 @@ import { EditDetailsModal } from "./EditDetailsModal";
 import { ChangePasswordModal } from "./ChangePasswordModal";
 import { PencilIcon, KeyIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import type { Me } from "@/models/me";
+import type { ScimUser } from "@/models/scim";
 
 const Footer = (props: {
   onClickEditDetails: () => void;
@@ -40,7 +40,7 @@ const Row = (props: { data: string[] }) => {
   );
 };
 
-const User = (props: { me: Me }) => {
+const User = (props: { me: ScimUser }) => {
   const { me } = props;
   const created = me.meta?.created
     ? dateToHuman(new Date(me.meta?.created))
@@ -69,7 +69,7 @@ const User = (props: { me: Me }) => {
   );
 };
 
-export const UserCard = (props: { me: Me }) => {
+export const UserCard = (props: { me: ScimUser }) => {
   const { me } = props;
   const [showEditDetails, setShowEditDetails] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);

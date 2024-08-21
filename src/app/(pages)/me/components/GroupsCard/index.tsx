@@ -4,7 +4,7 @@ import { Button } from "@/components/Buttons";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/16/solid";
 import { AddGroupModal } from "./AddGroupModal";
-import { Me } from "@/models/me";
+import { ScimUser } from "@/models/scim";
 import { useState } from "react";
 import { Group } from "@/models/groups";
 
@@ -27,7 +27,7 @@ const Row = (props: { title: string; deleteGroup: () => void }) => {
   );
 };
 
-const Groups = (props: { me: Me }) => {
+const Groups = (props: { me: ScimUser }) => {
   const { groups } = props.me;
   if (!groups) {
     return <p>No groups found</p>;
@@ -59,7 +59,7 @@ const Footer = (props: { showAddGroup: () => void }) => {
   );
 };
 
-export const GroupsCard = (props: { me: Me; groups: Group[] }): JSX.Element => {
+export const GroupsCard = (props: { me: ScimUser; groups: Group[] }): JSX.Element => {
   const { me, groups } = props;
   const [showAddGroupModal, setShowAddGroupModal] = useState(false);
   const name = me.name?.formatted ?? "unknown";

@@ -24,6 +24,8 @@ export const getItem: GetItem = async (endpoint: string | URL) => {
   } else {
     const error = await response.text();
     const status = response.status;
-    throw Error(`getItem failed with status ${status}: ${error}`);
+    throw Error(
+      `getItem from ${endpoint} failed with status ${status}: ${error}`
+    );
   }
 };

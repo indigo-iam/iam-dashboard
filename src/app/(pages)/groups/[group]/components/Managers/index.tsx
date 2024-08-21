@@ -1,7 +1,7 @@
 import { Group } from "@/models/groups";
 import { fetchGroupManagers } from "@/services/groups";
 import ManagersTable from "./ManagersTable";
-import AddManagersButton from "./AddManagerButton";
+import AssignGroupManagerButton from "./AssignManagerButton";
 
 type ManagersProps = {
   group: Group;
@@ -13,7 +13,7 @@ export default async function Managers(props: Readonly<ManagersProps>) {
   return (
     <>
       <ManagersTable group={group} managers={managers} />
-      <AddManagersButton group={group} />
+      <AssignGroupManagerButton group={group} />
     </>
   );
 }

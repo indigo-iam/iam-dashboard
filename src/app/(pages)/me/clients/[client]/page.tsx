@@ -1,6 +1,6 @@
-import Page from "@/components/Page";
-import { editClient, getClient } from "@/services/clients";
+import { Page } from "@/components/Layout";
 import ClientForm from "@/components/ClientForm";
+import { editClient, getClient } from "@/services/clients";
 
 type ClientPageProps = {
   params: { client: string };

@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Paginator } from "@/components/Table";
 import DeleteUser from "./DeleteUser";
 import AddUser from "./AddUser";
-import Panel from "@/components/Panel";
+import Panel from "@/components/Layout/Panel";
 
 type UsersProps = { count?: string; page?: string };
 export default function Users(props: Readonly<UsersProps>) {

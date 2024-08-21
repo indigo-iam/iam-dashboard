@@ -1,15 +1,14 @@
-import Page from "@/components/Page";
+import { auth } from "@/auth";
+import { Page, Panel } from "@/components/Layout";
+import Section from "@/components/Section";
+import { fetchMe } from "@/services/me";
 import { fetchUser } from "@/services/users";
-import Panel from "@/components/Panel";
 import UserInfo from "./components/Info";
 import { Certificates } from "./components/Certificates";
 import { GroupRequests } from "./components/GroupRequests";
 import { Groups } from "./components/Groups";
 import { LinkedAccounts } from "./components/LinkedAccounts";
-import { fetchMe } from "@/services/me";
-import Section from "@/components/Section";
 import SSHKeys from "./components/SSHKeys";
-import { auth } from "@/auth";
 import Attributes from "./components/Attributes";
 
 type UserPageProps = {

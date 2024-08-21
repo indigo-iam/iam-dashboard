@@ -1,5 +1,4 @@
-import Page from "@/components/Page";
-import Panel from "@/components/Panel";
+import { Page, Panel } from "@/components/Layout";
 import Section from "@/components/Section";
 import SubgroupsTable from "./components/Subgroups/Table";
 import GroupInfo from "./components/GroupInfo";

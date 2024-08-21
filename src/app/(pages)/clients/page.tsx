@@ -1,7 +1,6 @@
 import { Suspense } from "react";
-import Page from "@/components/Page";
+import { Page, Panel } from "@/components/Layout";
 import ClientsTable from "@/components/ClientsTable";
-import Panel from "@/components/Panel";
 
 type ClientsProps = {
   searchParams?: {

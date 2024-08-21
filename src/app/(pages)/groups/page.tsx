@@ -1,4 +1,4 @@
-import Page from "@/components/Page";
+import { Page } from "@/components/Layout";
 import { Groups } from "./components/Groups";
 
 type GroupsProps = {

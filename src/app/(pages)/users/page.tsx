@@ -1,4 +1,4 @@
-import Page from "@/components/Page";
+import { Page } from "@/components/Layout";
 import Users from "./components/Users";
 
 type UsersProps = {

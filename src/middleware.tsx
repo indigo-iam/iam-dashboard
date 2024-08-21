@@ -10,7 +10,6 @@ export default auth(req => {
 
   const sessionNotFound = !session && req.nextUrl.pathname !== "/signin";
   if (sessionNotFound) {
-    console.log("session not found");
     const newUrl = new URL("/signin", req.nextUrl.origin);
     return Response.redirect(newUrl);
   }
@@ -24,8 +23,7 @@ export default auth(req => {
     req.nextUrl.pathname !== "/signout" &&
     req.nextUrl.pathname !== "/signin"
   ) {
-    console.log("access token expired, redirect to /signout");
-    // This is an hack to make redirects on form submit post work. 
+    // This is an hack to make redirects on form submit post work.
     // Based on https://github.com/vercel/next.js/blob/0cf0d43a48e04820d081de59176cbd75dd4bf193/packages/next/src/client/components/router-reducer/reducers/server-action-reducer.ts#L82
     // Since it is not reported in the official documentation, consider to
     // revisit this logic in future.

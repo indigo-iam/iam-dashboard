@@ -1,7 +1,8 @@
 "use client";
 import { Button } from "@/components/Buttons";
 import { Form } from "@/components/Form";
-import MultiChoiceDropdown, {
+import {
+  MultiChoiceDropdown,
   MultiChoiceItem,
   MultiChoiceItemI,
 } from "@/components/MultiChoiceDropdown";

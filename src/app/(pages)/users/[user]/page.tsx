@@ -10,6 +10,7 @@ import { fetchMe } from "@/services/me";
 import Section from "@/components/Section";
 import SSHKeys from "./components/SSHKeys";
 import { auth } from "@/auth";
+import Attributes from "./components/Attributes";
 
 type UserPageProps = {
   params: { user: string };
@@ -60,7 +61,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
       </Panel>
       <Panel>
         <Section title="Attributes">
-          <p>To be implemented</p>
+          <Attributes user={user} />
         </Section>
       </Panel>
     </Page>

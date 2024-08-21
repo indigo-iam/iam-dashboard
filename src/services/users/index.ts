@@ -5,6 +5,7 @@ import { Paginated } from "@/models/pagination";
 import { ScimUser } from "@/models/scim";
 import { revalidatePath } from "next/cache";
 import { SSHKey } from "@/models/indigo-user";
+import { Attribute } from "@/models/attributes";
 
 const { BASE_URL } = getConfig();
 
@@ -33,7 +34,7 @@ export const getUsersPage = async (
 const manageUser = async (user: ScimUser, op: "add" | "delete") => {
   let url = `${BASE_URL}/scim/Users`;
   if (op === "delete") {
-    url = `${url}/${user.id!}`
+    url = `${url}/${user.id!}`;
   }
   const response = await authFetch(url, {
     body: JSON.stringify(user),
@@ -96,3 +97,39 @@ export const addSSHKey = async (userId: string, sshKey: SSHKey) => {
 export const deleteSSHKey = async (userId: string, sshKey: SSHKey) => {
   await patchUserSSHKey(userId, sshKey, "remove");
 };
+
+export async function fetchAttributes(userId: string) {
+  const url = `${BASE_URL}/iam/account/${userId}/attributes`;
+  return await getItem<Attribute[]>(url);
+}
+
+export async function addAttribute(userId: string, attr: Attribute) {
+  const url = `${BASE_URL}/iam/account/${userId}/attributes`;
+  const body = JSON.stringify(attr);
+  const response = await authFetch(url, {
+    body,
+    method: "PUT",
+    headers: {
+      "content-type": "application/json;charset=utf-8",
+    },
+  });
+  if (response.ok) {
+    revalidatePath(`/users/${userId}`);
+  } else {
+    const msg = await response.text();
+    throw Error(`Put attribute failed with status ${response.status} ${msg}`);
+  }
+}
+
+export async function deleteAttribute(userId: string, attr: Attribute) {
+  const url = `${BASE_URL}/iam/account/${userId}/attributes?name=${attr.name}`;
+  const response = await authFetch(url, {
+    method: "DELETE"
+  });
+  if (response.ok) {
+    revalidatePath(`/users/${userId}`);
+  } else {
+    const msg = await response.text();
+    throw Error(`Delete attribute failed with status ${response.status} ${msg}`);
+  }
+}

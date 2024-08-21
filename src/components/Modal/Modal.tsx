@@ -16,20 +16,6 @@ export interface ModalProps {
   onClose: () => void;
 }
 
-export const ModalBody = (props: { children?: ReactNode }) => {
-  const { children } = props;
-  return <div className="p-4 space-y-4">{children}</div>;
-};
-
-export const ModalFooter = (props: { children?: ReactNode }) => {
-  const { children } = props;
-  return (
-    <div className="bottom-0 flex min-h-8 justify-end space-x-2 border-t-2 pt-4">
-      {children}
-    </div>
-  );
-};
-
 export function Modal(props: Readonly<ModalProps>) {
   const { title, children, show, onClose } = props;
 

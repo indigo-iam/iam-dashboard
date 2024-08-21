@@ -1,6 +1,6 @@
 "use client";
 import { Paginator } from "@/components/Table";
-import InputSearch from "@/components/SearchFilter";
+import { InputSearch } from "@/components/Inputs";
 import Panel from "@/components/Panel";
 import { Group } from "@/models/groups";
 import { getGroupsPage } from "@/services/groups";

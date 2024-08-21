@@ -1,2 +1,3 @@
-export { default as Input } from "./Input";
-export { default as InputList } from "./InputList";
+export { Input } from "./Input";
+export { InputList } from "./InputList";
+export { InputSearch } from "./InputSearch";

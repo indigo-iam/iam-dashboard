@@ -1,5 +1,5 @@
 "use client";
-import InputSearch from "@/components/SearchFilter";
+import { InputSearch } from "@/components/Inputs";
 import { Group } from "@/models/groups";
 import { searchGroup } from "@/services/groups";
 import { useState } from "react";

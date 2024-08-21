@@ -1,7 +1,7 @@
 "use client";
 import { ScimUser } from "@/models/scim";
 import { getUsersPage } from "@/services/users";
-import SearchFilter from "@/components/SearchFilter";
+import { InputSearch } from "@/components/Inputs";
 import UsersTable from "./UsersTable";
 import { useCallback, useEffect, useState } from "react";
 import { Paginator } from "@/components/Table";
@@ -55,7 +55,7 @@ export default function Users(props: Readonly<UsersProps>) {
 
   return (
     <div className="space-y-3">
-      <SearchFilter onChange={handleFilterChange} onClear={handleFilterClear} />
+      <InputSearch onChange={handleFilterChange} onClear={handleFilterClear} />
       <DeleteUser
         show={!!userToDelete}
         onClose={closeDeleteUserModal}

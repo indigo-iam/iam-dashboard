@@ -7,7 +7,7 @@ type InputSearchProps = {
   onClear: () => void;
 };
 
-export default function InputSearch(props: Readonly<InputSearchProps>) {
+export function InputSearch(props: Readonly<InputSearchProps>) {
   const { onChange, onClear } = props;
   const searchCallback = async (filter: string) => {
     if (filter.length > 2) {

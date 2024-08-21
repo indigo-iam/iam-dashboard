@@ -1,8 +1,8 @@
 "use client";
 import { ScimUser } from "@/models/scim";
 import { searchUser } from "@/services/users";
+import { InputSearch } from "@/components/Inputs";
 import { useState } from "react";
-import InputSearch from "../SearchFilter";
 
 type ResultsDropDownProps = {
   results: ScimUser[];

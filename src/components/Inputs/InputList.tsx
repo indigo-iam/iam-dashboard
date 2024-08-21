@@ -9,7 +9,7 @@ interface InputListProps extends React.HTMLProps<HTMLInputElement> {
   removeItem: (index: number) => void;
 }
 
-export default function InputList(props: Readonly<InputListProps>) {
+export function InputList(props: Readonly<InputListProps>) {
   const { items, addItem, removeItem, name, ...inputProps } = props;
 
   const inputRef = useRef<HTMLInputElement>(null);

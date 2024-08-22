@@ -1,23 +1,20 @@
-import Label from "@/components/Label";
+import {
+  Input as HeadlessInput,
+  type InputProps as HeadlessInputProps,
+} from "@headlessui/react";
 
-export interface InputProps extends React.HTMLProps<HTMLInputElement> {
-  errorMessage?: string;
+export interface InputProps extends HeadlessInputProps {
+  className?: string;
 }
 
 export function Input(props: Readonly<InputProps>) {
-  const { id, title, className, errorMessage, ...inputProps } = props;
+  const { className, ...inputProps } = props;
   return (
     <div className={className}>
-      <div className="flex flex-col">
-        <Label htmlFor={id} title={title} />
-        <input
-          className="rounded-full bg-secondary-100 px-4 py-2 disabled:bg-secondary-300 placeholder:disabled:text-secondary-600"
-          {...inputProps}
-        />
-        {errorMessage ? (
-          <small className="text-danger">{errorMessage}</small>
-        ) : null}
-      </div>
+      <HeadlessInput
+        className="border w-full rounded-lg px-4 py-2 disabled:bg-secondary-300 placeholder:disabled:text-secondary-600"
+        {...inputProps}
+      />
     </div>
   );
 }

@@ -1,25 +1,36 @@
 "use client";
 import { useRef, useState } from "react";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/16/solid";
+import { Input, type InputProps } from "@/components/Inputs/Input";
 import { Button } from "@/components/Buttons";
 
-interface InputListProps extends React.HTMLProps<HTMLInputElement> {
-  items: string[];
-  addItem: (value: string) => void;
-  removeItem: (index: number) => void;
+interface InputListProps extends InputProps {
+  originalItems: string[];
 }
 
 export function InputList(props: Readonly<InputListProps>) {
-  const { items, addItem, removeItem, name, ...inputProps } = props;
+  const { originalItems, name, placeholder } = props;
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState("");
+  const [items, setItems] = useState(originalItems ?? []);
 
-  const listItems = props.items.map((item, index) => (
+  const addItem = (item: string) => {
+    if (!items.find(i => i === item)) {
+      setItems([...items, item]);
+    } else {
+      console.warn("address already present");
+    }
+  };
+  const removeItem = (index: number) => {
+    setItems(items.toSpliced(index, 1));
+  };
+
+  const listItems = items.map((item, index) => (
     <li key={item} className="mt-1 flex flex-row items-center gap-2 text-sm">
       <button
         type="button"
-        onClick={() => props.removeItem(index)}
+        onClick={() => removeItem(index)}
         className="w-5 rounded bg-secondary-100 hover:bg-danger hover:text-secondary"
       >
         <XMarkIcon />
@@ -29,7 +40,6 @@ export function InputList(props: Readonly<InputListProps>) {
         defaultValue={item}
         name={name}
         contentEditable={false}
-        type={inputProps.type}
       />
     </li>
   ));
@@ -44,12 +54,12 @@ export function InputList(props: Readonly<InputListProps>) {
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-row items-center gap-2">
-        <input
-          ref={inputRef}
+      <div className="flex flex-row gap-2">
+        <Input
+          className="grow"
           onChange={event => setValue(event.target.value)}
-          className="w-full border p-2"
-          {...inputProps}
+          value={value}
+          placeholder={placeholder}
         />
         <Button
           type="button"

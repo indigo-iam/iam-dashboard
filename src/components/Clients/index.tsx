@@ -1,7 +1,7 @@
 import { Panel } from "@/components/Layout";
 import { Button } from "@/components/Buttons";
 import { Suspense } from "react";
-import ClientsTable from "./Table";
+import SearchableTable from "./SearchableTable";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
@@ -26,7 +26,7 @@ export default function Clients(props: Readonly<ClientsProps>) {
         <Button color="secondary">Redeem client</Button>
       </div>
       <Suspense fallback="Loading...">
-        <ClientsTable {...searchParams} me={me} />
+        <SearchableTable {...searchParams} me={me} />
       </Suspense>
     </Panel>
   );

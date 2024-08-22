@@ -150,12 +150,27 @@ export const editClient = async (formData: FormData, isAdmin = false) => {
 export const getClientsPage = async (
   count: number,
   startIndex: number = 1,
-  me: boolean = false
+  me: boolean = false,
+  filter?: string
 ) => {
-  const searchParams = `count=${count}&startIndex=${startIndex}`;
-  const url = me
-    ? `${BASE_URL}/iam/account/me/clients?${searchParams}`
-    : `${BASE_URL}/iam/api/clients?${searchParams}`;
+  let searchParams = `count=${count}&startIndex=${startIndex}`;
+  let url: string;
+
+  if (me) {
+    url = `${BASE_URL}/iam/account/me/clients`;
+    // this is useless, since the endpoint doesn't not filter at all
+    if (filter) {
+      searchParams += `&filter=${filter}`;
+    }
+  } else {
+    if (filter) {
+      url = `${BASE_URL}/iam/api/search/clients`;
+      searchParams += `&searchType=name&search=${filter}`;
+    } else {
+      url = `${BASE_URL}/iam/api/clients`;
+    }
+  }
+  url += `?${searchParams}`; 
   return await getItem<Paginated<Client>>(url);
 };
 

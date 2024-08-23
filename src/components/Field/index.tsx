@@ -1,8 +1,4 @@
-import { Field as HeadlessField } from "@headlessui/react";
-
-type FieldProps = {
-  children?: React.ReactNode;
-};
+import { Field as HeadlessField, FieldProps } from "@headlessui/react";
 
 export default function Field(props: Readonly<FieldProps>) {
   const { children } = props;

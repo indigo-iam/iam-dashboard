@@ -21,48 +21,49 @@ export interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
 
 export default function Button(props: Readonly<ButtonProps>): JSX.Element {
   const { children, icon, isSmall, action, ...buttonProps } = props;
-  let className = "";
+  let buttonStyle = "min-w-12 px-2 py-1 h-8 ";
   switch (action) {
     case "primary":
-      className = "btn-primary";
+      buttonStyle += "btn-primary";
       break;
     case "primary-outline":
-      className = "btn-primary-outline";
+      buttonStyle += "btn-primary-outline";
       break;
     case "success":
-      className = "btn-success";
+      buttonStyle += "btn-success";
       break;
     case "success-outline":
-      className = "btn-success-outline";
+      buttonStyle += "btn-success-outline";
       break;
     case "warning":
-      className = "btn-warning";
+      buttonStyle += "btn-warning";
       break;
     case "warning-outline":
-      className = "btn-warning-outline";
+      buttonStyle += "btn-warning-outline";
       break;
     case "danger":
-      className = "btn-danger";
+      buttonStyle += "btn-danger";
       break;
     case "danger-outline":
-      className = "btn-danger-outline";
+      buttonStyle += "btn-danger-outline";
       break;
     default:
-      className = "btn-primary";
+      buttonStyle += "btn-primary";
+  }
+
+  if (isSmall) {
+    buttonStyle += " !px-1.5 !py-0.5";
   }
 
   return (
-    <button
-      {...buttonProps}
-      className={className + `${isSmall ? " !px-1.5 !py-0.5" : ""}`}
-    >
+    <button {...buttonProps} className={buttonStyle}>
       <div className="flex">
         {icon ? (
           <div className={`my-auto me-2 ${isSmall ? "h-3 w-3" : "h-5 w-5"}`}>
             {icon}
           </div>
         ) : null}
-        <small className="my-auto">{children}</small>
+        <small className="m-auto">{children}</small>
       </div>
     </button>
   );

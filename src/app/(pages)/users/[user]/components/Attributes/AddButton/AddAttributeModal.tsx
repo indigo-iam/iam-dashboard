@@ -1,6 +1,8 @@
 import { Button } from "@/components/Buttons";
+import Field from "@/components/Field";
 import { Form } from "@/components/Form";
 import { Input } from "@/components/Inputs";
+import Label from "@/components/Label";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import { ScimUser } from "@/models/scim";
 import { addAttribute } from "@/services/users";
@@ -30,20 +32,26 @@ export default function AddAttributeModal(
             <b>User</b>
             {username}
           </div>
-          <Input
-            id="attr-name"
-            title="Attribute Name"
-            name="attr-name"
-            placeholder="Attribute Name..."
-            required
-          />
-          <Input
-            id="attr-value"
-            title="Attribute Value"
-            name="attr-value"
-            placeholder="Attribute Value..."
-            required
-          />
+          <Field>
+            <Label> Attribute Name</Label>
+            <Input
+              id="attr-name"
+              title="Attribute Name"
+              name="attr-name"
+              placeholder="Attribute Name..."
+              required
+            />
+          </Field>
+          <Field>
+            <Label>Attribute Value</Label>
+            <Input
+              id="attr-value"
+              title="Attribute Value"
+              name="attr-value"
+              placeholder="Attribute Value..."
+              required
+            />
+          </Field>
         </ModalBody>
         <ModalFooter>
           <Button action="danger" type="button">

@@ -43,7 +43,7 @@ export default function SearchableTable(props: Readonly<SearchableTableProps>) {
         numberOfPages: Math.ceil(totalResults / itemsPerPage),
       });
     },
-    [filter]
+    [itemsPerPage, me, startIndex]
   );
 
   useEffect(() => {

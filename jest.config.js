@@ -1,5 +1,5 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} */
-export default {
+const config = {
   preset: "ts-jest",
   testEnvironment: "node",
   transform: {
@@ -9,3 +9,5 @@ export default {
     ],
   },
 };
+
+export default config;

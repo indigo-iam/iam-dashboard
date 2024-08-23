@@ -1,6 +1,8 @@
 import { Button } from "@/components/Buttons";
+import Field from "@/components/Field";
 import { Form } from "@/components/Form";
 import { Input } from "@/components/Inputs";
+import Label from "@/components/Label";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import TextArea from "@/components/TextArea";
 import { SSHKey } from "@/models/indigo-user";
@@ -27,18 +29,19 @@ export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
     <Modal {...modalProps} title="Add SSH Key">
       <Form action={action}>
         <ModalBody>
-          <Input
-            id="ssh-label"
-            name="ssh-label"
-            title="Label"
-            required={true}
-          />
-          <TextArea
-            id="ssh-key"
-            name="ssh-key"
-            title="SSH Key"
-            required={true}
-          />
+          <Field>
+            <Label>Label</Label>
+            <Input id="ssh-label" name="ssh-label" required={true} />
+          </Field>
+          <Field>
+            <Label>SSH Key</Label>
+            <TextArea
+              id="ssh-key"
+              name="ssh-key"
+              title="SSH Key"
+              required={true}
+            />
+          </Field>
         </ModalBody>
         <ModalFooter>
           <Button type="submit">Add SSH Key</Button>

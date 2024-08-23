@@ -1,23 +1,15 @@
 "use client";
-
 import {
   Carousel,
   CarouselList,
   CarouselNavigator,
-  CarouselPanel,
   CarouselTab,
 } from "@/components/Carousel";
 import CarouselPanels from "@/components/Carousel/CarouselPanels";
-import { Input, InputList } from "@/components/Inputs";
-import Label from "@/components/Label";
-import Section from "@/components/Section";
-import { Field } from "@headlessui/react";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@/components/Dropdown";
-import { ChevronDownIcon, XMarkIcon } from "@heroicons/react/16/solid";
-import { useState } from "react";
 import GeneralSettings from "./GeneralSettings";
 import OIDCSettings from "./OIDCSettings";
 import OtherInfo from "./OtherInfo";
+import { useState } from "react";
 
 export default function NewClientCarousel() {
   const [selectedIndex, setSelectedIndex] = useState(0);

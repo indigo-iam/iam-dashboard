@@ -12,6 +12,8 @@ import { useState } from "react";
 import { addUserToGroup } from "@/services/groups";
 import { Input } from "@/components/Inputs";
 import { makeScimReferenceFromUser } from "@/utils/scim";
+import Field from "@/components/Field";
+import Label from "@/components/Label";
 
 export interface JoinGroupModalProps extends ModalProps {
   user: ScimUser;
@@ -61,12 +63,12 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
         <ModalBody>
           <ModalBody>
             <section>
-              <h4>Select a Group to join</h4>
-              <SearchGroup
-                className="mt-2"
-                onClick={selectGroup}
-                hidden={!!selected}
-              />
+              <div hidden={!!selected}>
+                <Field>
+                  <Label>Select a Group to join</Label>
+                  <SearchGroup className="mt-2" onClick={selectGroup} />
+                </Field>
+              </div>
               <div hidden={!selected}>
                 <p>
                   Do you want to join group<b> {selected?.displayName}</b>?

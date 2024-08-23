@@ -54,7 +54,7 @@ export default function AddAttributeModal(
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button action="danger" type="button">
+          <Button action="danger" type="button" onClick={modalProps.onClose}>
             Cancel
           </Button>
           <Button action="primary-outline" type="reset">

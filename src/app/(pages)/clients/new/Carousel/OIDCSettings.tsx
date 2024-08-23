@@ -1,11 +1,13 @@
 import { CarouselPanel } from "@/components/Carousel";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@/components/Dropdown";
 import Field from "@/components/Field";
 import { InputListDropdown } from "@/components/Inputs";
 import Label from "@/components/Label";
 import Section from "@/components/Section";
-import { ChevronDownIcon, XMarkIcon } from "@heroicons/react/16/solid";
+import { XMarkIcon } from "@heroicons/react/16/solid";
 import { type Scope } from "@/models/client";
+import Select from "@/components/Select";
+import { Description } from "@headlessui/react";
+import { OpenIdConfiguration } from "@/models/openid-configuration";
 
 const Scope = (props: { item: string; name: string }) => {
   const { item, name } = props;
@@ -29,10 +31,11 @@ const Scope = (props: { item: string; name: string }) => {
 
 type OIDCSettingsProps = {
   systemScopes: Scope[];
+  openIdConfiguration: OpenIdConfiguration;
 };
 
 export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
-  const { systemScopes } = props;
+  const { systemScopes, openIdConfiguration } = props;
   const defaultScopes = systemScopes
     .filter(scope => scope.defaultScope)
     .map(scope => {
@@ -42,42 +45,47 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
     return { name: scope.value, value: scope.value };
   });
 
+  const { token_endpoint_auth_methods_supported, grant_types_supported } =
+    openIdConfiguration;
+
   return (
     <CarouselPanel unmount={false}>
       <Section title="OpenID Connect - OAuth2">
-        <Field>
+        <Field className="flex flex-col">
           <Label>Client Authentication</Label>
-          <Menu>
-            <MenuButton className="flex flex-row rounded-lg border p-2 hover:bg-gray-100">
-              HTTP basic authentication
-              <ChevronDownIcon className="h-5 w-5" />
-            </MenuButton>
-            <MenuItems>
-              <MenuItem>HTTP basic authentication</MenuItem>
-              <MenuItem>HTTP POST authentication</MenuItem>
-              <MenuItem>Symmetrical signed JWT assertion</MenuItem>
-              <MenuItem>Symmetrical signed JWT assertion</MenuItem>
-            </MenuItems>
-          </Menu>
+          <Description className="text-xs text-primary/60">
+            A little description.
+          </Description>
+          <Select name="token_endpoint_auth_method">
+            {token_endpoint_auth_methods_supported.map(m => {
+              return (
+                <option key={m} value={m}>
+                  {m}
+                </option>
+              );
+            })}
+          </Select>
         </Field>
         <Field>
           <Label>Authentication Flow</Label>
-          <Menu>
-            <MenuButton className="flex flex-row rounded-lg border p-2 hover:bg-gray-100">
-              Authorization Flow
-              <ChevronDownIcon className="h-5 w-5" />
-            </MenuButton>
-            <MenuItems>
-              <MenuItem>Authorization Flow</MenuItem>
-              <MenuItem>Implicit Flow</MenuItem>
-              <MenuItem>Device Code Flow</MenuItem>
-              <MenuItem>Client Credentials</MenuItem>
-              <MenuItem>Token Exchange</MenuItem>
-            </MenuItems>
-          </Menu>
+          <Description className="text-xs text-primary/60">
+            A little description.
+          </Description>
+          <Select name="grant_types">
+            {grant_types_supported.map(gt => {
+              return (
+                <option key={gt} value={gt}>
+                  {gt}
+                </option>
+              );
+            })}
+          </Select>
         </Field>
         <Field>
           <Label>Scopes</Label>
+          <Description className="text-xs text-primary/60">
+            A little description.
+          </Description>
           <InputListDropdown
             name="scopes"
             title="Add Scope"

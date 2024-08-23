@@ -13,7 +13,10 @@ export default async function NewClient() {
     <Page title="Create New Client">
       <Form>
         <Panel>
-          <NewClientCarousel systemScopes={scopes} />
+          <NewClientCarousel
+            systemScopes={scopes}
+            openIdConfiguration={openIdConfiguration}
+          />
         </Panel>
       </Form>
     </Page>

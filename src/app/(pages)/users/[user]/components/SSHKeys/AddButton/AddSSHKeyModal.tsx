@@ -44,13 +44,13 @@ export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button type="submit">Add SSH Key</Button>
-          <Button type="reset" action="primary-outline">
-            Reset Form
-          </Button>
           <Button type="reset" onClick={modalProps.onClose} action="danger">
             Cancel
           </Button>
+          <Button type="reset" action="primary-outline">
+            Reset Form
+          </Button>
+          <Button type="submit">Add SSH Key</Button>
         </ModalFooter>
       </Form>
     </Modal>

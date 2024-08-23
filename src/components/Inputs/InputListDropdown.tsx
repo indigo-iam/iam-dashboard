@@ -63,9 +63,9 @@ export function InputListDropdown(props: Readonly<InputListDropdown>) {
     <div className="flex flex-col">
       <div className="flex flex-row gap-2">
         <Menu>
-          <MenuButton className="flex flex-row rounded-lg border p-2 hover:bg-gray-100">
+          <MenuButton className="flex flex-row gap-2 rounded-lg border py-2 pl-2 pr-0.5 shadow-md hover:bg-gray-100">
             {title}
-            <ChevronDownIcon className="h-5 w-5" />
+            <ChevronDownIcon className="m-auto h-4 w-4" />
           </MenuButton>
           <MenuItems>
             {options.map(o => (

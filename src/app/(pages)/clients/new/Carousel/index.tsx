@@ -10,8 +10,16 @@ import GeneralSettings from "./GeneralSettings";
 import OIDCSettings from "./OIDCSettings";
 import OtherInfo from "./OtherInfo";
 import { useState } from "react";
+import { Scope } from "@/models/client";
 
-export default function NewClientCarousel() {
+type NewClientCarouselProps = {
+  systemScopes: Scope[];
+};
+
+export default function NewClientCarousel(
+  props: Readonly<NewClientCarouselProps>
+) {
+  const { systemScopes } = props;
   const [selectedIndex, setSelectedIndex] = useState(0);
   const back = (newIndex: number) => setSelectedIndex(Math.max(0, newIndex));
   const next = (newIndex: number) => setSelectedIndex(Math.min(2, newIndex));
@@ -29,7 +37,7 @@ export default function NewClientCarousel() {
         </CarouselList>
         <CarouselPanels>
           <GeneralSettings />
-          <OIDCSettings />
+          <OIDCSettings systemScopes={systemScopes} />
           <OtherInfo />
         </CarouselPanels>
       </Carousel>

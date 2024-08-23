@@ -1,9 +1,11 @@
 import { CarouselPanel } from "@/components/Carousel";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@/components/Dropdown";
 import Field from "@/components/Field";
+import { InputListDropdown } from "@/components/Inputs";
 import Label from "@/components/Label";
 import Section from "@/components/Section";
 import { ChevronDownIcon, XMarkIcon } from "@heroicons/react/16/solid";
+import { type Scope } from "@/models/client";
 
 const Scope = (props: { item: string; name: string }) => {
   const { item, name } = props;
@@ -25,7 +27,21 @@ const Scope = (props: { item: string; name: string }) => {
   );
 };
 
-export default function OIDCSettings() {
+type OIDCSettingsProps = {
+  systemScopes: Scope[];
+};
+
+export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
+  const { systemScopes } = props;
+  const defaultScopes = systemScopes
+    .filter(scope => scope.defaultScope)
+    .map(scope => {
+      return { name: scope.value, value: scope.value };
+    });
+  const scopes = systemScopes.map(scope => {
+    return { name: scope.value, value: scope.value };
+  });
+
   return (
     <CarouselPanel unmount={false}>
       <Section title="OpenID Connect - OAuth2">
@@ -62,24 +78,12 @@ export default function OIDCSettings() {
         </Field>
         <Field>
           <Label>Scopes</Label>
-          <Menu>
-            <MenuButton className="flex flex-row rounded-lg border p-2 hover:bg-gray-100">
-              Scopes
-              <ChevronDownIcon className="h-5 w-5" />
-            </MenuButton>
-            <MenuItems>
-              <MenuItem>Authorization Flow</MenuItem>
-              <MenuItem>Implicit Flow</MenuItem>
-              <MenuItem>Device Code Flow</MenuItem>
-              <MenuItem>Client Credentials</MenuItem>
-              <MenuItem>Token Exchange</MenuItem>
-            </MenuItems>
-          </Menu>
-          <ul className="mt-2">
-            <Scope item="Email" name="Email" />
-            <Scope item="OpenID" name="OpenID" />
-            <Scope item="Profile" name="Profile" />
-          </ul>
+          <InputListDropdown
+            name="scopes"
+            title="Add Scope"
+            options={scopes}
+            defaultOptions={defaultScopes}
+          />
         </Field>
       </Section>
     </CarouselPanel>

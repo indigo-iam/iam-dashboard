@@ -53,20 +53,17 @@ const Body = (props: BodyProps) => {
         id="current-password"
         title="Current Password"
         name="currentPassword"
-        errorMessage={currentPasswordErrorMessage}
       />
       <Input
         type="password"
         id="new-password"
         title="New Password"
         name="updatedPassword"
-        errorMessage={passwordErrorMessage}
       />
       <Input
         type="password"
         id="repeat-password"
         title="Repeat Password"
-        errorMessage={repeatPasswordErrorMessage}
         name="repeatPassword"
       />
     </ModalBody>

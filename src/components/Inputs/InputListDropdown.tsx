@@ -19,16 +19,16 @@ export function InputListDropdown(props: Readonly<InputListDropdown>) {
   const { name, title, options, defaultOptions } = props;
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const [selected, setItems] = useState(defaultOptions ?? []);
+  const [items, setItems] = useState(defaultOptions ?? []);
 
   const addItem = (item: InputListOption) => {
-    if (!selected.find(i => i.name === item.name)) {
-      setItems([...selected, item]);
+    if (!items.find(i => i.name === item.name)) {
+      setItems([...items, item]);
     }
   };
-  const removeItem = (index: number) => setItems(selected.toSpliced(index, 1));
+  const removeItem = (index: number) => setItems(items.toSpliced(index, 1));
 
-  const listItems = selected.map((item, index) => (
+  const listItems = items.map((item, index) => (
     <li
       key={item.name}
       className="mt-1 flex flex-row items-center gap-2 text-sm"

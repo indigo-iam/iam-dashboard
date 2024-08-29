@@ -68,7 +68,7 @@ function reducer(state: CarouselState, action: Action) {
       const oidcSettingsFulfilled = action.fulfilled;
       return { ...state, oidcSettingsFulfilled };
     }
-    case "GENERAL_SETTINGS_FULFILLED": {
+    case "OTHER_SETTINGS_FULFILLED": {
       const otherSettingsFulfilled = action.fulfilled;
       return { ...state, otherSettingsFulfilled };
     }

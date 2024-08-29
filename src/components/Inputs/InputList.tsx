@@ -5,6 +5,7 @@ import { Input } from "@/components/Inputs";
 import { Button } from "@/components/Buttons";
 
 interface InputListProps {
+  id?: string;
   originalItems: string[];
   name?: string;
   type?: string;
@@ -14,7 +15,8 @@ interface InputListProps {
 }
 
 export function InputList(props: Readonly<InputListProps>) {
-  const { originalItems, name, placeholder, type, required, onChange } = props;
+  const { id, originalItems, name, placeholder, type, required, onChange } =
+    props;
   const inputRef = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState("");
   const [items, setItems] = useState(originalItems ?? []);
@@ -64,6 +66,7 @@ export function InputList(props: Readonly<InputListProps>) {
     <div className="flex flex-col">
       <div className="flex flex-row gap-2">
         <Input
+          id={id}
           className="grow"
           onChange={event => setValue(event.target.value)}
           value={value}

@@ -9,6 +9,7 @@ import { Description } from "@headlessui/react";
 import { OpenIdConfiguration } from "@/models/openid-configuration";
 import { useState } from "react";
 import { InputListOption } from "@/components/Listbox";
+import { camelCaseToTitle } from "@/utils/strings";
 
 type OIDCSettingsProps = {
   systemScopes: Scope[];
@@ -32,20 +33,20 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
     openIdConfiguration;
 
   const authMethods = token_endpoint_auth_methods_supported.map(m => {
-    return { id: m, name: m };
+    return { id: m, name: camelCaseToTitle(m) };
   });
 
   const grantTypes = grant_types_supported.map(gt => {
-    return { id: gt, name: gt };
+    return { id: gt, name: camelCaseToTitle(gt) };
   });
 
   const [showRedirectUris, setShowRedirectUris] = useState(
-    grantTypes[0].name === "authorization_code"
+    grantTypes[0].id === "authorization_code"
   );
 
   const handleGrantTypeChange = (value: InputListOption) => {
-    setShowRedirectUris(value.name === "authorization_code");
-    onChange?.(value.name !== "authorization_code");
+    setShowRedirectUris(value.id === "authorization_code");
+    onChange?.(value.id !== "authorization_code");
   };
 
   const handleRedirectURIChange = (redirectUris: string[]) => {

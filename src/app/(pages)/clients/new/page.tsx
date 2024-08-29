@@ -22,10 +22,10 @@ export default async function NewClient() {
       client_description: (formData.get("client_description") as string) ?? "",
       contacts: formData.getAll("contacts") as string[],
       token_endpoint_auth_method: formData.get(
-        "token_endpoint_auth_method[name]"
+        "token_endpoint_auth_method[id]"
       ) as string,
       scope: "",
-      grant_types: [formData.get("grant_types[name]") as string],
+      grant_types: [formData.get("grant_types[id]") as string],
     };
 
     const scopes: string[] = [];

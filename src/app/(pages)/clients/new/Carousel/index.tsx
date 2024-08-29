@@ -27,8 +27,6 @@ type Action =
   | { type: "OIDC_SETTINGS_FULFILLED"; fulfilled: boolean }
   | { type: "OTHER_SETTINGS_FULFILLED"; fulfilled: boolean };
 
-type NextButtonType = undefined;
-
 type CarouselState = {
   currentPage: number;
   nextButtonTitle: string;

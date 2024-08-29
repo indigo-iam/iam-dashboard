@@ -58,7 +58,7 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
             A little description.
           </Description>
           <InputListDropdown
-            name="scopes"
+            name="scope"
             title="Add Scope"
             options={scopes}
             defaultOptions={defaultScopes}

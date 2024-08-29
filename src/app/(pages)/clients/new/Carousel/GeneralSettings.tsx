@@ -23,6 +23,7 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
           <Label required>Client Name</Label>
           <Input
             title="Client Name"
+            name="client_name"
             placeholder="The name of the client..."
             required
             onChange={handleClientNameChange}
@@ -32,6 +33,7 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
           <Label>Client Description</Label>
           <Input
             title="Client Description"
+            name="client_description"
             placeholder="Client description..."
           />
         </Field>
@@ -39,7 +41,7 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
           <Label>Redirect URIs</Label>
           <InputList
             originalItems={[]}
-            name="redirect-uris"
+            name="redirect_uris"
             type="url"
             placeholder="https://app.exchange.com/callback"
           />

@@ -15,7 +15,9 @@ export interface ClientRequest {
   token_endpoint_auth_method: string;
   scope: string;
   grant_types: string[];
-  response_types: string[];
+  client_uri?: string;
+  tos_uri?: string;
+  policy_uri?: string;
 }
 
 export interface ClientBase {
@@ -54,13 +56,13 @@ export interface ClientGrantTypes {
 
 export interface AccessTokenSettings {
   access_token_validity_seconds?: number; // admin
-  id_token_validity_seconds?: number;     // admin
+  id_token_validity_seconds?: number; // admin
   require_auth_time: boolean; // FIXME: this should be optional and admin only
 }
 
 export interface RefreshTokenSettings {
   refresh_token_validity_seconds?: number; // admin
-  reuse_refresh_token?: boolean;           // admin
+  reuse_refresh_token?: boolean; // admin
   clear_access_tokens_on_refresh: boolean; // FIXME: this should be optional and admin only
 }
 

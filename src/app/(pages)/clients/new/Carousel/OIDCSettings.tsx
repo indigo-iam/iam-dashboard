@@ -1,25 +1,29 @@
 import { CarouselPanel } from "@/components/Carousel";
 import Field from "@/components/Field";
-import { InputListDropdown } from "@/components/Inputs";
+import { InputList, InputListDropdown } from "@/components/Inputs";
 import Label from "@/components/Label";
 import Section from "@/components/Section";
 import { type Scope } from "@/models/client";
 import Select from "@/components/Select";
 import { Description } from "@headlessui/react";
 import { OpenIdConfiguration } from "@/models/openid-configuration";
+import { useState } from "react";
+import { InputListOption } from "@/components/Listbox";
 
 type OIDCSettingsProps = {
   systemScopes: Scope[];
   openIdConfiguration: OpenIdConfiguration;
+  onChange?: (fulfilled: boolean) => void;
 };
 
 export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
-  const { systemScopes, openIdConfiguration } = props;
+  const { systemScopes, openIdConfiguration, onChange } = props;
   const defaultScopes = systemScopes
     .filter(scope => scope.defaultScope)
     .map(scope => {
       return { id: scope.id.toString(), name: scope.value };
     });
+
   const scopes = systemScopes.map(scope => {
     return { id: scope.id.toString(), name: scope.value };
   });
@@ -34,6 +38,21 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
   const grantTypes = grant_types_supported.map(gt => {
     return { id: gt, name: gt };
   });
+
+  const [showRedirectUris, setShowRedirectUris] = useState(
+    grantTypes[0].name === "authorization_code"
+  );
+
+  const handleGrantTypeChange = (value: InputListOption) => {
+    setShowRedirectUris(value.name === "authorization_code");
+    onChange?.(value.name !== "authorization_code");
+  };
+
+  const handleRedirectURIChange = (redirectUris: string[]) => {
+    if (showRedirectUris) {
+      onChange?.(redirectUris.length > 0);
+    }
+  };
 
   return (
     <CarouselPanel unmount={false}>
@@ -50,8 +69,29 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
           <Description className="text-xs text-primary/60">
             A little description.
           </Description>
-          <Select name="grant_types" options={grantTypes} />
+          <Select
+            name="grant_types"
+            options={grantTypes}
+            onChange={handleGrantTypeChange}
+          />
         </Field>
+        {showRedirectUris ? (
+          <Field>
+            <Label required>Redirect URIs</Label>
+            <Description className="text-xs text-primary/60">
+              At least a valid Redirect URI is required when Authorization Code
+              is selected.
+            </Description>
+            <InputList
+              originalItems={[]}
+              name="redirect_uris"
+              type="url"
+              placeholder="https://app.exchange.com/callback"
+              onChange={handleRedirectURIChange}
+              required={showRedirectUris}
+            />
+          </Field>
+        ) : null}
         <Field>
           <Label>Scopes</Label>
           <Description className="text-xs text-primary/60">

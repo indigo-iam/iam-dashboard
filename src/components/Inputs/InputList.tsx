@@ -1,29 +1,37 @@
 "use client";
 import { useRef, useState } from "react";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/16/solid";
-import { Input, type InputProps } from "@/components/Inputs/Input";
+import { Input } from "@/components/Inputs";
 import { Button } from "@/components/Buttons";
 
-interface InputListProps extends InputProps {
+interface InputListProps {
   originalItems: string[];
+  name?: string;
+  type?: string;
+  placeholder?: string;
+  required?: boolean;
+  onChange?: (items: string[]) => void;
 }
 
 export function InputList(props: Readonly<InputListProps>) {
-  const { originalItems, name, placeholder } = props;
-
+  const { originalItems, name, placeholder, type, required, onChange } = props;
   const inputRef = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState("");
   const [items, setItems] = useState(originalItems ?? []);
 
   const addItem = (item: string) => {
     if (!items.find(i => i === item)) {
-      setItems([...items, item]);
+      const newItems = [...items, item];
+      onChange?.(newItems);
+      setItems(newItems);
     } else {
       console.warn("address already present");
     }
   };
   const removeItem = (index: number) => {
-    setItems(items.toSpliced(index, 1));
+    const newItems = items.toSpliced(index, 1);
+    onChange?.(newItems);
+    setItems(newItems);
   };
 
   const listItems = items.map((item, index) => (
@@ -60,6 +68,8 @@ export function InputList(props: Readonly<InputListProps>) {
           onChange={event => setValue(event.target.value)}
           value={value}
           placeholder={placeholder}
+          required={required}
+          type={type}
         />
         <Button
           type="button"

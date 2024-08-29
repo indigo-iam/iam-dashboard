@@ -41,7 +41,8 @@ const initialState: CarouselState = {
   nextButtonTitle: "Next",
   nextButtonType: "button",
   generalSettingsFulFilled: false,
-  oidcSettingsFulfilled: true,
+  // since authorization_code is the default value, redirect_uris must be fulfilled
+  oidcSettingsFulfilled: false,
   otherSettingsFulfilled: true,
 };
 
@@ -90,6 +91,10 @@ export default function NewClientCarousel(
     dispatch({ type: "GENERAL_SETTINGS_FULFILLED", fulfilled });
   };
 
+  const handleOIDCSettingsFulFilled = (fulfilled: boolean) => {
+    dispatch({ type: "OIDC_SETTINGS_FULFILLED", fulfilled });
+  };
+
   const canNavigateBack = state.currentPage > 0;
   const canNavigateNext =
     (state.currentPage === 0 && state.generalSettingsFulFilled) ||
@@ -109,6 +114,7 @@ export default function NewClientCarousel(
           <OIDCSettings
             systemScopes={systemScopes}
             openIdConfiguration={openIdConfiguration}
+            onChange={handleOIDCSettingsFulFilled}
           />
           <OtherInfo />
         </CarouselPanels>

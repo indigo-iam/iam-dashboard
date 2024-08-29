@@ -1,6 +1,6 @@
 import { CarouselPanel } from "@/components/Carousel";
 import Field from "@/components/Field";
-import { Input, InputList } from "@/components/Inputs";
+import { Input } from "@/components/Inputs";
 import Label from "@/components/Label";
 import Section from "@/components/Section";
 
@@ -35,15 +35,6 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
             title="Client Description"
             name="client_description"
             placeholder="Client description..."
-          />
-        </Field>
-        <Field>
-          <Label>Redirect URIs</Label>
-          <InputList
-            originalItems={[]}
-            name="redirect_uris"
-            type="url"
-            placeholder="https://app.exchange.com/callback"
           />
         </Field>
       </Section>

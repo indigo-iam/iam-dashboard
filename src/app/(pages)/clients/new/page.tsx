@@ -7,8 +7,7 @@ import NewClientCarousel from "./Carousel";
 export default async function NewClient() {
   const scopes = await fetchScopes();
   const openIdConfiguration = await fetchOpenIdConfiguration();
-  const grantTypes = openIdConfiguration.grant_types_supported;
-
+  
   const action = async (formData: FormData) => {
     "use server";
     console.log(formData);

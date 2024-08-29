@@ -6,15 +6,15 @@ import {
   ListboxOption,
 } from "@headlessui/react";
 
-export type InputListOption = {
+export type ListboxOption = {
   id: string;
   name: string;
 };
 
-type ListboxProps<T = InputListOption | InputListOption[]> = {
+type ListboxProps<T = ListboxOption | ListboxOption[]> = {
   name: string;
   title: string;
-  options: InputListOption[];
+  options: ListboxOption[];
   selected: T;
   onChange: (value: T) => void;
   multiple?: boolean;

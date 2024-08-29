@@ -1,18 +1,18 @@
 "use client";
-import Listbox, { InputListOption } from "@/components/Listbox";
+import Listbox, { ListboxOption } from "@/components/Listbox";
 import { useState } from "react";
 
 type SelectProps = {
   name: string;
-  options: InputListOption[];
-  onChange?: (value: InputListOption) => void;
+  options: ListboxOption[];
+  onChange?: (value: ListboxOption) => void;
 };
 
 export default function Select(props: Readonly<SelectProps>) {
   const { name, options, onChange } = props;
   const [item, setItem] = useState(options[0]);
 
-  const handleChange = (value: InputListOption) => {
+  const handleChange = (value: ListboxOption) => {
     setItem(value);
     onChange?.(value);
   };

@@ -8,7 +8,7 @@ import Select from "@/components/Select";
 import { Description } from "@headlessui/react";
 import { OpenIdConfiguration } from "@/models/openid-configuration";
 import { useState } from "react";
-import { InputListOption } from "@/components/Listbox";
+import { ListboxOption } from "@/components/Listbox";
 import { camelCaseToTitle } from "@/utils/strings";
 
 type OIDCSettingsProps = {
@@ -44,7 +44,7 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
     grantTypes[0].id === "authorization_code"
   );
 
-  const handleGrantTypeChange = (value: InputListOption) => {
+  const handleGrantTypeChange = (value: ListboxOption) => {
     setShowRedirectUris(value.id === "authorization_code");
     onChange?.(value.id !== "authorization_code");
   };

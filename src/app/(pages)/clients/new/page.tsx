@@ -55,7 +55,7 @@ export default async function NewClient() {
     if (policy_uri) {
       request.policy_uri = policy_uri;
     }
-
+    console.log(request)
     await registerClient(request);
     session?.is_admin ? redirect("/clients") : redirect("/me/clients");
   };

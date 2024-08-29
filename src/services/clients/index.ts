@@ -10,6 +10,7 @@ import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
 import { ScimUser } from "@/models/scim";
 import { Paginated } from "@/models/pagination";
+import { auth } from "@/auth";
 
 const { BASE_URL } = getConfig();
 
@@ -37,6 +38,7 @@ export const getClient = async (clientId: string, isAdmin = false) => {
 };
 
 export const deleteClient = async (clientId: string) => {
+  const session = await auth();
   const response = await authFetch(
     `${BASE_URL}/iam/api/client-registration/${clientId}`,
     {
@@ -44,8 +46,7 @@ export const deleteClient = async (clientId: string) => {
     }
   );
   if (response.ok) {
-    revalidatePath("/clients");
-    return "";
+    revalidatePath(session?.is_admin ? "/clients" : "/me/clients");
   } else {
     const msg = await response.text();
     throw Error(`Delete Client failed with status ${response.status} ${msg}`);
@@ -170,7 +171,7 @@ export const getClientsPage = async (
       url = `${BASE_URL}/iam/api/clients`;
     }
   }
-  url += `?${searchParams}`; 
+  url += `?${searchParams}`;
   return await getItem<Paginated<Client>>(url);
 };
 

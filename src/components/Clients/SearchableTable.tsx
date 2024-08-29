@@ -15,7 +15,6 @@ type ClientPage = {
 
 export default function SearchableTable(props: Readonly<SearchableTableProps>) {
   const { count, page, me } = props;
-  const [filter, setFilter] = useState<string>();
   const [clientPage, setClientPage] = useState<ClientPage>({
     clients: [],
     numberOfPages: 0,
@@ -29,7 +28,7 @@ export default function SearchableTable(props: Readonly<SearchableTableProps>) {
 
   const startIndex = currentPage * itemsPerPage + 1;
 
-  const fetchGroups = useCallback(
+  const fetchClients = useCallback(
     async (filter?: string) => {
       const response = await getClientsPage(
         itemsPerPage,
@@ -47,13 +46,13 @@ export default function SearchableTable(props: Readonly<SearchableTableProps>) {
   );
 
   useEffect(() => {
-    fetchGroups();
-  }, [fetchGroups]);
+    fetchClients();
+  }, [fetchClients]);
 
   const handleFilterChange = (filter: string) => {
-    fetchGroups(filter);
+    fetchClients(filter);
   };
-  const handleFilterClear = () => fetchGroups();
+  const handleFilterClear = () => fetchClients();
 
   return (
     <>
@@ -64,7 +63,10 @@ export default function SearchableTable(props: Readonly<SearchableTableProps>) {
           onClear={handleFilterClear}
         />
       )}
-      <ClientsTable clients={clientPage.clients} />
+      <ClientsTable
+        clients={clientPage.clients}
+        onClientDeleted={fetchClients}
+      />
       <Paginator numberOfPages={clientPage.numberOfPages} />
     </>
   );

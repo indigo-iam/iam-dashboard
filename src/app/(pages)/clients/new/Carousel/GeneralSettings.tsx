@@ -3,8 +3,21 @@ import Field from "@/components/Field";
 import { Input, InputList } from "@/components/Inputs";
 import Label from "@/components/Label";
 import Section from "@/components/Section";
+import { useEffect, useState } from "react";
 
-export default function GeneralSettings() {
+type GeneralSettingsProps = {
+  onChange?: (fulfilled: boolean) => void;
+};
+
+export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
+  const { onChange } = props;
+  const [clientName, setClientName] = useState<string>();
+
+  useEffect(() => {
+    const fulfilled = !!clientName;
+    onChange?.(fulfilled);
+  }, [clientName]);
+
   return (
     <CarouselPanel unmount={false}>
       <Section title="General Settings">
@@ -14,6 +27,7 @@ export default function GeneralSettings() {
             title="Client Name"
             placeholder="The name of the client..."
             required
+            onChange={e => setClientName(e.target.value)}
           />
         </Field>
         <Field>

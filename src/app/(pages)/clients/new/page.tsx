@@ -9,9 +9,14 @@ export default async function NewClient() {
   const openIdConfiguration = await fetchOpenIdConfiguration();
   const grantTypes = openIdConfiguration.grant_types_supported;
 
+  const action = async (formData: FormData) => {
+    "use server";
+    console.log(formData);
+  };
+
   return (
     <Page title="Create New Client">
-      <Form>
+      <Form action={action}>
         <Panel>
           <NewClientCarousel
             systemScopes={scopes}

@@ -16,7 +16,7 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
   useEffect(() => {
     const fulfilled = !!clientName;
     onChange?.(fulfilled);
-  }, [clientName]);
+  }, [clientName, onChange]);
 
   return (
     <CarouselPanel unmount={false}>

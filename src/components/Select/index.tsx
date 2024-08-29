@@ -1,19 +1,27 @@
-import {
-  Select as HeadlessSelect,
-  SelectProps as HeadlessSelectProps,
-} from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/16/solid";
+"use client";
+import Listbox from "@/components/Listbox";
+import { useState } from "react";
 
-interface SelectProps extends HeadlessSelectProps {}
+type InputListOption = {
+  id: string;
+  name: string;
+};
+
+type SelectProps = {
+  name: string;
+  options: InputListOption[];
+};
 
 export default function Select(props: Readonly<SelectProps>) {
+  const { name, options } = props;
+  const [item, setItem] = useState(options[0]);
   return (
-    <div className="relative w-48">
-      <HeadlessSelect
-        className="block w-full appearance-none rounded-md border bg-secondary p-2 shadow-md"
-        {...props}
-      />
-      <ChevronDownIcon className="group absolute right-2.5 top-2.5 size-4" />
-    </div>
+    <Listbox
+      name={name}
+      options={options}
+      selected={item}
+      onChange={setItem}
+      title={item.name}
+    />
   );
 }

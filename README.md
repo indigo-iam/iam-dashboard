@@ -238,15 +238,15 @@ docker run -p <some-port>:80 --env-file=prod.env cnafsoftwaredevel/iam-dashboard
 ### Home page
 
 - [ ] Validate password before submission
-- [ ] Whats happen if I change password when there is no password at all?
-- [ ] Finish the "Add to group" functionality
+- [ ] What happens if I change password when there is no password at all?
+- [x] Finish the "Add to group" functionality
 - [ ] Add "Change membership end time"
 - [ ] Add "Link external account" feature
 - [ ] Add "Link Certificate"
 - [ ] Add "Request Certificate"
 - [ ] Add "Add managed proxy certificate"
-- [ ] Add "Add ssh key"
-- [ ] Add "Set attribute"
+- [x] Add "Add ssh key"
+- [x] Add "Set attribute"
 
 ### Users Page
 
@@ -277,7 +277,7 @@ docker run -p <some-port>:80 --env-file=prod.env cnafsoftwaredevel/iam-dashboard
 - [x] Add Clients table
 - [x] Add "New Client"
 - [x] Add "Edit client" per each row
-- [ ] Add "Delete client" per each row
+- [x] Add "Delete client" per each row
 - [x] Add Client "edit" page with tabs (todo, form submission):
   - [x] Main (client name, client id, client description, redirect URIs, contacts, etc)
   - [x] Credentials (Token endpoint auth method, client secret, registration access token, regenerate registration a.c., Public key set, JWK URI)

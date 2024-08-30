@@ -37,7 +37,7 @@ export default function Listbox<T>(props: Readonly<ListboxProps<T>>) {
         </ListboxButton>
         <ListboxOptions
           anchor="bottom start"
-          className="z-10 mt-2 h-48 w-[var(--button-width)] rounded-lg border bg-secondary p-2 pb-4 shadow-md"
+          className="z-10 mt-2 !max-h-48 w-[var(--button-width)] rounded-lg border bg-secondary p-2 pb-4 shadow-md"
         >
           {options.map(o => (
             <ListboxOption

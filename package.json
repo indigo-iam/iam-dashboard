@@ -25,12 +25,12 @@
   },
   "dependencies": {
     "@headlessui/react": "^2",
-    "@heroicons/react": "^2.1.1",
+    "@heroicons/react": "^2",
     "next": "^14",
-    "next-auth": "^5.0.0-beta.19",
+    "next-auth": "^5.0.0-beta",
     "react": "^18",
     "react-dom": "^18",
-    "sharp": "^0.33.3"
+    "sharp": "^0.33"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

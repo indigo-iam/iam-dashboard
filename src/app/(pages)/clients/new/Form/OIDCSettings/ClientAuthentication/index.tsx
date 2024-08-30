@@ -11,23 +11,23 @@ import PrivateKeyJwt from "./PrivateKeyJwt";
 import { useFormStatus } from "@/utils/forms";
 
 type ClientAuthenticationSettingsProps = {
-  formComponentId: string;
   authMethod: string;
+  onStatusChange: (status: boolean) => void;
 };
 
 function ClientAuthenticationSettings(
   props: Readonly<ClientAuthenticationSettingsProps>
 ) {
-  const { formComponentId, authMethod } = props;
+  const { authMethod, onStatusChange } = props;
   switch (authMethod) {
     case "client_secret_basic":
-      return <ClientSecretBasic formComponentId={formComponentId} />;
+      return <ClientSecretBasic onStatusChange={onStatusChange} />;
     case "client_secret_post":
-      return <ClientSecretPost formComponentId={formComponentId} />;
+      return <ClientSecretPost onStatusChange={onStatusChange} />;
     case "client_secret_jwt":
-      return <ClientSecretJwt formComponentId={formComponentId} />;
+      return <ClientSecretJwt onStatusChange={onStatusChange} />;
     case "private_key_jwt":
-      return <PrivateKeyJwt formComponentId={formComponentId} />;
+      return <PrivateKeyJwt onStatusChange={onStatusChange} />;
     case "none":
       return null;
     default:
@@ -36,14 +36,14 @@ function ClientAuthenticationSettings(
 }
 
 type ClientAuthenticationProps = {
-  formComponentId: string;
   tokenEndpointAuthMethods: string[];
+  onStatusChange: (status: boolean) => void;
 };
 
 export default function ClientAuthentication(
   props: Readonly<ClientAuthenticationProps>
 ) {
-  const { formComponentId, tokenEndpointAuthMethods } = props;
+  const { tokenEndpointAuthMethods, onStatusChange } = props;
   const { updateFormStatus } = useFormStatus();
 
   const authMethods = tokenEndpointAuthMethods.map(m => {
@@ -53,7 +53,7 @@ export default function ClientAuthentication(
   const [authMethod, setAuthMethod] = useState(authMethods[0]);
 
   const handleAuthMethodChange = (authMethod: { id: string; name: string }) => {
-    updateFormStatus(formComponentId, false);
+    onStatusChange(false);
     setAuthMethod(authMethod);
   };
 
@@ -69,7 +69,7 @@ export default function ClientAuthentication(
         />
       </Field>
       <ClientAuthenticationSettings
-        formComponentId={formComponentId}
+        onStatusChange={onStatusChange}
         authMethod={authMethod.id}
       />
     </>

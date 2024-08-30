@@ -6,38 +6,36 @@ import AuthorizationCode from "./AuthorizationCode";
 import ClientCredentials from "./ClientCredentials";
 import DeviceCode from "./DeviceCode";
 import { useState } from "react";
-import { useFormStatus } from "@/utils/forms";
 
 type AuthenticationFlowSettingsProps = {
-  formComponentId: string;
   grantType: string;
+  onStatusChange: (status: boolean) => void;
 };
 
 const AuthenticationFlowSettings = (
   props: Readonly<AuthenticationFlowSettingsProps>
 ) => {
-  const { formComponentId, grantType } = props;
+  const { grantType, onStatusChange } = props;
   switch (grantType) {
     case "authorization_code":
-      return <AuthorizationCode formComponentId={formComponentId} />;
+      return <AuthorizationCode onStatusChange={onStatusChange} />;
     case "client_credentials":
-      return <ClientCredentials formComponentId={formComponentId} />;
+      return <ClientCredentials onStatusChange={onStatusChange} />;
     case "urn:ietf:params:oauth:grant-type:device_code":
-      return <DeviceCode formComponentId={formComponentId} />;
+      return <DeviceCode onStatusChange={onStatusChange} />;
     default:
       return <p>There is nothing here</p>;
   }
 };
 
 type AuthenticationFlowProps = {
-  formComponentId: string;
+  onStatusChange: (status: boolean) => void;
 };
 
 export default function AuthenticationFlow(
   props: Readonly<AuthenticationFlowProps>
 ) {
-  const { formComponentId } = props;
-  const { updateFormStatus } = useFormStatus();
+  const { onStatusChange } = props;
   const grantTypes = [
     { id: "authorization_code", name: "Authorization Code" },
     { id: "client_credentials", name: "Client Credentials" },
@@ -47,7 +45,7 @@ export default function AuthenticationFlow(
   const [grantType, setGrantType] = useState(grantTypes[0]);
 
   const handleGrantTypeChange = (grantType: { id: string; name: string }) => {
-    updateFormStatus(formComponentId, false);
+    onStatusChange(false);
     setGrantType(grantType);
   };
 
@@ -65,7 +63,7 @@ export default function AuthenticationFlow(
         />
       </Field>
       <AuthenticationFlowSettings
-        formComponentId={formComponentId}
+        onStatusChange={onStatusChange}
         grantType={grantType.id}
       />
     </>

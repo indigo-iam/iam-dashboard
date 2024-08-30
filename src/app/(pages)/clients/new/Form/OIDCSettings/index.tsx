@@ -8,7 +8,7 @@ import Description from "@/components/Description";
 import { OpenIdConfiguration } from "@/models/openid-configuration";
 import AuthenticationFlow from "./AuthenticationFlow";
 import { useFormStatus } from "@/utils/forms";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import ClientAuthentication from "./ClientAuthentication";
 
 type OIDCSettingsProps = {
@@ -19,11 +19,10 @@ type OIDCSettingsProps = {
 
 export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
   const { id, systemScopes, openIdConfiguration } = props;
-  const { formStatus, updateFormStatus } = useFormStatus();
-  const clientAuthStatusRef = useRef(false);
-  const authFlowRef = useRef(false);
-  const clientAuthComponentId = "clientAuthentication";
-  const authFlowComponentId = "authenticationFlow";
+  const { updateFormStatus } = useFormStatus();
+  const [authFlowFulfilled, setAuthFlowFulfilled] = useState(false);
+  const [clientAuthFulfilled, setClientAuthFulfilled] = useState(false);
+  const { token_endpoint_auth_methods_supported } = openIdConfiguration;
 
   const defaultScopes = systemScopes
     .filter(scope => scope.defaultScope)
@@ -35,30 +34,18 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
     return { id: scope.id.toString(), name: scope.value };
   });
 
-  const { token_endpoint_auth_methods_supported } = openIdConfiguration;
-
   useEffect(() => {
-    const newClientAuthStatus = formStatus[clientAuthComponentId];
-    const newAuthFlowStatus = formStatus[authFlowComponentId];
-    if (
-      clientAuthStatusRef.current !== newClientAuthStatus ||
-      authFlowRef.current !== newAuthFlowStatus
-    ) {
-      const newStatus = newClientAuthStatus && newAuthFlowStatus;
-      updateFormStatus(id, newStatus);
-      clientAuthStatusRef.current = newClientAuthStatus;
-      authFlowRef.current = newAuthFlowStatus;
-    }
-  }, [id, formStatus, updateFormStatus]);
+    updateFormStatus(id, authFlowFulfilled && clientAuthFulfilled);
+  }, [authFlowFulfilled, clientAuthFulfilled]);
 
   return (
     <CarouselPanel unmount={false}>
       <Section title="OpenID Connect - OAuth2">
+        <AuthenticationFlow onStatusChange={setAuthFlowFulfilled} />
         <ClientAuthentication
-          formComponentId={clientAuthComponentId}
+          onStatusChange={setClientAuthFulfilled}
           tokenEndpointAuthMethods={token_endpoint_auth_methods_supported}
         />
-        <AuthenticationFlow formComponentId={authFlowComponentId} />
         <Field>
           <Label>Scopes</Label>
           <Description>A little description.</Description>

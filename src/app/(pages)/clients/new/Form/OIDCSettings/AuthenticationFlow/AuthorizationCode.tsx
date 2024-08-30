@@ -1,20 +1,18 @@
 import Field from "@/components/Field";
 import { InputList } from "@/components/Inputs";
 import Label from "@/components/Label";
-import { useFormStatus } from "@/utils/forms";
 import { Description } from "@headlessui/react";
 
 type AuthorizationCodeProps = {
-  formComponentId: string;
+  onStatusChange: (status: boolean) => void;
 };
 
 export default function AuthorizationCode(
   props: Readonly<AuthorizationCodeProps>
 ) {
-  const { formComponentId } = props;
-  const { updateFormStatus } = useFormStatus();
+  const { onStatusChange } = props;
   const handleRedirectURIChange = (items: string[]) => {
-    updateFormStatus(formComponentId, items.length > 0);
+    onStatusChange(items.length > 0);
   };
 
   return (

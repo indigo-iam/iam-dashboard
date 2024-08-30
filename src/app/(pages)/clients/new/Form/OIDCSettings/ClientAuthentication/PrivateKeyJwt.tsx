@@ -3,25 +3,23 @@ import Field from "@/components/Field";
 import { Input } from "@/components/Inputs";
 import Label from "@/components/Label";
 import TextArea from "@/components/TextArea";
-import { useFormStatus } from "@/utils/forms";
 import { useState } from "react";
 
 type PrivateKeyJwtProps = {
-  formComponentId: string;
+  onStatusChange: (status: boolean) => void;
 };
 
 export default function PrivateKeyJwt(props: Readonly<PrivateKeyJwtProps>) {
-  const { formComponentId } = props;
+  const { onStatusChange } = props;
   const [jwkMethod, setJwkMethod] = useState<"uri" | "value">("uri");
-  const { updateFormStatus } = useFormStatus();
 
   const changeJwkMethod = (method: "uri" | "value") => {
     setJwkMethod(method);
-    updateFormStatus(formComponentId, false);
+    onStatusChange(false);
   };
 
   const handleJwkChange = (s: string) => {
-    updateFormStatus(formComponentId, s.length > 0);
+    onStatusChange(s.length > 0);
   };
 
   return (

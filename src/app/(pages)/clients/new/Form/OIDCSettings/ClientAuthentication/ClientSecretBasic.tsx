@@ -1,19 +1,13 @@
-import { useFormStatus } from "@/utils/forms";
 import { useEffect } from "react";
 
 type ClientSecretBasicProps = {
-  formComponentId: string;
+  onStatusChange: (status: boolean) => void;
 };
 
 export default function ClientSecretBasic(
   props: Readonly<ClientSecretBasicProps>
 ) {
-  const { formComponentId } = props;
-  const { updateFormStatus } = useFormStatus();
-
-  useEffect(() => {
-    updateFormStatus(formComponentId, true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { onStatusChange } = props;
+  useEffect(() => onStatusChange(true), []);
   return null;
 }

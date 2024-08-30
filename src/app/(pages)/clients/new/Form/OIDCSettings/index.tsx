@@ -36,7 +36,9 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
 
   useEffect(() => {
     updateFormStatus(id, authFlowFulfilled && clientAuthFulfilled);
-  }, [authFlowFulfilled, clientAuthFulfilled]);
+    // adding updateFormStatus causes infinite loops
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, authFlowFulfilled, clientAuthFulfilled]);
 
   return (
     <CarouselPanel unmount={false}>

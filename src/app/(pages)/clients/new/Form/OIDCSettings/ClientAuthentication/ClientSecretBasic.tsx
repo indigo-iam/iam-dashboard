@@ -8,6 +8,6 @@ export default function ClientSecretBasic(
   props: Readonly<ClientSecretBasicProps>
 ) {
   const { onStatusChange } = props;
-  useEffect(() => onStatusChange(true), []);
+  useEffect(() => onStatusChange(true), [onStatusChange]);
   return null;
 }

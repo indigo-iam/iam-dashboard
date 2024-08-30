@@ -43,7 +43,7 @@ export default function Listbox<T>(props: Readonly<ListboxProps<T>>) {
             <ListboxOption
               key={o.id}
               value={o}
-              className="group flex cursor-pointer select-none gap-2 rounded-md p-1 data-[focus]:bg-primary/80 data-[focus]:text-secondary"
+              className="group flex cursor-pointer select-none gap-2 rounded-md p-1 text-sm data-[focus]:bg-primary/80 data-[focus]:text-secondary"
             >
               <CheckIcon className="invisible my-auto size-4 group-data-[selected]:visible" />
               {o.name}

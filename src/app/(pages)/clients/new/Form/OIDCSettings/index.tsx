@@ -5,7 +5,7 @@ import Label from "@/components/Label";
 import Section from "@/components/Section";
 import { type Scope } from "@/models/client";
 import Select from "@/components/Select";
-import { Description } from "@headlessui/react";
+import Description from "@/components/Description";
 import { OpenIdConfiguration } from "@/models/openid-configuration";
 import { camelCaseToTitle } from "@/utils/strings";
 import AuthenticationFlow from "./AuthenticationFlow";
@@ -40,24 +40,20 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
 
   useEffect(() => {
     updateFormStatus(id, formStatus["authenticationFlow"]);
-  }, [formStatus["authenticationFlow"]])
+  }, [formStatus["authenticationFlow"]]);
 
   return (
     <CarouselPanel unmount={false}>
       <Section title="OpenID Connect - OAuth2">
         <Field className="flex flex-col">
           <Label>Client Authentication</Label>
-          <Description className="text-xs text-primary/60">
-            A little description.
-          </Description>
+          <Description>A little description.</Description>
           <Select name="token_endpoint_auth_method" options={authMethods} />
         </Field>
         <AuthenticationFlow formComponentId="authenticationFlow" />
         <Field>
           <Label>Scopes</Label>
-          <Description className="text-xs text-primary/60">
-            A little description.
-          </Description>
+          <Description>A little description.</Description>
           <InputListDropdown
             name="scope"
             title="Add Scope"

@@ -4,7 +4,7 @@ import { Input } from "@/components/Inputs";
 import Label from "@/components/Label";
 import Section from "@/components/Section";
 import { useFormStatus } from "@/utils/forms";
-import { Description } from "@headlessui/react";
+import Description from "@/components/Description";
 
 type GeneralSettingsProps = {
   id: string;
@@ -24,7 +24,7 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
       <Section title="General Settings">
         <Field>
           <Label required>Client Name</Label>
-          <Description className="text-xs text-primary/60">
+          <Description>
             Client name must be at least four characters long.
           </Description>
           <Input

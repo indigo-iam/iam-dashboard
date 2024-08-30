@@ -11,7 +11,8 @@ export default function DeviceCode(props: Readonly<DeviceCodeProps>) {
 
   useEffect(() => {
     updateFormStatus(formComponentId, true);
-  }, [formComponentId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return null;
 }

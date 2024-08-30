@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { FormStatusContext, FormStatusContextProps } from "./FormStatusContext";
 
 type FormStatus = { [k: string]: boolean };
@@ -9,16 +9,18 @@ export function FormStatusProvider(
   const { children } = props;
   const [formStatus, setFormStatus] = useState<FormStatus>({});
 
-  const updateFormStatus = (id: string, value: boolean) => {
-    const newStatus = { ...formStatus };
-    newStatus[id] = value;
-    setFormStatus(newStatus);
-    console.log(newStatus);
-  };
+  const updateFormStatus = useCallback(
+    (id: string, value: boolean) => {
+      const newStatus = { ...formStatus };
+      newStatus[id] = value;
+      setFormStatus(newStatus);
+    },
+    [formStatus]
+  );
 
   const value: FormStatusContextProps = useMemo(() => {
     return { formStatus, updateFormStatus };
-  }, [formStatus]);
+  }, [formStatus, updateFormStatus]);
 
   return (
     <FormStatusContext.Provider value={value}>

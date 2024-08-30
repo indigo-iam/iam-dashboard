@@ -13,7 +13,8 @@ export default function ClientCredentials(
 
   useEffect(() => {
     updateFormStatus(formComponentId, true);
-  }, [formComponentId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return null;
 }

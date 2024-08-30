@@ -16,8 +16,8 @@ export default function OtherSettings(props: Readonly<OtherSettingsProps>) {
 
   useEffect(() => {
     updateFormStatus(id, true);
-  }, [id]);
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <CarouselPanel unmount={false}>

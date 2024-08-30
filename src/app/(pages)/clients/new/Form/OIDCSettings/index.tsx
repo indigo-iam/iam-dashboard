@@ -10,7 +10,7 @@ import { OpenIdConfiguration } from "@/models/openid-configuration";
 import { camelCaseToTitle } from "@/utils/strings";
 import AuthenticationFlow from "./AuthenticationFlow";
 import { useFormStatus } from "@/utils/forms";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 type OIDCSettingsProps = {
   id: string;
@@ -21,6 +21,8 @@ type OIDCSettingsProps = {
 export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
   const { id, systemScopes, openIdConfiguration } = props;
   const { formStatus, updateFormStatus } = useFormStatus();
+  const authenticationFlowStatusRef = useRef(false);
+  const authenticationFlowComponentId = "authenticationFlow";
 
   const defaultScopes = systemScopes
     .filter(scope => scope.defaultScope)
@@ -39,8 +41,12 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
   });
 
   useEffect(() => {
-    updateFormStatus(id, formStatus["authenticationFlow"]);
-  }, [formStatus["authenticationFlow"]]);
+    const newStatus = formStatus[authenticationFlowComponentId];
+    if (authenticationFlowStatusRef.current !== newStatus) {
+      updateFormStatus(id, newStatus);
+      authenticationFlowStatusRef.current = newStatus;
+    }
+  }, [id, formStatus, updateFormStatus]);
 
   return (
     <CarouselPanel unmount={false}>
@@ -50,7 +56,7 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
           <Description>A little description.</Description>
           <Select name="token_endpoint_auth_method" options={authMethods} />
         </Field>
-        <AuthenticationFlow formComponentId="authenticationFlow" />
+        <AuthenticationFlow formComponentId={authenticationFlowComponentId} />
         <Field>
           <Label>Scopes</Label>
           <Description>A little description.</Description>

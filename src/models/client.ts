@@ -15,6 +15,8 @@ export interface ClientRequest {
   token_endpoint_auth_method: string;
   scope: string;
   grant_types: string[];
+  jwk_uri?: string;
+  jwk?: string;
   client_uri?: string;
   tos_uri?: string;
   policy_uri?: string;

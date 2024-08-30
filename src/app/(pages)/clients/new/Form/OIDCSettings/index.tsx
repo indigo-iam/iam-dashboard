@@ -11,6 +11,7 @@ import { camelCaseToTitle } from "@/utils/strings";
 import AuthenticationFlow from "./AuthenticationFlow";
 import { useFormStatus } from "@/utils/forms";
 import { useEffect, useRef } from "react";
+import ClientAuthentication from "./ClientAuthentication";
 
 type OIDCSettingsProps = {
   id: string;
@@ -21,8 +22,10 @@ type OIDCSettingsProps = {
 export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
   const { id, systemScopes, openIdConfiguration } = props;
   const { formStatus, updateFormStatus } = useFormStatus();
-  const authenticationFlowStatusRef = useRef(false);
-  const authenticationFlowComponentId = "authenticationFlow";
+  const clientAuthStatusRef = useRef(false);
+  const authFlowRef = useRef(false);
+  const clientAuthComponentId = "clientAuthentication";
+  const authFlowComponentId = "authenticationFlow";
 
   const defaultScopes = systemScopes
     .filter(scope => scope.defaultScope)
@@ -36,27 +39,28 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
 
   const { token_endpoint_auth_methods_supported } = openIdConfiguration;
 
-  const authMethods = token_endpoint_auth_methods_supported.map(m => {
-    return { id: m, name: camelCaseToTitle(m) };
-  });
-
   useEffect(() => {
-    const newStatus = formStatus[authenticationFlowComponentId];
-    if (authenticationFlowStatusRef.current !== newStatus) {
+    const newClientAuthStatus = formStatus[clientAuthComponentId];
+    const newAuthFlowStatus = formStatus[authFlowComponentId];
+    if (
+      clientAuthStatusRef.current !== newClientAuthStatus ||
+      authFlowRef.current !== newAuthFlowStatus
+    ) {
+      const newStatus = newClientAuthStatus && newAuthFlowStatus;
       updateFormStatus(id, newStatus);
-      authenticationFlowStatusRef.current = newStatus;
+      clientAuthStatusRef.current = newClientAuthStatus;
+      authFlowRef.current = newAuthFlowStatus;
     }
   }, [id, formStatus, updateFormStatus]);
 
   return (
     <CarouselPanel unmount={false}>
       <Section title="OpenID Connect - OAuth2">
-        <Field className="flex flex-col">
-          <Label>Client Authentication</Label>
-          <Description>A little description.</Description>
-          <Select name="token_endpoint_auth_method" options={authMethods} />
-        </Field>
-        <AuthenticationFlow formComponentId={authenticationFlowComponentId} />
+        <ClientAuthentication
+          formComponentId={clientAuthComponentId}
+          tokenEndpointAuthMethods={token_endpoint_auth_methods_supported}
+        />
+        <AuthenticationFlow formComponentId={authFlowComponentId} />
         <Field>
           <Label>Scopes</Label>
           <Description>A little description.</Description>

@@ -40,6 +40,16 @@ export default async function NewClient() {
     }
 
     request.scope = scopes.join(" ");
+
+    const jwk_uri = formData.get("jwk_uri") as string | undefined;
+    const jwk = formData.get("jwk") as string | undefined;
+
+    if (jwk_uri) {
+      request.jwk_uri = jwk_uri;
+    } else if (jwk) {
+      request.jwk = jwk;
+    }
+
     const client_uri = formData.get("client_uri") as string | undefined;
     const tos_uri = formData.get("tos_uri") as string | undefined;
     const policy_uri = formData.get("policy_uri") as string | undefined;

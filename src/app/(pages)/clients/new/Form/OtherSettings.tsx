@@ -3,11 +3,25 @@ import Field from "@/components/Field";
 import { Input } from "@/components/Inputs";
 import Label from "@/components/Label";
 import Section from "@/components/Section";
+import { useFormStatus } from "@/utils/forms";
+import { useEffect } from "react";
 
-export default function OtherInfo() {
+type OtherSettingsProps = {
+  id: string;
+};
+
+export default function OtherSettings(props: Readonly<OtherSettingsProps>) {
+  const { id } = props;
+  const { updateFormStatus } = useFormStatus();
+
+  useEffect(() => {
+    updateFormStatus(id, true);
+  }, [id]);
+
+
   return (
     <CarouselPanel unmount={false}>
-      <Section title="Other Info">
+      <Section title="Other Settings">
         <Field>
           <Label>Home Page</Label>
           <Input

@@ -3,17 +3,20 @@ import Field from "@/components/Field";
 import { Input } from "@/components/Inputs";
 import Label from "@/components/Label";
 import Section from "@/components/Section";
+import { useFormStatus } from "@/utils/forms";
+import { Description } from "@headlessui/react";
 
 type GeneralSettingsProps = {
-  onChange?: (fulfilled: boolean) => void;
+  id: string;
 };
 
 export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
-  const { onChange } = props;
+  const { id } = props;
+  const { updateFormStatus } = useFormStatus();
 
   const handleClientNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    onChange?.(!!value);
+    updateFormStatus(id, value.length >= 4);
   };
 
   return (
@@ -21,6 +24,9 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
       <Section title="General Settings">
         <Field>
           <Label required>Client Name</Label>
+          <Description className="text-xs text-primary/60">
+            Client name must be at least four characters long.
+          </Description>
           <Input
             title="Client Name"
             name="client_name"

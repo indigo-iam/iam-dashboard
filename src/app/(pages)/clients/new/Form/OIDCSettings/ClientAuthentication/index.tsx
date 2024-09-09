@@ -8,7 +8,6 @@ import ClientSecretBasic from "./ClientSecretBasic";
 import ClientSecretPost from "./ClientSecretPost";
 import ClientSecretJwt from "./ClientSecretJwt";
 import PrivateKeyJwt from "./PrivateKeyJwt";
-import { useFormStatus } from "@/utils/forms";
 
 type ClientAuthenticationSettingsProps = {
   authMethod: string;
@@ -44,7 +43,6 @@ export default function ClientAuthentication(
   props: Readonly<ClientAuthenticationProps>
 ) {
   const { tokenEndpointAuthMethods, onStatusChange } = props;
-  const { updateFormStatus } = useFormStatus();
 
   const authMethods = tokenEndpointAuthMethods.map(m => {
     return { id: m, name: capitalize(m.replaceAll("_", " ")) };

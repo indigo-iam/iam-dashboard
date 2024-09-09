@@ -12,8 +12,8 @@ import type { ScimUser } from "@/models/scim";
 import { patchMe } from "@/services/me";
 import React, { useState } from "react";
 
-const Body = (props: { me: ScimUser }) => {
-  const { me } = props;
+const Body = (props: { user: ScimUser }) => {
+  const { user } = props;
   return (
     <ModalBody>
       <Input
@@ -21,7 +21,7 @@ const Body = (props: { me: ScimUser }) => {
         id="name"
         title="Name"
         name="givenName"
-        defaultValue={me?.name?.givenName}
+        defaultValue={user?.name?.givenName}
         minLength={2}
         maxLength={64}
         required
@@ -31,7 +31,7 @@ const Body = (props: { me: ScimUser }) => {
         id="surname"
         title="Surname"
         name="familyName"
-        defaultValue={me?.name?.familyName}
+        defaultValue={user?.name?.familyName}
         minLength={2}
         maxLength={64}
         required
@@ -41,21 +41,21 @@ const Body = (props: { me: ScimUser }) => {
         id="middleName"
         title="Middle Name"
         name="middleName"
-        defaultValue={me?.name?.middleName}
+        defaultValue={user?.name?.middleName}
       />
       <Input
         type="email"
         id="email"
         title="Email"
         name="email"
-        defaultValue={me?.emails?.[0].value}
+        defaultValue={user?.emails?.[0].value}
       />
       <Input
         type="text"
         id="username"
         title="Username"
         name="username"
-        defaultValue={me?.userName}
+        defaultValue={user?.userName}
         disabled={true}
       />
     </ModalBody>
@@ -98,7 +98,7 @@ const Footer = (props: { canSubmit: boolean; onClose?: () => void }) => {
   );
 };
 
-const EditDetailsForm = (props: { me: ScimUser; onClose?: () => void }) => {
+const EditDetailsForm = (props: { user: ScimUser; onClose?: () => void }) => {
   const [canSubmit, setCanSubmit] = useState(false);
 
   const handleChange = (e: React.FormEvent<HTMLFormElement>) => {
@@ -118,7 +118,7 @@ const EditDetailsForm = (props: { me: ScimUser; onClose?: () => void }) => {
     setCanSubmit(false);
   };
 
-  const { me, ...others } = props;
+  const { user, ...others } = props;
   const footerProps = { ...others, canSubmit };
 
   const action = async (formData: FormData) => {
@@ -136,20 +136,20 @@ const EditDetailsForm = (props: { me: ScimUser; onClose?: () => void }) => {
       onChange={handleChange}
       onReset={handleReset}
     >
-      <Body me={me} />
+      <Body user={user} />
       <Footer {...footerProps} />
     </Form>
   );
 };
 
 export interface EditDetailsModalProps extends ModalProps {
-  me: ScimUser;
+  user: ScimUser;
 }
 
 export const EditDetailsModal = (props: EditDetailsModalProps) => {
-  const { me, ...modalProps } = props;
+  const { user, ...modalProps } = props;
   const formProps = {
-    me,
+    user,
     onClose: () => {
       const form = document.getElementById(
         "edit-details-form"
@@ -159,7 +159,7 @@ export const EditDetailsModal = (props: EditDetailsModalProps) => {
     },
   };
   return (
-    <Modal {...modalProps}>
+    <Modal {...modalProps} title="Edit User Details">
       <EditDetailsForm {...formProps} />
     </Modal>
   );

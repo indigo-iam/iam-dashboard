@@ -48,7 +48,7 @@ export default function UserInfo(props: Readonly<UserInfoProps>) {
     <div className="flex">
       <InfoTable data={data} />
       <div className="mb-auto ml-auto mr-0 mt-0">
-        <OptionsDropdown />
+        <OptionsDropdown user={user} />
       </div>
     </div>
   );

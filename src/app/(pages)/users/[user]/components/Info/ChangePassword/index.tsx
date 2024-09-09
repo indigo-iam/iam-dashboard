@@ -187,7 +187,7 @@ export const ChangePasswordModal = (props: ModalProps) => {
   const modalProps = { ...props, onClose: handleClose };
 
   return (
-    <Modal {...modalProps}>
+    <Modal {...modalProps} title="Change Password">
       <Form
         id="change-password-form"
         onChange={handleChange}

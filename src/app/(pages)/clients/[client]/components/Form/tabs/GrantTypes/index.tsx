@@ -9,7 +9,9 @@ export default async function GrantTypes(props: Readonly<GrantTypesProps>) {
   const openIdConfiguration = await fetchOpenIdConfiguration();
   const active_grant_types = props.grant_types ?? [];
   const { grant_types_supported } = openIdConfiguration;
-  const grant_types = grant_types_supported.map(gt => {
+  const grant_types = (
+    grant_types_supported ?? ["authorization_code", "implicit"]
+  ).map(gt => {
     return {
       name: gt,
       value: !!active_grant_types.find(current => current === gt),

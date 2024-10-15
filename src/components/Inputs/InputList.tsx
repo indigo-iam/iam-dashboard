@@ -20,14 +20,23 @@ export function InputList(props: Readonly<InputListProps>) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState("");
   const [items, setItems] = useState(originalItems ?? []);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const addItem = (item: string) => {
-    if (!items.find(i => i === item)) {
-      const newItems = [...items, item];
+    const { value, error } = sanitizeValue(item);
+    if (error) {
+      setErrorMessage(error);
+      return;
+    }
+    if (!items.find(i => i === value)) {
+      const newItems = [...items, value];
       onChange?.(newItems);
       setItems(newItems);
+      if (errorMessage) {
+        setErrorMessage(null);
+      }
     } else {
-      console.warn("address already present");
+      console.warn("item already present");
     }
   };
   const removeItem = (index: number) => {
@@ -50,9 +59,21 @@ export function InputList(props: Readonly<InputListProps>) {
         defaultValue={item}
         name={name}
         contentEditable={false}
+        required={required}
       />
     </li>
   ));
+
+  const sanitizeValue = (value: string) => {
+    if (type == "url") {
+      try {
+        new URL(value);
+      } catch (err) {
+        return { value: "", error: `"${value}" is not a valid URL.` };
+      }
+    }
+    return { value };
+  };
 
   const handleClick = () => {
     addItem(value);
@@ -71,7 +92,6 @@ export function InputList(props: Readonly<InputListProps>) {
           onChange={event => setValue(event.target.value)}
           value={value}
           placeholder={placeholder}
-          required={required}
           type={type}
         />
         <Button
@@ -83,6 +103,9 @@ export function InputList(props: Readonly<InputListProps>) {
           Add
         </Button>
       </div>
+      {errorMessage ? (
+        <small className="text-danger">{errorMessage}</small>
+      ) : null}
       <ul className="mt-2">{listItems}</ul>
     </div>
   );

@@ -26,13 +26,11 @@ type Action = { type: "NEXT_PAGE" } | { type: "PREVIOUS_PAGE" };
 type CarouselState = {
   currentPage: number;
   nextButtonTitle: string;
-  nextButtonType: string;
 };
 
 const initialState: CarouselState = {
   currentPage: 0,
   nextButtonTitle: "Next",
-  nextButtonType: "button",
 };
 
 function reducer(state: CarouselState, action: Action) {
@@ -40,15 +38,13 @@ function reducer(state: CarouselState, action: Action) {
     case "NEXT_PAGE": {
       const lastPage = TOTAL_PAGES - 1;
       const currentPage = Math.min(lastPage, state.currentPage + 1);
-      const nextButtonType = currentPage === lastPage ? "submit" : "button";
       const nextButtonTitle = currentPage === lastPage ? "Save" : "Next";
-      return { ...state, currentPage, nextButtonType, nextButtonTitle };
+      return { ...state, currentPage, nextButtonTitle };
     }
     case "PREVIOUS_PAGE": {
       const currentPage = Math.max(0, state.currentPage - 1);
-      const nextButtonType = "button";
       const nextButtonTitle = "Next";
-      return { ...state, currentPage, nextButtonType, nextButtonTitle };
+      return { ...state, currentPage, nextButtonTitle };
     }
     default:
       return state;

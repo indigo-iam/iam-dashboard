@@ -46,7 +46,9 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
         <AuthenticationFlow onStatusChange={setAuthFlowFulfilled} />
         <ClientAuthentication
           onStatusChange={setClientAuthFulfilled}
-          tokenEndpointAuthMethods={token_endpoint_auth_methods_supported}
+          tokenEndpointAuthMethods={
+            token_endpoint_auth_methods_supported ?? ["client_secret_basic"]
+          }
         />
         <Field>
           <Label>Scopes</Label>

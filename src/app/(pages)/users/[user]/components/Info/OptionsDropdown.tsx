@@ -95,7 +95,8 @@ function reducer(state: ModalsState, action: Action) {
 export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
   const { user } = props;
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  const indigoUser = user["urn:indigo-dc:scim:schemas:IndigoUser"];
+  const isAdmin = indigoUser?.authorities?.includes("ROLE_ADMIN");
   return (
     <>
       <Menu>
@@ -130,7 +131,7 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
               onClick={() => dispatch({ type: "openAssignAdmin" })}
             >
               <BookmarkSquareIcon className="w-5" />
-              Assign admin privileges
+              {isAdmin ? "Revoke" : "Assign"} admin privileges
             </button>
           </MenuItem>
           <MenuItem>
@@ -189,6 +190,7 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
         onClose={() => dispatch({ type: "closeDisableUser" })}
       />
       <AssignAdminModal
+        user={user}
         show={state.showAssignAdmin}
         onClose={() => dispatch({ type: "closeAssignAdmin" })}
       />

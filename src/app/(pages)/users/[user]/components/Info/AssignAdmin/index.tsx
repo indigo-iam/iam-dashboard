@@ -1,8 +1,36 @@
 import ConfirmModal from "@/components/ConfirmModal";
 import { ModalProps } from "@/components/Modal";
+import { ScimUser } from "@/models/scim";
+import {
+  assignAdminPrivileges,
+  revokeAdminPrivileges,
+} from "@/services/authorities";
 
-interface AssignAdminModalProps extends ModalProps {}
+interface AssignAdminModalProps extends ModalProps {
+  user: ScimUser;
+}
 
 export function AssignAdminModal(props: Readonly<AssignAdminModalProps>) {
-  return <ConfirmModal {...props} title="Assign Admin Privileges" />;
+  const { user } = props;
+  const indigoUser = user["urn:indigo-dc:scim:schemas:IndigoUser"];
+  const isAdmin = indigoUser?.authorities?.includes("ROLE_ADMIN");
+  const title = `${isAdmin ? "Revoke" : "Assign"} Admin Privileges`;
+
+  const action = async () => {
+    const operation = isAdmin ? revokeAdminPrivileges : assignAdminPrivileges;
+    await operation(user.id!!);
+    props.onClose();
+  };
+
+  return (
+    <ConfirmModal
+      {...props}
+      title={title}
+      onConfirm={action}
+      onCancel={props.onClose}
+    >
+      Do you want to want to {isAdmin ? "revoke" : "assign"} admin privileges to
+      user <b>{user.displayName}</b>?
+    </ConfirmModal>
+  );
 }

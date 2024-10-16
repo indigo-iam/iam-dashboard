@@ -4,6 +4,7 @@ import getConfig from "@/utils/config";
 import { ScimOp, ScimRequest, ScimUser } from "@/models/scim";
 import { Paginated } from "@/models/pagination";
 import { Client } from "@/models/client";
+import { revalidatePath } from "next/cache";
 
 const { BASE_URL } = getConfig();
 
@@ -64,9 +65,13 @@ export const patchMe = async (formData: FormData) => {
   });
 
   if (response.ok) {
-    return "";
+    revalidatePath("/users/me");
   } else {
+    if (response.status == 409) {
+      const json = await response.json();
+      return { err: json.detail as string };
+    }
     const msg = await response.text();
-    return `Patch Me failed with status ${response.status} ${msg}`;
+    throw new Error(`Patch Me failed with status ${response.status} ${msg}`);
   }
 };

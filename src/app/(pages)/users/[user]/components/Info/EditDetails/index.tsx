@@ -21,6 +21,7 @@ const Body = (props: { user: ScimUser }) => {
         id="name"
         title="Name"
         name="givenName"
+        placeholder="Name"
         defaultValue={user?.name?.givenName}
         minLength={2}
         maxLength={64}
@@ -31,6 +32,7 @@ const Body = (props: { user: ScimUser }) => {
         id="surname"
         title="Surname"
         name="familyName"
+        placeholder="Family Name"
         defaultValue={user?.name?.familyName}
         minLength={2}
         maxLength={64}
@@ -41,6 +43,7 @@ const Body = (props: { user: ScimUser }) => {
         id="middleName"
         title="Middle Name"
         name="middleName"
+        placeholder="Middle Name"
         defaultValue={user?.name?.middleName}
       />
       <Input
@@ -48,15 +51,19 @@ const Body = (props: { user: ScimUser }) => {
         id="email"
         title="Email"
         name="email"
+        placeholder="Email"
         defaultValue={user?.emails?.[0].value}
+        required
       />
       <Input
         type="text"
         id="username"
         title="Username"
         name="username"
+        placeholder="Username"
         defaultValue={user?.userName}
         disabled={true}
+        required
       />
     </ModalBody>
   );
@@ -123,7 +130,12 @@ const EditDetailsForm = (props: { user: ScimUser; onClose?: () => void }) => {
 
   const action = async (formData: FormData) => {
     try {
-      await patchMe(formData);
+      const resp = await patchMe(formData);
+      if (resp?.err) {
+        alert(resp.err);
+      } else {
+        props.onClose?.();
+      }
     } catch (err) {
       console.log("Patch failed because of an error:", err);
     }

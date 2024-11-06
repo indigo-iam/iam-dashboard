@@ -76,7 +76,7 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
                 <br />
                 <b>Name</b>
                 <p>{selected?.displayName}</p>
-                <b>UUID</b>
+                <b>Group ID</b>
                 <p>{selected?.id}</p>
                 <b>Labels</b>
                 <p>{labels}</p>

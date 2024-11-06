@@ -49,7 +49,7 @@ export default function DeleteUser(props: Readonly<DeleteUserProps>) {
             <tbody>
               <Row title="Name" value={user?.name?.formatted} />
               <Row title="Username" value={user?.userName} />
-              <Row title="UUID" value={user?.id} />
+              <Row title="User ID" value={user?.id} />
               <Row title="E-mail" value={user?.emails?.[0].value} />
               <Row title="Created at" value={createdAt} />
               <Row title="Groups" value={groups} />

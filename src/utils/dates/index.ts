@@ -1,10 +1,14 @@
-export function dateToHuman(date: Date) {
+export function dateToHuman(date: Date): string {
   const now = Date.now();
   const delta = now - date.getTime();
 
-  const formatter = new Intl.RelativeTimeFormat("en");
+  if (delta < 86400000) {
+    return "today";
+  }
 
+  const formatter = new Intl.RelativeTimeFormat("en");
   const days = Math.ceil(delta / 86400000);
+
   if (days < 31) {
     return formatter.format(-days, "day");
   }

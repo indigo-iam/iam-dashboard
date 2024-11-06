@@ -16,7 +16,7 @@ type TableProps = {
 
 export default async function AttributesTable(props: Readonly<TableProps>) {
   const { user } = props;
-  const attributes = await fetchAttributes(user.id!);
+  const attributes = await fetchAttributes(user.id);
 
   if (!attributes || attributes.length === 0) {
     return <p>No Attributes found</p>;

@@ -18,7 +18,7 @@ export default function DeleteSSHKeyConfirmModal(
   const { user, sshKey, show, onClose, onDeleted } = props;
 
   const handleConfirm = async () => {
-    await deleteSSHKey(user.id!, sshKey);
+    await deleteSSHKey(user.id, sshKey);
     onClose();
     onDeleted?.();
   };

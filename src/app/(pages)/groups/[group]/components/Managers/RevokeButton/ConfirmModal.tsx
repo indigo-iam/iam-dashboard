@@ -17,7 +17,7 @@ export default function ConfirmRevokeGroupManagerModal(
   const { user, group, show, onClose, onUnlinked } = props;
 
   const handleConfirm = async () => {
-    await revokeGroupManager(group.id, user.id!);
+    await revokeGroupManager(group.id, user.id);
     onClose();
     onUnlinked?.();
   };

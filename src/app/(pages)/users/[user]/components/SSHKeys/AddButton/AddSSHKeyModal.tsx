@@ -21,7 +21,7 @@ export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
       display: formData.get("ssh-label") as string,
       value: formData.get("ssh-key") as string,
     };
-    await addSSHKey(user.id!, sshKey);
+    await addSSHKey(user.id, sshKey);
     modalProps.onClose();
   };
 

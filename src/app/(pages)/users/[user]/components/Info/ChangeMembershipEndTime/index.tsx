@@ -27,12 +27,12 @@ export function ChangeMembershipEndTimeModal(
   const action = async (formData: FormData) => {
     const stringDate = formData.get("membership-end-date") as string;
     const isoDate = new Date(stringDate).toISOString();
-    await changeMembershipEndTime(user.id!, isoDate);
+    await changeMembershipEndTime(user.id, isoDate);
     props.onClose();
   };
 
   const revokeEndTime = async () => {
-    await revokeMembershipEndTime(user.id!);
+    await revokeMembershipEndTime(user.id);
     props.onClose();
   };
 

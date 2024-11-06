@@ -20,7 +20,7 @@ export default function AddAttributeModal(
   const action = async (formData: FormData) => {
     const name = formData.get("attr-name") as string;
     const value = formData.get("attr-value") as string;
-    await addAttribute(user.id!, { name, value });
+    await addAttribute(user.id, { name, value });
     modalProps.onClose();
   };
 

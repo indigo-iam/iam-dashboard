@@ -20,6 +20,7 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
     const surname = toTitleCase(formData.get("surname") as string);
     const email = formData.get("email") as string;
     const user: ScimUser = {
+      id: "",
       userName: formData.get("username") as string,
       displayName: `${firstName} ${surname}`,
       name: {

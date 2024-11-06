@@ -56,7 +56,7 @@ export default function GroupsTable(props: Readonly<GroupsTableProps>) {
   const userRef: ScimReference = {
     $ref: `${BASE_URL}/scim/Users${user.id}`,
     display: user.name?.formatted ?? "unknown user",
-    value: user.id!,
+    value: user.id,
   };
 
   return (

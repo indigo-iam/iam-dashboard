@@ -34,10 +34,15 @@ export const getUsersPage = async (
 const manageUser = async (user: ScimUser, op: "add" | "delete") => {
   let url = `${BASE_URL}/scim/Users`;
   if (op === "delete") {
-    url = `${url}/${user.id!}`;
+    url = `${url}/${user.id}`;
   }
+  // workaround to not send the 'id' field to the backend. If the field is
+  // sent to the backend, even containing an empty string, a user with that id
+  // (or undefined) is created
+  const { id, ...other } = user;
+  const body = JSON.stringify(op === "add" ? other : user);
   const response = await authFetch(url, {
-    body: JSON.stringify(user),
+    body,
     method: op === "add" ? "POST" : "DELETE",
     headers: { "content-type": "application/scim+json" },
   });

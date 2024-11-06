@@ -5,8 +5,8 @@ const { BASE_URL } = getConfig();
 
 export function makeScimReferenceFromUser(user: ScimUser): ScimReference {
   return {
-    $ref: `${BASE_URL}/scim/Users/${user.id!}`,
+    $ref: `${BASE_URL}/scim/Users/${user.id}`,
     display: user.userName!,
-    value: user.id!,
+    value: user.id,
   };
 }

@@ -18,7 +18,7 @@ export default function DeleteAttributeConfirmModal(
   const { user, attr, show, onClose, onDeleted } = props;
 
   const confirm = async () => {
-    await deleteAttribute(user.id!, attr);
+    await deleteAttribute(user.id, attr);
     onClose();
     onDeleted?.();
   };

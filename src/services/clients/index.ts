@@ -8,7 +8,7 @@ import {
 } from "@/models/client";
 import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { Paginated } from "@/models/pagination";
 import { auth } from "@/auth";
 
@@ -180,14 +180,14 @@ export const getClientOwnersPage = async (
   startIndex: number,
   count: number
 ) => {
-  return await getItem<Paginated<ScimUser>>(
+  return await getItem<Paginated<User>>(
     `${BASE_URL}/iam/api/clients/${clientId}/owners?startIndex=${startIndex}&count=${count}`
   );
 };
 
 export const getClientOwners = async (
   clientId: string
-): Promise<ScimUser[]> => {
+): Promise<User[]> => {
   const count = 10;
   const firstPage = await getClientOwnersPage(clientId, 1, count);
   const { totalResults } = firstPage;

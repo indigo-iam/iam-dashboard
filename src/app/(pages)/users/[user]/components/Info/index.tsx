@@ -1,4 +1,4 @@
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import OptionsDropdown from "./OptionsDropdown";
 import { dateToHuman } from "@/utils/dates";
 import InfoTable from "@/components/InfoTable";
@@ -17,7 +17,7 @@ const ActiveStatus = (props: { active: boolean }) => {
 };
 
 type UserInfoProps = {
-  user: ScimUser;
+  user: User;
 };
 export default function UserInfo(props: Readonly<UserInfoProps>) {
   const { user } = props;

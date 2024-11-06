@@ -1,12 +1,12 @@
 "use client";
 import { DeleteButton } from "@/components/Buttons";
 import { Attribute } from "@/models/attributes";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import DeleteAttributeConfirmModal from "./ConfirmModal";
 import { useState } from "react";
 
 type DeleteButtonProps = {
-  user: ScimUser;
+  user: User;
   attr: Attribute;
 };
 

@@ -6,11 +6,11 @@ import Label from "@/components/Label";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import TextArea from "@/components/TextArea";
 import { SSHKey } from "@/models/indigo-user";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { addSSHKey } from "@/services/users";
 
 interface AddSSHKeyModalProps extends ModalProps {
-  user: ScimUser;
+  user: User;
 }
 
 export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {

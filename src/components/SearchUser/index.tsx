@@ -1,12 +1,12 @@
 "use client";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { searchUser } from "@/services/users";
 import { InputSearch } from "@/components/Inputs";
 import { useState } from "react";
 
 type ResultsDropDownProps = {
-  results: ScimUser[];
-  onClick?: (user: ScimUser) => void;
+  results: User[];
+  onClick?: (user: User) => void;
 };
 
 function ResultsDropDown(props: Readonly<ResultsDropDownProps>) {
@@ -39,12 +39,12 @@ function ResultsDropDown(props: Readonly<ResultsDropDownProps>) {
 
 type SearchUserProps = {
   hidden?: boolean;
-  onSelected?: (user: ScimUser) => void;
+  onSelected?: (user: User) => void;
 };
 
 export default function SearchUser(props: Readonly<SearchUserProps>) {
   const { hidden, onSelected } = props;
-  const [results, setResults] = useState<ScimUser[]>([]);
+  const [results, setResults] = useState<User[]>([]);
 
   const handleFilterChange = async (filter: string) => {
     if (filter.length > 2) {
@@ -59,7 +59,7 @@ export default function SearchUser(props: Readonly<SearchUserProps>) {
     setResults([]);
   };
 
-  const select = (user: ScimUser) => {
+  const select = (user: User) => {
     clearResults();
     onSelected?.(user);
   };

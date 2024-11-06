@@ -1,9 +1,9 @@
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import Table from "./Table";
 import AddSSHKeyButton from "./AddButton";
 
 type SSHKeysProps = {
-  user: ScimUser;
+  user: User;
 };
 
 export default function SSHKeys(props: Readonly<SSHKeysProps>) {

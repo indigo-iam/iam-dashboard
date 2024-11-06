@@ -1,4 +1,4 @@
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { Certificate } from "@/models/indigo-user";
 
 const CertificateView = (props: { cert: Certificate }) => {
@@ -28,7 +28,7 @@ const CertificateView = (props: { cert: Certificate }) => {
 };
 
 type CertificateProps = {
-  user: ScimUser;
+  user: User;
 };
 export const Certificates = async (props: Readonly<CertificateProps>) => {
   const { user } = props;

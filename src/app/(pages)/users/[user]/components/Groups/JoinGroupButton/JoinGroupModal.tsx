@@ -6,7 +6,7 @@ import { Group } from "@/models/groups";
 import { JoinGroupRequest } from "@/models/group-requests";
 import { submitGroupRequest } from "@/services/group-requests";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import SearchGroup from "@/components/SearchGroup";
 import { useState } from "react";
 import { addUserToGroup } from "@/services/groups";
@@ -16,7 +16,7 @@ import Field from "@/components/Field";
 import Label from "@/components/Label";
 
 export interface JoinGroupModalProps extends ModalProps {
-  user: ScimUser;
+  user: User;
   groups: Group[];
   isAdmin?: boolean;
 }

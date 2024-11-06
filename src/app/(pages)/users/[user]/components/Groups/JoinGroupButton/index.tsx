@@ -1,11 +1,11 @@
 "use client";
 import { Button } from "@/components/Buttons";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { JoinGroupModal } from "./JoinGroupModal";
 import { useState } from "react";
 
 type JoinGroupButtonProps = {
-  user: ScimUser;
+  user: User;
   isAdmin?: boolean;
 };
 

@@ -4,11 +4,11 @@ import { Form } from "@/components/Form";
 import { Input } from "@/components/Inputs";
 import Label from "@/components/Label";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { addAttribute } from "@/services/users";
 
 interface AddAttributeModalProps extends ModalProps {
-  user: ScimUser;
+  user: User;
 }
 
 export default function AddAttributeModal(

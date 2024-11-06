@@ -1,11 +1,11 @@
 import ConfirmModal from "@/components/ConfirmModal";
 import InfoTable from "@/components/InfoTable";
 import { Attribute } from "@/models/attributes";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { deleteAttribute } from "@/services/users";
 
 type DeleteAttributeConfirmModalProps = {
-  user: ScimUser;
+  user: User;
   attr: Attribute;
   show: boolean;
   onClose: () => void;

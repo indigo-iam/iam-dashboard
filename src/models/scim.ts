@@ -2,7 +2,6 @@ import { IndigoUser } from "./indigo-user";
 
 // https://www.rfc-editor.org/rfc/rfc7643#section-4.1
 export interface ScimUser {
-  id: string;
   userName?: string;
   name?: Name;
   displayName?: string;
@@ -24,6 +23,10 @@ export interface ScimUser {
     location?: string;
   };
   "urn:indigo-dc:scim:schemas:IndigoUser"?: IndigoUser;
+}
+
+export interface User extends ScimUser {
+  id: string;
 }
 
 type Name = {

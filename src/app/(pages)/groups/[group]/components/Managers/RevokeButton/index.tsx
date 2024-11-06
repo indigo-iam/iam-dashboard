@@ -2,11 +2,11 @@
 import ConfirmRevokeGroupManagerModal from "./ConfirmModal";
 import { DeleteButton } from "@/components/Buttons";
 import { Group } from "@/models/groups";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { useState } from "react";
 
 type RevokeManagerButtonProps = {
-  user: ScimUser;
+  user: User;
   group: Group;
 };
 

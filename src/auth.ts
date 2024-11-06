@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import type { DefaultSession, NextAuthConfig } from "next-auth";
 import type { DefaultJWT } from "next-auth/jwt";
 import type { Profile, User, Awaitable, TokenSet } from "@auth/core/types";
-import type { ScimUser as IamUser } from "@/models/scim";
+import type { User as IamUser } from "@/models/scim";
 import type { OIDCConfig } from "next-auth/providers";
 import getConfig from "./utils/config";
 

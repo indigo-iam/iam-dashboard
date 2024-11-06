@@ -2,7 +2,7 @@
 import { authFetch, getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
 import { Paginated } from "@/models/pagination";
-import { ScimUser } from "@/models/scim";
+import { User, ScimUser } from "@/models/scim";
 import { revalidatePath } from "next/cache";
 import { SSHKey } from "@/models/indigo-user";
 import { Attribute } from "@/models/attributes";
@@ -10,10 +10,10 @@ import { Attribute } from "@/models/attributes";
 const { BASE_URL } = getConfig();
 
 export const fetchUser = async (uuid: string) =>
-  await getItem<ScimUser>(`${BASE_URL}/scim/Users/${uuid}`);
+  await getItem<User>(`${BASE_URL}/scim/Users/${uuid}`);
 
 export const searchUser = async (filter: string) => {
-  const response = await getItem<Paginated<ScimUser>>(
+  const response = await getItem<Paginated<User>>(
     `${BASE_URL}/iam/account/search?count=100&startIndex=0&filter=${filter}`
   );
   return response.Resources;
@@ -28,38 +28,37 @@ export const getUsersPage = async (
   if (filter) {
     url += `&filter=${filter}`;
   }
-  return await getItem<Paginated<ScimUser>>(url);
+  return await getItem<Paginated<User>>(url);
 };
 
-const manageUser = async (user: ScimUser, op: "add" | "delete") => {
+export const addUser = async (user: ScimUser) => {
   let url = `${BASE_URL}/scim/Users`;
-  if (op === "delete") {
-    url = `${url}/${user.id}`;
-  }
-  // workaround to not send the 'id' field to the backend. If the field is
-  // sent to the backend, even containing an empty string, a user with that id
-  // (or undefined) is created
-  const { id, ...other } = user;
-  const body = JSON.stringify(op === "add" ? other : user);
+  const body = JSON.stringify(user);
   const response = await authFetch(url, {
     body,
-    method: op === "add" ? "POST" : "DELETE",
+    method: "POST",
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
     revalidatePath("/users");
   } else {
     const msg = await response.text();
-    throw Error(`${op} user failed with status ${response.status} ${msg}`);
+    throw Error(`User creation failed with status ${response.status} ${msg}`);
   }
 };
 
-export const addUser = async (user: ScimUser) => {
-  await manageUser(user, "add");
-};
-
-export const deleteUser = async (user: ScimUser) => {
-  await manageUser(user, "delete");
+export const deleteUser = async (user: User) => {
+  const url = `${BASE_URL}/scim/Users/${user.id}`;
+  const response = await authFetch(url, {
+    method: "DELETE",
+    headers: { "content-type": "application/scim+json" },
+  });
+  if (response.ok) {
+    revalidatePath("/users");
+  } else {
+    const msg = await response.text();
+    throw Error(`User deletion failed with status ${response.status} ${msg}`);
+  }
 };
 
 const patchUserSSHKey = async (

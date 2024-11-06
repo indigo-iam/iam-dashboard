@@ -1,9 +1,9 @@
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import GroupsTable from "./Table";
 import JoinGroupButton from "./JoinGroupButton";
 
 type GroupsProps = {
-  user: ScimUser;
+  user: User;
   isAdmin?: boolean;
 };
 

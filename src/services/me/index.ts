@@ -1,14 +1,14 @@
 "use server";
 import { authFetch, getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
-import { ScimOp, ScimRequest, ScimUser } from "@/models/scim";
+import { ScimOp, ScimRequest, User } from "@/models/scim";
 import { Paginated } from "@/models/pagination";
 import { Client } from "@/models/client";
 import { revalidatePath } from "next/cache";
 
 const { BASE_URL } = getConfig();
 
-export const fetchMe = async () => getItem<ScimUser>(`${BASE_URL}/scim/Me`);
+export const fetchMe = async () => getItem<User>(`${BASE_URL}/scim/Me`);
 
 export const getClientsPage = async (count: number, startIndex: number = 1) => {
   return await getItem<Paginated<Client>>(

@@ -1,4 +1,4 @@
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { dateToHuman } from "@/utils/dates";
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import {
@@ -40,8 +40,8 @@ function DeleteUserButton(props: Readonly<{ onDeleteUser: () => void }>) {
 }
 
 type RowProps = {
-  user: ScimUser;
-  onDeleteUser?: (user: ScimUser) => void;
+  user: User;
+  onDeleteUser?: (user: User) => void;
 };
 
 function Row(props: Readonly<RowProps>) {
@@ -74,8 +74,8 @@ function Row(props: Readonly<RowProps>) {
 }
 
 type UsersTableProps = {
-  users: ScimUser[];
-  onDeleteUser?: (user: ScimUser) => void;
+  users: User[];
+  onDeleteUser?: (user: User) => void;
 };
 
 export default function UsersTable(props: Readonly<UsersTableProps>) {

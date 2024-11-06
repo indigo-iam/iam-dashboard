@@ -1,11 +1,11 @@
 import { Button } from "@/components/Buttons";
 import { Form } from "@/components/Form";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { deleteUser } from "@/services/users";
 
 interface DeleteUserProps extends ModalProps {
-  user?: ScimUser;
+  user?: User;
   onUserDeleted?: () => void;
 }
 

@@ -1,9 +1,9 @@
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import AttributesTable from "./Table";
 import AddAttributeButton from "./AddButton";
 
 type AttributesProps = {
-  user: ScimUser;
+  user: User;
 };
 
 export default function Attributes(props: Readonly<AttributesProps>) {

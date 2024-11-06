@@ -1,13 +1,13 @@
 import ConfirmModal from "@/components/ConfirmModal";
 import { ModalProps } from "@/components/Modal";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import {
   assignAdminPrivileges,
   revokeAdminPrivileges,
 } from "@/services/authorities";
 
 interface AssignAdminModalProps extends ModalProps {
-  user: ScimUser;
+  user: User;
 }
 
 export function AssignAdminModal(props: Readonly<AssignAdminModalProps>) {
@@ -18,7 +18,7 @@ export function AssignAdminModal(props: Readonly<AssignAdminModalProps>) {
 
   const action = async () => {
     const operation = isAdmin ? revokeAdminPrivileges : assignAdminPrivileges;
-    await operation(user.id!!);
+    await operation(user.id);
     props.onClose();
   };
 

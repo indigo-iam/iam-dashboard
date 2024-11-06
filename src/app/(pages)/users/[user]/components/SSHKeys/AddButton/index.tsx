@@ -1,11 +1,11 @@
 "use client";
 import { Button } from "@/components/Buttons";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import AddSSHKeyModal from "./AddSSHKeyModal";
 import { useState } from "react";
 
 type AddSSHKeyButtonProps = {
-  user: ScimUser;
+  user: User;
 };
 
 export default function AddSSHKeyButton(props: Readonly<AddSSHKeyButtonProps>) {

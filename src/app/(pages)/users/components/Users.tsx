@@ -1,5 +1,5 @@
 "use client";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { getUsersPage } from "@/services/users";
 import { InputSearch } from "@/components/Inputs";
 import UsersTable from "./UsersTable";
@@ -13,9 +13,9 @@ type UsersProps = { count?: string; page?: string };
 export default function Users(props: Readonly<UsersProps>) {
   const { count, page } = props;
   const [filter, setFilter] = useState<string>();
-  const [users, setUsers] = useState<ScimUser[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [numberOfPages, setNumberOfPages] = useState(0);
-  const [userToDelete, setUserToDelete] = useState<ScimUser>();
+  const [userToDelete, setUserToDelete] = useState<User>();
 
   let itemsPerPage = 10;
   let currentPage = 0;
@@ -44,7 +44,7 @@ export default function Users(props: Readonly<UsersProps>) {
     setFilter(undefined);
   };
 
-  const openDeleteUserModal = (user: ScimUser) => {
+  const openDeleteUserModal = (user: User) => {
     setUserToDelete(user);
   };
 

@@ -9,7 +9,7 @@ import {
   KeyIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/solid";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { EditDetailsModal } from "./EditDetails";
 import { ChangePasswordModal } from "./ChangePassword";
 import { DisableUser } from "./DisableUser";
@@ -20,7 +20,7 @@ import { SignAUPModal } from "./SignAUP";
 import { RequestAUPSignature } from "./RequestAUPSignature";
 
 type OptionsDropdownProps = {
-  user: ScimUser;
+  user: User;
 };
 
 type ModalsState = {

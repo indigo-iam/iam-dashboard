@@ -6,12 +6,12 @@ import {
   TableHeaderCell,
   TableRow,
 } from "@/components/Table";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { fetchAttributes } from "@/services/users";
 import DeleteAttributeButton from "./DeleteButton";
 
 type TableProps = {
-  user: ScimUser;
+  user: User;
 };
 
 export default async function AttributesTable(props: Readonly<TableProps>) {

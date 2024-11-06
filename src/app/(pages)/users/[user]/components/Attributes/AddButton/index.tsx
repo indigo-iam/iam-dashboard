@@ -1,11 +1,11 @@
 "use client";
 import { Button } from "@/components/Buttons";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { useState } from "react";
 import AddAttributeModal from "./AddAttributeModal";
 
 type AddButtonProps = {
-  user: ScimUser;
+  user: User;
 };
 
 export default function AddAttributeButton(props: Readonly<AddButtonProps>) {

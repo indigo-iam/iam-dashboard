@@ -1,12 +1,12 @@
 "use client";
 import { Button } from "@/components/Buttons";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
 import AssignOwnerModal from "./AssignOwnerModal";
 
 type OwnersListProps = {
-  owners: ScimUser[];
+  owners: User[];
 };
 
 export default function OwnersList(props: Readonly<OwnersListProps>) {

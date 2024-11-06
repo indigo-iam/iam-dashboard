@@ -4,14 +4,14 @@ import { Form } from "@/components/Form";
 import { Input } from "@/components/Inputs";
 import Label from "@/components/Label";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import {
   changeMembershipEndTime,
   revokeMembershipEndTime,
 } from "@/services/users";
 
 interface ChangeMembershipEndTimeModalProps extends ModalProps {
-  user: ScimUser;
+  user: User;
 }
 
 export function ChangeMembershipEndTimeModal(

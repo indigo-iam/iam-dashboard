@@ -2,14 +2,14 @@
 import { Button } from "@/components/Buttons";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import SearchUser from "@/components/SearchUser";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { useState } from "react";
 
 interface AssignOwnerModal extends ModalProps {}
 
 export default function AssignOwnerModal(props: Readonly<AssignOwnerModal>) {
-  const [selectedUser, setSelectedUser] = useState<ScimUser>();
-  const addOwner = (user: ScimUser) => {
+  const [selectedUser, setSelectedUser] = useState<User>();
+  const addOwner = (user: User) => {
     setSelectedUser(user);
     console.log(user);
   };

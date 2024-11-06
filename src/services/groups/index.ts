@@ -4,7 +4,7 @@ import { authFetch, getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
 import { Paginated } from "@/models/pagination";
 import { revalidatePath } from "next/cache";
-import { ScimReference, ScimUser } from "@/models/scim";
+import { ScimReference, User } from "@/models/scim";
 
 const { BASE_URL } = getConfig();
 
@@ -194,7 +194,7 @@ export const removeUserFromGroup = async (
 // for some reason this API is not paginated
 export const fetchGroupManagers = (groupId: string) => {
   const url = `${BASE_URL}/iam/group/${groupId}/group-managers`;
-  return getItem<ScimUser[]>(url);
+  return getItem<User[]>(url);
 };
 
 export const assignGroupManager = async (groupId: string, userId: string) => {

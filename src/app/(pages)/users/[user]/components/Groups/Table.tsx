@@ -1,4 +1,4 @@
-import { ScimReference, ScimUser } from "@/models/scim";
+import { ScimReference, User } from "@/models/scim";
 import {
   Table,
   TableBody,
@@ -42,7 +42,7 @@ const Row = (props: Readonly<RowProps>) => {
 };
 
 type GroupsTableProps = {
-  user: ScimUser;
+  user: User;
 };
 
 export default function GroupsTable(props: Readonly<GroupsTableProps>) {

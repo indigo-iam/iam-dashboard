@@ -1,10 +1,10 @@
 import InfoTable from "@/components/InfoTable";
 import { SSHKey } from "@/models/indigo-user";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import DeleteSSHKeyButton from "./DeleteButton";
 
 type TableProps = {
-  user: ScimUser;
+  user: User;
 };
 
 export default function Table(props: Readonly<TableProps>) {

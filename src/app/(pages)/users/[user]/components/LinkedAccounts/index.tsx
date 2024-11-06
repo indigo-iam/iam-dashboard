@@ -1,6 +1,6 @@
 import { XCircleIcon } from "@heroicons/react/16/solid";
 import { OidcId, SamlId } from "@/models/indigo-user";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { Button } from "@/components/Buttons";
 import { Subsection } from "@/components/Section";
 
@@ -72,7 +72,7 @@ function SamlAccounts(props: Readonly<{ samlIds?: SamlId[] }>) {
 }
 
 type LinkedAccountsProps = {
-  user: ScimUser;
+  user: User;
 };
 export async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
   const { user } = props;

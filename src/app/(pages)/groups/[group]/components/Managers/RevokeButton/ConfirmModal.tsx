@@ -1,10 +1,10 @@
 import ConfirmModal from "@/components/ConfirmModal";
 import { Group } from "@/models/groups";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { revokeGroupManager } from "@/services/groups";
 
 type ConfirmRevokeGroupManagerModal = {
-  user: ScimUser;
+  user: User;
   group: Group;
   show: boolean;
   onClose: () => void;

@@ -1,11 +1,11 @@
 import ConfirmModal from "@/components/ConfirmModal";
 import InfoTable from "@/components/InfoTable";
 import { SSHKey } from "@/models/indigo-user";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { deleteSSHKey } from "@/services/users";
 
 type DeleteSSHKeyConfirmModalProps = {
-  user: ScimUser;
+  user: User;
   sshKey: SSHKey;
   show: boolean;
   onClose: () => void;

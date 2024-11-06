@@ -3,7 +3,7 @@ import { Button } from "@/components/Buttons";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import SearchUser from "@/components/SearchUser";
 import { Group } from "@/models/groups";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { useState } from "react";
 import InfoTable from "@/components/InfoTable";
 import { addUserToGroup } from "@/services/groups";
@@ -15,8 +15,8 @@ interface AddMemberModalProps extends ModalProps {
 
 export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
   const { group, ...modalProps } = props;
-  const [selectedUser, setSelectedUser] = useState<ScimUser>();
-  const selectUser = (user: ScimUser) => setSelectedUser(user);
+  const [selectedUser, setSelectedUser] = useState<User>();
+  const selectUser = (user: User) => setSelectedUser(user);
 
   const clearAndClose = () => {
     props.onClose();

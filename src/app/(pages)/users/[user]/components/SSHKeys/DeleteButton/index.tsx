@@ -1,12 +1,12 @@
 "use client";
 import { DeleteButton } from "@/components/Buttons";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import { useState } from "react";
 import DeleteSSHKeyConfirmModal from "./ConfirmModal";
 import { SSHKey } from "@/models/indigo-user";
 
 type DeleteSSHKeyButtonProps = {
-  user: ScimUser;
+  user: User;
   sshKey: SSHKey;
 };
 

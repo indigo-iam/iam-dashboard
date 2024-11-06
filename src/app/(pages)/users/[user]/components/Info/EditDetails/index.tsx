@@ -8,11 +8,11 @@ import {
   ArrowUturnLeftIcon,
 } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import type { ScimUser } from "@/models/scim";
+import type { User } from "@/models/scim";
 import { patchMe } from "@/services/me";
 import React, { useState } from "react";
 
-const Body = (props: { user: ScimUser }) => {
+const Body = (props: { user: User }) => {
   const { user } = props;
   return (
     <ModalBody>
@@ -105,7 +105,7 @@ const Footer = (props: { canSubmit: boolean; onClose?: () => void }) => {
   );
 };
 
-const EditDetailsForm = (props: { user: ScimUser; onClose?: () => void }) => {
+const EditDetailsForm = (props: { user: User; onClose?: () => void }) => {
   const [canSubmit, setCanSubmit] = useState(false);
 
   const handleChange = (e: React.FormEvent<HTMLFormElement>) => {
@@ -155,7 +155,7 @@ const EditDetailsForm = (props: { user: ScimUser; onClose?: () => void }) => {
 };
 
 export interface EditDetailsModalProps extends ModalProps {
-  user: ScimUser;
+  user: User;
 }
 
 export const EditDetailsModal = (props: EditDetailsModalProps) => {

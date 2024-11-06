@@ -6,14 +6,14 @@ import {
   TableRow,
   TableCell,
 } from "@/components/Table";
-import { ScimUser } from "@/models/scim";
+import { User } from "@/models/scim";
 import Link from "next/link";
 import RevokeManagerButton from "./RevokeButton";
 import { Group } from "@/models/groups";
 
 type MembersTableProps = {
   group: Group;
-  managers: ScimUser[];
+  managers: User[];
 };
 
 export default function ManagersTable(props: Readonly<MembersTableProps>) {

@@ -141,8 +141,8 @@ export async function deleteAttribute(userId: string, attr: Attribute) {
   }
 }
 
-export async function changeMembershipEndTime(userID: string, date: string) {
-  const url = `${BASE_URL}/iam/account/${userID}/endTime`;
+export async function changeMembershipEndTime(userId: string, date: string) {
+  const url = `${BASE_URL}/iam/account/${userId}/endTime`;
   const body = JSON.stringify({ endTime: date });
   const response = await authFetch(url, {
     method: "PUT",
@@ -152,7 +152,7 @@ export async function changeMembershipEndTime(userID: string, date: string) {
     },
   });
   if (response.ok) {
-    revalidatePath(`/users/${userID}`);
+    revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();
     throw Error(
@@ -161,8 +161,8 @@ export async function changeMembershipEndTime(userID: string, date: string) {
   }
 }
 
-export async function revokeMembershipEndTime(userID: string) {
-  const url = `${BASE_URL}/iam/account/${userID}/endTime`;
+export async function revokeMembershipEndTime(userId: string) {
+  const url = `${BASE_URL}/iam/account/${userId}/endTime`;
   const body = JSON.stringify({});
   const response = await authFetch(url, {
     method: "PUT",
@@ -172,7 +172,7 @@ export async function revokeMembershipEndTime(userID: string) {
     },
   });
   if (response.ok) {
-    revalidatePath(`/users/${userID}`);
+    revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();
     throw Error(

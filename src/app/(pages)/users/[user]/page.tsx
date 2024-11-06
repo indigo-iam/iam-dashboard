@@ -17,10 +17,10 @@ type UserPageProps = {
 
 export default async function UserPage(props: Readonly<UserPageProps>) {
   const { params } = props;
-  const userID = params.user;
+  const userId = params.user;
   const session = await auth();
   const isAdmin = session?.is_admin ?? false;
-  const user = userID === "me" ? await fetchMe() : await fetchUser(userID);
+  const user = userId === "me" ? await fetchMe() : await fetchUser(userId);
 
   if (!user) {
     return <h1>User not found</h1>;

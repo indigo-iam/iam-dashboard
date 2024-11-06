@@ -5,13 +5,13 @@ import { revalidatePath } from "next/cache";
 
 const { BASE_URL } = getConfig();
 
-export const assignAdminPrivileges = async (userID: string) => {
-  let url = `${BASE_URL}/iam/account/${userID}/authorities?authority=ROLE_ADMIN`;
+export const assignAdminPrivileges = async (userId: string) => {
+  let url = `${BASE_URL}/iam/account/${userId}/authorities?authority=ROLE_ADMIN`;
   const response = await authFetch(url, {
     method: "POST",
   });
   if (response.ok) {
-    revalidatePath(`/users/${userID}`);
+    revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();
     throw new Error(
@@ -20,13 +20,13 @@ export const assignAdminPrivileges = async (userID: string) => {
   }
 };
 
-export const revokeAdminPrivileges = async (userID: string) => {
-  let url = `${BASE_URL}/iam/account/${userID}/authorities?authority=ROLE_ADMIN`;
+export const revokeAdminPrivileges = async (userId: string) => {
+  let url = `${BASE_URL}/iam/account/${userId}/authorities?authority=ROLE_ADMIN`;
   const response = await authFetch(url, {
     method: "DELETE",
   });
   if (response.ok) {
-    revalidatePath(`/users/${userID}`);
+    revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();
     throw new Error(

@@ -31,6 +31,7 @@ export type SSHKey = {
 
 export type IndigoUser = {
   aupSignatureTime?: string;
+  endTime?: string;
   oidcIds?: OidcId[];
   samlIds?: SamlId[];
   certificates?: Certificate[];

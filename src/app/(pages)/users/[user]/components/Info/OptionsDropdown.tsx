@@ -195,6 +195,7 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
         onClose={() => dispatch({ type: "closeAssignAdmin" })}
       />
       <ChangeMembershipEndTimeModal
+        user={user}
         show={state.showChangeMembershipEndTime}
         onClose={() => dispatch({ type: "closeChangeMembershipEndTime" })}
       />

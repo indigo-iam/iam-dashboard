@@ -124,12 +124,54 @@ export async function addAttribute(userId: string, attr: Attribute) {
 export async function deleteAttribute(userId: string, attr: Attribute) {
   const url = `${BASE_URL}/iam/account/${userId}/attributes?name=${attr.name}`;
   const response = await authFetch(url, {
-    method: "DELETE"
+    method: "DELETE",
   });
   if (response.ok) {
     revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();
-    throw Error(`Delete attribute failed with status ${response.status} ${msg}`);
+    throw Error(
+      `Delete attribute failed with status ${response.status} ${msg}`
+    );
+  }
+}
+
+export async function changeMembershipEndTime(userID: string, date: string) {
+  const url = `${BASE_URL}/iam/account/${userID}/endTime`;
+  const body = JSON.stringify({ endTime: date });
+  const response = await authFetch(url, {
+    method: "PUT",
+    body,
+    headers: {
+      "content-type": "application/json;charset=utf-8",
+    },
+  });
+  if (response.ok) {
+    revalidatePath(`/users/${userID}`);
+  } else {
+    const msg = await response.text();
+    throw Error(
+      `Change membership end date failed with status ${response.status} ${msg}`
+    );
+  }
+}
+
+export async function revokeMembershipEndTime(userID: string) {
+  const url = `${BASE_URL}/iam/account/${userID}/endTime`;
+  const body = JSON.stringify({});
+  const response = await authFetch(url, {
+    method: "PUT",
+    body,
+    headers: {
+      "content-type": "application/json;charset=utf-8",
+    },
+  });
+  if (response.ok) {
+    revalidatePath(`/users/${userID}`);
+  } else {
+    const msg = await response.text();
+    throw Error(
+      `Revoke membership end date failed with status ${response.status} ${msg}`
+    );
   }
 }

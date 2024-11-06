@@ -21,8 +21,12 @@ type UserInfoProps = {
 };
 export default function UserInfo(props: Readonly<UserInfoProps>) {
   const { user } = props;
+  const indigoUser = user["urn:indigo-dc:scim:schemas:IndigoUser"];
   const created = user.meta?.created
     ? dateToHuman(new Date(user.meta?.created))
+    : "N/A";
+  const endTime = indigoUser?.endTime
+    ? dateToHuman(new Date(indigoUser.endTime))
     : "N/A";
   const lastModified = user.meta?.lastModified
     ? dateToHuman(new Date(user.meta?.lastModified))
@@ -40,6 +44,7 @@ export default function UserInfo(props: Readonly<UserInfoProps>) {
     { name: "Email", value: user.emails?.[0].value ?? "N/A" },
     { name: "Status", value: <ActiveStatus active={user.active ?? false} /> },
     { name: "Created", value: created },
+    { name: "End Time", value: endTime },
     { name: "Last Modified", value: lastModified },
     { name: "Signed AUP", value: signedAup },
   ];

@@ -1,8 +1,14 @@
 import { fetchGroupsRequests } from "@/services/group-requests";
 import InfoTable from "@/components/InfoTable";
+import { User } from "@/models/scim";
 
-export const GroupRequests = async () => {
-  const result = await fetchGroupsRequests();
+type GroupRequestProps = {
+  user: User;
+};
+
+export const GroupRequests = async (props: Readonly<GroupRequestProps>) => {
+  const { user } = props;
+  const result = await fetchGroupsRequests(user.userName);
 
   if (!result || result.Resources.length === 0) {
     return "No requests found.";
@@ -13,9 +19,6 @@ export const GroupRequests = async () => {
     return {
       id: gp.uuid,
       values: [
-        { name: "Username", value: gp.username },
-        { name: "Full Name", value: gp.userFullName },
-        { name: "User ID", value: gp.userUuid },
         { name: "Group Name", value: gp.groupName },
         { name: "Group ID", value: gp.groupUuid },
       ],

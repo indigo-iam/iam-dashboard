@@ -10,10 +10,12 @@ import { revalidatePath } from "next/cache";
 
 const { BASE_URL } = getConfig();
 
-export const fetchGroupsRequests = async () => {
-  return await getItem<PaginatedGroupRequests>(
-    `${BASE_URL}/iam/group_requests?status=PENDING`
-  );
+export const fetchGroupsRequests = async (username?: string) => {
+  let url = `${BASE_URL}/iam/group_requests?status=PENDING`;
+  if (username) {
+    url += `&username=${username}`;
+  }
+  return await getItem<PaginatedGroupRequests>(url);
 };
 
 export const submitGroupRequest = async (req: JoinGroupRequest) => {

@@ -40,7 +40,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
       </Panel>
       <Panel>
         <Section title="Group Requests">
-          <GroupRequests />
+          <GroupRequests user={user} />
         </Section>
       </Panel>
       <Panel>

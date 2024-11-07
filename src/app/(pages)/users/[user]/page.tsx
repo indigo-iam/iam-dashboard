@@ -20,7 +20,8 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
   const userId = params.user;
   const session = await auth();
   const isAdmin = session?.is_admin ?? false;
-  const user = userId === "me" ? await fetchMe() : await fetchUser(userId);
+  const isMe = userId === "me";
+  const user = isMe ? await fetchMe() : await fetchUser(userId);
 
   if (!user) {
     return <h1>User not found</h1>;
@@ -40,7 +41,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
       </Panel>
       <Panel>
         <Section title="Group Requests">
-          <GroupRequests user={user} />
+          <GroupRequests user={user} isMe={isMe} />
         </Section>
       </Panel>
       <Panel>

@@ -34,13 +34,13 @@ export const submitGroupRequest = async (req: JoinGroupRequest) => {
   }
 };
 
-export const abortGroupRequest = async (req: GroupRequest) => {
+export const abortGroupRequest = async (userId: string, req: GroupRequest) => {
   const url = `${BASE_URL}/iam/group_requests/${req.uuid}`;
   const response = await authFetch(url, {
     method: "DELETE",
   });
   if (response.ok) {
-    revalidatePath("/");
+    revalidatePath(`/users/${userId}`);
   } else {
     return await response.json();
   }

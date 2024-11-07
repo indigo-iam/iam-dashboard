@@ -223,3 +223,19 @@ export async function requestAUPSignature(userId: string) {
     );
   }
 }
+
+export async function signAUP(userId: string) {
+  const url = `${BASE_URL}/iam/aup/signature/${userId}`;
+  const body = JSON.stringify({ signatureTime: new Date().toISOString() });
+  const response = await authFetch(url, {
+    method: "PATCH",
+    headers: { "content-type": "application/json" },
+    body,
+  });
+  if (response.ok) {
+    revalidatePath(`/user/${userId}`);
+  } else {
+    const msg = await response.text();
+    throw Error(`Sign AUP failed with status code ${response.status} ${msg}`);
+  }
+}

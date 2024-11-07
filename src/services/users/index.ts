@@ -2,7 +2,7 @@
 import { authFetch, getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
 import { Paginated } from "@/models/pagination";
-import { User, ScimUser } from "@/models/scim";
+import { User, ScimUser, ScimRequest } from "@/models/scim";
 import { revalidatePath } from "next/cache";
 import { SSHKey } from "@/models/indigo-user";
 import { Attribute } from "@/models/attributes";
@@ -176,6 +176,35 @@ export async function revokeMembershipEndTime(userId: string) {
     const msg = await response.text();
     throw Error(
       `Revoke membership end date failed with status ${response.status} ${msg}`
+    );
+  }
+}
+
+export async function changeUserStatus(userId: string, status: boolean) {
+  const url = `${BASE_URL}/scim/Users/${userId}`;
+  const patchRequest: ScimRequest = {
+    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
+    operations: [
+      {
+        op: "replace",
+        value: {
+          active: status,
+        },
+      },
+    ],
+  };
+  const body = JSON.stringify(patchRequest);
+  const response = await authFetch(url, {
+    method: "PATCH",
+    body,
+    headers: { "content-type": "application/scim+json" },
+  });
+  if (response.ok) {
+    revalidatePath(`/users/${userId}`);
+  } else {
+    const msg = await response.text();
+    throw Error(
+      `Edit user status failed with status code ${response.status} ${msg}`
     );
   }
 }

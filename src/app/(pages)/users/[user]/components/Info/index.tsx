@@ -7,7 +7,7 @@ const ActiveStatus = (props: { active: boolean }) => {
   const { active } = props;
   return (
     <div className="flex">
-      <p>{`${active ? "Active" : "Disabled"}`}</p>
+      <p>{`${active ? "active" : "disabled"}`}</p>
       <div
         title={`${active ? "Active" : "Disabled"}`}
         className={`${active ? "bg-success" : "bg-danger"} my-auto ml-2 h-3 w-3 rounded-full`}

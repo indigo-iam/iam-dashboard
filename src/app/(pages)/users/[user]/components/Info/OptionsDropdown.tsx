@@ -8,6 +8,7 @@ import {
   DocumentTextIcon,
   KeyIcon,
   PencilSquareIcon,
+  PowerIcon,
 } from "@heroicons/react/24/solid";
 import { User } from "@/models/scim";
 import { EditDetailsModal } from "./EditDetails";
@@ -120,8 +121,17 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
               className="flex gap-2 text-sm"
               onClick={() => dispatch({ type: "openDisableUser" })}
             >
-              <NoSymbolIcon className="w-5" />
-              Disable User
+              {user.active ? (
+                <>
+                  <NoSymbolIcon className="w-5" />
+                  Disable User
+                </>
+              ) : (
+                <>
+                  <PowerIcon className="w-5" />
+                  Enable User
+                </>
+              )}
             </button>
           </MenuItem>
           <MenuItem>
@@ -186,6 +196,7 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
         onClose={() => dispatch({ type: "closeChangePassword" })}
       />
       <DisableUser
+        user={user}
         show={state.showDisableUser}
         onClose={() => dispatch({ type: "closeDisableUser" })}
       />

@@ -208,3 +208,18 @@ export async function changeUserStatus(userId: string, status: boolean) {
     );
   }
 }
+
+export async function requestAUPSignature(userId: string) {
+  const url = `${BASE_URL}/iam/aup/signature/${userId}`;
+  const response = await authFetch(url, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    revalidatePath(`/users/${userId}`);
+  } else {
+    const msg = await response.text();
+    throw Error(
+      `Request AUP signature failed with status code ${response.status} ${msg}`
+    );
+  }
+}

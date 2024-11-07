@@ -215,6 +215,7 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
         onClose={() => dispatch({ type: "closeSignAUP" })}
       />
       <RequestAUPSignature
+        user={user}
         show={state.showRequestAUPSignature}
         onClose={() => dispatch({ type: "closeRequestAUPSignature" })}
       />

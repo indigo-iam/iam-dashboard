@@ -11,8 +11,9 @@ import {
   UserIcon,
   ShieldCheckIcon,
   InformationCircleIcon,
+  InboxArrowDownIcon,
 } from "@heroicons/react/20/solid";
-import LogoHeader  from "./LogoHeader";
+import LogoHeader from "./LogoHeader";
 import Link from "./Link";
 
 const LEFT_SIDEBAR_ID = "left-sidebar";
@@ -50,6 +51,11 @@ const OrganizationManagement = () => {
           title="Clients"
           href="/clients"
           icon={<RocketLaunchIcon />}
+        />
+        <SidebarLink
+          title="Requests"
+          href="/requests"
+          icon={<InboxArrowDownIcon />}
         />
         <SidebarLink title="Tokens" href="/tokens" icon={<KeyIcon />} />
       </nav>

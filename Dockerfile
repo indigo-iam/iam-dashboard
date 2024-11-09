@@ -20,8 +20,8 @@ COPY . .
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
-ENV NEXT_TELEMETRY_DISABLED 1
-ENV NODE_ENV production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
 
 RUN npm run build
 
@@ -29,8 +29,8 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
 COPY --from=builder /app/public ./public
 
@@ -47,8 +47,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
-ENV NODE_ENV production
-ENV PORT 80
+ENV NODE_ENV=production
+ENV PORT=80
 EXPOSE ${PORT}
 
 # server.js is created by next build from the standalone output

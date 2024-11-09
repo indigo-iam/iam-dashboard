@@ -21,12 +21,18 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
         <Section title="Group Information">
           <GroupInfo group={group} />
         </Section>
+      </Panel>
+      <Panel>
         <Section title="Subgroups">
           <SubgroupsTable group={group} />
         </Section>
+      </Panel>
+      <Panel>
         <Section title="Managers">
           <Managers group={group} />
         </Section>
+      </Panel>
+      <Panel>
         <Section title="Members">
           <Members group={group} />
         </Section>

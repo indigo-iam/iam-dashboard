@@ -7,7 +7,7 @@ import {
   TableHeaderCell,
   TableRow,
 } from "@/components/Table";
-import Link from "next/link";
+import Link from "@/components/Link";
 import { UnlinkMemberButton } from "@/components/Buttons";
 import getConfig from "@/utils/config";
 
@@ -23,12 +23,7 @@ const Row = (props: Readonly<RowProps>) => {
   return (
     <TableRow>
       <TableCell className="grow">
-        <Link
-          href={`/groups/${groupRef.value}`}
-          className="text-primary-800 underline"
-        >
-          {groupRef.display}
-        </Link>
+        <Link href={`/groups/${groupRef.value}`}>{groupRef.display}</Link>
       </TableCell>
       <TableCell className="text-center">
         <UnlinkMemberButton
@@ -63,7 +58,9 @@ export default function GroupsTable(props: Readonly<GroupsTableProps>) {
     <Table>
       <TableHeader>
         <TableHeaderCell>Group</TableHeaderCell>
-        <TableHeaderCell className="text-center w-1/12">Actions</TableHeaderCell>
+        <TableHeaderCell className="w-1/12 text-center">
+          Actions
+        </TableHeaderCell>
       </TableHeader>
       <TableBody>
         {groups.map(group => {

@@ -34,6 +34,7 @@ export default function Main(props: Readonly<MainProps>) {
           name="created_at"
           defaultValue={created_at}
           contentEditable={false}
+          className="bg-transparent"
         />
       </FormSection>
       <FormSection htmlFor="client-name" title="Client Name">
@@ -51,13 +52,14 @@ export default function Main(props: Readonly<MainProps>) {
           name="client_id"
           defaultValue={client_id}
           contentEditable={false}
+          className="bg-transparent"
         />
       </FormSection>
       <FormSection htmlFor="client-description" title="Client description">
         <textarea
           id="client-description"
           name="client_description"
-          className="w-full border p-2"
+          className="w-full border bg-transparent p-2"
           defaultValue={client_description}
         />
       </FormSection>
@@ -69,6 +71,7 @@ export default function Main(props: Readonly<MainProps>) {
           id="dynamically-registered-input"
           name="dynamically_registered"
           defaultValue={String(dynamically_registered)}
+          className="bg-transparent"
         />
       </FormSection>
       <FormSection htmlFor="redirect-uris" title="Redirect URIs">

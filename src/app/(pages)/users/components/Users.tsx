@@ -55,7 +55,6 @@ export default function Users(props: Readonly<UsersProps>) {
 
   return (
     <div className="space-y-3">
-      <InputSearch onChange={handleFilterChange} onClear={handleFilterClear} />
       <DeleteUser
         show={!!userToDelete}
         onClose={closeDeleteUserModal}
@@ -63,6 +62,10 @@ export default function Users(props: Readonly<UsersProps>) {
         user={userToDelete}
       />
       <Panel>
+        <InputSearch
+          onChange={handleFilterChange}
+          onClear={handleFilterClear}
+        />
         <UsersTable users={users} onDeleteUser={openDeleteUserModal} />
         <Paginator numberOfPages={numberOfPages} />
         <AddUser onUserAdded={fetchUsers} />

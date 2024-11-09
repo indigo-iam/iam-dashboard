@@ -7,8 +7,7 @@ import {
   TableRow,
 } from "@/components/Table";
 import { Group } from "@/models/groups";
-
-import Link from "next/link";
+import Link from "@/components/Link";
 import AddSubgroupButton from "./AddSubgroupButton";
 import DeleteGroupButton from "./DeleteGroupButton";
 import { ScimReference } from "@/models/scim";
@@ -34,12 +33,7 @@ function Row(props: Readonly<RowProps>) {
   return (
     <TableRow>
       <TableCell>
-        <Link
-          href={`/groups/${group.id}`}
-          className="text-primary-800 underline"
-        >
-          {group.displayName}
-        </Link>
+        <Link href={`/groups/${group.id}`}>{group.displayName}</Link>
       </TableCell>
       <TableCell>{strLabels}</TableCell>
       <TableCell className="flex">

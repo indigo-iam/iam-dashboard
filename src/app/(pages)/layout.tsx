@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`text-primary`}>
+      <body className={`dark:bg-dark text-primary dark:text-secondary-50`}>
         <Sidebar />
         <div className="ml-0 p-4 lg:ml-80">{children}</div>
       </body>

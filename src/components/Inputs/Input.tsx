@@ -12,7 +12,7 @@ export function Input(props: Readonly<InputProps>) {
   return (
     <div className={className}>
       <HeadlessInput
-        className="border w-full rounded-lg px-4 py-2 disabled:bg-secondary-300 placeholder:disabled:text-secondary-600"
+        className="w-full rounded-lg border px-4 py-2 disabled:bg-secondary-300 placeholder:disabled:text-secondary-600 dark:bg-primary"
         {...inputProps}
       />
     </div>

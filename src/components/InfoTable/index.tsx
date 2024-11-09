@@ -5,7 +5,7 @@ type RowProps = {
 function Row(props: Readonly<RowProps>) {
   const { name, value } = props;
   return (
-    <tr className="!bg-secondary text-sm">
+    <tr className=" text-sm">
       <td className="px-2 py-0.5">
         <b>{name}</b>
       </td>

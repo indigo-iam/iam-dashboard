@@ -9,7 +9,7 @@ import {
   TableHeaderCell,
   TableRow,
 } from "@/components/Table";
-import Link from "next/link";
+import Link from "@/components/Link";
 
 function StatusIcon(props: Readonly<{ active: boolean }>) {
   const { active } = props;
@@ -57,9 +57,7 @@ function Row(props: Readonly<RowProps>) {
   return (
     <TableRow>
       <TableCell>
-        <Link href={`/users/${user.id}`} className="text-primary-800 underline">
-          {user.name?.formatted}
-        </Link>
+        <Link href={`/users/${user.id}`}>{user.name?.formatted}</Link>
       </TableCell>
       <TableCell>{user.emails?.[0].value}</TableCell>
       <TableCell>{created}</TableCell>

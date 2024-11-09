@@ -9,7 +9,7 @@ export default function Tab(props: Readonly<TabProps>) {
   return (
     <HeadlessUITab
       {...other}
-      className="mx-0.5 w-full rounded-t-md px-3 py-1 text-secondary-300 hover:border-b-2 hover:border-secondary-200 hover:bg-secondary-100 data-[selected]:border-b-2 data-[selected]:border-primary data-[selected]:text-primary"
+      className="mx-0.5 w-full rounded-t-md px-3 py-1 text-secondary-300 hover:border-b-2 hover:border-secondary-200 hover:bg-secondary-100 data-[selected]:border-b-2 data-[selected]:border-primary data-[selected]:text-primary dark:hover:bg-primary-hover dark:data-[selected]:border-secondary dark:data-[selected]:bg-primary-hover dark:data-[selected]:text-secondary"
     >
       <small>{children}</small>
     </HeadlessUITab>

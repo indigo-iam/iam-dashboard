@@ -23,7 +23,7 @@ export function Subsection(props: Readonly<SubsectionProps>) {
   return (
     <section>
       <b>{title}</b>
-      <>{children}</>
+      {children}
     </section>
   );
 }

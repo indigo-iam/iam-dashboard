@@ -24,7 +24,7 @@ function Row(props: Readonly<RowProps>) {
       <TableCell>
         <Link
           href={`/clients/${client_id}`}
-          className="text-primary-800 underline"
+          className="text-primary-200 underline"
         >
           {client_id}
         </Link>

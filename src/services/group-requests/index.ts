@@ -34,6 +34,39 @@ export const submitGroupRequest = async (req: JoinGroupRequest) => {
   }
 };
 
+export const approveGroupRequest = async (requestId: string) => {
+  const url = `${BASE_URL}/iam/group_requests/${requestId}/approve`;
+  const response = await authFetch(url, {
+    method: "POST",
+  });
+  if (response.ok) {
+    revalidatePath("/requests");
+  } else {
+    const msg = await response.text();
+    throw Error(
+      `group request approval failed with status ${response.status} ${msg}`
+    );
+  }
+};
+
+export const rejectGroupRequest = async (
+  requestId: string,
+  motivation: string
+) => {
+  const url = `${BASE_URL}/iam/group_requests/${requestId}/reject?motivation=${motivation}`;
+  const response = await authFetch(url, {
+    method: "POST",
+  });
+  if (response.ok) {
+    revalidatePath("/requests");
+  } else {
+    const msg = await response.text();
+    throw Error(
+      `group request rejection failed with status ${response.status} ${msg}`
+    );
+  }
+};
+
 export const abortGroupRequest = async (userId: string, req: GroupRequest) => {
   const url = `${BASE_URL}/iam/group_requests/${req.uuid}`;
   const response = await authFetch(url, {

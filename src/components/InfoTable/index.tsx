@@ -5,7 +5,7 @@ type RowProps = {
 function Row(props: Readonly<RowProps>) {
   const { name, value } = props;
   return (
-    <tr className=" text-sm">
+    <tr className="text-sm">
       <td className="px-2 py-0.5">
         <b>{name}</b>
       </td>
@@ -14,8 +14,10 @@ function Row(props: Readonly<RowProps>) {
   );
 }
 
-type InfoTableProps = {
-  data: { name: string; value?: string | React.ReactNode }[];
+export type InfoTableData = { name: string; value?: string | React.ReactNode };
+
+export type InfoTableProps = {
+  data: InfoTableData[];
   className?: string;
 };
 

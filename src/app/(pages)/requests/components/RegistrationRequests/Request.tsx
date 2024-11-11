@@ -4,6 +4,7 @@ import Link from "@/components/Link";
 import ConfirmButton from "./ConfirmButton";
 import RejectButton from "./RejectButton";
 import { dateToHuman } from "@/utils/dates";
+import { RequestView } from "../RequestView";
 
 type RequestProps = {
   request: Registration;
@@ -26,14 +27,9 @@ export function Request(props: Readonly<RequestProps>) {
     { name: "Note", value: <i>{request.notes}</i> },
   ];
   return (
-    <div className="flex flex-row">
-      <InfoTable className="flex-grow" data={data} />
-      <div className="m-auto">
-        <div className="mx-auto flex gap-1">
-          <RejectButton request={request} />
-          <ConfirmButton request={request} />
-        </div>
-      </div>
-    </div>
+    <RequestView data={data}>
+      <RejectButton request={request} />
+      <ConfirmButton request={request} />
+    </RequestView>
   );
 }

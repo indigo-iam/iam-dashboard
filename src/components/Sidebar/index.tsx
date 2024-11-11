@@ -5,7 +5,6 @@ import Drawer, {
 } from "@/components/Drawer";
 import {
   HomeIcon,
-  KeyIcon,
   RocketLaunchIcon,
   UserGroupIcon,
   UserIcon,
@@ -60,7 +59,6 @@ const OrganizationManagement = async () => {
             href="/requests"
             icon={<InboxArrowDownIcon />}
           />
-          <SidebarLink title="Tokens" href="/tokens" icon={<KeyIcon />} />
         </nav>
       </DrawerSection>
     );

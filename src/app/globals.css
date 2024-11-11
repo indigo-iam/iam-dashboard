@@ -49,34 +49,34 @@
   }
 
   .btn-secondary {
-    @apply btn border border-secondary-200 bg-secondary-200 text-primary hover:border-secondary-400 hover:bg-secondary-400 hover:text-secondary;
+    @apply btn border border-secondary-200 bg-secondary-200 text-primary hover:border-secondary-400 hover:bg-secondary-400 hover:text-secondary disabled:border-secondary-200/50 disabled:bg-secondary-200/50;
   }
 
   .btn-secondary-outline {
-    @apply btn border border-secondary-200 hover:bg-secondary-200;
+    @apply btn border border-secondary-200 hover:bg-secondary-200 disabled:border-secondary-200/50 disabled:bg-secondary-200/50;
   }
 
   .btn-success {
-    @apply btn border border-success bg-success text-secondary hover:bg-success-600;
+    @apply btn border border-success bg-success text-secondary hover:bg-success-600 disabled:border-success/50 disabled:bg-success/50;
   }
 
   .btn-success-outline {
-    @apply btn border border-success bg-secondary text-success hover:bg-success hover:text-secondary;
+    @apply btn border border-success bg-secondary text-success hover:bg-success hover:text-secondary disabled:border-success/50 disabled:hover:bg-success/50;
   }
 
   .btn-warning {
-    @apply btn bg-warning text-secondary hover:bg-warning-300;
+    @apply btn bg-warning text-secondary hover:bg-warning-300 disabled:bg-warning/50;
   }
 
   .btn-warning-outline {
-    @apply btn border border-warning bg-secondary text-warning hover:bg-warning hover:text-secondary;
+    @apply btn border border-warning bg-secondary text-warning hover:bg-warning hover:text-secondary disabled:border-warning/50 disabled:hover:bg-warning/50;
   }
 
   .btn-danger {
-    @apply btn bg-danger text-secondary hover:bg-danger-700;
+    @apply btn bg-danger text-secondary hover:bg-danger-700 disabled:bg-danger/50;
   }
 
   .btn-danger-outline {
-    @apply btn border border-danger bg-secondary text-danger hover:bg-danger hover:text-secondary dark:bg-primary;
+    @apply btn border border-danger bg-secondary text-danger hover:bg-danger hover:text-secondary disabled:border-danger/50 disabled:hover:bg-danger/50 dark:bg-primary;
   }
 }

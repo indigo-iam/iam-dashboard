@@ -7,4 +7,5 @@ export interface Registration {
   accountId: string;
   creationTime: number;
   status: string;
+  notes?: string;
 }

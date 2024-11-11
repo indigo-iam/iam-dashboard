@@ -15,6 +15,7 @@ import {
 } from "@heroicons/react/20/solid";
 import LogoHeader from "./LogoHeader";
 import Link from "./Link";
+import { auth } from "@/auth";
 
 const LEFT_SIDEBAR_ID = "left-sidebar";
 
@@ -41,26 +42,29 @@ const AccountManagement = () => {
   );
 };
 
-const OrganizationManagement = () => {
-  return (
-    <DrawerSection title="Organization Management">
-      <nav>
-        <SidebarLink title="Users" href="/users" icon={<UserIcon />} />
-        <SidebarLink title="Groups" href="/groups" icon={<UserGroupIcon />} />
-        <SidebarLink
-          title="Clients"
-          href="/clients"
-          icon={<RocketLaunchIcon />}
-        />
-        <SidebarLink
-          title="Requests"
-          href="/requests"
-          icon={<InboxArrowDownIcon />}
-        />
-        <SidebarLink title="Tokens" href="/tokens" icon={<KeyIcon />} />
-      </nav>
-    </DrawerSection>
-  );
+const OrganizationManagement = async () => {
+  const session = await auth();
+  if (session?.is_admin) {
+    return (
+      <DrawerSection title="Organization Management">
+        <nav>
+          <SidebarLink title="Users" href="/users" icon={<UserIcon />} />
+          <SidebarLink title="Groups" href="/groups" icon={<UserGroupIcon />} />
+          <SidebarLink
+            title="Clients"
+            href="/clients"
+            icon={<RocketLaunchIcon />}
+          />
+          <SidebarLink
+            title="Requests"
+            href="/requests"
+            icon={<InboxArrowDownIcon />}
+          />
+          <SidebarLink title="Tokens" href="/tokens" icon={<KeyIcon />} />
+        </nav>
+      </DrawerSection>
+    );
+  }
 };
 
 const Body = () => {

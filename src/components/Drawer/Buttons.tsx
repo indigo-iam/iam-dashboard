@@ -19,7 +19,7 @@ export const DrawerButtons = async () => {
       <DrawerButton
         icon={<ArrowRightEndOnRectangleIcon />}
         title="Logout"
-        href="/logout"
+        href="/signout"
       />
     </div>
   );

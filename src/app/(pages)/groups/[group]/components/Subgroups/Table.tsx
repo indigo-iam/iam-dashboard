@@ -8,7 +8,7 @@ import {
   TableRow,
   TableCell,
 } from "@/components/Table";
-import Link from "next/link";
+import Link from "@/components/Link";
 import DeleteGroupButton from "../../../components/DeleteGroupButton";
 
 type SubgroupsTableProps = {
@@ -38,12 +38,7 @@ export default async function SubgroupsTable(
           return (
             <TableRow key={group.value}>
               <TableCell>
-                <Link
-                  href={`/groups/${group.value}`}
-                  className="text-primary-800 underline"
-                >
-                  {group.display}
-                </Link>
+                <Link href={`/groups/${group.value}`}>{group.display}</Link>
               </TableCell>
               <TableCell className="text-center">
                 <DeleteGroupButton group={group} />

@@ -8,7 +8,7 @@ import {
   TableRow,
   TableCell,
 } from "@/components/Table";
-import Link from "next/link";
+import Link from "@/components/Link";
 import { UnlinkMemberButton } from "@/components/Buttons";
 import { ScimReference } from "@/models/scim";
 
@@ -36,12 +36,7 @@ export default async function Members(props: Readonly<MembersProps>) {
           return (
             <TableRow key={member.value}>
               <TableCell>
-                <Link
-                  href={`/users/${member.value}`}
-                  className="text-primary-800 underline"
-                >
-                  {member.display}
-                </Link>
+                <Link href={`/users/${member.value}`}>{member.display}</Link>
               </TableCell>
               <TableCell className="text-center">
                 <UnlinkMemberButton

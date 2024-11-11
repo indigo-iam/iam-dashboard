@@ -9,7 +9,7 @@ interface LabelProps extends HeadlessLabelProps {
 
 export default function Label(props: Readonly<LabelProps>) {
   const { required, ...labelProps } = props;
-  let className = "text-normal font-bold text-primary";
+  let className = "text-normal font-bold";
   if (required) {
     className += " after:content-['*'] after:text-danger";
   }

@@ -24,7 +24,7 @@ export function InputListDropdown(props: Readonly<InputListDropdown>) {
       <button
         type="button"
         onClick={() => removeItem(index)}
-        className="w-5 rounded bg-secondary-100 hover:bg-danger hover:text-secondary"
+        className="w-5 rounded bg-secondary-100 hover:bg-danger hover:text-secondary dark:bg-secondary/60 dark:text-danger/80"
       >
         <XMarkIcon />
       </button>

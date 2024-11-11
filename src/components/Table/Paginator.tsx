@@ -15,7 +15,7 @@ export interface PaginatorProps {
 export default function Paginator(props: Readonly<PaginatorProps>) {
   const textStyle = "leading-tight text-gray-500 hover:text-gray-700";
   const buttonStyle =
-    "flex p-0.5 ml-0 bg-white text-gray-400 border border-gray-300 hover:bg-gray-100";
+    "flex p-0.5 ml-0 bg-white text-primary/50 border border-primary/10 hover:bg-primary/10 dark:bg-secondary/50 dark:text-secondary dark:hover:text-primary/50";
 
   const { numberOfPages } = props;
   const pathname = usePathname();
@@ -49,7 +49,7 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
         <div>Show</div>
         <select
           value={itemsPerPage}
-          className="block rounded-lg border border-gray-300 bg-gray-50 p-1 text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-800"
+          className="block rounded-lg border border-gray-300 bg-gray-50 p-1 text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-primary dark:text-secondary/50"
           onChange={e => onChangeItemsPerPage(parseInt(e.currentTarget.value))}
         >
           <option value="10">10</option>

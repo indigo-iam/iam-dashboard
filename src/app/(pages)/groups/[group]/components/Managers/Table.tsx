@@ -6,8 +6,8 @@ import {
   TableRow,
   TableCell,
 } from "@/components/Table";
+import Link from "@/components/Link";
 import { User } from "@/models/scim";
-import Link from "next/link";
 import RevokeManagerButton from "./RevokeButton";
 import { Group } from "@/models/groups";
 
@@ -34,12 +34,7 @@ export default function ManagersTable(props: Readonly<MembersTableProps>) {
           return (
             <TableRow key={m.id}>
               <TableCell>
-                <Link
-                  href={`/users/${m.id}`}
-                  className="text-primary-800 underline"
-                >
-                  {m.name?.formatted}
-                </Link>
+                <Link href={`/users/${m.id}`}>{m.name?.formatted}</Link>
               </TableCell>
               <TableCell className="text-center">
                 <RevokeManagerButton user={m} group={group} />

@@ -31,13 +31,13 @@ export default function Listbox<T>(props: Readonly<ListboxProps<T>>) {
         onChange={onChange}
         name={name}
       >
-        <ListboxButton className="relative block w-full rounded-md border bg-secondary p-2 text-left shadow-md">
+        <ListboxButton className="relative block w-full rounded-md border p-2 text-left shadow-md">
           {title}
           <ChevronDownIcon className="absolute right-2.5 top-2.5 size-4" />
         </ListboxButton>
         <ListboxOptions
           anchor="bottom start"
-          className="z-10 mt-2 !max-h-48 w-[var(--button-width)] rounded-lg border bg-secondary p-2 pb-4 shadow-md"
+          className="z-10 mt-2 !max-h-48 w-[var(--button-width)] rounded-lg border bg-secondary p-2 pb-4 shadow-md dark:bg-primary"
         >
           {options.map(o => (
             <ListboxOption

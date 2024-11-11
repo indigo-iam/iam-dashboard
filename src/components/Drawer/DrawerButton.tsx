@@ -1,19 +1,22 @@
+import Link from "next/link";
+
 type DrawerButtonProps = {
   icon: React.ReactNode;
   title: string;
-  onClick?: () => void;
+  children?: React.ReactNode;
+  href: string;
 };
 
 export const DrawerButton = (props: Readonly<DrawerButtonProps>) => {
-  const { icon, title, onClick } = props;
+  const { icon, title, children, href } = props;
   return (
-    <button
-      className="rounded-full p-3 hover:bg-primary-hover"
+    <Link
+      className="relative rounded-full p-3 hover:bg-primary-hover"
       title={title}
-      onClick={onClick}
-      type="button"
+      href={href}
     >
       <div className="h-6 w-6">{icon}</div>
-    </button>
+      {children}
+    </Link>
   );
 };

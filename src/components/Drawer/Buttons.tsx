@@ -1,4 +1,3 @@
-"use client";
 import { signOut } from "next-auth/react";
 import {
   ArrowRightEndOnRectangleIcon,
@@ -13,12 +12,12 @@ export const DrawerButtons = () => {
   };
   return (
     <div className="flex justify-around p-4">
-      {/* <Notifications /> */}
-      <DrawerButton icon={<WrenchIcon />} title="Settings" />
+      <Notifications />
+      <DrawerButton icon={<WrenchIcon />} title="Settings" href="/settings" />
       <DrawerButton
         icon={<ArrowRightEndOnRectangleIcon />}
         title="Logout"
-        onClick={logout}
+        href="/logout"
       />
     </div>
   );

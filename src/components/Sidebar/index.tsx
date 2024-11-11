@@ -85,7 +85,7 @@ const Footer = () => {
       />
       <SidebarLink
         title="IAM Documentation"
-        href="/docs"
+        href="https://indigo-iam.github.io/v/current/"
         icon={<InformationCircleIcon />}
       />
       <p className="w-full bg-primary-light text-center align-middle">v1.0</p>

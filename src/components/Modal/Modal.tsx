@@ -23,10 +23,10 @@ export function Modal(props: Readonly<ModalProps>) {
     <Transition appear show={show}>
       <Dialog
         as="div"
-        className="relative z-40 focus:outline-none"
+        className="relative z-10 focus:outline-none"
         onClose={onClose}
       >
-        <div className="fixed inset-0 z-40 w-screen overflow-y-auto">
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="mt-16 flex min-h-32 justify-center p-4">
             {/* Backdrop */}
             <TransitionChild

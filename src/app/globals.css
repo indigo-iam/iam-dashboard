@@ -79,4 +79,12 @@
   .btn-danger-outline {
     @apply btn border border-danger bg-secondary text-danger hover:bg-danger hover:text-secondary disabled:border-danger/50 disabled:hover:bg-danger/50 dark:bg-primary;
   }
+
+  .btn-check {
+    @apply mx-auto w-5 rounded-md bg-success p-0.5 text-secondary;
+  }
+
+  .btn-delete {
+    @apply mx-auto h-5 w-5 rounded-md bg-danger p-0.5 text-secondary;
+  }
 }

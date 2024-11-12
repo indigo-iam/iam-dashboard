@@ -1,10 +1,13 @@
-export interface Scope {
-  id: number;
+export interface RawScope {
   value: string;
   description: string;
   icon: string;
   defaultScope: boolean;
   restricted: boolean;
+}
+
+export interface Scope extends RawScope {
+  id: number;
 }
 
 export interface ClientRequest {

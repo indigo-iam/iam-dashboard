@@ -11,6 +11,7 @@ import {
   ShieldCheckIcon,
   InformationCircleIcon,
   InboxArrowDownIcon,
+  ClipboardDocumentCheckIcon,
 } from "@heroicons/react/20/solid";
 import LogoHeader from "./LogoHeader";
 import Link from "./Link";
@@ -58,6 +59,11 @@ const OrganizationManagement = async () => {
             title="Requests"
             href="/requests"
             icon={<InboxArrowDownIcon />}
+          />
+          <SidebarLink
+            title="Scopes"
+            href="/scopes"
+            icon={<ClipboardDocumentCheckIcon />}
           />
         </nav>
       </DrawerSection>

@@ -3,7 +3,6 @@ import getConfig from "@/utils/config";
 import { RawScope, Scope } from "@/models/client";
 import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
-import { headers } from "next/headers";
 
 const { BASE_URL } = getConfig();
 

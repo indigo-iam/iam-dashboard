@@ -24,10 +24,10 @@ function Row(props: Readonly<RowProps>) {
         {scope.value}
       </TableCell>
       <TableCell className="max-w-8">
-        <ScopeTypeSelect scope={scope} />
+        <ScopeTypeSelect key={scope.id} scope={scope} />
       </TableCell>
       <TableCell className="grow">
-        <InputDescription scope={scope} />
+        <InputDescription key={scope.id} scope={scope} />
       </TableCell>
       <TableCell className="w-4 text-center">
         <DeleteButton scope={scope} />

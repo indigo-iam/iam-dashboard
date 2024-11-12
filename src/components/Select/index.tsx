@@ -6,11 +6,12 @@ type SelectProps = {
   name: string;
   options: ListboxOption[];
   onChange?: (value: ListboxOption) => void;
+  defaultOption?: ListboxOption;
 };
 
 export default function Select(props: Readonly<SelectProps>) {
-  const { name, options, onChange } = props;
-  const [item, setItem] = useState(options[0]);
+  const { name, options, onChange, defaultOption } = props;
+  const [item, setItem] = useState(defaultOption ?? options[0]);
 
   const handleChange = (value: ListboxOption) => {
     setItem(value);

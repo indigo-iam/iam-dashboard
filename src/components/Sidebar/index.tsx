@@ -90,16 +90,14 @@ const Body = () => {
 const Footer = () => {
   return (
     <DrawerFooter>
-      <SidebarLink
-        title="Privacy Policy"
-        href="/privacy"
-        icon={<ShieldCheckIcon />}
-      />
-      <SidebarLink
-        title="IAM Documentation"
+      <a
+        target="_blank"
+        className="flex rounded-lg p-2 text-sm transition ease-in-out hover:bg-primary-hover"
         href="https://indigo-iam.github.io/v/current/"
-        icon={<InformationCircleIcon />}
-      />
+      >
+        <InformationCircleIcon className="me-2 h-5 w-5" />
+        IAM Documentation
+      </a>
       <p className="w-full bg-primary-light text-center align-middle">v1.0</p>
     </DrawerFooter>
   );

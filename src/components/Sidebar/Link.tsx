@@ -17,16 +17,21 @@ export default function Link(props: Readonly<SidebarLinkProps>) {
     dismissButton?.click();
   };
 
-  const rootPath = pathname.split("/").splice(0, 2).join("/");
-  const isActive = pathname === href || rootPath === href;
+  let isActive = pathname.split("/")[1] === href.split("/")[1];
+  if (
+    (pathname === "/users/me" && href === "/users") ||
+    (pathname === "/users" && href === "/users/me")
+  ) {
+    isActive = false;
+  }
 
   return (
     <NextLink
-      className={`flex rounded-lg p-2 text-sm transition ease-in-out hover:bg-primary-hover ${isActive ? "bg-primary-hover" : ""}`}
+      className={`flex rounded-lg p-2 text-sm transition ease-in-out hover:bg-primary-hover dark:hover:bg-white/10 ${isActive ? "bg-primary-hover dark:bg-white/10" : ""}`}
       href={href}
       onClick={hideSidebar}
     >
-      <div className="me-2 w-5 h-5">{icon}</div>
+      <div className="me-2 h-5 w-5">{icon}</div>
       {title}
     </NextLink>
   );

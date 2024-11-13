@@ -8,7 +8,6 @@ import {
   RocketLaunchIcon,
   UserGroupIcon,
   UserIcon,
-  ShieldCheckIcon,
   InformationCircleIcon,
   InboxArrowDownIcon,
   ClipboardDocumentCheckIcon,

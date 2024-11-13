@@ -3,11 +3,30 @@ import getConfig from "@/utils/config";
 import { RawScope, Scope } from "@/models/client";
 import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
+import { Paginated } from "@/models/pagination";
 
 const { BASE_URL } = getConfig();
 
 export async function fetchScopes() {
   return getItem<Scope[]>(`${BASE_URL}/api/scopes`);
+}
+
+export async function fetchPaginatedScopes(
+  count: number,
+  startIndex: number,
+  filter?: string
+): Promise<Paginated<Scope>> {
+  let scopes = await fetchScopes();
+  if (filter) {
+    scopes = scopes.filter(scope => scope.value.includes(filter));
+  }
+  const endIndex = startIndex + count;
+  return {
+    totalResults: scopes.length,
+    itemsPerPage: count,
+    startIndex,
+    Resources: scopes.slice(startIndex, endIndex),
+  };
 }
 
 export async function addScope(scope: RawScope) {

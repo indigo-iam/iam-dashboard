@@ -12,7 +12,7 @@ type TableRowProps = {
 export function TableRow(props: Readonly<TableRowProps>) {
   const { children } = props;
   return (
-    <tr className="even:bg-secondary-100 hover:bg-secondary-200 dark:even:bg-primary-hover dark:hover:bg-primary-hover">
+    <tr className="even:bg-secondary-100 hover:bg-secondary-200 dark:even:bg-white/10 dark:hover:bg-white/15">
       {children}
     </tr>
   );

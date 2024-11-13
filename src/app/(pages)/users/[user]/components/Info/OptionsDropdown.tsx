@@ -103,7 +103,7 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
       <Menu>
         <MenuButton
           className={
-            "h-8 w-8 rounded-md hover:bg-secondary-100 dark:hover:bg-primary-hover"
+            "h-8 w-8 rounded-md hover:bg-secondary-100 dark:hover:bg-white/10"
           }
         >
           <EllipsisHorizontalIcon />

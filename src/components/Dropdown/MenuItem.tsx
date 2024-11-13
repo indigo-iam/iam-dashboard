@@ -10,7 +10,7 @@ export function MenuItem(props: Readonly<MenuItemProps>) {
   const { children, ...menuItemProps } = props;
   return (
     <HeadlessMenuItem {...menuItemProps}>
-      <div className="hover:bg-hover truncate rounded-md p-1 text-sm hover:bg-secondary-200 dark:hover:bg-primary-hover">
+      <div className="hover:bg-hover truncate rounded-md p-1 text-sm hover:bg-secondary-200 dark:hover:bg-white/25 dark:hover:text-white">
         {children}
       </div>
     </HeadlessMenuItem>

@@ -31,19 +31,19 @@ export default function Listbox<T>(props: Readonly<ListboxProps<T>>) {
         onChange={onChange}
         name={name}
       >
-        <ListboxButton className="relative block w-full rounded-md border px-2 py-1 text-left shadow-md">
+        <ListboxButton className="relative block w-full rounded-md border px-2 py-1 text-left shadow-md dark:bg-white/10">
           {title}
           <ChevronDownIcon className="absolute right-2.5 top-1.5 size-4" />
         </ListboxButton>
         <ListboxOptions
           anchor="bottom start"
-          className="z-10 mt-2 !max-h-48 w-[var(--button-width)] rounded-lg border bg-secondary p-2 shadow-md dark:bg-primary"
+          className="z-10 mt-2 !max-h-48 w-[var(--button-width)] rounded-lg border bg-secondary p-2 shadow-md dark:bg-white/10 dark:backdrop-blur-md"
         >
           {options.map(o => (
             <ListboxOption
               key={o.id}
               value={o}
-              className="group flex cursor-pointer select-none gap-2 rounded-md p-1 text-sm data-[focus]:bg-primary/80 data-[focus]:text-secondary"
+              className="group flex cursor-pointer select-none gap-2 rounded-md p-1 text-sm data-[focus]:bg-primary/80 data-[focus]:text-secondary dark:data-[focus]:bg-white/25"
             >
               <CheckIcon className="invisible my-auto size-4 group-data-[selected]:visible" />
               {o.name}

@@ -1,4 +1,4 @@
-import { Page } from "@/components/Layout";
+import { Page, Panel } from "@/components/Layout";
 import ClientForm from "./components/Form";
 import { editClient, getClient } from "@/services/clients";
 import { auth } from "@/auth";
@@ -25,11 +25,13 @@ export default async function Client(props: Readonly<ClientPageProps>) {
   };
   return (
     <Page title={client.client_name}>
-      <ClientForm
-        client={client}
-        editClientAction={editAdminClient}
-        isAdmin={isAdmin}
-      />
+      <Panel>
+        <ClientForm
+          client={client}
+          editClientAction={editAdminClient}
+          isAdmin={isAdmin}
+        />
+      </Panel>
     </Page>
   );
 }

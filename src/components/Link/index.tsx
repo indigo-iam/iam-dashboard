@@ -8,7 +8,10 @@ type LinkProps = {
 export default function Link(props: Readonly<LinkProps>) {
   const { href, children } = props;
   return (
-    <NextLink href={href} className="text-primary-200 underline">
+    <NextLink
+      href={href}
+      className="font-medium text-primary-600 underline dark:text-primary-400"
+    >
       {children}
     </NextLink>
   );

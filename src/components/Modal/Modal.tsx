@@ -51,13 +51,13 @@ export function Modal(props: Readonly<ModalProps>) {
               leaveFrom="opacity-100 transform-[scale(100%)]"
               leaveTo="opacity-0 transform-[scale(95%)]"
             >
-              <DialogPanel className="z-50 w-full max-w-xl divide-y rounded-2xl bg-secondary p-4 text-primary shadow-lg dark:bg-slate-800 dark:text-secondary">
+              <DialogPanel className="z-50 w-full max-w-xl divide-y rounded-2xl bg-secondary p-4 text-primary shadow-lg dark:bg-white/10 dark:text-secondary dark:backdrop-blur-lg">
                 <DialogTitle as="h2" className="pb-2 text-xl font-bold">
                   <div className="flex">
                     {title}
                     <button className="ml-auto mr-0" onClick={onClose}>
                       <div
-                        className="w-6 rounded-full bg-neutral-300 p-[3px] text-neutral-500 hover:bg-neutral-400"
+                        className="w-6 rounded-full bg-neutral-300 p-[3px] text-neutral-500 hover:bg-neutral-400 dark:bg-white/25 dark:text-primary"
                         aria-label="close"
                       >
                         <XMarkIcon />

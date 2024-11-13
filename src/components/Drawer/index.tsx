@@ -12,7 +12,7 @@ export const DrawerSection = (props: DrawerSectionProps) => {
   const { title, children } = props;
   return (
     <>
-      <p className="p-4 pb-2 text-md font-bold uppercase text-secondary">
+      <p className="text-md p-4 pb-2 font-bold uppercase text-secondary">
         {title}
       </p>
       <div className="px-4 text-lg">{children}</div>
@@ -50,7 +50,7 @@ export default function Drawer(props: Readonly<DrawerProps>): JSX.Element {
       <Header drawerId={id} />
       <aside
         id={id}
-        className="fixed inset-0 z-30 mt-16 w-80 -translate-x-full bg-primary text-secondary transition-transform lg:translate-x-0"
+        className="fixed inset-0 z-30 mt-16 w-80 -translate-x-full bg-primary text-secondary transition-transform lg:translate-x-0 dark:bg-primary/50"
       >
         {children}
       </aside>

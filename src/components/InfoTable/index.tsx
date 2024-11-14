@@ -6,7 +6,7 @@ function Row(props: Readonly<RowProps>) {
   const { name, value } = props;
   return (
     <tr className="text-sm">
-      <td className="px-2 py-0.5">
+      <td className="text-nowrap px-2 py-0.5">
         <b>{name}</b>
       </td>
       <td className="break-all">{value}</td>

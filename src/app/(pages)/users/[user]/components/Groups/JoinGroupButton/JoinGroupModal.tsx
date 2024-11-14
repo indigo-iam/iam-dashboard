@@ -14,6 +14,7 @@ import { makeScimReferenceFromUser } from "@/utils/scim";
 import Field from "@/components/Field";
 import Label from "@/components/Label";
 import Combobox from "@/components/Combobox";
+import InfoTable from "@/components/InfoTable";
 
 export interface JoinGroupModalProps extends ModalProps {
   user: User;
@@ -57,34 +58,32 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
     clearAndClose();
   };
 
+  const data = [
+    { name: "Name", value: selected?.displayName },
+    { name: "Group ID", value: selected?.id },
+    { name: "Labels", value: labels },
+  ];
+
   return (
     <Modal {...modalProps} onClose={clearAndClose}>
       <Form action={action}>
         <ModalBody>
           <ModalBody>
-            <section>
-              <div hidden={!!selected}>
-                <Field>
-                  <Label>Select a Group to join</Label>
-                  <Combobox
-                    onSelected={selectGroup}
-                    searchCallback={searchGroup}
-                  />
-                </Field>
-              </div>
-              <div hidden={!selected}>
-                <p>
-                  Do you want to join group<b> {selected?.displayName}</b>?
-                </p>
-                <br />
-                <b>Name</b>
-                <p>{selected?.displayName}</p>
-                <b>Group ID</b>
-                <p>{selected?.id}</p>
-                <b>Labels</b>
-                <p>{labels}</p>
-              </div>
-            </section>
+            <div hidden={!!selected}>
+              <Field>
+                <Label>Select a Group to join</Label>
+                <Combobox
+                  onSelected={selectGroup}
+                  searchCallback={searchGroup}
+                />
+              </Field>
+            </div>
+            <div className="space-y-4" hidden={!selected}>
+              <p>
+                Do you want to join group<b> {selected?.displayName}</b>?
+              </p>
+              <InfoTable data={data} />
+            </div>
             {!isAdmin ? (
               <section>
                 <h4> Provide a motivation for your request</h4>

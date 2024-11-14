@@ -15,7 +15,7 @@ interface AddMemberModalProps extends ModalProps {
 }
 
 export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
-  const { group, ...modalProps } = props;
+  const { group, onClose, ...modalProps } = props;
   const [selectedUser, setSelectedUser] = useState<User>();
   const selectUser = (user: User) => setSelectedUser(user);
 
@@ -38,7 +38,7 @@ export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
   ];
 
   return (
-    <Modal {...modalProps} title="Add Member to Group">
+    <Modal onClose={clearAndClose} {...modalProps} title="Add Member to Group">
       <ModalBody>
         <div className="space-y-4" hidden={!!selectedUser}>
           <p>Type to search for an user</p>

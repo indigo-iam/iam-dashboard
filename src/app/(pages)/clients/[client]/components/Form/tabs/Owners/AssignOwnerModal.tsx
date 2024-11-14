@@ -1,8 +1,9 @@
 "use client";
 import { Button } from "@/components/Buttons";
+import Combobox from "@/components/Combobox";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
-import SearchUser from "@/components/SearchUser";
 import { User } from "@/models/scim";
+import { searchUser } from "@/services/users";
 import { useState } from "react";
 
 interface AssignOwnerModal extends ModalProps {}
@@ -22,7 +23,11 @@ export default function AssignOwnerModal(props: Readonly<AssignOwnerModal>) {
   return (
     <Modal {...props}>
       <ModalBody>
-        <SearchUser onSelected={addOwner} hidden={!!selectedUser} />
+        <Combobox
+          onSelected={addOwner}
+          hidden={!!selectedUser}
+          searchCallback={searchUser}
+        />
         <div hidden={!selectedUser}>
           <p>Selected user: </p>
           <b>Name</b>

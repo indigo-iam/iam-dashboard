@@ -9,7 +9,7 @@ export function MenuItems(props: Readonly<MenuItemsProps>) {
   return (
     <HeadlessMenuItems
       anchor="bottom"
-      className="truncate rounded-md bg-secondary p-2 shadow-md dark:bg-white/10 dark:backdrop-blur-lg"
+      className="z-20 truncate rounded-md bg-secondary p-2 shadow-md dark:bg-white/10 dark:backdrop-blur-lg"
       {...menuItemsProps}
     >
       {children}

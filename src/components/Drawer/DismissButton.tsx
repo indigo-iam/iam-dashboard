@@ -14,7 +14,7 @@ export default function DismissButton(props: Readonly<{ drawerId: string }>) {
     <button
       id={dismissButtonId}
       onClick={closeSidebar}
-      className="fixed inset-0 z-10 hidden bg-transparent"
+      className="fixed inset-0 z-5 hidden bg-transparent"
       type="button"
     />
   );

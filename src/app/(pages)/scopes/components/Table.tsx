@@ -19,13 +19,11 @@ function Row(props: Readonly<RowProps>) {
   const { scope } = props;
   return (
     <TableRow>
-      <TableCell className="max-w-24 truncate font-medium">
-        {scope.value}
-      </TableCell>
-      <TableCell className="max-w-8">
+      <TableCell className="w-8 font-medium">{scope.value}</TableCell>
+      <TableCell className="w-8">
         <ScopeTypeSelect key={scope.id} scope={scope} />
       </TableCell>
-      <TableCell className="grow">
+      <TableCell className="min-w-48 grow">
         <InputDescription key={scope.id} scope={scope} />
       </TableCell>
       <TableCell className="w-4 text-center">

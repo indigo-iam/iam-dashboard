@@ -25,7 +25,7 @@ export default function ClientForm(props: Readonly<ClientFormProps>) {
   return (
     <Form action={editClientAction}>
       <TabGroup className="w-full p-2">
-        <TabList className="flex">
+        <TabList className="flex max-w-full overflow-auto">
           <Tab>Main</Tab>
           <Tab>Credentials</Tab>
           <Tab>Scopes</Tab>

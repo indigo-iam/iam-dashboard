@@ -7,8 +7,8 @@ import {
 
 export default function FormButtons() {
   return (
-    <div className="flex justify-between">
-      <div className="flex gap-1">
+    <div className="grid grid-rows-2 sm:grid-cols-2 gap-2">
+      <div className="flex flex-row gap-1">
         <Button action="danger" icon={<XCircleIcon />}>
           Delete Client
         </Button>
@@ -16,7 +16,8 @@ export default function FormButtons() {
           Disable Client
         </Button>
       </div>
-      <div className="flex gap-1">
+
+      <div className="flex flex-row sm:justify-end gap-1">
         <Button action="primary-outline" type="reset">
           Reset
         </Button>

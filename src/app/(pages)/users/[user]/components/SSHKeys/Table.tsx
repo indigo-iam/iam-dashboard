@@ -42,10 +42,10 @@ export default function Table(props: Readonly<TableProps>) {
       return (
         <section key={d.key.value} className="mt-2">
           <div className="flex flex-row">
-            <InfoTable data={d.data} className="grow" />
+            <InfoTable data={d.data} className="grow truncate" />
             <DeleteSSHKeyButton user={user} sshKey={d.key} />
           </div>
-          <hr className="mt-2"/>
+          <hr className="mt-2" />
         </section>
       );
     });

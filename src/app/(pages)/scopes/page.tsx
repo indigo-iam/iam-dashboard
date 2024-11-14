@@ -27,7 +27,9 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
       <Panel>
         <NewScopeButton />
         <SearchField />
-        <ScopesTable scopes={scopes.Resources} />
+        <div className="overflow-y-visible">
+          <ScopesTable scopes={scopes.Resources} />
+        </div>
         <Paginator numberOfPages={numberOfPages} />
       </Panel>
     </Page>

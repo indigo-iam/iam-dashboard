@@ -33,6 +33,7 @@ export default function InputDescription(
       onBlur={action}
       onChange={e => setDescription(e.currentTarget.value)}
       onKeyDown={handleKeyDown}
+      className="min-w-4"
     />
   );
 }

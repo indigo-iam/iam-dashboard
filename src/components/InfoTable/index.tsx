@@ -9,7 +9,7 @@ function Row(props: Readonly<RowProps>) {
       <td className="px-2 py-0.5">
         <b>{name}</b>
       </td>
-      <td>{value}</td>
+      <td className="break-all">{value}</td>
     </tr>
   );
 }

@@ -13,7 +13,7 @@ function Badge(props: Readonly<BadgeProps>) {
     return null;
   }
   return (
-    <div className="absolute end-0 top-0 z-10 inline-flex h-5 w-5 items-center justify-center rounded-full bg-danger p-2 text-xs text-secondary">
+    <div className="absolute end-1 top-1 z-10 inline-flex h-5 w-5 items-center justify-center rounded-full bg-danger p-2 text-xs text-secondary">
       {count}
     </div>
   );

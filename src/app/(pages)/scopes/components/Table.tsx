@@ -20,10 +20,10 @@ function Row(props: Readonly<RowProps>) {
   return (
     <TableRow>
       <TableCell className="w-8 font-medium">{scope.value}</TableCell>
-      <TableCell className="w-8">
+      <TableCell className="w-24">
         <ScopeTypeSelect key={scope.id} scope={scope} />
       </TableCell>
-      <TableCell className="min-w-48 grow">
+      <TableCell className="min-w-24 grow">
         <InputDescription key={scope.id} scope={scope} />
       </TableCell>
       <TableCell className="w-4 text-center">

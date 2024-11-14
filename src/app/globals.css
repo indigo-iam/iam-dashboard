@@ -39,13 +39,13 @@
 
 @layer components {
   .btn {
-    @apply rounded-lg px-2 py-1.5;
+    @apply rounded-lg px-2 py-1.5 font-bold;
   }
   .btn-primary {
     @apply btn border border-primary bg-primary text-secondary hover:bg-primary-900 disabled:border-primary/50 disabled:bg-primary/50 dark:border-secondary/30 dark:bg-primary-300/30 disabled:dark:bg-gray-600 disabled:dark:text-gray-800;
   }
   .btn-primary-outline {
-    @apply btn border border-primary bg-secondary text-primary hover:bg-primary-900 hover:text-secondary disabled:border-primary/50 disabled:bg-secondary/50 disabled:text-primary/50 dark:border-secondary/70 dark:bg-secondary/50 dark:text-secondary dark:hover:bg-white/50;
+    @apply btn border border-primary/50 bg-secondary text-primary hover:bg-primary/5 disabled:border-primary/50 disabled:bg-secondary/50 disabled:text-primary/50 dark:border-secondary/70 dark:bg-primary/5 dark:text-secondary dark:hover:bg-white/30;
   }
 
   .btn-secondary {

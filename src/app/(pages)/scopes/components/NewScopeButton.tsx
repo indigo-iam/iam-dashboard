@@ -13,7 +13,7 @@ export default function NewScopeButton() {
   return (
     <>
       <NewScopeModal show={isShown} onClose={hide} />
-      <Button action="primary" icon={<PlusIcon />} onClick={show}>
+      <Button action="primary-outline" icon={<PlusIcon />} onClick={show}>
         New Scope
       </Button>
     </>

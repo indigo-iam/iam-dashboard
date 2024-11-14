@@ -17,7 +17,9 @@ export default function JoinGroupButton(props: Readonly<JoinGroupButtonProps>) {
   const title = isAdmin ? "Join Group" : "Ask to Join Group";
   return (
     <>
-      <Button onClick={openModal}>{title}</Button>
+      <Button action="primary-outline" onClick={openModal}>
+        {title}
+      </Button>
       <JoinGroupModal
         title={title}
         user={user}

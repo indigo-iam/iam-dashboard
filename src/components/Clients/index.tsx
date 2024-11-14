@@ -19,11 +19,11 @@ export default function Clients(props: Readonly<ClientsProps>) {
     <Panel>
       <div className="flex flex-row gap-2">
         <Link href="/clients/new">
-          <Button color="primary" icon={<PlusIcon />}>
+          <Button action="primary-outline" icon={<PlusIcon />}>
             New client
           </Button>
         </Link>
-        <Button color="secondary">Redeem client</Button>
+        <Button action="primary-outline">Redeem client</Button>
       </div>
       <Suspense fallback="Loading...">
         <SearchableTable {...searchParams} me={me} />

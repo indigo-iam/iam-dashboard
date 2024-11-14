@@ -1,12 +1,13 @@
 "use client";
 import { Button } from "@/components/Buttons";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
-import SearchUser from "@/components/SearchUser";
 import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
 import { useState } from "react";
 import InfoTable from "@/components/InfoTable";
 import { assignGroupManager } from "@/services/groups";
+import Combobox from "@/components/Combobox";
+import { searchUser } from "@/services/users";
 
 interface AssignGroupManagerModalProps extends ModalProps {
   group: Group;
@@ -15,13 +16,13 @@ interface AssignGroupManagerModalProps extends ModalProps {
 export default function AssignGroupManagerModal(
   props: Readonly<AssignGroupManagerModalProps>
 ) {
-  const { group, ...modalProps } = props;
+  const { group, onClose, ...modalProps } = props;
   const [selectedUser, setSelectedUser] = useState<User>();
   const selectUser = (user: User) => setSelectedUser(user);
 
   const clearAndClose = () => {
-    props.onClose();
     setTimeout(() => setSelectedUser(undefined), 500);
+    onClose();
   };
 
   const assignManager = async () => {
@@ -37,11 +38,11 @@ export default function AssignGroupManagerModal(
   ];
 
   return (
-    <Modal {...modalProps} title="Assign Group Manager">
+    <Modal onClose={clearAndClose} {...modalProps} title="Assign Group Manager">
       <ModalBody>
         <div className="space-y-4" hidden={!!selectedUser}>
           <p>Type to search for an user</p>
-          <SearchUser onSelected={selectUser} />
+          <Combobox onSelected={selectUser} searchCallback={searchUser} />
         </div>
         <div className="space-y-4" hidden={!selectedUser}>
           <p>

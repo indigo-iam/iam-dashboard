@@ -87,4 +87,16 @@
   .btn-delete {
     @apply mx-auto h-5 w-5 rounded-md bg-danger p-0.5 text-secondary;
   }
+
+  .combobox {
+    @apply rounded-lg border bg-transparent px-2 py-1 text-secondary;
+  }
+
+  .combobox-options {
+    @apply rounded-lg border;
+  }
+
+  .combobox-option {
+    @apply px-4 py-1 hover:rounded-lg hover:bg-primary-200 data-[disabled]:bg-transparent dark:hover:bg-white/20 dark:data-[disabled]:bg-transparent;
+  }
 }

@@ -1,13 +1,14 @@
 "use client";
 import { Button } from "@/components/Buttons";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
-import SearchUser from "@/components/SearchUser";
 import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
 import { useState } from "react";
 import InfoTable from "@/components/InfoTable";
 import { addUserToGroup } from "@/services/groups";
 import { makeScimReferenceFromUser } from "@/utils/scim";
+import Combobox from "@/components/Combobox";
+import { searchUser } from "@/services/users";
 
 interface AddMemberModalProps extends ModalProps {
   group: Group;
@@ -41,7 +42,7 @@ export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
       <ModalBody>
         <div className="space-y-4" hidden={!!selectedUser}>
           <p>Type to search for an user</p>
-          <SearchUser onSelected={selectUser} />
+          <Combobox onSelected={selectUser} searchCallback={searchUser} />
         </div>
         <div className="space-y-4" hidden={!selectedUser}>
           <p>

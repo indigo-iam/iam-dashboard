@@ -1,26 +1,15 @@
 import { User } from "@/models/scim";
 import { Certificate } from "@/models/indigo-user";
+import InfoTable from "@/components/InfoTable";
 
 const CertificateView = (props: { cert: Certificate }) => {
   const { cert } = props;
-  return (
-    <div className="border-bottom pb-2">
-      <div className="grid grid-cols-3 grid-rows-2">
-        <div className="col-span-1">
-          <b>Subject</b>
-        </div>
-        <div className="col-span-2 break-words">{cert.subjectDn}</div>
-        <div className="col-span-1">
-          <b>Issuer</b>
-        </div>
-        <div className="col-span-2">{cert.issuerDn}</div>
-        <div className="col-span-1">
-          <b>Last Modified</b>
-        </div>
-        <div className="col-span-2">{cert.lastModified}</div>
-      </div>
-    </div>
-  );
+  const data = [
+    { name: "Subject", value: cert.subjectDn },
+    { name: "Issuer", value: cert.issuerDn },
+    { name: "Last Modified", value: cert.lastModified },
+  ];
+  return <InfoTable data={data} />;
 };
 
 type CertificateProps = {

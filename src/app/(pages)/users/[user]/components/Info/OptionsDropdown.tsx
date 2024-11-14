@@ -108,7 +108,7 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
         >
           <EllipsisHorizontalIcon />
         </MenuButton>
-        <MenuItems>
+        <MenuItems anchor="bottom end">
           <MenuItem>
             <button
               type="button"

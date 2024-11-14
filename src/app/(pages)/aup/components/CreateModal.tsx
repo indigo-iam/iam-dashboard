@@ -1,8 +1,7 @@
 import { Button } from "@/components/Buttons";
-import Description from "@/components/Description";
-import { Form } from "@/components/Form";
+import { Description } from "@/components/Form";
+import { Form, Label } from "@/components/Form";
 import { Input } from "@/components/Inputs";
-import Label from "@/components/Label";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import { createAUP } from "@/services/aup";
 import { Field } from "@headlessui/react";

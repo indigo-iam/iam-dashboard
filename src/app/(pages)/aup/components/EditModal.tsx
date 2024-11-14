@@ -1,7 +1,4 @@
-import Description from "@/components/Description";
-import Field from "@/components/Field";
-import { Form } from "@/components/Form";
-import Label from "@/components/Label";
+import { Form, Field, Description, Label } from "@/components/Form";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import { Input } from "@/components/Inputs";
 import { Button } from "@/components/Buttons";

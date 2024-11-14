@@ -1,5 +1,4 @@
-import Description from "@/components/Description";
-import { Form, FormSection } from "@/components/Form";
+import { Form, Description, FormSection } from "@/components/Form";
 import { Input } from "@/components/Inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import { Button } from "@/components/Buttons";

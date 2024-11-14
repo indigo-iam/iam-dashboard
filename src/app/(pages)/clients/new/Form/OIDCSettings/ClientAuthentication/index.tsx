@@ -1,6 +1,4 @@
-import Description from "@/components/Description";
-import Field from "@/components/Field";
-import Label from "@/components/Label";
+import { Description, Field, Label } from "@/components/Form";
 import Select from "@/components/Select";
 import { capitalize } from "@/utils/strings";
 import { useState } from "react";

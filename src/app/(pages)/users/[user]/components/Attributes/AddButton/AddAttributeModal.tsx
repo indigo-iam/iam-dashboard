@@ -1,8 +1,6 @@
 import { Button } from "@/components/Buttons";
-import Field from "@/components/Field";
-import { Form } from "@/components/Form";
+import { Form, Field, Label } from "@/components/Form";
 import { Input } from "@/components/Inputs";
-import Label from "@/components/Label";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import { User } from "@/models/scim";
 import { addAttribute } from "@/services/users";

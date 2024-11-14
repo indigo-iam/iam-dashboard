@@ -1,7 +1,5 @@
-import Description from "@/components/Description";
-import Field from "@/components/Field";
+import { Field, Description, Label } from "@/components/Form";
 import { Input } from "@/components/Inputs";
-import Label from "@/components/Label";
 import TextArea from "@/components/TextArea";
 import { useState } from "react";
 

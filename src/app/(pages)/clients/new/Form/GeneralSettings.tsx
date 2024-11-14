@@ -1,10 +1,8 @@
 import { CarouselPanel } from "@/components/Carousel";
-import Field from "@/components/Field";
 import { Input } from "@/components/Inputs";
-import Label from "@/components/Label";
 import Section from "@/components/Section";
 import { useFormStatus } from "@/utils/forms";
-import Description from "@/components/Description";
+import { Field, Label, Description } from "@/components/Form";
 
 type GeneralSettingsProps = {
   id: string;

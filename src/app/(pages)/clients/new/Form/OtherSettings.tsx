@@ -1,7 +1,6 @@
 import { CarouselPanel } from "@/components/Carousel";
-import Field from "@/components/Field";
+import { Field, Label } from "@/components/Form";
 import { Input } from "@/components/Inputs";
-import Label from "@/components/Label";
 import Section from "@/components/Section";
 import { useFormStatus } from "@/utils/forms";
 import { useEffect } from "react";

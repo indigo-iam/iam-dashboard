@@ -4,10 +4,7 @@ import { dateToHuman } from "@/utils/dates";
 import EditButton from "./EditButton";
 import RequestSignatureButton from "./RequestSignatureButton";
 import DeleteButton from "./DeleteButton";
-import Field from "@/components/Field";
-import Label from "@/components/Label";
-import Description from "@/components/Description";
-import { Form } from "@/components/Form";
+import { Form, Field, Label, Description } from "@/components/Form";
 
 type AupViewProps = {
   aup: AUP;

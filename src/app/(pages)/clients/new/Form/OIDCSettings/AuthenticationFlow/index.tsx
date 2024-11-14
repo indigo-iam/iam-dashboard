@@ -1,7 +1,6 @@
-import Label from "@/components/Label";
 import Select from "@/components/Select";
 import { Description } from "@headlessui/react";
-import Field from "@/components/Field";
+import { Field, Label } from "@/components/Form";
 import AuthorizationCode from "./AuthorizationCode";
 import ClientCredentials from "./ClientCredentials";
 import DeviceCode from "./DeviceCode";
@@ -53,9 +52,7 @@ export default function AuthenticationFlow(
     <>
       <Field>
         <Label>Authentication Flow</Label>
-        <Description className="text-xs text-primary/60">
-          A little description.
-        </Description>
+        <Description className="description">A little description.</Description>
         <Select
           name="grant_types"
           options={grantTypes}

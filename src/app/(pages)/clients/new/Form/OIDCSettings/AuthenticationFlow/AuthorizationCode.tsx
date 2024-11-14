@@ -1,6 +1,5 @@
-import Field from "@/components/Field";
+import { Field, Label } from "@/components/Form";
 import { InputList } from "@/components/Inputs";
-import Label from "@/components/Label";
 import { Description } from "@headlessui/react";
 
 type AuthorizationCodeProps = {

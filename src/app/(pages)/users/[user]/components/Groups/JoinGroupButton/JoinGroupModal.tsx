@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/Buttons";
-import { Form } from "@/components/Form";
+import { Form, Field, Label } from "@/components/Form";
 import { XMarkIcon, ArrowUpTrayIcon } from "@heroicons/react/24/solid";
 import { Group } from "@/models/groups";
 import { JoinGroupRequest } from "@/models/group-requests";
@@ -11,8 +11,6 @@ import { useState } from "react";
 import { addUserToGroup, searchGroup } from "@/services/groups";
 import { Input } from "@/components/Inputs";
 import { makeScimReferenceFromUser } from "@/utils/scim";
-import Field from "@/components/Field";
-import Label from "@/components/Label";
 import Combobox from "@/components/Combobox";
 import InfoTable from "@/components/InfoTable";
 

@@ -3,7 +3,11 @@ import { fetchGroupsRequests } from "@/services/group-requests";
 import BellButton from "./BellButton";
 import { fetchRegistrationRequests } from "@/services/registration";
 
-function Badge(props: { count: number }) {
+type BadgeProps = {
+  count: number;
+};
+
+function Badge(props: Readonly<BadgeProps>) {
   const { count } = props;
   if (count === 0) {
     return null;

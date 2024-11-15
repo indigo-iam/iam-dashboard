@@ -23,7 +23,7 @@ export default function ConfirmButton(props: Readonly<ConfirmButtonProps>) {
     <>
       <button
         type="button"
-        className="popover-option text-primary"
+        className="popover-option"
         onClick={open}
       >
         Approve Group Request

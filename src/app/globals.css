@@ -90,7 +90,7 @@
   }
 
   .popover-option {
-    @apply whitespace-nowrap bg-gray-100 p-2 hover:bg-gray-200/50;
+    @apply whitespace-nowrap p-2 text-start hover:bg-gray-200/50;
   }
 
   .combobox {

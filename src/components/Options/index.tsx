@@ -14,7 +14,7 @@ export default function Options(props: Readonly<OptionsProps>) {
       </PopoverButton>
       <PopoverPanel
         anchor="bottom"
-        className="flex flex-col rounded-lg bg-gray-50 shadow"
+        className="flex flex-col rounded-lg bg-gray-50 shadow dark:bg-white/10 dark:backdrop-blur-lg"
       >
         {children}
       </PopoverPanel>

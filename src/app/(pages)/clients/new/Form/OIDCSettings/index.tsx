@@ -1,7 +1,7 @@
 import { CarouselPanel } from "@/components/Carousel";
 import { Field, Label, Description } from "@/components/Form";
 import { InputListDropdown } from "@/components/Inputs";
-import Section from "@/components/Section";
+import { Section } from "@/components/Layout";
 import { type Scope } from "@/models/client";
 import { OpenIdConfiguration } from "@/models/openid-configuration";
 import AuthenticationFlow from "./AuthenticationFlow";

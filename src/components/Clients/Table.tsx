@@ -1,5 +1,5 @@
 import { Client } from "@/models/client";
-import Link from "next/link";
+import Link from "@/components/Link";
 import {
   Table,
   TableBody,
@@ -22,12 +22,7 @@ function Row(props: Readonly<RowProps>) {
     <TableRow>
       <TableCell>{client_name}</TableCell>
       <TableCell>
-        <Link
-          href={`/clients/${client_id}`}
-          className="text-primary-200 underline"
-        >
-          {client_id}
-        </Link>
+        <Link href={`/clients/${client_id}`}>{client_id}</Link>
       </TableCell>
       <TableCell className="text-center">
         <DeleteClientButton client={client} onDeleted={onDeleted} />

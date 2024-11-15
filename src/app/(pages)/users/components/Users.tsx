@@ -7,7 +7,6 @@ import { useCallback, useEffect, useState } from "react";
 import { Paginator } from "@/components/Table";
 import DeleteUser from "./DeleteUser";
 import AddUser from "./AddUser";
-import Panel from "@/components/Layout/Panel";
 
 type UsersProps = { count?: string; page?: string };
 export default function Users(props: Readonly<UsersProps>) {
@@ -54,22 +53,17 @@ export default function Users(props: Readonly<UsersProps>) {
   };
 
   return (
-    <div className="space-y-3">
+    <>
       <DeleteUser
         show={!!userToDelete}
         onClose={closeDeleteUserModal}
         onUserDeleted={fetchUsers}
         user={userToDelete}
       />
-      <Panel>
-        <InputSearch
-          onChange={handleFilterChange}
-          onClear={handleFilterClear}
-        />
-        <UsersTable users={users} onDeleteUser={openDeleteUserModal} />
-        <Paginator numberOfPages={numberOfPages} />
-        <AddUser onUserAdded={fetchUsers} />
-      </Panel>
-    </div>
+      <InputSearch onChange={handleFilterChange} onClear={handleFilterClear} />
+      <UsersTable users={users} onDeleteUser={openDeleteUserModal} />
+      <Paginator numberOfPages={numberOfPages} />
+      <AddUser onUserAdded={fetchUsers} />
+    </>
   );
 }

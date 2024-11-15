@@ -1,4 +1,3 @@
-import { Panel } from "@/components/Layout";
 import { Button } from "@/components/Buttons";
 import { Suspense } from "react";
 import SearchableTable from "./SearchableTable";
@@ -16,7 +15,7 @@ type ClientsProps = {
 export default function Clients(props: Readonly<ClientsProps>) {
   const { searchParams, me } = props;
   return (
-    <Panel>
+    <>
       <div className="flex flex-row gap-2">
         <Link href="/clients/new">
           <Button action="primary-outline" icon={<PlusIcon />}>
@@ -28,6 +27,6 @@ export default function Clients(props: Readonly<ClientsProps>) {
       <Suspense fallback="Loading...">
         <SearchableTable {...searchParams} me={me} />
       </Suspense>
-    </Panel>
+    </>
   );
 }

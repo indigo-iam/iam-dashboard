@@ -1,6 +1,6 @@
 import { CarouselPanel } from "@/components/Carousel";
 import { Input } from "@/components/Inputs";
-import Section from "@/components/Section";
+import { Section } from "@/components/Layout";
 import { useFormStatus } from "@/utils/forms";
 import { Field, Label, Description } from "@/components/Form";
 

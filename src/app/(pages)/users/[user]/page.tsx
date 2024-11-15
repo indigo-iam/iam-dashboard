@@ -1,6 +1,5 @@
 import { auth } from "@/auth";
-import { Page, Panel } from "@/components/Layout";
-import Section from "@/components/Section";
+import { Page, Panel, Section } from "@/components/Layout";
 import { fetchMe } from "@/services/me";
 import { fetchUser } from "@/services/users";
 import UserInfo from "./components/Info";
@@ -33,33 +32,21 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
         <Section title="General">
           <UserInfo user={user} />
         </Section>
-      </Panel>
-      <Panel>
         <Section title="Groups">
           <Groups user={user} isAdmin={isAdmin} />
         </Section>
-      </Panel>
-      <Panel>
         <Section title="Group Requests">
           <GroupRequests user={user} isMe={isMe} />
         </Section>
-      </Panel>
-      <Panel>
         <Section title="Linked Accounts">
           <LinkedAccounts user={user} />
         </Section>
-      </Panel>
-      <Panel>
         <Section title="X509 Certificates">
           <Certificates user={user} />
         </Section>
-      </Panel>
-      <Panel>
         <Section title="SSH Keys">
           <SSHKeys user={user} />
         </Section>
-      </Panel>
-      <Panel>
         <Section title="Attributes">
           <Attributes user={user} />
         </Section>

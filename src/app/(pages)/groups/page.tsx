@@ -1,4 +1,4 @@
-import { Page } from "@/components/Layout";
+import { Page, Panel, Section } from "@/components/Layout";
 import { Groups } from "./components/Groups";
 
 type GroupsProps = {
@@ -12,7 +12,11 @@ export default async function GroupsPage(props: Readonly<GroupsProps>) {
   const { searchParams } = props;
   return (
     <Page title="Groups">
-      <Groups {...searchParams} />
+      <Panel>
+        <Section>
+          <Groups {...searchParams} />
+        </Section>
+      </Panel>
     </Page>
   );
 }

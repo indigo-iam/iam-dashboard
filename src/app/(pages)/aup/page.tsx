@@ -1,4 +1,4 @@
-import { Page, Panel } from "@/components/Layout";
+import { Page, Panel, Section } from "@/components/Layout";
 import { fetchAUP } from "@/services/aup";
 import AupView from "./components/AupView";
 import CreateButton from "./components/CreateButton";
@@ -9,7 +9,9 @@ export default async function AUP() {
     return (
       <Page title="Acceptable Usage Policy">
         <Panel>
-          <AupView aup={aup} />
+          <Section>
+            <AupView aup={aup} />
+          </Section>
         </Panel>
       </Page>
     );
@@ -17,8 +19,10 @@ export default async function AUP() {
     return (
       <Page title="Acceptable Usage Policy">
         <Panel>
-          <p>AUP is not defined for this organization.</p>
-          <CreateButton />
+          <Section>
+            <p>AUP is not defined for this organization.</p>
+            <CreateButton />
+          </Section>
         </Panel>
       </Page>
     );

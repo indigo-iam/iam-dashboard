@@ -2,7 +2,7 @@ import { XCircleIcon } from "@heroicons/react/16/solid";
 import { OidcId, SamlId } from "@/models/indigo-user";
 import { User } from "@/models/scim";
 import { Button } from "@/components/Buttons";
-import { Subsection } from "@/components/Section";
+import { Subsection } from "@/components/Layout";
 import SAMLOptions from "./SAMLOptions";
 
 const OidcIdView = (props: { id: OidcId }) => {

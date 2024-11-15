@@ -1,4 +1,4 @@
-import { Page } from "@/components/Layout";
+import { Page, Panel, Section } from "@/components/Layout";
 import Users from "./components/Users";
 
 type UsersProps = {
@@ -12,7 +12,11 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
   const { searchParams } = props;
   return (
     <Page title="Users">
-      <Users {...searchParams} />
+      <Panel>
+        <Section>
+          <Users {...searchParams} />
+        </Section>
+      </Panel>
     </Page>
   );
 }

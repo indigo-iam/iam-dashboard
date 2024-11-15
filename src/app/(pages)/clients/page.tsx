@@ -1,4 +1,4 @@
-import { Page } from "@/components/Layout";
+import { Page, Panel, Section } from "@/components/Layout";
 import Clients from "@/components/Clients";
 
 type ClientsProps = {
@@ -12,7 +12,11 @@ export default function ClientsPage(props: Readonly<ClientsProps>) {
   const { searchParams } = props;
   return (
     <Page title="Clients">
-      <Clients searchParams={searchParams} />
+      <Panel>
+        <Section>
+          <Clients searchParams={searchParams} />
+        </Section>
+      </Panel>
     </Page>
   );
 }

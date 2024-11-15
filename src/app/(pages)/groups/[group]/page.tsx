@@ -1,5 +1,4 @@
-import { Page, Panel } from "@/components/Layout";
-import Section from "@/components/Section";
+import { Page, Panel, Section } from "@/components/Layout";
 import SubgroupsTable from "./components/Subgroups/Table";
 import GroupInfo from "./components/GroupInfo";
 import Members from "./components/Members";
@@ -21,18 +20,12 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
         <Section title="Group Information">
           <GroupInfo group={group} />
         </Section>
-      </Panel>
-      <Panel>
         <Section title="Subgroups">
           <SubgroupsTable group={group} />
         </Section>
-      </Panel>
-      <Panel>
         <Section title="Managers">
           <Managers group={group} />
         </Section>
-      </Panel>
-      <Panel>
         <Section title="Members">
           <Members group={group} />
         </Section>

@@ -1,4 +1,4 @@
-import { Page, Panel } from "@/components/Layout";
+import { Page, Panel, Section } from "@/components/Layout";
 import { fetchPaginatedScopes } from "@/services/scopes";
 import NewScopeButton from "./components/NewScopeButton";
 import ScopesTable from "./components/Table";
@@ -25,12 +25,14 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
   return (
     <Page title="Scopes">
       <Panel>
-        <NewScopeButton />
-        <SearchField />
-        <div className="overflow-y-visible">
-          <ScopesTable scopes={scopes.Resources} />
-        </div>
-        <Paginator numberOfPages={numberOfPages} />
+        <Section>
+          <NewScopeButton />
+          <SearchField />
+          <div className="overflow-y-visible">
+            <ScopesTable scopes={scopes.Resources} />
+          </div>
+          <Paginator numberOfPages={numberOfPages} />
+        </Section>
       </Panel>
     </Page>
   );

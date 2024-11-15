@@ -47,18 +47,14 @@ export function Groups(props: Readonly<GroupsProps>) {
 
   return (
     <>
-      <Panel>
-        <InputSearch
-          onChange={handleFilterChange}
-          onClear={handleFilterClear}
-        />
-        <GroupsTable
-          groups={groups}
-          onGroupDeleted={fetchGroups}
-          onSubgroupAdded={fetchGroups}
-        ></GroupsTable>
-        <Paginator numberOfPages={numberOfPages} />
-      </Panel>
+      <InputSearch onChange={handleFilterChange} onClear={handleFilterClear} />
+      <GroupsTable
+        groups={groups}
+        onGroupDeleted={fetchGroups}
+        onSubgroupAdded={fetchGroups}
+      />
+      <Paginator numberOfPages={numberOfPages} />
+
       <AddGroupButton onGroupAdded={fetchGroups} />
     </>
   );

@@ -1,7 +1,6 @@
 "use client";
 import { Paginator } from "@/components/Table";
 import { InputSearch } from "@/components/Inputs";
-import { Panel } from "@/components/Layout";
 import { Group } from "@/models/groups";
 import { getGroupsPage } from "@/services/groups";
 import AddGroupButton from "./AddGroupButton";
@@ -48,11 +47,7 @@ export function Groups(props: Readonly<GroupsProps>) {
   return (
     <>
       <InputSearch onChange={handleFilterChange} onClear={handleFilterClear} />
-      <GroupsTable
-        groups={groups}
-        onGroupDeleted={fetchGroups}
-        onSubgroupAdded={fetchGroups}
-      />
+      <GroupsTable groups={groups} />
       <Paginator numberOfPages={numberOfPages} />
 
       <AddGroupButton onGroupAdded={fetchGroups} />

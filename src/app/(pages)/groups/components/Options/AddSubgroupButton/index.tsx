@@ -1,5 +1,4 @@
 "use client";
-import { AddButton } from "@/components/Buttons";
 import AddSubgroupModal from "./AddSubgroupModal";
 import { useState } from "react";
 import { Group } from "@/models/groups";
@@ -13,23 +12,18 @@ export default function AddSubgroupButton(
   props: Readonly<AddSubgroupButtonProps>
 ) {
   const { rootGroup, onAdded } = props;
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-
-  const action = () => {
-    showModal();
-  };
-
+  const [show, setShow] = useState(false);
+  const open = () => setShow(true);
+  const close = () => setShow(false);
   return (
     <>
-      <form action={action}>
-        <AddButton type="submit" title="Add Subgroup" />
-      </form>
+      <button type="button" className="popover-option" onClick={open}>
+        Add Subgroup
+      </button>
       <AddSubgroupModal
         rootGroup={rootGroup}
-        show={isModalOpen}
-        onClose={closeModal}
+        show={show}
+        onClose={close}
         onAdded={onAdded}
       />
     </>

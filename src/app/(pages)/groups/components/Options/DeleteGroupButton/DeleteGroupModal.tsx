@@ -3,7 +3,7 @@ import { ScimReference } from "@/models/scim";
 import { deleteGroup } from "@/services/groups";
 
 interface DeleteGroupModalProps {
-  group: ScimReference;
+  groupRef: ScimReference;
   show: boolean;
   onClose: () => void;
   onDeleted?: () => void;
@@ -11,10 +11,10 @@ interface DeleteGroupModalProps {
 export default function DeleteGroupModal(
   props: Readonly<DeleteGroupModalProps>
 ) {
-  const { group, show, onClose, onDeleted } = props;
+  const { groupRef, show, onClose, onDeleted } = props;
 
   const handleConfirm = async () => {
-    await deleteGroup(group.value);
+    await deleteGroup(groupRef.value);
     onClose();
     onDeleted?.();
   };
@@ -27,7 +27,7 @@ export default function DeleteGroupModal(
       onConfirm={handleConfirm}
       title="Delete Group"
     >
-      Are you sure you want to delete group <b>{group?.display}</b>?
+      Are you sure you want to delete group <b>{groupRef?.display}</b>?
     </ConfirmModal>
   );
 }

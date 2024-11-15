@@ -9,7 +9,6 @@ import {
   TableCell,
 } from "@/components/Table";
 import Link from "@/components/Link";
-import DeleteGroupButton from "../../../components/DeleteGroupButton";
 
 type SubgroupsTableProps = {
   group: Group;
@@ -41,7 +40,7 @@ export default async function SubgroupsTable(
                 <Link href={`/groups/${group.value}`}>{group.display}</Link>
               </TableCell>
               <TableCell className="text-center">
-                <DeleteGroupButton group={group} />
+                {/* <DeleteGroupButton group={group} /> */}
               </TableCell>
             </TableRow>
           );

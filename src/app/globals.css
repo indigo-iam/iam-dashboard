@@ -100,4 +100,12 @@
   .combobox-option {
     @apply px-4 py-1 hover:rounded-lg hover:bg-primary-200 data-[disabled]:bg-transparent dark:hover:bg-white/20 dark:data-[disabled]:bg-transparent;
   }
+
+  .tbl-th {
+    @apply border-b bg-primary/5 p-2 pt-8 first:rounded-tl-lg last:rounded-tr-lg;
+  }
+
+  .tbl-td {
+    @apply border-b border-primary/5 p-2 py-3;
+  }
 }

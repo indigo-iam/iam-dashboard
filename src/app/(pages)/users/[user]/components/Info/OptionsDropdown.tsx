@@ -112,7 +112,7 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
           <MenuItem>
             <button
               type="button"
-              className="flex gap-2 text-sm"
+              className="flex gap-2"
               onClick={() => dispatch({ type: "openEditDetails" })}
             >
               <PencilSquareIcon className="w-5" />
@@ -122,7 +122,7 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
           <MenuItem>
             <button
               type="button"
-              className="flex gap-2 text-sm"
+              className="flex gap-2"
               onClick={() => dispatch({ type: "openDisableUser" })}
             >
               {user.active ? (
@@ -141,7 +141,7 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
           <MenuItem>
             <button
               type="button"
-              className="flex gap-2 text-sm"
+              className="flex gap-2"
               onClick={() => dispatch({ type: "openAssignAdmin" })}
             >
               <BookmarkSquareIcon className="w-5" />
@@ -151,7 +151,7 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
           <MenuItem>
             <button
               type="button"
-              className="flex gap-2 text-sm"
+              className="flex gap-2"
               onClick={() => dispatch({ type: "openChangeMembershipEndTime" })}
             >
               <CalendarIcon className="w-5" />
@@ -161,7 +161,7 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
           <MenuItem>
             <button
               type="button"
-              className="flex gap-2 text-sm"
+              className="flex gap-2"
               onClick={() => dispatch({ type: "openSignAUP" })}
             >
               <DocumentTextIcon className="w-5" />
@@ -171,7 +171,7 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
           <MenuItem>
             <button
               type="button"
-              className="flex gap-2 text-sm"
+              className="flex gap-2"
               onClick={() => dispatch({ type: "openRequestAUPSignature" })}
             >
               <DocumentTextIcon className="w-5" />
@@ -181,7 +181,7 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
           <MenuItem>
             <button
               type="button"
-              className="flex gap-2 text-sm"
+              className="flex gap-2"
               onClick={() => dispatch({ type: "openChangePassword" })}
             >
               <KeyIcon className="w-5" />

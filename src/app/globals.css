@@ -39,7 +39,7 @@
 
 @layer components {
   .btn {
-    @apply flex rounded-lg p-2 px-4 font-medium gap-2;
+    @apply flex gap-2 rounded-lg p-2 px-4 font-medium;
   }
   .btn-primary {
     @apply btn border border-primary bg-primary text-secondary hover:bg-primary-900 disabled:border-primary/50 disabled:bg-primary/50 dark:border-secondary/30 dark:bg-primary-300/30 disabled:dark:bg-gray-600 disabled:dark:text-gray-800;
@@ -110,6 +110,10 @@
   }
 
   .tbl-td {
-    @apply border-b border-primary/5 p-2 py-3;
+    @apply border-b border-primary/5 p-2 py-2;
+  }
+
+  .tbl-hover {
+    @apply hover:bg-primary-100/30;
   }
 }

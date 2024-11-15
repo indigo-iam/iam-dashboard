@@ -1,37 +1,7 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableHeaderCell,
-  TableRow,
-} from "@/components/Table";
 import { Scope } from "@/models/client";
-import DeleteButton from "./DeleteButton";
 import ScopeTypeSelect from "./ScopeTypeSelect";
 import InputDescription from "./InputDescription";
-
-type RowProps = {
-  scope: Scope;
-};
-
-function Row(props: Readonly<RowProps>) {
-  const { scope } = props;
-  return (
-    <TableRow>
-      <TableCell className="w-8 font-medium">{scope.value}</TableCell>
-      <TableCell className="w-24">
-        <ScopeTypeSelect key={scope.id} scope={scope} />
-      </TableCell>
-      <TableCell className="min-w-24 grow">
-        <InputDescription key={scope.id} scope={scope} />
-      </TableCell>
-      <TableCell className="w-4 text-center">
-        <DeleteButton scope={scope} />
-      </TableCell>
-    </TableRow>
-  );
-}
+import ScopeOptions from "./Options";
 
 type ScopesTableProps = {
   scopes: Scope[];
@@ -40,18 +10,31 @@ type ScopesTableProps = {
 export default function ScopesTable(props: Readonly<ScopesTableProps>) {
   const { scopes } = props;
   return (
-    <Table>
-      <TableHeader>
-        <TableHeaderCell className="text-left">Scope</TableHeaderCell>
-        <TableHeaderCell>Type</TableHeaderCell>
-        <TableHeaderCell className="text-left">Description</TableHeaderCell>
-        <TableHeaderCell className="text-center">Actions</TableHeaderCell>
-      </TableHeader>
-      <TableBody>
+    <table className="w-full table-auto">
+      <thead>
+        <tr>
+          <th className="tbl-th text-left">Scope</th>
+          <th className="tbl-th text-left">Type</th>
+          <th className="tbl-th text-left">Description</th>
+          <th className="tbl-th text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
         {scopes.map(scope => (
-          <Row key={scope.id} scope={scope} />
+          <tr key={scope.id}>
+            <td className="tbl-td w-8 font-medium">{scope.value}</td>
+            <td className="tbl-td w-24">
+              <ScopeTypeSelect key={scope.id} scope={scope} />
+            </td>
+            <td className="tbl-td min-w-24 grow">
+              <InputDescription key={scope.id} scope={scope} />
+            </td>
+            <td className="tbl-td w-4 text-center">
+              <ScopeOptions scope={scope} />
+            </td>
+          </tr>
         ))}
-      </TableBody>
-    </Table>
+      </tbody>
+    </table>
   );
 }

@@ -7,7 +7,7 @@ export type FormSectionProps = {
 export default function FormSection(props: Readonly<FormSectionProps>) {
   const { htmlFor, title, children } = props;
   return (
-    <div className="flex flex-col text-sm gap-2">
+    <div className="flex flex-col gap-2">
       <label htmlFor={htmlFor} className="text-base font-bold">
         {title}
       </label>

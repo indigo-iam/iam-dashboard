@@ -27,7 +27,7 @@ export default function Link(props: Readonly<SidebarLinkProps>) {
 
   return (
     <NextLink
-      className={`flex rounded-lg p-2 text-sm transition ease-in-out hover:bg-primary-hover dark:hover:bg-white/10 ${isActive ? "bg-primary-hover dark:bg-white/10" : ""}`}
+      className={`flex rounded-lg p-2 transition ease-in-out hover:bg-primary-hover dark:hover:bg-white/10 ${isActive ? "bg-primary-hover dark:bg-white/10" : ""}`}
       href={href}
       onClick={hideSidebar}
     >

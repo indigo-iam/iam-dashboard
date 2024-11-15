@@ -20,7 +20,7 @@ export function InputListDropdown(props: Readonly<InputListDropdown>) {
   const removeItem = (index: number) => setItems(items.toSpliced(index, 1));
 
   const listItems = items.map((item, index) => (
-    <li key={item.id} className="mt-1 flex flex-row items-center gap-2 text-sm">
+    <li key={item.id} className="mt-1 flex flex-row items-center gap-2">
       <button
         type="button"
         onClick={() => removeItem(index)}

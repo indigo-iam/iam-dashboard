@@ -9,9 +9,7 @@ export default function Checkbox(props: Readonly<CheckboxProps>) {
   return (
     <div className="mt-4 flex flex-row gap-1">
       <input type="checkbox" name={name} defaultChecked={defaultChecked} />
-      <label className="text-sm" htmlFor={name}>
-        {label}
-      </label>
+      <label htmlFor={name}>{label}</label>
     </div>
   );
 }

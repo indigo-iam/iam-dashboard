@@ -18,7 +18,7 @@ export default function OwnersList(props: Readonly<OwnersListProps>) {
   };
 
   const listItems = items.map((item, index) => (
-    <li key={item} className="mt-1 flex flex-row items-center gap-2 text-sm">
+    <li key={item} className="mt-1 flex flex-row items-center gap-2">
       <button
         type="button"
         onClick={() => removeItem(index)}

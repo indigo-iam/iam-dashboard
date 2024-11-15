@@ -99,7 +99,7 @@ function DeviceCode(props: Readonly<DeviceCodeProps>) {
           name="device_code_validity_seconds"
           defaultValue={device_code_validity_seconds}
         />
-        <p className="mt-2 text-sm text-secondary-400">
+        <p className="mt-2 text-secondary-400">
           The control is disabled as the client is not authorized for the device
           code grant type.
         </p>

@@ -91,7 +91,7 @@ const Footer = () => {
     <DrawerFooter>
       <a
         target="_blank"
-        className="flex rounded-lg p-2 text-sm transition ease-in-out hover:bg-primary-hover"
+        className="flex rounded-lg p-2 transition ease-in-out hover:bg-primary-hover"
         href="https://indigo-iam.github.io/v/current/"
       >
         <InformationCircleIcon className="me-2 h-5 w-5" />

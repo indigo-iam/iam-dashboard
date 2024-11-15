@@ -16,7 +16,7 @@ export default function OtherInfo(props: Readonly<OtherInfoProps>) {
           placeholder={"https://app.example.org"}
           defaultValue={client_uri}
         />
-        <p className="mt-2 text-sm text-secondary-400">
+        <p className="mt-2 text-secondary-400">
           URL for the client&apos; s home page, which will be displayed to the
           user in the consent page.
         </p>
@@ -28,7 +28,7 @@ export default function OtherInfo(props: Readonly<OtherInfoProps>) {
           placeholder={"https://app.example.org/tos.html"}
           defaultValue={tos_uri}
         />
-        <p className="mt-2 text-sm text-secondary-400">
+        <p className="mt-2 text-secondary-400">
           URL that points to the Terms of Service for this client, will be
           displayed to the user in the consent page.
         </p>
@@ -40,7 +40,7 @@ export default function OtherInfo(props: Readonly<OtherInfoProps>) {
           placeholder={"https://app.example.org/policy.html"}
           defaultValue={policy_uri}
         />
-        <p className="mt-2 text-sm text-secondary-400">
+        <p className="mt-2 text-secondary-400">
           URL that points to the Policy statement for this client, will be
           displayed to the user in the consent page.
         </p>

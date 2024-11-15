@@ -30,7 +30,7 @@ export default function Listbox<T>(props: Readonly<ListboxProps<T>>) {
       onChange={onChange}
       name={name}
     >
-      <ListboxButton className="relative block w-full rounded-md border px-2 py-1 text-left shadow-md dark:bg-white/10">
+      <ListboxButton className="relative block rounded-md border px-2 py-1 text-left shadow-md dark:bg-white/10">
         <div className="flex flex-row gap-1">
           {title}
           <ChevronDownIcon className="m-auto size-4" />

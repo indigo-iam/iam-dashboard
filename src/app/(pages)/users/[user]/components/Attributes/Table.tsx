@@ -1,14 +1,6 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableHeaderCell,
-  TableRow,
-} from "@/components/Table";
 import { User } from "@/models/scim";
 import { fetchAttributes } from "@/services/users";
-import DeleteAttributeButton from "./DeleteButton";
+import Options from "./Options";
 
 type TableProps = {
   user: User;
@@ -23,27 +15,27 @@ export default async function AttributesTable(props: Readonly<TableProps>) {
   }
 
   return (
-    <Table>
-      <TableHeader>
-        <TableHeaderCell>Name</TableHeaderCell>
-        <TableHeaderCell>Value</TableHeaderCell>
-        <TableHeaderCell className="w-1/12 text-center">
-          Actions
-        </TableHeaderCell>
-      </TableHeader>
-      <TableBody>
+    <table className="w-full table-auto rounded-lg">
+      <thead>
+        <tr>
+          <th className="tbl-th text-left">Name</th>
+          <th className="tbl-th text-left">Value</th>
+          <th className="tbl-th text-center"></th>
+        </tr>
+      </thead>
+      <tbody>
         {attributes.map(attr => {
           return (
-            <TableRow key={attr.name}>
-              <TableCell>{attr.name}</TableCell>
-              <TableCell>{attr.value}</TableCell>
-              <TableCell className="w-1/12 text-center">
-                <DeleteAttributeButton user={user} attr={attr} />
-              </TableCell>
-            </TableRow>
+            <tr key={attr.name}>
+              <td className="tbl-td">{attr.name}</td>
+              <td className="tbl-td">{attr.value}</td>
+              <td className="tbl-td w-1/12 text-center">
+                <Options user={user} attr={attr} />
+              </td>
+            </tr>
           );
         })}
-      </TableBody>
-    </Table>
+      </tbody>
+    </table>
   );
 }

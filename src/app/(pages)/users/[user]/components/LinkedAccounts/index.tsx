@@ -3,6 +3,7 @@ import { OidcId, SamlId } from "@/models/indigo-user";
 import { User } from "@/models/scim";
 import { Button } from "@/components/Buttons";
 import { Subsection } from "@/components/Section";
+import SAMLOptions from "./SAMLOptions";
 
 const OidcIdView = (props: { id: OidcId }) => {
   return (
@@ -31,9 +32,7 @@ const SamlIdView = (props: { id: SamlId }) => {
         <p className="break-all">{props.id.userId}</p>
       </td>
       <td className="text-right">
-        <Button action="danger" isSmall={true} icon={<XCircleIcon />}>
-          Unlink
-        </Button>
+        <SAMLOptions />
       </td>
     </tr>
   );

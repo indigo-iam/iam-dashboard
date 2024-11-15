@@ -1,15 +1,7 @@
 import { ScimReference, User } from "@/models/scim";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableHeaderCell,
-  TableRow,
-} from "@/components/Table";
 import Link from "@/components/Link";
-import { UnlinkMemberButton } from "@/components/Buttons";
 import getConfig from "@/utils/config";
+import GroupOptions from "./Options";
 
 const { BASE_URL } = getConfig();
 
@@ -21,18 +13,18 @@ type RowProps = {
 const Row = (props: Readonly<RowProps>) => {
   const { groupRef, userRef } = props;
   return (
-    <TableRow>
-      <TableCell className="grow">
+    <tr>
+      <td className="tbl-td grow">
         <Link href={`/groups/${groupRef.value}`}>{groupRef.display}</Link>
-      </TableCell>
-      <TableCell className="text-center">
-        <UnlinkMemberButton
+      </td>
+      <td className="tbl-td w-1/12 text-center">
+        <GroupOptions
           userRef={userRef}
           groupId={groupRef.value}
           groupName={groupRef.display}
         />
-      </TableCell>
-    </TableRow>
+      </td>
+    </tr>
   );
 };
 
@@ -55,18 +47,12 @@ export default function GroupsTable(props: Readonly<GroupsTableProps>) {
   };
 
   return (
-    <Table>
-      <TableHeader>
-        <TableHeaderCell>Group</TableHeaderCell>
-        <TableHeaderCell className="w-1/12 text-center">
-          Actions
-        </TableHeaderCell>
-      </TableHeader>
-      <TableBody>
+    <table className="w-full table-auto rounded-lg">
+      <tbody>
         {groups.map(group => {
           return <Row key={group.value} groupRef={group} userRef={userRef} />;
         })}
-      </TableBody>
-    </Table>
+      </tbody>
+    </table>
   );
 }

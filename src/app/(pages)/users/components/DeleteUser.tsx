@@ -23,11 +23,11 @@ export default function DeleteUser(props: Readonly<DeleteUserProps>) {
   const Row = (props: Readonly<{ title: string; value?: string }>) => {
     const { title, value } = props;
     return (
-      <tr className="h-0">
-        <td className="bg-secondary">
+      <tr>
+        <td className="px-2">
           <b>{title}</b>
         </td>
-        <td className="bg-secondary">{value}</td>
+        <td>{value}</td>
       </tr>
     );
   };
@@ -45,7 +45,7 @@ export default function DeleteUser(props: Readonly<DeleteUserProps>) {
       <Modal {...modalProps} title={`Delete user '${user?.name?.formatted}'`}>
         <ModalBody>
           <p className="py-2">The following user will be deleted:</p>
-          <table className="border-0 text-sm">
+          <table className="table-auto">
             <tbody>
               <Row title="Name" value={user?.name?.formatted} />
               <Row title="Username" value={user?.userName} />

@@ -1,7 +1,7 @@
 import InfoTable from "@/components/InfoTable";
 import { SSHKey } from "@/models/indigo-user";
 import { User } from "@/models/scim";
-import DeleteSSHKeyButton from "./DeleteButton";
+import SSHKeysOptions from "./Options";
 
 type TableProps = {
   user: User;
@@ -37,17 +37,20 @@ export default function Table(props: Readonly<TableProps>) {
     };
   });
 
-  const InfoList = () =>
-    data.map(d => {
-      return (
-        <section key={d.key.value} className="mt-2">
-          <div className="flex flex-row">
-            <InfoTable data={d.data} className="grow truncate" />
-            <DeleteSSHKeyButton user={user} sshKey={d.key} />
-          </div>
-          <hr className="mt-2" />
-        </section>
-      );
-    });
-  return <InfoList />;
+  return (
+    <table className="w-full table-auto">
+      <tbody>
+        {data.map(d => (
+          <tr key={d.key.value}>
+            <td className="tbl-td">
+              <InfoTable data={d.data} className="grow truncate" />
+            </td>
+            <td className="tbl-td w-1/12 text-center">
+              <SSHKeysOptions user={user} sshKey={d.key} />
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 }

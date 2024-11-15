@@ -89,6 +89,10 @@
     @apply mx-auto h-5 w-5 rounded-md bg-danger p-0.5 text-secondary;
   }
 
+  .popover-option {
+    @apply bg-gray-100 p-4 hover:bg-gray-200/50;
+  }
+
   .combobox {
     @apply rounded-lg border bg-transparent px-2 py-1 text-secondary;
   }

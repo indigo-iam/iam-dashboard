@@ -1,15 +1,8 @@
 import { User } from "@/models/scim";
 import { dateToHuman } from "@/utils/dates";
 import { XMarkIcon } from "@heroicons/react/16/solid";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableHeaderCell,
-  TableRow,
-} from "@/components/Table";
 import Link from "@/components/Link";
+import UserOptions from "./Options";
 
 function StatusIcon(props: Readonly<{ active: boolean }>) {
   const { active } = props;
@@ -55,19 +48,19 @@ function Row(props: Readonly<RowProps>) {
     ? dateToHuman(new Date(user.meta.created))
     : "N/A";
   return (
-    <TableRow>
-      <TableCell>
+    <tr className="tbl-hover">
+      <td className="tbl-td">
         <Link href={`/users/${user.id}`}>{user.name?.formatted}</Link>
-      </TableCell>
-      <TableCell>{user.emails?.[0].value}</TableCell>
-      <TableCell>{created}</TableCell>
-      <TableCell>
+      </td>
+      <td className="tbl-td">{user.emails?.[0].value}</td>
+      <td className="tbl-td">{created}</td>
+      <td className="tbl-td">
         <StatusIcon active={!!user.active} />
-      </TableCell>
-      <TableCell className="text-center">
-        <DeleteUserButton onDeleteUser={deleteUser} />
-      </TableCell>
-    </TableRow>
+      </td>
+      <td className="tbl-td text-center">
+        <UserOptions user={user} />
+      </td>
+    </tr>
   );
 }
 
@@ -79,19 +72,21 @@ type UsersTableProps = {
 export default function UsersTable(props: Readonly<UsersTableProps>) {
   const { users, onDeleteUser } = props;
   return (
-    <Table>
-      <TableHeader>
-        <TableHeaderCell>Name</TableHeaderCell>
-        <TableHeaderCell>Email</TableHeaderCell>
-        <TableHeaderCell>Created</TableHeaderCell>
-        <TableHeaderCell className="text-center">Status</TableHeaderCell>
-        <TableHeaderCell className="text-center">Actions</TableHeaderCell>
-      </TableHeader>
-      <TableBody>
+    <table className="w-full table-auto">
+      <thead>
+        <tr>
+          <th className="tbl-th text-left">Name</th>
+          <th className="tbl-th text-left">Email</th>
+          <th className="tbl-th text-left">Created</th>
+          <th className="tbl-th text-center">Status</th>
+          <th className="tbl-th" />
+        </tr>
+      </thead>
+      <tbody>
         {users.map(user => (
           <Row key={user.id} user={user} onDeleteUser={onDeleteUser} />
         ))}
-      </TableBody>
-    </Table>
+      </tbody>
+    </table>
   );
 }

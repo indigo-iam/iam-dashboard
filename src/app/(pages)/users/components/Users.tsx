@@ -5,7 +5,7 @@ import { InputSearch } from "@/components/Inputs";
 import UsersTable from "./UsersTable";
 import { useCallback, useEffect, useState } from "react";
 import { Paginator } from "@/components/Table";
-import DeleteUser from "./DeleteUser";
+import DeleteUserModal from "./Options/DeleteUser/DeleteUserModal";
 import AddUser from "./AddUser";
 
 type UsersProps = { count?: string; page?: string };
@@ -54,7 +54,7 @@ export default function Users(props: Readonly<UsersProps>) {
 
   return (
     <>
-      <DeleteUser
+      <DeleteUserModal
         show={!!userToDelete}
         onClose={closeDeleteUserModal}
         onUserDeleted={fetchUsers}

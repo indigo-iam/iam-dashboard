@@ -4,12 +4,12 @@ import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import { User } from "@/models/scim";
 import { deleteUser } from "@/services/users";
 
-interface DeleteUserProps extends ModalProps {
+interface DeleteUserModalProps extends ModalProps {
   user?: User;
   onUserDeleted?: () => void;
 }
 
-export default function DeleteUser(props: Readonly<DeleteUserProps>) {
+export default function DeleteUserModal(props: Readonly<DeleteUserModalProps>) {
   const { user, onUserDeleted, ...modalProps } = props;
 
   const action = async () => {

@@ -4,7 +4,7 @@ import { getUsersPage } from "@/services/users";
 import { InputSearch } from "@/components/Inputs";
 import UsersTable from "./UsersTable";
 import { useCallback, useEffect, useState } from "react";
-import { Paginator } from "@/components/Table";
+import Paginator from "@/components/Paginator";
 import DeleteUserModal from "./Options/DeleteUser/DeleteUserModal";
 import AddUser from "./AddUser";
 

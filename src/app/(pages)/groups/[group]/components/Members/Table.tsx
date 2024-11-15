@@ -1,13 +1,5 @@
 import { Group } from "@/models/groups";
 import { fetchGroupMembersPage } from "@/services/groups";
-import {
-  Table,
-  TableHeader,
-  TableHeaderCell,
-  TableBody,
-  TableRow,
-  TableCell,
-} from "@/components/Table";
 import Link from "@/components/Link";
 import { ScimReference } from "@/models/scim";
 
@@ -25,23 +17,21 @@ export default async function Members(props: Readonly<MembersProps>) {
   }
 
   return (
-    <Table>
-      <TableHeader>
-        <TableHeaderCell>User</TableHeaderCell>
-        <TableHeaderCell className="text-center">Actions</TableHeaderCell>
-      </TableHeader>
-      <TableBody>
+    <table className="w-full table-auto">
+      <tbody>
         {members.map(member => {
           return (
-            <TableRow key={member.value}>
-              <TableCell>
+            <tr key={member.value}>
+              <td className="tbl-td">
                 <Link href={`/users/${member.value}`}>{member.display}</Link>
-              </TableCell>
-              <TableCell className="text-center"></TableCell>
-            </TableRow>
+              </td>
+              <td className="tbl-td text-center">
+                {/* TODO: implement options */}
+              </td>
+            </tr>
           );
         })}
-      </TableBody>
-    </Table>
+      </tbody>
+    </table>
   );
 }

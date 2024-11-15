@@ -2,7 +2,7 @@
 import { getClientsPage } from "@/services/clients";
 import { Client } from "@/models/client";
 import React, { useCallback, useEffect, useState } from "react";
-import { Paginator } from "@/components/Table";
+import Paginator from "@/components/Paginator";
 import { InputSearch } from "@/components/Inputs";
 import ClientsTable from "./Table";
 

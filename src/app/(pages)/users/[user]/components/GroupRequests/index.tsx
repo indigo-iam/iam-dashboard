@@ -1,7 +1,7 @@
 import { fetchGroupsRequests } from "@/services/group-requests";
 import InfoTable from "@/components/InfoTable";
 import { User } from "@/models/scim";
-import DeleteGroupRequestButton from "./DeleteButton";
+import GroupRequestOptions from "./Options";
 
 type GroupRequestProps = {
   user: User;
@@ -29,22 +29,25 @@ export const GroupRequests = async (props: Readonly<GroupRequestProps>) => {
   });
 
   return (
-    <>
-      {data.map(d => {
-        return (
-          <section key={d.id}>
-            <div className="flex flex-row">
-              <InfoTable className="grow" data={d.values} />
-              <DeleteGroupRequestButton
-                user={user}
-                isMe={isMe}
-                groupRequest={d.request}
-              />
-            </div>
-            <hr className="mt-2 last:hidden" />
-          </section>
-        );
-      })}
-    </>
+    <table className="w-full table-auto">
+      <tbody>
+        {data.map(d => {
+          return (
+            <tr key={d.id}>
+              <td className="tbl-td">
+                <InfoTable data={d.values} />
+              </td>
+              <td className="tbl-td text-center">
+                <GroupRequestOptions
+                  user={user}
+                  isMe={isMe}
+                  groupRequest={d.request}
+                />
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
   );
 };

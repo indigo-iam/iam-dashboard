@@ -2,7 +2,7 @@ import { Page, Panel, Section } from "@/components/Layout";
 import { fetchPaginatedScopes } from "@/services/scopes";
 import NewScopeButton from "./components/NewScopeButton";
 import ScopesTable from "./components/Table";
-import { Paginator } from "@/components/Table";
+import Paginator from "@/components/Paginator";
 import SearchField from "./components/SearchField";
 
 type ScopeProps = {

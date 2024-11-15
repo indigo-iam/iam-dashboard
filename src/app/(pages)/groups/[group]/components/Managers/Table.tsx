@@ -1,15 +1,7 @@
-import {
-  Table,
-  TableHeader,
-  TableHeaderCell,
-  TableBody,
-  TableRow,
-  TableCell,
-} from "@/components/Table";
 import Link from "@/components/Link";
 import { User } from "@/models/scim";
-import RevokeManagerButton from "./RevokeButton";
 import { Group } from "@/models/groups";
+import ManagerOptions from "./Options";
 
 type MembersTableProps = {
   group: Group;
@@ -24,25 +16,21 @@ export default function ManagersTable(props: Readonly<MembersTableProps>) {
   }
 
   return (
-    <Table>
-      <TableHeader>
-        <TableHeaderCell>User</TableHeaderCell>
-        <TableHeaderCell className="text-center">Actions</TableHeaderCell>
-      </TableHeader>
-      <TableBody>
+    <table className="w-full table-auto">
+      <tbody>
         {managers.map(m => {
           return (
-            <TableRow key={m.id}>
-              <TableCell>
+            <tr key={m.id}>
+              <td className="tbl-td text-left">
                 <Link href={`/users/${m.id}`}>{m.name?.formatted}</Link>
-              </TableCell>
-              <TableCell className="text-center">
-                <RevokeManagerButton user={m} group={group} />
-              </TableCell>
-            </TableRow>
+              </td>
+              <td className="tbl-td text-center">
+                <ManagerOptions manager={m} group={group} />
+              </td>
+            </tr>
           );
         })}
-      </TableBody>
-    </Table>
+      </tbody>
+    </table>
   );
 }

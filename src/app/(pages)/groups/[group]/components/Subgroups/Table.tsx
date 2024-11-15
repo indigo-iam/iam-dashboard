@@ -1,13 +1,5 @@
 import { Group } from "@/models/groups";
 import { fetchSubgroupsPage } from "@/services/groups";
-import {
-  Table,
-  TableHeader,
-  TableHeaderCell,
-  TableBody,
-  TableRow,
-  TableCell,
-} from "@/components/Table";
 import Link from "@/components/Link";
 
 type SubgroupsTableProps = {
@@ -27,25 +19,21 @@ export default async function SubgroupsTable(
   }
 
   return (
-    <Table>
-      <TableHeader>
-        <TableHeaderCell>Group</TableHeaderCell>
-        <TableHeaderCell className="text-center">Actions</TableHeaderCell>
-      </TableHeader>
-      <TableBody>
+    <table>
+      <tbody>
         {subgroups.map(group => {
           return (
-            <TableRow key={group.value}>
-              <TableCell>
+            <tr key={group.value}>
+              <td className="tbl-td text-left">
                 <Link href={`/groups/${group.value}`}>{group.display}</Link>
-              </TableCell>
-              <TableCell className="text-center">
+              </td>
+              <td className="tbl-td text-center">
                 {/* <DeleteGroupButton group={group} /> */}
-              </TableCell>
-            </TableRow>
+              </td>
+            </tr>
           );
         })}
-      </TableBody>
-    </Table>
+      </tbody>
+    </table>
   );
 }

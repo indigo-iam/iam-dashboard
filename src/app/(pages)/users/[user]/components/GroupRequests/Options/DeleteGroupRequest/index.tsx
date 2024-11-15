@@ -15,22 +15,25 @@ export default function DeleteGroupRequestButton(
   props: Readonly<DeleteGroupRequestButtonProps>
 ) {
   const { user, isMe, groupRequest } = props;
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => setIsModalOpen(true);
-  const hideModal = () => setIsModalOpen(false);
-  const action = () => showModal();
+  const [show, setShow] = useState(false);
+  const open = () => setShow(true);
+  const close = () => setShow(false);
   return (
-    <div className="m-auto">
-      <form action={action}>
-        <DeleteButton type="submit" title="Delete Group Request" />
-      </form>
+    <>
+      <button
+        type="submit"
+        className="popover-option text-danger"
+        onClick={open}
+      >
+        Delete Group Request
+      </button>
       <DeleteGroupRequestModal
         user={user}
         isMe={isMe}
         groupRequest={groupRequest}
-        show={isModalOpen}
-        onClose={hideModal}
+        show={show}
+        onClose={close}
       />
-    </div>
+    </>
   );
 }

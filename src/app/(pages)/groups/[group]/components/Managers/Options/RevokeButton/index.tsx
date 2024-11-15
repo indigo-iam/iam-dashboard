@@ -1,6 +1,5 @@
 "use client";
 import ConfirmRevokeGroupManagerModal from "./ConfirmModal";
-import { DeleteButton } from "@/components/Buttons";
 import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
 import { useState } from "react";
@@ -14,24 +13,23 @@ export default function RevokeManagerButton(
   props: Readonly<RevokeManagerButtonProps>
 ) {
   const { user, group } = props;
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-
-  const action = () => {
-    showModal();
-  };
-
+  const [show, setShow] = useState(false);
+  const open = () => setShow(true);
+  const close = () => setShow(false);
   return (
     <>
-      <form action={action}>
-        <DeleteButton type="submit" title="Revoke Group Manager" />
-      </form>
+      <button
+        type="button"
+        className="popover-option text-danger"
+        onClick={open}
+      >
+        Revoke Group Manager
+      </button>
       <ConfirmRevokeGroupManagerModal
         user={user}
         group={group}
-        show={isModalOpen}
-        onClose={closeModal}
+        show={show}
+        onClose={close}
       />
     </>
   );

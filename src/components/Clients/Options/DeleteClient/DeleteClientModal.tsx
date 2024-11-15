@@ -1,6 +1,6 @@
 import ConfirmModal from "@/components/ConfirmModal";
 import { Client } from "@/models/client";
-import InfoTable from "../InfoTable";
+import InfoTable from "@/components/InfoTable";
 import { deleteClient } from "@/services/clients";
 
 interface DeleteClientModalProps {

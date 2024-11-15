@@ -1,5 +1,4 @@
 "use client";
-import { AddButton } from "@/components/Buttons";
 import ConfirmModal from "@/components/ConfirmModal";
 import { GroupRequest } from "@/models/group-requests";
 import { approveGroupRequest } from "@/services/group-requests";
@@ -11,21 +10,27 @@ type ConfirmButtonProps = {
 
 export default function ConfirmButton(props: Readonly<ConfirmButtonProps>) {
   const { request } = props;
-  const [isModalShown, setIsModalShown] = useState(false);
-  const show = () => setIsModalShown(true);
-  const hide = () => setIsModalShown(false);
+  const [show, setShow] = useState(false);
+  const open = () => setShow(true);
+  const close = () => setShow(false);
 
   const action = async () => {
     await approveGroupRequest(request.uuid);
-    hide();
+    close();
   };
 
   return (
     <>
-      <AddButton title="Approve Group Request" onClick={show} />
+      <button
+        type="button"
+        className="popover-option text-primary"
+        onClick={open}
+      >
+        Approve Group Request
+      </button>
       <ConfirmModal
-        show={isModalShown}
-        onClose={hide}
+        show={show}
+        onClose={close}
         onConfirm={action}
         title="Approve Group Request"
       >

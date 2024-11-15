@@ -1,5 +1,4 @@
 "use client";
-import { AddButton } from "@/components/Buttons";
 import ConfirmModal from "@/components/ConfirmModal";
 import { Registration } from "@/models/registration";
 import { approveRegistrationRequest } from "@/services/registration";
@@ -11,21 +10,27 @@ type ConfirmButtonProps = {
 
 export default function ConfirmButton(props: Readonly<ConfirmButtonProps>) {
   const { request } = props;
-  const [isModalShown, setIsModalShown] = useState(false);
-  const show = () => setIsModalShown(true);
-  const hide = () => setIsModalShown(false);
+  const [show, setShow] = useState(false);
+  const open = () => setShow(true);
+  const close = () => setShow(false);
 
   const action = async () => {
     await approveRegistrationRequest(request.uuid);
-    hide();
+    close();
   };
 
   return (
     <>
-      <AddButton title="Add User" onClick={show} />
+      <button
+        type="button"
+        className="popover-option text-primary"
+        onClick={open}
+      >
+        Accept User
+      </button>
       <ConfirmModal
-        show={isModalShown}
-        onClose={hide}
+        show={show}
+        onClose={close}
         onConfirm={action}
         title="Add User"
       >

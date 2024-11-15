@@ -2,7 +2,7 @@ import { Page, Panel, Section } from "@/components/Layout";
 import { Tab, TabPanel, TabGroup, TabList, TabPanels } from "@/components/Tabs";
 import { fetchGroupsRequests } from "@/services/group-requests";
 import { fetchRegistrationRequests } from "@/services/registration";
-import RegistrationRequests from "./components/RegistrationRequests/Index";
+import RegistrationRequests from "./components/RegistrationRequests";
 import GroupRequests from "./components/GroupRequests";
 
 export default async function Requests() {

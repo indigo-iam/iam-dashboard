@@ -1,5 +1,5 @@
 "use client";
-import { Button, DeleteButton } from "@/components/Buttons";
+import { Button } from "@/components/Buttons";
 import { Form } from "@/components/Form";
 import { Modal, ModalBody, ModalFooter } from "@/components/Modal";
 import TextArea from "@/components/TextArea";
@@ -28,7 +28,13 @@ export default function RejectButton(props: Readonly<RejectButtonProps>) {
 
   return (
     <>
-      <DeleteButton title="Reject User" onClick={show} />
+      <button
+        type="button"
+        className="popover-option text-danger"
+        onClick={show}
+      >
+        Reject User
+      </button>
       <Modal
         show={isModalShown}
         onClose={hide}
@@ -38,8 +44,7 @@ export default function RejectButton(props: Readonly<RejectButtonProps>) {
           <ModalBody>
             <p>
               Are you sure you want to delete the registration request for the
-              user
-              <b>{`${request.givenname} ${request.familyname}`}</b>?
+              user <b>{`${request.givenname} ${request.familyname}`}</b>?
             </p>
             <p>
               To proceed provide a motivation that will be sent to the user:

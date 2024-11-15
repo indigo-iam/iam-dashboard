@@ -1,5 +1,5 @@
 "use client";
-import { Button, DeleteButton } from "@/components/Buttons";
+import { Button } from "@/components/Buttons";
 import { GroupRequest } from "@/models/group-requests";
 import { Modal, ModalBody, ModalFooter } from "@/components/Modal";
 import { useState } from "react";
@@ -13,22 +13,28 @@ type RejectButtonProps = {
 
 export default function RejectButton(props: Readonly<RejectButtonProps>) {
   const { request } = props;
-  const [isModalShown, setIsModalShown] = useState(false);
+  const [show, setShow] = useState(false);
   const [motivation, setMotivation] = useState<string>();
-  const show = () => setIsModalShown(true);
-  const hide = () => setIsModalShown(false);
+  const open = () => setShow(true);
+  const close = () => setShow(false);
   const disabled = !(motivation && motivation.length > 3);
 
   const action = async (formData: FormData) => {
     const motivation = formData.get("motivation") as string;
     await rejectGroupRequest(request.uuid, motivation);
-    hide();
+    close();
   };
 
   return (
     <>
-      <DeleteButton title="Reject Group Request" onClick={show} />
-      <Modal show={isModalShown} onClose={hide} title="Reject Group Request">
+      <button
+        type="button"
+        className="popover-option text-danger"
+        onClick={open}
+      >
+        Reject Request
+      </button>
+      <Modal show={show} onClose={close} title="Reject Group Request">
         <Form action={action}>
           <ModalBody>
             <p>
@@ -51,7 +57,12 @@ export default function RejectButton(props: Readonly<RejectButtonProps>) {
             >
               Reject Request
             </Button>
-            <Button action="primary" title="Cancel" type="reset" onClick={hide}>
+            <Button
+              action="primary"
+              title="Cancel"
+              type="reset"
+              onClick={close}
+            >
               Cancel
             </Button>
           </ModalFooter>

@@ -3,13 +3,13 @@ import { fetchPaginatedScopes } from "@/services/scopes";
 import NewScopeButton from "./components/NewScopeButton";
 import ScopesTable from "./components/Table";
 import Paginator from "@/components/Paginator";
-import SearchField from "./components/SearchField";
+import InputQuery from "@/components/Inputs/InputQuery";
 
 type ScopeProps = {
   searchParams?: {
     count?: string;
     page?: string;
-    filter?: string;
+    query?: string;
   };
 };
 
@@ -17,9 +17,9 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
   const { searchParams } = props;
   const count = searchParams?.count ? parseInt(searchParams.count) : 10;
   const page = searchParams?.page ? parseInt(searchParams.page) : 1;
-  const filter = searchParams?.filter;
+  const query = searchParams?.query;
   const startIndex = count * (page - 1);
-  const scopes = await fetchPaginatedScopes(count, startIndex, filter);
+  const scopes = await fetchPaginatedScopes(count, startIndex, query);
   const numberOfPages = Math.ceil(scopes.totalResults / count);
 
   return (
@@ -27,7 +27,7 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
       <Panel>
         <Section>
           <NewScopeButton />
-          <SearchField />
+          <InputQuery />
           <div className="overflow-y-visible">
             <ScopesTable scopes={scopes.Resources} />
           </div>

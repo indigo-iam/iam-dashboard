@@ -12,7 +12,6 @@ export default function AssignOwnerModal(props: Readonly<AssignOwnerModal>) {
   const [selectedUser, setSelectedUser] = useState<User>();
   const addOwner = (user: User) => {
     setSelectedUser(user);
-    console.log(user);
   };
 
   const clearAndClose = () => {

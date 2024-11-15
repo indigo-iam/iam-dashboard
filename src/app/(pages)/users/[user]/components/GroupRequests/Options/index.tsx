@@ -1,5 +1,5 @@
 import Options from "@/components/Options";
-import DeleteGroupRequestButton from "./DeleteGroupRequest";
+import DeleteGroupRequestButton from "./DeleteButton";
 import { User } from "@/models/scim";
 import { GroupRequest } from "@/models/group-requests";
 

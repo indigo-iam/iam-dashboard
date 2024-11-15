@@ -1,32 +1,47 @@
-import { Button } from "@/components/Buttons";
-import { Suspense } from "react";
-import SearchableTable from "./SearchableTable";
-import { PlusIcon } from "@heroicons/react/24/solid";
-import Link from "next/link";
+import { Client } from "@/models/client";
+import Link from "@/components/Link";
+import ClientOptions from "./Options";
 
-type ClientsProps = {
-  searchParams?: {
-    count?: string;
-    page?: string;
-  };
-  me?: boolean;
+type RowProps = {
+  client: Client;
 };
 
-export default function Clients(props: Readonly<ClientsProps>) {
-  const { searchParams, me } = props;
+function Row(props: Readonly<RowProps>) {
+  const { client } = props;
+  const { client_id, client_name } = client;
   return (
-    <>
-      <div className="flex flex-row gap-2">
-        <Link href="/clients/new">
-          <Button action="primary-outline" icon={<PlusIcon />}>
-            New client
-          </Button>
-        </Link>
-        <Button action="primary-outline">Redeem client</Button>
-      </div>
-      <Suspense fallback="Loading...">
-        <SearchableTable {...searchParams} me={me} />
-      </Suspense>
-    </>
+    <tr className="tbl-hover">
+      <td className="tbl-td">{client_name}</td>
+      <td className="tbl-td">
+        <Link href={`/clients/${client_id}`}>{client_id}</Link>
+      </td>
+      <td className="tbl-td text-center">
+        <ClientOptions client={client} />
+      </td>
+    </tr>
+  );
+}
+
+type ClientsTableProps = {
+  clients: Client[];
+};
+
+export default function ClientsTable(props: Readonly<ClientsTableProps>) {
+  const { clients } = props;
+  return (
+    <table className="w-full table-auto">
+      <thead>
+        <tr className="tbl-hover">
+          <th className="tbl-th text-left">Name</th>
+          <th className="tbl-th text-left">Client Id</th>
+          <th className="tbl-th text-center" />
+        </tr>
+      </thead>
+      <tbody>
+        {clients.map(client => (
+          <Row key={client.client_id} client={client} />
+        ))}
+      </tbody>
+    </table>
   );
 }

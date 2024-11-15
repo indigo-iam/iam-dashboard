@@ -16,7 +16,7 @@ export default function ScopesTable(props: Readonly<ScopesTableProps>) {
           <th className="tbl-th text-left">Scope</th>
           <th className="tbl-th text-left">Type</th>
           <th className="tbl-th text-left">Description</th>
-          <th className="tbl-th text-center">Actions</th>
+          <th className="tbl-th text-center" />
         </tr>
       </thead>
       <tbody>

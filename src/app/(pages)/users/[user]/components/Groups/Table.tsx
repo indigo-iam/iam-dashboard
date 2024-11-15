@@ -13,7 +13,7 @@ type RowProps = {
 const Row = (props: Readonly<RowProps>) => {
   const { groupRef, userRef } = props;
   return (
-    <tr>
+    <tr className="tbl-tr">
       <td className="tbl-td grow">
         <Link href={`/groups/${groupRef.value}`}>{groupRef.display}</Link>
       </td>

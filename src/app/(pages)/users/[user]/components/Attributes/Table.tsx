@@ -26,7 +26,7 @@ export default async function AttributesTable(props: Readonly<TableProps>) {
       <tbody>
         {attributes.map(attr => {
           return (
-            <tr key={attr.name}>
+            <tr className="tbl-tr" key={attr.name}>
               <td className="tbl-td">{attr.name}</td>
               <td className="tbl-td">{attr.value}</td>
               <td className="tbl-td w-1/12 text-center">

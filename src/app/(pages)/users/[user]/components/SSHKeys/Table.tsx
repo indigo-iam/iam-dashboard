@@ -41,7 +41,7 @@ export default function Table(props: Readonly<TableProps>) {
     <table className="w-full table-auto">
       <tbody>
         {data.map(d => (
-          <tr key={d.key.value}>
+          <tr className="tbl-tr" key={d.key.value}>
             <td className="tbl-td">
               <InfoTable data={d.data} className="grow truncate" />
             </td>

@@ -109,8 +109,12 @@
     @apply border-b bg-primary/5 p-2 pt-8 first:rounded-tl-lg last:rounded-tr-lg;
   }
 
+  .tbl-tr {
+    @apply border-b border-primary/5 last:border-none dark:border-white/5;
+  }
+
   .tbl-td {
-    @apply border-b border-primary/5 p-2 py-2 dark:border-white/5;
+    @apply p-2 py-2;
   }
 
   .tbl-hover {

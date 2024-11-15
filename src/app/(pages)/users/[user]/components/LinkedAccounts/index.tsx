@@ -7,7 +7,7 @@ import SAMLOptions from "./SAMLOptions";
 
 const OidcIdView = (props: { id: OidcId }) => {
   return (
-    <tr>
+    <tr className="tbl-tr">
       <td className="p-2">
         <b>Issuer:</b> {props.id.issuer}
         <br />
@@ -25,7 +25,7 @@ const OidcIdView = (props: { id: OidcId }) => {
 
 const SamlIdView = (props: { id: SamlId }) => {
   return (
-    <tr>
+    <tr className="tbl-tr">
       <td className="p-2">
         <p className="break-all">{props.id.idpId}</p>
         <p className="break-all"> {props.id.attributeId}</p>

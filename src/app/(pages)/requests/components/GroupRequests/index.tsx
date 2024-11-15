@@ -30,7 +30,7 @@ export function Row(props: Readonly<RowPros>) {
     { name: "Note", value: <i>{request.notes}</i> },
   ];
   return (
-    <tr>
+    <tr className="tbl-tr">
       <td className="tbl-td">
         <InfoTable data={data} />
       </td>

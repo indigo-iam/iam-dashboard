@@ -20,7 +20,7 @@ export default function ManagersTable(props: Readonly<MembersTableProps>) {
       <tbody>
         {managers.map(m => {
           return (
-            <tr key={m.id}>
+            <tr className="tbl-tr" key={m.id}>
               <td className="tbl-td text-left">
                 <Link href={`/users/${m.id}`}>{m.name?.formatted}</Link>
               </td>

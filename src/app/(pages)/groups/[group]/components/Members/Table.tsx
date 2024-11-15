@@ -21,7 +21,7 @@ export default async function Members(props: Readonly<MembersProps>) {
       <tbody>
         {members.map(member => {
           return (
-            <tr key={member.value}>
+            <tr className="tbl-tr" key={member.value}>
               <td className="tbl-td">
                 <Link href={`/users/${member.value}`}>{member.display}</Link>
               </td>

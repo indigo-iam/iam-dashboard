@@ -23,7 +23,7 @@ export default async function SubgroupsTable(
       <tbody>
         {subgroups.map(group => {
           return (
-            <tr key={group.value}>
+            <tr className="tbl-tr" key={group.value}>
               <td className="tbl-td text-left">
                 <Link href={`/groups/${group.value}`}>{group.display}</Link>
               </td>

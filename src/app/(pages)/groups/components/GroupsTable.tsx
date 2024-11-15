@@ -13,7 +13,7 @@ function Row(props: Readonly<RowProps>) {
   const strLabels = labels ? labels.map(l => l.name).join(" ") : " ";
 
   return (
-    <tr className="tbl-hover">
+    <tr className="tbl-tr tbl-hover">
       <td className="tbl-td">
         <Link href={`/groups/${group.id}`}>{group.displayName}</Link>
       </td>

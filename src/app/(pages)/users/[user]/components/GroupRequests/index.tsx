@@ -33,7 +33,7 @@ export const GroupRequests = async (props: Readonly<GroupRequestProps>) => {
       <tbody>
         {data.map(d => {
           return (
-            <tr key={d.id}>
+            <tr className="tbl-tr" key={d.id}>
               <td className="tbl-td">
                 <InfoTable data={d.values} />
               </td>

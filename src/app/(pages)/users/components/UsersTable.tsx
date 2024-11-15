@@ -34,21 +34,16 @@ function DeleteUserButton(props: Readonly<{ onDeleteUser: () => void }>) {
 
 type RowProps = {
   user: User;
-  onDeleteUser?: (user: User) => void;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const { user, onDeleteUser } = props;
-
-  const deleteUser = () => {
-    onDeleteUser?.(user);
-  };
+  const { user } = props;
 
   const created = user.meta?.created
     ? dateToHuman(new Date(user.meta.created))
     : "N/A";
   return (
-    <tr className="tbl-hover">
+    <tr className="tbl-tr tbl-hover">
       <td className="tbl-td">
         <Link href={`/users/${user.id}`}>{user.name?.formatted}</Link>
       </td>
@@ -66,15 +61,14 @@ function Row(props: Readonly<RowProps>) {
 
 type UsersTableProps = {
   users: User[];
-  onDeleteUser?: (user: User) => void;
 };
 
 export default function UsersTable(props: Readonly<UsersTableProps>) {
-  const { users, onDeleteUser } = props;
+  const { users } = props;
   return (
     <table className="w-full table-auto">
       <thead>
-        <tr>
+        <tr className="tbl-tr">
           <th className="tbl-th text-left">Name</th>
           <th className="tbl-th text-left">Email</th>
           <th className="tbl-th text-left">Created</th>
@@ -84,7 +78,7 @@ export default function UsersTable(props: Readonly<UsersTableProps>) {
       </thead>
       <tbody>
         {users.map(user => (
-          <Row key={user.id} user={user} onDeleteUser={onDeleteUser} />
+          <Row key={user.id} user={user} />
         ))}
       </tbody>
     </table>

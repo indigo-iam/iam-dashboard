@@ -21,7 +21,7 @@ export interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
 
 export default function Button(props: Readonly<ButtonProps>): JSX.Element {
   const { children, icon, isSmall, action, ...buttonProps } = props;
-  let buttonStyle = "min-w-12 px-2 py-1 h-8 ";
+  let buttonStyle = "min-w-12 ";
   switch (action) {
     case "primary":
       buttonStyle += "btn-primary";
@@ -57,14 +57,10 @@ export default function Button(props: Readonly<ButtonProps>): JSX.Element {
 
   return (
     <button {...buttonProps} className={buttonStyle}>
-      <div className="flex">
-        {icon ? (
-          <div className={`my-auto me-2 ${isSmall ? "h-3 w-3" : "h-5 w-5"}`}>
-            {icon}
-          </div>
-        ) : null}
-        <small className="m-auto">{children}</small>
-      </div>
+      {icon ? (
+        <div className={`my-auto ${isSmall ? "size-3" : "size-5"}`}>{icon}</div>
+      ) : null}
+      {children}
     </button>
   );
 }

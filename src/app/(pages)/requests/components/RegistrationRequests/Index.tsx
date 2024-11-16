@@ -9,7 +9,7 @@ type RowProps = {
   request: Registration;
 };
 
-export function Row(props: Readonly<RowProps>) {
+function Row(props: Readonly<RowProps>) {
   const { request } = props;
   const link = (
     <Link href={`/users/${request.accountId}`}>{request.accountId}</Link>

@@ -13,21 +13,22 @@ type ClientsProps = {
     count?: string;
     page?: string;
     query?: string;
+    me?: string;
   };
-  me?: boolean;
 };
 
 export default async function ClientsPage(props: Readonly<ClientsProps>) {
-  const { searchParams, me } = props;
+  const { searchParams } = props;
+  const isMe = searchParams?.hasOwnProperty("me");
   const count = searchParams?.count ? parseInt(searchParams.count) : 10;
   const page = searchParams?.page ? parseInt(searchParams.page) : 1;
   const query = searchParams?.query;
   const startIndex = 1 + count * (page - 1);
-  const clientPage = await getClientsPage(count, startIndex, me, query);
+  const clientPage = await getClientsPage(count, startIndex, isMe, query);
   const numberOfPages = Math.ceil(clientPage.totalResults / count);
   const clients = clientPage.Resources;
   return (
-    <Page title="Clients">
+    <Page title={`${isMe ? "My Clients" : "Clients"}`}>
       <Panel>
         <Section>
           <div className="flex flex-row gap-2">

@@ -1,6 +1,6 @@
 "use client";
 import { default as NextLink } from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 export type SidebarLinkProps = {
   sidebarId: string;
@@ -12,17 +12,27 @@ export type SidebarLinkProps = {
 export default function Link(props: Readonly<SidebarLinkProps>) {
   const { sidebarId, title, href, icon } = props;
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const hideSidebar = () => {
     const dismissButton = document.getElementById(`${sidebarId}-dismiss-btn`);
     dismissButton?.click();
   };
-
+  console.log(searchParams);
   let isActive = pathname.split("/")[1] === href.split("/")[1];
-  if (
-    (pathname === "/users/me" && href === "/users") ||
-    (pathname === "/users" && href === "/users/me")
-  ) {
-    isActive = false;
+
+  switch (pathname) {
+    case "/users":
+      isActive = href === "/users";
+      break;
+    case "/users/me":
+      isActive = href === "/users/me";
+      break;
+    case "/clients":
+      isActive =
+        (href === "/clients?me" && searchParams.has("me")) ||
+        (href === "/clients" && !searchParams.has("me"));
+      break;
+    default:
   }
 
   return (

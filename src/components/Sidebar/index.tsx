@@ -35,7 +35,7 @@ const AccountManagement = () => {
       <SidebarLink title="Home" href="/users/me" icon={<HomeIcon />} />
       <SidebarLink
         title="My Clients"
-        href="/me/clients"
+        href="/clients?me"
         icon={<RocketLaunchIcon />}
       />
     </DrawerSection>

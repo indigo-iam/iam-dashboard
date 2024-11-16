@@ -1,28 +1,24 @@
 import InfoTable from "@/components/InfoTable";
+import Link from "@/components/Link";
 import { TabPanel } from "@/components/Tabs";
-import { GroupRequest } from "@/models/group-requests";
+import { Registration } from "@/models/registration";
 import { dateToHuman } from "@/utils/dates";
-import Link from "next/link";
-import GroupRequestOptions from "./Options";
+import RegistrationRequestsOptions from "./Options";
 
-type RowPros = {
-  request: GroupRequest;
+type RowProps = {
+  request: Registration;
 };
 
-export function Row(props: Readonly<RowPros>) {
+function Row(props: Readonly<RowProps>) {
   const { request } = props;
-  const userLink = (
-    <Link href={`/users/${request.userUuid}`}>{request.userUuid}</Link>
+  const link = (
+    <Link href={`/users/${request.accountId}`}>{request.accountId}</Link>
   );
-  const groupLink = (
-    <Link href={`/groups/${request.groupUuid}`}>{request.groupUuid}</Link>
-  );
-
   const data = [
+    { name: "Given Name", value: request.givenname },
+    { name: "Family Name", value: request.familyname },
     { name: "Username", value: request.username },
-    { name: "Group", value: request.groupName },
-    { name: "User ID", value: userLink },
-    { name: "Group ID", value: groupLink },
+    { name: "User ID", value: link },
     {
       name: "Creation Date",
       value: dateToHuman(new Date(request.creationTime)),
@@ -35,18 +31,19 @@ export function Row(props: Readonly<RowPros>) {
         <InfoTable data={data} />
       </td>
       <td className="tbl-td">
-        <GroupRequestOptions request={request} />
+        <RegistrationRequestsOptions request={request} />
       </td>
     </tr>
   );
 }
 
-type groupRequestProps = {
-  requests: GroupRequest[];
+type RegistrationsProps = {
+  requests: Registration[];
 };
 
-export default function GroupRequests(props: Readonly<groupRequestProps>) {
+export default function Registrations(props: Readonly<RegistrationsProps>) {
   const { requests } = props;
+
   if (requests.length === 0) {
     return (
       <TabPanel className="flex flex-col gap-4 divide-y">
@@ -54,9 +51,10 @@ export default function GroupRequests(props: Readonly<groupRequestProps>) {
       </TabPanel>
     );
   }
+
   return (
-    <TabPanel>
-      <table className="w-full table-auto">
+    <TabPanel className="flex flex-col gap-4 divide-y">
+      <table>
         <tbody>
           {requests.map(r => (
             <Row key={r.uuid} request={r} />

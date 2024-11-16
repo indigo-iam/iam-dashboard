@@ -1,24 +1,28 @@
 import InfoTable from "@/components/InfoTable";
-import Link from "@/components/Link";
 import { TabPanel } from "@/components/Tabs";
-import { Registration } from "@/models/registration";
+import { GroupRequest } from "@/models/group-requests";
 import { dateToHuman } from "@/utils/dates";
-import RegistrationRequestsOptions from "./Options";
+import GroupRequestOptions from "./Options";
+import Link from "@/components/Link";
 
-type RowProps = {
-  request: Registration;
+type RowPros = {
+  request: GroupRequest;
 };
 
-function Row(props: Readonly<RowProps>) {
+export function Row(props: Readonly<RowPros>) {
   const { request } = props;
-  const link = (
-    <Link href={`/users/${request.accountId}`}>{request.accountId}</Link>
+  const userLink = (
+    <Link href={`/users/${request.userUuid}`}>{request.userUuid}</Link>
   );
+  const groupLink = (
+    <Link href={`/groups/${request.groupUuid}`}>{request.groupUuid}</Link>
+  );
+
   const data = [
-    { name: "Given Name", value: request.givenname },
-    { name: "Family Name", value: request.familyname },
     { name: "Username", value: request.username },
-    { name: "User ID", value: link },
+    { name: "Group", value: request.groupName },
+    { name: "User ID", value: userLink },
+    { name: "Group ID", value: groupLink },
     {
       name: "Creation Date",
       value: dateToHuman(new Date(request.creationTime)),
@@ -31,21 +35,18 @@ function Row(props: Readonly<RowProps>) {
         <InfoTable data={data} />
       </td>
       <td className="tbl-td">
-        <RegistrationRequestsOptions request={request} />
+        <GroupRequestOptions request={request} />
       </td>
     </tr>
   );
 }
 
-type RegistrationRequestsProps = {
-  requests: Registration[];
+type GroupsProps = {
+  requests: GroupRequest[];
 };
 
-export default function RegistrationRequests(
-  props: Readonly<RegistrationRequestsProps>
-) {
+export default function Groups(props: Readonly<GroupsProps>) {
   const { requests } = props;
-
   if (requests.length === 0) {
     return (
       <TabPanel className="flex flex-col gap-4 divide-y">
@@ -53,10 +54,9 @@ export default function RegistrationRequests(
       </TabPanel>
     );
   }
-
   return (
-    <TabPanel className="flex flex-col gap-4 divide-y">
-      <table>
+    <TabPanel>
+      <table className="w-full table-auto">
         <tbody>
           {requests.map(r => (
             <Row key={r.uuid} request={r} />

@@ -17,7 +17,7 @@ export default function Link(props: Readonly<SidebarLinkProps>) {
     const dismissButton = document.getElementById(`${sidebarId}-dismiss-btn`);
     dismissButton?.click();
   };
-  console.log(searchParams);
+
   let isActive = pathname.split("/")[1] === href.split("/")[1];
 
   switch (pathname) {

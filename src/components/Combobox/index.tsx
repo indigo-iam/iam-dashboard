@@ -35,14 +35,14 @@ export default function Combobox<T extends Searchable>(
   };
 
   return (
-    <div className="relative" hidden={hidden}>
-      <HeadlessCombobox onChange={onSelected}>
-        <ComboboxInput
-          className="combobox w-full"
-          placeholder="Type to search..."
-          displayValue={(user: User) => user?.displayName ?? ""}
-          onChange={event => setQuery(event.target.value)}
-        />
+    <HeadlessCombobox onChange={onSelected}>
+      <ComboboxInput
+        className="combobox w-full"
+        placeholder="Type to search..."
+        displayValue={(user: User) => user?.displayName ?? ""}
+        onChange={event => setQuery(event.target.value)}
+      />
+      <div className="relative">
         <ComboboxOptions className="combobox-options">
           {items.map(item => (
             <ComboboxOption
@@ -55,7 +55,7 @@ export default function Combobox<T extends Searchable>(
             </ComboboxOption>
           ))}
         </ComboboxOptions>
-      </HeadlessCombobox>
-    </div>
+      </div>
+    </HeadlessCombobox>
   );
 }

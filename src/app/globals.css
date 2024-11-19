@@ -94,11 +94,11 @@
   }
 
   .combobox {
-    @apply rounded-lg border bg-transparent px-2 py-1 text-secondary;
+    @apply rounded-lg border bg-transparent px-2 py-1 dark:text-secondary;
   }
 
   .combobox-options {
-    @apply rounded-lg border;
+    @apply rounded-lg border z-50;
   }
 
   .combobox-option {

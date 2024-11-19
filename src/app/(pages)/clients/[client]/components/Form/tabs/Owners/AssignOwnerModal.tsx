@@ -24,7 +24,6 @@ export default function AssignOwnerModal(props: Readonly<AssignOwnerModal>) {
       <ModalBody>
         <Combobox
           onSelected={addOwner}
-          hidden={!!selectedUser}
           searchCallback={searchUser}
         />
         <div hidden={!selectedUser}>

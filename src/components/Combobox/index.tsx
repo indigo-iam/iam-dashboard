@@ -12,7 +12,6 @@ import { Group } from "@/models/groups";
 type Searchable = User | Group;
 
 type ComboboxProps<T extends Searchable> = {
-  hidden?: boolean;
   searchCallback: (query: string) => Promise<T[]>;
   onSelected: (item: T) => void;
 };
@@ -20,7 +19,7 @@ type ComboboxProps<T extends Searchable> = {
 export default function Combobox<T extends Searchable>(
   props: Readonly<ComboboxProps<T>>
 ) {
-  const { hidden, onSelected, searchCallback } = props;
+  const { onSelected, searchCallback } = props;
   const [items, setItems] = useState<T[]>([]);
   const itemNotFound = {
     id: "-1",

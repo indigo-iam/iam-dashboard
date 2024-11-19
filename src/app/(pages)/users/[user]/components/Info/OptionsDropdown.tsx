@@ -22,6 +22,7 @@ import { RequestAUPSignature } from "./RequestAUPSignature";
 
 type OptionsDropdownProps = {
   user: User;
+  isAdmin?: boolean;
 };
 
 type ModalsState = {
@@ -94,10 +95,10 @@ function reducer(state: ModalsState, action: Action) {
 }
 
 export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
-  const { user } = props;
+  const { user, isAdmin } = props;
   const [state, dispatch] = useReducer(reducer, initialState);
   const indigoUser = user["urn:indigo-dc:scim:schemas:IndigoUser"];
-  const isAdmin = indigoUser?.authorities?.includes("ROLE_ADMIN");
+  const hasRoleAdmin = indigoUser?.authorities?.includes("ROLE_ADMIN");
   return (
     <>
       <Menu>
@@ -119,65 +120,83 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
               Edit details
             </button>
           </MenuItem>
-          <MenuItem>
-            <button
-              type="button"
-              className="flex gap-2"
-              onClick={() => dispatch({ type: "openDisableUser" })}
-            >
-              {user.active ? (
-                <>
-                  <NoSymbolIcon className="w-5" />
-                  Disable User
-                </>
-              ) : (
-                <>
-                  <PowerIcon className="w-5" />
-                  Enable User
-                </>
-              )}
-            </button>
-          </MenuItem>
-          <MenuItem>
-            <button
-              type="button"
-              className="flex gap-2"
-              onClick={() => dispatch({ type: "openAssignAdmin" })}
-            >
-              <BookmarkSquareIcon className="w-5" />
-              {isAdmin ? "Revoke" : "Assign"} admin privileges
-            </button>
-          </MenuItem>
-          <MenuItem>
-            <button
-              type="button"
-              className="flex gap-2"
-              onClick={() => dispatch({ type: "openChangeMembershipEndTime" })}
-            >
-              <CalendarIcon className="w-5" />
-              Change membership end time
-            </button>
-          </MenuItem>
-          <MenuItem>
-            <button
-              type="button"
-              className="flex gap-2"
-              onClick={() => dispatch({ type: "openSignAUP" })}
-            >
-              <DocumentTextIcon className="w-5" />
-              Sign AUP on behalf of this user
-            </button>
-          </MenuItem>
-          <MenuItem>
-            <button
-              type="button"
-              className="flex gap-2"
-              onClick={() => dispatch({ type: "openRequestAUPSignature" })}
-            >
-              <DocumentTextIcon className="w-5" />
-              Request AUP signature
-            </button>
-          </MenuItem>
+          {isAdmin ? (
+            <>
+              <MenuItem>
+                <button
+                  type="button"
+                  className="flex gap-2"
+                  onClick={() => dispatch({ type: "openDisableUser" })}
+                >
+                  {user.active ? (
+                    <>
+                      <NoSymbolIcon className="w-5" />
+                      Disable User
+                    </>
+                  ) : (
+                    <>
+                      <PowerIcon className="w-5" />
+                      Enable User
+                    </>
+                  )}
+                </button>
+              </MenuItem>
+              <MenuItem>
+                <button
+                  type="button"
+                  className="flex gap-2"
+                  onClick={() => dispatch({ type: "openAssignAdmin" })}
+                >
+                  <BookmarkSquareIcon className="w-5" />
+                  {hasRoleAdmin ? "Revoke" : "Assign"} admin privileges
+                </button>
+              </MenuItem>
+              <MenuItem>
+                <button
+                  type="button"
+                  className="flex gap-2"
+                  onClick={() =>
+                    dispatch({ type: "openChangeMembershipEndTime" })
+                  }
+                >
+                  <CalendarIcon className="w-5" />
+                  Change membership end time
+                </button>
+              </MenuItem>
+              <MenuItem>
+                <button
+                  type="button"
+                  className="flex gap-2"
+                  onClick={() => dispatch({ type: "openSignAUP" })}
+                >
+                  <DocumentTextIcon className="w-5" />
+                  Sign AUP on behalf of this user
+                </button>
+              </MenuItem>
+              <MenuItem>
+                <button
+                  type="button"
+                  className="flex gap-2"
+                  onClick={() => dispatch({ type: "openRequestAUPSignature" })}
+                >
+                  <DocumentTextIcon className="w-5" />
+                  Request AUP signature
+                </button>
+              </MenuItem>
+            </>
+          ) : (
+            <MenuItem>
+              <button
+                type="button"
+                className="flex gap-2"
+                onClick={() => console.log("to implement")}
+              >
+                <DocumentTextIcon className="w-5" />
+                Sign AUP
+              </button>
+            </MenuItem>
+          )}
+
           <MenuItem>
             <button
               type="button"
@@ -185,7 +204,7 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
               onClick={() => dispatch({ type: "openChangePassword" })}
             >
               <KeyIcon className="w-5" />
-              Reset password
+              Change password
             </button>
           </MenuItem>
         </MenuItems>

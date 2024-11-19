@@ -2,6 +2,7 @@ import { User } from "@/models/scim";
 import OptionsDropdown from "./OptionsDropdown";
 import { dateToHuman } from "@/utils/dates";
 import InfoTable from "@/components/InfoTable";
+import { auth } from "@/auth";
 
 const ActiveStatus = (props: { active: boolean }) => {
   const { active } = props;
@@ -19,8 +20,9 @@ const ActiveStatus = (props: { active: boolean }) => {
 type UserInfoProps = {
   user: User;
 };
-export default function UserInfo(props: Readonly<UserInfoProps>) {
+export default async function UserInfo(props: Readonly<UserInfoProps>) {
   const { user } = props;
+  const session = await auth();
   const indigoUser = user["urn:indigo-dc:scim:schemas:IndigoUser"];
   const created = user.meta?.created
     ? dateToHuman(new Date(user.meta?.created))
@@ -53,7 +55,7 @@ export default function UserInfo(props: Readonly<UserInfoProps>) {
     <div className="flex">
       <InfoTable data={data} />
       <div className="mb-auto ml-auto mr-0 mt-0">
-        <OptionsDropdown user={user} />
+        <OptionsDropdown user={user} isAdmin={session?.is_admin} />
       </div>
     </div>
   );

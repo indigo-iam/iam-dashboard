@@ -23,6 +23,7 @@ import { RequestAUPSignature } from "./RequestAUPSignature";
 type OptionsDropdownProps = {
   user: User;
   isAdmin?: boolean;
+  isMe?: boolean;
 };
 
 type ModalsState = {
@@ -95,7 +96,7 @@ function reducer(state: ModalsState, action: Action) {
 }
 
 export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
-  const { user, isAdmin } = props;
+  const { user, isAdmin, isMe } = props;
   const [state, dispatch] = useReducer(reducer, initialState);
   const indigoUser = user["urn:indigo-dc:scim:schemas:IndigoUser"];
   const hasRoleAdmin = indigoUser?.authorities?.includes("ROLE_ADMIN");
@@ -163,16 +164,7 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
                   Change membership end time
                 </button>
               </MenuItem>
-              <MenuItem>
-                <button
-                  type="button"
-                  className="flex gap-2"
-                  onClick={() => dispatch({ type: "openSignAUP" })}
-                >
-                  <DocumentTextIcon className="w-5" />
-                  Sign AUP on behalf of this user
-                </button>
-              </MenuItem>
+
               <MenuItem>
                 <button
                   type="button"
@@ -184,19 +176,17 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
                 </button>
               </MenuItem>
             </>
-          ) : (
-            <MenuItem>
-              <button
-                type="button"
-                className="flex gap-2"
-                onClick={() => console.log("to implement")}
-              >
-                <DocumentTextIcon className="w-5" />
-                Sign AUP
-              </button>
-            </MenuItem>
-          )}
-
+          ) : null}
+          <MenuItem>
+            <button
+              type="button"
+              className="flex gap-2"
+              onClick={() => dispatch({ type: "openSignAUP" })}
+            >
+              <DocumentTextIcon className="w-5" />
+              {isMe ? "Sign AUP" : "Sign AUP on behalf of this user"}
+            </button>
+          </MenuItem>
           <MenuItem>
             <button
               type="button"
@@ -236,6 +226,7 @@ export default function OptionsDropdown(props: Readonly<OptionsDropdownProps>) {
       <SignAUPModal
         user={user}
         show={state.showSignAUP}
+        isMe={isMe}
         onClose={() => dispatch({ type: "closeSignAUP" })}
       />
       <RequestAUPSignature

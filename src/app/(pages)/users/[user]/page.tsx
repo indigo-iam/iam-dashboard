@@ -30,7 +30,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
     <Page title={user.name?.formatted}>
       <Panel>
         <Section title="General">
-          <UserInfo user={user} />
+          <UserInfo user={user} isMe={isMe} />
         </Section>
         <Section title="Groups">
           <Groups user={user} isAdmin={isAdmin} />

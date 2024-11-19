@@ -19,9 +19,10 @@ const ActiveStatus = (props: { active: boolean }) => {
 
 type UserInfoProps = {
   user: User;
+  isMe?: boolean;
 };
 export default async function UserInfo(props: Readonly<UserInfoProps>) {
-  const { user } = props;
+  const { user, isMe } = props;
   const session = await auth();
   const indigoUser = user["urn:indigo-dc:scim:schemas:IndigoUser"];
   const created = user.meta?.created
@@ -55,7 +56,7 @@ export default async function UserInfo(props: Readonly<UserInfoProps>) {
     <div className="flex">
       <InfoTable data={data} />
       <div className="mb-auto ml-auto mr-0 mt-0">
-        <OptionsDropdown user={user} isAdmin={session?.is_admin} />
+        <OptionsDropdown user={user} isAdmin={session?.is_admin} isMe={isMe} />
       </div>
     </div>
   );

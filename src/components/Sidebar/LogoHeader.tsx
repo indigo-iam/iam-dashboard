@@ -1,6 +1,7 @@
 import { UserCircleIcon } from "@heroicons/react/24/solid";
-import { DrawerButtons } from "../Drawer/Buttons";
 import { fetchMe } from "@/services/me";
+import Notifications from "../Notifications";
+import { Logout } from "../Buttons";
 
 const UserLogo = (props: { username: string }) => {
   const { username } = props;
@@ -16,9 +17,12 @@ export default async function LogoHeader() {
   const me = await fetchMe();
   let username = me.name?.formatted ? me.name.formatted : "Unknown User";
   return (
-    <div id="logo-header" className="mt-8 w-full p-2">
+    <div id="logo-header" className="flex flex-col gap-2">
       <UserLogo username={username} />
-      <DrawerButtons />
+      <div className="flex justify-center">
+        <Notifications />
+        <Logout />
+      </div>
       <hr className="bg-secondary" />
     </div>
   );

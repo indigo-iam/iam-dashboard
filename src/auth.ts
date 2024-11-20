@@ -17,8 +17,9 @@ declare module "next-auth/jwt" {
 declare module "next-auth" {
   interface Session {
     access_token?: string & DefaultSession["user"];
-    expires_at: number;
+    expired: boolean;
     is_admin: boolean;
+    token_expires?: Date & string;
   }
 }
 
@@ -49,35 +50,36 @@ const IamProvider: OIDCConfig<Profile> = {
 
 export const authConfig: NextAuthConfig = {
   providers: [IamProvider],
+  session: { strategy: "jwt" },
+  pages: { signIn: "/signin", signOut: "/signout" },
   callbacks: {
-    authorized({ auth }) {
-      let authorized = false;
-      if (auth?.access_token) {
-        authorized = auth.expires_at < Date.now();
+    authorized({ request, auth }) {
+      if (request.nextUrl.pathname.startsWith("/api/auth")) {
+        return true;
       }
-      return authorized;
+      if (auth?.user && auth?.access_token) {
+        return true;
+      }
+      return false;
     },
     async jwt({ token, account }) {
-      if (account) {
+      if (account?.access_token) {
+        // first time login, save access token and expiration
         const { access_token } = account;
-        if (!access_token) {
-          throw Error("Access Token not found");
-        }
-        token.access_token = access_token;
-        token.expires_at = (account.expires_at ?? 0) * 1000;
+        const expires_at = (account.expires_at ?? 0) * 1000;
         const me = await fetchMe(access_token);
-        token.is_admin =
-          me["urn:indigo-dc:scim:schemas:IndigoUser"]?.authorities?.includes(
-            "ROLE_ADMIN"
-          ) ?? false;
+        const indigoUser = me["urn:indigo-dc:scim:schemas:IndigoUser"];
+        const is_admin =
+          indigoUser?.authorities?.includes("ROLE_ADMIN") ?? false;
+        return { ...token, access_token, is_admin, expires_at };
       }
       return token;
     },
     async session({ session, token }) {
-      session.access_token = token.access_token;
-      session.expires_at = token.expires_at;
-      session.is_admin = token.is_admin;
-      return session;
+      const { access_token, expires_at, is_admin } = token;
+      const expired = expires_at < Date.now();
+      const token_expires = new Date(expires_at);
+      return { ...session, access_token, is_admin, expired, token_expires };
     },
   },
 };

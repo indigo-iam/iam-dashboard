@@ -12,10 +12,11 @@ import { User } from "@/models/scim";
 import { Paginated } from "@/models/pagination";
 import { auth } from "@/auth";
 import { setNotification } from "@/components/Toaster";
+import { redirect } from "next/navigation";
 
 const { BASE_URL } = getConfig();
 
-export const registerClient = async (client: ClientRequest) => {
+export async function registerClient(client: ClientRequest, isAdmin?: boolean) {
   const response = await authFetch(`${BASE_URL}/iam/api/client-registration`, {
     body: JSON.stringify(client),
     method: "POST",
@@ -23,13 +24,17 @@ export const registerClient = async (client: ClientRequest) => {
   });
 
   if (response.ok) {
-    const res = await response.json();
-    return res;
+    setNotification({ type: "success", message: "Client created" });
+    isAdmin ? redirect("/clients") : redirect("/me/clients");
   } else {
     const msg = await response.text();
-    throw Error(`Register Client failed with status ${response.status} ${msg}`);
+    setNotification({
+      type: "error",
+      message: "Cannot create client",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
-};
+}
 
 export const getClient = async (clientId: string, isAdmin = false) => {
   const url = isAdmin
@@ -40,17 +45,20 @@ export const getClient = async (clientId: string, isAdmin = false) => {
 
 export const deleteClient = async (clientId: string) => {
   const session = await auth();
-  const response = await authFetch(
-    `${BASE_URL}/iam/api/client-registration/${clientId}`,
-    {
-      method: "DELETE",
-    }
-  );
+  const url = `${BASE_URL}/iam/api/client-registration/${clientId}`;
+  const response = await authFetch(url, {
+    method: "DELETE",
+  });
   if (response.ok) {
+    setNotification({ type: "success", message: "Client deleted" });
     revalidatePath(session?.is_admin ? "/clients" : "/me/clients");
   } else {
     const msg = await response.text();
-    throw Error(`Delete Client failed with status ${response.status} ${msg}`);
+    setNotification({
+      type: "error",
+      message: "Cannot delete client",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 };
 
@@ -140,7 +148,7 @@ export const editClient = async (formData: FormData, isAdmin = false) => {
   });
 
   if (response.ok) {
-    setNotification({ type: "success", message: "Client Updated" });
+    setNotification({ type: "success", message: "Client saved" });
     isAdmin
       ? revalidatePath(`/clients/${client_id}`)
       : revalidatePath(`/me/clients/${client_id}`);
@@ -149,7 +157,7 @@ export const editClient = async (formData: FormData, isAdmin = false) => {
     setNotification({
       type: "error",
       message: "Could not save client",
-      subtitle: `Error ${response.status}: ${msg}`,
+      subtitle: `Error ${response.status} ${msg}`,
     });
   }
 };

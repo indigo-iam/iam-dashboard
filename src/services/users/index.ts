@@ -6,6 +6,7 @@ import { User, ScimUser, ScimRequest } from "@/models/scim";
 import { revalidatePath } from "next/cache";
 import { SSHKey } from "@/models/indigo-user";
 import { Attribute } from "@/models/attributes";
+import { setNotification } from "@/components/Toaster";
 
 const { BASE_URL } = getConfig();
 
@@ -40,10 +41,15 @@ export const addUser = async (user: ScimUser) => {
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
+    setNotification({ type: "success", message: "User created" });
     revalidatePath("/users");
   } else {
     const msg = await response.text();
-    throw Error(`User creation failed with status ${response.status} ${msg}`);
+    setNotification({
+      type: "error",
+      message: "Cannot create user",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 };
 
@@ -54,10 +60,15 @@ export const deleteUser = async (user: User) => {
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
+    setNotification({ type: "success", message: "User deleted" });
     revalidatePath("/users");
   } else {
     const msg = await response.text();
-    throw Error(`User deletion failed with status ${response.status} ${msg}`);
+    setNotification({
+      type: "error",
+      message: "Cannot delete user",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 };
 
@@ -87,10 +98,18 @@ const patchUserSSHKey = async (
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
+    setNotification({
+      type: "success",
+      message: op === "add" ? "Key add" : "Key updated",
+    });
     revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();
-    throw Error(`${op} SSH key failed with status ${response.status} ${msg}`);
+    setNotification({
+      type: "error",
+      message: op === "add" ? "Cannot add key" : "Cannot update key",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 };
 
@@ -121,7 +140,11 @@ export async function addAttribute(userId: string, attr: Attribute) {
     revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();
-    throw Error(`Put attribute failed with status ${response.status} ${msg}`);
+    setNotification({
+      type: "error",
+      message: "Cannot add attribute",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 }
 
@@ -134,9 +157,11 @@ export async function deleteAttribute(userId: string, attr: Attribute) {
     revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();
-    throw Error(
-      `Delete attribute failed with status ${response.status} ${msg}`
-    );
+    setNotification({
+      type: "error",
+      message: "Cannot delete attribute",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 }
 
@@ -151,12 +176,18 @@ export async function changeMembershipEndTime(userId: string, date: string) {
     },
   });
   if (response.ok) {
+    setNotification({
+      type: "success",
+      message: "Membership End Time updated",
+    });
     revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();
-    throw Error(
-      `Change membership end date failed with status ${response.status} ${msg}`
-    );
+    setNotification({
+      type: "error",
+      message: "Cannot update Membership End Date",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 }
 
@@ -171,12 +202,18 @@ export async function revokeMembershipEndTime(userId: string) {
     },
   });
   if (response.ok) {
+    setNotification({
+      type: "success",
+      message: "Membership End Time revoked",
+    });
     revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();
-    throw Error(
-      `Revoke membership end date failed with status ${response.status} ${msg}`
-    );
+    setNotification({
+      type: "error",
+      message: "Cannot revoke Membership End Time",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 }
 
@@ -200,12 +237,18 @@ export async function changeUserStatus(userId: string, status: boolean) {
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
+    setNotification({
+      type: "success",
+      message: `User ${status ? "enabled" : "disabled"}`,
+    });
     revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();
-    throw Error(
-      `Edit user status failed with status code ${response.status} ${msg}`
-    );
+    setNotification({
+      type: "error",
+      message: `Cannot ${status ? "enable" : "disable"} the user`,
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 }
 
@@ -215,12 +258,15 @@ export async function requestAUPSignature(userId: string) {
     method: "DELETE",
   });
   if (response.ok) {
+    setNotification({ type: "success", message: "Request AUP Signature sent" });
     revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();
-    throw Error(
-      `Request AUP signature failed with status code ${response.status} ${msg}`
-    );
+    setNotification({
+      type: "error",
+      message: "Cannot send AUP signature request",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 }
 
@@ -233,9 +279,14 @@ export async function signAUP(userId: string) {
     body,
   });
   if (response.ok) {
+    setNotification({ type: "success", message: "AUP Signed" });
     revalidatePath(`/user/${userId}`);
   } else {
     const msg = await response.text();
-    throw Error(`Sign AUP failed with status code ${response.status} ${msg}`);
+    setNotification({
+      type: "error",
+      message: "Cannot sign AUP",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 }

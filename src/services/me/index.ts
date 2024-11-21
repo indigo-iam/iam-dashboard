@@ -5,6 +5,7 @@ import { ScimOp, ScimRequest, User } from "@/models/scim";
 import { Paginated } from "@/models/pagination";
 import { Client } from "@/models/client";
 import { revalidatePath } from "next/cache";
+import { setNotification } from "@/components/Toaster";
 
 const { BASE_URL } = getConfig();
 
@@ -65,6 +66,7 @@ export const patchMe = async (formData: FormData) => {
   });
 
   if (response.ok) {
+    setNotification({ type: "success", message: "Saved" });
     revalidatePath("/users/me");
   } else {
     if (response.status == 409) {
@@ -72,6 +74,10 @@ export const patchMe = async (formData: FormData) => {
       return { err: json.detail as string };
     }
     const msg = await response.text();
-    throw new Error(`Patch Me failed with status ${response.status} ${msg}`);
+    setNotification({
+      type: "error",
+      message: "Cannot save user",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 };

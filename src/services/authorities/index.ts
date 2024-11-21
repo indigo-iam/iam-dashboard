@@ -2,6 +2,7 @@
 import { authFetch } from "@/utils/fetch";
 import getConfig from "@/utils/config";
 import { revalidatePath } from "next/cache";
+import { setNotification } from "@/components/Toaster";
 
 const { BASE_URL } = getConfig();
 
@@ -11,12 +12,15 @@ export const assignAdminPrivileges = async (userId: string) => {
     method: "POST",
   });
   if (response.ok) {
+    setNotification({ type: "success", message: "Admin privileges assigned" });
     revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();
-    throw new Error(
-      `Assigning admin privileges failed with status ${response.status} ${msg}`
-    );
+    setNotification({
+      type: "error",
+      message: "Cannot assign Admin privileges to the user",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 };
 
@@ -26,11 +30,14 @@ export const revokeAdminPrivileges = async (userId: string) => {
     method: "DELETE",
   });
   if (response.ok) {
+    setNotification({ type: "info", message: "Admin privileges revoked" });
     revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();
-    throw new Error(
-      `Revoking admin privileges failed with status ${response.status} ${msg}`
-    );
+    setNotification({
+      type: "error",
+      message: "Cannot revoke admin privileges",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 };

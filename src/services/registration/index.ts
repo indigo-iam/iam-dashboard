@@ -3,6 +3,7 @@ import { authFetch, getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
 import { Registration } from "@/models/registration";
 import { revalidatePath } from "next/cache";
+import { setNotification } from "@/components/Toaster";
 
 const { BASE_URL } = getConfig();
 
@@ -17,12 +18,15 @@ export async function approveRegistrationRequest(requestId: string) {
     method: "POST",
   });
   if (response.ok) {
+    setNotification({ type: "success", message: "User approved" });
     revalidatePath("/requests");
   } else {
     const msg = await response.text();
-    throw Error(
-      `Registration request approval failed with status ${response.status} ${msg}`
-    );
+    setNotification({
+      type: "error",
+      message: "Cannot approve user",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 }
 
@@ -38,11 +42,14 @@ export async function rejectRegistrationRequest(
     headers: { "content-type": "application/json" },
   });
   if (response.ok) {
+    setNotification({ type: "success", message: "User request rejected" });
     revalidatePath("/requests");
   } else {
     const msg = await response.text();
-    throw Error(
-      `Registration request rejection failed with status ${response.status} ${msg}`
-    );
+    setNotification({
+      type: "error",
+      message: "Cannot reject user request",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 }

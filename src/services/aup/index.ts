@@ -1,4 +1,5 @@
 "use server";
+import { setNotification } from "@/components/Toaster";
 import { AUP, AUPCreate, AUPPatch } from "@/models/aup";
 import getConfig from "@/utils/config";
 import { authFetch, getItem } from "@/utils/fetch";
@@ -18,10 +19,15 @@ export async function createAUP(aup: AUPCreate) {
     headers: { "content-type": "application/json" },
   });
   if (response.ok) {
+    setNotification({ type: "success", message: "AUP Created" });
     revalidatePath("/aup");
   } else {
     const msg = await response.text();
-    throw Error(`create aup failed with status ${response.status} ${msg}`);
+    setNotification({
+      type: "error",
+      message: "Cannot create AUP",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 }
 
@@ -32,10 +38,15 @@ export async function patchAUP(aup: AUPPatch) {
     headers: { "content-type": "application/json" },
   });
   if (response.ok) {
+    setNotification({ type: "success", message: "AUP updated" });
     revalidatePath("/aup");
   } else {
     const msg = await response.text();
-    throw Error(`aup patch failed with status ${response.status} ${msg}`);
+    setNotification({
+      type: "error",
+      message: "Cannot update AUP",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 }
 
@@ -44,10 +55,15 @@ export async function deleteAUP() {
     method: "DELETE",
   });
   if (response.ok) {
+    setNotification({ type: "success", message: "AUP deleted" });
     revalidatePath("/aup");
   } else {
     const msg = await response.text();
-    throw Error(`aup delete failed with status ${response.status} ${msg}`);
+    setNotification({
+      type: "error",
+      message: "Cannot delete AUP",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 }
 
@@ -60,6 +76,10 @@ export async function touchAUP() {
     revalidatePath("/aup");
   } else {
     const msg = await response.text();
-    throw Error(`aup touch failed with status ${response.status} ${msg}`);
+    setNotification({
+      type: "error",
+      message: "Cannot touch AUP",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 }

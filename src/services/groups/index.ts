@@ -5,6 +5,7 @@ import getConfig from "@/utils/config";
 import { Paginated } from "@/models/pagination";
 import { revalidatePath } from "next/cache";
 import { ScimReference, User } from "@/models/scim";
+import { setNotification } from "@/components/Toaster";
 
 const { BASE_URL } = getConfig();
 
@@ -149,12 +150,15 @@ export const addUserToGroup = async (
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
+    setNotification({ type: "success", message: "Success" });
     revalidatePath(`/groups/${groupId}`);
   } else {
     const msg = await response.text();
-    throw Error(
-      `Add user to group failed with status ${response.status} ${msg}`
-    );
+    setNotification({
+      type: "error",
+      message: "Cannot join group",
+      subtitle: `Error ${response.status}, ${msg}`,
+    });
   }
 };
 

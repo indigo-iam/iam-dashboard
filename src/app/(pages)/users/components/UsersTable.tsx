@@ -52,7 +52,7 @@ function Row(props: Readonly<RowProps>) {
       <td className="tbl-td">
         <StatusIcon active={!!user.active} />
       </td>
-      <td className="tbl-td text-center">
+      <td className="tbl-td w-1/12 text-center">
         <UserOptions user={user} />
       </td>
     </tr>

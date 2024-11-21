@@ -18,10 +18,8 @@ function Row(props: Readonly<RowProps>) {
         <Link href={`/groups/${group.id}`}>{group.displayName}</Link>
       </td>
       <td className="tbl-td">{strLabels}</td>
-      <td className="tbl-td">
-        <div className="mx-auto flex gap-1">
-          <GroupOptions group={group} />
-        </div>
+      <td className="tbl-td w-1/12 text-center">
+        <GroupOptions group={group} />
       </td>
     </tr>
   );
@@ -39,7 +37,7 @@ export default function GroupsTable(props: Readonly<TableProps>) {
         <tr>
           <th className="tbl-th text-left">Name</th>
           <th className="tbl-th text-left">Labels</th>
-          <th className="tbl-th text-center" />
+          <th className="tbl-th" />
         </tr>
       </thead>
       <tbody>

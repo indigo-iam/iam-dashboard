@@ -29,7 +29,7 @@ export default function ScopesTable(props: Readonly<ScopesTableProps>) {
             <td className="tbl-td min-w-24 grow">
               <InputDescription key={scope.id} scope={scope} />
             </td>
-            <td className="tbl-td w-4 text-center">
+            <td className="tbl-td w-1/12 text-center">
               <ScopeOptions scope={scope} />
             </td>
           </tr>

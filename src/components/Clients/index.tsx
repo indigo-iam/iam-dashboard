@@ -10,12 +10,12 @@ function Row(props: Readonly<RowProps>) {
   const { client } = props;
   const { client_id, client_name } = client;
   return (
-    <tr className="tbl-hover">
+    <tr className="tbl-hover tbl-tr">
       <td className="tbl-td">{client_name}</td>
       <td className="tbl-td">
         <Link href={`/clients/${client_id}`}>{client_id}</Link>
       </td>
-      <td className="tbl-td text-center">
+      <td className="tbl-td w-1/12 text-center">
         <ClientOptions client={client} />
       </td>
     </tr>

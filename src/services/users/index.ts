@@ -217,7 +217,7 @@ export async function revokeMembershipEndTime(userId: string) {
   }
 }
 
-export async function changeUserStatus(userId: string, status: boolean) {
+export async function changeUserStatus(userId: string, newStatus: boolean) {
   const url = `${BASE_URL}/scim/Users/${userId}`;
   const patchRequest: ScimRequest = {
     schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
@@ -225,7 +225,7 @@ export async function changeUserStatus(userId: string, status: boolean) {
       {
         op: "replace",
         value: {
-          active: status,
+          active: newStatus,
         },
       },
     ],
@@ -239,14 +239,14 @@ export async function changeUserStatus(userId: string, status: boolean) {
   if (response.ok) {
     setNotification({
       type: "success",
-      message: `User ${status ? "enabled" : "disabled"}`,
+      message: `User ${newStatus ? "enabled" : "disabled"}`,
     });
-    revalidatePath(`/users/${userId}`);
+    revalidatePath(`/users`);
   } else {
     const msg = await response.text();
     setNotification({
       type: "error",
-      message: `Cannot ${status ? "enable" : "disable"} the user`,
+      message: `Cannot ${newStatus ? "enable" : "disable"} the user`,
       subtitle: `Error ${response.status} ${msg}`,
     });
   }

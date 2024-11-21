@@ -11,7 +11,6 @@ export default function DeleteUser(props: Readonly<DeleteUserProps>) {
   const { user } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
-  const close = () => setShow(false);
   return (
     <>
       <button
@@ -19,7 +18,7 @@ export default function DeleteUser(props: Readonly<DeleteUserProps>) {
         className="popover-option text-danger"
         onClick={open}
       >
-        Delete User
+        Delete
       </button>
       <DeleteUserModal show={show} user={user} onClose={close} />
     </>

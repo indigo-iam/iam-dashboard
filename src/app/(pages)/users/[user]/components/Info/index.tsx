@@ -6,14 +6,15 @@ import { auth } from "@/auth";
 
 const ActiveStatus = (props: { active: boolean }) => {
   const { active } = props;
+  const status = active ? "active" : "disabled";
   return (
-    <div className="flex">
-      <p>{`${active ? "active" : "disabled"}`}</p>
-      <div
-        title={`${active ? "Active" : "Disabled"}`}
-        className={`${active ? "bg-success" : "bg-danger"} my-auto ml-2 h-3 w-3 rounded-full`}
-      />
-    </div>
+    <small
+      title={`${active ? "Active" : "Disabled"}`}
+      className="data-[status=disabled] inline rounded-full bg-danger p-1 px-2 text-secondary data-[status=active]:bg-success"
+      data-status={status}
+    >
+      {status}
+    </small>
   );
 };
 

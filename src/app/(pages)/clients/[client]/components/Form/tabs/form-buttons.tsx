@@ -21,7 +21,6 @@ export default function FormButtons() {
         <Button action="primary-outline" type="reset">
           Reset
         </Button>
-        <Button action="primary-outline">Cancel</Button>
         <Button
           action="success"
           title="Submit"

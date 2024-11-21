@@ -11,6 +11,7 @@ import { revalidatePath } from "next/cache";
 import { User } from "@/models/scim";
 import { Paginated } from "@/models/pagination";
 import { auth } from "@/auth";
+import { setNotification } from "@/components/Toaster";
 
 const { BASE_URL } = getConfig();
 
@@ -139,12 +140,17 @@ export const editClient = async (formData: FormData, isAdmin = false) => {
   });
 
   if (response.ok) {
+    setNotification({ type: "success", message: "Client Updated" });
     isAdmin
       ? revalidatePath(`/clients/${client_id}`)
       : revalidatePath(`/me/clients/${client_id}`);
   } else {
     const msg = await response.text();
-    throw Error(`Update Client failed with status ${response.status} ${msg}`);
+    setNotification({
+      type: "error",
+      message: "Could not save client",
+      subtitle: `Error ${response.status}: ${msg}`,
+    });
   }
 };
 
@@ -185,9 +191,7 @@ export const getClientOwnersPage = async (
   );
 };
 
-export const getClientOwners = async (
-  clientId: string
-): Promise<User[]> => {
+export const getClientOwners = async (clientId: string): Promise<User[]> => {
   const count = 10;
   const firstPage = await getClientOwnersPage(clientId, 1, count);
   const { totalResults } = firstPage;

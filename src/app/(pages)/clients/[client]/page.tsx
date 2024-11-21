@@ -21,7 +21,7 @@ export default async function Client(props: Readonly<ClientPageProps>) {
 
   const editAdminClient = async (formData: FormData) => {
     "use server";
-    editClient(formData, true);
+     await editClient(formData, true);
   };
   return (
     <Page title={client.client_name}>

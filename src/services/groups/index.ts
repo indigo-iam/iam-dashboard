@@ -83,10 +83,15 @@ export const addGroup = async (groupName: string) => {
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
+    setNotification({ type: "success", message: "Group created" });
     revalidatePath("/groups");
   } else {
     const msg = await response.text();
-    throw Error(`Add RootGroup failed with status ${response.status} ${msg}`);
+    setNotification({
+      type: "error",
+      message: "Cannot create group",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 };
 
@@ -94,12 +99,15 @@ export const deleteGroup = async (groupId: string) => {
   const url = `${BASE_URL}/scim/Groups/${groupId}`;
   const response = await authFetch(url, { method: "DELETE" });
   if (response.ok) {
+    setNotification({ type: "info", message: "Group deleted" });
     revalidatePath("/groups");
   } else {
     const msg = await response.text();
-    throw Error(
-      `Delete RootGroup failed with status ${response.status} ${msg}`
-    );
+    setNotification({
+      type: "error",
+      message: "Cannot delete group",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 };
 
@@ -122,10 +130,15 @@ export const addSubgroup = async (groupName: string, parentGroup: Group) => {
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
+    setNotification({ type: "success", message: "Subgroup added" });
     revalidatePath("/groups");
   } else {
     const msg = await response.text();
-    throw Error(`Add Subgroup failed with status ${response.status} ${msg}`);
+    setNotification({
+      type: "error",
+      message: "Cannot add subgroup",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 };
 
@@ -207,12 +220,15 @@ export const assignGroupManager = async (groupId: string, userId: string) => {
     method: "POST",
   });
   if (response.ok) {
+    setNotification({ type: "success", message: "Success" });
     revalidatePath(`/groups/${groupId}`);
   } else {
     const msg = await response.text();
-    throw Error(
-      `Assign group manager failed with status ${response.status} ${msg}`
-    );
+    setNotification({
+      type: "error",
+      message: "Cannot assign group manager",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 };
 
@@ -222,11 +238,14 @@ export const revokeGroupManager = async (groupId: string, userId: string) => {
     method: "DELETE",
   });
   if (response.ok) {
+    setNotification({ type: "success", message: "Success" });
     revalidatePath(`/groups/${groupId}`);
   } else {
     const msg = await response.text();
-    throw Error(
-      `Revoke group manager failed with status ${response.status} ${msg}`
-    );
+    setNotification({
+      type: "error",
+      message: "Cannot revoke group manager",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 };

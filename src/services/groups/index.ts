@@ -1,5 +1,9 @@
 "use server";
-import { Group, GroupsSearchResponse } from "@/models/groups";
+import {
+  Group,
+  GroupsSearchResponse,
+  ManagedGroupResponse,
+} from "@/models/groups";
 import { authFetch, getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
 import { Paginated } from "@/models/pagination";
@@ -249,3 +253,8 @@ export const revokeGroupManager = async (groupId: string, userId: string) => {
     });
   }
 };
+
+export async function fetchManagedGroups(userId: string) {
+  const url = `${BASE_URL}/iam/account/${userId}/managed-groups`;
+  return getItem<ManagedGroupResponse>(url);
+}

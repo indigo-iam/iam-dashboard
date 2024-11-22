@@ -9,6 +9,7 @@ import { Groups } from "./components/Groups";
 import { LinkedAccounts } from "./components/LinkedAccounts";
 import SSHKeys from "./components/SSHKeys";
 import Attributes from "./components/Attributes";
+import ManagedGroups from "./components/ManagedGroups";
 
 type UserPageProps = {
   params: { user: string };
@@ -32,6 +33,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
         <UserInfo user={user} isMe={isMe} />
         <Groups user={user} isAdmin={isAdmin} />
         <GroupRequests user={user} isMe={isMe} />
+        <ManagedGroups user={user} />
         <LinkedAccounts user={user} />
         <Certificates user={user} />
         <SSHKeys user={user} />

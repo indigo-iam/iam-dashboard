@@ -26,3 +26,19 @@ export interface GroupsSearchResponse {
   startIndex: number;
   Resources: Group[];
 }
+
+export interface ManagedGroup {
+  id: string;
+  name: string;
+  description?: string;
+  parent?: string;
+}
+
+export type UnmanagedGroup = ManagedGroup;
+
+export type ManagedGroupResponse = {
+  id: string;
+  username: string;
+  managedGroups: ManagedGroup[];
+  unmanagedGroups: ManagedGroup[];
+};

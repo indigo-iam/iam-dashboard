@@ -2,6 +2,7 @@ import { fetchGroupsRequests } from "@/services/group-requests";
 import InfoTable from "@/components/InfoTable";
 import { User } from "@/models/scim";
 import GroupRequestOptions from "./Options";
+import { Section } from "@/components/Layout";
 
 type GroupRequestProps = {
   user: User;
@@ -13,7 +14,7 @@ export const GroupRequests = async (props: Readonly<GroupRequestProps>) => {
   const result = await fetchGroupsRequests(user.userName);
 
   if (!result || result.Resources.length === 0) {
-    return "No requests found.";
+    return null;
   }
 
   const groupRequests = result.Resources;
@@ -29,25 +30,27 @@ export const GroupRequests = async (props: Readonly<GroupRequestProps>) => {
   });
 
   return (
-    <table className="w-full table-auto">
-      <tbody>
-        {data.map(d => {
-          return (
-            <tr className="tbl-tr" key={d.id}>
-              <td className="tbl-td">
-                <InfoTable data={d.values} />
-              </td>
-              <td className="tbl-td text-center">
-                <GroupRequestOptions
-                  user={user}
-                  isMe={isMe}
-                  groupRequest={d.request}
-                />
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+    <Section title="Group Requests">
+      <table className="w-full table-auto">
+        <tbody>
+          {data.map(d => {
+            return (
+              <tr className="tbl-tr" key={d.id}>
+                <td className="tbl-td">
+                  <InfoTable data={d.values} />
+                </td>
+                <td className="tbl-td text-center">
+                  <GroupRequestOptions
+                    user={user}
+                    isMe={isMe}
+                    groupRequest={d.request}
+                  />
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </Section>
   );
 };

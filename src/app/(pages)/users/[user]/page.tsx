@@ -29,27 +29,13 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
   return (
     <Page title={user.name?.formatted}>
       <Panel>
-        <Section title="General">
-          <UserInfo user={user} isMe={isMe} />
-        </Section>
-        <Section title="Groups">
-          <Groups user={user} isAdmin={isAdmin} />
-        </Section>
-        <Section title="Group Requests">
-          <GroupRequests user={user} isMe={isMe} />
-        </Section>
-        <Section title="Linked Accounts">
-          <LinkedAccounts user={user} />
-        </Section>
-        <Section title="X509 Certificates">
-          <Certificates user={user} />
-        </Section>
-        <Section title="SSH Keys">
-          <SSHKeys user={user} />
-        </Section>
-        <Section title="Attributes">
-          <Attributes user={user} />
-        </Section>
+        <UserInfo user={user} isMe={isMe} />
+        <Groups user={user} isAdmin={isAdmin} />
+        <GroupRequests user={user} isMe={isMe} />
+        <LinkedAccounts user={user} />
+        <Certificates user={user} />
+        <SSHKeys user={user} />
+        <Attributes user={user} />
       </Panel>
     </Page>
   );

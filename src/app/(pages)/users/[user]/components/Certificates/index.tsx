@@ -1,6 +1,7 @@
 import { User } from "@/models/scim";
 import { Certificate } from "@/models/indigo-user";
 import InfoTable from "@/components/InfoTable";
+import { Section } from "@/components/Layout";
 
 const CertificateView = (props: { cert: Certificate }) => {
   const { cert } = props;
@@ -23,17 +24,17 @@ export const Certificates = async (props: Readonly<CertificateProps>) => {
     certificates = user["urn:indigo-dc:scim:schemas:IndigoUser"].certificates;
   }
 
-  if (!certificates || certificates?.length == 0) {
-    return <p>No certificates found.</p>;
-  }
-
   return (
-    <>
-      {certificates?.map(cert => {
-        return (
-          <CertificateView key={cert.subjectDn + cert.issuerDn} cert={cert} />
-        );
-      })}
-    </>
+    <Section title="X509 Certificates">
+      {certificates && certificates.length > 0 ? (
+        certificates.map(cert => {
+          return (
+            <CertificateView key={cert.subjectDn + cert.issuerDn} cert={cert} />
+          );
+        })
+      ) : (
+        <p>No certificates found.</p>
+      )}
+    </Section>
   );
 };

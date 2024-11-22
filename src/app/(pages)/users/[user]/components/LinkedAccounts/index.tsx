@@ -2,7 +2,7 @@ import { XCircleIcon } from "@heroicons/react/16/solid";
 import { OidcId, SamlId } from "@/models/indigo-user";
 import { User } from "@/models/scim";
 import { Button } from "@/components/Buttons";
-import { Subsection } from "@/components/Layout";
+import { Section, Subsection } from "@/components/Layout";
 import SAMLOptions from "./SAMLOptions";
 
 const OidcIdView = (props: { id: OidcId }) => {
@@ -83,13 +83,15 @@ export async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
     samlIds = user["urn:indigo-dc:scim:schemas:IndigoUser"].samlIds;
   }
   return (
-    <div className="space-y-4">
-      <Subsection title="OpenID Connect">
-        <OidcAccounts oidcIds={oidcIds} />
-      </Subsection>
-      <Subsection title="SAML">
-        <SamlAccounts samlIds={samlIds} />
-      </Subsection>
-    </div>
+    <Section title="Linked Accounts">
+      <div className="space-y-4">
+        <Subsection title="OpenID Connect">
+          <OidcAccounts oidcIds={oidcIds} />
+        </Subsection>
+        <Subsection title="SAML">
+          <SamlAccounts samlIds={samlIds} />
+        </Subsection>
+      </div>
+    </Section>
   );
 }

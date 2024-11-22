@@ -3,6 +3,7 @@ import OptionsDropdown from "./OptionsDropdown";
 import { dateToHuman } from "@/utils/dates";
 import InfoTable from "@/components/InfoTable";
 import { auth } from "@/auth";
+import { Section } from "@/components/Layout";
 
 const ActiveStatus = (props: { active: boolean }) => {
   const { active } = props;
@@ -54,11 +55,17 @@ export default async function UserInfo(props: Readonly<UserInfoProps>) {
   ];
 
   return (
-    <div className="flex">
-      <InfoTable data={data} />
-      <div className="mb-auto ml-auto mr-0 mt-0">
-        <OptionsDropdown user={user} isAdmin={session?.is_admin} isMe={isMe} />
+    <Section title="General">
+      <div className="flex">
+        <InfoTable data={data} />
+        <div className="mb-auto ml-auto mr-0 mt-0">
+          <OptionsDropdown
+            user={user}
+            isAdmin={session?.is_admin}
+            isMe={isMe}
+          />
+        </div>
       </div>
-    </div>
+    </Section>
   );
 }

@@ -32,3 +32,8 @@ export interface OpenIdConfiguration {
   request_object_signing_alg_values_supported: string[];
   request_object_encryption_alg_values_supported: string[];
 }
+
+export type GrantType =
+  | "authorization_code"
+  | "client_credentials"
+  | "urn:ietf:params:oauth:grant-type:device_code";

@@ -2,6 +2,7 @@ import { User } from "@/models/scim";
 import { Certificate } from "@/models/indigo-user";
 import InfoTable from "@/components/InfoTable";
 import { Section } from "@/components/Layout";
+import LinkCertificateButton from "./LinkCertificateButton";
 
 const CertificateView = (props: { cert: Certificate }) => {
   const { cert } = props;
@@ -27,14 +28,13 @@ export const Certificates = async (props: Readonly<CertificateProps>) => {
   return (
     <Section title="X509 Certificates">
       {certificates && certificates.length > 0 ? (
-        certificates.map(cert => {
-          return (
-            <CertificateView key={cert.subjectDn + cert.issuerDn} cert={cert} />
-          );
-        })
+        certificates.map(cert => (
+          <CertificateView key={cert.subjectDn + cert.issuerDn} cert={cert} />
+        ))
       ) : (
         <p>No certificates found.</p>
       )}
+      <LinkCertificateButton user={user} />
     </Section>
   );
 };

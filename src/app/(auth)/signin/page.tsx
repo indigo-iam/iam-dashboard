@@ -14,6 +14,6 @@ export default function SignIn() {
       router.push("/");
     }
     console.log(status);
-  }, [status]);
+  }, [status, router]);
   return <div>Redirecting to login page...</div>;
 }

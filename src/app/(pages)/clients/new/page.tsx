@@ -5,7 +5,6 @@ import { fetchScopes } from "@/services/scopes";
 import { NewClientForm } from "./Form";
 import { registerClient } from "@/services/clients";
 import { ClientRequest } from "@/models/client";
-import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 
 export default async function NewClient() {

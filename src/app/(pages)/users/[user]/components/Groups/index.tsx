@@ -8,7 +8,7 @@ type GroupsProps = {
   isAdmin?: boolean;
 };
 
-export const Groups = (props: Readonly<GroupsProps>): JSX.Element => {
+export const Groups = (props: Readonly<GroupsProps>) => {
   const { user, isAdmin } = props;
 
   return (

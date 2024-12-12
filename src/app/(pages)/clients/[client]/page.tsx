@@ -4,12 +4,12 @@ import { editClient, getClient } from "@/services/clients";
 import { auth } from "@/auth";
 
 type ClientPageProps = {
-  params: { client: string };
+  params: Promise<{ slug: string }>;
 };
 
 export default async function Client(props: Readonly<ClientPageProps>) {
   const { params } = props;
-  const clientId = params.client;
+  const clientId = (await params).slug;
 
   const session = await auth();
   const isAdmin = session?.is_admin ?? false;
@@ -21,7 +21,7 @@ export default async function Client(props: Readonly<ClientPageProps>) {
 
   const editAdminClient = async (formData: FormData) => {
     "use server";
-     await editClient(formData, true);
+    await editClient(formData, true);
   };
   return (
     <Page title={client.client_name}>

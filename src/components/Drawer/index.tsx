@@ -43,7 +43,7 @@ export interface DrawerProps {
   id: string;
 }
 
-export default function Drawer(props: Readonly<DrawerProps>): JSX.Element {
+export default function Drawer(props: Readonly<DrawerProps>) {
   const { children, id } = props;
   return (
     <>

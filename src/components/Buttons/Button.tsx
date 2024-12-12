@@ -19,7 +19,7 @@ export interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
   action?: ButtonColor;
 }
 
-export default function Button(props: Readonly<ButtonProps>): JSX.Element {
+export default function Button(props: Readonly<ButtonProps>) {
   const { children, icon, isSmall, action, ...buttonProps } = props;
   let buttonStyle = "min-w-12 ";
   switch (action) {

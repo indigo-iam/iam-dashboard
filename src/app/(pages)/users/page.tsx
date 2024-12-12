@@ -6,15 +6,15 @@ import AddUser from "./components/AddUser";
 import InputQuery from "@/components/Inputs/InputQuery";
 
 type UsersProps = {
-  searchParams?: {
+  searchParams?: Promise<{
     count?: string;
     page?: string;
     query?: string;
-  };
+  }>;
 };
 
 export default async function UsersPage(props: Readonly<UsersProps>) {
-  const { searchParams } = props;
+  const searchParams = await props.searchParams;
   const count = searchParams?.count ? parseInt(searchParams.count) : 10;
   const page = searchParams?.page ? parseInt(searchParams.page) : 1;
   const query = searchParams?.query;

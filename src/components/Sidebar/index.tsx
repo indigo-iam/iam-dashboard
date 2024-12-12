@@ -21,7 +21,7 @@ const LEFT_SIDEBAR_ID = "left-sidebar";
 
 type SidebarLinkProps = {
   title: string;
-  icon: JSX.Element;
+  icon: React.ReactNode;
   href: string;
 };
 

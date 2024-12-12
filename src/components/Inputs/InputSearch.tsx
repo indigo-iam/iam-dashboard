@@ -15,7 +15,7 @@ export function InputSearch(props: Readonly<InputSearchProps>) {
     }
   };
 
-  const timeoutRef = useRef<number | null>();
+  const timeoutRef = useRef<number | null>(null);
   const delayedSearch = (filter: string) => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);

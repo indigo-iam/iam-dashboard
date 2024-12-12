@@ -12,12 +12,11 @@ import Attributes from "./components/Attributes";
 import ManagedGroups from "./components/ManagedGroups";
 
 type UserPageProps = {
-  params: { user: string };
+  params: Promise<{ user: string }>;
 };
 
 export default async function UserPage(props: Readonly<UserPageProps>) {
-  const { params } = props;
-  const userId = params.user;
+  const userId = (await props.params).user;
   const session = await auth();
   const isAdmin = session?.is_admin ?? false;
   const isMe = userId === "me";

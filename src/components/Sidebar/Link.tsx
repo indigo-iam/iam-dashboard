@@ -5,7 +5,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 export type SidebarLinkProps = {
   sidebarId: string;
   title: string;
-  icon: JSX.Element;
+  icon: React.ReactNode;
   href: string;
 };
 

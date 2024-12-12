@@ -6,12 +6,12 @@ import { fetchGroup } from "@/services/groups";
 import Managers from "./components/Managers";
 
 type GroupPageProps = {
-  params: { group: string };
+  params: Promise<{ group: string }>;
 };
 
 export default async function GroupPage(props: Readonly<GroupPageProps>) {
   const { params } = props;
-  const groupID = params.group;
+  const groupID = (await params).group;
   const group = await fetchGroup(groupID);
 
   return (

@@ -213,7 +213,7 @@ export const removeUserFromGroup = async (
 };
 
 // for some reason this API is not paginated
-export const fetchGroupManagers = (groupId: string) => {
+export const fetchGroupManagers = async (groupId: string) => {
   const url = `${BASE_URL}/iam/group/${groupId}/group-managers`;
   return getItem<User[]>(url);
 };

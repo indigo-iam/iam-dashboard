@@ -1,13 +1,13 @@
-import Select from "@/components/Select";
 import { Description } from "@headlessui/react";
-import { Field, Label } from "@/components/Form";
+import { Field, Label, Select, SelectOption } from "@/components/Form";
 import AuthorizationCode from "./AuthorizationCode";
 import ClientCredentials from "./ClientCredentials";
 import DeviceCode from "./DeviceCode";
 import { useState } from "react";
+import { GrantType } from "@/models/openid-configuration";
 
 type AuthenticationFlowSettingsProps = {
-  grantType: string;
+  grantType: GrantType;
   onStatusChange: (status: boolean) => void;
 };
 
@@ -35,17 +35,16 @@ export default function AuthenticationFlow(
   props: Readonly<AuthenticationFlowProps>
 ) {
   const { onStatusChange } = props;
-  const grantTypes = [
+  const options = [
     { id: "authorization_code", name: "Authorization Code" },
     { id: "client_credentials", name: "Client Credentials" },
     { id: "urn:ietf:params:oauth:grant-type:device_code", name: "Device Code" },
   ];
-
-  const [grantType, setGrantType] = useState(grantTypes[0]);
+  const [selectedGrantType, setSelectedGrantType] = useState(options[0]);
 
   const handleGrantTypeChange = (grantType: { id: string; name: string }) => {
     onStatusChange(false);
-    setGrantType(grantType);
+    setSelectedGrantType(grantType);
   };
 
   return (
@@ -55,13 +54,19 @@ export default function AuthenticationFlow(
         <Description className="description">A little description.</Description>
         <Select
           name="grant_types"
-          options={grantTypes}
+          defaultValue={options[0]}
           onChange={handleGrantTypeChange}
-        />
+        >
+          {options.map(option => (
+            <SelectOption key={option.id} value={option}>
+              {option.name}
+            </SelectOption>
+          ))}
+        </Select>
       </Field>
       <AuthenticationFlowSettings
         onStatusChange={onStatusChange}
-        grantType={grantType.id}
+        grantType={selectedGrantType.id as GrantType}
       />
     </>
   );

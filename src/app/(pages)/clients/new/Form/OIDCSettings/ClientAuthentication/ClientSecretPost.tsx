@@ -7,5 +7,5 @@ export default function ClientSecretPost(
 ) {
   const { onStatusChange } = props;
   onStatusChange(true);
-  return null;
+  return <p>Client Secret Post Here</p>;
 }

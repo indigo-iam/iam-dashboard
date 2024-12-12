@@ -9,5 +9,5 @@ export default function ClientSecretBasic(
 ) {
   const { onStatusChange } = props;
   useEffect(() => onStatusChange(true), [onStatusChange]);
-  return null;
+  return <p>Client Secret Basic Here</p>;
 }

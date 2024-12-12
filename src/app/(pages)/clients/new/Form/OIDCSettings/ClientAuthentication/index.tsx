@@ -1,5 +1,10 @@
-import { Description, Field, Label } from "@/components/Form";
-import Select from "@/components/Select";
+import {
+  Description,
+  Field,
+  Label,
+  Select,
+  SelectOption,
+} from "@/components/Form";
 import { capitalize } from "@/utils/strings";
 import { useState } from "react";
 import ClientSecretBasic from "./ClientSecretBasic";
@@ -60,9 +65,15 @@ export default function ClientAuthentication(
         <Description>A little description.</Description>
         <Select
           name="token_endpoint_auth_method"
-          options={authMethods}
           onChange={handleAuthMethodChange}
-        />
+          defaultValue={authMethods[0]}
+        >
+          {authMethods.map(method => (
+            <SelectOption key={method.id} value={method}>
+              {method.name}
+            </SelectOption>
+          ))}
+        </Select>
       </Field>
       <ClientAuthenticationSettings
         onStatusChange={onStatusChange}

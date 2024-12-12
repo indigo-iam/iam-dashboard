@@ -23,7 +23,7 @@ export default function ScopesTable(props: Readonly<ScopesTableProps>) {
         {scopes.map(scope => (
           <tr className="tbl-tr" key={scope.id}>
             <td className="tbl-td w-8 font-medium">{scope.value}</td>
-            <td className="tbl-td w-24">
+            <td className="tbl-td w-36">
               <ScopeTypeSelect key={scope.id} scope={scope} />
             </td>
             <td className="tbl-td min-w-24 grow">

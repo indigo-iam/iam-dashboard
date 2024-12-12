@@ -1,20 +1,26 @@
 "use client";
 import { useState } from "react";
 import { XMarkIcon } from "@heroicons/react/16/solid";
-import Listbox from "@/components/Listbox";
-type InputListOption = {
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from "@/components/Listbox";
+
+type DropdownListOption = {
   id: string;
   name: string;
 };
 
-type InputListDropdown = {
+type DropdownListProps = {
   name: string;
   title: string;
-  options: InputListOption[];
-  defaultOptions: InputListOption[];
+  options: DropdownListOption[];
+  defaultOptions: DropdownListOption[];
 };
 
-export function InputListDropdown(props: Readonly<InputListDropdown>) {
+export default function DropdownList(props: Readonly<DropdownListProps>) {
   const { name, title, options, defaultOptions } = props;
   const [items, setItems] = useState(defaultOptions);
   const removeItem = (index: number) => setItems(items.toSpliced(index, 1));
@@ -35,14 +41,16 @@ export function InputListDropdown(props: Readonly<InputListDropdown>) {
   return (
     <div className="flex flex-col">
       <div className="max-w-md">
-        <Listbox
-          name={name}
-          options={options}
-          selected={items}
-          onChange={setItems}
-          title={title}
-          multiple
-        />
+        <Listbox name={name} onChange={setItems} value={items} multiple>
+          <ListboxButton>{title}</ListboxButton>
+          <ListboxOptions>
+            {options.map(opt => (
+              <ListboxOption key={opt.id} value={opt}>
+                {opt.name}
+              </ListboxOption>
+            ))}
+          </ListboxOptions>
+        </Listbox>
       </div>
       <ul className="mt-2">{listItems}</ul>
     </div>

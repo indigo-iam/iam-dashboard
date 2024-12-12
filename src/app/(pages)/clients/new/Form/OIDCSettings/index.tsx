@@ -1,6 +1,5 @@
 import { CarouselPanel } from "@/components/Carousel";
-import { Field, Label, Description } from "@/components/Form";
-import { InputListDropdown } from "@/components/Inputs";
+import { Field, Label, Description, DropdownList } from "@/components/Form";
 import { Section } from "@/components/Layout";
 import { type Scope } from "@/models/client";
 import { OpenIdConfiguration } from "@/models/openid-configuration";
@@ -49,7 +48,7 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
         <Field>
           <Label>Scopes</Label>
           <Description>A little description.</Description>
-          <InputListDropdown
+          <DropdownList
             name="scope"
             title="Add Scope"
             options={scopes}

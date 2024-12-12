@@ -1,9 +1,9 @@
 import { Form, Description, FormSection } from "@/components/Form";
+import {Select, SelectOption   } from "@/components/Form";
 import { Input } from "@/components/Inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/Modal";
 import { Button } from "@/components/Buttons";
 import { PlusIcon } from "@heroicons/react/16/solid";
-import Listbox, { ListboxOption } from "@/components/Listbox";
 import { useState } from "react";
 import { addScope } from "@/services/scopes";
 
@@ -16,7 +16,7 @@ export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
     { id: "default", name: "Default" },
     { id: "restricted", name: "Restricted" },
   ];
-  const [scopeType, setScopeType] = useState<ListboxOption>(options[0]);
+  const [scopeType, setScopeType] = useState(options[0]);
 
   const action = async (formData: FormData) => {
     const value = formData.get("value") as string;
@@ -53,13 +53,13 @@ export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
               resources. <br />
               <b>None</b>: none of above.
             </Description>
-            <Listbox
-              name="scope-type"
-              options={options}
-              title={scopeType.name}
-              selected={scopeType}
-              onChange={setScopeType}
-            />
+            <Select name="scope-type" defaultValue={scopeType}>
+              {options.map(option => (
+                <SelectOption key={option.id} value={option}>
+                  {option.name}
+                </SelectOption>
+              ))}
+            </Select>
           </FormSection>
         </ModalBody>
         <ModalFooter>

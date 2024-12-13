@@ -1,9 +1,8 @@
-import { Page, Panel, Section } from "@/components/Layout";
+import { Page, Panel, Section } from "@/components/layout";
+import Paginator from "@/components/paginator";
+import { InputQuery } from "@/components/inputs";
 import { fetchPaginatedScopes } from "@/services/scopes";
-import NewScopeButton from "./components/NewScopeButton";
-import ScopesTable from "./components/Table";
-import Paginator from "@/components/Paginator";
-import InputQuery from "@/components/Inputs/InputQuery";
+import { NewScopeButton, ScopesTable } from "./components";
 
 type ScopeProps = {
   searchParams?: Promise<{

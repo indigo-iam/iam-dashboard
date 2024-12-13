@@ -1,9 +1,8 @@
-import { Page, Panel, Section } from "@/components/Layout";
+import { Page, Panel, Section } from "@/components/layout";
 import { getUsersPage } from "@/services/users";
-import Paginator from "@/components/Paginator";
-import UsersTable from "./components/UsersTable";
-import AddUser from "./components/AddUser";
-import InputQuery from "@/components/Inputs/InputQuery";
+import { InputQuery } from "@/components/inputs";
+import Paginator from "@/components/paginator";
+import { AddUserButton, UsersTable } from "./components";
 
 type UsersProps = {
   searchParams?: Promise<{
@@ -26,7 +25,7 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
     <Page title="Users">
       <Panel>
         <Section>
-          <AddUser />
+          <AddUserButton />
           <InputQuery />
           <UsersTable users={users} />
           <Paginator numberOfPages={numberOfPages} />

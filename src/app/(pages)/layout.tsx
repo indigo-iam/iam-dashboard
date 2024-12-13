@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/sidebar";
 import "@/app/globals.css";
-import { getNotification } from "@/components/Toaster/utils";
-import { Toaster } from "@/components/Toaster";
+import { ToasterPortal, getNotification } from "@/components/toaster";
 
 export const metadata: Metadata = {
   title: "INDIGO IAM",
@@ -20,7 +19,7 @@ export default async function RootLayout({
       <body className="bg-gray-100 text-primary dark:bg-dark dark:text-secondary-50">
         <Sidebar />
         <main className="ml-0 lg:ml-80">{children}</main>
-        <Toaster notification={notification} />
+        <ToasterPortal notification={notification} />
       </body>
     </html>
   );

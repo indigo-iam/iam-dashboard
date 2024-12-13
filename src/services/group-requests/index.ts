@@ -7,7 +7,7 @@ import {
 import { authFetch, getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
 import { revalidatePath } from "next/cache";
-import { setNotification } from "@/components/Toaster";
+import { setNotification } from "@/components/toaster";
 
 const { BASE_URL } = getConfig();
 
@@ -29,11 +29,11 @@ export const submitGroupRequest = async (req: JoinGroupRequest) => {
     },
   });
   if (response.ok) {
-    setNotification({ type: "success", message: "Group Request sent" });
+    await setNotification({ type: "success", message: "Group Request sent" });
     revalidatePath("/");
   } else {
     const msg = await response.text();
-    setNotification({
+    await setNotification({
       type: "error",
       message: "Cannot send Group Request",
       subtitle: `Error ${response.status}: ${msg}`,
@@ -47,11 +47,11 @@ export const approveGroupRequest = async (requestId: string) => {
     method: "POST",
   });
   if (response.ok) {
-    setNotification({ type: "success", message: "Group Request approved" });
+    await setNotification({ type: "success", message: "Group Request approved" });
     revalidatePath("/requests");
   } else {
     const msg = await response.text();
-    setNotification({
+    await setNotification({
       type: "error",
       message: "Cannot approve Group Request",
       subtitle: `Error ${response.status} ${msg}`,
@@ -68,11 +68,11 @@ export const rejectGroupRequest = async (
     method: "POST",
   });
   if (response.ok) {
-    setNotification({ type: "info", message: "Group Request rejected" });
+    await setNotification({ type: "info", message: "Group Request rejected" });
     revalidatePath("/requests");
   } else {
     const msg = await response.text();
-    setNotification({
+    await setNotification({
       type: "error",
       message: "Cannot reject Group Request",
       subtitle: `Error ${response.status} ${msg}`,
@@ -86,11 +86,11 @@ export const abortGroupRequest = async (userId: string, req: GroupRequest) => {
     method: "DELETE",
   });
   if (response.ok) {
-    setNotification({ type: "info", message: "Group Request deleted" });
+    await setNotification({ type: "info", message: "Group Request deleted" });
     revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();
-    setNotification({
+    await setNotification({
       type: "error",
       message: "Cannot delete Group Request",
       subtitle: `Error ${response.status} ${msg}`,

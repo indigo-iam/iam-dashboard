@@ -4,7 +4,7 @@ import { RawScope, Scope } from "@/models/client";
 import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
 import { Paginated } from "@/models/pagination";
-import { setNotification } from "@/components/Toaster";
+import { setNotification } from "@/components/toaster";
 
 const { BASE_URL } = getConfig();
 
@@ -38,11 +38,11 @@ export async function addScope(scope: RawScope) {
     headers: { "content-type": "application/json" },
   });
   if (response.ok) {
-    setNotification({ type: "success", message: "Scope added" });
+    await setNotification({ type: "success", message: "Scope added" });
     revalidatePath("/scopes");
   } else {
     const msg = await response.text();
-    setNotification({
+    await setNotification({
       type: "error",
       message: "Cannot add scope",
       subtitle: `Error ${response.status} ${msg}`,
@@ -76,11 +76,11 @@ export async function editScope(scope: Scope) {
     body: JSON.stringify(scope),
   });
   if (response.ok) {
-    setNotification({ type: "success", message: "Scope saved" });
+    await setNotification({ type: "success", message: "Scope saved" });
     revalidatePath("/scopes");
   } else {
     const msg = await response.text();
-    setNotification({
+    await setNotification({
       type: "error",
       message: "Cannot save scope",
       subtitle: `Error ${response.status} ${msg}`,

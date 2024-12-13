@@ -1,8 +1,8 @@
-import { Form } from "@/components/Form";
-import { Page, Panel } from "@/components/Layout";
+import { Form } from "@/components/form";
+import { Page, Panel } from "@/components/layout";
 import { fetchOpenIdConfiguration } from "@/services/openid-configuration";
 import { fetchScopes } from "@/services/scopes";
-import { NewClientForm } from "./Form";
+import { NewClientForm } from "./form";
 import { registerClient } from "@/services/clients";
 import { ClientRequest } from "@/models/client";
 import { auth } from "@/auth";

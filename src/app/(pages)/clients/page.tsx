@@ -1,9 +1,9 @@
-import { Page, Panel, Section } from "@/components/Layout";
-import InputQuery from "@/components/Inputs/InputQuery";
-import ClientsTable from "@/components/Clients";
+import { Page, Panel, Section } from "@/components/layout";
+import { InputQuery } from "@/components/inputs";
+import ClientsTable from "@/components/clients";
 import { getClientsPage } from "@/services/clients";
-import Paginator from "@/components/Paginator";
-import { Button } from "@/components/Buttons";
+import Paginator from "@/components/paginator";
+import { Button } from "@/components/buttons";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { Suspense } from "react";

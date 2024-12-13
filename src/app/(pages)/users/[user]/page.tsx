@@ -1,15 +1,17 @@
 import { auth } from "@/auth";
-import { Page, Panel, Section } from "@/components/Layout";
+import { Page, Panel } from "@/components/layout";
 import { fetchMe } from "@/services/me";
 import { fetchUser } from "@/services/users";
-import UserInfo from "./components/Info";
-import { Certificates } from "./components/Certificates";
-import { GroupRequests } from "./components/GroupRequests";
-import { Groups } from "./components/Groups";
-import { LinkedAccounts } from "./components/LinkedAccounts";
-import SSHKeys from "./components/SSHKeys";
-import Attributes from "./components/Attributes";
-import ManagedGroups from "./components/ManagedGroups";
+import {
+  Attributes,
+  Certificates,
+  Groups,
+  GroupRequests,
+  LinkedAccounts,
+  ManagedGroups,
+  SSHKeys,
+  UserInfo,
+} from "./components";
 
 type UserPageProps = {
   params: Promise<{ user: string }>;

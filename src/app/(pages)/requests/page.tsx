@@ -1,9 +1,8 @@
-import { Page, Panel, Section } from "@/components/Layout";
-import { Tab, TabPanel, TabGroup, TabList, TabPanels } from "@/components/Tabs";
+import { Page, Panel, Section } from "@/components/layout";
+import { Tab, TabPanel, TabGroup, TabList, TabPanels } from "@/components/tabs";
 import { fetchGroupsRequests } from "@/services/group-requests";
 import { fetchRegistrationRequests } from "@/services/registration";
-import Registrations from "./components/Registrations";
-import Groups from "./components/Groups";
+import { Groups, Registrations } from "./components";
 
 export default async function Requests() {
   const groupRequests = await fetchGroupsRequests();

@@ -1,6 +1,6 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { setNotification } from "@/components/Toaster";
+import { setNotification } from "@/components/toaster";
 import { CertLinkRequest } from "@/models/certs";
 import { authFetch } from "@/utils/fetch";
 import getConfig from "@/utils/config";
@@ -19,11 +19,11 @@ export async function sendCertificateLinkRequest(request: CertLinkRequest) {
     },
   });
   if (response.ok) {
-    setNotification({ type: "success", message: "Request sent" });
+    await setNotification({ type: "success", message: "Request sent" });
     revalidatePath("/users");
   } else {
     const msg = await response.text();
-    setNotification({
+    await setNotification({
       type: "error",
       message: "Cannot send Certificate Link Request",
       subtitle: `Error ${response.status} ${msg}`,

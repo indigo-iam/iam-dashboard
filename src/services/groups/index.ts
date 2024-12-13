@@ -9,7 +9,7 @@ import getConfig from "@/utils/config";
 import { Paginated } from "@/models/pagination";
 import { revalidatePath } from "next/cache";
 import { ScimReference, User } from "@/models/scim";
-import { setNotification } from "@/components/Toaster";
+import { setNotification } from "@/components/toaster";
 
 const { BASE_URL } = getConfig();
 
@@ -87,7 +87,7 @@ export const addGroup = async (groupName: string) => {
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
-    setNotification({ type: "success", message: "Group created" });
+    await setNotification({ type: "success", message: "Group created" });
     revalidatePath("/groups");
   } else {
     const msg = await response.text();

@@ -3,7 +3,7 @@ import { authFetch, getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
 import { Registration } from "@/models/registration";
 import { revalidatePath } from "next/cache";
-import { setNotification } from "@/components/Toaster";
+import { setNotification } from "@/components/toaster";
 
 const { BASE_URL } = getConfig();
 

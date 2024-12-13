@@ -1,5 +1,5 @@
-import { Page, Panel } from "@/components/Layout";
-import ClientForm from "./components/Form";
+import { Page, Panel } from "@/components/layout";
+import ClientForm from "./components/form";
 import { editClient, getClient } from "@/services/clients";
 import { auth } from "@/auth";
 

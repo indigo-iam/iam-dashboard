@@ -1,9 +1,8 @@
-import { Page, Panel, Section } from "@/components/Layout";
-import AddGroupButton from "./components/AddGroupButton";
-import GroupsTable from "./components/GroupsTable";
-import Paginator from "@/components/Paginator";
+import { Page, Panel, Section } from "@/components/layout";
+import Paginator from "@/components/paginator";
 import { getGroupsPage } from "@/services/groups";
-import InputQuery from "@/components/Inputs/InputQuery";
+import { InputQuery } from "@/components/inputs";
+import { AddGroupButton, GroupsTable } from "./components";
 
 type GroupsProps = {
   searchParams?: Promise<{

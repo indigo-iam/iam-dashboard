@@ -1,7 +1,6 @@
-import { Page, Panel, Section } from "@/components/Layout";
+import { Page, Panel, Section } from "@/components/layout";
 import { fetchAUP } from "@/services/aup";
-import AupView from "./components/AupView";
-import CreateButton from "./components/CreateButton";
+import { AupView, CreateButton } from "./components/";
 
 export default async function AUP() {
   try {

@@ -11,7 +11,7 @@ import { revalidatePath } from "next/cache";
 import { User } from "@/models/scim";
 import { Paginated } from "@/models/pagination";
 import { auth } from "@/auth";
-import { setNotification } from "@/components/Toaster";
+import { setNotification } from "@/components/toaster";
 import { redirect } from "next/navigation";
 
 const { BASE_URL } = getConfig();
@@ -24,11 +24,11 @@ export async function registerClient(client: ClientRequest, isAdmin?: boolean) {
   });
 
   if (response.ok) {
-    setNotification({ type: "success", message: "Client created" });
+    await setNotification({ type: "success", message: "Client created" });
     isAdmin ? redirect("/clients") : redirect("/me/clients");
   } else {
     const msg = await response.text();
-    setNotification({
+    await setNotification({
       type: "error",
       message: "Cannot create client",
       subtitle: `Error ${response.status} ${msg}`,
@@ -50,11 +50,11 @@ export const deleteClient = async (clientId: string) => {
     method: "DELETE",
   });
   if (response.ok) {
-    setNotification({ type: "success", message: "Client deleted" });
+    await setNotification({ type: "success", message: "Client deleted" });
     revalidatePath(session?.is_admin ? "/clients" : "/me/clients");
   } else {
     const msg = await response.text();
-    setNotification({
+    await setNotification({
       type: "error",
       message: "Cannot delete client",
       subtitle: `Error ${response.status} ${msg}`,
@@ -148,13 +148,13 @@ export const editClient = async (formData: FormData, isAdmin = false) => {
   });
 
   if (response.ok) {
-    setNotification({ type: "success", message: "Client saved" });
+    await setNotification({ type: "success", message: "Client saved" });
     isAdmin
       ? revalidatePath(`/clients/${client_id}`)
       : revalidatePath(`/me/clients/${client_id}`);
   } else {
     const msg = await response.text();
-    setNotification({
+    await setNotification({
       type: "error",
       message: "Could not save client",
       subtitle: `Error ${response.status} ${msg}`,

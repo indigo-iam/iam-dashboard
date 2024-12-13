@@ -5,7 +5,7 @@ import { ScimOp, ScimRequest, User } from "@/models/scim";
 import { Paginated } from "@/models/pagination";
 import { Client } from "@/models/client";
 import { revalidatePath } from "next/cache";
-import { setNotification } from "@/components/Toaster";
+import { setNotification } from "@/components/toaster";
 
 const { BASE_URL } = getConfig();
 

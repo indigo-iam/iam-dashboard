@@ -4,12 +4,12 @@ import { editClient, getClient } from "@/services/clients";
 import { auth } from "@/auth";
 
 type ClientPageProps = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ client: string }>;
 };
 
 export default async function Client(props: Readonly<ClientPageProps>) {
   const { params } = props;
-  const clientId = (await params).slug;
+  const clientId = (await params).client;
 
   const session = await auth();
   const isAdmin = session?.is_admin ?? false;

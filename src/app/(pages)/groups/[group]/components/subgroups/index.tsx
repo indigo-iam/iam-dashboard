@@ -1,4 +1,3 @@
-"use client";
 import { Group } from "@/models/groups";
 import SubgroupsTable from "./table";
 

@@ -10,6 +10,7 @@ import { Paginated } from "@/models/pagination";
 import { revalidatePath } from "next/cache";
 import { ScimReference, User } from "@/models/scim";
 import { setNotification } from "@/components/toaster";
+import { fetchMe } from "@/services/me";
 
 const { BASE_URL } = getConfig();
 
@@ -66,13 +67,31 @@ export const fetchGroups = async () => {
 export const getGroupsPage = async (
   count: number,
   startIndex: number = 1,
+  me: boolean = false,
   filter?: string
 ) => {
-  let url = `${BASE_URL}/iam/group/search?count=${count}&startIndex=${startIndex}`;
-  if (filter) {
-    url += `&filter=${filter}`;
+  if (me) {
+    // modo osceno per recuperare i gruppi dell'utente
+    const meObj = await fetchMe();
+    let groups: Paginated<Group> = {
+      totalResults: 0,
+      itemsPerPage: count,
+      startIndex: startIndex,
+      Resources: []
+    };
+    for(const g of meObj?.groups ?? []) {
+      groups.Resources.push(await fetchGroup(g.value));
+      groups.totalResults += 1;
+    }
+    groups.Resources = groups.Resources.slice(startIndex - 1, startIndex + count - 1)
+    return groups;
+  } else {
+    let url = `${BASE_URL}/iam/group/search?count=${count}&startIndex=${startIndex}`;
+    if (filter) {
+      url += `&filter=${filter}`;
+    }
+    return await getItem<Paginated<Group>>(url);
   }
-  return await getItem<Paginated<Group>>(url);
 };
 
 export const addGroup = async (groupName: string) => {

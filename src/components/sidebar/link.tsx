@@ -32,6 +32,11 @@ export default function Link(props: Readonly<SidebarLinkProps>) {
         (href === "/clients?me" && searchParams.has("me")) ||
         (href === "/clients" && !searchParams.has("me"));
       break;
+    case "/groups":
+      isActive =
+        (href === "/groups?me" && searchParams.has("me")) ||
+        (href === "/groups" && !searchParams.has("me"));
+      break;
     default:
   }
 

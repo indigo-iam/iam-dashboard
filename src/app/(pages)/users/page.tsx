@@ -19,7 +19,7 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
   const query = searchParams?.query;
   const startIndex = 1 + count * (page - 1);
   const usersPage = await getUsersPage(count, startIndex, query);
-  const numberOfPages = Math.ceil(usersPage.totalResults / count);
+  const numberOfPages = Math.ceil(usersPage.totalResults / count) || 1;
   const users = usersPage.Resources;
   return (
     <Page title="Users">

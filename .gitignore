@@ -50,3 +50,4 @@ next-env.d.ts
 .devcontainer/devcontainer.env
 *.env
 nginx/conf.d/env/*.conf
+cypress.env.json

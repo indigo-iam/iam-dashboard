@@ -1,13 +1,12 @@
 import { Group } from "@/models/groups";
 import { dateToHuman } from "@/utils/dates";
 import InfoTable from "@/components/info-table";
+import { Section } from "@/components/layout";
 
 type GroupInfoProps = {
   group: Group;
 };
-export default function GroupInfo(
-  props: Readonly<GroupInfoProps>
-) {
+export default function GroupInfo(props: Readonly<GroupInfoProps>) {
   const { group } = props;
   const description =
     group["urn:indigo-dc:scim:schemas:IndigoGroup"].description;
@@ -20,5 +19,9 @@ export default function GroupInfo(
     { name: "Group Description", value: description ?? "No description." },
     { name: "Created", value: created },
   ];
-  return <InfoTable data={data} />;
+  return (
+    <Section title="Group Information">
+      <InfoTable data={data} />
+    </Section>
+  );
 }

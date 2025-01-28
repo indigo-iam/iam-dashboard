@@ -1,4 +1,4 @@
-import { Page, Panel, Section } from "@/components/layout";
+import { Page, Panel } from "@/components/layout";
 import { GroupInfo, Managers, Members, Subgroups } from "./components";
 import { fetchGroup } from "@/services/groups";
 
@@ -14,18 +14,10 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
   return (
     <Page title={group.displayName}>
       <Panel>
-        <Section title="Group Information">
-          <GroupInfo group={group} />
-        </Section>
-        <Section title="Subgroups">
-          <Subgroups group={group} />
-        </Section>
-        <Section title="Managers">
-          <Managers group={group} />
-        </Section>
-        <Section title="Members">
-          <Members group={group} />
-        </Section>
+        <GroupInfo group={group} />
+        <Subgroups group={group} />
+        <Managers group={group} />
+        <Members group={group} />
       </Panel>
     </Page>
   );

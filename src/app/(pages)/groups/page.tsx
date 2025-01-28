@@ -15,18 +15,13 @@ type GroupsProps = {
   }>;
 };
 
-async function getGroups(
-  isMe: boolean,
+async function getMyGroupsPageWrap(
   count: number,
   startIndex?: number,
   query?: string
 ) {
-  if (isMe) {
-    const me = await fetchMe();
-    return (await getMyGroupsPage(me, count, startIndex))
-  } else {
-    return (await getGroupsPage(count, startIndex, query))
-  }
+  const me = await fetchMe();
+  return (await getMyGroupsPage(me, count, startIndex, query))
 }
 
 export default async function GroupsPage(props: Readonly<GroupsProps>) {
@@ -36,9 +31,11 @@ export default async function GroupsPage(props: Readonly<GroupsProps>) {
   const page = searchParams?.page ? parseInt(searchParams.page) : 1;
   const query = searchParams?.query;
   const startIndex = 1 + count * (page - 1);
-  const groupsPage = await getGroups(isMe, count, startIndex, query);
+  const groupsPage = isMe ? await getMyGroupsPageWrap(count, startIndex, query)
+    : await getGroupsPage(count, startIndex, query);
   const numberOfPages = Math.ceil(groupsPage.totalResults / count) || 1;
   const groups = groupsPage.Resources;
+  
   return (
     <Page title={isMe ? "My Groups" : "Groups"}>
       <Panel>

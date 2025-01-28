@@ -78,18 +78,22 @@ export const getGroupsPage = async (
 export async function getMyGroupsPage(
   me: User,
   count: number,
-  startIndex: number = 1
+  startIndex: number = 1,
+  filter?: string
 ) {
   const groupsPromises = [];
   for(const g of me?.groups ?? []) {
     groupsPromises.push(fetchGroup(g.value));
   }
-  const groupsResolved = await Promise.all(groupsPromises);
+  let groupsResolved = await Promise.all(groupsPromises);
+  if (filter) {
+    groupsResolved = groupsResolved.filter((g) => g.displayName.includes(filter))
+  }
   let myGroups: Paginated<Group> = {
     totalResults: groupsResolved.length,
     itemsPerPage: count,
     startIndex: startIndex,
-    Resources: groupsResolved.slice(startIndex - 1, startIndex + count - 1)
+    Resources: groupsResolved.slice(startIndex - 1, startIndex - 1 + count)
   };
   return myGroups;
 }

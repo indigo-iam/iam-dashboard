@@ -103,11 +103,11 @@ export const deleteGroup = async (groupId: string) => {
   const url = `${BASE_URL}/scim/Groups/${groupId}`;
   const response = await authFetch(url, { method: "DELETE" });
   if (response.ok) {
-    setNotification({ type: "info", message: "Group deleted" });
+    await setNotification({ type: "info", message: "Group deleted" });
     revalidatePath("/groups");
   } else {
     const msg = await response.text();
-    setNotification({
+    await setNotification({
       type: "error",
       message: "Cannot delete group",
       subtitle: `Error ${response.status} ${msg}`,

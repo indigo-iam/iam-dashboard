@@ -52,6 +52,7 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
           className="block rounded-lg border border-gray-300 bg-gray-50 p-1 text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-white/10 dark:text-secondary/50"
           onChange={e => onChangeItemsPerPage(parseInt(e.currentTarget.value))}
         >
+          <option value="3">3</option> {/* DEBUG: to be removed */}
           <option value="10">10</option>
           <option value="20">20</option>
           <option value="50">50</option>

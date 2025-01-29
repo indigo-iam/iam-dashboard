@@ -1,4 +1,4 @@
-const login = (username: string, password: string) => {
+export const login = (username: string, password: string) => {
   // https://docs.cypress.io/api/commands/session#Cross-domain-sessions
   cy.visit("https://iam-dev.cloud.cnaf.infn.it/login"); // do not remove it
 
@@ -20,14 +20,3 @@ const login = (username: string, password: string) => {
     }
   );
 };
-
-describe("template spec", () => {
-  beforeEach(() => {
-    login(Cypress.env("IAM_ADMIN_USER"), Cypress.env("IAM_ADMIN_PASSWD"));
-  });
-
-  it("test 1", () => {
-    cy.log("heyy!!!");
-    cy.visit("/");
-  });
-});

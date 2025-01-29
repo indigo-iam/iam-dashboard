@@ -57,9 +57,10 @@ jobs:
           # tags: ${{ steps.meta.outputs.tags }}
 
       - name: Cypress Run
-        uses: cypress-io/github-action@v6
-        with:
-          start: docker run --rm -p 8080:80 --env-file .env cnafsoftwaredevel/iam-dashboard:latest
+        run: |
+          docker run --rm -p 8080:80 -d --name dashboard --env-file .env cnafsoftwaredevel/iam-dashboard:latest
+          npx cypress run
+          docker stop dashboard
 
       - uses: actions/upload-artifact@v4
         # add the line below to store screenshots only on failures

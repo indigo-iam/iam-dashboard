@@ -1,8 +1,9 @@
-import { login } from "./auth.cy";
-
 describe("groups", () => {
   beforeEach(() => {
-    login(Cypress.env("IAM_ADMIN_USER"), Cypress.env("IAM_ADMIN_PASSWD"));
+    cy.loginWithIam(
+      Cypress.env("IAM_ADMIN_USER"),
+      Cypress.env("IAM_ADMIN_PASSWD")
+    );
   });
 
   it("create group", () => {

@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import { Page, Panel } from "@/components/layout";
 import { fetchMe } from "@/services/me";
 import { fetchUser } from "@/services/users";
@@ -19,8 +18,6 @@ type UserPageProps = {
 
 export default async function UserPage(props: Readonly<UserPageProps>) {
   const userId = (await props.params).user;
-  const session = await auth();
-  const isAdmin = session?.is_admin ?? false;
   const isMe = userId === "me";
   const user = isMe ? await fetchMe() : await fetchUser(userId);
 
@@ -32,7 +29,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
     <Page title={user.name?.formatted}>
       <Panel>
         <UserInfo user={user} isMe={isMe} />
-        <Groups user={user} isAdmin={isAdmin} />
+        <Groups user={user} />
         <GroupRequests user={user} isMe={isMe} />
         <ManagedGroups user={user} />
         <LinkedAccounts user={user} />

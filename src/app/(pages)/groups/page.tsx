@@ -1,10 +1,11 @@
 import { Page, Panel, Section } from "@/components/layout";
 import Paginator from "@/components/paginator";
 import { getGroupsPage, getMyGroupsPage } from "@/services/groups";
-import { InputQuery } from "@/components/inputs";
-import { AddGroupButton, GroupsTable } from "./components";
-import { Suspense } from "react";
 import { fetchMe } from "@/services/me";
+import { InputQuery } from "@/components/inputs";
+import { AddGroupButton, GroupsTable, JoinGroupButton } from "./components";
+import { auth } from "@/auth";
+import { Suspense } from "react";
 
 type GroupsProps = {
   searchParams?: Promise<{
@@ -34,20 +35,27 @@ export default async function GroupsPage(props: Readonly<GroupsProps>) {
   const groupsPage = isMe ? await getMyGroupsPageWrap(count, startIndex, query)
     : await getGroupsPage(count, startIndex, query);
   const numberOfPages = Math.ceil(groupsPage.totalResults / count) || 1;
+  const me = isMe ? await fetchMe() : null
+  const session = isMe ? await auth() : null
+  const isAdmin = session?.is_admin ?? false
   const groups = groupsPage.Resources;
   
   return (
     <Page title={isMe ? "My Groups" : "Groups"}>
       <Panel>
         <Section>
-          {/* isMe && Button to join group? */}
-          <AddGroupButton />
+          {me ? (
+            <JoinGroupButton user={me} isAdmin={isAdmin} />
+          ) : (
+            <AddGroupButton />
+          )}
           <InputQuery />
           <Suspense fallback="Loading...">
             <GroupsTable groups={groups} />
           </Suspense>
           <Paginator numberOfPages={numberOfPages} />
         </Section>
+        {/* Panel ManagedGroups */}
       </Panel>
     </Page>
   );

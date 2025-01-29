@@ -15,11 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: "Cypress E2E test suite"
     steps:
-      - name: Stup node v23
-        uses: actions/setup-node@v4
-        with:
-          node-version: 23
-
       - name: Checkout
         uses: actions/checkout@v4
 

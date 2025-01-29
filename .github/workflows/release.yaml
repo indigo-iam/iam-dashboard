@@ -14,9 +14,6 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     environment: "Cypress E2E test suite"
-    container:
-      image: cypress/browsers:latest
-      options: --user 1001
     steps:
       - name: Setup Node
         uses: actions/setup-node@v4

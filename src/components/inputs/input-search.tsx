@@ -5,10 +5,11 @@ import { useRef } from "react";
 type InputSearchProps = {
   onChange: (filter: string) => void;
   onClear: () => void;
+  "data-test"?: string;
 };
 
 export function InputSearch(props: Readonly<InputSearchProps>) {
-  const { onChange, onClear } = props;
+  const { onChange, onClear, ...others } = props;
   const searchCallback = async (filter: string) => {
     if (filter.length > 2) {
       onChange(filter);
@@ -29,6 +30,7 @@ export function InputSearch(props: Readonly<InputSearchProps>) {
     <Input
       onKeyUp={e => delayedSearch(e.currentTarget.value)}
       placeholder="Type to search..."
+      {...others}
     />
   );
 }

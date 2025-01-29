@@ -8,6 +8,7 @@ interface ConfirmModal extends ModalProps {
   children?: React.ReactNode;
   cancelButtonText?: string;
   confirmButtonText?: string;
+  "data-test"?: string;
 }
 
 export default function ConfirmModal(props: Readonly<ConfirmModal>) {

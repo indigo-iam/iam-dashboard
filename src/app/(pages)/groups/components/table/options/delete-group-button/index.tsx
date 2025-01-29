@@ -24,11 +24,12 @@ export default function DeleteGroupButton(
   };
 
   return (
-    <>
+    <div className="option">
       <button
         type="button"
         className="popover-option text-danger"
         onClick={open}
+        data-test="delete"
       >
         Delete Group
       </button>
@@ -38,6 +39,6 @@ export default function DeleteGroupButton(
         onClose={close}
         onDeleted={onDeleted}
       />
-    </>
+    </div>
   );
 }

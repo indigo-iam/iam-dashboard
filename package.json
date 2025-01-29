@@ -19,7 +19,7 @@
   "scripts": {
     "dev": "next dev -p 8080",
     "build": "next build",
-    "start": "next start -p 8080",
+    "start": "next start -H 0.0.0.0 -p 8080",
     "test": "jest",
     "lint": "tsc --project ./tsconfig.json --noEmit && eslint . --ext ts,tsx,js --report-unused-disable-directives --max-warnings 0"
   },

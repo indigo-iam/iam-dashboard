@@ -2,10 +2,8 @@ export const login = (username: string, password: string) => {
   // https://docs.cypress.io/api/commands/session#Cross-domain-sessions
   cy.visit("http://localhost:8080"); // do not remove it
 
-  cy.session(
-    username,
-    () => {
-      cy.visit("/signin");
+  cy.session(username, () => {
+      cy.visit("http://localhost:8080/signin");
       cy.origin(
         "https://iam-dev.cloud.cnaf.infn.it",
         { args: { username, password } },

@@ -53,19 +53,19 @@ jobs:
           echo ${CYPRESS_ENV_BASE64} | base64 -d > cypress.env.json
           echo ${NEXT_ENV_BASE64} | base64 -d > .env
 
-      - name: Build docker
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          load: true
-          tags: cnafsoftwaredevel/iam-dashboard:latest
-          # tags: ${{ steps.meta.outputs.tags }}
+      # - name: Build docker
+      #   uses: docker/build-push-action@v6
+      #   with:
+      #     context: .
+      #     load: true
+      #     tags: cnafsoftwaredevel/iam-dashboard:latest
+      #     # tags: ${{ steps.meta.outputs.tags }}
 
       - name: Cypress Run
         uses: cypress-io/github-action@v6
         with:
-          start: docker run --rm -p 8080:80 --env-file .env cnafsoftwaredevel/iam-dashboard
-          wait-on: "http://localhost:8080"
+          build: npm run build
+          start: npm start
 
       - uses: actions/upload-artifact@v4
         # add the line below to store screenshots only on failures
@@ -75,12 +75,12 @@ jobs:
           path: cypress/screenshots
           if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
 
-      - name: Build and push to Docker Hub
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: ${{ github.ref == 'refs/heads/main' }}
-          tags: cnafsoftwaredevel/iam-dashboard:latest
-          # tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64
+      # - name: Build and push to Docker Hub
+      #   uses: docker/build-push-action@v6
+      #   with:
+      #     context: .
+      #     push: ${{ github.ref == 'refs/heads/main' }}
+      #     tags: cnafsoftwaredevel/iam-dashboard:latest
+      #     # tags: ${{ steps.meta.outputs.tags }}
+      #     labels: ${{ steps.meta.outputs.labels }}
+      #     platforms: linux/amd64

@@ -8,13 +8,10 @@ on:
     paths-ignore:
       - README.md
       - LICENSE
-  workflow_call:
-    secrets:
-      CYPRESS_ENV_BASE64:
-        required: true
 
 jobs:
   cypress-run:
+    environment: "Cypress E2E test suite"
     name: E2E Tests
     runs-on: ubuntu-latest
     steps:

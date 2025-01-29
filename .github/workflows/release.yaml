@@ -64,6 +64,7 @@ jobs:
       - name: Cypress Run
         run: |
           docker run --rm -p 8080:80 -d --name dashboard --env-file .env cnafsoftwaredevel/iam-dashboard:latest
+          npm ci
           npx cypress run
           docker stop dashboard
 

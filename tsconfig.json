@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
+    "baseUrl": ".", // https://github.com/cypress-io/cypress/issues/15724
     "target": "ES2020",
     "allowJs": true,
     "skipLibCheck": true,

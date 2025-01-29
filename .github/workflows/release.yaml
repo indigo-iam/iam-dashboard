@@ -62,16 +62,9 @@ jobs:
           # tags: ${{ steps.meta.outputs.tags }}
 
       - name: Cypress Run
-        run: |
-          docker run --rm -p 8080:80 -d --name dashboard --env-file .env cnafsoftwaredevel/iam-dashboard:latest
-          echo "Waiting 2 seconds..."
-          sleep 2
-          docker ps -a
-          curl -v http://localhost:8080
-          curl -v http://0.0.0.0:8080
-          npm ci
-          npx cypress run
-          docker stop dashboard
+        uses: cypress-io/github-action@v6
+        with:
+          start: docker run --rm -p 8080:80 --env-file .env
 
       - uses: actions/upload-artifact@v4
         # add the line below to store screenshots only on failures

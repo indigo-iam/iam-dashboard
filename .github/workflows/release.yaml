@@ -64,7 +64,7 @@ jobs:
       - name: Cypress Run
         uses: cypress-io/github-action@v6
         with:
-          build: npm build
+          build: npm run build
           start: npm start
           wait-on: "http://localhost:8080"
 

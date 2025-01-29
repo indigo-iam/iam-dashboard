@@ -39,7 +39,7 @@ jobs:
           # tags: |
           #   type=sha
           #   type=ref,event=tag
-      
+
       - name: Retrieve Cypress and Nextjs secret env files
         env:
           CYPRESS_ENV_BASE64: ${{ secrets.CYPRESS_ENV_BASE64 }}
@@ -47,17 +47,19 @@ jobs:
         run: |
           echo ${CYPRESS_ENV_BASE64} | base64 -d > cypress.env.json
           echo ${NEXT_ENV_BASE64} | base64 -d > .env
-      
-      - name: Cypress Run
-        uses: cypress-io/github-action@v6
-        with:
-          start: docker run --rm -p 8080:80 --env-file .env dashboard
-  
+
       - name: Build docker
         uses: docker/build-push-action@v6
         with:
           context: .
           load: true
+          tags: cnafsoftwaredevel/iam-dashboard:latest
+          # tags: ${{ steps.meta.outputs.tags }}
+
+      - name: Cypress Run
+        uses: cypress-io/github-action@v6
+        with:
+          start: docker run --rm -p 8080:80 --env-file .env cnafsoftwaredevel/iam-dashboard:latest
 
       - name: Build and push to Docker Hub
         uses: docker/build-push-action@v6

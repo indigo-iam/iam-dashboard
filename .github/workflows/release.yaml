@@ -15,11 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: "Cypress E2E test suite"
     steps:
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 23
-
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -74,13 +69,12 @@ jobs:
           path: cypress/screenshots
           if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
 
-
-      # - name: Build and push to Docker Hub
-      #   uses: docker/build-push-action@v6
-      #   with:
-      #     context: .
-      #     push: ${{ github.ref == 'refs/heads/main' }}
-      #     tags: cnafsoftwaredevel/iam-dashboard:latest
-      #     # tags: ${{ steps.meta.outputs.tags }}
-      #     labels: ${{ steps.meta.outputs.labels }}
-      #     platforms: linux/amd64
+      - name: Build and push to Docker Hub
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: ${{ github.ref == 'refs/heads/main' }}
+          tags: cnafsoftwaredevel/iam-dashboard:latest
+          # tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          platforms: linux/amd64

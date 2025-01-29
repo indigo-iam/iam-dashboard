@@ -64,6 +64,8 @@ jobs:
       - name: Cypress Run
         run: |
           docker run --rm -p 8080:80 -d --name dashboard --env-file .env cnafsoftwaredevel/iam-dashboard:latest
+          echo "Waiting 2 seconds..."
+          sleep 2
           docker ps -a
           curl -v http://localhost:8080
           curl -v http://0.0.0.0:8080

@@ -1,5 +1,5 @@
 "use client";
-import DeleteGroupModal from "./DeleteGroupModal";
+import DeleteGroupModal from "./modal";
 import { useState } from "react";
 import { ScimReference } from "@/models/scim";
 import { Group } from "@/models/groups";

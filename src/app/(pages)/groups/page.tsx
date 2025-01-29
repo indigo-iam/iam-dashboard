@@ -35,9 +35,9 @@ export default async function GroupsPage(props: Readonly<GroupsProps>) {
   const groupsPage = isMe ? await getMyGroupsPageWrap(count, startIndex, query)
     : await getGroupsPage(count, startIndex, query);
   const numberOfPages = Math.ceil(groupsPage.totalResults / count) || 1;
-  const me = isMe ? await fetchMe() : null
-  const session = isMe ? await auth() : null
-  const isAdmin = session?.is_admin ?? false
+  const me = isMe ? await fetchMe() : undefined;
+  const session = isMe ? await auth() : undefined;
+  const isAdmin = session?.is_admin ?? false;
   const groups = groupsPage.Resources;
   
   return (
@@ -51,7 +51,7 @@ export default async function GroupsPage(props: Readonly<GroupsProps>) {
           )}
           <InputQuery />
           <Suspense fallback="Loading...">
-            <GroupsTable groups={groups} />
+            <GroupsTable groups={groups} user={me} />
           </Suspense>
           <Paginator numberOfPages={numberOfPages} />
         </Section>

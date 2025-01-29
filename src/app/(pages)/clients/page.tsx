@@ -25,7 +25,7 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
   const query = searchParams?.query;
   const startIndex = 1 + count * (page - 1);
   const clientPage = await getClientsPage(count, startIndex, isMe, query);
-  const numberOfPages = Math.ceil(clientPage.totalResults / count);
+  const numberOfPages = Math.ceil(clientPage.totalResults / count) || 1;
   const clients = clientPage.Resources;
   return (
     <Page title={`${isMe ? "My Clients" : "Clients"}`}>

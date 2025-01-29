@@ -26,7 +26,7 @@ export default async function GroupsPage(props: Readonly<GroupsProps>) {
       <Panel>
         <Section>
           <AddGroupButton />
-          <InputQuery />
+          <InputQuery data-test="search-group" />
           <GroupsTable groups={groups} />
           <Paginator numberOfPages={numberOfPages} />
         </Section>

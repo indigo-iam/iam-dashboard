@@ -1,4 +1,4 @@
-name: Release
+name: ci
 
 on:
   workflow_dispatch:
@@ -45,9 +45,8 @@ jobs:
         with:
           context: .
           load: true
-          tags: cnafsoftwaredevel/iam-dashboard:latest
-          # tags: ${{ steps.meta.outputs.tags }}
-        
+          tags: cnafsoftwaredevel/iam-dashboard:test
+
       - name: Retrieve Cypress and Next.js secret env files
         env:
           CYPRESS_ENV_BASE64: ${{ secrets.CYPRESS_ENV_BASE64 }}
@@ -59,7 +58,7 @@ jobs:
       - name: Cypress Run
         uses: cypress-io/github-action@v6
         with:
-          start: docker run --rm -p 3000:80 --env-file .env cnafsoftwaredevel/iam-dashboard:latest
+          start: docker run --rm -p 3000:80 --env-file .env cnafsoftwaredevel/iam-dashboard:test
 
       - uses: actions/upload-artifact@v4
         # add the line below to store screenshots only on failures

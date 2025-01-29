@@ -10,30 +10,10 @@ on:
       - LICENSE
 
 jobs:
-  cypress-run:
-    environment: "Cypress E2E test suite"
-    name: E2E Tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Retrieve Cypress and Nextjs secret env files
-        env:
-          CYPRESS_ENV_BASE64: ${{ secrets.CYPRESS_ENV_BASE64 }}
-          NEXT_ENV_BASE64: ${{ secrets.NEXT_ENV_BASE64 }}
-        run: |
-          echo ${CYPRESS_ENV_BASE64} | base64 -d > cypress.env.json
-          echo ${NEXT_ENV_BASE64} | base64 -d > .env
-
-      - name: Cypress Run
-        uses: cypress-io/github-action@v6
-        with:
-          start: npm ci && npm run build && node .next/standalone/server.js
-
   main:
     name: Release
     runs-on: ubuntu-latest
+    environment: "Cypress E2E test suite"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -59,9 +39,28 @@ jobs:
           # tags: |
           #   type=sha
           #   type=ref,event=tag
+      
+      - name: Retrieve Cypress and Nextjs secret env files
+        env:
+          CYPRESS_ENV_BASE64: ${{ secrets.CYPRESS_ENV_BASE64 }}
+          NEXT_ENV_BASE64: ${{ secrets.NEXT_ENV_BASE64 }}
+        run: |
+          echo ${CYPRESS_ENV_BASE64} | base64 -d > cypress.env.json
+          echo ${NEXT_ENV_BASE64} | base64 -d > .env
+      
+      - name: Cypress Run
+        uses: cypress-io/github-action@v6
+        with:
+          start: docker run --rm -p 8080:80 --env-file .env dashboard
+  
+      - name: Build docker
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
 
-      - name: Build & Push
-        uses: docker/build-push-action@v5
+      - name: Build and push to Docker Hub
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: ${{ github.ref == 'refs/heads/main' }}

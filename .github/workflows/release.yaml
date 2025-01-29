@@ -66,7 +66,6 @@ jobs:
         with:
           build: npm run build
           start: npm start
-          wait-on: "http://127.0.0.1:8080"
 
       - uses: actions/upload-artifact@v4
         # add the line below to store screenshots only on failures

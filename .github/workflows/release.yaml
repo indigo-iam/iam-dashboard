@@ -59,6 +59,7 @@ jobs:
       - name: Cypress Run
         uses: cypress-io/github-action@v6
         with:
+          browser: chrome
           start: docker run --rm -p 8080:80 --env-file .env cnafsoftwaredevel/iam-dashboard:latest
 
       - name: Build and push to Docker Hub

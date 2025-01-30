@@ -4,27 +4,24 @@ import { ScimReference } from "@/models/scim";
 import RemoveMembership from "./remove-membership-button";
 import AddSubgroupButton from "./add-subgroup-button";
 import DeleteGroupButton from "./delete-group-button";
-import { auth } from "@/auth";
 
 export type GroupOptionsProps = {
   group: Group;
   userRef?: ScimReference;
+  isAdmin?: boolean;
 };
 
-export default async function GroupOptions(
+export default function GroupOptions(
   props: Readonly<GroupOptionsProps>
 ) {
-  const { group, userRef } = props;
-  const session = await auth();
-  const isAdmin = session?.is_admin ?? false
+  const { group, userRef, isAdmin } = props;
 
   return (
     <Options>
       {isAdmin && <AddSubgroupButton rootGroup={group} />}
       {userRef && <RemoveMembership
         userRef={userRef}
-        groupId={group.id}
-        groupName={group.displayName}
+        group={group}
       />}
       {isAdmin && <DeleteGroupButton group={group} />}
     </Options>

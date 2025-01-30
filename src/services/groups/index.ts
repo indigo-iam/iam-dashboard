@@ -81,19 +81,17 @@ export async function getMyGroupsPage(
   startIndex: number = 1,
   filter?: string
 ) {
-  const groupsPromises = [];
-  for(const g of me?.groups ?? []) {
-    groupsPromises.push(fetchGroup(g.value));
-  }
-  let groupsResolved = await Promise.all(groupsPromises);
+  const scimGroups = me.groups ?? [];
+  const promises = scimGroups.map(group => fetchGroup(group.value));
+  let resolved = await Promise.all(promises);
   if (filter) {
-    groupsResolved = groupsResolved.filter((g) => g.displayName.includes(filter))
+    resolved = resolved.filter(g => g.displayName.includes(filter));
   }
-  let myGroups: Paginated<Group> = {
-    totalResults: groupsResolved.length,
+  const myGroups: Paginated<Group> = {
+    totalResults: resolved.length,
     itemsPerPage: count,
     startIndex: startIndex,
-    Resources: groupsResolved.slice(startIndex - 1, startIndex - 1 + count)
+    Resources: resolved.slice(startIndex - 1, startIndex - 1 + count)
   };
   return myGroups;
 }

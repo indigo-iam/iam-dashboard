@@ -1,6 +1,7 @@
 import { ScimReference, User } from "@/models/scim";
 import Link from "@/components/link";
 import getConfig from "@/utils/config";
+import { makeScimReferenceFromUser } from "@/utils/scim";
 import GroupOptions from "./options";
 
 const { BASE_URL } = getConfig();
@@ -40,11 +41,7 @@ export default function GroupsTable(props: Readonly<GroupsTableProps>) {
     return <p>No groups found</p>;
   }
 
-  const userRef: ScimReference = {
-    $ref: `${BASE_URL}/scim/Users/${user.id}`,
-    display: user.name?.formatted ?? "unknown user",
-    value: user.id,
-  };
+  const userRef = makeScimReferenceFromUser(user);
 
   return (
     <table className="w-full table-auto rounded-lg">

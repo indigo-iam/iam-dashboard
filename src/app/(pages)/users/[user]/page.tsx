@@ -29,7 +29,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
     <Page title={user.name?.formatted}>
       <Panel>
         <UserInfo user={user} isMe={isMe} />
-        <Groups user={user} />
+        {!isMe && <Groups user={user} />}
         <GroupRequests user={user} isMe={isMe} />
         <ManagedGroups user={user} />
         <LinkedAccounts user={user} />

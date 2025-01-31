@@ -7,14 +7,14 @@ import DeleteGroupButton from "./delete-group-button";
 
 export type GroupOptionsProps = {
   group: Group;
-  userRef?: ScimReference;
   isAdmin?: boolean;
+  userRef?: ScimReference;
 };
 
 export default function GroupOptions(
   props: Readonly<GroupOptionsProps>
 ) {
-  const { group, userRef, isAdmin } = props;
+  const { group, isAdmin, userRef } = props;
 
   return (
     <Options>

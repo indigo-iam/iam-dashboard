@@ -1,7 +1,5 @@
 import Link from "@/components/link";
 import { ManagedGroup } from "@/models/groups";
-import { User } from "@/models/scim";
-import { fetchManagedGroups } from "@/services/groups";
 
 type RowProps = {
   group: ManagedGroup;
@@ -23,19 +21,13 @@ function Row(props: Readonly<RowProps>) {
 }
 
 type TableProps = {
-  user: User;
+  groups: ManagedGroup[];
 };
 
-export default async function ManagedGroupsTable(
+export default function ManagedGroupsTable(
   props: Readonly<TableProps>
 ) {
-  const { user } = props;
-  const { managedGroups } = await fetchManagedGroups(user.id);
-
-  // TODO: spostare questo controllo per dare null a tutta la Section parent invece
-  if (managedGroups.length === 0) {
-    return null;
-  }
+  const { groups } = props;
 
   return (
     <table className="w-full table-auto">
@@ -46,7 +38,7 @@ export default async function ManagedGroupsTable(
         </tr>
       </thead>
       <tbody>
-        {managedGroups.map(group => (
+        {groups.map(group => (
           <Row
             key={group.id}
             group={group}

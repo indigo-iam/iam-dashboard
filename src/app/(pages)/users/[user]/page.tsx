@@ -31,7 +31,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
         <UserInfo user={user} isMe={isMe} />
         {!isMe && <Groups user={user} />}
         <GroupRequests user={user} isMe={isMe} />
-        <ManagedGroups user={user} />
+        {!isMe && <ManagedGroups user={user} />}
         <LinkedAccounts user={user} />
         <Certificates user={user} />
         <SSHKeys user={user} />

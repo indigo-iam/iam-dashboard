@@ -39,7 +39,9 @@ type TableProps = {
   user?: User;
 };
 
-export default async function GroupsTable(props: Readonly<TableProps>) {
+export default async function GroupsTable(
+  props: Readonly<TableProps>
+) {
   const { groups, user } = props;
   const userRef = user ? makeScimReferenceFromUser(user) : undefined;
   const session = await auth();

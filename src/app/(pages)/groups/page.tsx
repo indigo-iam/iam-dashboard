@@ -3,7 +3,12 @@ import Paginator from "@/components/paginator";
 import { getGroupsPage, getMyGroupsPage } from "@/services/groups";
 import { fetchMe } from "@/services/me";
 import { InputQuery } from "@/components/inputs";
-import { AddGroupButton, GroupsTable, JoinGroupButton } from "./components";
+import {
+  AddGroupButton,
+  JoinGroupButton,
+  GroupsTable,
+  ManagedGroupsTable
+} from "./components";
 import { auth } from "@/auth";
 import { Suspense } from "react";
 
@@ -43,19 +48,23 @@ export default async function GroupsPage(props: Readonly<GroupsProps>) {
   return (
     <Page title={isMe ? "My Groups" : "Groups"}>
       <Panel>
-        <Section>
+        <Section title="Membership">
           {me ? (
             <JoinGroupButton user={me} isAdmin={isAdmin} />
           ) : (
             <AddGroupButton />
           )}
           <InputQuery />
-          <Suspense fallback="Loading...">
+          <Suspense fallback="Loading membership groups...">
             <GroupsTable groups={groups} user={me} />
           </Suspense>
           <Paginator numberOfPages={numberOfPages} />
         </Section>
-        {/* Panel ManagedGroups */}
+        {me && <Section title="Managed">
+          <Suspense fallback="Loading managed groups...">
+            <ManagedGroupsTable user={me} />
+          </Suspense>
+        </Section>}
       </Panel>
     </Page>
   );

@@ -25,13 +25,13 @@ declare global {
 
 Cypress.Commands.add("loginWithIam", (username: string, password: string) => {
   // https://docs.cypress.io/api/commands/session#Cross-domain-sessions
-  cy.visit("http://localhost:3000"); // do not remove it
+  cy.visit("/"); // do not remove it
   cy.session(
     username,
     () => {
-      cy.visit("http://localhost:3000/signin");
+      cy.visit("/signin");
       cy.origin(
-        "https://iam-dev.cloud.cnaf.infn.it",
+        Cypress.env("IAM_AUTHORITY_URL"),
         { args: { username, password } },
         ({ username, password }) => {
           cy.get("#username").type(username);
@@ -41,11 +41,11 @@ Cypress.Commands.add("loginWithIam", (username: string, password: string) => {
           cy.get("#login-submit").click();
         }
       );
-      cy.visit("http://localhost:3000");
+      cy.visit("/");
     },
     {
       validate() {
-        cy.url().should("match", /.+\/users\/me$/);
+        cy.url().should("match", /\/users\/me$/);
       },
     }
   );

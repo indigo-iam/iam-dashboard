@@ -25,7 +25,7 @@ export async function registerClient(client: ClientRequest, isAdmin?: boolean) {
 
   if (response.ok) {
     await setNotification({ type: "success", message: "Client created" });
-    isAdmin ? redirect("/clients") : redirect("/me/clients");
+    isAdmin ? redirect("/clients") : redirect("/clients?me");
   } else {
     const msg = await response.text();
     await setNotification({

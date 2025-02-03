@@ -13,7 +13,7 @@ export default function Groups(props: Readonly<GroupsProps>) {
 
   return (
     <Section title="Groups">
-      <GroupsTable user={user} />
+      <GroupsTable user={user} isAdmin={isAdmin} />
       <JoinGroupButton user={user} isAdmin={isAdmin} />
     </Section>
   );

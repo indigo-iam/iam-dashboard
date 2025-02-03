@@ -12,11 +12,6 @@ using [React](https://react.dev) and [Next.js](https://nextjs.org).
 The OpenID Connect authorization flow is handled by [Auth.js](https://authjs.dev).
 
 In order to run the web application, **working INDIGO IAM instance is required**.
-It is possible to run the dashboard against both a remote IAM instance or, 
-a local IAM instance using Docker containers.
-This project is shipped with a [`docker-compose.yaml`](docker-compose.yaml)
-that runs a local instance of INDIGO IAM. See the following sections for 
-instructions.
 
 ## IAM Client Configuration
 
@@ -25,7 +20,6 @@ required. This step is required the first time only (or whenever the local
 database volume is deleted/recreated).
 
 To register a new client, go to the chosen IAM instance
-([http://localhost:8081/](http://localhost:8081) for the local instance).
 Login as admin, register a new client and configure it as described below.
 
 ### Redirect URIs
@@ -38,7 +32,7 @@ To be able to develop the dashboard on your local machine, the redirect uri must
 be
 
 ```shell
-http://localhost:8080/auth/callback/indigo-iam
+http://localhost:3000/auth/callback/indigo-iam
 ```
 
 For a production deployment, the redirect uri will be, for example
@@ -123,43 +117,15 @@ Something similar to the following should be prompted:
 > next dev -p 8080
 
   ▲ Next.js 14.2.2
-  - Local:        http://localhost:8080
+  - Local:        http://localhost:3000
   - Environments: .env
 
  ✓ Starting...
  ✓ Ready in 9.5s
  ```
 
-The dashboard is then available at [http://localhost:8080](http://localhost:8080).
+The dashboard is then available at [http://localhost:3000](http://localhost:3000).
 
-### Dev Containers
-
-Even though not strictly necessary, it is highly recommended to use
-Visual Studio Code with the [Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers)
-integration.
-
-This project is provided with a [`docker-compose.yaml`](docker-compose.yaml)
-that spawns the following services
-
-- `iam-backend`: INDIGO IAM backend (and old dashboard)
-- `iam-database`: MySQL instance for IAM backend
-- `iam-dashboard`: the new dashboard (core of this project)
-- `iam-nginx`: NGINX proxy pass instance which route the traffic between services
-
-#### Start the services
-
-If you open this project with Visual Studio Code, it should automatically
-suggest to reopen the project using the containers functionality.
-
-If this is not the case, it is possible to start all services from within Visual
-Studio Code, launching the command `Reopen in Container`.
-Otherwise, it is possible to manually start the services with
-
-```bash
-docker compose up -d
-```
-and then, in Visual Studio Code, attach the session with
-`Attach to Running Container...`
 
 #### Start the Next.js development server
 
@@ -170,40 +136,8 @@ After launching the services, from **inside** the
 npm run dev
 ```
 
-The dashboard is then available at
-[http://localhost:8080](http://localhost:8080), while the INDIGO IAM instance
-is located at [http://localhost:8081](http://localhost:8081).
+The dashboard is then available at [http://localhost:3000](http://localhost:3000).
 
-#### Docker compose
-
-This method is very similar to the Dev Containers method, since they share
-the same [`docker-compose.yaml`](docker-compose.yaml) file to declare all the
-services. This method has just few caveats, compared to Dev Containers that
-require a couple of additional steps.
-
-#### Start the Next.js development server
-
-As first step, start the services with `docker compose` as shown before
-
-```shell
-docker compose up -d
-```
-
-Now you have to enter the container interactively with
-
-```shell
-docker exec -it iam-dashboard bash
-```
-
-Navigate to the `/workspace` directory. This directory is mounted to
-your local project directory. From here, install the dependencies and 
-start the Next.js development server with
-
-```shell
-# in /workspace dir
-npm run install     # not required with dev containers
-npm run dev
-```
 
 ## Deployment
 
@@ -241,9 +175,9 @@ docker run -p <some-port>:80 --env-file=prod.env cnafsoftwaredevel/iam-dashboard
 - [ ] Validate password before submission
 - [ ] What happens if I change password when there is no password at all?
 - [x] Finish the "Add to group" functionality
-- [ ] Add "Change membership end time"
+- [x] Add "Change membership end time"
 - [ ] Add "Link external account" feature
-- [ ] Add "Link Certificate"
+- [x] Add "Link Certificate"
 - [ ] Add "Request Certificate"
 - [ ] Add "Add managed proxy certificate"
 - [x] Add "Add ssh key"
@@ -264,14 +198,14 @@ docker run -p <some-port>:80 --env-file=prod.env cnafsoftwaredevel/iam-dashboard
 
 ### Requests Page
 
-- [ ] Create "Registration Request" tab
-- [ ] Create "Group requests" tab
+- [x] Create "Registration Request" tab
+- [X] Create "Group requests" tab
 
 ### AUP Page
 
-- [ ] Add "Edit AUP"
-- [ ] Add "Request AUP Signature"
-- [ ] Add "Delete AUP"
+- [x] Add "Edit AUP"
+- [x] Add "Request AUP Signature"
+- [x] Add "Delete AUP"
 
 ### Clients Page
 
@@ -291,10 +225,10 @@ docker run -p <some-port>:80 --env-file=prod.env cnafsoftwaredevel/iam-dashboard
 
 ### Tokens Page
 
-- [ ] ???
+- [ ] TBD
 
 ### Scopes
 
-- [ ] Add Scopes table
-- [ ] Add "Edit Scope" button per each row (Description, default scope, restricted)
-- [ ] Add "Delete scope" button per each row
+- [x] Add Scopes table
+- [x] Add "Edit Scope" button per each row (Description, default scope, restricted)
+- [x] Add "Delete scope" button per each row

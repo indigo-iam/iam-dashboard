@@ -46,7 +46,11 @@ next-env.d.ts
 *.sln
 *.sw?
 
+# cypress
+cypress/screenshots/
+
 # secrets
 .devcontainer/devcontainer.env
 *.env
 nginx/conf.d/env/*.conf
+cypress.env.json

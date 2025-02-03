@@ -1,0 +1,79 @@
+name: ci
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "**"
+    paths-ignore:
+      - README.md
+      - LICENSE
+
+jobs:
+  main:
+    name: Release
+    runs-on: ubuntu-latest
+    environment: "Cypress E2E test suite"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Docker Login
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Docker Metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: cnafsoftwaredevel/iam-dashboard
+          # tags: |
+          #   type=sha
+          #   type=ref,event=tag
+
+      - name: Build docker
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          tags: cnafsoftwaredevel/iam-dashboard:test
+
+      - name: Retrieve Cypress and Next.js secret env files
+        env:
+          CYPRESS_ENV_BASE64: ${{ secrets.CYPRESS_ENV_BASE64 }}
+          NEXT_ENV_BASE64: ${{ secrets.NEXT_ENV_BASE64 }}
+        run: |
+          echo ${CYPRESS_ENV_BASE64} | base64 -d > cypress.env.json
+          echo ${NEXT_ENV_BASE64} | base64 -d > .env
+
+      - name: Cypress Run
+        uses: cypress-io/github-action@v6
+        with:
+          start: docker run --rm -p 3000:80 --env-file .env cnafsoftwaredevel/iam-dashboard:test
+
+      - uses: actions/upload-artifact@v4
+        # add the line below to store screenshots only on failures
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
+
+      - name: Build and push to Docker Hub
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: ${{ github.ref == 'refs/heads/main' }}
+          tags: cnafsoftwaredevel/iam-dashboard:latest
+          # tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          platforms: linux/amd64

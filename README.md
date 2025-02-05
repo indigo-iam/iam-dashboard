@@ -1,6 +1,6 @@
 # INDIGO IAM Dashboard
 
-[![github-build-status](https://github.com/indigo-iam/iam-dashboard/actions/workflows/release.yaml/badge.svg?branch=main&event=push)](https://github.com/indigo-iam/iam-dashboard/actions/workflows/release.yaml)
+[![github-build-status](https://github.com/indigo-iam/iam-dashboard/actions/workflows/ci.yaml/badge.svg?branch=main&event=push)](https://github.com/indigo-iam/iam-dashboard/actions/workflows/ci.yaml)
 [![sonarqube-qg](https://sonarcloud.io/api/project_badges/measure?project=indigo-iam_iam-dashboard&metric=alert_status)](https://sonarcloud.io/dashboard?id=indigo-iam_iam-dashboard)
 
 INDIGO IAM Dashboard is the web application of INDIGO IAM developed by INFN.
@@ -9,36 +9,29 @@ INDIGO IAM Dashboard is the web application of INDIGO IAM developed by INFN.
 
 The dashboard is implemented in [TypeScript](https://www.typescriptlang.org),
 using [React](https://react.dev) and [Next.js](https://nextjs.org).
-The OpenID Connect authorization flow is handled by [Auth.js](https://authjs.dev).
+OpenID Connect/OAuth2 authorization flow is handled by
+[Auth.js](https://authjs.dev).
 
 In order to run the web application, **working INDIGO IAM instance is required**.
-It is possible to run the dashboard against both a remote IAM instance or, 
-a local IAM instance using Docker containers.
-This project is shipped with a [`docker-compose.yaml`](docker-compose.yaml)
-that runs a local instance of INDIGO IAM. See the following sections for 
-instructions.
 
 ## IAM Client Configuration
 
-The dashboard acts as client for IAM backend and thus, registering the client is
-required. This step is required the first time only (or whenever the local 
-database volume is deleted/recreated).
+The dashboard acts as a INDIGO IAM Login Service client and thus, registering
+the client is required to receive an access token.
 
-To register a new client, go to the chosen IAM instance
-([http://localhost:8081/](http://localhost:8081) for the local instance).
-Login as admin, register a new client and configure it as described below.
+To register a new client, go to the chosen INDIGO IAM instance, login as admin
+and create a new client with the configuration described below.
 
 ### Redirect URIs
 
 In the client main page, add all needed redirect uris, in the form of
-`<IAM_URL>/auth/callback/indigo-iam`
-(without the trailing `/`).
+`<IAM_URL>/auth/callback/indigo-iam` (without the trailing `/`).
 
-To be able to develop the dashboard on your local machine, the redirect uri must
-be
+To enable development of the dashboard on your local machine, the redirect uri
+must be
 
 ```shell
-http://localhost:8080/auth/callback/indigo-iam
+http://localhost:3000/auth/callback/indigo-iam
 ```
 
 For a production deployment, the redirect uri will be, for example
@@ -59,25 +52,24 @@ In the *Scopes* tab, assure that the following scopes are enabled
 - `profile`
 - `scim:read`
 - `scim:write`
+- `iam:admin.read`
+- `iam:admin.write`
 
 ### Grant Types
 
 In the *Grant Types* tab, enable `authorization_code`.
-Finally, in the **Crypto** section enable PKCE with SHA-256 has algorithm.
+Finally, in the **Crypto** section, enable PKCE with SHA-256 has algorithm.
 
 ## Development
 
 To launch the development environment, an installation of
 [Node.js](https://nodejs.org/en) is the only mandatory requirement.
-This project currently relies upon Node 20 LTS.
-
-Regardless the chosen method, an environment file is required to the dashboard
-about which IAM it should use.
+This project currently relies upon Node 22 LTS.
 
 ### Create the `.env` file
 
-Create a file named `.env` located to the root directory of this repository and
-define the following variables:
+Create a file named `.env` located to the project root directory and define the
+following variables:
 
 ```shell
 # .env
@@ -85,24 +77,22 @@ NODE_ENV=debug
 IAM_AUTHORITY_URL=https://iam-dev.cloud.cnaf.infn.it # or http://localhost:8081
 IAM_CLIENT_ID=<your_client_id>
 IAM_CLIENT_SECRET=<your_client_secret>
+IAM_SCOPES="openid profile scim:read scim:write iam:admin.read iam:admin.write"
 AUTH_SECRET=<authentication_secret>                  # see below
 ```
 
-`AUTH_SECRET` is a variable to securely protect session cookies for
-authentication. You could generate a secret running
+**Imporant**: `AUTH_SECRET` is a variable to securely protect session cookies
+for authentication. You could generate a secret running
 
 ```shell
 openssl rand -base64 32
 ```
 
-> **Note:** If you want to use the local IAM instance, and thus you don't have a
-> client yet, start the services (see below), create a new clint (see above) and
-> finally create the `.env` file with the proper values.
+> **Note** this is considered a sensitive credentials do decrypt session cookies
+> and thus the Access Token. Do not share the secret especially the once
+> generated for production deployment.
 
-### Local development (remote IAM only)
-
-The simplest way to quick start the application requires Node.js only.
-Be aware that with this method *a remote INDIGO IAM instance is required*.
+### Local development
 
 First install the required dependencies with
 
@@ -120,95 +110,22 @@ Something similar to the following should be prompted:
 
 ```bash
 > iam-dashboard@0.1.0 dev
-> next dev -p 8080
+> next dev
 
   ▲ Next.js 14.2.2
-  - Local:        http://localhost:8080
+  - Local:        http://localhost:3000
   - Environments: .env
 
  ✓ Starting...
  ✓ Ready in 9.5s
  ```
 
-The dashboard is then available at [http://localhost:8080](http://localhost:8080).
-
-### Dev Containers
-
-Even though not strictly necessary, it is highly recommended to use
-Visual Studio Code with the [Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers)
-integration.
-
-This project is provided with a [`docker-compose.yaml`](docker-compose.yaml)
-that spawns the following services
-
-- `iam-backend`: INDIGO IAM backend (and old dashboard)
-- `iam-database`: MySQL instance for IAM backend
-- `iam-dashboard`: the new dashboard (core of this project)
-- `iam-nginx`: NGINX proxy pass instance which route the traffic between services
-
-#### Start the services
-
-If you open this project with Visual Studio Code, it should automatically
-suggest to reopen the project using the containers functionality.
-
-If this is not the case, it is possible to start all services from within Visual
-Studio Code, launching the command `Reopen in Container`.
-Otherwise, it is possible to manually start the services with
-
-```bash
-docker compose up -d
-```
-and then, in Visual Studio Code, attach the session with
-`Attach to Running Container...`
-
-#### Start the Next.js development server
-
-After launching the services, from **inside** the
-`iam-dashboard` container, start the development server
-
-```bash
-npm run dev
-```
-
-The dashboard is then available at
-[http://localhost:8080](http://localhost:8080), while the INDIGO IAM instance
-is located at [http://localhost:8081](http://localhost:8081).
-
-#### Docker compose
-
-This method is very similar to the Dev Containers method, since they share
-the same [`docker-compose.yaml`](docker-compose.yaml) file to declare all the
-services. This method has just few caveats, compared to Dev Containers that
-require a couple of additional steps.
-
-#### Start the Next.js development server
-
-As first step, start the services with `docker compose` as shown before
-
-```shell
-docker compose up -d
-```
-
-Now you have to enter the container interactively with
-
-```shell
-docker exec -it iam-dashboard bash
-```
-
-Navigate to the `/workspace` directory. This directory is mounted to
-your local project directory. From here, install the dependencies and 
-start the Next.js development server with
-
-```shell
-# in /workspace dir
-npm run install     # not required with dev containers
-npm run dev
-```
+The dashboard is then available at [http://localhost:3000](http://localhost:3000).
 
 ## Deployment
 
-A Docker image is automatically built using GitHub Action. As for development,
-the same environment variables are required, plus the `AUTH_URL` variable. The
+A Docker image is automatically built using GitHub Action.
+The same environment variables are required, plus the `AUTH_URL` variable. The
 latter is need when the application is behind a docker image or proxy which
 hides the current hostname.
 
@@ -217,13 +134,15 @@ Create the following environment file, giving your preferred name, for example
 
 ```bash
 # prod.env
+NODE_ENV=production
 IAM_AUTHORITY_URL=https://iam-dev.cloud.cnaf.infn.it
 IAM_CLIENT_ID=<your_client_id>
 IAM_CLIENT_SECRET=<your_client_secret>
+IAM_SCOPES="openid profile scim:read scim:write iam:admin.read iam:admin.write"
 AUTH_SECRET=<authentication_secret>
 AUTH_URL=<dashboard_hostname>  # e.g. https://iam-dashboard.cloud.cnaf.infn.it
 ```
-To start the application then run
+To start the application run
 
 ```bash
 docker run -p <some-port>:80 --env-file=prod.env cnafsoftwaredevel/iam-dashboard:latest
@@ -241,9 +160,9 @@ docker run -p <some-port>:80 --env-file=prod.env cnafsoftwaredevel/iam-dashboard
 - [ ] Validate password before submission
 - [ ] What happens if I change password when there is no password at all?
 - [x] Finish the "Add to group" functionality
-- [ ] Add "Change membership end time"
+- [x] Add "Change membership end time"
 - [ ] Add "Link external account" feature
-- [ ] Add "Link Certificate"
+- [x] Add "Link Certificate"
 - [ ] Add "Request Certificate"
 - [ ] Add "Add managed proxy certificate"
 - [x] Add "Add ssh key"
@@ -264,14 +183,14 @@ docker run -p <some-port>:80 --env-file=prod.env cnafsoftwaredevel/iam-dashboard
 
 ### Requests Page
 
-- [ ] Create "Registration Request" tab
-- [ ] Create "Group requests" tab
+- [x] Create "Registration Request" tab
+- [X] Create "Group requests" tab
 
 ### AUP Page
 
-- [ ] Add "Edit AUP"
-- [ ] Add "Request AUP Signature"
-- [ ] Add "Delete AUP"
+- [x] Add "Edit AUP"
+- [x] Add "Request AUP Signature"
+- [x] Add "Delete AUP"
 
 ### Clients Page
 
@@ -291,10 +210,10 @@ docker run -p <some-port>:80 --env-file=prod.env cnafsoftwaredevel/iam-dashboard
 
 ### Tokens Page
 
-- [ ] ???
+- [ ] TBD
 
 ### Scopes
 
-- [ ] Add Scopes table
-- [ ] Add "Edit Scope" button per each row (Description, default scope, restricted)
-- [ ] Add "Delete scope" button per each row
+- [x] Add Scopes table
+- [x] Add "Edit Scope" button per each row (Description, default scope, restricted)
+- [x] Add "Delete scope" button per each row

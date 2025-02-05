@@ -5,6 +5,7 @@ import {
 
 export interface InputProps extends HeadlessInputProps {
   className?: string;
+  "data-test"?: string;
 }
 
 export function Input(props: Readonly<InputProps>) {

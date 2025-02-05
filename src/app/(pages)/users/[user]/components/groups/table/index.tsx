@@ -3,15 +3,20 @@ import Link from "@/components/link";
 
 type RowProps = {
   groupRef: ScimReference;
+  isAdmin?: boolean;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const { groupRef } = props;
-  
+  const { groupRef, isAdmin } = props;
+
   return (
     <tr className="tbl-tr">
       <td className="tbl-td grow">
-        <Link href={`/groups/${groupRef.value}`}>{groupRef.display}</Link>
+        {isAdmin ? (
+          <Link href={`/groups/${groupRef.value}`}>{groupRef.display}</Link>
+        ) : (
+          groupRef.display
+        )}
       </td>
     </tr>
   );
@@ -19,10 +24,11 @@ function Row(props: Readonly<RowProps>) {
 
 type GroupsTableProps = {
   user: User;
+  isAdmin?: boolean;
 };
 
 export default function GroupsTable(props: Readonly<GroupsTableProps>) {
-  const { user } = props;
+  const { user, isAdmin } = props;
   const { groups } = user;
 
   return (
@@ -32,7 +38,13 @@ export default function GroupsTable(props: Readonly<GroupsTableProps>) {
       <table className="w-full table-auto rounded-lg">
         <tbody>
           {groups.map(group => {
-            return <Row key={group.value} groupRef={group} />;
+            return (
+              <Row
+                key={group.value}
+                groupRef={group}
+                isAdmin={isAdmin}
+              />
+            );
           })}
         </tbody>
       </table>

@@ -2,7 +2,11 @@
 import { InputSearch } from "@/components/inputs";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export function InputQuery() {
+type InputQueryProps = {
+  "data-test"?: string;
+};
+
+export function InputQuery(props: Readonly<InputQueryProps>) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -19,5 +23,5 @@ export function InputQuery() {
     router.push(`${pathname}?${params.toString()}`);
   };
 
-  return <InputSearch onChange={setQuery} onClear={clearQuery} />;
+  return <InputSearch onChange={setQuery} onClear={clearQuery} {...props} />;
 }

@@ -14,10 +14,11 @@ export interface ModalProps {
   children?: ReactNode;
   show: boolean;
   onClose: () => void;
+  "data-test"?: string;
 }
 
 export function Modal(props: Readonly<ModalProps>) {
-  const { title, children, show, onClose } = props;
+  const { title, children, show, onClose, ...other } = props;
 
   return (
     <Transition appear show={show}>
@@ -25,6 +26,7 @@ export function Modal(props: Readonly<ModalProps>) {
         as="div"
         className="relative z-10 focus:outline-none"
         onClose={onClose}
+        {...other}
       >
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="mt-16 flex min-h-32 justify-center p-4">

@@ -1,2 +1,2 @@
-export { default as AddGroupButton } from "./add-group-button";
-export { default as GroupsTable } from "./table";
+export { default as MembershipGroupsSection } from "./membership";
+export { default as ManagedGroupsSection } from "./managed";

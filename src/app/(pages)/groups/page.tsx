@@ -1,7 +1,7 @@
 import { Page, Panel } from "@/components/layout";
 import { fetchMe } from "@/services/me";
 import {
-  MembershipGroupsSection,
+  GroupsSection,
   ManagedGroupsSection
 } from "./components";
 
@@ -25,7 +25,7 @@ export default async function GroupsPage(props: Readonly<GroupsProps>) {
   return (
     <Page title={isMe ? "My Groups" : "Groups"}>
       <Panel>
-        <MembershipGroupsSection
+        <GroupsSection
           count={count}
           page={page}
           query={query}

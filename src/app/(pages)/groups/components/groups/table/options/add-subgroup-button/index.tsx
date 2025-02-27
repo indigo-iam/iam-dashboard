@@ -1,10 +1,10 @@
 "use client";
 import AddSubgroupModal from "./modal";
 import { useState } from "react";
-import { Group } from "@/models/groups";
+import { ScimReference } from "@/models/scim";
 
 type AddSubgroupButtonProps = {
-  rootGroup: Group;
+  rootGroup: ScimReference;
   onAdded?: () => void;
 };
 

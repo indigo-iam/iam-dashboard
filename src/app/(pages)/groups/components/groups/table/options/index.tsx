@@ -1,13 +1,12 @@
 import Options from "@/components/options";
-import { Group } from "@/models/groups";
 import { ScimReference } from "@/models/scim";
 import RemoveMembership from "./remove-membership-button";
 import AddSubgroupButton from "./add-subgroup-button";
 import DeleteGroupButton from "./delete-group-button";
 
 export type GroupOptionsProps = {
-  group: Group;
-  isAdmin?: boolean;
+  group: ScimReference;
+  isAdmin: boolean;
   userRef?: ScimReference;
 };
 

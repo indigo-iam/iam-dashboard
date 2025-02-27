@@ -1,2 +1,2 @@
-export { default as MembershipGroupsSection } from "./membership";
+export { default as GroupsSection } from "./groups";
 export { default as ManagedGroupsSection } from "./managed";

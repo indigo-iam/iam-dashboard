@@ -2,11 +2,11 @@ import { Button } from "@/components/buttons";
 import { Form } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
-import { Group } from "@/models/groups";
+import { ScimReference } from "@/models/scim";
 import { addSubgroup } from "@/services/groups";
 
 interface AddSubgroupModalProps extends ModalProps {
-  rootGroup?: Group;
+  rootGroup: ScimReference;
   onAdded?: () => void;
 }
 export default function AddSubgroupModal(
@@ -20,13 +20,13 @@ export default function AddSubgroupModal(
       onAdded?.();
       modalProps.onClose();
     } else {
-      console.warn("group do delete is undefined");
+      console.warn("group to delete is undefined");
     }
   };
   return (
     <Modal
       {...modalProps}
-      title={`Add new subgroup to '${rootGroup?.displayName}'`}
+      title={`Add new subgroup to '${rootGroup.display}'`}
     >
       <Form id="add-subgroup-form" action={action}>
         <ModalBody>

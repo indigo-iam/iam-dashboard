@@ -1,12 +1,11 @@
 "use client";
 import { useState } from "react";
 import ConfirmUnlinkUserModal from "./modal";
-import { Group } from "@/models/groups";
 import { ScimReference } from "@/models/scim";
 
 export type RemoveMembershipProps = {
   userRef: ScimReference;
-  group: Group;
+  group: ScimReference;
 };
 
 export default function RemoveMembership(

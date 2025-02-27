@@ -1,32 +1,31 @@
-import { Group } from "@/models/groups";
 import { User, ScimReference } from "@/models/scim";
 import Link from "@/components/link";
 import { makeScimReferenceFromUser } from "@/utils/scim";
 import GroupOptions from "./options";
 
 type RowProps = {
-  group: Group;
-  isAdmin?: boolean;
+  group: ScimReference;
+  isAdmin: boolean;
   userRef?: ScimReference;
 };
 
 function Row(props: Readonly<RowProps>) {
   const { group, isAdmin, userRef } = props;
 
-  let { labels } = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
-  const strLabels = labels ? labels.map(l => l.name).join(" ") : " ";
-
   return (
     <tr className="tbl-tr tbl-hover">
       <td className="tbl-td">
-        <Link href={`/groups/${group.id}`}>{group.displayName}</Link>
+        {isAdmin ? (
+          <Link href={`/groups/${group.value}`}>{group.display}</Link>
+        ) : (
+          group.display
+        )}
       </td>
-      <td className="tbl-td">{strLabels}</td>
       <td className="tbl-td w-1/12 text-center">
         <GroupOptions
           group={group}
-          userRef={userRef}
           isAdmin={isAdmin}
+          userRef={userRef}
         />
       </td>
     </tr>
@@ -34,7 +33,7 @@ function Row(props: Readonly<RowProps>) {
 }
 
 type TableProps = {
-  groups: Group[];
+  groups: ScimReference[];
   isAdmin: boolean;
   user?: User;
 };
@@ -50,17 +49,16 @@ export default async function GroupsTable(
       <thead>
         <tr>
           <th className="tbl-th text-left">Name</th>
-          <th className="tbl-th text-left">Labels</th>
           <th className="tbl-th" />
         </tr>
       </thead>
       <tbody>
         {groups.map(group => (
           <Row
-            key={group.id}
+            key={group.value}
             group={group}
-            userRef={userRef}
             isAdmin={isAdmin}
+            userRef={userRef}
           />
         ))}
       </tbody>

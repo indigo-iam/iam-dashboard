@@ -2,10 +2,9 @@
 import DeleteGroupModal from "./modal";
 import { useState } from "react";
 import { ScimReference } from "@/models/scim";
-import { Group } from "@/models/groups";
 
 type DeleteGroupButtonProps = {
-  group: Group;
+  group: ScimReference;
   onDeleted?: () => void;
 };
 
@@ -17,14 +16,8 @@ export default function DeleteGroupButton(
   const open = () => setShow(true);
   const close = () => setShow(false);
 
-  const groupRef: ScimReference = {
-    display: group.displayName,
-    value: group.id,
-    $ref: `/groups/${group.id}`,
-  };
-
   return (
-    <div className="option">
+    <>
       <button
         type="button"
         className="popover-option text-danger"
@@ -34,11 +27,11 @@ export default function DeleteGroupButton(
         Delete Group
       </button>
       <DeleteGroupModal
-        groupRef={groupRef}
+        groupRef={group}
         show={show}
         onClose={close}
         onDeleted={onDeleted}
       />
-    </div>
+    </>
   );
 }

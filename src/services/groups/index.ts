@@ -75,27 +75,6 @@ export const getGroupsPage = async (
   return await getItem<Paginated<Group>>(url);
 };
 
-export async function getMyGroupsPage(
-  me: User,
-  count: number,
-  startIndex: number = 1,
-  filter?: string
-) {
-  const scimGroups = me.groups ?? [];
-  const promises = scimGroups.map(group => fetchGroup(group.value));
-  let resolved = await Promise.all(promises);
-  if (filter) {
-    resolved = resolved.filter(g => g.displayName.includes(filter));
-  }
-  const myGroups: Paginated<Group> = {
-    totalResults: resolved.length,
-    itemsPerPage: count,
-    startIndex: startIndex,
-    Resources: resolved.slice(startIndex - 1, startIndex - 1 + count)
-  };
-  return myGroups;
-}
-
 export const addGroup = async (groupName: string) => {
   const body = {
     displayName: groupName,
@@ -136,15 +115,13 @@ export const deleteGroup = async (groupId: string) => {
   }
 };
 
-export const addSubgroup = async (groupName: string, parentGroup: Group) => {
+export const addSubgroup = async (groupName: string, parentGroup: ScimReference) => {
   const body = {
     displayName: groupName,
     schemas: ["urn:ietf:params:scim:schemas:core:2.0:Group"],
     "urn:indigo-dc:scim:schemas:IndigoGroup": {
       parentGroup: {
-        $ref: `${BASE_URL}/scim/Groups/${parentGroup.id}`,
-        display: parentGroup.displayName,
-        value: parentGroup.id,
+        ...parentGroup
       },
     },
   };

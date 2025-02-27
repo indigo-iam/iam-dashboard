@@ -7,7 +7,6 @@ type RowProps = {
 
 function Row(props: Readonly<RowProps>) {
   const { group } = props;
-
   return (
     <tr className="tbl-tr">
       <td className="tbl-td grow">
@@ -15,7 +14,7 @@ function Row(props: Readonly<RowProps>) {
       </td>
     </tr>
   );
-};
+}
 
 type ManagedGroupsTableProps = {
   managedGroups: ManagedGroup[];
@@ -29,10 +28,10 @@ export default function ManagedGroupsTable(
   return (
     <table className="w-full table-auto rounded-lg">
       <tbody>
-        {managedGroups.map(group => {
-          return <Row key={group.id} group={group} />;
-        })}
+        {managedGroups.map(group => (
+          <Row key={group.id} group={group} />
+        ))}
       </tbody>
     </table>
   );
-};
+}

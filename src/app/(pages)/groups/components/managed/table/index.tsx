@@ -7,7 +7,6 @@ type RowProps = {
 
 function Row(props: Readonly<RowProps>) {
   const { group } = props;
-
   return (
     <tr className="tbl-tr tbl-hover">
       <td className="tbl-td">

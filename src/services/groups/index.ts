@@ -115,15 +115,13 @@ export const deleteGroup = async (groupId: string) => {
   }
 };
 
-export const addSubgroup = async (groupName: string, parentGroup: Group) => {
+export const addSubgroup = async (groupName: string, parentGroup: ScimReference) => {
   const body = {
     displayName: groupName,
     schemas: ["urn:ietf:params:scim:schemas:core:2.0:Group"],
     "urn:indigo-dc:scim:schemas:IndigoGroup": {
       parentGroup: {
-        $ref: `${BASE_URL}/scim/Groups/${parentGroup.id}`,
-        display: parentGroup.displayName,
-        value: parentGroup.id,
+        ...parentGroup
       },
     },
   };

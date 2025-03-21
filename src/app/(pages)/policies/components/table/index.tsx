@@ -8,12 +8,13 @@ type PoliciesTableProps = {
 
 function Row(props: Readonly<{ policy: ScopePolicy }>) {
   const { policy } = props;
+  const scopes = policy.scopes ? policy.scopes.join(" ") : "";
   return (
     <tr className="tbl-tr tbl-hover">
       <td className="tbl-td text-wrap">
         <Link href={`/policies/${policy.id}`}>{policy.description}</Link>
       </td>
-      <td className="text-wrap">{policy.scopes && policy.scopes.join(" ")}</td>
+      <td className="text-wrap">{scopes}</td>
       <td className="tbl-td">
         <PolicyOptions policy={policy} />
       </td>

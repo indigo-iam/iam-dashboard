@@ -12,11 +12,11 @@ import {
   InboxArrowDownIcon,
   ClipboardDocumentCheckIcon,
   ClipboardDocumentListIcon,
+  ScaleIcon,
 } from "@heroicons/react/16/solid";
 import LogoHeader from "./logo-header";
 import Link from "./link";
 import { auth } from "@/auth";
-import { ScaleIcon } from "@heroicons/react/16/solid";
 
 const LEFT_SIDEBAR_ID = "left-sidebar";
 

@@ -1,4 +1,4 @@
-import Link from "@/components/link";
+import Link from "next/link";
 import { ScopePolicy } from "@/models/scope-policies";
 import PolicyOptions from "./options";
 
@@ -10,15 +10,16 @@ function Row(props: Readonly<{ policy: ScopePolicy }>) {
   const { policy } = props;
   const scopes = policy.scopes ? policy.scopes.join(" ") : "";
   return (
-    <tr className="tbl-tr tbl-hover">
-      <td className="tbl-td text-wrap">
-        <Link href={`/policies/${policy.id}`}>{policy.description}</Link>
-      </td>
-      <td className="text-wrap">{scopes}</td>
-      <td className="tbl-td">
-        <PolicyOptions policy={policy} />
-      </td>
-    </tr>
+    <div className="flex flex-row border-b p-2 last:border-b-0 hover:rounded-md hover:bg-neutral-200">
+      <Link
+        className="flex grow flex-col font-bold hover:underline"
+        href={`/policies/${policy.id}`}
+      >
+        {policy.description}
+        <small className="iam-text-light">{scopes}</small>
+      </Link>
+      <PolicyOptions policy={policy} />
+    </div>
   );
 }
 
@@ -26,20 +27,11 @@ export default function PoliciesTable(props: Readonly<PoliciesTableProps>) {
   const { policies } = props;
   return (
     <div className="overflow-x-auto">
-      <table className="w-full table-auto">
-        <thead>
-          <tr className="tbl-tr">
-            <th className="tbl-th text-left">Name</th>
-            <th className="tbl-th text-left">Scopes</th>
-            <th className="tbl-th text-center" />
-          </tr>
-        </thead>
-        <tbody>
-          {policies.map(policy => (
-            <Row key={policy.id} policy={policy} />
-          ))}
-        </tbody>
-      </table>
+      <div>
+        {policies.map(policy => (
+          <Row key={policy.id} policy={policy} />
+        ))}
+      </div>
     </div>
   );
 }

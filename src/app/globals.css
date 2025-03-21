@@ -38,6 +38,14 @@
 }
 
 @layer components {
+  .iam-text-normal {
+    @apply text-primary dark:text-secondary;
+  }
+
+  .iam-text-light {
+    @apply font-extralight text-primary/75 dark:text-secondary/75;
+  }
+
   .btn {
     @apply flex gap-2 rounded-lg p-2 px-4 font-medium;
   }

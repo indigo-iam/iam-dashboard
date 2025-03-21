@@ -43,7 +43,7 @@
   }
 
   .iam-text-light {
-    @apply font-extralight text-primary/75 dark:text-secondary/75;
+    @apply font-light text-primary/75 dark:text-secondary/75;
   }
 
   .btn {

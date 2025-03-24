@@ -10,7 +10,6 @@ const { BASE_URL } = getConfig();
 export async function sendCertificateLinkRequest(request: CertLinkRequest) {
   const url = `${BASE_URL}/iam/cert_link_requests`;
   const body = JSON.stringify(request);
-  console.log(body);
   const response = await authFetch(url, {
     method: "POST",
     body,

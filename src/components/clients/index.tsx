@@ -22,7 +22,7 @@ function Row(props: Readonly<RowProps>) {
     ? dateToHuman(new Date(client.created_at))
     : "N/A";
   return (
-    <li className="flex flex-row rounded border-b p-2 last:border-b-0 hover:border-transparent hover:bg-neutral-200">
+    <li className="flex flex-row rounded border-b p-2 last:border-b-0 hover:border-transparent hover:bg-neutral-200 has-[+:hover]:border-transparent">
       <Link
         className="my-auto flex grow flex-col gap-1"
         href={`/clients/${client_id}`}

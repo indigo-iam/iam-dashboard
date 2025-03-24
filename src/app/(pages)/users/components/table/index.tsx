@@ -14,7 +14,7 @@ function Row(props: Readonly<RowProps>) {
     ? dateToHuman(new Date(user.meta.created))
     : "N/A";
   return (
-    <div className="flex flex-row border-b p-2 hover:rounded-md hover:bg-neutral-200">
+    <div className="flex flex-row border-b p-2 hover:rounded-md hover:bg-neutral-200 has-[+:hover]:border-transparent">
       <Link
         className="flex grow flex-col font-bold hover:underline"
         href={`/users/${user.id}`}

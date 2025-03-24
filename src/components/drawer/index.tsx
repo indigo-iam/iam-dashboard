@@ -50,7 +50,7 @@ export default function Drawer(props: Readonly<DrawerProps>) {
       <Header drawerId={id} />
       <aside
         id={id}
-        className="dark:bg-primary-dark fixed inset-0 z-10 mt-16 w-80 -translate-x-full bg-primary text-secondary transition-transform lg:translate-x-0"
+        className="fixed inset-0 z-50 mt-16 w-80 -translate-x-full bg-primary text-secondary transition-transform lg:translate-x-0 dark:bg-primary-dark"
       >
         {children}
       </aside>

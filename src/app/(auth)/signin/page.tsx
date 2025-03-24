@@ -13,7 +13,6 @@ export default function SignIn() {
     } else if (status === "authenticated") {
       router.push("/");
     }
-    console.log(status);
   }, [status, router]);
   return <div>Redirecting to login page...</div>;
 }

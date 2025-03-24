@@ -2,7 +2,6 @@ import { SSHKey } from "@/models/indigo-user";
 import { User } from "@/models/scim";
 import SSHKeysOptions from "./options";
 import { dateToHuman } from "@/utils/dates";
-import { FingerPrintIcon } from "@heroicons/react/24/outline";
 
 function SSHKeyView(props: Readonly<{ user: User; sshKey: SSHKey }>) {
   const { user, sshKey } = props;
@@ -10,7 +9,7 @@ function SSHKeyView(props: Readonly<{ user: User; sshKey: SSHKey }>) {
     ? dateToHuman(new Date(sshKey.created!))
     : undefined;
   return (
-    <li className="flex flex-row overflow-hidden border-b p-2 last:border-b-0">
+    <li className="flex flex-row overflow-hidden border-b p-2 last:border-b-0 hover:rounded hover:border-transparent hover:bg-neutral-200 has-[+:hover]:border-transparent">
       <div className="my-auto flex grow flex-col gap-1 truncate">
         <p className="iam-text-normal text-lg">{sshKey.display}</p>
         <small

@@ -37,7 +37,7 @@ function Row(props: Readonly<RowProps>) {
       </Link>
       <div className="flex flex-col">
         <div className="my-auto flex flex-row">
-          <div className="flex flex-col items-end px-2">
+          <div className="hidden flex-col items-end px-2 sm:flex">
             <Status active={client.active} />
             <small className="iam-text-light min-w-48 text-right">
               Created {createdAt}

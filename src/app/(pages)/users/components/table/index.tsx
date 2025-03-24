@@ -23,7 +23,7 @@ function Row(props: Readonly<RowProps>) {
         <small className="iam-text-light">{user.emails?.[0].value}</small>
       </Link>
       <div className="flex flex-row">
-        <div className="flex flex-col items-end px-2">
+        <div className="hidden flex-col items-end px-2 sm:flex">
           <Status active={user.active ?? false} />
           <small className="iam-text-light">Created {created}</small>
         </div>

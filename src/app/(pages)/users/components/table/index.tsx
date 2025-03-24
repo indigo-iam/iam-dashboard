@@ -2,20 +2,7 @@ import { User } from "@/models/scim";
 import { dateToHuman } from "@/utils/dates";
 import Link from "next/link";
 import UserOptions from "./options";
-
-const ActiveStatus = (props: { active: boolean }) => {
-  const { active } = props;
-  const status = active ? "Active" : "Disabled";
-  return (
-    <small
-      title={`${active ? "Active" : "Disabled"}`}
-      className="data-[status=disabled] my-auto rounded-full bg-danger p-0.5 px-2 text-xs text-secondary data-[status=Active]:bg-success"
-      data-status={status}
-    >
-      {status}
-    </small>
-  );
-};
+import { Status } from "@/components/badges";
 
 type RowProps = {
   user: User;
@@ -36,8 +23,8 @@ function Row(props: Readonly<RowProps>) {
         <small className="iam-text-light">{user.emails?.[0].value}</small>
       </Link>
       <div className="flex flex-row">
-        <div className="flex flex-col items-end px-4">
-          <ActiveStatus active={!!user.active} />
+        <div className="flex flex-col items-end px-2">
+          <Status active={user.active ?? false} />
           <small className="iam-text-light">Created {created}</small>
         </div>
         <UserOptions user={user} />

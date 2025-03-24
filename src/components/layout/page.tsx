@@ -7,11 +7,11 @@ export default function Page(props: Readonly<PageProps>) {
   const { title, children } = props;
 
   return (
-    <div className="mt-16 space-y-4 lg:mt-0" id={title}>
-      <h1 className="border-b border-b-gray-300 p-4">
+    <div className="mt-16 lg:mt-0" id={title}>
+      <h1 className="fixed z-10 h-16 w-full border-b border-b-gray-300 bg-gray-100 p-4 text-primary dark:bg-dark dark:text-secondary-50">
         {title ?? "Unknown Client"}
       </h1>
-      {children}
+      <div className="relative top-16 p-4">{children}</div>
     </div>
   );
 }

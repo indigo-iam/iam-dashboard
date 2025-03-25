@@ -10,7 +10,7 @@ export default function Options(props: Readonly<OptionsProps>) {
   return (
     <Popover className="relative my-auto size-8">
       <PopoverButton data-test="option">
-        <EllipsisHorizontalIcon className="size-8 text-primary/75" />
+        <EllipsisHorizontalIcon className="size-8 text-primary/75 dark:text-secondary/75" />
       </PopoverButton>
       <PopoverPanel
         anchor="bottom"

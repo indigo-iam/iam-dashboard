@@ -1,7 +1,28 @@
 import { Group } from "@/models/groups";
 import { fetchGroupMembersPage } from "@/services/groups";
-import Link from "@/components/link";
 import { ScimReference } from "@/models/scim";
+import MemberOptions from "./options";
+import Link from "next/link";
+
+function Row(props: Readonly<{ member: ScimReference }>) {
+  const { member } = props;
+  return (
+    <li className="flex flex-row border-b p-2 hover:rounded-md hover:bg-neutral-200 has-[+:hover]:border-transparent">
+      <div className="flex grow flex-col">
+        <Link
+          className="flex grow flex-col font-bold hover:underline"
+          href={`/users/${member.value}`}
+        >
+          {member.display}
+          <small className="iam-text-light">{member.value}</small>
+        </Link>
+      </div>
+      <div className="flex flex-col">
+        <MemberOptions />
+      </div>
+    </li>
+  );
+}
 
 type MembersProps = {
   group: Group;
@@ -17,21 +38,10 @@ export default async function Members(props: Readonly<MembersProps>) {
   }
 
   return (
-    <table className="w-full table-auto">
-      <tbody>
-        {members.map(member => {
-          return (
-            <tr className="tbl-tr" key={member.value}>
-              <td className="tbl-td">
-                <Link href={`/users/${member.value}`}>{member.display}</Link>
-              </td>
-              <td className="tbl-td text-center">
-                {/* TODO: implement options */}
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+    <ul className="w-full">
+      {members.map(member => (
+        <Row key={member.value} member={member} />
+      ))}
+    </ul>
   );
 }

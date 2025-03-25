@@ -1,6 +1,22 @@
 import { Group } from "@/models/groups";
+import { ScimReference } from "@/models/scim";
 import { fetchSubgroupsPage } from "@/services/groups";
-import Link from "@/components/link";
+import Link from "next/link";
+
+function Row(props: Readonly<{ groupRef: ScimReference }>) {
+  const { groupRef } = props;
+  return (
+    <li className="flex flex-row border-b p-2 hover:rounded-md hover:bg-neutral-200 has-[+:hover]:border-transparent">
+      <Link
+        className="flex grow flex-col font-bold hover:underline"
+        href={`/groups/${groupRef.value}`}
+      >
+        {groupRef.display}
+        <small className="iam-text-light">{groupRef.value}</small>
+      </Link>
+    </li>
+  );
+}
 
 type SubgroupsTableProps = {
   group: Group;
@@ -19,21 +35,10 @@ export default async function SubgroupsTable(
   }
 
   return (
-    <table>
-      <tbody>
-        {subgroups.map(group => {
-          return (
-            <tr className="tbl-tr" key={group.value}>
-              <td className="tbl-td text-left">
-                <Link href={`/groups/${group.value}`}>{group.display}</Link>
-              </td>
-              <td className="tbl-td text-center">
-                {/* <DeleteGroupButton group={group} /> */}
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+    <ul className="w-full">
+      {subgroups.map(groupRef => (
+        <Row key={groupRef.value} groupRef={groupRef} />
+      ))}
+    </ul>
   );
 }

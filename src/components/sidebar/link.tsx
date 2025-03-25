@@ -18,33 +18,37 @@ export default function Link(props: Readonly<SidebarLinkProps>) {
     dismissButton?.click();
   };
 
-  let isActive = pathname.split("/")[1] === href.split("/")[1];
-
+  let selected = false;
   switch (pathname) {
     case "/users":
-      isActive = href === "/users";
+      selected = href === "/users";
       break;
     case "/users/me":
-      isActive = href === "/users/me";
+      selected = href === "/users/me";
+      break;
+    case "/users/me/groups":
+      selected = href === "/users/me/groups";
       break;
     case "/clients":
-      isActive =
+      selected =
         (href === "/clients?me" && searchParams.has("me")) ||
         (href === "/clients" && !searchParams.has("me"));
       break;
     case "/groups":
-      isActive =
+      selected =
         (href === "/groups?me" && searchParams.has("me")) ||
         (href === "/groups" && !searchParams.has("me"));
       break;
     default:
+      selected = pathname === href;
   }
 
   return (
     <NextLink
-      className={`flex rounded-lg p-2 transition ease-in-out hover:bg-primary-hover dark:hover:bg-white/10 ${isActive ? "bg-primary-hover dark:bg-white/10" : ""}`}
+      className="flex rounded-lg p-2 transition ease-in-out hover:bg-primary-hover data-[selected=true]:bg-primary-hover dark:hover:bg-white/10 data-[selected=true]:dark:bg-white/10"
       href={href}
       onClick={hideSidebar}
+      data-selected={selected ? "true" : "false"}
     >
       <div className="my-auto me-2 h-5 w-5">{icon}</div>
       {title}

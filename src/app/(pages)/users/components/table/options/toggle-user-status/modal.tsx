@@ -13,7 +13,6 @@ export default function ToggleUserStatusModal(
   const { user, show, onClose } = props;
   const action = async () => {
     const newStatus = !(user.active ?? false);
-    console.log(newStatus);
     await changeUserStatus(user.id, newStatus);
     onClose();
   };

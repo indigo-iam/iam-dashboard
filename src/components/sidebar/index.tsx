@@ -12,6 +12,7 @@ import {
   InboxArrowDownIcon,
   ClipboardDocumentCheckIcon,
   ClipboardDocumentListIcon,
+  ScaleIcon,
 } from "@heroicons/react/16/solid";
 import LogoHeader from "./logo-header";
 import Link from "./link";
@@ -75,6 +76,7 @@ const OrganizationManagement = async () => {
             href="/aup"
             icon={<ClipboardDocumentListIcon />}
           />
+          <SidebarLink title="Policies" href="/policies" icon={<ScaleIcon />} />
         </nav>
       </DrawerSection>
     );

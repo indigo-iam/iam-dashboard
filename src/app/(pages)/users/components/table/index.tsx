@@ -1,17 +1,8 @@
 import { User } from "@/models/scim";
 import { dateToHuman } from "@/utils/dates";
-import Link from "@/components/link";
+import Link from "next/link";
 import UserOptions from "./options";
-
-function StatusIcon(props: Readonly<{ active: boolean }>) {
-  const { active } = props;
-  return (
-    <div
-      title={`${active ? "Enabled" : "Disabled"}`}
-      className={`${active ? "bg-success" : "bg-danger"} mx-auto h-3 w-3 rounded-full`}
-    />
-  );
-}
+import { Status } from "@/components/badges";
 
 type RowProps = {
   user: User;
@@ -19,24 +10,32 @@ type RowProps = {
 
 function Row(props: Readonly<RowProps>) {
   const { user } = props;
-
   const created = user.meta?.created
     ? dateToHuman(new Date(user.meta.created))
     : "N/A";
   return (
-    <tr className="tbl-tr tbl-hover">
-      <td className="tbl-td">
-        <Link href={`/users/${user.id}`}>{user.name?.formatted}</Link>
-      </td>
-      <td className="tbl-td">{user.emails?.[0].value}</td>
-      <td className="tbl-td">{created}</td>
-      <td className="tbl-td">
-        <StatusIcon active={!!user.active} />
-      </td>
-      <td className="tbl-td w-1/12 text-center">
+    <li className="flex flex-row border-b p-2 hover:rounded-md hover:bg-neutral-200 has-[+:hover]:border-transparent">
+      <div className="flex grow flex-col">
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Link
+            className="flex grow flex-col font-bold hover:underline"
+            href={`/users/${user.id}`}
+          >
+            {user.name?.formatted}
+            <small className="iam-text-light">{user.emails?.[0].value}</small>
+          </Link>
+          <div className="my-auto flex grow flex-col">
+            <div className="inline-flex gap-2 sm:flex-col sm:items-end sm:gap-0 sm:px-2">
+              <Status active={user.active ?? false} />
+              <small className="iam-text-light">Created {created}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col">
         <UserOptions user={user} />
-      </td>
-    </tr>
+      </div>
+    </li>
   );
 }
 
@@ -47,21 +46,10 @@ type UsersTableProps = {
 export default function UsersTable(props: Readonly<UsersTableProps>) {
   const { users } = props;
   return (
-    <table className="w-full table-auto">
-      <thead>
-        <tr className="tbl-tr">
-          <th className="tbl-th text-left">Name</th>
-          <th className="tbl-th text-left">Email</th>
-          <th className="tbl-th text-left">Created</th>
-          <th className="tbl-th text-center">Status</th>
-          <th className="tbl-th" />
-        </tr>
-      </thead>
-      <tbody>
-        {users.map(user => (
-          <Row key={user.id} user={user} />
-        ))}
-      </tbody>
-    </table>
+    <ul className="w-full">
+      {users.map(user => (
+        <Row key={user.id} user={user} />
+      ))}
+    </ul>
   );
 }

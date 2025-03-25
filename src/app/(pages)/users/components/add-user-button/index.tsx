@@ -113,7 +113,7 @@ export default function AddUser(props: Readonly<AddUserProps>) {
         onUserAdded={onUserAdded}
         title="Add User"
       />
-      <Button icon={<UserIcon />} onClick={open}>
+      <Button icon={<UserIcon />} onClick={open} action="primary-outline">
         Add User
       </Button>
     </>

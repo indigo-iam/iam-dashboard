@@ -27,9 +27,9 @@ const SamlIdView = (props: { id: SamlId }) => {
   return (
     <tr className="tbl-tr">
       <td className="p-2">
-        <p className="break-all">{props.id.idpId}</p>
-        <p className="break-all"> {props.id.attributeId}</p>
-        <p className="break-all">{props.id.userId}</p>
+        <p className="iam-text-normal break-all">{props.id.userId}</p>
+        <p className="iam-text-light break-all">{props.id.idpId}</p>
+        <p className="iam-text-light break-all"> {props.id.attributeId}</p>
       </td>
       <td className="text-right">
         <SAMLOptions />
@@ -41,7 +41,11 @@ const SamlIdView = (props: { id: SamlId }) => {
 function OidcAccounts(props: Readonly<{ oidcIds?: OidcId[] }>) {
   const { oidcIds } = props;
   if (!oidcIds || oidcIds.length === 0) {
-    return <p className="p-2">No OpenID connect linked accounts found.</p>;
+    return (
+      <p className="iam-text-light p-2">
+        No OpenID connect linked accounts found.
+      </p>
+    );
   }
   return (
     <table className="w-full">
@@ -57,7 +61,7 @@ function OidcAccounts(props: Readonly<{ oidcIds?: OidcId[] }>) {
 function SamlAccounts(props: Readonly<{ samlIds?: SamlId[] }>) {
   const { samlIds } = props;
   if (!samlIds || samlIds.length === 0) {
-    return <p className="p-2">No linked SAML accounts found.</p>;
+    return <p className="iam-text-light p-2">No linked SAML accounts found.</p>;
   }
   return (
     <table className="w-full">

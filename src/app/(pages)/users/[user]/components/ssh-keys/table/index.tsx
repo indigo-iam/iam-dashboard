@@ -1,7 +1,31 @@
-import InfoTable from "@/components/info-table";
 import { SSHKey } from "@/models/indigo-user";
 import { User } from "@/models/scim";
 import SSHKeysOptions from "./options";
+import { dateToHuman } from "@/utils/dates";
+
+function SSHKeyView(props: Readonly<{ user: User; sshKey: SSHKey }>) {
+  const { user, sshKey } = props;
+  const createdAt = sshKey.created
+    ? dateToHuman(new Date(sshKey.created!))
+    : undefined;
+  return (
+    <li className="flex flex-row overflow-hidden border-b p-2 last:border-b-0 hover:rounded hover:border-transparent hover:bg-neutral-200 has-[+:hover]:border-transparent">
+      <div className="my-auto flex grow flex-col gap-1 truncate">
+        <p className="iam-text-normal text-lg">{sshKey.display}</p>
+        <small
+          className="iam-text-light truncate text-sm"
+          title={sshKey.fingerprint}
+        >
+          {sshKey.fingerprint}
+        </small>
+      </div>
+      <div className="iam-text-light my-auto hidden px-2 text-sm sm:flex">
+        Created {createdAt}
+      </div>
+      <SSHKeysOptions user={user} sshKey={sshKey} />
+    </li>
+  );
+}
 
 type TableProps = {
   user: User;
@@ -18,39 +42,13 @@ export default function Table(props: Readonly<TableProps>) {
   }
 
   if (sshKeys.length === 0) {
-    return <p>No SSH keys found.</p>;
+    return <p className="iam-text-light">No SSH keys found.</p>;
   }
-
-  const data = sshKeys.map(sshKey => {
-    return {
-      key: sshKey,
-      data: [
-        {
-          name: "Label",
-          value: sshKey.display,
-        },
-        {
-          name: "Fingerprint",
-          value: sshKey.fingerprint,
-        },
-      ],
-    };
-  });
-
   return (
-    <table className="w-full table-auto">
-      <tbody>
-        {data.map(d => (
-          <tr className="tbl-tr" key={d.key.value}>
-            <td className="tbl-td">
-              <InfoTable data={d.data} className="grow truncate" />
-            </td>
-            <td className="tbl-td w-1/12 text-center">
-              <SSHKeysOptions user={user} sshKey={d.key} />
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <ul className="w-full">
+      {sshKeys.map(key => (
+        <SSHKeyView key={key.fingerprint} user={user} sshKey={key} />
+      ))}
+    </ul>
   );
 }

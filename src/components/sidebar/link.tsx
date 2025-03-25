@@ -46,7 +46,7 @@ export default function Link(props: Readonly<SidebarLinkProps>) {
       href={href}
       onClick={hideSidebar}
     >
-      <div className="me-2 h-5 w-5">{icon}</div>
+      <div className="my-auto me-2 h-5 w-5">{icon}</div>
       {title}
     </NextLink>
   );

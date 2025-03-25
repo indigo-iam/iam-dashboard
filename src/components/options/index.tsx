@@ -8,9 +8,9 @@ type OptionsProps = {
 export default function Options(props: Readonly<OptionsProps>) {
   const { children } = props;
   return (
-    <Popover className="relative">
+    <Popover className="relative my-auto size-8">
       <PopoverButton data-test="option">
-        <EllipsisHorizontalIcon className="size-8" />
+        <EllipsisHorizontalIcon className="size-8 text-primary/75" />
       </PopoverButton>
       <PopoverPanel
         anchor="bottom"

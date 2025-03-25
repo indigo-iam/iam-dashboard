@@ -10,6 +10,7 @@ import { Paginated } from "@/models/pagination";
 import { revalidatePath } from "next/cache";
 import { ScimReference, User } from "@/models/scim";
 import { setNotification } from "@/components/toaster";
+import { makeScimReferenceFromUser } from "@/utils/scim";
 
 const { BASE_URL } = getConfig();
 
@@ -180,10 +181,8 @@ export const addUserToGroup = async (
   }
 };
 
-export const removeUserFromGroup = async (
-  groupId: string,
-  userRef: ScimReference
-) => {
+export const removeUserFromGroup = async (groupId: string, user: User) => {
+  const userRef = makeScimReferenceFromUser(user);
   const body = {
     operations: [
       {
@@ -257,5 +256,6 @@ export const revokeGroupManager = async (groupId: string, userId: string) => {
 
 export async function fetchManagedGroups(userId: string) {
   const url = `${BASE_URL}/iam/account/${userId}/managed-groups`;
-  return getItem<ManagedGroupResponse>(url);
+  const response = await getItem<ManagedGroupResponse>(url);
+  return response.managedGroups;
 }

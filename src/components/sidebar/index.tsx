@@ -41,7 +41,7 @@ const AccountManagement = () => {
       />
       <SidebarLink
         title="My Groups"
-        href="/groups?user=me"
+        href="/users/me/groups"
         icon={<UserGroupIcon />}
       />
     </DrawerSection>

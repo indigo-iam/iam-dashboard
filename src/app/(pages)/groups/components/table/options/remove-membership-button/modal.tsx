@@ -1,10 +1,10 @@
 import ConfirmModal from "@/components/confirm-modal";
-import { ScimReference } from "@/models/scim";
+import { ScimReference, User } from "@/models/scim";
 import { removeUserFromGroup } from "@/services/groups";
 
 type ConfirmUnlinkUserModal = {
-  userRef: ScimReference;
-  group: ScimReference;
+  user: User;
+  groupRef: ScimReference;
   show: boolean;
   onClose: () => void;
 };
@@ -12,10 +12,10 @@ type ConfirmUnlinkUserModal = {
 export default function ConfirmUnlinkUserModal(
   props: Readonly<ConfirmUnlinkUserModal>
 ) {
-  const { userRef, group, show, onClose } = props;
+  const { user, groupRef, show, onClose } = props;
 
   const handleConfirm = async () => {
-    await removeUserFromGroup(group.value, userRef);
+    await removeUserFromGroup(groupRef.value, user);
     onClose();
   };
 
@@ -27,8 +27,8 @@ export default function ConfirmUnlinkUserModal(
       title="Remove User Membership"
       onConfirm={handleConfirm}
     >
-      Are you sure you want to remove <b>{userRef.display}</b> from group{" "}
-      <b>{group.display}</b>?
+      Are you sure you want to remove <b>{user.displayName}</b> from group{" "}
+      <b>{groupRef.display}</b>?
     </ConfirmModal>
   );
 }

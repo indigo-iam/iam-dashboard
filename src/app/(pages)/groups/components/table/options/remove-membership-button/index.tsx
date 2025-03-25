@@ -1,17 +1,17 @@
 "use client";
 import { useState } from "react";
 import ConfirmUnlinkUserModal from "./modal";
-import { ScimReference } from "@/models/scim";
+import { ScimReference, User } from "@/models/scim";
 
 export type RemoveMembershipProps = {
-  userRef: ScimReference;
-  group: ScimReference;
+  user: User;
+  groupRef: ScimReference;
 };
 
 export default function RemoveMembership(
   props: Readonly<RemoveMembershipProps>
 ) {
-  const { userRef, group } = props;
+  const { user, groupRef } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
@@ -27,8 +27,8 @@ export default function RemoveMembership(
         Remove Membership
       </button>
       <ConfirmUnlinkUserModal
-        userRef={userRef}
-        group={group}
+        user={user}
+        groupRef={groupRef}
         show={show}
         onClose={close}
       />

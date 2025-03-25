@@ -5,19 +5,19 @@ import { Suspense } from "react";
 import { fetchManagedGroups } from "@/services/groups";
 
 type ManagedGroupsProps = {
-  me?: User;
+  user?: User;
 };
 
 export default async function ManagedGroups(
   props: Readonly<ManagedGroupsProps>
 ) {
-  const { me } = props;
-  
-  if (!me) {
+  const { user } = props;
+
+  if (!user) {
     return null;
   }
 
-  const { managedGroups } = await fetchManagedGroups(me.id);
+  const { managedGroups } = await fetchManagedGroups(user.id);
 
   if (managedGroups.length === 0) {
     return null;

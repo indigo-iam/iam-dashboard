@@ -91,7 +91,7 @@ export const addGroup = async (groupName: string) => {
     revalidatePath("/groups");
   } else {
     const msg = await response.text();
-    setNotification({
+    await setNotification({
       type: "error",
       message: "Cannot create group",
       subtitle: `Error ${response.status} ${msg}`,
@@ -115,13 +115,16 @@ export const deleteGroup = async (groupId: string) => {
   }
 };
 
-export const addSubgroup = async (groupName: string, parentGroup: ScimReference) => {
+export const addSubgroup = async (
+  groupName: string,
+  parentGroup: ScimReference
+) => {
   const body = {
     displayName: groupName,
     schemas: ["urn:ietf:params:scim:schemas:core:2.0:Group"],
     "urn:indigo-dc:scim:schemas:IndigoGroup": {
       parentGroup: {
-        ...parentGroup
+        ...parentGroup,
       },
     },
   };
@@ -132,11 +135,11 @@ export const addSubgroup = async (groupName: string, parentGroup: ScimReference)
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
-    setNotification({ type: "success", message: "Subgroup added" });
+    await setNotification({ type: "success", message: "Subgroup added" });
     revalidatePath("/groups");
   } else {
     const msg = await response.text();
-    setNotification({
+    await setNotification({
       type: "error",
       message: "Cannot add subgroup",
       subtitle: `Error ${response.status} ${msg}`,
@@ -165,11 +168,11 @@ export const addUserToGroup = async (
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
-    setNotification({ type: "success", message: "Success" });
+    await setNotification({ type: "success", message: "Success" });
     revalidatePath(`/groups/${groupId}`);
   } else {
     const msg = await response.text();
-    setNotification({
+    await setNotification({
       type: "error",
       message: "Cannot join group",
       subtitle: `Error ${response.status}, ${msg}`,
@@ -222,11 +225,11 @@ export const assignGroupManager = async (groupId: string, userId: string) => {
     method: "POST",
   });
   if (response.ok) {
-    setNotification({ type: "success", message: "Success" });
+    await setNotification({ type: "success", message: "Success" });
     revalidatePath(`/groups/${groupId}`);
   } else {
     const msg = await response.text();
-    setNotification({
+    await setNotification({
       type: "error",
       message: "Cannot assign group manager",
       subtitle: `Error ${response.status} ${msg}`,
@@ -240,11 +243,11 @@ export const revokeGroupManager = async (groupId: string, userId: string) => {
     method: "DELETE",
   });
   if (response.ok) {
-    setNotification({ type: "success", message: "Success" });
+    await setNotification({ type: "success", message: "Success" });
     revalidatePath(`/groups/${groupId}`);
   } else {
     const msg = await response.text();
-    setNotification({
+    await setNotification({
       type: "error",
       message: "Cannot revoke group manager",
       subtitle: `Error ${response.status} ${msg}`,

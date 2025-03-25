@@ -56,7 +56,7 @@ export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
         <Button type="button" action="danger" onClick={clearAndClose}>
           Cancel
         </Button>
-        <Button type="submit" onClick={addMember}>
+        <Button type="submit" action="primary-outline" onClick={addMember}>
           Add Member
         </Button>
       </ModalFooter>

@@ -17,7 +17,9 @@ export default function AssignGroupManagerButton(
   const closeModal = () => setShow(false);
   return (
     <>
-      <Button onClick={openModal}>Assign Group Manager</Button>
+      <Button onClick={openModal} action="primary-outline">
+        Assign Group Manager
+      </Button>
       <AssignGroupManagerModal show={show} onClose={closeModal} group={group} />
     </>
   );

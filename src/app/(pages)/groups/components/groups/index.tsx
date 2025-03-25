@@ -71,7 +71,7 @@ export default async function Groups(props: Readonly<GroupsProps>) {
       ) : (
         <AddGroupButton />
       )}
-      <InputQuery />
+      <InputQuery data-test="search-group"/>
       <Suspense fallback="Loading groups...">
         <GroupsTable groups={groups} isAdmin={isAdmin} user={user} />
       </Suspense>

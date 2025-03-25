@@ -7,7 +7,7 @@ import Link from "next/link";
 function Row(props: Readonly<{ member: ScimReference }>) {
   const { member } = props;
   return (
-    <li className="flex flex-row border-b p-2 hover:rounded-md hover:bg-neutral-200 has-[+:hover]:border-transparent">
+    <li className="flex flex-row border-b p-2 hover:rounded-md hover:bg-neutral-200 has-[+:hover]:border-transparent dark:hover:bg-neutral-200/10">
       <div className="flex grow flex-col">
         <Link
           className="flex grow flex-col font-bold hover:underline"

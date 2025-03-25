@@ -14,9 +14,9 @@ function Row(props: Readonly<RowProps>) {
     ? dateToHuman(new Date(user.meta.created))
     : "N/A";
   return (
-    <li className="flex flex-row border-b p-2 hover:rounded-md hover:bg-neutral-200 has-[+:hover]:border-transparent">
+    <li className="flex flex-row border-b p-2 hover:rounded-md hover:bg-neutral-200 has-[+:hover]:border-transparent dark:hover:bg-neutral-200/10">
       <div className="flex grow flex-col">
-        <div className="flex flex-col sm:flex-row gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row">
           <Link
             className="flex grow flex-col font-bold hover:underline"
             href={`/users/${user.id}`}

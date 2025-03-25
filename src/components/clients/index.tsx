@@ -22,7 +22,7 @@ function Row(props: Readonly<RowProps>) {
     ? dateToHuman(new Date(client.created_at))
     : "N/A";
   return (
-    <li className="flex flex-row rounded border-b p-2 last:border-b-0 hover:border-transparent hover:bg-neutral-200 has-[+:hover]:border-transparent">
+    <li className="flex flex-row rounded border-b p-2 last:border-b-0 hover:border-transparent hover:bg-neutral-200 has-[+:hover]:border-transparent dark:hover:bg-neutral-200/10">
       <div className="flex grow flex-col">
         <div className="flex flex-col sm:flex-row">
           <Link

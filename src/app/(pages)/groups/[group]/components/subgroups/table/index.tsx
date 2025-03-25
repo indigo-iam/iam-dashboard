@@ -6,7 +6,7 @@ import Link from "next/link";
 function Row(props: Readonly<{ groupRef: ScimReference }>) {
   const { groupRef } = props;
   return (
-    <li className="flex flex-row border-b p-2 hover:rounded-md hover:bg-neutral-200 has-[+:hover]:border-transparent">
+    <li className="flex flex-row border-b p-2 hover:rounded-md hover:bg-neutral-200 has-[+:hover]:border-transparent dark:hover:bg-neutral-200/10">
       <Link
         className="flex grow flex-col font-bold hover:underline"
         href={`/groups/${groupRef.value}`}

@@ -9,7 +9,7 @@ function SSHKeyView(props: Readonly<{ user: User; sshKey: SSHKey }>) {
     ? dateToHuman(new Date(sshKey.created!))
     : undefined;
   return (
-    <li className="flex flex-row overflow-hidden border-b p-2 last:border-b-0 hover:rounded hover:border-transparent hover:bg-neutral-200 has-[+:hover]:border-transparent">
+    <li className="flex flex-row overflow-hidden border-b p-2 last:border-b-0 hover:rounded hover:border-transparent hover:bg-neutral-200 has-[+:hover]:border-transparent dark:hover:bg-neutral-200/10">
       <div className="my-auto flex grow flex-col gap-1 truncate">
         <p className="iam-text-normal text-lg">{sshKey.display}</p>
         <small

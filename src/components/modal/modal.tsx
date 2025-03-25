@@ -63,7 +63,7 @@ export function Modal(props: Readonly<ModalProps>) {
                       onClick={onClose}
                     >
                       <div
-                        className="w-6 rounded-full bg-neutral-300 p-[3px] text-neutral-500 hover:bg-neutral-400 dark:bg-white/25 dark:text-primary"
+                        className="w-6 rounded-full bg-neutral-300 p-[3px] text-neutral-500 hover:bg-neutral-400 dark:bg-white/25 dark:text-primary dark:hover:bg-neutral-200/10"
                         aria-label="close"
                       >
                         <XMarkIcon />

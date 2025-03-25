@@ -4,10 +4,8 @@ import { fetchUser } from "@/services/users";
 import {
   Attributes,
   Certificates,
-  Groups,
   GroupRequests,
   LinkedAccounts,
-  ManagedGroups,
   SSHKeys,
   UserInfo,
 } from "./components";
@@ -29,9 +27,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
     <Page title={user.name?.formatted}>
       <Panel>
         <UserInfo user={user} isMe={isMe} />
-        {!isMe && <Groups user={user} />}
         <GroupRequests user={user} isMe={isMe} />
-        {!isMe && <ManagedGroups user={user} />}
         <LinkedAccounts user={user} />
         <Certificates user={user} />
         <SSHKeys user={user} />

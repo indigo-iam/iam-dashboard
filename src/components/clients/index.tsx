@@ -10,7 +10,7 @@ type RowProps = {
 
 function sortScopes(scope: String) {
   const scopes = scope.split(" ");
-  scopes.sort();
+  scopes.sort((a, b) => a.localeCompare(b));
   return scopes.join(" ");
 }
 

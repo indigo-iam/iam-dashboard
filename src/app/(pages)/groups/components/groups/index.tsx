@@ -11,7 +11,7 @@ import Paginator from "@/components/paginator";
 import { Paginated } from "@/models/pagination";
 import { makeScimReferenceFromGroup } from "@/utils/scim";
 
-function paginateUserGroups(
+function fetchUserGroupsPage(
   user: User,
   count: number,
   startIndex: number = 1,
@@ -29,7 +29,7 @@ function paginateUserGroups(
   };
 }
 
-async function getScimGroupPage(
+async function fetchScimGroupPage(
   count: number,
   startIndex: number = 1,
   filter?: string
@@ -57,8 +57,8 @@ export default async function Groups(props: Readonly<GroupsProps>) {
   const { count, page, query, user } = props;
   const startIndex = 1 + count * (page - 1);
   const groupsPage = user
-    ? paginateUserGroups(user, count, startIndex, query)
-    : await getScimGroupPage(count, startIndex, query);
+    ? fetchUserGroupsPage(user, count, startIndex, query)
+    : await fetchScimGroupPage(count, startIndex, query);
   const numberOfPages = Math.ceil(groupsPage.totalResults / count) || 1;
   const groups = groupsPage.Resources;
   const session = await auth();
@@ -71,7 +71,7 @@ export default async function Groups(props: Readonly<GroupsProps>) {
       ) : (
         <AddGroupButton />
       )}
-      <InputQuery data-test="search-group"/>
+      <InputQuery data-test="search-group" />
       <Suspense fallback="Loading groups...">
         <GroupsTable groups={groups} isAdmin={isAdmin} user={user} />
       </Suspense>

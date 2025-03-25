@@ -33,7 +33,7 @@ export default async function Certificates(props: Readonly<CertificateProps>) {
           <CertificateView key={cert.subjectDn + cert.issuerDn} cert={cert} />
         ))
       ) : (
-        <p>No certificates found.</p>
+        <p className="iam-text-light">No certificates found.</p>
       )}
       <LinkCertificateButton user={user} />
     </Section>

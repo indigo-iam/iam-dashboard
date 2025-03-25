@@ -42,7 +42,7 @@ export default function Table(props: Readonly<TableProps>) {
   }
 
   if (sshKeys.length === 0) {
-    return <p className="text-light">No SSH keys found.</p>;
+    return <p className="iam-text-light">No SSH keys found.</p>;
   }
   return (
     <ul className="w-full">

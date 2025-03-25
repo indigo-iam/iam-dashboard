@@ -39,6 +39,11 @@ const AccountManagement = () => {
         href="/clients?me"
         icon={<RocketLaunchIcon />}
       />
+      <SidebarLink
+        title="My Groups"
+        href="/groups?user=me"
+        icon={<UserGroupIcon />}
+      />
     </DrawerSection>
   );
 };

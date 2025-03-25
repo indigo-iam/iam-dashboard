@@ -1,40 +1,37 @@
-import { XCircleIcon } from "@heroicons/react/16/solid";
 import { OidcId, SamlId } from "@/models/indigo-user";
 import { User } from "@/models/scim";
-import { Button } from "@/components/buttons";
 import { Section, Subsection } from "@/components/layout";
 import SAMLOptions from "./saml-options";
+import OidcOptions from "./oidc-options";
 
-const OidcIdView = (props: { id: OidcId }) => {
+const OidcIdView = (props: { oidcId: OidcId }) => {
+  const { oidcId } = props;
   return (
-    <tr className="tbl-tr">
-      <td className="p-2">
-        <b>Issuer:</b> {props.id.issuer}
-        <br />
-        <b>Subject:</b>
-        {props.id.subject}
-      </td>
-      <td className="text-right">
-        <Button action="danger" isSmall={true} icon={<XCircleIcon />}>
-          Unlink
-        </Button>
-      </td>
-    </tr>
+    <li className="flex flex-row border-b p-2 last:border-0">
+      <div className="flex grow flex-col">
+        <p>{oidcId.issuer}</p>
+        <small className="iam-text-light">{oidcId.subject}</small>
+      </div>
+      <div className="flex flex-col">
+        <OidcOptions oidcId={oidcId} />
+      </div>
+    </li>
   );
 };
 
-const SamlIdView = (props: { id: SamlId }) => {
+const SamlIdView = (props: { samlId: SamlId }) => {
+  const { samlId } = props;
   return (
-    <tr className="tbl-tr">
-      <td className="p-2">
-        <p className="iam-text-normal break-all">{props.id.userId}</p>
-        <p className="iam-text-light break-all">{props.id.idpId}</p>
-        <p className="iam-text-light break-all"> {props.id.attributeId}</p>
-      </td>
-      <td className="text-right">
+    <li className="flex flex-row border-b p-2 last:border-0">
+      <div className="flex grow flex-col">
+        <p className="iam-text-normal break-all">{samlId.userId}</p>
+        <small className="iam-text-light break-all">{samlId.idpId}</small>
+        <small className="iam-text-light break-all">{samlId.attributeId}</small>
+      </div>
+      <div className="flex flex-col">
         <SAMLOptions />
-      </td>
-    </tr>
+      </div>
+    </li>
   );
 };
 
@@ -48,13 +45,11 @@ function OidcAccounts(props: Readonly<{ oidcIds?: OidcId[] }>) {
     );
   }
   return (
-    <table className="w-full">
-      <tbody>
-        {oidcIds.map(oidcId => (
-          <OidcIdView key={oidcId.subject} id={oidcId} />
-        ))}
-      </tbody>
-    </table>
+    <ul className="w-full">
+      {oidcIds.map(oidcId => (
+        <OidcIdView key={oidcId.subject} oidcId={oidcId} />
+      ))}
+    </ul>
   );
 }
 
@@ -64,13 +59,11 @@ function SamlAccounts(props: Readonly<{ samlIds?: SamlId[] }>) {
     return <p className="iam-text-light p-2">No linked SAML accounts found.</p>;
   }
   return (
-    <table className="w-full">
-      <tbody>
-        {samlIds.map(samlId => (
-          <SamlIdView key={samlId.attributeId} id={samlId} />
-        ))}
-      </tbody>
-    </table>
+    <ul className="w-full">
+      {samlIds.map(samlId => (
+        <SamlIdView key={samlId.attributeId} samlId={samlId} />
+      ))}
+    </ul>
   );
 }
 

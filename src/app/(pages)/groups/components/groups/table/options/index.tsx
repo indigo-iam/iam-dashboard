@@ -10,19 +10,17 @@ export type GroupOptionsProps = {
   userRef?: ScimReference;
 };
 
-export default function GroupOptions(
-  props: Readonly<GroupOptionsProps>
-) {
+export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
   const { group, isAdmin, userRef } = props;
-
   return (
     <Options>
-      {isAdmin && <AddSubgroupButton rootGroup={group} />}
-      {userRef && <RemoveMembership
-        userRef={userRef}
-        group={group}
-      />}
-      {isAdmin && <DeleteGroupButton group={group} />}
+      {userRef && <RemoveMembership userRef={userRef} group={group} />}
+      {isAdmin && (
+        <>
+          <AddSubgroupButton rootGroup={group} />
+          <DeleteGroupButton group={group} />
+        </>
+      )}
     </Options>
   );
 }

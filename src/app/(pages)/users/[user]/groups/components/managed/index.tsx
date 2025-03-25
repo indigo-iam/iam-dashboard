@@ -14,7 +14,7 @@ function Row(props: Readonly<RowProps>) {
   const { group } = props;
   const groupRef = makeScimReferenceFromManagedGroup(group);
   return (
-    <li className="flex flex-row border-b p-2 hover:rounded-md hover:bg-neutral-200 has-[+:hover]:border-transparent dark:hover:bg-neutral-200/10">
+    <li className="iam-link-list flex flex-row">
       <Link
         className="flex grow flex-col hover:underline"
         href={`/groups/${group.id}`}

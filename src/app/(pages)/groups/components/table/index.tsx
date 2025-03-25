@@ -13,7 +13,7 @@ function Row(props: Readonly<RowProps>) {
     ? dateToHuman(new Date(group.meta.created))
     : "N/A";
   return (
-    <li className="flex flex-row border-b p-2 hover:rounded-md hover:bg-neutral-200 has-[+:hover]:border-transparent dark:hover:bg-neutral-200/10">
+    <li className="iam-link-list flex flex-row">
       <div className="flex grow flex-col">
         <div className="flex flex-col gap-2 sm:flex-row">
           <Link

@@ -128,4 +128,8 @@
   .tbl-hover {
     @apply hover:bg-primary-100/30;
   }
+
+  .iam-link-list {
+    @apply border-b p-2 last:border-transparent hover:rounded-md hover:border-transparent hover:bg-neutral-200 has-[+:hover]:border-transparent dark:border-secondary/75 dark:hover:bg-neutral-200/10;
+  }
 }

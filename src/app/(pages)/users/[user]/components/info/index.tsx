@@ -4,20 +4,7 @@ import { dateToHuman } from "@/utils/dates";
 import InfoTable from "@/components/info-table";
 import { Section } from "@/components/layout";
 import { auth } from "@/auth";
-
-const ActiveStatus = (props: { active: boolean }) => {
-  const { active } = props;
-  const status = active ? "active" : "disabled";
-  return (
-    <small
-      title={`${active ? "Active" : "Disabled"}`}
-      className="data-[status=disabled] inline rounded-full bg-danger p-1 px-2 text-secondary data-[status=active]:bg-success"
-      data-status={status}
-    >
-      {status}
-    </small>
-  );
-};
+import { Status } from "@/components/badges";
 
 type UserInfoProps = {
   user: User;
@@ -47,7 +34,7 @@ export default async function UserInfo(props: Readonly<UserInfoProps>) {
     { name: "Username", value: user.displayName ?? "N/A" },
     { name: "User ID", value: user.id ?? "N/A" },
     { name: "Email", value: user.emails?.[0].value ?? "N/A" },
-    { name: "Status", value: <ActiveStatus active={user.active ?? false} /> },
+    { name: "Status", value: <Status active={user.active ?? false} /> },
     { name: "Created", value: created },
     { name: "End Time", value: endTime },
     { name: "Last Modified", value: lastModified },

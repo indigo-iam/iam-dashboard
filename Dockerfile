@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
+#
+# SPDX-License-Identifier: EUPL-1.2
+
 # Based on https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
 FROM node:lts-alpine AS base
 

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
+//
+// SPDX-License-Identifier: EUPL-1.2
+
 /// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to

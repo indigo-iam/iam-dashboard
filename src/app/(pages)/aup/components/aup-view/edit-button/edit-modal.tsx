@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
+//
+// SPDX-License-Identifier: EUPL-1.2
+
 import { Form, Field, Description, Label } from "@/components/form";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Input } from "@/components/inputs";

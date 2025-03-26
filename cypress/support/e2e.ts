@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
+//
+// SPDX-License-Identifier: EUPL-1.2
+
 // ***********************************************************
 // This example support/e2e.ts is processed and
 // loaded automatically before your test files.

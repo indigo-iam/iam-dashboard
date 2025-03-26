@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
+//
+// SPDX-License-Identifier: EUPL-1.2
+
 import { MultiChoiceItemI } from "./multichoice-item";
 
 export const ItemView = (props: { item: MultiChoiceItemI }) => {

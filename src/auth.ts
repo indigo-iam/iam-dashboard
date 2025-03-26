@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
+//
+// SPDX-License-Identifier: EUPL-1.2
+
 import NextAuth from "next-auth";
 import type { DefaultSession, NextAuthConfig } from "next-auth";
 import type { DefaultJWT } from "next-auth/jwt";

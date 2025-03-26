@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
+//
+// SPDX-License-Identifier: EUPL-1.2
+
 import { ScimReference, User } from "@/models/scim";
 import { Section } from "@/components/layout";
 import GroupOptions from "./options";

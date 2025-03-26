@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
+//
+// SPDX-License-Identifier: EUPL-1.2
+
 import { XCircleIcon } from "@heroicons/react/16/solid";
 
 export const Capsule = (props: { title: string; onDeselect?: () => void }) => {

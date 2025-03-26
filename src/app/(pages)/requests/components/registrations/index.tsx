@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
+//
+// SPDX-License-Identifier: EUPL-1.2
+
 import InfoTable from "@/components/info-table";
 import Link from "@/components/link";
 import { TabPanel } from "@/components/tabs";

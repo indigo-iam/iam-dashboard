@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
+//
+// SPDX-License-Identifier: EUPL-1.2
+
 import ConfirmModal from "@/components/confirm-modal";
 import { Group } from "@/models/groups";
 import { deleteGroup } from "@/services/groups";

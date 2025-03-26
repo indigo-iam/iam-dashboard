@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
+//
+// SPDX-License-Identifier: EUPL-1.2
+
 export function toTitleCase(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }

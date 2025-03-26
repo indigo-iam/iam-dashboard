@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
+//
+// SPDX-License-Identifier: EUPL-1.2
+
 export { default as Credentials } from "./credentials";
 export { default as Crypto } from "./crypto";
 export { default as GrantTypes } from "./grant-types";

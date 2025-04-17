@@ -15,12 +15,12 @@ interface DrawerSectionProps {
 export const DrawerSection = (props: DrawerSectionProps) => {
   const { title, children } = props;
   return (
-    <>
-      <p className="text-md p-4 pb-2 font-bold uppercase text-secondary">
+    <div className="p-6">
+      <p className="pb-2 text-base font-bold uppercase text-secondary">
         {title}
       </p>
-      <div className="px-4 text-lg">{children}</div>
-    </>
+      {children}
+    </div>
   );
 };
 

@@ -4,33 +4,27 @@
 
 import { Button } from "@/components/buttons";
 import {
-  NoSymbolIcon,
   PencilSquareIcon,
-  XCircleIcon,
+  TrashIcon,
 } from "@heroicons/react/16/solid";
 
 export default function FormButtons() {
   return (
-    <div className="grid grid-rows-2 sm:grid-cols-2 gap-2">
+    <div className="grid grid-rows-2 gap-2 sm:grid-cols-2">
       <div className="flex flex-row gap-1">
-        <Button action="danger" icon={<XCircleIcon />}>
+        <Button className="btn-danger">
+          <TrashIcon className="my-auto size-5" />
           Delete Client
         </Button>
-        <Button action="warning" icon={<NoSymbolIcon />}>
-          Disable Client
-        </Button>
+        <Button className="btn-danger-tertiary">Disable Client</Button>
       </div>
 
-      <div className="flex flex-row sm:justify-end gap-1">
-        <Button action="primary-outline" type="reset">
+      <div className="flex flex-row gap-1 sm:justify-end">
+        <Button className="btn-tertiary" type="reset">
           Reset
         </Button>
-        <Button
-          action="success"
-          title="Submit"
-          icon={<PencilSquareIcon />}
-          type="submit"
-        >
+        <Button className="btn-primary" title="Submit" type="submit">
+          <PencilSquareIcon className="my-auto size-5" />
           Save Client
         </Button>
       </div>

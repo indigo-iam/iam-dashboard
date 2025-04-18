@@ -21,7 +21,7 @@ export default function LinkCertificateButton(
   const close = () => setShow(false);
   return (
     <>
-      <Button action="primary-outline" onClick={open}>
+      <Button onClick={open} className="btn-secondary">
         Request certificate linking
       </Button>
       <LinkCertificateModal show={show} onClose={close} user={user} />

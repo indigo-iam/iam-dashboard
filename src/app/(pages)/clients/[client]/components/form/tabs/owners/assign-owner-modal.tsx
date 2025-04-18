@@ -26,10 +26,7 @@ export default function AssignOwnerModal(props: Readonly<AssignOwnerModal>) {
   return (
     <Modal {...props}>
       <ModalBody>
-        <Combobox
-          onSelected={addOwner}
-          searchCallback={searchUser}
-        />
+        <Combobox onSelected={addOwner} searchCallback={searchUser} />
         <div hidden={!selectedUser}>
           <p>Selected user: </p>
           <b>Name</b>
@@ -39,9 +36,9 @@ export default function AssignOwnerModal(props: Readonly<AssignOwnerModal>) {
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button action="primary">Assign Owner</Button>
-        <Button action="danger-outline" onClick={clearAndClose}>
-          Cancel{" "}
+        <Button className="btn-primary">Assign Owner</Button>
+        <Button className="btn-tertiary" onClick={clearAndClose}>
+          Cancel
         </Button>
       </ModalFooter>
     </Modal>

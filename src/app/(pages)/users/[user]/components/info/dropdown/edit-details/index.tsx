@@ -7,11 +7,7 @@ import { Button } from "@/components/buttons";
 import { Form } from "@/components/form";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Input } from "@/components/inputs";
-import {
-  ArrowUpTrayIcon,
-  ArrowUturnLeftIcon,
-} from "@heroicons/react/24/outline";
-import { XMarkIcon } from "@heroicons/react/24/solid";
+import { ArrowUpTrayIcon } from "@heroicons/react/24/outline";
 import type { User } from "@/models/scim";
 import { patchMe } from "@/services/me";
 import React, { useState } from "react";
@@ -78,32 +74,17 @@ const Footer = (props: { canSubmit: boolean; onClose?: () => void }) => {
 
   return (
     <ModalFooter>
-      <div className="flex justify-end p-2">
-        <div className="col p-1">
-          <Button
-            action="primary"
-            icon={<ArrowUpTrayIcon />}
-            type="submit"
-            disabled={!canSubmit}
-          >
-            Update
-          </Button>
-        </div>
-        <div className="col p-1">
-          <Button action="warning" icon={<ArrowUturnLeftIcon />} type="reset">
-            Reset
-          </Button>
-        </div>
-        <div className="col p-1">
-          <Button
-            action="danger"
-            onClick={onClose}
-            icon={<XMarkIcon />}
-            type="button"
-          >
-            Cancel
-          </Button>
-        </div>
+      <div className="flex justify-end gap-2">
+        <Button className="btn-tertiary" onClick={onClose} type="button">
+          Cancel
+        </Button>
+        <Button className="btn-secondary" type="reset">
+          Reset
+        </Button>
+        <Button className="btn-primary" type="submit" disabled={!canSubmit}>
+          <ArrowUpTrayIcon className="my-auto size-5" />
+          Update
+        </Button>
       </div>
     </ModalFooter>
   );

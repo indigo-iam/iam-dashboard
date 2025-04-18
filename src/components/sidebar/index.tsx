@@ -102,13 +102,13 @@ const Footer = () => {
     <DrawerFooter>
       <a
         target="_blank"
-        className="flex rounded-lg p-2 transition ease-in-out hover:bg-primary-hover"
+        className="flex rounded-lg p-2 transition ease-in-out hover:bg-white/10"
         href="https://indigo-iam.github.io/v/current/"
       >
         <InformationCircleIcon className="me-2 h-5 w-5" />
         IAM Documentation
       </a>
-      <p className="w-full bg-primary-light text-center align-middle">v1.0</p>
+      <p className="bg-light w-full text-center align-middle">v1.0</p>
     </DrawerFooter>
   );
 };

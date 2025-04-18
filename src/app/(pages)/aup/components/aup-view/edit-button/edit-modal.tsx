@@ -70,7 +70,7 @@ export default function EditModal(props: Readonly<EditModalProps>) {
             </Description>
           </Field>
           <section>
-            <p className="py-2 text-primary-light">
+            <p className="text-light py-2">
               Editing the AUP will <b>not</b> trigger an AUP signature request
             </p>
             <p className="text-xs">
@@ -81,12 +81,14 @@ export default function EditModal(props: Readonly<EditModalProps>) {
           </section>
         </ModalBody>
         <ModalFooter>
-          <Button type="submit">Confirm</Button>
-          <Button type="reset" action="primary-outline">
+          <Button className="btn-tertiary" type="reset" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button className="btn-secondary" type="reset">
             Reset
           </Button>
-          <Button type="reset" action="danger-outline" onClick={onClose}>
-            Cancel
+          <Button className="btn-primary" type="submit">
+            Confirm
           </Button>
         </ModalFooter>
       </Form>

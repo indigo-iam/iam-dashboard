@@ -4,10 +4,8 @@
  * SPDX-License-Identifier: EUPL-1.2
  */
 
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer utilities {
-  .show-sidebar {
-    @apply translate-x-0;
-  }
+@utility show-sidebar {
+  @apply translate-x-0;
 }

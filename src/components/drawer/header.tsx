@@ -16,7 +16,7 @@ const LogoIam = () => (
       alt="INFN Cloud"
       priority={true}
     />
-    <div className="my-auto px-4 py-1 text-2xl font-bold text-secondary">
+    <div className="text-secondary my-auto px-4 py-1 text-2xl font-bold">
       INDIGO IAM for cnafsd
     </div>
   </div>
@@ -25,7 +25,7 @@ const LogoIam = () => (
 export default function Header(props: Readonly<{ drawerId: string }>) {
   const { drawerId } = props;
   return (
-    <header className="fixed left-0 top-0 z-30 h-16 w-screen bg-primary lg:w-80 dark:bg-primary-dark">
+    <header className="bg-primary fixed top-0 left-0 z-30 h-16 w-screen lg:w-80">
       <div className="flex h-full justify-between px-4">
         <LogoIam />
         <BurgerButton drawerId={drawerId} />

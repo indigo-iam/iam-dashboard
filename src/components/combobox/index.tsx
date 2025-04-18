@@ -40,16 +40,16 @@ export default function Combobox<T extends Searchable>(
   return (
     <HeadlessCombobox onChange={onSelected}>
       <ComboboxInput
-        className="combobox w-full"
+        className="dark:text-secondary w-full rounded-lg border bg-transparent px-2 py-1"
         placeholder="Type to search..."
         displayValue={(user: User) => user?.displayName ?? ""}
         onChange={event => setQuery(event.target.value)}
       />
       <div className="relative">
-        <ComboboxOptions className="combobox-options">
+        <ComboboxOptions className="z-50 rounded-lg border">
           {items.map(item => (
             <ComboboxOption
-              className="combobox-option"
+              className="px-4 py-1 hover:rounded-lg hover:bg-gray-200 data-[disabled]:bg-transparent dark:hover:bg-white/20 dark:data-[disabled]:bg-transparent"
               key={item.id}
               value={item}
               disabled={item.id === "-1"}

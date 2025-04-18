@@ -19,7 +19,7 @@ export default function AddMemberButton(props: Readonly<AddMemberButtonProps>) {
   const closeModal = () => setShow(false);
   return (
     <>
-      <Button onClick={openModal} action="primary-outline">
+      <Button className="btn-secondary" onClick={openModal}>
         Add Member
       </Button>
       <AddMemberModal show={show} onClose={closeModal} group={group} />

@@ -26,7 +26,7 @@ export default function OwnersList(props: Readonly<OwnersListProps>) {
       <button
         type="button"
         onClick={() => removeItem(index)}
-        className="w-5 rounded bg-secondary-100 hover:bg-danger hover:text-secondary"
+        className="bg-secondary-100 hover:bg-danger hover:text-secondary w-5 rounded"
       >
         <XMarkIcon />
       </button>
@@ -46,7 +46,8 @@ export default function OwnersList(props: Readonly<OwnersListProps>) {
     <div className="flex flex-col gap-4">
       <ul className="mt-2">{listItems}</ul>
       <div>
-        <Button type="button" icon={<PlusIcon />} onClick={open}>
+        <Button className="btn-secondary" type="button" onClick={open}>
+          <PlusIcon className="my-auto size-5" />
           Assign Owner
         </Button>
       </div>

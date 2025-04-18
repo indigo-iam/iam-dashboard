@@ -15,7 +15,8 @@ export default function CreateButton() {
   return (
     <>
       <CreateModal show={isShown} onClose={hide} />
-      <Button icon={<PlusIcon />} onClick={show}>
+      <Button className="btn-secondary" onClick={show}>
+        <PlusIcon className="my-auto size-5" />
         Create AUP
       </Button>
     </>

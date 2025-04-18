@@ -12,7 +12,7 @@ export default async function Policies() {
     <Page title="Create Scope Policy">
       <Panel>
         <Section>
-          <p className="iam-text-light">
+          <p className="font-light">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in
             accumsan leo. Suspendisse potenti. Pellentesque habitant morbi
             tristique senectus et netus et malesuada fames ac turpis egestas.

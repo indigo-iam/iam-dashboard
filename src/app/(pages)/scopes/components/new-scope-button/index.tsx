@@ -17,7 +17,8 @@ export default function NewScopeButton() {
   return (
     <>
       <NewScopeModal show={isShown} onClose={hide} />
-      <Button action="primary-outline" icon={<PlusIcon />} onClick={show}>
+      <Button className="btn-secondary" onClick={show}>
+        <PlusIcon className="my-auto size-5" />
         New Scope
       </Button>
     </>

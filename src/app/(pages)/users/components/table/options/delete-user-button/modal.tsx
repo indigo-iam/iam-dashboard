@@ -45,8 +45,8 @@ export default function DeleteUserModal(props: Readonly<DeleteUserModalProps>) {
     : "No groups";
 
   return (
-    <Form id="delete-user-form">
-      <Modal {...modalProps} title={`Delete user '${user?.name?.formatted}'`}>
+    <Modal {...modalProps} title={`Delete user '${user?.name?.formatted}'`}>
+      <Form id="delete-user-form">
         <ModalBody>
           <p className="py-2">The following user will be deleted:</p>
           <table className="table-auto">
@@ -61,14 +61,18 @@ export default function DeleteUserModal(props: Readonly<DeleteUserModalProps>) {
           </table>
         </ModalBody>
         <ModalFooter>
-          <Button action="danger" type="button" onClick={action}>
-            Delete User
-          </Button>
-          <Button type="button" onClick={modalProps.onClose}>
+          <Button
+            className="btn-tertiary"
+            type="button"
+            onClick={modalProps.onClose}
+          >
             Cancel
           </Button>
+          <Button className="btn-danger" type="button" onClick={action}>
+            Delete user
+          </Button>
         </ModalFooter>
-      </Modal>
-    </Form>
+      </Form>
+    </Modal>
   );
 }

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Form, Description, FormSection } from "@/components/form";
-import {Select, SelectOption   } from "@/components/form";
+import { Select, SelectOption } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Button } from "@/components/buttons";
@@ -67,14 +67,15 @@ export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
           </FormSection>
         </ModalBody>
         <ModalFooter>
-          <Button action="primary" icon={<PlusIcon />} type="submit">
-            Add Scope
+          <Button className="btn-tertiary" type="reset" onClick={onClose}>
+            Cancel
           </Button>
-          <Button action="danger-outline" type="reset">
+          <Button className="btn-secondary" type="reset">
             Reset
           </Button>
-          <Button action="primary-outline" type="reset" onClick={onClose}>
-            Cancel
+          <Button className="btn-primary" type="submit">
+            <PlusIcon className="my-auto size-5" />
+            Add Scope
           </Button>
         </ModalFooter>
       </Form>

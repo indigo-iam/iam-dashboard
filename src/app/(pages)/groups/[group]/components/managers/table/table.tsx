@@ -10,14 +10,14 @@ import Link from "next/link";
 function Row(props: Readonly<{ manager: User; group: Group }>) {
   const { manager, group } = props;
   return (
-    <li className="iam-link-list flex flex-row">
+    <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
         <Link
           className="flex grow flex-col font-bold hover:underline"
           href={`/users/${manager.id}`}
         >
           {manager.displayName}
-          <small className="iam-text-light">{manager.id}</small>
+          <small className="font-light">{manager.id}</small>
         </Link>
       </div>
       <div className="flex flex-col">

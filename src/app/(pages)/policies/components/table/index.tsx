@@ -14,13 +14,13 @@ function Row(props: Readonly<{ policy: ScopePolicy }>) {
   const { policy } = props;
   const scopes = policy.scopes ? policy.scopes.join(" ") : "";
   return (
-    <div className="iam-link-list flex flex-row">
+    <div className="iam-list-item flex flex-row">
       <Link
         className="flex grow flex-col font-bold hover:underline"
         href={`/policies/${policy.id}`}
       >
         {policy.description}
-        <small className="iam-text-light">{scopes}</small>
+        <small className="font-light">{scopes}</small>
       </Link>
       <PolicyOptions policy={policy} />
     </div>

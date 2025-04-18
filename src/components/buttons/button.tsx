@@ -3,67 +3,49 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import React from "react";
+import "./button.css";
 
 export type ButtonColor =
   | "primary"
-  | "primary-outline"
   | "secondary"
-  | "secondary-outline"
-  | "success"
-  | "success-outline"
-  | "warning"
-  | "warning-outline"
+  | "tertiary"
   | "danger"
-  | "danger-outline";
+  | "danger-secondary"
+  | "danger-tertiary";
 
 export interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
   type?: "button" | "reset" | "submit";
-  icon?: React.ReactNode;
-  isSmall?: boolean;
   action?: ButtonColor;
 }
 
 export default function Button(props: Readonly<ButtonProps>) {
-  const { children, icon, isSmall, action, ...buttonProps } = props;
-  let buttonStyle = "min-w-12 ";
+  const { children, action, ...buttonProps } = props;
+  let className: string;
+
   switch (action) {
     case "primary":
-      buttonStyle += "btn-primary";
+      className = "btn-primary";
       break;
-    case "primary-outline":
-      buttonStyle += "btn-primary-outline";
+    case "secondary":
+      className = "btn-secondary";
       break;
-    case "success":
-      buttonStyle += "btn-success";
-      break;
-    case "success-outline":
-      buttonStyle += "btn-success-outline";
-      break;
-    case "warning":
-      buttonStyle += "btn-warning";
-      break;
-    case "warning-outline":
-      buttonStyle += "btn-warning-outline";
+    case "tertiary":
+      className = "btn-tertiary";
       break;
     case "danger":
-      buttonStyle += "btn-danger";
+      className = "btn-danger";
       break;
-    case "danger-outline":
-      buttonStyle += "btn-danger-outline";
+    case "danger-secondary":
+      className = "btn-danger-secondary";
+      break;
+    case "danger-tertiary":
+      className = "danger-tertiary";
       break;
     default:
-      buttonStyle += "btn-primary";
+      className = "btn-primary";
   }
-
-  if (isSmall) {
-    buttonStyle += " !px-1.5 !py-0.5";
-  }
-
   return (
-    <button {...buttonProps} className={buttonStyle}>
-      {icon ? (
-        <div className={`my-auto ${isSmall ? "size-3" : "size-5"}`}>{icon}</div>
-      ) : null}
+    <button {...buttonProps} className={className}>
       {children}
     </button>
   );

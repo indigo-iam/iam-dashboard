@@ -11,14 +11,14 @@ import Link from "next/link";
 function Row(props: Readonly<{ member: ScimReference }>) {
   const { member } = props;
   return (
-    <li className="iam-link-list flex flex-row">
+    <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
         <Link
           className="flex grow flex-col font-bold hover:underline"
           href={`/users/${member.value}`}
         >
           {member.display}
-          <small className="iam-text-light">{member.value}</small>
+          <small className="font-light">{member.value}</small>
         </Link>
       </div>
       <div className="flex flex-col">

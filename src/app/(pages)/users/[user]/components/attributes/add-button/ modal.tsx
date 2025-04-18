@@ -56,13 +56,17 @@ export default function AddAttributeModal(
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button action="danger" type="button" onClick={modalProps.onClose}>
+          <Button
+            className="btn-tertiary"
+            type="button"
+            onClick={modalProps.onClose}
+          >
             Cancel
           </Button>
-          <Button action="primary-outline" type="reset">
+          <Button className="btn-secondary" type="reset">
             Reset
           </Button>
-          <Button action="primary" type="submit">
+          <Button className="btn-primary" type="submit">
             Add Attribute
           </Button>
         </ModalFooter>

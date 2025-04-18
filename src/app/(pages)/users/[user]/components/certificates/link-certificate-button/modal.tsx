@@ -106,11 +106,15 @@ export default function LinkCertificateModal(
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button type="reset" onClick={close}>
+          <Button className="btn-tertiary" type="reset" onClick={close}>
             Cancel
           </Button>
-          <Button type="reset">Reset</Button>
-          <Button type="submit">Add Certificate</Button>
+          <Button className="btn-secondary" type="reset">
+            Reset
+          </Button>
+          <Button className="btn-primary" type="submit">
+            Add Certificate
+          </Button>
         </ModalFooter>
       </Form>
     </Modal>

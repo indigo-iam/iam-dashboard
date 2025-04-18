@@ -14,7 +14,7 @@ const OidcIdView = (props: { oidcId: OidcId }) => {
     <li className="flex flex-row border-b p-2 last:border-0">
       <div className="flex grow flex-col">
         <p>{oidcId.issuer}</p>
-        <small className="iam-text-light">{oidcId.subject}</small>
+        <small className="font-light">{oidcId.subject}</small>
       </div>
       <div className="flex flex-col">
         <OidcOptions oidcId={oidcId} />
@@ -28,9 +28,9 @@ const SamlIdView = (props: { samlId: SamlId }) => {
   return (
     <li className="flex flex-row border-b p-2 last:border-0">
       <div className="flex grow flex-col">
-        <p className="iam-text-normal break-all">{samlId.userId}</p>
-        <small className="iam-text-light break-all">{samlId.idpId}</small>
-        <small className="iam-text-light break-all">{samlId.attributeId}</small>
+        <p className="break-all">{samlId.userId}</p>
+        <small className="break-all">{samlId.idpId}</small>
+        <small className="break-all">{samlId.attributeId}</small>
       </div>
       <div className="flex flex-col">
         <SAMLOptions />
@@ -43,7 +43,7 @@ function OidcAccounts(props: Readonly<{ oidcIds?: OidcId[] }>) {
   const { oidcIds } = props;
   if (!oidcIds || oidcIds.length === 0) {
     return (
-      <p className="iam-text-light p-2">
+      <p className="font-light p-2">
         No OpenID connect linked accounts found.
       </p>
     );
@@ -60,7 +60,7 @@ function OidcAccounts(props: Readonly<{ oidcIds?: OidcId[] }>) {
 function SamlAccounts(props: Readonly<{ samlIds?: SamlId[] }>) {
   const { samlIds } = props;
   if (!samlIds || samlIds.length === 0) {
-    return <p className="iam-text-light p-2">No linked SAML accounts found.</p>;
+    return <p className="font-light p-2">No linked SAML accounts found.</p>;
   }
   return (
     <ul className="w-full">

@@ -13,17 +13,17 @@ function SSHKeyView(props: Readonly<{ user: User; sshKey: SSHKey }>) {
     ? dateToHuman(new Date(sshKey.created!))
     : undefined;
   return (
-    <li className="iam-link-list flex flex-row overflow-hidden">
+    <li className="iam-list-item flex flex-row overflow-hidden">
       <div className="my-auto flex grow flex-col gap-1 truncate">
-        <p className="iam-text-normal text-lg">{sshKey.display}</p>
+        <p className="text-lg">{sshKey.display}</p>
         <small
-          className="iam-text-light truncate text-sm"
+          className="truncate text-sm"
           title={sshKey.fingerprint}
         >
           {sshKey.fingerprint}
         </small>
       </div>
-      <div className="iam-text-light my-auto hidden px-2 text-sm sm:flex">
+      <div className=" my-auto hidden px-2 text-sm sm:flex">
         Created {createdAt}
       </div>
       <SSHKeysOptions user={user} sshKey={sshKey} />
@@ -46,7 +46,7 @@ export default function Table(props: Readonly<TableProps>) {
   }
 
   if (sshKeys.length === 0) {
-    return <p className="iam-text-light">No SSH keys found.</p>;
+    return <p className="font-light">No SSH keys found.</p>;
   }
   return (
     <ul className="w-full">

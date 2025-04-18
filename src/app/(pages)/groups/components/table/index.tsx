@@ -17,7 +17,7 @@ function Row(props: Readonly<RowProps>) {
     ? dateToHuman(new Date(group.meta.created))
     : "N/A";
   return (
-    <li className="iam-link-list flex flex-row">
+    <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
         <div className="flex flex-col gap-2 sm:flex-row">
           <Link
@@ -25,11 +25,11 @@ function Row(props: Readonly<RowProps>) {
             href={`/groups/${group.id}`}
           >
             {group.displayName}
-            <small className="iam-text-light">{group.id}</small>
+            <small className="font-light">{group.id}</small>
           </Link>
           <div className="my-auto flex grow flex-col">
             <div className="inline-flex gap-2 sm:flex-col sm:items-end sm:gap-0">
-              <small className="iam-text-light">Created {created}</small>
+              <small className="font-light">Created {created}</small>
             </div>
           </div>
         </div>

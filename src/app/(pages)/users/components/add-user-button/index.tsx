@@ -10,7 +10,7 @@ import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { ScimUser } from "@/models/scim";
 import { addUser } from "@/services/users";
 import { toTitleCase } from "@/utils/strings";
-import { UserIcon } from "@heroicons/react/24/outline";
+import { UserPlusIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
 type AddUserFormProps = {
@@ -117,7 +117,8 @@ export default function AddUser(props: Readonly<AddUserProps>) {
         onUserAdded={onUserAdded}
         title="Add User"
       />
-      <Button icon={<UserIcon />} onClick={open} action="primary-outline">
+      <Button className="btn-secondary" onClick={open}>
+        <UserPlusIcon className="my-auto size-5" />
         Add User
       </Button>
     </>

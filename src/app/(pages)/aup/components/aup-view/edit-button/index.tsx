@@ -21,7 +21,8 @@ export default function EditButton(props: Readonly<EditButtonProps>) {
   return (
     <>
       <EditModal show={isShown} onClose={hide} aup={aup} />
-      <Button icon={<PencilIcon />} onClick={show}>
+      <Button className="btn-secondary" onClick={show}>
+        <PencilIcon className="my-auto size-5" />
         Edit AUP
       </Button>
     </>

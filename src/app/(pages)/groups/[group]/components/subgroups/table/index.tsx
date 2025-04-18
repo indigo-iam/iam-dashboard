@@ -10,13 +10,13 @@ import Link from "next/link";
 function Row(props: Readonly<{ groupRef: ScimReference }>) {
   const { groupRef } = props;
   return (
-    <li className="iam-link-list flex flex-row">
+    <li className="iam-list-item flex flex-row">
       <Link
         className="flex grow flex-col font-bold hover:underline"
         href={`/groups/${groupRef.value}`}
       >
         {groupRef.display}
-        <small className="iam-text-light">{groupRef.value}</small>
+        <small className="font-light">{groupRef.value}</small>
       </Link>
     </li>
   );

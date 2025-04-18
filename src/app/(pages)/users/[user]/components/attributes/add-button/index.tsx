@@ -19,7 +19,7 @@ export default function AddAttributeButton(props: Readonly<AddButtonProps>) {
   const closeModal = () => setShow(false);
   return (
     <>
-      <Button action="primary-outline" onClick={openModal}>
+      <Button className="btn-secondary" onClick={openModal}>
         Add Attribute
       </Button>
       <AddAttributeModal show={show} onClose={closeModal} user={user} />

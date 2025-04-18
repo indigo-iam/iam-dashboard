@@ -8,7 +8,7 @@ export default function TextArea(props: Readonly<TextAreaProps>) {
   return (
     <div className="flex flex-col">
       <textarea
-        className="rounded-xl border bg-secondary px-4 py-2 disabled:bg-secondary-300 placeholder:disabled:text-secondary-600 dark:bg-white/10"
+        className="bg-secondary disabled:bg-secondary-300 placeholder:disabled:text-secondary-600 rounded-xl border border-gray-400 px-4 py-2 dark:bg-white/10"
         {...props}
       />
     </div>

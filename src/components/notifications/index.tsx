@@ -19,7 +19,7 @@ function Badge(props: Readonly<BadgeProps>) {
     return null;
   }
   return (
-    <div className="absolute end-0 top-0 z-10 inline-flex size-5 items-center justify-center rounded-full bg-danger p-2 text-xs text-secondary">
+    <div className="bg-danger text-secondary absolute end-0 top-0 z-10 inline-flex size-5 items-center justify-center rounded-full p-2 text-xs">
       {count}
     </div>
   );
@@ -37,9 +37,9 @@ export default async function Notifications() {
     ? `There are ${totalRequests} pending request(s)`
     : "Notifications";
   return (
-    <div className="relative m-auto rounded-full p-2 hover:bg-primary-hover">
+    <div className="relative m-auto rounded-full p-2 hover:bg-white/10">
       <Link title={title} href="/requests" className="my-auto">
-        <BellIcon className="size-6 text-secondary" />
+        <BellIcon className="text-secondary size-6" />
         <Badge count={totalRequests} />
       </Link>
     </div>

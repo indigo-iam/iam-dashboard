@@ -49,7 +49,7 @@ export default function Link(props: Readonly<SidebarLinkProps>) {
 
   return (
     <NextLink
-      className="flex rounded-lg p-2 transition ease-in-out hover:bg-primary-hover data-[selected=true]:bg-primary-hover dark:hover:bg-white/10 data-[selected=true]:dark:bg-white/10"
+      className="flex rounded-lg p-2 transition ease-in-out hover:bg-white/10 data-[selected=true]:bg-white/10"
       href={href}
       onClick={hideSidebar}
       data-selected={selected ? "true" : "false"}

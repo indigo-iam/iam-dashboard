@@ -8,8 +8,11 @@ import Link from "next/link";
 
 export default function AddPolicyButton() {
   return (
-    <Button action="primary-outline" icon={<PlusIcon />}>
-      <Link href="/policies/new">Add new policy</Link>
-    </Button>
+    <Link href="/policies/new">
+      <Button className="btn-secondary">
+        <PlusIcon className="my-auto size-5" />
+        Add new policy
+      </Button>
+    </Link>
   );
 }

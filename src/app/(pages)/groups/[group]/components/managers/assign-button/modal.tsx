@@ -57,10 +57,10 @@ export default function AssignGroupManagerModal(
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button type="button" action="danger" onClick={clearAndClose}>
+        <Button className="btn-tertiary" type="button" onClick={clearAndClose}>
           Cancel
         </Button>
-        <Button type="submit" onClick={assignManager}>
+        <Button className="btn-primary" type="submit" onClick={assignManager}>
           Assign Group Manager
         </Button>
       </ModalFooter>

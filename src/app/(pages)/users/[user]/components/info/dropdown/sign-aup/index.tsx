@@ -13,7 +13,7 @@ interface SignAUPProps extends ModalProps {
 }
 
 export function SignAUPModal(props: Readonly<SignAUPProps>) {
-  const { user, isMe } = props;
+  const { user, isMe, ...others } = props;
   const action = async () => {
     signAUP(user.id);
     props.onClose();
@@ -21,7 +21,7 @@ export function SignAUPModal(props: Readonly<SignAUPProps>) {
 
   return (
     <ConfirmModal
-      {...props}
+      {...others}
       title={isMe ? "Resign AUP" : "Sign AUP in behalf of the user"}
       onConfirm={action}
     >

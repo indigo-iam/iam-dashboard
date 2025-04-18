@@ -36,10 +36,14 @@ function AddGroupForm(props: Readonly<AddGroupFormProps>) {
         />
       </ModalBody>
       <ModalFooter>
-        <Button type="submit">Add Root Group</Button>
-        <Button type="reset">Reset</Button>
-        <Button type="reset" onClick={onClose}>
+        <Button className="btn-tertiary" type="reset" onClick={onClose}>
           Cancel
+        </Button>
+        <Button className="btn-secondary" type="reset">
+          Reset
+        </Button>
+        <Button className="btn-primary" type="submit">
+          Add Root Group
         </Button>
       </ModalFooter>
     </Form>
@@ -60,12 +64,8 @@ export default function AddGroupButton(props: Readonly<AddGroupButtonProps>) {
       <Modal show={show} onClose={close} title="Add Group" data-test="modal">
         <AddGroupForm onClose={close} onGroupAdded={onGroupAdded} />
       </Modal>
-      <Button
-        data-test="add-group"
-        action="primary-outline"
-        icon={<PlusIcon />}
-        onClick={open}
-      >
+      <Button className="btn-secondary" data-test="add-group" onClick={open}>
+        <PlusIcon className="my-auto size-5" />
         Add Group
       </Button>
     </>

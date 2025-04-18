@@ -73,12 +73,14 @@ export default function CreateModal(props: Readonly<CreateModalProps>) {
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button type="submit">Create AUP</Button>
-          <Button type="reset" action="primary-outline">
+          <Button className="btn-tertiary" type="reset" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button className="btn-secondary" type="reset">
             Reset
           </Button>
-          <Button type="reset" action="danger-outline" onClick={onClose}>
-            Cancel
+          <Button className="btn-primary" type="submit">
+            Create AUP
           </Button>
         </ModalFooter>
       </Form>

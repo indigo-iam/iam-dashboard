@@ -52,7 +52,7 @@ let Icon = (props: Readonly<{ type: NotificationType }>) => {
       return (
         <ExclamationCircleIcon
           key="danger-circle-icon"
-          className="size-6 text-danger"
+          className="text-danger size-6"
         />
       );
   }
@@ -68,18 +68,18 @@ const CustomToast = (props: {
 
   return (
     <div className={"flex w-96"}>
-      <div className="text:primary w-full rounded-lg border border-gray-300 bg-white p-3 shadow-lg dark:border-gray-800 dark:bg-slate-800 dark:text-secondary">
+      <div className="text:primary dark:text-secondary w-full rounded-lg border border-gray-300 bg-white p-3 shadow-lg dark:border-gray-800 dark:bg-slate-800">
         <div className="flex w-full items-center">
           <div className="mr-4 w-5">
             <Icon type={type} />
           </div>
-          <div className="ml-2 mr-6">
+          <div className="mr-6 ml-2">
             <span className="font-semibold">{title}</span>
             <span className="block text-gray-500">{subtitle}</span>
           </div>
           <div className="m-auto mr-0">
             <button
-              className="w-8 rounded-full p-[5px] text-neutral-500 hover:bg-secondary dark:hover:bg-primary-hover"
+              className="hover:bg-secondary w-8 rounded-full p-[5px] text-neutral-500 dark:hover:bg-white/10"
               onClick={dismiss}
             >
               <XCircleIcon />

@@ -4,14 +4,9 @@
 
 "use client";
 import { Button } from "@/components/buttons";
-import { Form } from "@/components/form";
+import { Field, Form, Label } from "@/components/form";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Input } from "@/components/inputs";
-import {
-  ArrowUpTrayIcon,
-  ArrowUturnLeftIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/solid";
 import React, { useState } from "react";
 
 interface ErrorMessages {
@@ -52,24 +47,36 @@ const Body = (props: BodyProps) => {
   } = props;
   return (
     <ModalBody>
-      <Input
-        type="password"
-        id="current-password"
-        title="Current Password"
-        name="currentPassword"
-      />
-      <Input
-        type="password"
-        id="new-password"
-        title="New Password"
-        name="updatedPassword"
-      />
-      <Input
-        type="password"
-        id="repeat-password"
-        title="Repeat Password"
-        name="repeatPassword"
-      />
+      <Field>
+        <Label>Current password</Label>
+        <Input
+          type="password"
+          id="current-password"
+          title="Current Password"
+          name="currentPassword"
+          placeholder="Type your current password"
+        />
+      </Field>
+      <Field>
+        <Label>New password</Label>
+        <Input
+          type="password"
+          id="new-password"
+          title="New Password"
+          name="updatedPassword"
+          placeholder="Type the new password"
+        />
+      </Field>
+      <Field>
+        <Label>Repeat new password</Label>
+        <Input
+          type="password"
+          id="repeat-password"
+          title="Repeat Password"
+          name="repeatPassword"
+          placeholder="Repeat the new password"
+        />
+      </Field>
     </ModalBody>
   );
 };
@@ -78,31 +85,16 @@ const Footer = (props: { isValid: boolean; onClose?: () => void }) => {
   const { isValid, onClose } = props;
   return (
     <ModalFooter>
-      <div className="justify-content-end flex p-2">
-        <div className="col p-1">
-          <Button
-            action="primary"
-            icon={<ArrowUpTrayIcon />}
-            disabled={!isValid}
-          >
-            Update Password
-          </Button>
-        </div>
-        <div className="col p-1">
-          <Button action="warning" icon={<ArrowUturnLeftIcon />} type="reset">
-            Reset
-          </Button>
-        </div>
-        <div className="col p-1">
-          <Button
-            action="danger"
-            onClick={onClose}
-            icon={<XMarkIcon />}
-            type="button"
-          >
-            Cancel
-          </Button>
-        </div>
+      <div className="justify-content-end flex gap-2">
+        <Button className="btn-tertiary" onClick={onClose} type="button">
+          Cancel
+        </Button>
+        <Button className="btn-secondary" type="reset">
+          Reset
+        </Button>
+        <Button className="btn-primary" disabled={!isValid}>
+          Update Password
+        </Button>
       </div>
     </ModalFooter>
   );

@@ -20,7 +20,7 @@ export default function AddSSHKeyButton(props: Readonly<AddSSHKeyButtonProps>) {
 
   return (
     <>
-      <Button action="primary-outline" onClick={openModal}>
+      <Button className="btn-secondary" onClick={openModal}>
         Add SSH Key
       </Button>
       <AddSSHKeyModal show={show} onClose={closeModal} user={user} />

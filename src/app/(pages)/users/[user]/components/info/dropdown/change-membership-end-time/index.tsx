@@ -48,14 +48,18 @@ export function ChangeMembershipEndTimeModal(
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button type="submit" action="success">
-            Change Membership End Time
+          <Button className="btn-tertiary" type="reset" onClick={props.onClose}>
+            Cancel
           </Button>
-          <Button type="button" action="danger-outline" onClick={revokeEndTime}>
+          <Button
+            className="btn-danger-secondary"
+            type="button"
+            onClick={revokeEndTime}
+          >
             Revoke End Time
           </Button>
-          <Button type="reset" action="primary-outline" onClick={props.onClose}>
-            Cancel
+          <Button className="btn-primary" type="submit">
+            Change Membership End Time
           </Button>
         </ModalFooter>
       </Form>

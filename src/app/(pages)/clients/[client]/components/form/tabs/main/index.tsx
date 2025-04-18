@@ -63,7 +63,7 @@ export default function Main(props: Readonly<MainProps>) {
         <textarea
           id="client-description"
           name="client_description"
-          className="w-full border bg-transparent p-2"
+          className="w-full border border-gray-400 bg-transparent p-2"
           defaultValue={client_description}
         />
       </FormSection>

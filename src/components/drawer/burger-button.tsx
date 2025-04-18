@@ -22,10 +22,10 @@ export default function BurgerButton(props: Readonly<{ drawerId: string }>) {
 
   return (
     <button
-      className="hover:bg-primary-hover my-auto rounded-md p-1 transition active:bg-primary-200 lg:hidden"
+      className="my-auto rounded-md p-1 transition hover:bg-white/10 active:bg-white/20 lg:hidden"
       onClick={toggleSidebar}
     >
-      <Bars3Icon className="w-8 text-secondary" />
+      <Bars3Icon className="text-secondary w-8" />
     </button>
   );
 }

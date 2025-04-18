@@ -37,11 +37,12 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
         <Section>
           <div className="flex flex-row gap-2">
             <Link href="/clients/new">
-              <Button action="primary-outline" icon={<PlusIcon />}>
+              <Button className="btn-secondary">
+                <PlusIcon className="my-auto size-5" />
                 New client
               </Button>
             </Link>
-            <Button action="primary-outline">Redeem client</Button>
+            <Button className="btn-secondary">Redeem client</Button>
           </div>
           <InputQuery />
           <Suspense fallback="Loading...">

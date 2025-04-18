@@ -44,13 +44,11 @@ export default function Editor(props: Readonly<EditorProps>) {
         onChange={handleChange}
       />
       <div className="flex justify-end gap-2">
-        <Button
-          onClick={handleOnClickEdit}
-          action={editing ? "danger-outline" : "primary"}
-        >
+        <Button className="btn-secondary" onClick={handleOnClickEdit}>
           {editing ? "Cancel" : "Edit"}
         </Button>
         <Button
+          className="btn-primary"
           disabled={!editing || newPolicy === policy_str}
           onClick={handleSubmit}
         >

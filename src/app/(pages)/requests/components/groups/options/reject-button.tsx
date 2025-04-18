@@ -54,20 +54,20 @@ export default function RejectButton(props: Readonly<RejectButtonProps>) {
           </ModalBody>
           <ModalFooter>
             <Button
-              action="danger"
-              title="Reject Request"
-              type="submit"
-              disabled={disabled}
-            >
-              Reject Request
-            </Button>
-            <Button
-              action="primary"
+              className="btn-tertiary"
               title="Cancel"
               type="reset"
               onClick={close}
             >
               Cancel
+            </Button>
+            <Button
+              className="btn-danger"
+              title="Reject request"
+              type="submit"
+              disabled={disabled}
+            >
+              Reject request
             </Button>
           </ModalFooter>
         </Form>

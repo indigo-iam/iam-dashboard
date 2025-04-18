@@ -9,7 +9,7 @@ export const Logout = async () => {
   return (
     <form
       action={logout}
-      className="m-auto flex rounded-full p-2 hover:bg-primary-hover"
+      className="m-auto flex rounded-full p-2 hover:bg-white/10"
     >
       <button type="submit" className="size-6 text-secondary">
         <ArrowRightEndOnRectangleIcon />

@@ -1,0 +1,82 @@
+/*
+ * SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
+ *
+ * SPDX-License-Identifier: EUPL-1.2
+ */
+
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #002a44;
+  --color-primary-hover: #183e56;
+  --color-secondary: var(--color-gray-100);
+  --color-dark: #021523;
+  --color-light: #4196b4;
+  --color-success: var(--color-green-600);
+  --color-warning: var(--color-yellow-400);
+  --color-danger: var(--color-red-700);
+  --color-danger-hover: var(--color-red-800);
+}
+
+@layer base {
+  h1 {
+    @apply text-2xl font-bold;
+  }
+  h2 {
+    @apply text-xl font-bold;
+  }
+  h3 {
+    @apply text-lg font-bold;
+  }
+  h4 {
+    @apply text-base font-bold;
+  }
+}
+
+@utility btn {
+  @apply flex min-w-12 gap-2 rounded-md p-1 px-2 text-base font-medium;
+}
+
+@utility btn-primary {
+  @apply btn border-primary bg-primary text-secondary hover:bg-primary-hover disabled:border-primary/50 disabled:bg-primary/50 dark:border-secondary/30 dark:bg-primary/30 border disabled:dark:bg-gray-600 disabled:dark:text-gray-800;
+}
+
+@utility btn-secondary {
+  @apply btn border-primary/30 text-primary hover:bg-primary/5 disabled:border-primary/50 disabled:bg-secondary/50 disabled:text-primary/50 dark:border-secondary/70 dark:bg-primary/5 dark:text-secondary border bg-gray-100 dark:hover:bg-white/30;
+}
+
+@utility btn-tertiary {
+  @apply btn hover:underline;
+}
+
+@utility btn-danger {
+  @apply btn bg-danger text-secondary hover:bg-danger-hover disabled:bg-danger/50;
+}
+
+@utility btn-danger-secondary {
+  @apply btn border-danger bg-secondary text-danger hover:bg-danger hover:text-secondary disabled:border-danger/50 disabled:hover:bg-danger/50 dark:bg-primary border;
+}
+
+@utility btn-danger-tertiary {
+  @apply btn hover:text-danger hover:underline;
+}
+
+@utility popover-option {
+  @apply p-2 text-start whitespace-nowrap hover:bg-gray-200/50;
+}
+
+@utility tbl-th {
+  @apply bg-primary/5 border-b p-2 pt-8 first:rounded-tl-lg last:rounded-tr-lg;
+}
+
+@utility tbl-tr {
+  @apply border-primary/5 border-b last:border-none dark:border-white/5;
+}
+
+@utility tbl-td {
+  @apply p-2;
+}
+
+@utility iam-list-item {
+  @apply dark:border-secondary/75 flex flex-row border-b border-gray-200 p-2 last:border-transparent hover:rounded-md hover:border-transparent hover:bg-neutral-200 has-[+:hover]:border-transparent dark:hover:bg-neutral-200/10;
+}

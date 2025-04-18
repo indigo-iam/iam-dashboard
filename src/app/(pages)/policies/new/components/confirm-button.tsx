@@ -5,12 +5,7 @@
 "use client";
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
-import { GroupRequest } from "@/models/group-requests";
 import { useState } from "react";
-
-type ConfirmButtonProps = {
-  request: GroupRequest;
-};
 
 export default function ConfirmButton() {
   const [show, setShow] = useState(false);
@@ -23,7 +18,7 @@ export default function ConfirmButton() {
 
   return (
     <div className="flex justify-end">
-      <Button action="primary-outline" onClick={open}>
+      <Button className="btn-primary" onClick={open}>
         Add Scope Policy
       </Button>
       <ConfirmModal

@@ -73,10 +73,7 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
           <div hidden={!!selected}>
             <Field>
               <Label>Select a Group to join</Label>
-              <Combobox
-                onSelected={selectGroup}
-                searchCallback={searchGroup}
-              />
+              <Combobox onSelected={selectGroup} searchCallback={searchGroup} />
             </Field>
           </div>
           <div className="space-y-4" hidden={!selected}>
@@ -103,16 +100,16 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
           ) : null}
         </ModalBody>
         <ModalFooter>
-          <Button type="submit" action="primary" icon={<ArrowUpTrayIcon />}>
-            Add group
-          </Button>
           <Button
+            className="btn-tertiary"
             type="button"
-            action="danger"
             onClick={clearAndClose}
-            icon={<XMarkIcon />}
           >
             Cancel
+          </Button>
+          <Button className="btn-primary" type="submit">
+            <ArrowUpTrayIcon className="my-auto size-5" />
+            Add group
           </Button>
         </ModalFooter>
       </Form>

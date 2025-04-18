@@ -37,11 +37,15 @@ export default function ConfirmModal(props: Readonly<ConfirmModal>) {
       <Form action={action}>
         <ModalBody>{children}</ModalBody>
         <ModalFooter>
-          <Button action="danger" type="submit">
-            {confirmText}
-          </Button>
-          <Button type="button" onClick={modalProps.onClose}>
+          <Button
+            className="btn-tertiary"
+            type="button"
+            onClick={modalProps.onClose}
+          >
             {cancelText}
+          </Button>
+          <Button className="btn-primary" type="submit">
+            {confirmText}
           </Button>
         </ModalFooter>
       </Form>

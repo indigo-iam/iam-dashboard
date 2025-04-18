@@ -30,7 +30,7 @@ export default function RequestSignatureButton() {
           <b>ALL</b> users at their next login.
         </p>
       </ConfirmModal>
-      <Button action="warning" onClick={show}>
+      <Button className="btn-primary" onClick={show}>
         Request AUP signature
       </Button>
     </>

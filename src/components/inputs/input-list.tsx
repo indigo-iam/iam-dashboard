@@ -54,7 +54,7 @@ export function InputList(props: Readonly<InputListProps>) {
       <button
         type="button"
         onClick={() => removeItem(index)}
-        className="w-5 rounded bg-secondary-100 hover:bg-danger hover:text-secondary dark:bg-secondary/60 dark:text-danger/80"
+        className="bg-secondary-100 hover:bg-danger hover:text-secondary dark:bg-secondary/60 dark:text-danger/80 w-5 rounded"
       >
         <XMarkIcon />
       </button>
@@ -99,11 +99,12 @@ export function InputList(props: Readonly<InputListProps>) {
           type={type}
         />
         <Button
+          className="btn-primary"
           type="button"
-          icon={<PlusIcon />}
           onClick={handleClick}
           disabled={value.length === 0}
         >
+          <PlusIcon className="my-auto size-5" />
           Add
         </Button>
       </div>

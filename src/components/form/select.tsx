@@ -23,7 +23,7 @@ type SelectProps = {
   className?: string;
 };
 
-export default function Select(props: Readonly<SelectProps>) {
+export function Select(props: Readonly<SelectProps>) {
   const { name, onChange, children, defaultValue, disabled, className } = props;
   const [selected, setSelected] = useState(defaultValue);
 

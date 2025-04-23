@@ -9,7 +9,7 @@ import {
 
 interface LabelProps extends HeadlessLabelProps {}
 
-export default function Label(props: Readonly<LabelProps>) {
+export function Label(props: Readonly<LabelProps>) {
   return (
     <HeadlessLabel
       className="data-[required]:after:text-danger text-light text-sm data-[required]:after:content-['*']"

@@ -7,7 +7,7 @@ import {
   DescriptionProps,
 } from "@headlessui/react";
 
-export default function Description(props: Readonly<DescriptionProps>) {
+export function Description(props: Readonly<DescriptionProps>) {
   return (
     <HeadlessDescription
       {...props}

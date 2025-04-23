@@ -34,7 +34,7 @@
 }
 
 @utility btn {
-  @apply flex min-w-12 gap-2 rounded-md p-1 px-2 text-base font-medium;
+  @apply flex min-w-12 gap-2 rounded-md p-1 px-2 text-base font-medium text-nowrap;
 }
 
 @utility btn-primary {

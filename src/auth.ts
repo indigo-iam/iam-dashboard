@@ -15,10 +15,14 @@ declare module "next-auth/jwt" {
     access_token: string;
     expires_at: number;
     is_admin: boolean;
+    userId: string;
   }
 }
 
 declare module "next-auth" {
+  interface User {
+    sub: string;
+  }
   interface Session {
     access_token?: string & DefaultSession["user"];
     expired: boolean;
@@ -47,6 +51,7 @@ const IamProvider: OIDCConfig<Profile> = {
       name: profile.name ?? undefined,
       email: profile.email ?? undefined,
       image: profile.picture ?? undefined,
+      sub: profile.sub as string,
     };
     return user;
   },
@@ -66,7 +71,7 @@ export const authConfig: NextAuthConfig = {
       }
       return false;
     },
-    async jwt({ token, account }) {
+    async jwt({ token, account, user }) {
       if (account?.access_token) {
         // first time login, save access token and expiration
         const { access_token } = account;
@@ -75,6 +80,7 @@ export const authConfig: NextAuthConfig = {
         const indigoUser = me["urn:indigo-dc:scim:schemas:IndigoUser"];
         const is_admin =
           indigoUser?.authorities?.includes("ROLE_ADMIN") ?? false;
+        token.userId = user.sub;
         return { ...token, access_token, is_admin, expires_at };
       }
       return token;
@@ -83,6 +89,7 @@ export const authConfig: NextAuthConfig = {
       const { access_token, expires_at, is_admin } = token;
       const expired = expires_at < Date.now();
       const token_expires = new Date(expires_at);
+      session.user.id = token.userId;
       return { ...session, access_token, is_admin, expired, token_expires };
     },
   },

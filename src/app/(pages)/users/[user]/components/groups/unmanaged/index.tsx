@@ -14,7 +14,7 @@ type RowProps = {
 function Row(props: Readonly<RowProps>) {
   const { user, groupRef } = props;
   return (
-    <li className="flex flex-row border-b p-2 last:border-0">
+    <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col font-bold">
         {groupRef.display}
         <small className="font-light">{groupRef.value}</small>
@@ -36,7 +36,7 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
   }
 
   return (
-    <Section title="User Groups">
+    <Section title="Joined Groups">
       <ul className="w-full">
         {groups.map(g => (
           <Row key={g.value} user={user} groupRef={g} />

@@ -41,7 +41,7 @@ export default async function ManagedGroups(
   const { user } = props;
   const groups = await fetchManagedGroups(user.id);
   return (
-    <Section title="Managed">
+    <Section title="Managed Groups">
       <ul className="w-full">
         {groups.map(group => (
           <Row key={group.id} group={group} />

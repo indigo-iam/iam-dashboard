@@ -49,7 +49,7 @@ function CertificateTypeRadio(
 function PEMField() {
   return (
     <Field>
-      <Label required>Certificate</Label>
+      <Label data-required>Certificate</Label>
       <TextArea name="certificate" required placeholder="Certificate..." />
     </Field>
   );
@@ -58,7 +58,7 @@ function PEMField() {
 function IssuerField() {
   return (
     <Field>
-      <Label required>Issuer</Label>
+      <Label data-required>Issuer</Label>
       <Select name="issuer" disabled>
         <option>No options</option>
       </Select>
@@ -95,7 +95,7 @@ export default function LinkCertificateModal(
             <b>User</b> {user.displayName}
           </p>
           <Field>
-            <Label required>Label</Label>
+            <Label data-required>Label</Label>
             <Input required name="label" placeholder="Label..." />
           </Field>
           {issuers ? <CertificateTypeRadio callback={setFormat} /> : null}

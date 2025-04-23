@@ -8,18 +8,14 @@ import {
 } from "@headlessui/react";
 
 export interface InputProps extends HeadlessInputProps {
-  className?: string;
   "data-test"?: string;
 }
 
 export function Input(props: Readonly<InputProps>) {
-  const { className, ...inputProps } = props;
   return (
-    <div className={className}>
-      <HeadlessInput
-        className="disabled:bg-secondary-300 placeholder:disabled:text-secondary-600 disabled:dark:bg-dark/10 w-full rounded-lg border border-gray-400 px-4 py-1 dark:bg-white/5 disabled:dark:text-white/20"
-        {...inputProps}
-      />
-    </div>
+    <HeadlessInput
+      className="placeholder:disabled:text-secondary-600 outline-danger data-[invalid=true]:text-danger invalid:text-danger w-full rounded border border-gray-300 px-2 py-1 invalid:bg-red-50 invalid:outline disabled:bg-transparent disabled:text-slate-400 data-[invalid=true]:bg-red-50 data-[invalid=true]:outline"
+      {...props}
+    />
   );
 }

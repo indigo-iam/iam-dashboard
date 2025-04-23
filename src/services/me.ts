@@ -3,13 +3,11 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use server";
-import { authFetch, getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
-import { ScimOp, ScimRequest, User } from "@/models/scim";
+import { getItem } from "@/utils/fetch";
+import { User } from "@/models/scim";
 import { Paginated } from "@/models/pagination";
 import { Client } from "@/models/client";
-import { revalidatePath } from "next/cache";
-import { setNotification } from "@/components/toaster";
 
 const { BASE_URL } = getConfig();
 

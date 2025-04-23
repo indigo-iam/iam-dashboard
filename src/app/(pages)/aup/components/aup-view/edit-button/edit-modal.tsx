@@ -34,7 +34,7 @@ export default function EditModal(props: Readonly<EditModalProps>) {
       <Form action={action}>
         <ModalBody>
           <Field>
-            <Label required>Accept Usage Policy URL</Label>
+            <Label data-required>Accept Usage Policy URL</Label>
             <Input name="url" type="url" defaultValue={aup.url} required />
             <Description>
               The URL above is presented to users at registration time or
@@ -42,7 +42,7 @@ export default function EditModal(props: Readonly<EditModalProps>) {
             </Description>
           </Field>
           <Field>
-            <Label required>AUP signature validity (in days)</Label>
+            <Label data-required>AUP signature validity (in days)</Label>
             <Input
               name="validity"
               type="text"
@@ -56,7 +56,7 @@ export default function EditModal(props: Readonly<EditModalProps>) {
             </Description>
           </Field>
           <Field>
-            <Label required>AUP signature reminders (in days)</Label>
+            <Label data-required>AUP signature reminders (in days)</Label>
             <Input
               name="reminders"
               type="text"

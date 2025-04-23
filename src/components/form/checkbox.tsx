@@ -8,7 +8,7 @@ export type CheckboxProps = {
   defaultChecked?: boolean;
 };
 
-export default function Checkbox(props: Readonly<CheckboxProps>) {
+export function Checkbox(props: Readonly<CheckboxProps>) {
   const { name, defaultChecked, label } = props;
   return (
     <div className="mt-4 flex flex-row gap-1">

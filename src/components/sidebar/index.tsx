@@ -38,16 +38,6 @@ const AccountManagement = () => {
   return (
     <DrawerSection title="Account Management">
       <SidebarLink title="Home" href="/users/me" icon={<HomeIcon />} />
-      <SidebarLink
-        title="My Clients"
-        href="/clients?me"
-        icon={<RocketLaunchIcon />}
-      />
-      <SidebarLink
-        title="My Groups"
-        href="/users/me/groups"
-        icon={<UserGroupIcon />}
-      />
     </DrawerSection>
   );
 };

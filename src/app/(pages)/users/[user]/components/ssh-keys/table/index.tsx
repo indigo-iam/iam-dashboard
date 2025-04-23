@@ -17,13 +17,13 @@ function SSHKeyView(props: Readonly<{ user: User; sshKey: SSHKey }>) {
       <div className="my-auto flex grow flex-col gap-1 truncate">
         <p className="text-lg">{sshKey.display}</p>
         <small
-          className="truncate text-sm"
+          className="text-light truncate text-sm font-light"
           title={sshKey.fingerprint}
         >
           {sshKey.fingerprint}
         </small>
       </div>
-      <div className=" my-auto hidden px-2 text-sm sm:flex">
+      <div className="my-auto hidden px-2 text-sm sm:flex">
         Created {createdAt}
       </div>
       <SSHKeysOptions user={user} sshKey={sshKey} />

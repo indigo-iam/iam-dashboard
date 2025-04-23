@@ -24,7 +24,7 @@ type DropdownListProps = {
   defaultOptions: DropdownListOption[];
 };
 
-export default function DropdownList(props: Readonly<DropdownListProps>) {
+export function DropdownList(props: Readonly<DropdownListProps>) {
   const { name, title, options, defaultOptions } = props;
   const [items, setItems] = useState(defaultOptions);
   const removeItem = (index: number) => setItems(items.toSpliced(index, 1));

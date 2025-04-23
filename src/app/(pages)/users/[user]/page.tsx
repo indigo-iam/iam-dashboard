@@ -3,15 +3,17 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Page, Panel } from "@/components/layout";
+import { Tab, TabGroup, TabList, TabPanels } from "@/components/tabs";
 import { fetchMe } from "@/services/me";
 import { fetchUser } from "@/services/users";
 import {
   Attributes,
   Certificates,
-  GroupRequests,
+  General,
   LinkedAccounts,
   SSHKeys,
-  UserInfo,
+  UserClients,
+  UserGroups,
 } from "./components";
 
 type UserPageProps = {
@@ -30,12 +32,26 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
   return (
     <Page title={user.name?.formatted}>
       <Panel>
-        <UserInfo user={user} isMe={isMe} />
-        <GroupRequests user={user} isMe={isMe} />
-        <LinkedAccounts user={user} />
-        <Certificates user={user} />
-        <SSHKeys user={user} />
-        <Attributes user={user} />
+        <TabGroup className="space-y-8">
+          <TabList className="flex overflow-auto">
+            <Tab>GENERAL</Tab>
+            <Tab>GROUPS</Tab>
+            <Tab>CLIENTS</Tab>
+            <Tab>LINKED ACCOUNTS</Tab>
+            <Tab>CERTIFICATES</Tab>
+            <Tab>SSH KEYS</Tab>
+            <Tab>ATTRIBUTES</Tab>
+          </TabList>
+          <TabPanels>
+            <General user={user} isMe={isMe} />
+            <UserGroups user={user} />
+            <UserClients isMe={isMe} />
+            <LinkedAccounts user={user} />
+            <Certificates user={user} />
+            <SSHKeys user={user} />
+            <Attributes user={user} />
+          </TabPanels>
+        </TabGroup>
       </Panel>
     </Page>
   );

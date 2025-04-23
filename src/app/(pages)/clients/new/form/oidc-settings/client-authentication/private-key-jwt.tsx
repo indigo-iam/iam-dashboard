@@ -26,7 +26,7 @@ export default function PrivateKeyJwt(props: Readonly<PrivateKeyJwtProps>) {
 
   return (
     <Field>
-      <Label required>Public Key Set</Label>
+      <Label data-required>Public Key Set</Label>
       <Description>
         The JSON Web Keyset for this client. Used for client authentication and
         token encryption. Keys can be provided by reference or by value.

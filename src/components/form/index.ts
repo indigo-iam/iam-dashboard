@@ -2,11 +2,11 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-export { default as Checkbox } from "./checkbox";
-export { default as Description } from "./description";
-export { default as DropdownList } from "./dropdown-list";
-export { default as Form } from "./form";
-export { default as FormSection } from "./form-section";
-export { default as Field } from "./field";
-export { default as Label } from "./label";
-export { default as Select, SelectOption } from "./select";
+export { Checkbox } from "./checkbox";
+export { Description } from "./description";
+export { DropdownList } from "./dropdown-list";
+export { Form } from "./form";
+export { FormSection } from "./form-section";
+export { Label } from "./label";
+export { Select, SelectOption } from "./select";
+export { Field } from "@headlessui/react";

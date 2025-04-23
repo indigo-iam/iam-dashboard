@@ -2,9 +2,10 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-export { default as Attributes } from "./attributes";
-export { default as Certificates } from "./certificates";
-export { default as GroupRequests } from "./group-requests";
-export { default as LinkedAccounts } from "./linked-accounts";
-export { default as SSHKeys } from "./ssh-keys";
-export { default as UserInfo } from "./info";
+export { General } from "./general";
+export { UserGroups } from "./groups";
+export { UserClients } from "./clients";
+export { LinkedAccounts } from "./linked-accounts";
+export { Certificates } from "./certificates";
+export { SSHKeys } from "./ssh-keys";
+export { Attributes } from "./attributes";

@@ -8,7 +8,7 @@ export type FormSectionProps = {
   children: React.ReactNode;
 };
 
-export default function FormSection(props: Readonly<FormSectionProps>) {
+export function FormSection(props: Readonly<FormSectionProps>) {
   const { htmlFor, title, children } = props;
   return (
     <div className="flex flex-col gap-2">

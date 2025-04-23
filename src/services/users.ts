@@ -6,11 +6,12 @@
 import { authFetch, getItem } from "@/utils/fetch";
 import getConfig from "@/utils/config";
 import { Paginated } from "@/models/pagination";
-import { User, ScimUser, ScimRequest } from "@/models/scim";
+import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
 import { revalidatePath } from "next/cache";
 import { SSHKey } from "@/models/indigo-user";
 import { Attribute } from "@/models/attributes";
 import { setNotification } from "@/components/toaster";
+import { auth } from "@/auth";
 
 const { BASE_URL } = getConfig();
 
@@ -56,6 +57,72 @@ export const addUser = async (user: ScimUser) => {
     });
   }
 };
+
+export async function patchUser(userId: string, formData: FormData) {
+  const session = await auth();
+  const isMe = session?.user?.id === userId;
+  const op: ScimRequest = {
+    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
+    operations: [],
+  };
+
+  const givenName = formData.get("given-name") as string | undefined;
+  const familyName = formData.get("family-name") as string | undefined;
+  const middleName = formData.get("middle-name") as string | undefined;
+
+  if (givenName || familyName) {
+    const userOp: ScimOp = {
+      op: "replace",
+      value: {
+        displayName: `${givenName} ${familyName}`,
+        name: {
+          givenName,
+          familyName,
+          middleName,
+        },
+      },
+    };
+    op.operations.push(userOp);
+  }
+
+  const email = formData.get("email") as string | undefined;
+  if (email) {
+    const mailOp: ScimOp = {
+      op: "replace",
+      value: {
+        emails: [
+          {
+            type: "work",
+            value: email,
+            primary: true,
+          },
+        ],
+      },
+    };
+    op.operations.push(mailOp);
+  }
+  const url = isMe ? `${BASE_URL}/scim/Me` : `${BASE_URL}/scim/Users/${userId}`;
+  const response = await authFetch(url, {
+    body: JSON.stringify(op),
+    method: "PATCH",
+    headers: { "content-type": "application/scim+json" },
+  });
+
+  if (response.ok) {
+    await setNotification({ type: "success", message: "Saved changes" });
+  } else {
+    if (response.status == 409) {
+      const json = await response.json();
+      return { err: json.detail as string };
+    }
+    const msg = await response.text();
+    await setNotification({
+      type: "error",
+      message: "Cannot save user",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
+  }
+}
 
 export const deleteUser = async (user: User) => {
   const url = `${BASE_URL}/scim/Users/${user.id}`;
@@ -262,7 +329,10 @@ export async function requestAUPSignature(userId: string) {
     method: "DELETE",
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "Request AUP Signature sent" });
+    await setNotification({
+      type: "success",
+      message: "Request AUP Signature sent",
+    });
     revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();

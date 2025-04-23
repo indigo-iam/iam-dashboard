@@ -13,10 +13,7 @@ type TapPanelProps = {
 export default function TabPanel(props: Readonly<TapPanelProps>) {
   const { children, className, unmount } = props;
   return (
-    <HeadlessUITabPanel
-      unmount={unmount}
-      className={"rounded-lg p-4 shadow " + className}
-    >
+    <HeadlessUITabPanel unmount={unmount} className={className}>
       {children}
     </HeadlessUITabPanel>
   );

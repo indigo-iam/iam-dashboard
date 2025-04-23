@@ -9,4 +9,3 @@ export { LinkedAccounts } from "./linked-accounts";
 export { Certificates } from "./certificates";
 export { SSHKeys } from "./ssh-keys";
 export { Attributes } from "./attributes";
-export { default as UserInfo } from "./info";

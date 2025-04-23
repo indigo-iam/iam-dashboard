@@ -5,23 +5,24 @@
 export function dateToHuman(date: Date): string {
   const now = Date.now();
   const delta = now - date.getTime();
-
-  if (delta < 86400000) {
+  const sign = delta >= 0 ? -1 : 1;
+  
+  if (delta >= 0 && delta < 86400000) {
     return "today";
   }
-
+  const absDelta = Math.abs(delta);
   const formatter = new Intl.RelativeTimeFormat("en");
-  const days = Math.ceil(delta / 86400000);
+  const days = Math.ceil(absDelta / 86400000);
 
-  if (days < 31) {
-    return formatter.format(-days, "day");
+  if (days <= 31) {
+    return formatter.format(sign * days, "day");
   }
 
-  const months = Math.floor(delta / 2678400000);
+  const months = Math.floor(absDelta / 2678400000);
   if (months < 12) {
-    return formatter.format(-months, "month");
+    return formatter.format(sign * months, "month");
   }
 
-  const years = Math.floor(delta / 32140800000);
-  return formatter.format(-years, "year");
+  const years = Math.floor(absDelta / 32140800000);
+  return formatter.format(sign * years, "year");
 }

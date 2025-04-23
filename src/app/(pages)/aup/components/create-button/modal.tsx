@@ -36,7 +36,7 @@ export default function CreateModal(props: Readonly<CreateModalProps>) {
       <Form action={action}>
         <ModalBody>
           <Field>
-            <Label required>Acceptable Usage Policy URL</Label>
+            <Label data-required>Acceptable Usage Policy URL</Label>
             <Input type="url" name="url" required />
             <Description>
               The URL above is presented to users at registration time or
@@ -44,7 +44,7 @@ export default function CreateModal(props: Readonly<CreateModalProps>) {
             </Description>
           </Field>
           <Field>
-            <Label required>AUP signature validity (in days)</Label>
+            <Label data-required>AUP signature validity (in days)</Label>
             <Input
               type="number"
               name="validity"
@@ -59,7 +59,7 @@ export default function CreateModal(props: Readonly<CreateModalProps>) {
             </Description>
           </Field>
           <Field hidden={validity <= 0}>
-            <Label required>AUP reminders (in days)</Label>
+            <Label data-required>AUP reminders (in days)</Label>
             <Input
               type="text"
               name="reminders"

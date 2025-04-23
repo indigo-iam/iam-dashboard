@@ -20,7 +20,7 @@ export default function AuthorizationCode(
 
   return (
     <Field>
-      <Label required>Redirect URIs</Label>
+      <Label data-required>Redirect URIs</Label>
       <Description className="text-xs text-primary/60">
         At least a valid Redirect URI is required when Authorization Code is
         selected.

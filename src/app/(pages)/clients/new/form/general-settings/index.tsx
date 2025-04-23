@@ -25,7 +25,7 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
     <CarouselPanel unmount={false}>
       <Section title="General Settings">
         <Field>
-          <Label required>Client Name</Label>
+          <Label data-required>Client Name</Label>
           <Description>
             Client name must be at least four characters long.
           </Description>

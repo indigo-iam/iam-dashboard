@@ -5,7 +5,7 @@
 "use client";
 import { Button } from "@/components/buttons";
 import { Form, Field, Label } from "@/components/form";
-import { XMarkIcon, ArrowUpTrayIcon } from "@heroicons/react/24/solid";
+import { ArrowUpTrayIcon } from "@heroicons/react/24/solid";
 import { Group } from "@/models/groups";
 import { JoinGroupRequest } from "@/models/group-requests";
 import { submitGroupRequest } from "@/services/group-requests";

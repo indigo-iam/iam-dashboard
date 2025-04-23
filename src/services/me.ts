@@ -11,10 +11,12 @@ import { Client } from "@/models/client";
 
 const { BASE_URL } = getConfig();
 
-export const fetchMe = async () => getItem<User>(`${BASE_URL}/scim/Me`);
+export async function fetchMe() {
+  return getItem<User>(`${BASE_URL}/scim/Me`);
+}
 
-export const getClientsPage = async (count: number, startIndex: number = 1) => {
+export async function getClientsPage(count: number, startIndex: number = 1) {
   return await getItem<Paginated<Client>>(
     `${BASE_URL}/iam/account/me/clients?count=${count}&startIndex=${startIndex}`
   );
-};
+}

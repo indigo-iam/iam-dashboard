@@ -7,11 +7,13 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #002a44;
+  --color-infn: #002a44;
+  --color-primary: var(--color-slate-700);
+  --color-light: var(--color-slate-600);
+  --color-extralight: var(--color-slate-400);
   --color-primary-hover: #183e56;
   --color-secondary: var(--color-gray-100);
   --color-dark: #021523;
-  --color-light: #4196b4;
   --color-success: var(--color-green-600);
   --color-warning: var(--color-yellow-400);
   --color-danger: var(--color-red-700);

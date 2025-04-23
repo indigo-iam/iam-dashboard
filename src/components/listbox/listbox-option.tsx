@@ -14,7 +14,7 @@ export default function ListboxOption(props: ListboxOptionProps) {
   const { children, value } = props;
   return (
     <HeadlessListboxOption
-      className="group flex cursor-pointer select-none gap-1 rounded-md px-2 py-1 data-[focus]:bg-primary/80 data-[focus]:text-secondary dark:data-[focus]:bg-white/25"
+      className="group data-[focus]:bg-infn/80 data-[focus]:text-secondary flex cursor-pointer gap-1 rounded-md px-2 py-1 select-none dark:data-[focus]:bg-white/25"
       value={value}
     >
       <CheckIcon className="invisible my-auto size-4 group-data-[selected]:visible" />

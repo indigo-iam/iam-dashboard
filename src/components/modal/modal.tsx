@@ -6,10 +6,10 @@
 import { ReactNode } from "react";
 import {
   Dialog,
+  DialogBackdrop,
   DialogPanel,
   DialogTitle,
   Transition,
-  TransitionChild,
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
@@ -22,7 +22,7 @@ export interface ModalProps {
 }
 
 export function Modal(props: Readonly<ModalProps>) {
-  const { title, children, show, onClose, ...other } = props;
+  const { title, children, show, onClose } = props;
 
   return (
     <Transition appear show={show}>
@@ -30,54 +30,36 @@ export function Modal(props: Readonly<ModalProps>) {
         as="div"
         className="relative z-10 focus:outline-none"
         onClose={onClose}
-        {...other}
       >
+        <DialogBackdrop
+          transition
+          className="fixed inset-0 bg-black/30 duration-300 data-[closed]:opacity-0"
+        />
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="mt-16 flex min-h-32 justify-center p-4">
-            {/* Backdrop */}
-            <TransitionChild
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 transform-[scale(95%)]"
-              enterTo="opacity-100 transform-[scale(100%)]"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 transform-[scale(100%)]"
-              leaveTo="opacity-0 transform-[scale(95%)]"
+            <DialogPanel
+              transition
+              className="bg-secondary text-primary dark:text-secondary z-50 w-full max-w-xl divide-y rounded-2xl p-4 shadow-2xl duration-300 ease-out data-[closed]:transform-[scale-95] data-[closed]:opacity-0 dark:bg-white/10"
             >
-              <div
-                className="z-25 fixed inset-0 bg-black/30"
-                aria-hidden="true"
-              />
-            </TransitionChild>
-            {/* Popup */}
-            <TransitionChild
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 transform-[scale(95%)]"
-              enterTo="opacity-100 transform-[scale(100%)]"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 transform-[scale(100%)]"
-              leaveTo="opacity-0 transform-[scale(95%)]"
-            >
-              <DialogPanel className="z-50 w-full max-w-xl divide-y rounded-2xl bg-secondary p-4 text-primary shadow-lg dark:bg-white/10 dark:text-secondary dark:backdrop-blur-lg">
-                <DialogTitle as="h2" className="pb-2 text-xl font-bold">
-                  <div className="flex">
-                    {title}
-                    <button
-                      className="ml-auto mr-0"
-                      type="reset"
-                      onClick={onClose}
+              <DialogTitle as="h2" className="pb-2 text-xl font-bold">
+                <div className="flex">
+                  {title}
+                  <button
+                    className="mr-0 ml-auto"
+                    type="reset"
+                    onClick={onClose}
+                  >
+                    <div
+                      className="dark:text-primary w-6 rounded-full bg-neutral-300 p-[3px] text-neutral-500 hover:bg-neutral-400 dark:bg-white/25 dark:hover:bg-neutral-200/10"
+                      aria-label="close"
                     >
-                      <div
-                        className="w-6 rounded-full bg-neutral-300 p-[3px] text-neutral-500 hover:bg-neutral-400 dark:bg-white/25 dark:text-primary dark:hover:bg-neutral-200/10"
-                        aria-label="close"
-                      >
-                        <XMarkIcon />
-                      </div>
-                    </button>
-                  </div>
-                </DialogTitle>
-                {children}
-              </DialogPanel>
-            </TransitionChild>
+                      <XMarkIcon />
+                    </div>
+                  </button>
+                </div>
+              </DialogTitle>
+              {children}
+            </DialogPanel>
           </div>
         </div>
       </Dialog>

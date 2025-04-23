@@ -25,7 +25,7 @@ const LogoIam = () => (
 export default function Header(props: Readonly<{ drawerId: string }>) {
   const { drawerId } = props;
   return (
-    <header className="bg-infn fixed top-0 left-0 z-30 h-16 w-screen lg:w-80">
+    <header className="bg-infn fixed top-0 left-0 z-10 h-16 w-screen lg:w-80">
       <div className="flex h-full justify-between px-4">
         <LogoIam />
         <BurgerButton drawerId={drawerId} />

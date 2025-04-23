@@ -13,7 +13,7 @@ type UserDetailsFormProps = {
   user: User;
 };
 
-export default function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
+export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
   const { user } = props;
 
   const action = async (formData: FormData) => {

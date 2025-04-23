@@ -5,7 +5,7 @@
 import { TabPanel } from "@/components/tabs";
 import { User } from "@/models/scim";
 import { Metadata } from "./metadata";
-import UserDetailsForm from "./user-details-form";
+import { UserDetailsForm } from "./user-details-form";
 import { Aup } from "./aup";
 import { DangerZone } from "./danger-zone";
 

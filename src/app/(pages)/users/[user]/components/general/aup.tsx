@@ -9,12 +9,12 @@ import { User } from "@/models/scim";
 import { fetchAUP } from "@/services/aup";
 import { dateToHuman } from "@/utils/dates";
 
-type AUPProps = {
+type AupProps = {
   user: User;
   isMe: boolean;
 };
 
-export async function AUP(props: Readonly<AUPProps>) {
+export async function Aup(props: Readonly<AupProps>) {
   const { user, isMe } = props;
   const [aupExpiresIn, expired] = await (async () => {
     const aupSignatureTime =

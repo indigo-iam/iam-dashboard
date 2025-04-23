@@ -6,7 +6,7 @@ import { TabPanel } from "@/components/tabs";
 import { User } from "@/models/scim";
 import { Metadata } from "./metadata";
 import UserDetailsForm from "./user-details-form";
-import { AUP } from "./aup";
+import { Aup } from "./aup";
 import { DangerZone } from "./danger-zone";
 
 type GeneralProps = {
@@ -21,7 +21,7 @@ export function General(props: Readonly<GeneralProps>) {
       <Metadata user={user} />
       <UserDetailsForm user={user} />
       <hr className="col-span-full text-gray-300" />
-      <AUP user={user} isMe={isMe} />
+      <Aup user={user} isMe={isMe} />
       {isMe ? null : (
         <>
           <hr className="col-span-full text-gray-300" />

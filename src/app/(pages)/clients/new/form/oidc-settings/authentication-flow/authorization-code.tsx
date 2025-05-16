@@ -19,9 +19,9 @@ export default function AuthorizationCode(
   };
 
   return (
-    <Field>
+    <Field className="flex flex-col">
       <Label data-required>Redirect URIs</Label>
-      <Description className="text-xs text-primary/60">
+      <Description className="text-primary/60 dark:text-secondary/60 p-1 text-xs">
         At least a valid Redirect URI is required when Authorization Code is
         selected.
       </Description>

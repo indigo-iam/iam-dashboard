@@ -24,7 +24,7 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
   return (
     <CarouselPanel unmount={false}>
       <Section title="General Settings">
-        <Field>
+        <Field className="flex flex-col">
           <Label data-required>Client Name</Label>
           <Description>
             Client name must be at least four characters long.
@@ -37,7 +37,7 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
             onChange={handleClientNameChange}
           />
         </Field>
-        <Field>
+        <Field className="flex flex-col gap-2">
           <Label>Client Description</Label>
           <Input
             title="Client Description"

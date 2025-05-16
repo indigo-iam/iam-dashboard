@@ -64,7 +64,7 @@ export default function ClientAuthentication(
 
   return (
     <>
-      <Field className="flex flex-col">
+      <Field>
         <Label>Client Authentication</Label>
         <Description>A little description.</Description>
         <Select

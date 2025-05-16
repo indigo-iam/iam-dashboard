@@ -2,8 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Description } from "@headlessui/react";
-import { Field, Label, Select, SelectOption } from "@/components/form";
+import {
+  Field,
+  Label,
+  Select,
+  SelectOption,
+  Description,
+} from "@/components/form";
 import AuthorizationCode from "./authorization-code";
 import ClientCredentials from "./client-credentials";
 import DeviceCode from "./device-code";
@@ -55,7 +60,7 @@ export default function AuthenticationFlow(
     <>
       <Field>
         <Label>Authentication Flow</Label>
-        <Description className="description">A little description.</Description>
+        <Description>A little description.</Description>
         <Select
           name="grant_types"
           defaultValue={options[0]}

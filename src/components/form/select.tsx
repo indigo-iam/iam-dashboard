@@ -20,11 +20,10 @@ type SelectProps = {
   onChange?: (value: { id: string; name: string }) => void;
   defaultValue?: { id: string; name: string };
   disabled?: boolean;
-  className?: string;
 };
 
 export function Select(props: Readonly<SelectProps>) {
-  const { name, onChange, children, defaultValue, disabled, className } = props;
+  const { name, onChange, children, defaultValue, disabled } = props;
   const [selected, setSelected] = useState(defaultValue);
 
   const handleChange = (value: { id: string; name: string }) => {
@@ -39,7 +38,7 @@ export function Select(props: Readonly<SelectProps>) {
       onChange={handleChange}
       disabled={disabled}
     >
-      <ListboxButton className={className}>{selected?.name}</ListboxButton>
+      <ListboxButton>{selected?.name}</ListboxButton>
       <ListboxOptions>{children}</ListboxOptions>
     </Listbox>
   );

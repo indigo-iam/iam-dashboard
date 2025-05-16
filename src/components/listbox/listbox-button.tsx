@@ -7,15 +7,12 @@ import { ChevronDownIcon } from "@heroicons/react/24/solid";
 
 type ListboxButtonProps = {
   children?: React.ReactNode;
-  className?: string;
 };
 
 export default function ListboxButton(props: Readonly<ListboxButtonProps>) {
-  const { children, className } = props;
+  const { children } = props;
   return (
-    <HeadlessListboxButton
-      className={`relative block rounded-md border px-2 py-1 text-left shadow-md dark:bg-white/10 ${className}`}
-    >
+    <HeadlessListboxButton className="btn-secondary">
       <div className="flex flex-row justify-between gap-2">
         {children}
         <ChevronDownIcon className="right-0 my-auto size-4" />

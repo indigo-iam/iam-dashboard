@@ -34,7 +34,7 @@ export async function Aup(props: Readonly<AupProps>) {
   return (
     <>
       <div className="col-span-full text-sm font-light sm:col-span-2">
-        <div className="text-light dark:text-extralight/60">
+        <div className="text-light dark:text-extralight/60 py-1">
           Acceptable Usage Policy
         </div>
         <div className="text-extralight">

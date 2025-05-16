@@ -19,9 +19,11 @@ export default async function Policies() {
           tempus sit amet enim eget consequat. Phasellus sit amet fringilla mi,
           id hendrerit quam.
         </p>
-        <Section>
-          <AddPolicyButton />
-          <PoliciesTable policies={policies} />
+        <Section title="Policies">
+          <div className="flex flex-col gap-2">
+            <AddPolicyButton />
+            <PoliciesTable policies={policies} />
+          </div>
         </Section>
       </Panel>
     </Page>

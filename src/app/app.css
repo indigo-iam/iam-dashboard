@@ -80,5 +80,5 @@
 }
 
 @utility iam-list-item {
-  @apply dark:border-secondary/75 flex flex-row border-b border-gray-200 p-2 last:border-transparent hover:rounded-md hover:border-transparent hover:bg-neutral-200 has-[+:hover]:border-transparent dark:hover:bg-neutral-200/10;
+  @apply dark:border-light flex flex-row border-b border-gray-200 p-2 last:border-transparent hover:rounded-md hover:border-transparent hover:bg-neutral-200 has-[+:hover]:border-transparent dark:hover:bg-neutral-200/10;
 }

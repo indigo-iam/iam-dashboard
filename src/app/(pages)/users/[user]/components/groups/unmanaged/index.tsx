@@ -17,7 +17,9 @@ function Row(props: Readonly<RowProps>) {
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col font-bold">
         {groupRef.display}
-        <small className="font-light">{groupRef.value}</small>
+        <small className="dark:text-extralight font-light">
+          {groupRef.value}
+        </small>
       </div>
       <GroupOptions groupRef={groupRef} user={user} />
     </li>

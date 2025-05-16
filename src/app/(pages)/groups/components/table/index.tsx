@@ -25,11 +25,15 @@ function Row(props: Readonly<RowProps>) {
             href={`/groups/${group.id}`}
           >
             {group.displayName}
-            <small className="font-light">{group.id}</small>
+            <small className="dark:text-extralight font-light">
+              {group.id}
+            </small>
           </Link>
           <div className="my-auto flex grow flex-col">
             <div className="inline-flex gap-2 sm:flex-col sm:items-end sm:gap-0">
-              <small className="font-light">Created {created}</small>
+              <small className="dark:text-extralight px-2 font-light">
+                Created {created}
+              </small>
             </div>
           </div>
         </div>

@@ -26,12 +26,16 @@ function Row(props: Readonly<RowProps>) {
             href={`/users/${user.id}`}
           >
             {user.name?.formatted}
-            <small className="font-light">{user.emails?.[0].value}</small>
+            <small className="dark:text-extralight font-light">
+              {user.emails?.[0].value}
+            </small>
           </Link>
           <div className="my-auto flex grow flex-col">
             <div className="inline-flex gap-2 sm:flex-col sm:items-end sm:gap-0 sm:px-2">
               <Status active={user.active ?? false} />
-              <small className="font-light">Created {created}</small>
+              <small className="dark:text-extralight font-light">
+                Created {created}
+              </small>
             </div>
           </div>
         </div>

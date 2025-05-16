@@ -39,7 +39,9 @@ export async function Certificates(props: Readonly<CertificateProps>) {
             <CertificateView key={cert.subjectDn + cert.issuerDn} cert={cert} />
           ))
         ) : (
-          <p className="font-light">No certificates found.</p>
+          <p className="dark:text-extralight font-light">
+            No certificates found.
+          </p>
         )}
         <LinkCertificateButton user={user} />
       </Section>

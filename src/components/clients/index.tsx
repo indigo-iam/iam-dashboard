@@ -35,19 +35,21 @@ function Row(props: Readonly<RowProps>) {
           >
             <div className="flex flex-col hover:underline">
               <div className="font-bold">{client_name}</div>
-              <small>{client_id}</small>
+              <small className="dark:text-extralight">{client_id}</small>
             </div>
             <div
               title={scopes}
-              className="font-light line-clamp-1 p-1 text-xs"
+              className="dark:text-secondary line-clamp-1 text-xs font-light"
             >
               {scopes}
             </div>
           </Link>
           <div className="my-auto flex grow flex-col">
-            <div className="inline-flex gap-2 sm:flex-col sm:items-end sm:gap-0 sm:px-2">
-              <Status active={client.active} />
-              <small className="font-light min-w-48 sm:text-right">
+            <div className="inline-flex gap-2 sm:flex-col sm:items-end sm:gap-0.5 sm:px-2">
+              <div className="">
+                <Status active={client.active} />
+              </div>
+              <small className="dark:text-extralight min-w-48 font-light sm:text-right">
                 Created {createdAt}
               </small>
             </div>

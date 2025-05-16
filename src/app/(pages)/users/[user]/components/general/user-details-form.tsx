@@ -27,7 +27,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
       className="col-span-full grid grid-cols-subgrid gap-4 sm:col-span-4"
       action={action}
     >
-      <Field className="col-span-full sm:col-span-2">
+      <Field className="col-span-full flex flex-col sm:col-span-2">
         <Label data-required>First Name</Label>
         <Input
           required
@@ -38,7 +38,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
           defaultValue={user.name?.givenName}
         />
       </Field>
-      <Field className="col-span-full sm:col-span-2">
+      <Field className="col-span-full flex flex-col sm:col-span-2">
         <Label data-required>Last Name</Label>
         <Input
           required
@@ -49,11 +49,11 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
           defaultValue={user.name?.familyName}
         />
       </Field>
-      <Field className="col-span-full">
+      <Field className="col-span-full flex flex-col">
         <Label>Username</Label>
         <Input defaultValue={user.userName} disabled />
       </Field>
-      <Field className="col-span-full">
+      <Field className="col-span-full flex flex-col">
         <Label data-required>Email</Label>
         <Input
           required
@@ -63,7 +63,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
           defaultValue={user.emails?.[0].value}
         />
       </Field>
-      <Field className="col-span-full">
+      <Field className="col-span-full flex flex-col">
         <Label>Authentication</Label>
         <div className="flex gap-2">
           <Button className="btn-secondary" type="button">

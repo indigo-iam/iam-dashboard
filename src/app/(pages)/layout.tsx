@@ -88,7 +88,7 @@ function OrganizationManagement() {
       <Link title="Clients" href="/clients">
         <RocketLaunchIcon className="size-5" />
       </Link>
-      <Link title="Request" href="/request">
+      <Link title="Requests" href="/requests">
         <InboxArrowDownIcon className="size-5" />
       </Link>
       <Link title="Scopes" href="/scopes">

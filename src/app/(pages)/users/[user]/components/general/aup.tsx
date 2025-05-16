@@ -34,7 +34,9 @@ export async function Aup(props: Readonly<AupProps>) {
   return (
     <>
       <div className="col-span-full text-sm font-light sm:col-span-2">
-        <div className="text-light">Acceptable Usage Policy</div>
+        <div className="text-light dark:text-extralight/60">
+          Acceptable Usage Policy
+        </div>
         <div className="text-extralight">
           I don’t know why this is import but it is a very important
           information. Add something not stupid.

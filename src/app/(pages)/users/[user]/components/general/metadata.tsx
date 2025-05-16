@@ -18,7 +18,7 @@ export function Metadata(props: Readonly<{ user: User }>) {
   return (
     <div className="col-span-full space-y-2 text-sm font-light sm:col-span-2">
       <div>
-        <div className="text-light flex justify-between">
+        <div className="text-extralight/60 flex justify-between">
           <div className="flex gap-2">
             <IdentificationIcon className="my-auto size-5" />
             UUID

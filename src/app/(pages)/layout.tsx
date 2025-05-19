@@ -57,7 +57,7 @@ function UserLogo(props: Readonly<{ username?: string | null }>) {
 
 function SessionButtons() {
   return (
-    <div className="border-secondary/60 flex justify-center border-b">
+    <div className="flex justify-center border-b border-slate-700 p-2">
       <Notifications />
       <Logout />
     </div>

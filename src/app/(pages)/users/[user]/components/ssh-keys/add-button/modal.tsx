@@ -33,7 +33,12 @@ export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
         <ModalBody>
           <Field>
             <Label>Label</Label>
-            <Input id="ssh-label" name="ssh-label" required={true} />
+            <Input
+              id="ssh-label"
+              name="ssh-label"
+              required={true}
+              placeholder="Type a label..."
+            />
           </Field>
           <Field>
             <Label>SSH Key</Label>
@@ -41,6 +46,8 @@ export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
               id="ssh-key"
               name="ssh-key"
               title="SSH Key"
+              className="textarea w-full"
+              placeholder="SSH Key..."
               required={true}
             />
           </Field>

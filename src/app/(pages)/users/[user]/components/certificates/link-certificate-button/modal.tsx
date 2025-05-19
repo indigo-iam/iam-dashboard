@@ -50,7 +50,12 @@ function PEMField() {
   return (
     <Field>
       <Label data-required>Certificate</Label>
-      <TextArea name="certificate" required placeholder="Certificate..." />
+      <TextArea
+        name="certificate"
+        className="textarea w-full"
+        required
+        placeholder="Certificate..."
+      />
     </Field>
   );
 }
@@ -102,7 +107,11 @@ export default function LinkCertificateModal(
           {format === "pem" ? <PEMField /> : <IssuerField />}
           <Field>
             <Label>Optional Request Notes</Label>
-            <TextArea name="notes" placeholder="Notes..." />
+            <TextArea
+              name="notes"
+              className="textarea w-full"
+              placeholder="Notes..."
+            />
           </Field>
         </ModalBody>
         <ModalFooter>

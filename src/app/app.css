@@ -67,6 +67,10 @@
   @apply p-2 text-start whitespace-nowrap hover:bg-gray-200/50;
 }
 
+@utility textarea {
+  @apply rounded border border-gray-300 bg-white p-2 dark:bg-slate-700;
+}
+
 @utility tbl-th {
   @apply bg-primary/5 border-b p-2 pt-8 first:rounded-tl-lg last:rounded-tr-lg;
 }

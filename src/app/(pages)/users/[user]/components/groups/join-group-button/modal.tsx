@@ -3,20 +3,21 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
-import { Button } from "@/components/buttons";
-import { Form, Field, Label } from "@/components/form";
+
 import { ArrowUpTrayIcon } from "@heroicons/react/24/solid";
-import { Group } from "@/models/groups";
+import { Form, Field, Label } from "@/components/form";
+import { Button } from "@/components/buttons";
 import { JoinGroupRequest } from "@/models/group-requests";
 import { submitGroupRequest } from "@/services/group-requests";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
-import { useState } from "react";
 import { addUserToGroup, searchGroup } from "@/services/groups";
-import { Input } from "@/components/inputs";
-import { makeScimReferenceFromUser } from "@/utils/scim";
 import Combobox from "@/components/combobox";
+import TextArea from "@/components/textarea";
 import InfoTable from "@/components/info-table";
+import { makeScimReferenceFromUser } from "@/utils/scim";
+import { useState } from "react";
 
 export interface JoinGroupModalProps extends ModalProps {
   user: User;
@@ -83,17 +84,17 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
             <InfoTable data={data} />
           </div>
           {!isAdmin ? (
-            <section>
+            <section className="flex flex-col gap-2">
               <h4> Provide a motivation for your request</h4>
               <p>
                 This motivation will be show to the administrators that will
                 manage your request.
               </p>
-              <Input
+              <TextArea
                 id="group-request-notes"
                 name="group-request-notes"
                 placeholder="Explain why you want to be a member of group..."
-                className="mt-2"
+                className="textarea w-full"
                 required={!isAdmin}
               />
             </section>

@@ -17,7 +17,7 @@ export default async function Requests() {
     <Page title="Requests">
       <Panel>
         <Section>
-          <TabGroup>
+          <TabGroup className="space-y-4">
             <TabList>
               <Tab>{`Registration Requests (${registrationRequests.length})`}</Tab>
               <Tab>{`Group Requests (${groupRequests.totalResults})`}</Tab>

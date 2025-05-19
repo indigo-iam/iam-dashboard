@@ -2,12 +2,11 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import InfoTable from "@/components/info-table";
 import { TabPanel } from "@/components/tabs";
-import Link from "@/components/link";
 import { GroupRequest } from "@/models/group-requests";
 import { dateToHuman } from "@/utils/dates";
 import GroupRequestOptions from "./options";
+import Link from "next/link";
 
 type RowPros = {
   request: GroupRequest;
@@ -15,33 +14,36 @@ type RowPros = {
 
 export function Row(props: Readonly<RowPros>) {
   const { request } = props;
-  const userLink = (
-    <Link href={`/users/${request.userUuid}`}>{request.userUuid}</Link>
-  );
-  const groupLink = (
-    <Link href={`/groups/${request.groupUuid}`}>{request.groupUuid}</Link>
-  );
+  const { userFullName, username, userUuid, groupName, groupUuid } = request;
+  const creationTime = request.creationTime
+    ? dateToHuman(new Date(request.creationTime))
+    : "N/A";
 
-  const data = [
-    { name: "Username", value: request.username },
-    { name: "Group", value: request.groupName },
-    { name: "User ID", value: userLink },
-    { name: "Group ID", value: groupLink },
-    {
-      name: "Creation Date",
-      value: dateToHuman(new Date(request.creationTime)),
-    },
-    { name: "Note", value: <i>{request.notes}</i> },
-  ];
   return (
-    <tr className="tbl-tr">
-      <td className="tbl-td">
-        <InfoTable data={data} />
-      </td>
-      <td className="tbl-td">
-        <GroupRequestOptions request={request} />
-      </td>
-    </tr>
+    <li className="iam-list-item flex flex-row">
+      <div className="flex grow flex-col">
+        <div className="flex gap-1">
+          User
+          <Link
+            href={`/users/${userUuid}`}
+            className="inline-flex gap-1 hover:underline"
+          >
+            <span className="font-bold">{userFullName}</span>
+            <span>({username})</span>
+          </Link>
+          asked to join group
+          <Link
+            href={`/groups/${groupUuid}`}
+            className="inline-flex gap-1 hover:underline"
+          >
+            <span className="font-bold">{groupName}</span>
+          </Link>
+          {creationTime}.
+        </div>
+        <span className="p-2 italic">Motivation: {request.notes}</span>
+      </div>
+      <GroupRequestOptions request={request} />
+    </li>
   );
 }
 
@@ -60,13 +62,11 @@ export default function Groups(props: Readonly<GroupsProps>) {
   }
   return (
     <TabPanel>
-      <table className="w-full table-auto">
-        <tbody>
-          {requests.map(r => (
-            <Row key={r.uuid} request={r} />
-          ))}
-        </tbody>
-      </table>
+      <ul className="w-full table-auto">
+        {requests.map(r => (
+          <Row key={r.uuid} request={r} />
+        ))}
+      </ul>
     </TabPanel>
   );
 }

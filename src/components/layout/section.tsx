@@ -11,9 +11,9 @@ export default function Section(props: Readonly<SectionProps>) {
   const { children, title } = props;
   return (
     <section className="dark:bg-primary rounded-lg bg-gray-50 p-4 shadow-md">
-      {title ? (
-        <h2 className="border-b border-gray-300 pb-2">{title}</h2>
-      ) : null}
+      <h2 className="border-b border-gray-300 pb-2" hidden={!title}>
+        {title}
+      </h2>
       <div className="mt-4 space-y-4">{children}</div>
     </section>
   );

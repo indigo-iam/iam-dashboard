@@ -3,13 +3,14 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use server";
+
 import { setNotification } from "@/components/toaster";
 import { AUP, AUPCreate, AUPPatch } from "@/models/aup";
-import getConfig from "@/utils/config";
+import { settings } from "@/config";
 import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
 
-const { BASE_URL } = getConfig();
+const { BASE_URL } = settings;
 const AUP_URL = `${BASE_URL}/iam/aup`;
 
 export async function fetchAUP() {

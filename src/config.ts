@@ -2,8 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-export default function getConfig() {
-  return {
-    BASE_URL: process.env.IAM_AUTHORITY_URL,
-  };
-}
+export const settings = {
+  BASE_URL: process.env.IAM_AUTHORITY_URL,
+};

@@ -3,20 +3,21 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use server";
+
 import {
   Group,
   GroupsSearchResponse,
   ManagedGroupResponse,
 } from "@/models/groups";
 import { authFetch, getItem } from "@/utils/fetch";
-import getConfig from "@/utils/config";
+import { settings } from "@/config";
 import { Paginated } from "@/models/pagination";
 import { revalidatePath } from "next/cache";
 import { ScimReference, User } from "@/models/scim";
 import { setNotification } from "@/components/toaster";
 import { makeScimReferenceFromUser } from "@/utils/scim";
 
-const { BASE_URL } = getConfig();
+const { BASE_URL } = settings;
 
 export const fetchGroup = async (groupID: string) => {
   let url = `${BASE_URL}/scim/Groups/${groupID}`;

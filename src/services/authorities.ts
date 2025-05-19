@@ -3,12 +3,13 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use server";
+
 import { authFetch } from "@/utils/fetch";
-import getConfig from "@/utils/config";
 import { revalidatePath } from "next/cache";
 import { setNotification } from "@/components/toaster";
+import { settings } from "@/config";
 
-const { BASE_URL } = getConfig();
+const { BASE_URL } = settings;
 
 export const assignAdminPrivileges = async (userId: string) => {
   let url = `${BASE_URL}/iam/account/${userId}/authorities?authority=ROLE_ADMIN`;
@@ -16,7 +17,10 @@ export const assignAdminPrivileges = async (userId: string) => {
     method: "POST",
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "Admin privileges assigned" });
+    await setNotification({
+      type: "success",
+      message: "Admin privileges assigned",
+    });
     revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();
@@ -34,7 +38,10 @@ export const revokeAdminPrivileges = async (userId: string) => {
     method: "DELETE",
   });
   if (response.ok) {
-    await setNotification({ type: "info", message: "Admin privileges revoked" });
+    await setNotification({
+      type: "info",
+      message: "Admin privileges revoked",
+    });
     revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();

@@ -3,10 +3,11 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use server";
-import getConfig from "@/utils/config";
+
+import { settings } from "@/config";
 import { OpenIdConfiguration } from "@/models/openid-configuration";
 
-const { BASE_URL } = getConfig();
+const { BASE_URL } = settings;
 
 export const fetchOpenIdConfiguration: () => Promise<OpenIdConfiguration> =
   async () => {

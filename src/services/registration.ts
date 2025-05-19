@@ -3,13 +3,14 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use server";
+
 import { authFetch, getItem } from "@/utils/fetch";
-import getConfig from "@/utils/config";
 import { Registration } from "@/models/registration";
 import { revalidatePath } from "next/cache";
 import { setNotification } from "@/components/toaster";
+import { settings } from "@/config";
 
-const { BASE_URL } = getConfig();
+const { BASE_URL } = settings;
 
 export async function fetchRegistrationRequests() {
   let url = `${BASE_URL}/registration/list/pending`;

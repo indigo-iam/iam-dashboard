@@ -3,17 +3,18 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use server";
+
 import {
   GroupRequest,
   PaginatedGroupRequests,
   JoinGroupRequest,
 } from "@/models/group-requests";
 import { authFetch, getItem } from "@/utils/fetch";
-import getConfig from "@/utils/config";
+import { settings } from "@/config";
 import { revalidatePath } from "next/cache";
 import { setNotification } from "@/components/toaster";
 
-const { BASE_URL } = getConfig();
+const { BASE_URL } = settings;
 
 export const fetchGroupsRequests = async (username?: string) => {
   let url = `${BASE_URL}/iam/group_requests?status=PENDING`;
@@ -51,7 +52,10 @@ export const approveGroupRequest = async (requestId: string) => {
     method: "POST",
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "Group Request approved" });
+    await setNotification({
+      type: "success",
+      message: "Group Request approved",
+    });
     revalidatePath("/requests");
   } else {
     const msg = await response.text();

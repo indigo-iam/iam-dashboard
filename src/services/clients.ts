@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use server";
-import getConfig from "@/utils/config";
+
 import {
   Client,
   ClientRequest,
@@ -17,8 +17,9 @@ import { Paginated } from "@/models/pagination";
 import { auth } from "@/auth";
 import { setNotification } from "@/components/toaster";
 import { redirect } from "next/navigation";
+import { settings } from "@/config";
 
-const { BASE_URL } = getConfig();
+const { BASE_URL } = settings;
 
 export async function registerClient(client: ClientRequest, isAdmin?: boolean) {
   const response = await authFetch(`${BASE_URL}/iam/api/client-registration`, {

@@ -3,11 +3,12 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use server";
-import { getItem } from "@/utils/fetch";
-import getConfig from "@/utils/config";
-import { ScopePolicy } from "@/models/scope-policies";
 
-const { BASE_URL } = getConfig();
+import { getItem } from "@/utils/fetch";
+import { ScopePolicy } from "@/models/scope-policies";
+import { settings } from "@/config";
+
+const { BASE_URL } = settings;
 
 export async function fetchScopePolicies() {
   const url = `${BASE_URL}/iam/scope_policies`;

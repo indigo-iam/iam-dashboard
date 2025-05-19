@@ -7,9 +7,9 @@
 import { ArrowRightEndOnRectangleIcon } from "@heroicons/react/24/solid";
 import { signOut } from "@/auth";
 import { redirect } from "next/navigation";
-import getConfig from "@/utils/config";
+import { settings } from "@/config";
 
-const { BASE_URL } = getConfig();
+const { BASE_URL } = settings;
 
 export async function Logout() {
   async function action() {

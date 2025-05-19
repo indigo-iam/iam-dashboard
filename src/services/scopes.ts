@@ -3,14 +3,15 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use server";
-import getConfig from "@/utils/config";
+
+import { settings } from "@/config";
 import { RawScope, Scope } from "@/models/client";
 import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
 import { Paginated } from "@/models/pagination";
 import { setNotification } from "@/components/toaster";
 
-const { BASE_URL } = getConfig();
+const { BASE_URL } = settings;
 
 export async function fetchScopes() {
   return getItem<Scope[]>(`${BASE_URL}/api/scopes`);

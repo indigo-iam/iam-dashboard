@@ -4,9 +4,9 @@
 
 import { Group, ManagedGroup } from "@/models/groups";
 import { ScimReference, User } from "@/models/scim";
-import getConfig from "@/utils/config";
+import { settings } from "@/config";
 
-const { BASE_URL } = getConfig();
+const { BASE_URL } = settings;
 
 export function makeScimReferenceFromUser(user: User): ScimReference {
   return {

@@ -3,13 +3,14 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use server";
-import getConfig from "@/utils/config";
+
+import { settings } from "@/config";
 import { getItem } from "@/utils/fetch";
 import { User } from "@/models/scim";
 import { Paginated } from "@/models/pagination";
 import { Client } from "@/models/client";
 
-const { BASE_URL } = getConfig();
+const { BASE_URL } = settings;
 
 export async function fetchMe() {
   return getItem<User>(`${BASE_URL}/scim/Me`);

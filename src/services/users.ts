@@ -3,17 +3,18 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use server";
+
 import { authFetch, getItem } from "@/utils/fetch";
-import getConfig from "@/utils/config";
 import { Paginated } from "@/models/pagination";
 import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
 import { revalidatePath } from "next/cache";
 import { SSHKey } from "@/models/indigo-user";
 import { Attribute } from "@/models/attributes";
 import { setNotification } from "@/components/toaster";
+import { settings } from "@/config";
 import { auth } from "@/auth";
 
-const { BASE_URL } = getConfig();
+const { BASE_URL } = settings;
 
 export const fetchUser = async (uuid: string) =>
   await getItem<User>(`${BASE_URL}/scim/Users/${uuid}`);

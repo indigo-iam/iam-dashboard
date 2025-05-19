@@ -4,9 +4,9 @@
 
 import { signOut } from "@/auth";
 import { unstable_noStore as noStore } from "next/cache";
-import getConfig from "@/utils/config";
+import { settings } from "@/config";
 
-const { BASE_URL } = getConfig();
+const { BASE_URL } = settings;
 
 export const GET = async () => {
   noStore();

@@ -50,7 +50,6 @@ export default function ScopeTypeSelect(props: { scope: Scope }) {
       name="scope-type"
       onChange={handleChange}
       defaultValue={defaultOption}
-      className="w-full"
     >
       {options.map(o => (
         <SelectOption key={o.id} value={o}>

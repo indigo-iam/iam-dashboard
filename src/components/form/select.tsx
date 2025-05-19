@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import {
   Listbox,
   ListboxButton,
@@ -19,11 +20,12 @@ type SelectProps = {
   children: React.ReactNode;
   onChange?: (value: { id: string; name: string }) => void;
   defaultValue?: { id: string; name: string };
+  className?: string;
   disabled?: boolean;
 };
 
 export function Select(props: Readonly<SelectProps>) {
-  const { name, onChange, children, defaultValue, disabled } = props;
+  const { name, onChange, children, defaultValue, className, disabled } = props;
   const [selected, setSelected] = useState(defaultValue);
 
   const handleChange = (value: { id: string; name: string }) => {
@@ -38,7 +40,9 @@ export function Select(props: Readonly<SelectProps>) {
       onChange={handleChange}
       disabled={disabled}
     >
-      <ListboxButton>{selected?.name}</ListboxButton>
+      <ListboxButton className="btn-secondary w-full justify-between">
+        {selected?.name}
+      </ListboxButton>
       <ListboxOptions>{children}</ListboxOptions>
     </Listbox>
   );

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { Select, SelectOption } from "@/components/form";
 import { Scope } from "@/models/client";
 import { editScope } from "@/services/scopes";

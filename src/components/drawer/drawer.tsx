@@ -6,6 +6,7 @@
 
 import { Button } from "@/components/buttons";
 import { Bars3Icon } from "@heroicons/react/24/solid";
+import { useState } from "react";
 
 type DrawerProps = {
   children?: React.ReactNode;
@@ -13,20 +14,21 @@ type DrawerProps = {
 
 export function Drawer(props: Readonly<DrawerProps>) {
   const { children } = props;
+  const [show, setShow] = useState(false);
 
   const toggleDrawer = () => {
     const drawer = document.getElementById("drawer");
     drawer?.classList.toggle("translate-x-0");
-    const backdropButton = document.getElementById("backdrop-drawer-button");
-    backdropButton?.classList.toggle("hidden");
+    setShow(!show);
   };
 
   return (
     <>
       <Button
         id="backdrop-drawer-button"
-        className="fixed inset-0 z-20 md:hidden"
+        className="fixed inset-0 z-20 data-[show=false]:hidden md:hidden"
         onClick={toggleDrawer}
+        data-show={show}
       ></Button>
       <header className="bg-infn t-0 fixed inset-0 z-30 flex h-16 w-full justify-end md:hidden">
         <Button className="flex p-2" onClick={toggleDrawer}>

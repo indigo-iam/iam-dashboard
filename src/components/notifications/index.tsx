@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use server";
+
 import { fetchGroupsRequests } from "@/services/group-requests";
 import { fetchRegistrationRequests } from "@/services/registration";
 import Link from "next/link";

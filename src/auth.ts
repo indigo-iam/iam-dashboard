@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import NextAuth from "next-auth";
-import type { DefaultSession, NextAuthConfig } from "next-auth";
+import type { NextAuthConfig } from "next-auth";
 import type { DefaultJWT } from "next-auth/jwt";
 import type { Profile, User, Awaitable, TokenSet } from "@auth/core/types";
 import type { User as IamUser } from "@/models/scim";
@@ -24,10 +24,9 @@ declare module "next-auth" {
     sub: string;
   }
   interface Session {
-    access_token?: string & DefaultSession["user"];
-    expired: boolean;
+    access_token: string;
     is_admin: boolean;
-    token_expires?: Date & string;
+    expires_at: number;
   }
 }
 
@@ -62,15 +61,6 @@ export const authConfig: NextAuthConfig = {
   session: { strategy: "jwt" },
   pages: { signIn: "/signin", signOut: "/signout" },
   callbacks: {
-    authorized({ request, auth }) {
-      if (request.nextUrl.pathname.startsWith("/api/auth")) {
-        return true;
-      }
-      if (auth?.user && auth?.access_token) {
-        return true;
-      }
-      return false;
-    },
     async jwt({ token, account, user }) {
       if (account?.access_token) {
         // first time login, save access token and expiration
@@ -85,12 +75,17 @@ export const authConfig: NextAuthConfig = {
       }
       return token;
     },
+    async authorized({ auth }) {
+      const expired = (auth?.expires_at ?? 0) < Date.now();
+      return !!auth && !expired;
+    },
     async session({ session, token }) {
       const { access_token, expires_at, is_admin } = token;
-      const expired = expires_at < Date.now();
-      const token_expires = new Date(expires_at);
       session.user.id = token.userId;
-      return { ...session, access_token, is_admin, expired, token_expires };
+      session.access_token = access_token;
+      session.is_admin = is_admin;
+      session.expires_at = expires_at;
+      return session;
     },
   },
 };

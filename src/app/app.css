@@ -53,7 +53,7 @@
 }
 
 @utility btn-danger {
-  @apply btn bg-danger text-secondary hover:bg-danger-hover disabled:bg-danger/50;
+  @apply btn bg-danger text-secondary hover:bg-danger-hover disabled:bg-danger/50 border-none;
 }
 
 @utility btn-danger-secondary {

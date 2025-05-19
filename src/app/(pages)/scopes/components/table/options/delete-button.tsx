@@ -28,6 +28,7 @@ export default function DeleteButton(props: Readonly<DeleteButtonProps>) {
         onClose={close}
         title="Delete Scope"
         onConfirm={action}
+        danger={true}
       >
         <p>
           Are you sure you want to delete the scope <b>{scope.value}</b>?

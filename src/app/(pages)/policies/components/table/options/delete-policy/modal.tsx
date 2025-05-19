@@ -25,6 +25,7 @@ export default function DeletePolicyModal(props: Readonly<DeletePolicyModal>) {
       title="Delete Policy"
       onConfirm={handleConfirm}
       data-test="modal"
+      danger={true}
     >
       Are you sure you want to delete policy <b>{policy.description}</b>
     </ConfirmModal>

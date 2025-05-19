@@ -36,6 +36,7 @@ export default function DeleteClientModal(
       confirmButtonText="Delete Client"
       onConfirm={handleConfirm}
       title="Delete Client"
+      danger={true}
     >
       Are you sure you want to delete the following client?
       <InfoTable data={data} />

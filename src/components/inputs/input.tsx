@@ -12,10 +12,5 @@ export interface InputProps extends HeadlessInputProps {
 }
 
 export function Input(props: Readonly<InputProps>) {
-  return (
-    <HeadlessInput
-      className="placeholder:disabled:text-secondary-600 w-full rounded border border-gray-300 bg-white px-2 py-1 disabled:bg-transparent disabled:text-slate-400 data-[invalid=true]:outline dark:border-white/30 dark:bg-transparent"
-      {...props}
-    />
-  );
+  return <HeadlessInput className="iam-input" {...props} />;
 }

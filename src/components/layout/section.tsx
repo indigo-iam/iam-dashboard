@@ -10,7 +10,7 @@ type SectionProps = {
 export default function Section(props: Readonly<SectionProps>) {
   const { children, title } = props;
   return (
-    <section className="rounded-lg bg-gray-50 p-4 shadow-md dark:bg-infn ">
+    <section className="dark:bg-primary rounded-lg bg-gray-50 p-4 shadow-md">
       {title ? (
         <h2 className="border-b border-gray-300 pb-2">{title}</h2>
       ) : null}

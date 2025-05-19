@@ -40,7 +40,7 @@ export default function Combobox<T extends Searchable>(
   return (
     <HeadlessCombobox onChange={onSelected}>
       <ComboboxInput
-        className="dark:text-secondary w-full rounded-lg border bg-transparent px-2 py-1"
+        className="iam-input w-full"
         placeholder="Type to search..."
         displayValue={(user: User) => user?.displayName ?? ""}
         onChange={event => setQuery(event.target.value)}

@@ -116,7 +116,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className="text-primary dark:text-secondary dark:bg-dark bg-gray-100">
+      <body className="text-primary dark:text-secondary dark:bg-extradark bg-gray-100">
         <Drawer>
           <LogoIam />
           <UserLogo username={username} />

@@ -12,6 +12,7 @@ interface ConfirmModal extends ModalProps {
   children?: React.ReactNode;
   cancelButtonText?: string;
   confirmButtonText?: string;
+  danger?: boolean;
   "data-test"?: string;
 }
 
@@ -22,6 +23,7 @@ export default function ConfirmModal(props: Readonly<ConfirmModal>) {
     children,
     cancelButtonText,
     confirmButtonText,
+    danger,
     ...modalProps
   } = props;
 
@@ -44,7 +46,11 @@ export default function ConfirmModal(props: Readonly<ConfirmModal>) {
           >
             {cancelText}
           </Button>
-          <Button className="btn-primary" type="submit">
+          <Button
+            className="btn-primary data-[danger=true]:btn-danger"
+            type="submit"
+            data-danger={danger}
+          >
             {confirmText}
           </Button>
         </ModalFooter>

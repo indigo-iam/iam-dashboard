@@ -28,8 +28,9 @@ export function Modal(props: Readonly<ModalProps>) {
     <Transition appear show={show}>
       <Dialog
         as="div"
-        className="relative z-10 focus:outline-none"
+        className="relative z-30 focus:outline-none"
         onClose={onClose}
+        data-test={props["data-test"]}
       >
         <DialogBackdrop
           transition

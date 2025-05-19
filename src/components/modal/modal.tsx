@@ -41,7 +41,10 @@ export function Modal(props: Readonly<ModalProps>) {
               transition
               className="bg-secondary text-primary dark:text-secondary z-50 w-full max-w-xl divide-y rounded-2xl p-4 shadow-2xl duration-300 ease-out data-[closed]:transform-[scale-95] data-[closed]:opacity-0 dark:bg-slate-800"
             >
-              <DialogTitle as="h2" className="pb-2 text-xl font-bold">
+              <DialogTitle
+                as="h2"
+                className="border-gray-300 pb-2 text-xl font-bold"
+              >
                 <div className="flex">
                   {title}
                   <button

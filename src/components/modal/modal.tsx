@@ -39,7 +39,7 @@ export function Modal(props: Readonly<ModalProps>) {
           <div className="mt-16 flex min-h-32 justify-center p-4">
             <DialogPanel
               transition
-              className="bg-secondary text-primary dark:text-secondary z-50 w-full max-w-xl divide-y rounded-2xl p-4 shadow-2xl duration-300 ease-out data-[closed]:transform-[scale-95] data-[closed]:opacity-0 dark:bg-slate-800"
+              className="bg-secondary text-primary dark:text-secondary z-50 w-full max-w-xl rounded-2xl p-4 shadow-2xl duration-300 ease-out data-[closed]:transform-[scale-95] data-[closed]:opacity-0 dark:bg-slate-800"
             >
               <DialogTitle
                 as="h2"

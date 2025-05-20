@@ -2,12 +2,12 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import InfoTable from "@/components/info-table";
-import Link from "@/components/link";
 import { TabPanel } from "@/components/tabs";
 import { Registration } from "@/models/registration";
 import { dateToHuman } from "@/utils/dates";
+import { Section } from "@/components/layout";
 import RegistrationRequestsOptions from "./options";
+import Link from "next/link";
 
 type RowProps = {
   request: Registration;
@@ -30,14 +30,23 @@ function Row(props: Readonly<RowProps>) {
     { name: "Note", value: <i>{request.notes}</i> },
   ];
   return (
-    <tr className="tbl-tr">
-      <td className="tbl-td">
-        <InfoTable data={data} />
-      </td>
-      <td className="tbl-td">
-        <RegistrationRequestsOptions request={request} />
-      </td>
-    </tr>
+    <li className="iam-list-item">
+      <div className="flex grow flex-col">
+        <div className="flex flex-row gap-1">
+          User
+          <Link
+            className="inline-flex gap-1 underline"
+            href={`/users/${request.accountId}`}
+          >
+            <span className="inline-flex font-bold">{`${request.givenname} ${request.familyname}`}</span>
+            <span className="inline-flex">({request.username})</span>
+          </Link>
+          <span>applied for an account.</span>
+        </div>
+        <span className="flex flex-row p-2 italic">Notes: {request.notes}</span>
+      </div>
+      <RegistrationRequestsOptions request={request} />
+    </li>
   );
 }
 
@@ -50,21 +59,21 @@ export default function Registrations(props: Readonly<RegistrationsProps>) {
 
   if (requests.length === 0) {
     return (
-      <TabPanel className="flex flex-col gap-4 divide-y">
-        There are no pending requests.
+      <TabPanel>
+        <Section>There are no pending requests.</Section>
       </TabPanel>
     );
   }
 
   return (
-    <TabPanel className="flex flex-col gap-4 divide-y">
-      <table>
-        <tbody>
+    <TabPanel>
+      <Section>
+        <ul>
           {requests.map(r => (
             <Row key={r.uuid} request={r} />
           ))}
-        </tbody>
-      </table>
+        </ul>
+      </Section>
     </TabPanel>
   );
 }

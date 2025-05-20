@@ -365,3 +365,22 @@ export async function signAUP(userId: string) {
     });
   }
 }
+
+export async function changePassword(user: User, formData: FormData) {
+  const url = `${BASE_URL}/iam/password-update`;
+  const response = await authFetch(url, {
+    method: "POST",
+    body: formData,
+  });
+  if (response.ok) {
+    await setNotification({ type: "success", message: "Password changed" });
+    revalidatePath(`/user/${user.id}`);
+  } else {
+    const msg = await response.text();
+    await setNotification({
+      type: "error",
+      message: "Password not saved",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
+  }
+}

@@ -8,6 +8,7 @@ import { Input } from "@/components/inputs";
 import { User } from "@/models/scim";
 import { patchUser } from "@/services/users";
 import { revalidatePath } from "next/cache";
+import { ResetPassword } from "./reset-password";
 
 type UserDetailsFormProps = {
   user: User;
@@ -69,9 +70,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
           <Button className="btn-secondary" type="button">
             Enable MFA
           </Button>
-          <Button className="btn-secondary" type="button">
-            Reset password
-          </Button>
+          <ResetPassword user={user} />
         </div>
       </Field>
       <Field className="col-span-full flex justify-between">

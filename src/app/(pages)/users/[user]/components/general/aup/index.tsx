@@ -8,6 +8,7 @@ import { Input } from "@/components/inputs";
 import { User } from "@/models/scim";
 import { fetchAUP } from "@/services/aup";
 import { dateToHuman } from "@/utils/dates";
+import { RequestSignature } from "./request-signature";
 
 type AupProps = {
   user: User;
@@ -52,10 +53,8 @@ export async function Aup(props: Readonly<AupProps>) {
               defaultValue={aupExpiresIn}
             />
           </Field>
-          <Button className="btn-secondary">
-            {isMe ? "Re-sign AUP" : "Request AUP Signature"}
-          </Button>
         </Form>
+        <RequestSignature user={user} isMe={isMe} />
       </div>
     </>
   );

@@ -7,6 +7,7 @@ import { User } from "@/models/scim";
 import { DisableUserButton, EnableUserButton } from "./toggle-user-status";
 import { DeleteUser } from "./delete-user";
 import { EditExpirationDate } from "./expiration-date";
+import { SetAdminPrivileges } from "./admin-priviledges";
 
 type DangerZoneProps = {
   user: User;
@@ -28,7 +29,7 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
         <div className="flex flex-col justify-between gap-4 md:flex-row">
           <div className="flex gap-4">
             <EditExpirationDate user={user} />
-            <Button className="btn-secondary">Revoke admin privileges</Button>
+            <SetAdminPrivileges user={user} />
           </div>
           <div className="flex items-center gap-4">
             {active ? (

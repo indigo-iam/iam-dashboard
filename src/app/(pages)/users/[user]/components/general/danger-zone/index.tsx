@@ -6,7 +6,7 @@ import { User } from "@/models/scim";
 import { SetUserStatus } from "./user-status";
 import { DeleteUser } from "./delete-user";
 import { EditExpirationDate } from "./expiration-date";
-import { SetAdminPrivileges } from "./admin-priviledges";
+import { SetAdminPrivileges } from "./admin-privileges";
 
 type DangerZoneProps = {
   user: User;

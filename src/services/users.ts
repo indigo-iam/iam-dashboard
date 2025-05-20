@@ -250,14 +250,14 @@ export async function changeMembershipEndTime(userId: string, date: string) {
   if (response.ok) {
     await setNotification({
       type: "success",
-      message: "Membership End Time updated",
+      message: "Membership end time updated",
     });
     revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();
     await setNotification({
       type: "error",
-      message: "Cannot update Membership End Date",
+      message: "Cannot update membership end date",
       subtitle: `Error ${response.status} ${msg}`,
     });
   }
@@ -276,14 +276,14 @@ export async function revokeMembershipEndTime(userId: string) {
   if (response.ok) {
     await setNotification({
       type: "success",
-      message: "Membership End Time revoked",
+      message: "Membership end time revoked",
     });
     revalidatePath(`/users/${userId}`);
   } else {
     const msg = await response.text();
     await setNotification({
       type: "error",
-      message: "Cannot revoke Membership End Time",
+      message: "Cannot revoke membership end time",
       subtitle: `Error ${response.status} ${msg}`,
     });
   }

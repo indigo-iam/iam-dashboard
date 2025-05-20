@@ -21,7 +21,7 @@ export async function Logout() {
   return (
     <form
       action={action}
-      className="m-auto flex rounded-full p-2 hover:bg-white/10"
+      className="flex rounded-full p-2 hover:bg-white/10"
     >
       <button type="submit" className="text-secondary size-6">
         <ArrowRightEndOnRectangleIcon />

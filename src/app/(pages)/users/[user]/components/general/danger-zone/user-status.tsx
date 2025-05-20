@@ -3,10 +3,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Button } from "@/components/buttons";
-import { User } from "@/models/scim";
 import { changeUserStatus } from "@/services/users";
+import { User } from "@/models/scim";
 
-export function EnableUserButton(props: Readonly<{ user: User }>) {
+function EnableUserButton(props: Readonly<{ user: User }>) {
   const { user } = props;
   const action = async () => {
     "use server";
@@ -21,7 +21,7 @@ export function EnableUserButton(props: Readonly<{ user: User }>) {
   );
 }
 
-export function DisableUserButton(props: Readonly<{ user: User }>) {
+function DisableUserButton(props: Readonly<{ user: User }>) {
   const { user } = props;
   const action = async () => {
     "use server";
@@ -33,5 +33,18 @@ export function DisableUserButton(props: Readonly<{ user: User }>) {
         Disable user
       </Button>
     </form>
+  );
+}
+
+type SetUserStatusProps = {
+  user: User;
+};
+
+export function SetUserStatus(props: Readonly<SetUserStatusProps>) {
+  const { user } = props;
+  return user.active ? (
+    <DisableUserButton user={user} />
+  ) : (
+    <EnableUserButton user={user} />
   );
 }

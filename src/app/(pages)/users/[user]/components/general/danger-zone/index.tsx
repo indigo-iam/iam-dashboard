@@ -2,9 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Button } from "@/components/buttons";
 import { User } from "@/models/scim";
-import { DisableUserButton, EnableUserButton } from "./toggle-user-status";
+import { SetUserStatus } from "./user-status";
 import { DeleteUser } from "./delete-user";
 import { EditExpirationDate } from "./expiration-date";
 import { SetAdminPrivileges } from "./admin-priviledges";
@@ -32,11 +31,7 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
             <SetAdminPrivileges user={user} />
           </div>
           <div className="flex items-center gap-4">
-            {active ? (
-              <DisableUserButton user={user} />
-            ) : (
-              <EnableUserButton user={user} />
-            )}
+            <SetUserStatus user={user} />
             <DeleteUser user={user} />
           </div>
         </div>

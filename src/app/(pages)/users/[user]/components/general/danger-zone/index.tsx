@@ -4,37 +4,8 @@
 
 import { Button } from "@/components/buttons";
 import { User } from "@/models/scim";
-import { changeUserStatus } from "@/services/users";
-
-function EnableUserButton(props: Readonly<{ user: User }>) {
-  const { user } = props;
-  const action = async () => {
-    "use server";
-    await changeUserStatus(user.id, true);
-  };
-  return (
-    <form action={action}>
-      <Button className="btn-secondary" type="submit">
-        Enable user
-      </Button>
-    </form>
-  );
-}
-
-function DisableUserButton(props: Readonly<{ user: User }>) {
-  const { user } = props;
-  const action = async () => {
-    "use server";
-    await changeUserStatus(user.id, false);
-  };
-  return (
-    <form action={action}>
-      <Button className="btn-danger-secondary" type="submit">
-        Disable user
-      </Button>
-    </form>
-  );
-}
+import { DisableUserButton, EnableUserButton } from "./toggle-user-status";
+import { DeleteUser } from "./delete-user";
 
 type DangerZoneProps = {
   user: User;
@@ -64,7 +35,7 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
             ) : (
               <EnableUserButton user={user} />
             )}
-            <Button className="btn-danger">Delete user</Button>
+            <DeleteUser user={user} />
           </div>
         </div>
       </div>

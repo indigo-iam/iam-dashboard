@@ -4,6 +4,37 @@
 
 import { Button } from "@/components/buttons";
 import { User } from "@/models/scim";
+import { changeUserStatus } from "@/services/users";
+
+function EnableUserButton(props: Readonly<{ user: User }>) {
+  const { user } = props;
+  const action = async () => {
+    "use server";
+    await changeUserStatus(user.id, true);
+  };
+  return (
+    <form action={action}>
+      <Button className="btn-secondary" type="submit">
+        Enable user
+      </Button>
+    </form>
+  );
+}
+
+function DisableUserButton(props: Readonly<{ user: User }>) {
+  const { user } = props;
+  const action = async () => {
+    "use server";
+    await changeUserStatus(user.id, false);
+  };
+  return (
+    <form action={action}>
+      <Button className="btn-danger-secondary" type="submit">
+        Disable user
+      </Button>
+    </form>
+  );
+}
 
 type DangerZoneProps = {
   user: User;
@@ -11,6 +42,7 @@ type DangerZoneProps = {
 
 export function DangerZone(props: Readonly<DangerZoneProps>) {
   const { user } = props;
+  const { active } = user;
   return (
     <>
       <div className="col-span-full text-sm font-light sm:col-span-2">
@@ -26,8 +58,12 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
             <Button className="btn-secondary">Edit expiration date</Button>
             <Button className="btn-secondary">Revoke admin privileges</Button>
           </div>
-          <div className="flex gap-4">
-            <Button className="btn-danger-secondary">Disable user</Button>
+          <div className="flex items-center gap-4">
+            {active ? (
+              <DisableUserButton user={user} />
+            ) : (
+              <EnableUserButton user={user} />
+            )}
             <Button className="btn-danger">Delete user</Button>
           </div>
         </div>

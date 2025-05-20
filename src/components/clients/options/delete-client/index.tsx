@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import DeleteClientModal from "./modal";
 import { useState } from "react";
 import { Client } from "@/models/client";
@@ -19,7 +20,7 @@ export default function DeleteClient(props: Readonly<DeleteClientProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <button className="popover-option text-danger" onClick={open}>
+      <button className="popover-option-danger" onClick={open}>
         Delete Client
       </button>
       <DeleteClientModal

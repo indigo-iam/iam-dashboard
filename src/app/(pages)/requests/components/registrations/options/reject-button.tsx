@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { Button } from "@/components/buttons";
 import { Form } from "@/components/form";
 import { Modal, ModalBody, ModalFooter } from "@/components/modal";
@@ -32,12 +33,8 @@ export default function RejectButton(props: Readonly<RejectButtonProps>) {
 
   return (
     <>
-      <button
-        type="button"
-        className="popover-option text-danger"
-        onClick={show}
-      >
-        Reject User
+      <button type="button" className="popover-option-danger" onClick={show}>
+        Reject user
       </button>
       <Modal
         show={isModalShown}

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { useState } from "react";
 import ConfirmUnlinkUserModal from "./modal";
 import { OidcId } from "@/models/indigo-user";
@@ -24,7 +25,7 @@ export default function UnlinkOidcAccount(
       <button
         type="button"
         title="Unlink Account"
-        className="popover-option text-danger"
+        className="popover-option-danger"
         onClick={open}
       >
         Unlink Account

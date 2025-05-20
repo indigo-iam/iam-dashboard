@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { ScopePolicy } from "@/models/scope-policies";
 import DeletePolicyModal from "./modal";
 import { useState } from "react";
@@ -18,11 +19,7 @@ export default function DeletePolicy(props: Readonly<DeletePolicyProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <button
-        type="button"
-        className="popover-option text-danger"
-        onClick={open}
-      >
+      <button type="button" className="popover-option-danger" onClick={open}>
         Delete Policy
       </button>
       <DeletePolicyModal show={show} onClose={close} policy={policy} />

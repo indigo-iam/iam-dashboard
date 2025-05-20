@@ -68,6 +68,10 @@
   @apply p-2 text-start whitespace-nowrap hover:bg-gray-200/50;
 }
 
+@utility popover-option-danger {
+  @apply text-danger hover:bg-danger hover:text-secondary p-2 text-start whitespace-nowrap;
+}
+
 @utility textarea {
   @apply dark:bg-primary rounded border border-gray-300 bg-white p-2;
 }

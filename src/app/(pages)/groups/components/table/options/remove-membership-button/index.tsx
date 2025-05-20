@@ -3,9 +3,10 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { useState } from "react";
-import ConfirmUnlinkUserModal from "./modal";
 import { ScimReference, User } from "@/models/scim";
+import ConfirmUnlinkUserModal from "./modal";
 
 export type RemoveMembershipProps = {
   user: User;
@@ -25,7 +26,7 @@ export default function RemoveMembership(
       <button
         type="button"
         title="Remove Membership"
-        className="popover-option text-danger"
+        className="popover-option-danger"
         onClick={open}
       >
         Remove Membership

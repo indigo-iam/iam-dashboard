@@ -17,8 +17,8 @@ export default function GroupRequestOptions(
   const { request } = props;
   return (
     <Options>
-      <RejectButton request={request} />
       <ConfirmButton request={request} />
+      <RejectButton request={request} />
     </Options>
   );
 }

@@ -3,9 +3,9 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import Options from "@/components/options";
+import { Registration } from "@/models/registration";
 import ConfirmButton from "./confirm-button";
 import RejectButton from "./reject-button";
-import { Registration } from "@/models/registration";
 
 type RegistrationRequestOptionsProps = {
   request: Registration;
@@ -17,8 +17,8 @@ export default function RegistrationRequestsOptions(
   const { request } = props;
   return (
     <Options>
-      <RejectButton request={request} />
       <ConfirmButton request={request} />
+      <RejectButton request={request} />
     </Options>
   );
 }

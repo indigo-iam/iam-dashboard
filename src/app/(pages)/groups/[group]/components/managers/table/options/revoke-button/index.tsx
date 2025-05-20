@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import ConfirmRevokeGroupManagerModal from "./modal";
 import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
@@ -22,11 +23,7 @@ export default function RevokeManagerButton(
   const close = () => setShow(false);
   return (
     <>
-      <button
-        type="button"
-        className="popover-option text-danger"
-        onClick={open}
-      >
+      <button type="button" className="popover-option-danger" onClick={open}>
         Revoke Group Manager
       </button>
       <ConfirmRevokeGroupManagerModal

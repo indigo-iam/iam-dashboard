@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { User } from "@/models/scim";
 import { GroupRequest } from "@/models/group-requests";
 import { useState } from "react";
@@ -23,11 +24,7 @@ export default function DeleteGroupRequestButton(
   const close = () => setShow(false);
   return (
     <>
-      <button
-        type="submit"
-        className="popover-option text-danger"
-        onClick={open}
-      >
+      <button type="submit" className="popover-option-danger" onClick={open}>
         Delete Group Request
       </button>
       <DeleteGroupRequestModal

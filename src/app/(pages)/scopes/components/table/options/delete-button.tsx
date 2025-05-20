@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import ConfirmModal from "@/components/confirm-modal";
 import { Scope } from "@/models/client";
 import { deleteScope } from "@/services/scopes";
@@ -34,11 +35,7 @@ export default function DeleteButton(props: Readonly<DeleteButtonProps>) {
           Are you sure you want to delete the scope <b>{scope.value}</b>?
         </p>
       </ConfirmModal>
-      <button
-        type="button"
-        className="popover-option text-danger"
-        onClick={open}
-      >
+      <button type="button" className="popover-option-danger" onClick={open}>
         Delete Scope
       </button>
     </>

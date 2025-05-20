@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import DeleteGroupModal from "./modal";
 import { useState } from "react";
 import { Group } from "@/models/groups";
@@ -24,7 +25,7 @@ export default function DeleteGroupButton(
     <>
       <button
         type="button"
-        className="popover-option text-danger"
+        className="popover-option-danger"
         onClick={open}
         data-test="delete"
       >

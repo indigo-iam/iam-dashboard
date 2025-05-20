@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import ConfirmModal from "@/components/confirm-modal";
 import { useState } from "react";
 
@@ -16,7 +17,7 @@ export default function Unlink(props: Readonly<UnlinkProps>) {
     <>
       <button
         type="button"
-        className="popover-option text-danger"
+        className="popover-option-danger"
         onClick={open}
         title="Unlink"
       >

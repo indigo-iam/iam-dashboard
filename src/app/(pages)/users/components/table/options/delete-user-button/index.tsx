@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { User } from "@/models/scim";
 import { useState } from "react";
 import DeleteUserModal from "./modal";
@@ -19,11 +20,7 @@ export default function DeleteUserButton(
   const open = () => setShow(true);
   return (
     <>
-      <button
-        type="button"
-        className="popover-option text-danger"
-        onClick={open}
-      >
+      <button type="button" className="popover-option-danger" onClick={open}>
         Delete
       </button>
       <DeleteUserModal show={show} user={user} onClose={close} />

@@ -3,13 +3,14 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { Button } from "@/components/buttons";
 import { GroupRequest } from "@/models/group-requests";
 import { Modal, ModalBody, ModalFooter } from "@/components/modal";
-import { useState } from "react";
 import { Form } from "@/components/form";
 import TextArea from "@/components/textarea";
 import { rejectGroupRequest } from "@/services/group-requests";
+import { useState } from "react";
 
 type RejectButtonProps = {
   request: GroupRequest;
@@ -31,12 +32,8 @@ export default function RejectButton(props: Readonly<RejectButtonProps>) {
 
   return (
     <>
-      <button
-        type="button"
-        className="popover-option text-danger"
-        onClick={open}
-      >
-        Reject Request
+      <button type="button" className="popover-option-danger" onClick={open}>
+        Reject request
       </button>
       <Modal show={show} onClose={close} title="Reject Group Request">
         <Form action={action}>

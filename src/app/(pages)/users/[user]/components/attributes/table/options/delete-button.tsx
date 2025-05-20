@@ -44,11 +44,7 @@ export default function DeleteButton(props: Readonly<DeleteButtonProps>) {
         </p>
         <InfoTable data={data} />
       </ConfirmModal>
-      <button
-        type="button"
-        className="popover-option text-danger"
-        onClick={open}
-      >
+      <button type="button" className="popover-option-danger" onClick={open}>
         Delete Button
       </button>
     </>

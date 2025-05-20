@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { SSHKey } from "@/models/indigo-user";
 import { User } from "@/models/scim";
 import { useState } from "react";
@@ -21,7 +22,7 @@ export default function DeleteButton(props: Readonly<DeleteButtonProps>) {
   return (
     <>
       <button
-        className="popover-option text-danger"
+        className="popover-option-danger"
         type="button"
         title="Delete SSH Key"
         onClick={showModal}

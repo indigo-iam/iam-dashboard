@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import ConfirmModal from "@/components/confirm-modal";
 import { Registration } from "@/models/registration";
 import { approveRegistrationRequest } from "@/services/registration";
@@ -25,12 +26,8 @@ export default function ConfirmButton(props: Readonly<ConfirmButtonProps>) {
 
   return (
     <>
-      <button
-        type="button"
-        className="popover-option"
-        onClick={open}
-      >
-        Accept User
+      <button type="button" className="popover-option" onClick={open}>
+        Accept user
       </button>
       <ConfirmModal
         show={show}

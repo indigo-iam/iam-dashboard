@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import ConfirmModal from "@/components/confirm-modal";
 import { GroupRequest } from "@/models/group-requests";
 import { approveGroupRequest } from "@/services/group-requests";
@@ -30,7 +31,7 @@ export default function ConfirmButton(props: Readonly<ConfirmButtonProps>) {
         className="popover-option"
         onClick={open}
       >
-        Approve Group Request
+        Approve request
       </button>
       <ConfirmModal
         show={show}

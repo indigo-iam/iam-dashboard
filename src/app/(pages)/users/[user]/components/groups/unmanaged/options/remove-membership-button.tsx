@@ -3,10 +3,11 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
-import { useState } from "react";
+
 import { ScimReference, User } from "@/models/scim";
 import { removeUserFromGroup } from "@/services/groups";
 import ConfirmModal from "@/components/confirm-modal";
+import { useState } from "react";
 
 type ConfirmUnlinkUserModal = {
   user: User;
@@ -54,7 +55,7 @@ export default function RemoveMembership(
       <button
         type="button"
         title="Leave Group"
-        className="popover-option text-danger"
+        className="popover-option-danger"
         onClick={open}
       >
         Leave Group

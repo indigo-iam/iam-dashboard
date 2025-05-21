@@ -2,20 +2,23 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { revalidatePath } from "next/cache";
 import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { User } from "@/models/scim";
-import { patchUser } from "@/services/users";
-import { revalidatePath } from "next/cache";
+import { patchUser, statusMFA } from "@/services/users";
 import { ResetPassword } from "./reset-password";
+import { MFAButton } from "./mfa";
 
 type UserDetailsFormProps = {
   user: User;
+  isMe: boolean;
 };
 
-export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
-  const { user } = props;
+export async function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
+  const { user, isMe } = props;
+  const mfaEnabled = await statusMFA();
 
   const action = async (formData: FormData) => {
     "use server";
@@ -67,9 +70,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
       <Field className="col-span-full flex flex-col">
         <Label>Authentication</Label>
         <div className="flex gap-2">
-          <Button className="btn-secondary" type="button">
-            Enable MFA
-          </Button>
+          {isMe && <MFAButton enabled={mfaEnabled} />}
           <ResetPassword user={user} />
         </div>
       </Field>

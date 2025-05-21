@@ -4,12 +4,13 @@
 
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { authFetch, getItem } from "@/utils/fetch";
+import { Attribute } from "@/models/attributes";
+import { SSHKey } from "@/models/indigo-user";
+import { AddSecretResponse } from "@/models/mfa";
 import { Paginated } from "@/models/pagination";
 import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
-import { revalidatePath } from "next/cache";
-import { SSHKey } from "@/models/indigo-user";
-import { Attribute } from "@/models/attributes";
 import { setNotification } from "@/services/notifications";
 import { settings } from "@/config";
 import { auth } from "@/auth";
@@ -381,6 +382,65 @@ export async function changePassword(user: User, formData: FormData) {
       type: "error",
       message: "Password not saved",
       subtitle: `Error ${response.status} ${msg}`,
+    });
+  }
+}
+
+export async function statusMFA() {
+  const url = `${BASE_URL}/iam/multi-factor-settings/`;
+  const response = await authFetch(url);
+  const payload = await response.json();
+  return payload.authenticatorAppActive === true;
+}
+
+export async function addMFASecret() {
+  const url = `${BASE_URL}/iam/authenticator-app/add-secret`;
+  const response = await authFetch(url, {
+    method: "PUT",
+  });
+  if (response.ok) {
+    const secret = (await response.json()) as AddSecretResponse;
+    return { result: secret };
+  } else {
+    const msg = await response.text();
+    return { error: { message: msg, status: response.status } };
+  }
+}
+
+export async function enableMFA(formData: FormData) {
+  const url = `${BASE_URL}/iam/authenticator-app/enable`;
+  const response = await authFetch(url, {
+    method: "POST",
+    body: formData,
+  });
+  if (response.ok) {
+    await setNotification({
+      type: "success",
+      message: "MFA successfully enabled",
+    });
+  } else {
+    const msg = await response.text();
+    return { error: { message: msg, status: response.status } };
+  }
+}
+
+export async function disableMFA(formData: FormData) {
+  const url = `${BASE_URL}/iam/authenticator-app/disable`;
+  const response = await authFetch(url, {
+    method: "POST",
+    body: formData,
+  });
+  if (response.ok) {
+    await setNotification({
+      type: "success",
+      message: "MFA successfully disabled",
+    });
+  } else {
+    const msg = await response.text();
+    await setNotification({
+      type: "error",
+      message: "Cannot disable MFA",
+      subtitle: `${msg}`,
     });
   }
 }

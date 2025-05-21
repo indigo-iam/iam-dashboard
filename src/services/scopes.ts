@@ -9,7 +9,7 @@ import { RawScope, Scope } from "@/models/client";
 import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
 import { Paginated } from "@/models/pagination";
-import { setNotification } from "@/components/toaster";
+import { setNotification } from "@/services/notifications";
 
 const { BASE_URL } = settings;
 

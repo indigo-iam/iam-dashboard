@@ -6,9 +6,9 @@
 
 import { authFetch, getItem } from "@/utils/fetch";
 import { Registration } from "@/models/registration";
-import { revalidatePath } from "next/cache";
-import { setNotification } from "@/components/toaster";
+import { setNotification } from "@/services/notifications";
 import { settings } from "@/config";
+import { revalidatePath } from "next/cache";
 
 const { BASE_URL } = settings;
 

@@ -11,13 +11,13 @@ import {
   TokenEndpointAuthMethod,
 } from "@/models/client";
 import { authFetch, getItem } from "@/utils/fetch";
-import { revalidatePath } from "next/cache";
 import { User } from "@/models/scim";
 import { Paginated } from "@/models/pagination";
+import { setNotification } from "@/services/notifications";
 import { auth } from "@/auth";
-import { setNotification } from "@/components/toaster";
-import { redirect } from "next/navigation";
 import { settings } from "@/config";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 const { BASE_URL } = settings;
 

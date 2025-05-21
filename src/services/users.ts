@@ -10,7 +10,7 @@ import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
 import { revalidatePath } from "next/cache";
 import { SSHKey } from "@/models/indigo-user";
 import { Attribute } from "@/models/attributes";
-import { setNotification } from "@/components/toaster";
+import { setNotification } from "@/services/notifications";
 import { settings } from "@/config";
 import { auth } from "@/auth";
 

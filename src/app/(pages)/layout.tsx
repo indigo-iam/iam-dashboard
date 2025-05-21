@@ -3,7 +3,8 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import type { Metadata } from "next";
-import { ToasterPortal, getNotification } from "@/components/toaster";
+import { ToasterPortal } from "@/components/toaster";
+import { getNotification } from "@/services/notifications";
 import { Drawer, Link } from "@/components/drawer";
 import Notifications from "@/components/notifications";
 import { Logout } from "@/components/buttons";

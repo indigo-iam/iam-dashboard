@@ -5,7 +5,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { setNotification } from "@/components/toaster";
+import { setNotification } from "@/services/notifications";
 import { CertLinkRequest } from "@/models/certs";
 import { authFetch } from "@/utils/fetch";
 import { settings } from "@/config";

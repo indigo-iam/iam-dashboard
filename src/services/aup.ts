@@ -4,7 +4,7 @@
 
 "use server";
 
-import { setNotification } from "@/components/toaster";
+import { setNotification } from "@/services/notifications";
 import { AUP, AUPCreate, AUPPatch } from "@/models/aup";
 import { settings } from "@/config";
 import { authFetch, getItem } from "@/utils/fetch";

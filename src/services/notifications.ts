@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { cookies } from "next/headers";
-import { Notification } from "./types";
+import { Notification } from "@/components/toaster";
 
 export async function setNotification(notification: Notification) {
   const cookiesStore = await cookies();

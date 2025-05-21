@@ -14,7 +14,7 @@ import { settings } from "@/config";
 import { Paginated } from "@/models/pagination";
 import { revalidatePath } from "next/cache";
 import { ScimReference, User } from "@/models/scim";
-import { setNotification } from "@/components/toaster";
+import { setNotification } from "@/services/notifications";
 import { makeScimReferenceFromUser } from "@/utils/scim";
 
 const { BASE_URL } = settings;

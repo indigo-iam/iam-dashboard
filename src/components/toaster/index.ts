@@ -3,4 +3,4 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 export { default as ToasterPortal, toaster } from "./toaster";
-export { setNotification, getNotification } from "./utils";
+export type { Notification } from "./types";

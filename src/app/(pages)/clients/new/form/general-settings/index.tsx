@@ -3,10 +3,9 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { CarouselPanel } from "@/components/carousel";
-import { Input } from "@/components/inputs";
-import { Section } from "@/components/layout";
-import { useFormStatus } from "@/utils/forms";
 import { Field, Label, Description } from "@/components/form";
+import { Input } from "@/components/inputs";
+import { useFormStatus } from "@/utils/forms";
 
 type GeneralSettingsProps = {
   id: string;
@@ -23,29 +22,27 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
 
   return (
     <CarouselPanel unmount={false}>
-      <Section title="General Settings">
-        <Field className="flex flex-col">
-          <Label data-required>Client Name</Label>
-          <Description>
-            Client name must be at least four characters long.
-          </Description>
-          <Input
-            title="Client Name"
-            name="client_name"
-            placeholder="The name of the client..."
-            required
-            onChange={handleClientNameChange}
-          />
-        </Field>
-        <Field className="flex flex-col gap-2">
-          <Label>Client Description</Label>
-          <Input
-            title="Client Description"
-            name="client_description"
-            placeholder="Client description..."
-          />
-        </Field>
-      </Section>
+      <Field className="flex flex-col">
+        <Label data-required>Client Name</Label>
+        <Description>
+          Client name must be at least four characters long.
+        </Description>
+        <Input
+          title="Client Name"
+          name="client_name"
+          placeholder="The name of the client..."
+          required
+          onChange={handleClientNameChange}
+        />
+      </Field>
+      <Field className="flex flex-col gap-2">
+        <Label>Client Description</Label>
+        <Input
+          title="Client Description"
+          name="client_description"
+          placeholder="Client description..."
+        />
+      </Field>
     </CarouselPanel>
   );
 }

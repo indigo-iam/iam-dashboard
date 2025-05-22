@@ -42,7 +42,7 @@ export default function CarouselNavigator(
   };
 
   return (
-    <div className="flex flex-row gap-2">
+    <div className="flex flex-row justify-end gap-2">
       <Button
         className="btn-tertiary"
         onClick={back}

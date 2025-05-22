@@ -4,7 +4,6 @@
 
 import { CarouselPanel } from "@/components/carousel";
 import { Field, Label, Description, DropdownList } from "@/components/form";
-import { Section } from "@/components/layout";
 import { type Scope } from "@/models/client";
 import { OpenIdConfiguration } from "@/models/openid-configuration";
 import { useFormStatus } from "@/utils/forms";
@@ -42,24 +41,22 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
   }, [id, authFlowFulfilled, clientAuthFulfilled]);
 
   return (
-    <CarouselPanel unmount={false}>
-      <Section title="OpenID Connect - OAuth2">
-        <AuthenticationFlow onStatusChange={setAuthFlowFulfilled} />
-        <ClientAuthentication
-          onStatusChange={setClientAuthFulfilled}
-          tokenEndpointAuthMethods={token_endpoint_auth_methods_supported}
+    <CarouselPanel unmount={false} className="flex flex-col gap-4">
+      <AuthenticationFlow onStatusChange={setAuthFlowFulfilled} />
+      <ClientAuthentication
+        onStatusChange={setClientAuthFulfilled}
+        tokenEndpointAuthMethods={token_endpoint_auth_methods_supported}
+      />
+      <Field>
+        <Label>Scopes</Label>
+        <Description>A little description.</Description>
+        <DropdownList
+          name="scope"
+          title="Add Scope"
+          options={scopes}
+          defaultOptions={defaultScopes}
         />
-        <Field>
-          <Label>Scopes</Label>
-          <Description>A little description.</Description>
-          <DropdownList
-            name="scope"
-            title="Add Scope"
-            options={scopes}
-            defaultOptions={defaultScopes}
-          />
-        </Field>
-      </Section>
+      </Field>
     </CarouselPanel>
   );
 }

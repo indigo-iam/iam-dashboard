@@ -34,7 +34,7 @@ export function DropdownList(props: Readonly<DropdownListProps>) {
       <button
         type="button"
         onClick={() => removeItem(index)}
-        className="w-5 rounded bg-secondary-100 hover:bg-danger hover:text-secondary dark:bg-secondary/60 dark:text-danger/80"
+        className="bg-secondary-100 hover:bg-danger hover:text-secondary dark:bg-secondary/60 dark:text-danger/80 w-5 rounded"
       >
         <XMarkIcon />
       </button>
@@ -46,7 +46,7 @@ export function DropdownList(props: Readonly<DropdownListProps>) {
     <div className="flex flex-col">
       <div className="max-w-md">
         <Listbox name={name} onChange={setItems} value={items} multiple>
-          <ListboxButton>{title}</ListboxButton>
+          <ListboxButton className="btn-secondary">{title}</ListboxButton>
           <ListboxOptions>
             {options.map(opt => (
               <ListboxOption key={opt.id} value={opt}>

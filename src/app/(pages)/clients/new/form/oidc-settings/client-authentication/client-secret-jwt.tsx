@@ -2,12 +2,14 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { useEffect } from "react";
+
 type ClientSecretJwtProps = {
   onStatusChange: (status: boolean) => void;
 };
 
 export default function ClientSecretJwt(props: Readonly<ClientSecretJwtProps>) {
   const { onStatusChange } = props;
-  onStatusChange(true);
+  useEffect(() => onStatusChange(true), [onStatusChange]);
   return <p>Client Secret JWT here</p>;
 }

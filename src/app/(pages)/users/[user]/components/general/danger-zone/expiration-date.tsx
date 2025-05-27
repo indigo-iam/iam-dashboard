@@ -40,7 +40,7 @@ export function EditExpirationDate(props: Readonly<EditExpirationDateProps>) {
               Change the expiration time for the user
               <span className="text-center font-bold">
                 {user.name?.formatted}
-                <span className="font-normal"> ({user.userName})</span>
+                <span className="font-normal">{` (${user.userName})`}</span>
               </span>
             </p>
             <Input type="date" name="end-date" defaultValue={defaultValue} />

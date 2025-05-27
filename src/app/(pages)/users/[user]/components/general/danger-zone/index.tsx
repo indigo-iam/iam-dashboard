@@ -14,7 +14,6 @@ type DangerZoneProps = {
 
 export function DangerZone(props: Readonly<DangerZoneProps>) {
   const { user } = props;
-  const { active } = user;
   return (
     <>
       <div className="col-span-full text-sm font-light sm:col-span-2">

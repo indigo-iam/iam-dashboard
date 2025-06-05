@@ -10,10 +10,14 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@/components/listbox";
-
 import { useState } from "react";
 
 export { ListboxOption as SelectOption };
+
+export type SelectOption = {
+  id: string;
+  name: string;
+};
 
 type SelectProps = {
   name: string;
@@ -25,7 +29,7 @@ type SelectProps = {
 };
 
 export function Select(props: Readonly<SelectProps>) {
-  const { name, onChange, children, defaultValue, className, disabled } = props;
+  const { name, onChange, children, defaultValue, disabled } = props;
   const [selected, setSelected] = useState(defaultValue);
 
   const handleChange = (value: { id: string; name: string }) => {

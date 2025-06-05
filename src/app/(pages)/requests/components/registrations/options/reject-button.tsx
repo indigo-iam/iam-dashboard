@@ -7,7 +7,7 @@
 import { Button } from "@/components/buttons";
 import { Form } from "@/components/form";
 import { Modal, ModalBody, ModalFooter } from "@/components/modal";
-import TextArea from "@/components/textarea";
+import { Textarea } from "@/components/textarea";
 import { Registration } from "@/models/registration";
 import { rejectRegistrationRequest } from "@/services/registration";
 import { useState } from "react";
@@ -50,8 +50,9 @@ export default function RejectButton(props: Readonly<RejectButtonProps>) {
             <p>
               To proceed provide a motivation that will be sent to the user:
             </p>
-            <TextArea
+            <Textarea
               name="motivation"
+              className="textarea"
               onChange={e => setMotivation(e.currentTarget.value)}
             />
           </ModalBody>

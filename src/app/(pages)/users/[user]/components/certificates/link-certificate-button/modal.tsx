@@ -7,7 +7,7 @@ import { Button } from "@/components/buttons";
 import { Field, Form, Label, Select } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
-import TextArea from "@/components/textarea";
+import { Textarea } from "@/components/textarea";
 import { User } from "@/models/scim";
 import { sendCertificateLinkRequest } from "@/services/certs";
 import { useState } from "react";
@@ -50,7 +50,7 @@ function PEMField() {
   return (
     <Field>
       <Label data-required>Certificate</Label>
-      <TextArea
+      <Textarea
         name="certificate"
         className="textarea w-full"
         required
@@ -107,7 +107,7 @@ export default function LinkCertificateModal(
           {format === "pem" ? <PEMField /> : <IssuerField />}
           <Field>
             <Label>Optional Request Notes</Label>
-            <TextArea
+            <Textarea
               name="notes"
               className="textarea w-full"
               placeholder="Notes..."

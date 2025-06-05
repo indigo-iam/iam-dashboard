@@ -8,7 +8,7 @@ import { Button } from "@/components/buttons";
 import { GroupRequest } from "@/models/group-requests";
 import { Modal, ModalBody, ModalFooter } from "@/components/modal";
 import { Form } from "@/components/form";
-import TextArea from "@/components/textarea";
+import { Textarea } from "@/components/textarea";
 import { rejectGroupRequest } from "@/services/group-requests";
 import { useState } from "react";
 
@@ -44,8 +44,9 @@ export default function RejectButton(props: Readonly<RejectButtonProps>) {
               <b>{request.userFullName}</b>?
             </p>
             <p>To proceed provide a motivation that will sent to the user:</p>
-            <TextArea
+            <Textarea
               name="motivation"
+              className="textarea"
               onChange={e => setMotivation(e.currentTarget.value)}
             />
           </ModalBody>

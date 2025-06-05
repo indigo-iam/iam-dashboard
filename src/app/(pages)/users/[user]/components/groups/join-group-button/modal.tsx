@@ -14,7 +14,7 @@ import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
 import { addUserToGroup, searchGroup } from "@/services/groups";
 import Combobox from "@/components/combobox";
-import TextArea from "@/components/textarea";
+import { Textarea } from "@/components/textarea";
 import InfoTable from "@/components/info-table";
 import { makeScimReferenceFromUser } from "@/utils/scim";
 import { useState } from "react";
@@ -90,7 +90,7 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
                 This motivation will be show to the administrators that will
                 manage your request.
               </p>
-              <TextArea
+              <Textarea
                 id="group-request-notes"
                 name="group-request-notes"
                 placeholder="Explain why you want to be a member of group..."

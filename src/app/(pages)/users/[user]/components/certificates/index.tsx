@@ -5,7 +5,6 @@
 import { User } from "@/models/scim";
 import { Certificate } from "@/models/indigo-user";
 import InfoTable from "@/components/info-table";
-import { Section } from "@/components/layout";
 import LinkCertificateButton from "./link-certificate-button";
 import { TabPanel } from "@/components/tabs";
 
@@ -32,19 +31,18 @@ export async function Certificates(props: Readonly<CertificateProps>) {
   }
 
   return (
-    <TabPanel>
-      <Section title="X509 Certificates">
-        {certificates && certificates.length > 0 ? (
-          certificates.map(cert => (
-            <CertificateView key={cert.subjectDn + cert.issuerDn} cert={cert} />
-          ))
-        ) : (
-          <p className="dark:text-extralight font-light">
-            No certificates found.
-          </p>
-        )}
-        <LinkCertificateButton user={user} />
-      </Section>
+    <TabPanel className="panel space-y-4">
+      <h2 className="border-b">X509 Certificates</h2>
+      {certificates && certificates.length > 0 ? (
+        certificates.map(cert => (
+          <CertificateView key={cert.subjectDn + cert.issuerDn} cert={cert} />
+        ))
+      ) : (
+        <p className="dark:text-extralight font-light">
+          No certificates found.
+        </p>
+      )}
+      <LinkCertificateButton user={user} />
     </TabPanel>
   );
 }

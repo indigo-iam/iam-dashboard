@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Page, Panel, Section } from "@/components/layout";
+import { Page, Panel } from "@/components/layout";
 import { fetchAUP } from "@/services/aup";
 import { AupView, CreateButton } from "./components/";
 
@@ -12,9 +12,9 @@ export default async function AUP() {
     return (
       <Page title="Acceptable Usage Policy">
         <Panel>
-          <Section>
+          <div className="panel">
             <AupView aup={aup} />
-          </Section>
+          </div>
         </Panel>
       </Page>
     );
@@ -22,10 +22,10 @@ export default async function AUP() {
     return (
       <Page title="Acceptable Usage Policy">
         <Panel>
-          <Section>
+          <div className="panel space-y-4">
             <p>AUP is not defined for this organization.</p>
             <CreateButton />
-          </Section>
+          </div>
         </Panel>
       </Page>
     );

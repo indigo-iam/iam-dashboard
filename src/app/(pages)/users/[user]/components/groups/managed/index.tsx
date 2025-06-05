@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Section } from "@/components/layout";
 import { User } from "@/models/scim";
 import { fetchManagedGroups } from "@/services/groups";
 import { ManagedGroup } from "@/models/groups";
@@ -40,13 +39,19 @@ export default async function ManagedGroups(
 ) {
   const { user } = props;
   const groups = await fetchManagedGroups(user.id);
+
+  if (groups.length === 0) {
+    return null;
+  }
+
   return (
-    <Section title="Managed Groups">
+    <div className="panel">
+      <h2 className="border-b">Managed Groups</h2>
       <ul className="w-full">
         {groups.map(group => (
           <Row key={group.id} group={group} />
         ))}
       </ul>
-    </Section>
+    </div>
   );
 }

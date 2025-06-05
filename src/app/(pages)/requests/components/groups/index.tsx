@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { TabPanel } from "@/components/tabs";
-import { Section } from "@/components/layout";
 import { GroupRequest } from "@/models/group-requests";
 import { dateToHuman } from "@/utils/dates";
 import GroupRequestOptions from "./options";
@@ -62,14 +61,12 @@ export default function Groups(props: Readonly<GroupsProps>) {
     );
   }
   return (
-    <TabPanel>
-      <Section>
-        <ul className="w-full table-auto">
-          {requests.map(r => (
-            <Row key={r.uuid} request={r} />
-          ))}
-        </ul>
-      </Section>
+    <TabPanel className="panel space-y-4">
+      <ul className="w-full table-auto">
+        {requests.map(r => (
+          <Row key={r.uuid} request={r} />
+        ))}
+      </ul>
     </TabPanel>
   );
 }

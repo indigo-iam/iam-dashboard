@@ -6,7 +6,6 @@ import { Group } from "@/models/groups";
 import { fetchGroupManagers } from "@/services/groups";
 import ManagersTable from "./table/table";
 import AssignGroupManagerButton from "./assign-button";
-import { Section } from "@/components/layout";
 import { auth } from "@/auth";
 
 type ManagersProps = {
@@ -25,9 +24,10 @@ export default async function Managers(props: Readonly<ManagersProps>) {
   const managers = await fetchGroupManagers(group.id);
 
   return (
-    <Section title="Managers">
+    <div className="panel space-y-4">
+      <h2 className="border-b">Managers</h2>
       <ManagersTable group={group} managers={managers} />
       <AssignGroupManagerButton group={group} />
-    </Section>
+    </div>
   );
 }

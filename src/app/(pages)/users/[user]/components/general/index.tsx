@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Section } from "@/components/layout";
 import { TabPanel } from "@/components/tabs";
 import { User } from "@/models/scim";
 import { Aup } from "./aup";
@@ -18,21 +17,17 @@ type GeneralProps = {
 export async function General(props: Readonly<GeneralProps>) {
   const { user, isMe } = props;
   return (
-    <TabPanel>
-      <Section>
-        <div className="grid grid-cols-6 gap-4">
-          <Metadata user={user} />
-          <UserDetailsForm user={user} isMe={isMe} />
+    <TabPanel className="panel grid grid-cols-6 gap-4">
+      <Metadata user={user} />
+      <UserDetailsForm user={user} isMe={isMe} />
+      <hr className="col-span-full text-gray-300" />
+      <Aup user={user} isMe={isMe} />
+      {isMe ? null : (
+        <>
           <hr className="col-span-full text-gray-300" />
-          <Aup user={user} isMe={isMe} />
-          {isMe ? null : (
-            <>
-              <hr className="col-span-full text-gray-300" />
-              <DangerZone user={user} />
-            </>
-          )}
-        </div>
-      </Section>
+          <DangerZone user={user} />
+        </>
+      )}
     </TabPanel>
   );
 }

@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Page, Panel, Section } from "@/components/layout";
+import { Page, Panel } from "@/components/layout";
 import { fetchScopePolicies } from "@/services/scope-policies";
 import { AddPolicyButton, PoliciesTable } from "./components";
 
@@ -19,12 +19,13 @@ export default async function Policies() {
           tempus sit amet enim eget consequat. Phasellus sit amet fringilla mi,
           id hendrerit quam.
         </p>
-        <Section title="Policies">
+        <div className="panel space-y-4">
+          <h2 className="border-b">Policies</h2>
           <div className="flex flex-col gap-2">
             <AddPolicyButton />
             <PoliciesTable policies={policies} />
           </div>
-        </Section>
+        </div>
       </Panel>
     </Page>
   );

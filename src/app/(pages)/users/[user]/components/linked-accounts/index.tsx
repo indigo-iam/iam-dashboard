@@ -4,7 +4,6 @@
 
 import { OidcId, SamlId } from "@/models/indigo-user";
 import { User } from "@/models/scim";
-import { Section } from "@/components/layout";
 import SAMLOptions from "./saml-options";
 import OidcOptions from "./oidc-options";
 import { TabPanel } from "@/components/tabs";
@@ -94,12 +93,14 @@ export async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
   }
   return (
     <TabPanel className="space-y-6">
-      <Section title="OpenID Connect">
+      <div className="panel">
+        <h2 className="border-b">OpenID Connect</h2>
         <OidcAccounts oidcIds={oidcIds} />
-      </Section>
-      <Section title="SAML">
+      </div>
+      <div className="panel">
+        <h2 className="border-b">SAML</h2>
         <SamlAccounts samlIds={samlIds} />
-      </Section>
+      </div>
     </TabPanel>
   );
 }

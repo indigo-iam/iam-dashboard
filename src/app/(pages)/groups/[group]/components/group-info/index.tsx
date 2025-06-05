@@ -5,11 +5,11 @@
 import { Group } from "@/models/groups";
 import { dateToHuman } from "@/utils/dates";
 import InfoTable from "@/components/info-table";
-import { Section } from "@/components/layout";
 
 type GroupInfoProps = {
   group: Group;
 };
+
 export default function GroupInfo(props: Readonly<GroupInfoProps>) {
   const { group } = props;
   const description =
@@ -24,8 +24,9 @@ export default function GroupInfo(props: Readonly<GroupInfoProps>) {
     { name: "Created", value: created },
   ];
   return (
-    <Section title="Group Information">
+    <div className="panel space-y-4">
+      <h2 className="border-b">Group Information</h2>
       <InfoTable data={data} />
-    </Section>
+    </div>
   );
 }

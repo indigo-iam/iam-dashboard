@@ -4,7 +4,6 @@
 
 import { TabPanel } from "@/components/tabs";
 import { Registration } from "@/models/registration";
-import { Section } from "@/components/layout";
 import RegistrationRequestsOptions from "./options";
 import Link from "next/link";
 
@@ -44,21 +43,17 @@ export default function Registrations(props: Readonly<RegistrationsProps>) {
 
   if (requests.length === 0) {
     return (
-      <TabPanel>
-        <Section>There are no pending requests.</Section>
-      </TabPanel>
+      <TabPanel className="panel">There are no pending requests.</TabPanel>
     );
   }
 
   return (
-    <TabPanel>
-      <Section>
-        <ul>
-          {requests.map(r => (
-            <Row key={r.uuid} request={r} />
-          ))}
-        </ul>
-      </Section>
+    <TabPanel className="panel">
+      <ul>
+        {requests.map(r => (
+          <Row key={r.uuid} request={r} />
+        ))}
+      </ul>
     </TabPanel>
   );
 }

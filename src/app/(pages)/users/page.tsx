@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Page, Panel, Section } from "@/components/layout";
+import { Page, Panel } from "@/components/layout";
 import { getUsersPage } from "@/services/users";
 import { InputQuery } from "@/components/inputs";
 import Paginator from "@/components/paginator";
@@ -28,12 +28,12 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
   return (
     <Page title="Users">
       <Panel>
-        <Section>
+        <div className="panel space-y-4">
           <AddUserButton />
           <InputQuery />
           <UsersTable users={users} />
           <Paginator numberOfPages={numberOfPages} />
-        </Section>
+        </div>
       </Panel>
     </Page>
   );

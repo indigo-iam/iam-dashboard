@@ -26,7 +26,7 @@
     @apply text-2xl font-bold;
   }
   h2 {
-    @apply text-xl font-bold;
+    @apply border-gray-300 pb-2 text-xl font-bold;
   }
   h3 {
     @apply text-lg font-bold;
@@ -94,4 +94,8 @@
 
 @utility iam-list-item {
   @apply dark:border-light flex flex-row border-b border-gray-200 p-2 last:border-transparent hover:rounded-md hover:border-transparent hover:bg-neutral-200 has-[+:hover]:border-transparent dark:hover:bg-neutral-200/10;
+}
+
+@utility panel {
+  @apply dark:bg-primary rounded-lg bg-gray-50 p-4 shadow-md;
 }

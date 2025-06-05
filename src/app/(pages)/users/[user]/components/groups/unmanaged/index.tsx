@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { ScimReference, User } from "@/models/scim";
-import { Section } from "@/components/layout";
 import GroupOptions from "./options";
 
 type RowProps = {
@@ -34,16 +33,22 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
   const { user } = props;
   const { groups } = user;
   if (!groups || groups.length === 0) {
-    return <Section title="User Groups">No groups found.</Section>;
+    return (
+      <div className="panel">
+        <h2 className="border-b">User Groups</h2>
+        No groups found.
+      </div>
+    );
   }
 
   return (
-    <Section title="Joined Groups">
+    <div className="panel">
+      <h2 className="border-b">Joined Groups</h2>
       <ul className="w-full">
         {groups.map(g => (
           <Row key={g.value} user={user} groupRef={g} />
         ))}
       </ul>
-    </Section>
+    </div>
   );
 }

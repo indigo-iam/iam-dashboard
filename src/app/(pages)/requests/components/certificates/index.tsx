@@ -2,13 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Section } from "@/components/layout";
 import { TabPanel } from "@headlessui/react";
 
 export function CertificateLinkRequests() {
-  return (
-    <TabPanel>
-      <Section>To be implemented.</Section>
-    </TabPanel>
-  );
+  return <TabPanel className="panel">To be implemented.</TabPanel>;
 }

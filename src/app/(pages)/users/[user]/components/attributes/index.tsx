@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { User } from "@/models/scim";
-import { Section } from "@/components/layout";
 import { TabPanel } from "@/components/tabs";
 import AttributesTable from "./table";
 import AddAttributeButton from "./add-button";
@@ -15,11 +14,10 @@ type AttributesProps = {
 export function Attributes(props: Readonly<AttributesProps>) {
   const { user } = props;
   return (
-    <TabPanel>
-      <Section title="Attributes">
-        <AttributesTable user={user} />
-        <AddAttributeButton user={user} />
-      </Section>
+    <TabPanel className="panel space-y-4">
+      <h2 className="border-b">Attributes</h2>
+      <AttributesTable user={user} />
+      <AddAttributeButton user={user} />
     </TabPanel>
   );
 }

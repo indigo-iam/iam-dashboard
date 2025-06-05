@@ -4,7 +4,6 @@
 
 import { Group } from "@/models/groups";
 import SubgroupsTable from "./table";
-import { Section } from "@/components/layout";
 
 type SubgroupsProps = {
   group: Group;
@@ -13,8 +12,9 @@ type SubgroupsProps = {
 export default function Subgroups(props: Readonly<SubgroupsProps>) {
   const { group } = props;
   return (
-    <Section title="Subgroups">
+    <div className="panel space-y-4">
+      <h2 className="border-b">Subgroups</h2>
       <SubgroupsTable group={group} />
-    </Section>
+    </div>
   );
 }

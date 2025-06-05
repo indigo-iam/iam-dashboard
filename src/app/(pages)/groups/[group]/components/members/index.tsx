@@ -6,7 +6,6 @@ import { Group } from "@/models/groups";
 import { fetchGroupMembersPage } from "@/services/groups";
 import MembersTable from "./table";
 import AddMemberButton from "./add-button";
-import { Section } from "@/components/layout";
 
 type MembersProps = {
   group: Group;
@@ -17,9 +16,10 @@ export default async function Members(props: Readonly<MembersProps>) {
   // TODO: pagination
   const members = (await fetchGroupMembersPage(group.id)).Resources;
   return (
-    <Section title="Members">
+    <div className="panel space-y-4">
+      <h2 className="border-b">Members</h2>
       <MembersTable group={group} members={members} />
       <AddMemberButton group={group} />
-    </Section>
+    </div>
   );
 }

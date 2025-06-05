@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Page, Panel, Section } from "@/components/layout";
+import { Page, Panel } from "@/components/layout";
 import { getGroupsPage } from "@/services/groups";
 import { AddGroupButton, GroupsTable } from "./components";
 import { InputQuery } from "@/components/inputs";
@@ -29,12 +29,12 @@ export default async function GroupsPage(props: Readonly<GroupsProps>) {
   return (
     <Page title="Groups">
       <Panel>
-        <Section>
+        <div className="panel space-y-4">
           <AddGroupButton />
           <InputQuery data-test="search-group" />
           <GroupsTable groups={groups} />
           <Paginator numberOfPages={numberOfPages} />
-        </Section>
+        </div>
       </Panel>
     </Page>
   );

@@ -42,12 +42,10 @@ function AccessToken(props: Readonly<AccessTokenProps>) {
           type="number"
           defaultValue={id_token_validity_seconds}
         />
-      </FormSection>
-      <Checkbox
-        name="require_auth_time"
-        defaultChecked={require_auth_time}
-        label="Always require authentication time in ID tokens"
-      />
+      <Field className="flex flex-row items-center gap-2">
+        <Checkbox name="require_auth_time" defaultChecked={require_auth_time} />
+        <Label>Always require authentication time in ID tokens</Label>
+      </Field>
     </div>
   );
 }
@@ -71,17 +69,20 @@ function RefreshToken(props: Readonly<RefreshTokenProps>) {
           name="refresh_token_validity_seconds"
           defaultValue={refresh_token_validity_seconds}
         />
-      </FormSection>
-      <Checkbox
-        name="reuse_refresh_token"
-        defaultChecked={reuse_refresh_token}
-        label="Reuse Refresh Token"
-      />
-      <Checkbox
-        name="clear_access_tokens_on_refresh"
-        defaultChecked={clear_access_tokens_on_refresh}
-        label="Clear Access Tokens on refresh"
-      />
+      <Field className="flex flex-row items-center gap-2">
+        <Checkbox
+          name="reuse_refresh_token"
+          defaultChecked={reuse_refresh_token}
+        />
+        <Label>Reuse Refresh Token</Label>
+      </Field>
+      <Field className="flex flex-row items-center gap-2">
+        <Checkbox
+          name="clear_access_tokens_on_refresh"
+          defaultChecked={clear_access_tokens_on_refresh}
+        />
+        <Label>Clear Access Tokens on refresh</Label>
+      </Field>
     </div>
   );
 }

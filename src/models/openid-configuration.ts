@@ -40,4 +40,6 @@ export interface OpenIdConfiguration {
 export type GrantType =
   | "authorization_code"
   | "client_credentials"
-  | "urn:ietf:params:oauth:grant-type:device_code";
+  | "urn:ietf:params:oauth:grant-type:device_code"
+  | "urn:ietf:params:oauth:grant-type:token-exchange"
+  | "refresh_token";

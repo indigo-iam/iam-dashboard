@@ -17,7 +17,7 @@
   --color-extradark: var(--color-gray-900);
   --color-success: var(--color-green-600);
   --color-warning: var(--color-yellow-400);
-  --color-danger: var(--color-red-700);
+  --color-danger: var(--color-red-600);
   --color-danger-hover: var(--color-red-800);
 }
 

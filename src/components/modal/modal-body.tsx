@@ -2,7 +2,12 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-export const ModalBody = (props: { children?: React.ReactNode }) => {
-  const { children } = props;
-  return <div className="space-y-4 p-4">{children}</div>;
+type ModalBodyProps = {
+  className?: string;
+  children?: React.ReactNode;
+};
+
+export const ModalBody = (props: Readonly<ModalBodyProps>) => {
+  const { className, children } = props;
+  return <div className={className ?? "space-y-4 p-4"}>{children}</div>;
 };

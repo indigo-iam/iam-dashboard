@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+import { SearchUsers } from "@/app/components/search-users";
 import { Button } from "@/components/buttons";
-import Combobox from "@/components/combobox";
 import InfoTable from "@/components/info-table";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Group } from "@/models/groups";
@@ -22,11 +22,17 @@ export default function AssignGroupManagerModal(
 ) {
   const { group, onClose, ...modalProps } = props;
   const [selectedUser, setSelectedUser] = useState<User>();
+  const [searchResult, setSearchResult] = useState<User[]>([]);
   const selectUser = (user: User) => setSelectedUser(user);
 
   const clearAndClose = () => {
     setTimeout(() => setSelectedUser(undefined), 500);
     onClose();
+  };
+
+  const handleQueryChange = async (query: string) => {
+    const result = await searchUser(query);
+    setSearchResult(result);
   };
 
   const assignManager = async () => {
@@ -46,7 +52,7 @@ export default function AssignGroupManagerModal(
       <ModalBody>
         <div className="space-y-4" hidden={!!selectedUser}>
           <p>Type to search for an user</p>
-          <Combobox onSelected={selectUser} searchCallback={searchUser} />
+          <SearchUsers onSelect={setSelectedUser} />
         </div>
         <div className="space-y-4" hidden={!selectedUser}>
           <p>

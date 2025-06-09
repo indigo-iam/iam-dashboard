@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { Button } from "@/components/buttons";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Group } from "@/models/groups";
@@ -11,8 +12,7 @@ import { useState } from "react";
 import InfoTable from "@/components/info-table";
 import { addUserToGroup } from "@/services/groups";
 import { makeScimReferenceFromUser } from "@/utils/scim";
-import Combobox from "@/components/combobox";
-import { searchUser } from "@/services/users";
+import { SearchUsers } from "@/app/components/search-users";
 
 interface AddMemberModalProps extends ModalProps {
   group: Group;
@@ -21,7 +21,6 @@ interface AddMemberModalProps extends ModalProps {
 export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
   const { group, onClose, ...modalProps } = props;
   const [selectedUser, setSelectedUser] = useState<User>();
-  const selectUser = (user: User) => setSelectedUser(user);
 
   const clearAndClose = () => {
     props.onClose();
@@ -46,7 +45,7 @@ export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
       <ModalBody>
         <div className="space-y-4" hidden={!!selectedUser}>
           <p>Type to search for an user</p>
-          <Combobox onSelected={selectUser} searchCallback={searchUser} />
+          <SearchUsers onSelect={setSelectedUser} />
         </div>
         <div className="space-y-4" hidden={!selectedUser}>
           <p>

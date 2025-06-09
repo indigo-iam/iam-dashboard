@@ -12,12 +12,12 @@ import { submitGroupRequest } from "@/services/group-requests";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
-import { addUserToGroup, searchGroup } from "@/services/groups";
-import Combobox from "@/components/combobox";
+import { addUserToGroup } from "@/services/groups";
 import { Textarea } from "@/components/textarea";
 import InfoTable from "@/components/info-table";
 import { makeScimReferenceFromUser } from "@/utils/scim";
 import { useState } from "react";
+import { SearchGroups } from "@/app/components/search-groups";
 
 export interface JoinGroupModalProps extends ModalProps {
   user: User;
@@ -74,7 +74,7 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
           <div hidden={!!selected}>
             <Field>
               <Label>Select a Group to join</Label>
-              <Combobox onSelected={selectGroup} searchCallback={searchGroup} />
+              <SearchGroups onSelect={selectGroup} />
             </Field>
           </div>
           <div className="space-y-4" hidden={!selected}>

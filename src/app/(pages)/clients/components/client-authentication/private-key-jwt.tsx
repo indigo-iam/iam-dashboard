@@ -4,11 +4,11 @@
 
 import { Field, Description, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
-import TextArea from "@/components/textarea";
-import { useState } from "react";
+import { Textarea } from "@/components/textarea";
+import { ChangeEvent, useState } from "react";
 
 type PrivateKeyJwtProps = {
-  onStatusChange: (status: boolean) => void;
+  onStatusChange?: (status: boolean) => void;
 };
 
 export default function PrivateKeyJwt(props: Readonly<PrivateKeyJwtProps>) {
@@ -17,11 +17,13 @@ export default function PrivateKeyJwt(props: Readonly<PrivateKeyJwtProps>) {
 
   const changeJwkMethod = (method: "uri" | "value") => {
     setJwkMethod(method);
-    onStatusChange(false);
+    onStatusChange?.(false);
   };
 
-  const handleJwkChange = (s: string) => {
-    onStatusChange(s.length > 0);
+  const handleJwkChange = (
+    e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    onStatusChange?.(e.currentTarget.value.length > 0);
   };
 
   return (
@@ -57,14 +59,14 @@ export default function PrivateKeyJwt(props: Readonly<PrivateKeyJwtProps>) {
           type="uri"
           title="JSON Web Keyset URI"
           placeholder="https://app.example.org/jwk"
-          onChange={e => handleJwkChange(e.target.value)}
+          onChange={handleJwkChange}
           required
         />
       ) : (
-        <TextArea
+        <Textarea
           name="jwk"
           placeholder={'{"keys": []}'}
-          onChange={e => handleJwkChange(e.currentTarget.value)}
+          onChange={handleJwkChange}
           required
         />
       )}

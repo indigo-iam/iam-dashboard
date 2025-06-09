@@ -2,27 +2,26 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client";
+
 import { CarouselPanel } from "@/components/carousel";
 import { Field, Label, Description, DropdownList } from "@/components/form";
 import { type Scope } from "@/models/client";
-import { OpenIdConfiguration } from "@/models/openid-configuration";
 import { useFormStatus } from "@/utils/forms";
 import AuthenticationFlow from "./authentication-flow";
-import ClientAuthentication from "./client-authentication";
+import { ClientAuthentication } from "@/app/(pages)/clients/components";
 import { useEffect, useState } from "react";
 
 type OIDCSettingsProps = {
   id: string;
   systemScopes: Scope[];
-  openIdConfiguration: OpenIdConfiguration;
 };
 
 export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
-  const { id, systemScopes, openIdConfiguration } = props;
+  const { id, systemScopes } = props;
   const { updateFormStatus } = useFormStatus();
   const [authFlowFulfilled, setAuthFlowFulfilled] = useState(false);
   const [clientAuthFulfilled, setClientAuthFulfilled] = useState(false);
-  const { token_endpoint_auth_methods_supported } = openIdConfiguration;
 
   const defaultScopes = systemScopes
     .filter(scope => scope.defaultScope)
@@ -43,10 +42,13 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
   return (
     <CarouselPanel unmount={false} className="flex flex-col gap-4">
       <AuthenticationFlow onStatusChange={setAuthFlowFulfilled} />
-      <ClientAuthentication
-        onStatusChange={setClientAuthFulfilled}
-        tokenEndpointAuthMethods={token_endpoint_auth_methods_supported}
-      />
+      <Field>
+        <Label>Client Authentication</Label>
+        <Description>
+          How the client authenticate to the Token Endpoint.
+        </Description>
+        <ClientAuthentication onStatusChange={setClientAuthFulfilled} />
+      </Field>
       <Field>
         <Label>Scopes</Label>
         <Description>A little description.</Description>

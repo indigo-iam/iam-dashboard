@@ -5,11 +5,13 @@
 import { useEffect } from "react";
 
 type ClientSecretJwtProps = {
-  onStatusChange: (status: boolean) => void;
+  onStatusChange?: (status: boolean) => void;
 };
 
 export default function ClientSecretJwt(props: Readonly<ClientSecretJwtProps>) {
   const { onStatusChange } = props;
-  useEffect(() => onStatusChange(true), [onStatusChange]);
-  return <p>Client Secret JWT here</p>;
+  useEffect(() => onStatusChange?.(true), [onStatusChange]);
+  return (
+    <span className="text-danger font-mono">TODO Client Secret JWT here</span>
+  );
 }

@@ -29,7 +29,7 @@ export default function AuthorizationCode(
         originalItems={[]}
         name="redirect_uris"
         type="url"
-        placeholder="https://app.exchange.com/callback"
+        placeholder="https://app.example.com/callback"
         onChange={handleRedirectURIChange}
         required
       />

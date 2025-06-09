@@ -19,7 +19,6 @@ import { Scope } from "@/models/client";
 import { OpenIdConfiguration } from "@/models/openid-configuration";
 import { FormStatusProvider, useFormStatus } from "@/utils/forms";
 import { Stepper } from "@/components/stepper";
-import { Section } from "@/components/layout";
 
 const TOTAL_PAGES = 3;
 
@@ -59,7 +58,7 @@ function reducer(state: CarouselState, action: Action) {
 }
 
 export function NewClientCarousel(props: Readonly<NewClientFormProps>) {
-  const { systemScopes, openIdConfiguration } = props;
+  const { systemScopes } = props;
   const [state, dispatch] = useReducer(reducer, initialState);
   const { formStatus } = useFormStatus();
 
@@ -80,7 +79,8 @@ export function NewClientCarousel(props: Readonly<NewClientFormProps>) {
     <div className="flex">
       <Stepper currentPage={state.currentPage} totalPages={TOTAL_PAGES} />
       <div className="flex grow flex-col gap-4">
-        <Section title={titles[state.currentPage]}>
+        <div className="panel">
+          <h2>{titles[state.currentPage]}</h2>
           <Carousel selectedIndex={state.currentPage}>
             <CarouselList>
               <CarouselTab>General Settings</CarouselTab>
@@ -89,11 +89,7 @@ export function NewClientCarousel(props: Readonly<NewClientFormProps>) {
             </CarouselList>
             <CarouselPanels>
               <GeneralSettings id="generalSettings" />
-              <OIDCSettings
-                systemScopes={systemScopes}
-                openIdConfiguration={openIdConfiguration}
-                id="oidcSettings"
-              />
+              <OIDCSettings systemScopes={systemScopes} id="oidcSettings" />
               <OtherSettings id="otherSettings" />
             </CarouselPanels>
           </Carousel>
@@ -107,7 +103,7 @@ export function NewClientCarousel(props: Readonly<NewClientFormProps>) {
             backButtonDisabled={!canNavigateBack}
             nextButtonDisabled={!canNavigateNext}
           />
-        </Section>
+        </div>
       </div>
     </div>
   );

@@ -5,13 +5,13 @@
 import { useEffect } from "react";
 
 type ClientSecretPostProps = {
-  onStatusChange: (status: boolean) => void;
+  onStatusChange?: (status: boolean) => void;
 };
 
 export default function ClientSecretPost(
   props: Readonly<ClientSecretPostProps>
 ) {
   const { onStatusChange } = props;
-  useEffect(() => onStatusChange(true), [onStatusChange]);
+  useEffect(() => onStatusChange?.(true), [onStatusChange]);
   return <p>Client Secret Post Here</p>;
 }

@@ -2,9 +2,17 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { TabGroup, TabList, TabPanels, Tab } from "@/components/tabs";
 import { Page, Panel } from "@/components/layout";
-import ClientForm from "./components/form";
-import { editClient, getClient } from "@/services/clients";
+import { getClient } from "@/services/clients";
+import {
+  Main,
+  Credentials,
+  Scopes,
+  GrantTypes,
+  Tokens,
+  Owners,
+} from "./components";
 import { auth } from "@/auth";
 
 type ClientPageProps = {
@@ -23,18 +31,27 @@ export default async function Client(props: Readonly<ClientPageProps>) {
     throw Error(client.error);
   }
 
-  const editAdminClient = async (formData: FormData) => {
-    "use server";
-    await editClient(formData, true);
-  };
   return (
     <Page title={client.client_name}>
       <Panel>
-        <ClientForm
-          client={client}
-          editClientAction={editAdminClient}
-          isAdmin={isAdmin}
-        />
+        <TabGroup className="space-y-8">
+          <TabList className="flex overflow-auto">
+            <Tab>GENERAL</Tab>
+            <Tab>CREDENTIALS</Tab>
+            <Tab>SCOPES</Tab>
+            <Tab>GRANT TYPES</Tab>
+            <Tab>TOKENS</Tab>
+            {isAdmin ? <Tab>OWNERS</Tab> : null}
+          </TabList>
+          <TabPanels>
+            <Main client={client} />
+            <Credentials client={client} />
+            <Scopes client={client} />
+            <GrantTypes client={client} />
+            <Tokens client={client} />
+            {isAdmin ? <Owners client={client} /> : null}
+          </TabPanels>
+        </TabGroup>
       </Panel>
     </Page>
   );

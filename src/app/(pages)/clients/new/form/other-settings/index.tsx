@@ -26,7 +26,7 @@ export default function OtherSettings(props: Readonly<OtherSettingsProps>) {
       <Field>
         <Label>Home Page</Label>
         <Input
-          placeholder="https://app.exchange.org"
+          placeholder="https://app.example.org"
           type="url"
           name="client_uri"
         />
@@ -34,7 +34,7 @@ export default function OtherSettings(props: Readonly<OtherSettingsProps>) {
       <Field>
         <Label>Term of Service</Label>
         <Input
-          placeholder="https://app.exchange.org/tos.html"
+          placeholder="https://app.example.org/tos.html"
           type="url"
           name="tos_uri"
         />
@@ -42,7 +42,7 @@ export default function OtherSettings(props: Readonly<OtherSettingsProps>) {
       <Field>
         <Label>Policy Statement</Label>
         <Input
-          placeholder="https://app.exchange.org/policy.html"
+          placeholder="https://app.example.org/policy.html"
           type="url"
           name="policy_uri"
         />

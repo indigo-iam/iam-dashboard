@@ -9,11 +9,12 @@ import { Bars3Icon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 
 type DrawerProps = {
+  title?: string;
   children?: React.ReactNode;
 };
 
 export function Drawer(props: Readonly<DrawerProps>) {
-  const { children } = props;
+  const { title, children } = props;
   const [show, setShow] = useState(false);
 
   const toggleDrawer = () => {
@@ -26,12 +27,13 @@ export function Drawer(props: Readonly<DrawerProps>) {
     <>
       <Button
         id="backdrop-drawer-button"
-        className="fixed inset-0 z-20 data-[show=false]:hidden md:hidden"
+        className="fixed inset-0 -z-10 bg-black/30 transition-opacity data-[show=true]:z-20 data-[show=true]:opacity-100 md:hidden"
         onClick={toggleDrawer}
         data-show={show}
-      ></Button>
-      <header className="bg-infn t-0 fixed inset-0 z-30 flex h-16 w-full justify-end md:hidden">
-        <Button className="flex p-2" onClick={toggleDrawer}>
+      />
+      <header className="bg-infn t-0 fixed inset-0 z-30 flex h-16 items-center justify-between px-4 py-2 text-2xl font-bold md:hidden">
+        {title}
+        <Button className="flex" onClick={toggleDrawer}>
           <Bars3Icon className="p my-auto size-8 rounded fill-white hover:bg-white/30" />
         </Button>
       </header>

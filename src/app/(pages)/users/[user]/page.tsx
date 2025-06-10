@@ -2,7 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Page, Panel } from "@/components/layout";
+import { Page } from "@/app/components/page";
+import { Panel } from "@/components/layout";
 import { Tab, TabGroup, TabList, TabPanels } from "@/components/tabs";
 import { fetchMe } from "@/services/me";
 import { fetchUser } from "@/services/users";
@@ -31,7 +32,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
 
   return (
     <Page title={user.name?.formatted}>
-      <Panel>
+      <div className="panel">
         <TabGroup className="space-y-8">
           <TabList className="flex overflow-auto">
             <Tab>GENERAL</Tab>
@@ -52,7 +53,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
             <Attributes user={user} />
           </TabPanels>
         </TabGroup>
-      </Panel>
+      </div>
     </Page>
   );
 }

@@ -2,8 +2,9 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { Page } from "@/app/components/page";
 import { Form } from "@/components/form";
-import { Page, Panel } from "@/components/layout";
+import { Panel } from "@/components/layout";
 import { fetchOpenIdConfiguration } from "@/services/openid-configuration";
 import { fetchScopes } from "@/services/scopes";
 import { registerClient } from "@/services/clients";
@@ -68,7 +69,7 @@ export default async function NewClient() {
     if (policy_uri) {
       request.policy_uri = policy_uri;
     }
-    console.log(request)
+    console.log(request);
     await registerClient(request, session?.is_admin);
   };
 

@@ -2,7 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Page, Panel } from "@/components/layout";
+import { Page } from "@/app/components/page";
+import { Panel } from "@/components/layout";
 import { getGroupsPage } from "@/services/groups";
 import { AddGroupButton, GroupsTable } from "./components";
 import { InputQuery } from "@/components/inputs";

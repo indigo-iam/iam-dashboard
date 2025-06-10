@@ -2,8 +2,9 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { Page } from "@/app/components/page";
 import { TabGroup, TabList, TabPanels, Tab } from "@/components/tabs";
-import { Page, Panel } from "@/components/layout";
+import { Panel } from "@/components/layout";
 import { getClient } from "@/services/clients";
 import {
   Main,

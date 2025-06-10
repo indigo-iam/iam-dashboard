@@ -2,7 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Page, Panel } from "@/components/layout";
+import { Page } from "@/app/components/page";
+import { Panel } from "@/components/layout";
 import { getUsersPage } from "@/services/users";
 import { InputQuery } from "@/components/inputs";
 import Paginator from "@/components/paginator";

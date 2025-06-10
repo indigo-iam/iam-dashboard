@@ -12,10 +12,10 @@ export default function Page(props: Readonly<PageProps>) {
 
   return (
     <div className="mt-16 md:mt-0" id={title}>
-      <h1 className="text-primary dark:bg-dark dark:text-secondary fixed z-10 h-16 w-full border-b border-b-gray-300 bg-gray-100 p-4">
-        {title ?? "Unknown Client"}
+      <h1 className="text-primary dark:bg-dark dark:text-secondary z-10 flex h-0 items-center border-b border-b-gray-300 bg-gray-100 p-0 opacity-0 md:h-16 md:p-4 md:opacity-100">
+        {title}
       </h1>
-      <div className="relative top-16 p-4">{children}</div>
+      <div className="relative">{children}</div>
     </div>
   );
 }

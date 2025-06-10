@@ -2,10 +2,10 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Drawer as EmptyDrawer, Link } from "@/components/drawer";
+import { Drawer, Link } from "@/components/drawer";
 import Notifications from "@/components/notifications";
 import { Logout } from "@/components/buttons";
-import { Page as EmptyPage } from "@/components/layout";
+import { Page } from "@/components/layout";
 import {
   ClipboardDocumentCheckIcon,
   HomeIcon,
@@ -97,19 +97,19 @@ function OrganizationManagement() {
   );
 }
 
-type PageProps = {
+type LayoutProps = {
   title?: string;
   children?: React.ReactNode;
 };
 
-export async function Page(props: Readonly<PageProps>) {
+export async function Layout(props: Readonly<LayoutProps>) {
   const { title, children } = props;
   const session = await auth();
   const isAdmin = session?.is_admin ?? false;
   const username = session?.user?.name;
   return (
-    <EmptyPage title={title}>
-      <EmptyDrawer title={title}>
+    <Page title={title}>
+      <Drawer title={title}>
         <div className="fixed">
           <LogoIam />
         </div>
@@ -119,8 +119,8 @@ export async function Page(props: Readonly<PageProps>) {
           <AccountManagement />
           {isAdmin && <OrganizationManagement />}
         </div>
-      </EmptyDrawer>
-      {children}
-    </EmptyPage>
+      </Drawer>
+      <div className="p-4 md:px-16 md:py-8">{children}</div>
+    </Page>
   );
 }

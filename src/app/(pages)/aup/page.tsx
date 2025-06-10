@@ -2,8 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Page } from "@/app/components/page";
-import { Panel } from "@/components/layout";
+import { Layout } from "@/app/components/layout";
 import { fetchAUP } from "@/services/aup";
 import { AupView, CreateButton } from "./components/";
 
@@ -11,24 +10,20 @@ export default async function AUP() {
   try {
     const aup = await fetchAUP();
     return (
-      <Page title="Acceptable Usage Policy">
-        <Panel>
-          <div className="panel">
-            <AupView aup={aup} />
-          </div>
-        </Panel>
-      </Page>
+      <Layout title="Acceptable Usage Policy">
+        <div className="panel">
+          <AupView aup={aup} />
+        </div>
+      </Layout>
     );
   } catch (err) {
     return (
-      <Page title="Acceptable Usage Policy">
-        <Panel>
-          <div className="panel space-y-4">
-            <p>AUP is not defined for this organization.</p>
-            <CreateButton />
-          </div>
-        </Panel>
-      </Page>
+      <Layout title="Acceptable Usage Policy">
+        <div className="panel space-y-4">
+          <p>AUP is not defined for this organization.</p>
+          <CreateButton />
+        </div>
+      </Layout>
     );
   }
 }

@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Page, Panel } from "@/components/layout";
+import { Layout } from "@/app/components/layout";
 import { fetchScopePolicy } from "@/services/scope-policies";
 import Editor from "./components/editor";
 
@@ -15,13 +15,11 @@ export default async function PolicyPage(props: Readonly<PolicyPageProps>) {
   const id = (await params).policy;
   const policy = await fetchScopePolicy(id);
   return (
-    <Page title="Edit Scope Policy">
-      <Panel>
-        <div className="panel">
-          <h2>{policy.description}</h2>
-          <Editor policy={policy} />
-        </div>
-      </Panel>
-    </Page>
+    <Layout title="Edit Scope Policy">
+      <div className="panel space-y-4">
+        <h2>{policy.description}</h2>
+        <Editor policy={policy} />
+      </div>
+    </Layout>
   );
 }

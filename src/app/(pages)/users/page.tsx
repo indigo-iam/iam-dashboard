@@ -2,8 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Page } from "@/app/components/page";
-import { Panel } from "@/components/layout";
+import { Layout } from "@/app/components/layout";
 import { getUsersPage } from "@/services/users";
 import { InputQuery } from "@/components/inputs";
 import Paginator from "@/components/paginator";
@@ -27,15 +26,13 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
   const numberOfPages = Math.ceil(usersPage.totalResults / count) || 1;
   const users = usersPage.Resources;
   return (
-    <Page title="Users">
-      <Panel>
-        <div className="panel space-y-4">
-          <AddUserButton />
-          <InputQuery />
-          <UsersTable users={users} />
-          <Paginator numberOfPages={numberOfPages} />
-        </div>
-      </Panel>
-    </Page>
+    <Layout title="Users">
+      <div className="panel space-y-4">
+        <AddUserButton />
+        <InputQuery />
+        <UsersTable users={users} />
+        <Paginator numberOfPages={numberOfPages} />
+      </div>
+    </Layout>
   );
 }

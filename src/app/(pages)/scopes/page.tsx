@@ -2,8 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Page } from "@/app/components/page";
-import { Panel } from "@/components/layout";
+import { Layout } from "@/app/components/layout";
 import Paginator from "@/components/paginator";
 import { InputQuery } from "@/components/inputs";
 import { fetchPaginatedScopes } from "@/services/scopes";
@@ -27,17 +26,15 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
   const numberOfPages = Math.ceil(scopes.totalResults / count);
 
   return (
-    <Page title="Scopes">
-      <Panel>
-        <div className="panel space-y-4">
-          <NewScopeButton />
-          <InputQuery />
-          <div className="overflow-y-visible">
-            <ScopesTable scopes={scopes.Resources} />
-          </div>
-          <Paginator numberOfPages={numberOfPages} />
+    <Layout title="Scopes">
+      <div className="panel space-y-4">
+        <NewScopeButton />
+        <InputQuery />
+        <div className="overflow-y-visible">
+          <ScopesTable scopes={scopes.Resources} />
         </div>
-      </Panel>
-    </Page>
+        <Paginator numberOfPages={numberOfPages} />
+      </div>
+    </Layout>
   );
 }

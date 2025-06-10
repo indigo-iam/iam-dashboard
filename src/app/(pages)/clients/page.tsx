@@ -2,8 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Page } from "@/app/components/page";
-import { Panel } from "@/components/layout";
+import { Layout } from "@/app/components/layout";
 import { InputQuery } from "@/components/inputs";
 import ClientsTable from "@/components/clients";
 import { getClientsPage } from "@/services/clients";
@@ -33,25 +32,23 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
   const numberOfPages = Math.ceil(clientPage.totalResults / count) || 1;
   const clients = clientPage.Resources;
   return (
-    <Page title={`${isMe ? "My Clients" : "Clients"}`}>
-      <Panel>
-        <div className="panel space-y-4">
-          <div className="flex flex-row gap-2">
-            <Link href="/clients/new">
-              <Button className="btn-secondary">
-                <PlusIcon className="my-auto size-5" />
-                New client
-              </Button>
-            </Link>
-            <Button className="btn-secondary">Redeem client</Button>
-          </div>
-          <InputQuery />
-          <Suspense fallback="Loading...">
-            <ClientsTable clients={clients} />
-          </Suspense>
+    <Layout title={`${isMe ? "My Clients" : "Clients"}`}>
+      <div className="panel space-y-4">
+        <div className="flex flex-row gap-2">
+          <Link href="/clients/new">
+            <Button className="btn-secondary">
+              <PlusIcon className="my-auto size-5" />
+              New client
+            </Button>
+          </Link>
+          <Button className="btn-secondary">Redeem client</Button>
         </div>
-        <Paginator numberOfPages={numberOfPages} />
-      </Panel>
-    </Page>
+        <InputQuery />
+        <Suspense fallback="Loading...">
+          <ClientsTable clients={clients} />
+        </Suspense>
+      </div>
+      <Paginator numberOfPages={numberOfPages} />
+    </Layout>
   );
 }

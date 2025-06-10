@@ -2,16 +2,15 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Page } from "@/app/components/page";
-import { Panel } from "@/components/layout";
+import { Layout } from "@/app/components/layout";
 import { fetchScopePolicies } from "@/services/scope-policies";
 import { AddPolicyButton, PoliciesTable } from "./components";
 
 export default async function Policies() {
   const policies = await fetchScopePolicies();
   return (
-    <Page title="Scope Policies">
-      <Panel>
+    <Layout title="Scope Policies">
+      <div className="space-y-4">
         <p className="font-light">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in
           accumsan leo. Suspendisse potenti. Pellentesque habitant morbi
@@ -27,7 +26,7 @@ export default async function Policies() {
             <PoliciesTable policies={policies} />
           </div>
         </div>
-      </Panel>
-    </Page>
+      </div>
+    </Layout>
   );
 }

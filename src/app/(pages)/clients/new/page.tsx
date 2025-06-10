@@ -2,9 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Page } from "@/app/components/page";
+import { Layout } from "@/app/components/layout";
 import { Form } from "@/components/form";
-import { Panel } from "@/components/layout";
 import { fetchOpenIdConfiguration } from "@/services/openid-configuration";
 import { fetchScopes } from "@/services/scopes";
 import { registerClient } from "@/services/clients";
@@ -74,15 +73,13 @@ export default async function NewClient() {
   };
 
   return (
-    <Page title="Create New Client">
-      <Panel>
-        <Form action={action}>
-          <NewClientCarousel
-            systemScopes={scopes}
-            openIdConfiguration={openIdConfiguration}
-          />
-        </Form>
-      </Panel>
-    </Page>
+    <Layout title="Create New Client">
+      <Form action={action}>
+        <NewClientCarousel
+          systemScopes={scopes}
+          openIdConfiguration={openIdConfiguration}
+        />
+      </Form>
+    </Layout>
   );
 }

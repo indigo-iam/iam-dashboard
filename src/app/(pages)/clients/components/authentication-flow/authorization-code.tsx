@@ -26,7 +26,7 @@ export default function AuthorizationCode(
     if (redirect_uris.length > 0) {
       onStatusChange?.(true);
     }
-  }, []);
+  });
 
   return (
     <Field className="flex flex-col">

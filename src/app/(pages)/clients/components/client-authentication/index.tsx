@@ -69,7 +69,7 @@ export function ClientAuthentication(
   // Temporary workaround to make carousel go to next page
   useEffect(() => {
     onStatusChange?.(true);
-  }, []);
+  });
 
   const handleAuthMethodChange = (authMethod: { id: string; name: string }) => {
     onStatusChange?.(true); // change me

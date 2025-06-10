@@ -4,19 +4,29 @@
 
 import { Field, Label } from "@/components/form";
 import { InputList } from "@/components/inputs";
+import { Client } from "@/models/client";
 import { Description } from "@headlessui/react";
+import { useEffect } from "react";
 
 type AuthorizationCodeProps = {
-  onStatusChange: (status: boolean) => void;
+  client?: Client;
+  onStatusChange?: (status: boolean) => void;
 };
 
 export default function AuthorizationCode(
   props: Readonly<AuthorizationCodeProps>
 ) {
-  const { onStatusChange } = props;
+  const { client, onStatusChange } = props;
+  const redirect_uris = client?.redirect_uris ?? [];
   const handleRedirectURIChange = (items: string[]) => {
-    onStatusChange(items.length > 0);
+    onStatusChange?.(items.length > 0);
   };
+
+  useEffect(() => {
+    if (redirect_uris.length > 0) {
+      onStatusChange?.(true);
+    }
+  }, []);
 
   return (
     <Field className="flex flex-col">
@@ -26,7 +36,7 @@ export default function AuthorizationCode(
         selected.
       </Description>
       <InputList
-        originalItems={[]}
+        originalItems={redirect_uris}
         name="redirect_uris"
         type="url"
         placeholder="https://app.example.com/callback"

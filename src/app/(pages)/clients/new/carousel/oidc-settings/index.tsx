@@ -4,12 +4,14 @@
 
 "use client";
 
-import { ClientAuthentication } from "@/app/(pages)/clients/components";
+import {
+  ClientAuthentication,
+  AuthenticationFlow,
+} from "@/app/(pages)/clients/components";
 import { Button } from "@/components/buttons";
 import { CarouselPanel } from "@/components/carousel";
 import { Field, Label, Description, DropdownList } from "@/components/form";
 import { type Scope } from "@/models/client";
-import AuthenticationFlow from "./authentication-flow";
 import { useState } from "react";
 
 type OIDCSettingsProps = {

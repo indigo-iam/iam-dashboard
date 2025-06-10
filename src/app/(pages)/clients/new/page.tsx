@@ -28,7 +28,7 @@ export default async function NewClient() {
         "token_endpoint_auth_method[id]"
       ) as string,
       scope: "",
-      grant_types: [formData.get("grant_types[id]") as string],
+      grant_types: [formData.get("grant_type[id]") as string],
     };
 
     const scopes: string[] = [];
@@ -68,6 +68,7 @@ export default async function NewClient() {
     if (policy_uri) {
       request.policy_uri = policy_uri;
     }
+    console.log(request)
     await registerClient(request, session?.is_admin);
   };
 

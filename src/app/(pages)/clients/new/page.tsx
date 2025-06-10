@@ -6,9 +6,9 @@ import { Form } from "@/components/form";
 import { Page, Panel } from "@/components/layout";
 import { fetchOpenIdConfiguration } from "@/services/openid-configuration";
 import { fetchScopes } from "@/services/scopes";
-import { NewClientForm } from "./form";
 import { registerClient } from "@/services/clients";
 import { ClientRequest } from "@/models/client";
+import { NewClientCarousel } from "./carousel";
 import { auth } from "@/auth";
 
 export default async function NewClient() {
@@ -73,14 +73,14 @@ export default async function NewClient() {
 
   return (
     <Page title="Create New Client">
-      <Form action={action}>
-        <Panel>
-          <NewClientForm
+      <Panel>
+        <Form action={action}>
+          <NewClientCarousel
             systemScopes={scopes}
             openIdConfiguration={openIdConfiguration}
           />
-        </Panel>
-      </Form>
+        </Form>
+      </Panel>
     </Page>
   );
 }

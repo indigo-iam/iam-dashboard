@@ -91,8 +91,9 @@ export function GeneralForm(props: Readonly<{ client: Client }>) {
         <Field>
           <Label>Homepage URL</Label>
           <Description>
-            URL for the client' s home page, which will be displayed to the user
-            in the consent page.
+            {
+              "URL for the client's home page, which will be displayed to the user in the consent page."
+            }
           </Description>
           <Input
             name="client_uri"

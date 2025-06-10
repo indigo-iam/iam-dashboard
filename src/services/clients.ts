@@ -43,7 +43,7 @@ export const getClient = async (clientId: string, isAdmin = false) => {
   return await getItem<Client>(url);
 };
 
-export const deleteClient = async (clientId: string) => {
+export const deleteClient = async (clientId: string, isMe?: boolean) => {
   const session = await auth();
   const url = `${BASE_URL}/iam/api/client-registration/${clientId}`;
   const response = await authFetch(url, {
@@ -51,7 +51,7 @@ export const deleteClient = async (clientId: string) => {
   });
   if (response.ok) {
     await setNotification({ type: "success", message: "Client deleted" });
-    revalidatePath(session?.is_admin ? "/clients" : "/me/clients");
+    redirect(isMe ? "/users/me" : "/clients");
   } else {
     const msg = await response.text();
     await setNotification({

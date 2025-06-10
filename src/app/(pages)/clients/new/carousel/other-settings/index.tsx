@@ -2,27 +2,20 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { Button } from "@/components/buttons";
 import { CarouselPanel } from "@/components/carousel";
 import { Field, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { useFormStatus } from "@/utils/forms";
-import { useEffect } from "react";
 
 type OtherSettingsProps = {
-  id: string;
+  goBack: () => void;
 };
 
 export default function OtherSettings(props: Readonly<OtherSettingsProps>) {
-  const { id } = props;
-  const { updateFormStatus } = useFormStatus();
-
-  useEffect(() => {
-    updateFormStatus(id, true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  const { goBack } = props;
+  const canSave = true;
   return (
-    <CarouselPanel unmount={false}>
+    <CarouselPanel unmount={false} className="flex flex-col gap-4">
       <Field>
         <Label>Home Page</Label>
         <Input
@@ -47,6 +40,14 @@ export default function OtherSettings(props: Readonly<OtherSettingsProps>) {
           name="policy_uri"
         />
       </Field>
+      <div className="flex flex-row justify-end py-2">
+        <Button className="btn-tertiary" onClick={goBack}>
+          Back
+        </Button>
+        <Button className="btn-primary" type="submit" disabled={!canSave}>
+          Save
+        </Button>
+      </div>
     </CarouselPanel>
   );
 }

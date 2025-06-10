@@ -13,10 +13,8 @@ type CarouselProps = {
 export default function Carousel(props: Readonly<CarouselProps>) {
   const { selectedIndex, onChange, children } = props;
   return (
-    <>
-      <CarouselGroup selectedIndex={selectedIndex} onChange={onChange}>
-        {children}
-      </CarouselGroup>
-    </>
+    <CarouselGroup selectedIndex={selectedIndex} onChange={onChange}>
+      {children}
+    </CarouselGroup>
   );
 }

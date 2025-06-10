@@ -4,7 +4,7 @@
 
 "use client";
 import { Button } from "@/components/buttons";
-import TextArea from "@/components/textarea";
+import { Textarea } from "@/components/textarea";
 import { ScopePolicy } from "@/models/scope-policies";
 import { ChangeEvent, useState } from "react";
 
@@ -36,8 +36,8 @@ export default function Editor(props: Readonly<EditorProps>) {
 
   return (
     <>
-      <TextArea
-        className="overflow-hidden font-mono"
+      <Textarea
+        className="overflow-hidden font-mono textarea w-full"
         rows={policy_str.split("\n").length}
         disabled={!editing}
         value={newPolicy}

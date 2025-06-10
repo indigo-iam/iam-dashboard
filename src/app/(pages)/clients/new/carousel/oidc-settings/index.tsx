@@ -4,24 +4,24 @@
 
 "use client";
 
+import { ClientAuthentication } from "@/app/(pages)/clients/components";
+import { Button } from "@/components/buttons";
 import { CarouselPanel } from "@/components/carousel";
 import { Field, Label, Description, DropdownList } from "@/components/form";
 import { type Scope } from "@/models/client";
-import { useFormStatus } from "@/utils/forms";
 import AuthenticationFlow from "./authentication-flow";
-import { ClientAuthentication } from "@/app/(pages)/clients/components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type OIDCSettingsProps = {
-  id: string;
   systemScopes: Scope[];
+  goBack: () => void;
+  goNext: () => void;
 };
 
 export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
-  const { id, systemScopes } = props;
-  const { updateFormStatus } = useFormStatus();
-  const [authFlowFulfilled, setAuthFlowFulfilled] = useState(false);
-  const [clientAuthFulfilled, setClientAuthFulfilled] = useState(false);
+  const { systemScopes, goBack, goNext } = props;
+  const [authFlowOk, setAuthFlowOk] = useState(false);
+  const [clientAuthOk, setClientAuthOk] = useState(false);
 
   const defaultScopes = systemScopes
     .filter(scope => scope.defaultScope)
@@ -33,21 +33,20 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
     return { id: scope.id.toString(), name: scope.value };
   });
 
-  useEffect(() => {
-    updateFormStatus(id, authFlowFulfilled && clientAuthFulfilled);
-    // adding updateFormStatus causes infinite loops
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, authFlowFulfilled, clientAuthFulfilled]);
+  const canContinue = authFlowOk && clientAuthOk;
 
   return (
     <CarouselPanel unmount={false} className="flex flex-col gap-4">
-      <AuthenticationFlow onStatusChange={setAuthFlowFulfilled} />
+      <AuthenticationFlow onStatusChange={setAuthFlowOk} />
       <Field>
         <Label>Client Authentication</Label>
         <Description>
           How the client authenticate to the Token Endpoint.
         </Description>
-        <ClientAuthentication onStatusChange={setClientAuthFulfilled} />
+        <ClientAuthentication
+          name="token_endpoint_auth_method"
+          onStatusChange={setClientAuthOk}
+        />
       </Field>
       <Field>
         <Label>Scopes</Label>
@@ -59,6 +58,18 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
           defaultOptions={defaultScopes}
         />
       </Field>
+      <div className="flex flex-row justify-end py-2">
+        <Button className="btn-tertiary" onClick={goBack}>
+          Back
+        </Button>
+        <Button
+          className="btn-secondary"
+          onClick={goNext}
+          disabled={!canContinue}
+        >
+          Continue
+        </Button>
+      </div>
     </CarouselPanel>
   );
 }

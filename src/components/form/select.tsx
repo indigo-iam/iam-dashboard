@@ -44,9 +44,7 @@ export function Select(props: Readonly<SelectProps>) {
       onChange={handleChange}
       disabled={disabled}
     >
-      <ListboxButton className="btn-secondary justify-between">
-        {selected?.name}
-      </ListboxButton>
+      <ListboxButton>{selected?.name}</ListboxButton>
       <ListboxOptions>{children}</ListboxOptions>
     </Listbox>
   );

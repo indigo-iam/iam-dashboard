@@ -3,10 +3,10 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { User } from "@/models/scim";
-import { SetUserStatus } from "./user-status";
+import { SetAdminPrivileges } from "./admin-privileges";
 import { DeleteUser } from "./delete-user";
 import { EditExpirationDate } from "./expiration-date";
-import { SetAdminPrivileges } from "./admin-privileges";
+import { ToggleStatusButton } from "./toggle-user-status";
 
 type DangerZoneProps = {
   user: User;
@@ -30,7 +30,7 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
             <SetAdminPrivileges user={user} />
           </div>
           <div className="flex items-center gap-4">
-            <SetUserStatus user={user} />
+            <ToggleStatusButton user={user} />
             <DeleteUser user={user} />
           </div>
         </div>

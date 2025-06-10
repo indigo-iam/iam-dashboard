@@ -2,11 +2,10 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Button } from "@/components/buttons";
 import { Form } from "@/components/form";
 import { Client } from "@/models/client";
-import { ToggleStatusButton } from "./toggle-status-button";
 import { DeleteButton } from "./delete-button";
+import { ToggleStatusButton } from "./toggle-status-button";
 
 export function DangerZone(props: Readonly<{ client: Client }>) {
   const { client } = props;

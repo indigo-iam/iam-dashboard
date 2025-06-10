@@ -24,12 +24,12 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
         </div>
       </div>
       <div className="col-span-full grow sm:col-span-4">
-        <div className="flex flex-col justify-between gap-4 md:flex-row">
-          <div className="flex gap-4">
+        <div className="flex flex-col justify-between gap-4">
+          <div className="flex flex-wrap gap-4">
             <EditExpirationDate user={user} />
             <SetAdminPrivileges user={user} />
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center justify-end gap-4">
             <ToggleStatusButton user={user} />
             <DeleteUser user={user} />
           </div>

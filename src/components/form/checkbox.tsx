@@ -14,6 +14,7 @@ export interface CheckboxState<T> {
 type CheckboxProps = {
   id?: string;
   name?: string;
+  value?: string;
   defaultChecked?: boolean;
   checked?: boolean;
   disabled?: boolean;

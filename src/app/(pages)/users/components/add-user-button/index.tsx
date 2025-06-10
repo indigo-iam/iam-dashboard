@@ -4,7 +4,7 @@
 
 "use client";
 import { Button } from "@/components/buttons";
-import { Form } from "@/components/form";
+import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { ScimUser } from "@/models/scim";
@@ -41,41 +41,58 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
   };
   return (
     <Form id="add-user-form" action={handleSubmit}>
+      <p>Enter new user data.</p>
       <ModalBody>
-        <Input
-          type="text"
-          name="name"
-          title="Name"
-          placeholder="First Name"
-          required
-        />
-        <Input
-          type="text"
-          name="surname"
-          title="Surname"
-          placeholder="Surname"
-          required
-        />
-        <Input
-          type="text"
-          name="username"
-          title="Username"
-          placeholder="Username"
-          required
-        />
-        <Input
-          type="email"
-          name="email"
-          title="Email"
-          placeholder="Email Name"
-          required
-        />
+        <Field>
+          <Label data-required>First Name</Label>
+          <Input
+            type="text"
+            name="name"
+            title="Name"
+            placeholder="First Name..."
+            required
+          />
+        </Field>
+        <Field>
+          <Label data-required>Surname</Label>
+          <Input
+            type="text"
+            name="surname"
+            title="Surname"
+            placeholder="Surname"
+            required
+          />
+        </Field>
+        <Field>
+          <Label data-required>Username</Label>
+          <Input
+            type="text"
+            name="username"
+            title="Username"
+            placeholder="Username"
+            required
+          />
+        </Field>
+        <Field>
+          <Label data-required>Email</Label>
+          <Input
+            type="email"
+            name="email"
+            title="Email"
+            placeholder="Email Name"
+            required
+          />
+        </Field>
       </ModalBody>
       <ModalFooter>
-        <Button type="submit">Create User</Button>
-        <Button type="reset">Reset</Button>
-        <Button type="reset" onClick={onClose}>
+        <Button className="btn-tertiary" type="reset" onClick={onClose}>
           Cancel
+        </Button>
+        <Button className="btn-secondary" type="reset">
+          Reset
+        </Button>
+        <Button className="btn-primary" type="submit">
+          Create User
         </Button>
       </ModalFooter>
     </Form>

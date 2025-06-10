@@ -50,6 +50,7 @@ export default function ConfirmModal(props: Readonly<ConfirmModal>) {
             className="btn-primary data-[danger=true]:btn-danger"
             type="submit"
             data-danger={danger}
+            onClick={modalProps.onClose}
           >
             {confirmText}
           </Button>

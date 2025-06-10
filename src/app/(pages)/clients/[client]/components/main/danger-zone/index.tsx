@@ -5,6 +5,7 @@
 import { Button } from "@/components/buttons";
 import { Form } from "@/components/form";
 import { Client } from "@/models/client";
+import { ToggleStatusButton } from "./toggle-status-button";
 
 export function DangerZone(props: Readonly<{ client: Client }>) {
   const { client } = props;
@@ -19,11 +20,7 @@ export function DangerZone(props: Readonly<{ client: Client }>) {
       </div>
       <Form className="col-span-full flex items-center justify-end sm:col-span-2">
         <div className="flex flex-row gap-4">
-          {client.active ? (
-            <Button className="btn-danger-tertiary">Disable</Button>
-          ) : (
-            <Button className="btn-tertiary">Enable</Button>
-          )}
+          <ToggleStatusButton client={client} />
           <Button className="btn-danger">Delete</Button>
         </div>
       </Form>

@@ -83,6 +83,40 @@ export const editClient = async (client: Client) => {
   }
 };
 
+export async function enableClient(client: Client) {
+  const { client_id } = client;
+  const url = `${BASE_URL}/iam/api/clients/${client_id}/enable`;
+  const response = await authFetch(url, { method: "PATCH" });
+  if (response.ok) {
+    await setNotification({ type: "success", message: "Client enabled" });
+    revalidatePath(`/clients/${client_id}`);
+  } else {
+    const msg = await response.text();
+    await setNotification({
+      type: "error",
+      message: "Cannot enable client",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
+  }
+}
+
+export async function disableClient(client: Client) {
+  const { client_id } = client;
+  const url = `${BASE_URL}/iam/api/clients/${client_id}/disable`;
+  const response = await authFetch(url, { method: "PATCH" });
+  if (response.ok) {
+    await setNotification({ type: "success", message: "Client disabled" });
+    revalidatePath(`/clients/${client_id}`);
+  } else {
+    const msg = await response.text();
+    await setNotification({
+      type: "error",
+      message: "Cannot disable client",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
+  }
+}
+
 export const getClientsPage = async (
   count: number,
   startIndex: number = 1,

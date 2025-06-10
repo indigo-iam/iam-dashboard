@@ -14,6 +14,8 @@ import {
 } from "@/components/form";
 import { TabPanel } from "@/components/tabs";
 import { Client } from "@/models/client";
+import { GrantType } from "@/models/openid-configuration";
+import { editClient } from "@/services/clients";
 
 const grantTypes = [
   { id: "none", name: "None" },
@@ -34,6 +36,24 @@ function defaultGrantType(client: Client) {
 export default async function GrantTypes(props: Readonly<{ client: Client }>) {
   const { client } = props;
   const { grant_types } = client;
+
+  async function action(formData: FormData) {
+    "use server";
+    const grant_types = (formData.getAll("grant_type") as GrantType[]).concat(
+      formData.getAll("grant_type[id]") as GrantType[]
+    );
+    const requestBody: Client = { ...client, grant_types };
+    await editClient(requestBody);
+  }
+
+  const deviceCode = grant_types.includes(
+    "urn:ietf:params:oauth:grant-type:device_code"
+  );
+  const tokenExchange = grant_types.includes(
+    "urn:ietf:params:oauth:grant-type:token-exchange"
+  );
+  const refreshToken = grant_types.includes("refresh_token");
+
   return (
     <TabPanel className="panel grid grid-cols-3 gap-4" unmount={false}>
       <div className="text-extralight col-span-full flex flex-col gap-2 text-sm sm:col-span-1">
@@ -50,7 +70,10 @@ export default async function GrantTypes(props: Readonly<{ client: Client }>) {
           Access/ID tokens
         </span>
       </div>
-      <Form className="col-span-full flex flex-col gap-4 sm:col-span-2">
+      <Form
+        className="col-span-full flex flex-col gap-4 sm:col-span-2"
+        action={action}
+      >
         <Field>
           <Label>Authorization Grant</Label>
           <Description>
@@ -75,7 +98,9 @@ export default async function GrantTypes(props: Readonly<{ client: Client }>) {
           </Description>
           <div className="inline-flex items-center gap-2">
             <Checkbox
-              name="urn:ietf:params:oauth:grant-type:device_code"
+              name="grant_type"
+              value="urn:ietf:params:oauth:grant-type:device_code"
+              key={`device_code${deviceCode}`}
               defaultChecked={grant_types.includes(
                 "urn:ietf:params:oauth:grant-type:device_code"
               )}
@@ -84,7 +109,9 @@ export default async function GrantTypes(props: Readonly<{ client: Client }>) {
           </div>
           <div className="inline-flex items-center gap-2">
             <Checkbox
-              name="urn:ietf:params:oauth:grant-type:token-exchange"
+              name="grant_type"
+              value="urn:ietf:params:oauth:grant-type:token-exchange"
+              key={`token-exchange${tokenExchange}`}
               defaultChecked={grant_types.includes(
                 "urn:ietf:params:oauth:grant-type:token-exchange"
               )}
@@ -93,10 +120,10 @@ export default async function GrantTypes(props: Readonly<{ client: Client }>) {
           </div>
           <div className="inline-flex items-center gap-2">
             <Checkbox
-              name="urn:ietf:params:oauth:grant-type:token-exchange"
-              defaultChecked={grant_types.includes(
-                "urn:ietf:params:oauth:grant-type:token-exchange"
-              )}
+              name="grant_type"
+              value="refresh_token"
+              key={`refresh_token${refreshToken}`}
+              defaultChecked={grant_types.includes("refresh_token")}
             />
             <Label>Refresh Token</Label>
           </div>

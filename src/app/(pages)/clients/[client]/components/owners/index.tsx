@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Client } from "@/models/client";
-import { Button } from "@/components/buttons";
 import { Description, Field, Form, Label } from "@/components/form";
 import { TabPanel } from "@/components/tabs";
 import { getClientOwners } from "@/services/clients";
@@ -17,6 +16,7 @@ export default async function Owners(props: Readonly<OwnersProps>) {
   const { client } = props;
   const { client_id } = client;
   const owners = await getClientOwners(client_id);
+
   return (
     <TabPanel className="panel grid grid-cols-3 gap-4 pb-4">
       <div className="text-extralight col-span-full flex flex-col gap-2 text-sm sm:col-span-1">
@@ -30,16 +30,8 @@ export default async function Owners(props: Readonly<OwnersProps>) {
             Owners are organization users that can manage the client
             configuration.
           </Description>
-          <OwnersList owners={owners} />
+          <OwnersList client={client} owners={owners} />
         </Field>
-        <div className="flex flex-row justify-end">
-          <Button className="btn-tertiary" type="reset">
-            Cancel
-          </Button>
-          <Button className="btn-secondary" type="submit">
-            Save changes
-          </Button>
-        </div>
       </Form>
     </TabPanel>
   );

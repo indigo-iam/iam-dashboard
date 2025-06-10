@@ -52,6 +52,7 @@ function ClientAuthenticationSettings(
 }
 
 type ClientAuthenticationProps = {
+  name: string;
   defaultValue?: SelectOption;
   showRegenerateClientSecret?: boolean;
   onStatusChange?: (status: boolean) => void;
@@ -60,7 +61,8 @@ type ClientAuthenticationProps = {
 export function ClientAuthentication(
   props: Readonly<ClientAuthenticationProps>
 ) {
-  const { defaultValue, showRegenerateClientSecret, onStatusChange } = props;
+  const { name, defaultValue, showRegenerateClientSecret, onStatusChange } =
+    props;
 
   const [authMethod, setAuthMethod] = useState(defaultValue);
 
@@ -72,7 +74,7 @@ export function ClientAuthentication(
   return (
     <div className="flex flex-col gap-4">
       <Select
-        name="token_endpoint_auth_method"
+        name={name}
         onChange={handleAuthMethodChange}
         defaultValue={defaultValue ?? TOKEN_ENDPOINT_AUTH_VALUES[0]}
       >

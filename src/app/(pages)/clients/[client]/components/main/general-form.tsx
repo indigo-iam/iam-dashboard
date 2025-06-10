@@ -3,13 +3,14 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { ComputerDesktopIcon } from "@heroicons/react/24/outline";
+import { Client } from "@/models/client";
 import { Status } from "@/components/badges";
 import { Button } from "@/components/buttons";
 import { Description, Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Textarea } from "@/components/textarea";
-import { Client } from "@/models/client";
 import { dateToHuman } from "@/utils/dates";
+import { editClient } from "@/services/clients";
 
 export function GeneralForm(props: Readonly<{ client: Client }>) {
   const { client } = props;
@@ -19,6 +20,20 @@ export function GeneralForm(props: Readonly<{ client: Client }>) {
   const statusChangedOn = client.status_changed_on
     ? dateToHuman(new Date(client.status_changed_on))
     : "N/A";
+
+  async function action(formData: FormData) {
+    "use server";
+    const requestBody: Client = {
+      ...client,
+      client_name: formData.get("client_name") as string,
+      client_description: formData.get("client_description") as string,
+      client_uri: formData.get("client_uri") as string,
+      tos_uri: formData.get("tos_uri") as string,
+      policy_uri: formData.get("policy_uri") as string,
+    };
+    await editClient(requestBody);
+  }
+
   return (
     <div className="border-extralight/60 grid grid-cols-3 gap-4 pb-4">
       <div className="col-span-full space-y-2 text-sm font-light sm:col-span-1">
@@ -37,18 +52,7 @@ export function GeneralForm(props: Readonly<{ client: Client }>) {
           )}
         </div>
       </div>
-      <Form className="col-span-2 space-y-4">
-        {/* Add hidden inputs to not overwrite the db entries with null values */}
-        <input
-          name="client_secret"
-          defaultValue={client.client_secret}
-          hidden={true}
-        />
-        <input
-          name="allow_introspection"
-          defaultValue={`${client.allow_introspection}`}
-          hidden={true}
-        />
+      <Form className="col-span-2 space-y-4" action={action}>
         <Field>
           <Label data-required>Client Name</Label>
           <Description>Something users will recognize and trust.</Description>
@@ -115,7 +119,7 @@ export function GeneralForm(props: Readonly<{ client: Client }>) {
             the user in the consent page.
           </Description>
           <Input
-            name="policy_url"
+            name="policy_uri"
             placeholder="https://app.example.org/policy.html"
             defaultValue={client.policy_uri}
           />

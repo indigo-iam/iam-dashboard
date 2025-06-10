@@ -7,7 +7,8 @@
 import { User } from "@/models/scim";
 import { SearchUsers } from "@/app/components/search-users";
 import { XMarkIcon } from "@heroicons/react/16/solid";
-import { useState } from "react";
+import { addOwner, removeOwner } from "@/services/clients";
+import { Client } from "@/models/client";
 
 type OwnersListProps = {
   owners: User[];
@@ -35,24 +36,20 @@ function OwnerList(props: Readonly<OwnersListProps>) {
 }
 
 type OwnersProps = {
+  client: Client;
   owners: User[];
 };
 
 export default function OwnersList(props: Readonly<OwnersProps>) {
-  const [owners, setOwners] = useState(props.owners);
-
-  const addOwner = (user: User) => {
-    setOwners([...owners, user]);
-  };
-
-  const removeItem = (index: number) => {
-    setOwners(owners.toSpliced(index, 1));
-  };
+  const { client, owners } = props;
 
   return (
     <div className="flex flex-col gap-2">
-      <SearchUsers onSelect={addOwner} />
-      <OwnerList owners={owners} onClick={removeItem} />
+      <SearchUsers onSelect={user => addOwner(client, user)} />
+      <OwnerList
+        owners={owners}
+        onClick={index => removeOwner(client, owners[index])}
+      />
     </div>
   );
 }

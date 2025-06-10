@@ -12,7 +12,7 @@ export default function ClientCredentials(
   props: Readonly<ClientCredentialsProps>
 ) {
   const { onStatusChange } = props;
-  useEffect(() => onStatusChange(true), [onStatusChange]);
+  useEffect(() => onStatusChange(true), []);
 
   return null;
 }

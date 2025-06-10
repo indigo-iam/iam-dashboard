@@ -8,8 +8,8 @@ import { Select, SelectOption } from "@/components/form";
 import ClientSecretJwt from "./client-secret-jwt";
 import PrivateKeyJwt from "./private-key-jwt";
 import { TOKEN_ENDPOINT_AUTH_VALUES } from "./utils";
-import { useState } from "react";
 import { RegenerateClientSecret } from "./regenerate-client-secret";
+import { useEffect, useState } from "react";
 
 type ClientAuthenticationSettingsProps = {
   authMethod: string;
@@ -66,8 +66,13 @@ export function ClientAuthentication(
 
   const [authMethod, setAuthMethod] = useState(defaultValue);
 
+  // Temporary workaround to make carousel go to next page
+  useEffect(() => {
+    onStatusChange?.(true);
+  }, []);
+
   const handleAuthMethodChange = (authMethod: { id: string; name: string }) => {
-    onStatusChange?.(false);
+    onStatusChange?.(true); // change me
     setAuthMethod(authMethod);
   };
 

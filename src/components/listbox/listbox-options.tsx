@@ -12,7 +12,7 @@ export default function ListboxOptions(props: Readonly<ListboxOptionsProps>) {
     <HeadlessListboxOptions
       {...props}
       anchor="bottom start"
-      className="bg-secondary z-10 mt-2 !max-h-48 w-auto rounded-lg border border-slate-300 p-2 shadow-md dark:bg-white/10 dark:backdrop-blur-md"
+      className="bg-secondary z-10 mt-2 w-(--input-width) rounded-lg border border-slate-300 p-2 shadow-md dark:bg-white/10 dark:backdrop-blur-md"
     />
   );
 }

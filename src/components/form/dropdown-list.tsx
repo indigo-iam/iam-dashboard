@@ -46,7 +46,7 @@ export function DropdownList(props: Readonly<DropdownListProps>) {
     <div className="flex flex-col">
       <div className="max-w-md">
         <Listbox name={name} onChange={setItems} value={items} multiple>
-          <ListboxButton className="btn-secondary">{title}</ListboxButton>
+          <ListboxButton>{title}</ListboxButton>
           <ListboxOptions>
             {options.map(opt => (
               <ListboxOption key={opt.id} value={opt}>

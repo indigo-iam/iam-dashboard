@@ -15,21 +15,20 @@ export default function ScopesTable(props: Readonly<ScopesTableProps>) {
   return (
     <ul>
       {scopes.map(scope => (
-        <li className="iam-list-item flex-row items-center" key={scope.id}>
-          <div className="flex grow flex-col gap-4 sm:flex-row sm:items-center">
+        <li
+          className="iam-list-item flex-row items-center gap-2"
+          key={scope.id}
+        >
+          <div className="flex grow flex-col gap-2 sm:flex-row sm:items-center sm:gap-0">
             <div className="flex grow flex-col">
               <span className="font-medium">{scope.value}</span>
-              <span className="text-light text-sm font-light">
+              <small className="dark:text-extralight font-light">
                 {scope.description}
-              </span>
+              </small>
             </div>
-            <div className="min-w-36 px-2">
-              <ScopeTypeSelect key={scope.id} scope={scope} />
-            </div>
+            <ScopeTypeSelect key={scope.id} scope={scope} />
           </div>
-          <div>
-            <ScopeOptions scope={scope} />
-          </div>
+          <ScopeOptions scope={scope} />
         </li>
       ))}
     </ul>

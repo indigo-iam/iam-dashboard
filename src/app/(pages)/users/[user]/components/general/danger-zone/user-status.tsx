@@ -14,7 +14,7 @@ function EnableUserButton(props: Readonly<{ user: User }>) {
   };
   return (
     <form action={action}>
-      <Button className="btn-secondary" type="submit">
+      <Button className="btn-tertiary" type="submit">
         Enable user
       </Button>
     </form>
@@ -29,7 +29,7 @@ function DisableUserButton(props: Readonly<{ user: User }>) {
   };
   return (
     <form action={action}>
-      <Button className="btn-danger-secondary" type="submit">
+      <Button className="btn-danger-tertiary" type="submit">
         Disable user
       </Button>
     </form>

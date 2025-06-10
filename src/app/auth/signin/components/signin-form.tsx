@@ -13,8 +13,10 @@ export function LoginForm() {
   const router = useRouter();
 
   useEffect(() => {
-    document.getElementById("login-form-button")?.click();
-  }, []);
+    if (status == "unauthenticated") {
+      signIn("indigo-iam");
+    }
+  }, [status]);
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -22,13 +24,5 @@ export function LoginForm() {
     }
   }, [status, router]);
 
-  const handleLogin = async () => {
-    await signIn("indigo-iam");
-  };
-
-  return (
-    <form action={handleLogin}>
-      <button id="login-form-button" type="submit" />
-    </form>
-  );
+  return null;
 }

@@ -2,13 +2,14 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { SessionProvider } from "next-auth/react";
 import { LoginForm } from "./components/signin-form";
 
 export default function SignIn() {
   return (
-    <div>
+    <SessionProvider>
       Redirecting to login page...
       <LoginForm />
-    </div>
+    </SessionProvider>
   );
 }

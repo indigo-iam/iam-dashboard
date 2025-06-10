@@ -5,7 +5,7 @@
 import {
   ClientAuthentication,
   TOKEN_ENDPOINT_AUTH_VALUES,
-} from "@/app/(pages)/clients/components";
+} from "@/app/clients/components";
 import { Button } from "@/components/buttons";
 import {
   Description,

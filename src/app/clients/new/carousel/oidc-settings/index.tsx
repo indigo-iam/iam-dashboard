@@ -7,7 +7,7 @@
 import {
   ClientAuthentication,
   AuthenticationFlow,
-} from "@/app/(pages)/clients/components";
+} from "@/app/clients/components";
 import { Button } from "@/components/buttons";
 import { CarouselPanel } from "@/components/carousel";
 import { Field, Label, Description, DropdownList } from "@/components/form";

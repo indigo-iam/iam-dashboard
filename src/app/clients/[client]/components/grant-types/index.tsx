@@ -4,7 +4,7 @@
 
 "use client";
 
-import { AuthenticationFlow } from "@/app/(pages)/clients/components";
+import { AuthenticationFlow } from "@/app/clients/components";
 import { Button } from "@/components/buttons";
 import { Checkbox, Description, Field, Form, Label } from "@/components/form";
 import { TabPanel } from "@/components/tabs";

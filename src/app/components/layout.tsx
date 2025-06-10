@@ -113,7 +113,7 @@ export async function Layout(props: Readonly<LayoutProps>) {
         <div className="fixed">
           <LogoIam />
         </div>
-        <div className="fixed inset-0 mt-16 overflow-auto">
+        <div className="fixed inset-0 mt-16 space-y-4 overflow-auto">
           <UserLogo username={username} />
           <SessionButtons />
           <AccountManagement />

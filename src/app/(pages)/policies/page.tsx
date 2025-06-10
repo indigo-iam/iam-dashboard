@@ -19,10 +19,12 @@ export default async function Policies() {
           tempus sit amet enim eget consequat. Phasellus sit amet fringilla mi,
           id hendrerit quam.
         </p>
-        <div className="panel space-y-4">
+        <div>
+          <AddPolicyButton />
+        </div>
+        <div className="panel">
           <h2 className="border-b">Policies</h2>
           <div className="flex flex-col gap-2">
-            <AddPolicyButton />
             <PoliciesTable policies={policies} />
           </div>
         </div>

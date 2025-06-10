@@ -27,10 +27,10 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
 
   return (
     <Layout title="Scopes">
-      <div className="panel space-y-4">
+      <div className="space-y-4">
         <NewScopeButton />
         <InputQuery />
-        <div className="overflow-y-visible">
+        <div className="panel">
           <ScopesTable scopes={scopes.Resources} />
         </div>
         <Paginator numberOfPages={numberOfPages} />

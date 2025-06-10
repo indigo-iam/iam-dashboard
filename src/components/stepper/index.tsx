@@ -72,7 +72,7 @@ export function Stepper(props: Readonly<StepperProps>) {
   }
 
   return (
-    <div className="p-8">
+    <div className="m-auto pr-8">
       <PreviousPages />
       <CurrentPage page={currentPage} totalPages={totalPages} />
       <NextPages />

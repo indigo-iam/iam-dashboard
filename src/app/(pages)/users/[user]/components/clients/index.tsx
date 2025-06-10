@@ -17,13 +17,17 @@ export async function UserClients(props: Readonly<UseClientsProps>) {
   const clientPage = await getClientsPage(100, 1, isMe);
   const clients = clientPage.Resources;
   return (
-    <TabPanel className="panel space-y-4">
-      <h2 className="border-b">Owned Clients</h2>
-      <div className="flex flex-col gap-4">
+    <TabPanel className="space-y-4">
+      <div>
         <Link href="/clients/new">
           <Button className="btn-secondary">New Client</Button>
         </Link>
-        <ClientsTable clients={clients} />
+      </div>
+      <div className="panel">
+        <h2 className="border-b">Owned Clients</h2>
+        <div className="flex flex-col gap-4">
+          <ClientsTable clients={clients} />
+        </div>
       </div>
     </TabPanel>
   );

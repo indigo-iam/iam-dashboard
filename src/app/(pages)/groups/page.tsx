@@ -27,10 +27,12 @@ export default async function GroupsPage(props: Readonly<GroupsProps>) {
   const groups = groupsPage.Resources;
   return (
     <Layout title="Groups">
-      <div className="panel space-y-4">
+      <div className="space-y-4">
         <AddGroupButton />
         <InputQuery data-test="search-group" />
-        <GroupsTable groups={groups} />
+        <div className="panel">
+          <GroupsTable groups={groups} />
+        </div>
         <Paginator numberOfPages={numberOfPages} />
       </div>
     </Layout>

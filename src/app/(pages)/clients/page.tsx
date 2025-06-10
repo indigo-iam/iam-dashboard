@@ -12,6 +12,20 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { Suspense } from "react";
 
+function Buttons() {
+  return (
+    <div className="flex flex-row gap-2">
+      <Link href="/clients/new">
+        <Button className="btn-secondary">
+          <PlusIcon className="my-auto size-5" />
+          New client
+        </Button>
+      </Link>
+      <Button className="btn-secondary">Redeem client</Button>
+    </div>
+  );
+}
+
 type ClientsProps = {
   searchParams?: Promise<{
     count?: string;
@@ -33,22 +47,16 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
   const clients = clientPage.Resources;
   return (
     <Layout title={`${isMe ? "My Clients" : "Clients"}`}>
-      <div className="panel space-y-4">
-        <div className="flex flex-row gap-2">
-          <Link href="/clients/new">
-            <Button className="btn-secondary">
-              <PlusIcon className="my-auto size-5" />
-              New client
-            </Button>
-          </Link>
-          <Button className="btn-secondary">Redeem client</Button>
+      <div className="space-y-4">
+        <Buttons />
+        <div className="panel space-y-4">
+          <InputQuery />
+          <Suspense fallback="Loading...">
+            <ClientsTable clients={clients} />
+          </Suspense>
         </div>
-        <InputQuery />
-        <Suspense fallback="Loading...">
-          <ClientsTable clients={clients} />
-        </Suspense>
+        <Paginator numberOfPages={numberOfPages} />
       </div>
-      <Paginator numberOfPages={numberOfPages} />
     </Layout>
   );
 }

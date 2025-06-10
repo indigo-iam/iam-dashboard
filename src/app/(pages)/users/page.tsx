@@ -27,10 +27,12 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
   const users = usersPage.Resources;
   return (
     <Layout title="Users">
-      <div className="panel space-y-4">
+      <div className="space-y-4">
         <AddUserButton />
         <InputQuery />
-        <UsersTable users={users} />
+        <div className="panel">
+          <UsersTable users={users} />
+        </div>
         <Paginator numberOfPages={numberOfPages} />
       </div>
     </Layout>

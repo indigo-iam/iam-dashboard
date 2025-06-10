@@ -15,7 +15,7 @@ type UserGroupsProps = {
 export function UserGroups(props: Readonly<UserGroupsProps>) {
   const { user } = props;
   return (
-    <TabPanel className="space-y-6">
+    <TabPanel className="space-y-4">
       <JoinGroupButton user={user} />
       <UnmanagedGroups user={user} />
       <ManagedGroups user={user} />

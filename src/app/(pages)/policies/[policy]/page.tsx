@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Page, Panel, Section } from "@/components/layout";
+import { Page, Panel } from "@/components/layout";
 import { fetchScopePolicy } from "@/services/scope-policies";
 import Editor from "./components/editor";
 
@@ -17,9 +17,10 @@ export default async function PolicyPage(props: Readonly<PolicyPageProps>) {
   return (
     <Page title="Edit Scope Policy">
       <Panel>
-        <Section title={policy.description}>
+        <div className="panel">
+          <h2>{policy.description}</h2>
           <Editor policy={policy} />
-        </Section>
+        </div>
       </Panel>
     </Page>
   );

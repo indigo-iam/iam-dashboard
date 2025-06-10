@@ -5,7 +5,6 @@
 import { fetchGroupsRequests } from "@/services/group-requests";
 import InfoTable from "@/components/info-table";
 import { User } from "@/models/scim";
-import { Section } from "@/components/layout";
 import GroupRequestOptions from "./options";
 
 type GroupRequestProps = {
@@ -36,7 +35,8 @@ export default async function GroupRequests(
   });
 
   return (
-    <Section title="Group Requests">
+    <div className="panel">
+      <h2>Group Requests</h2>
       <table className="w-full table-auto">
         <tbody>
           {data.map(d => {
@@ -57,6 +57,6 @@ export default async function GroupRequests(
           })}
         </tbody>
       </table>
-    </Section>
+    </div>
   );
 }

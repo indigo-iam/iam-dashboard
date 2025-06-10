@@ -2,16 +2,15 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Page, Panel, Section } from "@/components/layout";
-import TextArea from "@/components/textarea";
-import { fetchScopePolicies } from "@/services/scope-policies";
+import { Page, Panel } from "@/components/layout";
+import { Textarea } from "@/components/textarea";
 import ConfirmButton from "./components/confirm-button";
 
 export default async function Policies() {
   return (
     <Page title="Create Scope Policy">
       <Panel>
-        <Section>
+        <div className="section">
           <p className="font-light">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in
             accumsan leo. Suspendisse potenti. Pellentesque habitant morbi
@@ -20,9 +19,9 @@ export default async function Policies() {
             Integer tempus sit amet enim eget consequat. Phasellus sit amet
             fringilla mi, id hendrerit quam.
           </p>
-          <TextArea />
+          <Textarea className="textarea w-full font-mono" />
           <ConfirmButton />
-        </Section>
+        </div>
       </Panel>
     </Page>
   );

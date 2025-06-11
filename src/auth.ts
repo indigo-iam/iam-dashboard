@@ -26,7 +26,7 @@ declare module "next-auth" {
   interface Session {
     access_token: string;
     is_admin: boolean;
-    expires_at: number;
+    expired: boolean;
   }
 }
 
@@ -76,15 +76,14 @@ export const authConfig: NextAuthConfig = {
       return token;
     },
     async authorized({ auth }) {
-      const expired = (auth?.expires_at ?? 0) < Date.now();
-      return !!auth && !expired;
+      return !!auth && !auth.expired;
     },
     async session({ session, token }) {
       const { access_token, expires_at, is_admin } = token;
       session.user.id = token.userId;
       session.access_token = access_token;
       session.is_admin = is_admin;
-      session.expires_at = expires_at;
+      session.expired = expires_at < Date.now();
       return session;
     },
   },

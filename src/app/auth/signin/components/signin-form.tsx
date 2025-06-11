@@ -4,23 +4,28 @@
 
 "use client";
 
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export function LoginForm() {
-  const { status } = useSession();
+  const { status, data } = useSession();
   const router = useRouter();
 
   useEffect(() => {
-    if (status == "unauthenticated") {
-      signIn("indigo-iam");
-    }
-  }, [status]);
-
-  useEffect(() => {
-    if (status === "authenticated") {
-      router.push("/");
+    switch (status) {
+      case "unauthenticated":
+        signIn("indigo-iam");
+        break;
+      case "authenticated":
+        if (data.expired) {
+          signOut();
+        } else {
+          router.push("/");
+        }
+        break;
+      default:
+        break;
     }
   }, [status, router]);
 

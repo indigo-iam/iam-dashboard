@@ -27,7 +27,7 @@ export function LoginForm() {
       default:
         break;
     }
-  }, [status, router]);
+  }, [status, router, data]);
 
   return null;
 }

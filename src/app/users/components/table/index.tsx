@@ -30,7 +30,7 @@ function Row(props: Readonly<RowProps>) {
               {user.emails?.[0].value}
             </small>
           </Link>
-          <div className="my-auto flex grow flex-col">
+          <div className="my-auto flex flex-col">
             <div className="inline-flex gap-2 sm:flex-col sm:items-end sm:gap-0 sm:px-2">
               <Status active={user.active ?? false} />
               <small className="dark:text-extralight font-light">

@@ -21,7 +21,7 @@ function Row(props: Readonly<RowProps>) {
       <div className="flex grow flex-col">
         <div className="flex flex-col gap-2 sm:flex-row">
           <Link
-            className="flex flex-col font-bold hover:underline"
+            className="flex flex-col font-bold break-all hover:underline"
             href={`/groups/${group.id}`}
           >
             {group.displayName}

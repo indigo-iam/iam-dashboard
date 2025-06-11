@@ -22,7 +22,7 @@ function Row(props: Readonly<RowProps>) {
       <div className="flex grow flex-col">
         <div className="flex flex-col gap-2 sm:flex-row">
           <Link
-            className="flex grow flex-col font-bold hover:underline"
+            className="flex grow flex-col font-bold break-all hover:underline"
             href={`/users/${user.id}`}
           >
             {user.name?.formatted}

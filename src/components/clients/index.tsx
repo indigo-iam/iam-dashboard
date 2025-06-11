@@ -27,10 +27,10 @@ function Row(props: Readonly<RowProps>) {
     : "N/A";
   return (
     <li className="iam-list-item flex flex-row">
-      <div className="flex grow flex-col">
-        <div className="flex flex-col sm:flex-row">
+      <div className="flex grow">
+        <div className="flex grow flex-col lg:flex-row">
           <Link
-            className="my-auto flex flex-col gap-1"
+            className="flex grow flex-col gap-1 break-all"
             href={`/clients/${client_id}`}
           >
             <div className="flex flex-col hover:underline">
@@ -44,21 +44,15 @@ function Row(props: Readonly<RowProps>) {
               {scopes}
             </div>
           </Link>
-          <div className="my-auto flex grow flex-col">
-            <div className="inline-flex gap-2 sm:flex-col sm:items-end sm:gap-0.5 sm:px-2">
-              <div className="">
-                <Status active={client.active} />
-              </div>
-              <small className="dark:text-extralight min-w-48 font-light sm:text-right">
-                Created {createdAt}
-              </small>
-            </div>
+          <div className="flex flex-row gap-2 py-1 lg:flex-col lg:items-end lg:justify-center">
+            <Status active={client.active} />
+            <small className="dark:text-extralight font-light sm:text-right">
+              Created {createdAt}
+            </small>
           </div>
         </div>
       </div>
-      <div className="flex flex-col">
-        <ClientOptions client={client} />
-      </div>
+      <ClientOptions client={client} />
     </li>
   );
 }

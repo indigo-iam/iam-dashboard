@@ -7,7 +7,6 @@ import { User } from "@/models/scim";
 import { Aup } from "./aup";
 import { UserDetailsForm } from "./details";
 import { DangerZone } from "./danger-zone";
-import { Metadata } from "./metadata";
 
 type GeneralProps = {
   user: User;
@@ -17,10 +16,8 @@ type GeneralProps = {
 export async function General(props: Readonly<GeneralProps>) {
   const { user, isMe } = props;
   return (
-    <TabPanel className="panel grid grid-cols-6 gap-4">
-      <Metadata user={user} />
+    <TabPanel className="panel">
       <UserDetailsForm user={user} isMe={isMe} />
-      <hr className="col-span-full text-gray-300" />
       <Aup user={user} isMe={isMe} />
       {isMe ? null : (
         <>

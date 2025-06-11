@@ -35,14 +35,12 @@ export function GeneralForm(props: Readonly<{ client: Client }>) {
   }
 
   return (
-    <div className="border-extralight/60 grid grid-cols-3 gap-4 pb-4">
-      <div className="col-span-full space-y-2 text-sm font-light sm:col-span-1">
-        <div>
-          <div className="text-light dark:text-extralight/60 flex gap-2">
-            <ComputerDesktopIcon className="my-auto size-5" />
-            <span>Status</span>
-            <Status active={client.active ?? false} />
-          </div>
+    <div className="border-extralight/60 flex flex-col gap-4 pb-4 lg:flex-row">
+      <div className="grow space-y-2 text-sm font-light">
+        <div className="text-light dark:text-extralight/60 flex gap-2">
+          <ComputerDesktopIcon className="my-auto size-5" />
+          <span>Status</span>
+          <Status active={client.active ?? false} />
         </div>
         <div className="text-extralight flex flex-col">
           <span>Created {createdAt}.</span>
@@ -52,7 +50,7 @@ export function GeneralForm(props: Readonly<{ client: Client }>) {
           )}
         </div>
       </div>
-      <Form className="col-span-2 space-y-4" action={action}>
+      <Form className="min-w-2/3 space-y-4" action={action}>
         <Field>
           <Label data-required>Client Name</Label>
           <Description>Something users will recognize and trust.</Description>

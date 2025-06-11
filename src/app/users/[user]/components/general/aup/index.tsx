@@ -32,8 +32,8 @@ export async function Aup(props: Readonly<AupProps>) {
   })();
 
   return (
-    <>
-      <div className="col-span-full text-sm font-light sm:col-span-2">
+    <div className="flex flex-col gap-4 pt-4 lg:flex-row">
+      <div className="grow text-sm font-light">
         <div className="text-light dark:text-extralight/60 py-1">
           Acceptable Usage Policy
         </div>
@@ -42,8 +42,8 @@ export async function Aup(props: Readonly<AupProps>) {
           information. Add something not stupid.
         </div>
       </div>
-      <div className="col-span-full grid grid-cols-subgrid gap-4 sm:col-span-4">
-        <Form className="col-span-full space-y-4">
+      <div className="min-w-2/3 grow space-y-2">
+        <Form className="flex flex-col">
           <Field>
             <Label>Expiration</Label>
             <Input
@@ -55,6 +55,6 @@ export async function Aup(props: Readonly<AupProps>) {
         </Form>
         <RequestSignature user={user} isMe={isMe} />
       </div>
-    </>
+    </div>
   );
 }

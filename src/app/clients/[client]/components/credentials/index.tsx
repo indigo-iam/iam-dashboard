@@ -79,15 +79,15 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
 
   return (
     <TabPanel className="panel">
-      <Form action={action}>
+      <Form action={action} className="space-y-4">
         <div className="divide-light-gray divide-y">
-          <div className="grid grid-cols-3 gap-4 pb-4">
-            <div className="text-extralight col-span-full flex flex-col gap-2 text-sm sm:col-span-1">
+          <div className="flex flex-col gap-4 pb-4 lg:flex-row">
+            <div className="text-extralight flex flex-col gap-2 text-sm lg:flex-row">
               If the client type is confidential, the client and authorization
               server establish a client authentication method suitable for the
               security requirements of the authorization server.
             </div>
-            <div className="col-span-full flex flex-col gap-4 sm:col-span-2">
+            <div className="flex min-w-2/3 flex-col gap-4 pb-4">
               <Field>
                 <Label>Client Authentication</Label>
                 <Description>
@@ -111,14 +111,14 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
               </Field>
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-4 pt-4">
+          <div className="flex flex-col gap-4 pt-4 lg:flex-row">
             <div className="text-extralight col-span-full flex flex-col gap-2 text-sm sm:col-span-1">
               PKCE is an extension to the Authorization Code flow to prevent
               CSRF and authorization code injection attacks. PKCE is recommended
               even if a client is using a client secret or other form of client
               authentication like private_key_jwt.
             </div>
-            <div className="col-span-full sm:col-span-2">
+            <div className="flex min-w-2/3 flex-col">
               <Field>
                 <Label>
                   Proof Key for Code Exchange (PKCE) challenge method

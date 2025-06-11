@@ -10,15 +10,15 @@ import { ToggleStatusButton } from "./toggle-status-button";
 export function DangerZone(props: Readonly<{ client: Client }>) {
   const { client } = props;
   return (
-    <div className="grid grid-cols-3 gap-4 pt-4">
-      <div className="col-span-full flex flex-col space-y-2 text-sm font-light sm:col-span-1">
+    <div className="flex flex-col gap-4 pt-4 lg:flex-row">
+      <div className="flex grow flex-col space-y-2 text-sm font-light">
         <span className="text-danger">Danger Zone</span>
         <span className="text-extralight">
           A disabled client cannot issue new Access Tokens and Refresh Tokens
           and the old ones are immediately revoked.
         </span>
       </div>
-      <Form className="col-span-full flex items-center justify-end sm:col-span-2">
+      <Form className="flex min-w-2/3 items-center justify-end">
         <div className="flex flex-row gap-4">
           <ToggleStatusButton client={client} />
           <DeleteButton client={client} />

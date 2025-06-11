@@ -5,7 +5,6 @@
 import { Drawer, Link } from "@/components/drawer";
 import Notifications from "@/components/notifications";
 import { Logout } from "@/components/buttons";
-import { Page } from "@/components/layout";
 import {
   ClipboardDocumentCheckIcon,
   HomeIcon,
@@ -108,7 +107,10 @@ export async function Layout(props: Readonly<LayoutProps>) {
   const isAdmin = session?.is_admin ?? false;
   const username = session?.user?.name;
   return (
-    <Page title={title}>
+    <div className="mt-16 ml-0 md:mt-0 md:ml-80" id={title}>
+      <h1 className="text-primary dark:bg-dark dark:text-secondary z-10 flex h-0 items-center border-b border-b-gray-300 bg-gray-100 p-0 opacity-0 md:h-16 md:p-4 md:opacity-100">
+        {title}
+      </h1>
       <Drawer title={title}>
         <div className="fixed">
           <LogoIam />
@@ -120,7 +122,7 @@ export async function Layout(props: Readonly<LayoutProps>) {
           {isAdmin && <OrganizationManagement />}
         </div>
       </Drawer>
-      <div className="p-4 md:px-16 md:py-8">{children}</div>
-    </Page>
+      <div className="p-4 md:px-16 md:py-8 xl:px-48">{children}</div>
+    </div>
   );
 }

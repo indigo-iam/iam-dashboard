@@ -57,8 +57,8 @@ export default function GrantTypes(props: Readonly<{ client: Client }>) {
   const refreshToken = grant_types.includes("refresh_token");
 
   return (
-    <TabPanel className="panel grid grid-cols-3 gap-4" unmount={false}>
-      <div className="text-extralight col-span-full flex flex-col gap-2 text-sm sm:col-span-1">
+    <TabPanel className="panel flex flex-col gap-4 lg:flex-row" unmount={false}>
+      <div className="text-extralight flex flex-col gap-2 text-sm">
         <span>
           Device code: allow the clients to obtain a token with OAuth2 device
           code flow
@@ -72,10 +72,7 @@ export default function GrantTypes(props: Readonly<{ client: Client }>) {
           Access/ID tokens
         </span>
       </div>
-      <Form
-        className="col-span-full flex flex-col gap-4 sm:col-span-2"
-        action={action}
-      >
+      <Form className="flex min-w-2/3 flex-col gap-4" action={action}>
         <Field>
           <Label>Authorization Grant</Label>
           <Description>

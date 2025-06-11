@@ -18,12 +18,12 @@ export default async function Owners(props: Readonly<OwnersProps>) {
   const owners = await getClientOwners(client_id);
 
   return (
-    <TabPanel className="panel grid grid-cols-3 gap-4 pb-4">
+    <TabPanel className="panel flex flex-col gap-4 pb-4 lg:flex-row">
       <div className="text-extralight col-span-full flex flex-col gap-2 text-sm sm:col-span-1">
         Group owners can manage add and remove users and create and delete
         sub-groups.
       </div>
-      <Form className="col-span-full flex flex-col gap-4 sm:col-span-2">
+      <Form className="flex min-w-2/3 flex-col gap-4">
         <Field>
           <Label>Owners</Label>
           <Description>

@@ -21,7 +21,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="text-primary dark:text-secondary dark:bg-extradark bg-gray-100">
-        <main className="ml-0 md:ml-80">{children}</main>
+        <main>{children}</main>
         <ToasterPortal notification={notification} />
       </body>
     </html>

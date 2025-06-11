@@ -26,7 +26,7 @@ export function RequestSignature(props: Readonly<RequestSignatureProps>) {
 
   if (isMe) {
     return (
-      <form action={action}>
+      <form className="flex justify-end" action={action}>
         <Button className="btn-secondary" type="submit">
           Re-sign AUP
         </Button>
@@ -35,7 +35,7 @@ export function RequestSignature(props: Readonly<RequestSignatureProps>) {
   }
 
   return (
-    <div>
+    <>
       <ConfirmModal
         show={show}
         onConfirm={action}
@@ -49,6 +49,6 @@ export function RequestSignature(props: Readonly<RequestSignatureProps>) {
       <Button className="btn-secondary" onClick={open}>
         Request AUP Signature
       </Button>
-    </div>
+    </>
   );
 }

@@ -52,7 +52,7 @@ export default async function Scopes(props: Readonly<ScopesProps>) {
 
   return (
     <TabPanel className="panel flex flex-col gap-2" unmount={false}>
-      <div className="flex flex-row gap-2">
+      <div className="flex flex-wrap gap-2">
         <AddScopeButton client={client} scopes={unusedSystemScopes} />
         <AddCustomScope client={client} />
       </div>

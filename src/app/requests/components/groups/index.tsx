@@ -22,23 +22,20 @@ export function Row(props: Readonly<RowPros>) {
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
-        <div className="flex gap-1">
-          User
+        <div className="space-x-1">
+          <span>User</span>
           <Link
             href={`/users/${userUuid}`}
-            className="inline-flex gap-1 hover:underline"
+            className="space-x-1 break-all hover:underline"
           >
             <span className="font-bold">{userFullName}</span>
             <span>({username})</span>
           </Link>
-          asked to join group
-          <Link
-            href={`/groups/${groupUuid}`}
-            className="inline-flex gap-1 hover:underline"
-          >
+          <span>asked to join group</span>
+          <Link href={`/groups/${groupUuid}`} className="hover:underline">
             <span className="font-bold">{groupName}</span>
           </Link>
-          {creationTime}.
+          <span>{creationTime}</span>.
         </div>
         <span className="p-2 italic">Motivation: {request.notes}</span>
       </div>

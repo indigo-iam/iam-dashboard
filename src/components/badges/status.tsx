@@ -12,7 +12,7 @@ export default function Status(props: Readonly<StatusProps>) {
   return (
     <small
       title={`${active ? "Active" : "Disabled"}`}
-      className="data-[status=disabled] my-auto rounded-full bg-danger p-0.5 px-2 text-xs text-secondary data-[status=Active]:bg-success"
+      className="data-[status=disabled] bg-danger text-secondary data-[status=Active]:bg-success max-w-fit max-h-5 rounded-full p-0.5 px-2 text-xs"
       data-status={status}
     >
       {status}

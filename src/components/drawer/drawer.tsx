@@ -27,12 +27,12 @@ export function Drawer(props: Readonly<DrawerProps>) {
     <>
       <Button
         id="backdrop-drawer-button"
-        className="fixed inset-0 -z-10 bg-black/30 transition-opacity data-[show=true]:z-20 data-[show=true]:opacity-100 md:hidden"
+        className="fixed inset-0 -z-10 bg-black/30 opacity-0 transition-opacity data-[show=true]:z-20 data-[show=true]:opacity-100 md:hidden"
         onClick={toggleDrawer}
         data-show={show}
       />
-      <header className="bg-infn t-0 fixed inset-0 z-30 flex h-16 items-center justify-between px-4 py-2 text-2xl font-bold md:hidden">
-        {title}
+      <header className="bg-infn t-0 text-secondary fixed inset-0 z-30 flex h-16 items-center justify-between px-4 py-2 text-2xl font-bold md:hidden">
+        <span className="line-clamp-2">{title}</span>
         <Button className="flex" onClick={toggleDrawer}>
           <Bars3Icon className="p my-auto size-8 rounded fill-white hover:bg-white/30" />
         </Button>

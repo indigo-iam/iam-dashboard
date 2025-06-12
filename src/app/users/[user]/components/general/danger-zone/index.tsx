@@ -15,15 +15,15 @@ type DangerZoneProps = {
 export function DangerZone(props: Readonly<DangerZoneProps>) {
   const { user } = props;
   return (
-    <>
-      <div className="col-span-full text-sm font-light sm:col-span-2">
-        <div className="text-danger py-1">Danger zone</div>
+    <div className="border-light-gray flex flex-row gap-4 border-t py-4">
+      <div className="flex grow flex-col text-sm font-light">
+        <div className="text-danger">Danger zone</div>
         <div className="text-extralight">
           A disabled user cannot login and their Access Tokens and Refresh
           Tokens are immediately revoked.
         </div>
       </div>
-      <div className="col-span-full grow sm:col-span-4">
+      <div className="min-w-2/3">
         <div className="flex flex-col justify-between gap-4">
           <div className="flex flex-wrap gap-4">
             <EditExpirationDate user={user} />
@@ -35,6 +35,6 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

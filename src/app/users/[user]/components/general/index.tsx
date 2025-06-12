@@ -19,12 +19,7 @@ export async function General(props: Readonly<GeneralProps>) {
     <TabPanel className="panel">
       <UserDetailsForm user={user} isMe={isMe} />
       <Aup user={user} isMe={isMe} />
-      {isMe ? null : (
-        <>
-          <hr className="col-span-full text-gray-300" />
-          <DangerZone user={user} />
-        </>
-      )}
+      {isMe ? null : <DangerZone user={user} />}
     </TabPanel>
   );
 }

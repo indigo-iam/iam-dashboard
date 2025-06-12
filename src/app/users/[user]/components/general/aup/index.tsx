@@ -32,17 +32,17 @@ export async function Aup(props: Readonly<AupProps>) {
   })();
 
   return (
-    <div className="flex flex-col gap-4 pt-4 lg:flex-row">
+    <div className="flex flex-col gap-4 py-4 last:pb-0 lg:flex-row">
       <div className="grow text-sm font-light">
         <div className="text-light dark:text-extralight/60 py-1">
           Acceptable Usage Policy
         </div>
         <div className="text-extralight">
-          I don’t know why this is import but it is a very important
-          information. Add something not stupid.
+          Curabitur id libero vehicula, molestie lorem a, tempor tellus. Nulla
+          eget gravida leo, dictum pharetra felis.
         </div>
       </div>
-      <div className="min-w-2/3 grow space-y-2">
+      <div className="min-w-2/3 grow space-y-4">
         <Form className="flex flex-col">
           <Field>
             <Label>Expiration</Label>

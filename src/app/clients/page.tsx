@@ -2,9 +2,9 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { ClientsTable } from "@/app/components/clients";
 import { Layout } from "@/app/components/layout";
 import { InputQuery } from "@/components/inputs";
-import ClientsTable from "@/components/clients";
 import { getClientsPage } from "@/services/clients";
 import Paginator from "@/components/paginator";
 import { Button } from "@/components/buttons";

@@ -2,11 +2,11 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Client } from "@/models/client";
 import Link from "next/link";
-import ClientOptions from "./options";
+import { Status } from "@/components/badges";
+import { Client } from "@/models/client";
 import { dateToHuman } from "@/utils/dates";
-import { Status } from "../badges";
+import ClientOptions from "./options";
 
 type RowProps = {
   client: Client;
@@ -61,7 +61,7 @@ type ClientsTableProps = {
   clients: Client[];
 };
 
-export default function ClientsTable(props: Readonly<ClientsTableProps>) {
+export function ClientsTable(props: Readonly<ClientsTableProps>) {
   const { clients } = props;
   return (
     <ul className="w-full">

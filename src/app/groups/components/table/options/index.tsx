@@ -2,10 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import Options from "@/components/options";
-import AddSubgroupButton from "./add-subgroup-button";
-import DeleteGroupButton from "./delete-group-button";
+"use client";
+
+import { Options, Option } from "@/components/options";
 import { Group } from "@/models/groups";
+import AddSubgroupModal from "./add-subgroup-modal";
+import DeleteGroupModal from "./delete-group-modal";
+import { useState } from "react";
 
 export type GroupOptionsProps = {
   group: Group;
@@ -13,10 +16,26 @@ export type GroupOptionsProps = {
 
 export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
   const { group } = props;
+  const [show, setShow] = useState<"ADD_SUBGROUP" | "DELETE_GROUP">();
+  const close = () => setShow(undefined);
   return (
-    <Options>
-      <AddSubgroupButton rootGroup={group} />
-      <DeleteGroupButton group={group} />
-    </Options>
+    <>
+      <Options>
+        <Option onClick={() => setShow("ADD_SUBGROUP")}>Add subgroup</Option>
+        <Option onClick={() => setShow("DELETE_GROUP")} danger>
+          Delete group
+        </Option>
+      </Options>
+      <AddSubgroupModal
+        rootGroup={group}
+        show={show === "ADD_SUBGROUP"}
+        onClose={close}
+      />
+      <DeleteGroupModal
+        group={group}
+        show={show === "DELETE_GROUP"}
+        onClose={close}
+      />
+    </>
   );
 }

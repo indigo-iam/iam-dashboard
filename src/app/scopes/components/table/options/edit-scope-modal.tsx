@@ -7,13 +7,13 @@ import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Scope } from "@/models/client";
 import { editScope } from "@/services/scopes";
-import { Button } from "@headlessui/react";
+import { Button } from "@/components/buttons";
 
 interface EditScopeModalProps extends ModalProps {
   scope: Scope;
 }
 
-export function EditScopeModal(props: Readonly<EditScopeModalProps>) {
+export default function EditScopeModal(props: Readonly<EditScopeModalProps>) {
   const { scope, show, onClose } = props;
 
   const action = async (formData: FormData) => {

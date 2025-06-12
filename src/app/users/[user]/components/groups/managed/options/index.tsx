@@ -2,10 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import Options from "@/components/options";
+"use client";
+
+import { Options, Option } from "@/components/options";
 import { ScimReference } from "@/models/scim";
-import AddSubgroupButton from "./add-subgroup-button";
-import DeleteGroupButton from "./delete-group-button";
+import AddSubgroupModal from "./add-subgroup-modal";
+import DeleteGroupModal from "./delete-group-modal";
+import { useState } from "react";
 
 export type GroupOptionsProps = {
   groupRef: ScimReference;
@@ -13,10 +16,26 @@ export type GroupOptionsProps = {
 
 export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
   const { groupRef } = props;
+  const [show, setShow] = useState<"ADD_SUBGROUP" | "DELETE_GROUP">();
+  const close = () => setShow(undefined);
   return (
-    <Options>
-      <AddSubgroupButton rootGroup={groupRef} />
-      <DeleteGroupButton group={groupRef} />
-    </Options>
+    <>
+      <Options>
+        <Option onClick={() => setShow("ADD_SUBGROUP")}>Add subgroup</Option>
+        <Option onClick={() => setShow("DELETE_GROUP")} danger>
+          Delete group
+        </Option>
+      </Options>
+      <AddSubgroupModal
+        rootGroup={groupRef}
+        show={show === "ADD_SUBGROUP"}
+        onClose={close}
+      />
+      <DeleteGroupModal
+        groupRef={groupRef}
+        show={show === "DELETE_GROUP"}
+        onClose={close}
+      />
+    </>
   );
 }

@@ -2,10 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import Options from "@/components/options";
-import DeleteGroupRequestButton from "./delete-button";
+"use client";
+
+import { Options, Option } from "@/components/options";
 import { User } from "@/models/scim";
 import { GroupRequest } from "@/models/group-requests";
+import DeleteGroupRequestModal from "./delete-group-request-modal";
+import { useState } from "react";
 
 type GroupRequestOptionsProps = {
   user: User;
@@ -17,13 +20,22 @@ export default function GroupRequestOptions(
   props: Readonly<GroupRequestOptionsProps>
 ) {
   const { user, isMe, groupRequest } = props;
+  const [show, setShow] = useState<"DELETE">();
+  const close = () => setShow(undefined);
   return (
-    <Options>
-      <DeleteGroupRequestButton
+    <>
+      <Options>
+        <Option onClick={() => setShow("DELETE")} danger>
+          Delete
+        </Option>
+      </Options>
+      <DeleteGroupRequestModal
+        groupRequest={groupRequest}
         user={user}
         isMe={isMe}
-        groupRequest={groupRequest}
+        show={show === "DELETE"}
+        onClose={close}
       />
-    </Options>
+    </>
   );
 }

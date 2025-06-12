@@ -26,7 +26,7 @@ function Row(props: Readonly<RowProps>) {
     ? dateToHuman(new Date(client.created_at))
     : "N/A";
   return (
-    <li className="iam-list-item flex flex-row">
+    <li className="iam-list-item flex flex-row gap-2">
       <div className="flex grow">
         <div className="flex grow flex-col lg:flex-row">
           <Link

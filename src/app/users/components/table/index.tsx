@@ -2,11 +2,11 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import Link from "next/link";
+import { Status } from "@/components/badges";
 import { User } from "@/models/scim";
 import { dateToHuman } from "@/utils/dates";
-import Link from "next/link";
 import UserOptions from "./options";
-import { Status } from "@/components/badges";
 
 type RowProps = {
   user: User;
@@ -40,7 +40,7 @@ function Row(props: Readonly<RowProps>) {
           </div>
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col justify-center">
         <UserOptions user={user} />
       </div>
     </li>

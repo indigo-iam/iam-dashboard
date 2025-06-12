@@ -2,10 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import Options from "@/components/options";
+"use client";
+
+import { Options, Option } from "@/components/options";
 import { User } from "@/models/scim";
 import { Group } from "@/models/groups";
-import RevokeManagerButton from "./revoke-button";
+import RevokeGroupManagerModal from "./revoke-group-manager-modal";
+import { useState } from "react";
 
 type ManagerOptionsProps = {
   manager: User;
@@ -14,9 +17,21 @@ type ManagerOptionsProps = {
 
 export default function ManagerOptions(props: Readonly<ManagerOptionsProps>) {
   const { manager, group } = props;
+  const [show, setShow] = useState<"REVOKE_MANAGER">();
+  const close = () => setShow(undefined);
   return (
-    <Options>
-      <RevokeManagerButton user={manager} group={group} />
-    </Options>
+    <>
+      <Options>
+        <Option onClick={() => setShow("REVOKE_MANAGER")} danger>
+          Revoke
+        </Option>
+      </Options>
+      <RevokeGroupManagerModal
+        user={manager}
+        group={group}
+        show={show === "REVOKE_MANAGER"}
+        onClose={close}
+      />
+    </>
   );
 }

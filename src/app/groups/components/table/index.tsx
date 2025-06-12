@@ -38,9 +38,7 @@ function Row(props: Readonly<RowProps>) {
           </div>
         </div>
       </div>
-      <div className="flex flex-col">
-        <GroupOptions group={group} />
-      </div>
+      <GroupOptions group={group} />
     </li>
   );
 }

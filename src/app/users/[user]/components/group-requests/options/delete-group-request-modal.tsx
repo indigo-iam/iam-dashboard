@@ -34,7 +34,7 @@ export default function DeleteGroupRequestModal(
     <ConfirmModal
       show={show}
       onClose={onClose}
-      confirmButtonText="Delete Request"
+      confirmButtonText="Delete"
       title="Delete Group Request"
       onConfirm={handleConfirm}
     >

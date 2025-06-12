@@ -7,7 +7,7 @@ import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
 import { revokeGroupManager } from "@/services/groups";
 
-type ConfirmRevokeGroupManagerModal = {
+type RevokeGroupManagerModal = {
   user: User;
   group: Group;
   show: boolean;
@@ -15,8 +15,8 @@ type ConfirmRevokeGroupManagerModal = {
   onUnlinked?: () => void;
 };
 
-export default function ConfirmRevokeGroupManagerModal(
-  props: Readonly<ConfirmRevokeGroupManagerModal>
+export default function RevokeGroupManagerModal(
+  props: Readonly<RevokeGroupManagerModal>
 ) {
   const { user, group, show, onClose, onUnlinked } = props;
 
@@ -30,9 +30,10 @@ export default function ConfirmRevokeGroupManagerModal(
     <ConfirmModal
       show={show}
       onClose={onClose}
-      confirmButtonText="Remove Group Manager"
+      confirmButtonText="Revoke Manager"
       title="Revoke Group Manager Privileges"
       onConfirm={handleConfirm}
+      danger
     >
       Are you sure you want to revoke group manager privileges from user{" "}
       <b>{user.name?.formatted}</b> for group <b>{group.displayName}</b>?

@@ -8,7 +8,7 @@ import { SSHKey } from "@/models/indigo-user";
 import { User } from "@/models/scim";
 import { deleteSSHKey } from "@/services/users";
 
-type DeleteSSHKeyConfirmModalProps = {
+type DeleteSSHKeyModalProps = {
   user: User;
   sshKey: SSHKey;
   show: boolean;
@@ -16,8 +16,8 @@ type DeleteSSHKeyConfirmModalProps = {
   onDeleted?: () => void;
 };
 
-export default function DeleteSSHKeyConfirmModal(
-  props: Readonly<DeleteSSHKeyConfirmModalProps>
+export default function DeleteSSHKeyModal(
+  props: Readonly<DeleteSSHKeyModalProps>
 ) {
   const { user, sshKey, show, onClose, onDeleted } = props;
 
@@ -37,9 +37,10 @@ export default function DeleteSSHKeyConfirmModal(
     <ConfirmModal
       show={show}
       onClose={onClose}
-      confirmButtonText="Delete Key"
+      confirmButtonText="Delete"
       title="Delete SSH Key"
       onConfirm={handleConfirm}
+      danger
     >
       <p>
         The following SSH Key will be removed from <b>{user.name?.formatted}</b>

@@ -18,9 +18,7 @@ const OidcIdView = (props: { oidcId: OidcId }) => {
           {oidcId.subject}
         </small>
       </div>
-      <div className="flex flex-col">
-        <OidcOptions oidcId={oidcId} />
-      </div>
+      <OidcOptions oidcId={oidcId} />
     </li>
   );
 };
@@ -36,9 +34,7 @@ const SamlIdView = (props: { samlId: SamlId }) => {
           {samlId.attributeId}
         </small>
       </div>
-      <div className="flex flex-col">
-        <SAMLOptions />
-      </div>
+      <SAMLOptions samlId={samlId} />
     </li>
   );
 };

@@ -3,10 +3,12 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
-import Options from "@/components/options";
+
+import { Option, Options } from "@/components/options";
 import { Attribute } from "@/models/attributes";
 import { User } from "@/models/scim";
-import DeleteButton from "./delete-button";
+import DeleteUserModal from "./delete-button";
+import { useState } from "react";
 
 type OptionsProps = {
   user: User;
@@ -15,9 +17,21 @@ type OptionsProps = {
 
 export default function AttributeOptions(props: Readonly<OptionsProps>) {
   const { user, attr } = props;
+  const [show, setShow] = useState<"DELETE_USER">();
+  const close = () => setShow(undefined);
   return (
-    <Options>
-      <DeleteButton user={user} attr={attr} />
-    </Options>
+    <>
+      <Options>
+        <Option onClick={() => setShow("DELETE_USER")} danger>
+          Delete
+        </Option>
+      </Options>
+      <DeleteUserModal
+        user={user}
+        attr={attr}
+        show={show === "DELETE_USER"}
+        onClose={close}
+      />
+    </>
   );
 }

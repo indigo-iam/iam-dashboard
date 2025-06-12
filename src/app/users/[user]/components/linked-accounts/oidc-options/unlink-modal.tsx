@@ -2,17 +2,19 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client";
+
 import ConfirmModal from "@/components/confirm-modal";
 import { OidcId } from "@/models/indigo-user";
 
-type ConfirmUnlinkAccountModalProps = {
+type UnlinkAccountModalProps = {
   oidcId: OidcId;
   show: boolean;
   onClose: () => void;
 };
 
-export default function ConfirmUnlinkAccountModal(
-  props: Readonly<ConfirmUnlinkAccountModalProps>
+export default function UnlinkAccountModal(
+  props: Readonly<UnlinkAccountModalProps>
 ) {
   const { oidcId, show, onClose } = props;
 
@@ -29,6 +31,7 @@ export default function ConfirmUnlinkAccountModal(
       confirmButtonText="Remove Membership"
       title="Remove User Membership"
       onConfirm={handleConfirm}
+      danger
     >
       Are you sure you want to unlink the account with subject{" "}
       <b>{oidcId.subject}</b> and issuer

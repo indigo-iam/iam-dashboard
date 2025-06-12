@@ -2,9 +2,12 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import Options from "@/components/options";
+"use client";
+
+import { Options, Option } from "@/components/options";
 import { ScopePolicy } from "@/models/scope-policies";
-import DeletePolicy from "./delete-policy";
+import DeletePolicyModal from "./delete-policy-modal";
+import { useState } from "react";
 
 type PolicyOptionsProps = {
   policy: ScopePolicy;
@@ -12,9 +15,20 @@ type PolicyOptionsProps = {
 
 export default function PolicyOptions(props: Readonly<PolicyOptionsProps>) {
   const { policy } = props;
+  const [show, setShow] = useState<"DELETE_POLICY">();
+  const close = () => setShow(undefined);
   return (
-    <Options>
-      <DeletePolicy policy={policy} />
-    </Options>
+    <>
+      <Options>
+        <Option onClick={() => setShow("DELETE_POLICY")} danger>
+          Delete
+        </Option>
+      </Options>
+      <DeletePolicyModal
+        show={show === "DELETE_POLICY"}
+        onClose={close}
+        policy={policy}
+      />
+    </>
   );
 }

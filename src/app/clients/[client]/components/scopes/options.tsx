@@ -2,10 +2,12 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Button } from "@/components/buttons";
-import { Form } from "@/components/form";
-import Options from "@/components/options";
+"use client";
+
+import { Options, Option } from "@/components/options";
 import { Client } from "@/models/client";
+import DeleteScopeModal from "./delete-scope-modal";
+import { useState } from "react";
 
 type ScopeOptionsProps = {
   client: Client;
@@ -13,18 +15,22 @@ type ScopeOptionsProps = {
 };
 
 export function ScopeOptions(props: Readonly<ScopeOptionsProps>) {
-  const { client, scope } = props;
-  const action = async () => {
-    "use server";
-    console.log(`delete scope ${scope} from client ${client.client_id}`);
-  };
+  const { scope, client } = props;
+  const [show, setShow] = useState<"DELETE">();
+  const close = () => setShow(undefined);
   return (
-    <Options>
-      <Form action={action}>
-        <Button className="popover-option-danger" type="submit">
+    <>
+      <Options>
+        <Option onClick={() => setShow("DELETE")} danger>
           Delete
-        </Button>
-      </Form>
-    </Options>
+        </Option>
+      </Options>
+      <DeleteScopeModal
+        scope={scope}
+        client={client}
+        show={show === "DELETE"}
+        onClose={close}
+      />
+    </>
   );
 }

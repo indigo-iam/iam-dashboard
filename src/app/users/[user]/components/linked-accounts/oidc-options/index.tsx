@@ -2,9 +2,12 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import Options from "@/components/options";
-import UnlinkOidcAccount from "./unlink";
+"use client";
+
+import { Option, Options } from "@/components/options";
 import { OidcId } from "@/models/indigo-user";
+import UnlinkAccountModal from "./unlink-modal";
+import { useState } from "react";
 
 type OidcOptionsProps = {
   oidcId: OidcId;
@@ -12,9 +15,20 @@ type OidcOptionsProps = {
 
 export default function OidcOptions(props: Readonly<OidcOptionsProps>) {
   const { oidcId } = props;
+  const [show, setShow] = useState<"UNLINK_ACCOUNT">();
+  const close = () => setShow(undefined);
   return (
-    <Options>
-      <UnlinkOidcAccount oidcId={oidcId} />
-    </Options>
+    <>
+      <Options>
+        <Option onClick={() => setShow("UNLINK_ACCOUNT")} danger>
+          Unlink account
+        </Option>
+      </Options>
+      <UnlinkAccountModal
+        oidcId={oidcId}
+        show={show === "UNLINK_ACCOUNT"}
+        onClose={close}
+      />
+    </>
   );
 }

@@ -2,19 +2,22 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import ConfirmModal from "@/components/confirm-modal";
+"use client";
+
 import { ScimReference, User } from "@/models/scim";
 import { removeUserFromGroup } from "@/services/groups";
+import ConfirmModal from "@/components/confirm-modal";
+import { useState } from "react";
 
-type ConfirmUnlinkUserModal = {
+export type RemoveMembershipModalProps = {
   user: User;
   groupRef: ScimReference;
   show: boolean;
   onClose: () => void;
 };
 
-export default function ConfirmUnlinkUserModal(
-  props: Readonly<ConfirmUnlinkUserModal>
+export default function RemoveMembershipModal(
+  props: Readonly<RemoveMembershipModalProps>
 ) {
   const { user, groupRef, show, onClose } = props;
 
@@ -27,12 +30,12 @@ export default function ConfirmUnlinkUserModal(
     <ConfirmModal
       show={show}
       onClose={onClose}
-      confirmButtonText="Remove Membership"
-      title="Remove User Membership"
+      confirmButtonText="Leave Group"
+      title="Leave Group"
       onConfirm={handleConfirm}
+      danger
     >
-      Are you sure you want to remove <b>{user.displayName}</b> from group{" "}
-      <b>{groupRef.display}</b>?
+      Are you sure you want to leave the group <b>{groupRef.display}</b>?
     </ConfirmModal>
   );
 }

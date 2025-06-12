@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Button } from "@/components/buttons";
-import { Form } from "@/components/form";
+import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { ScimReference } from "@/models/scim";
@@ -28,24 +28,30 @@ export default function AddSubgroupModal(
     }
   };
   return (
-    <Modal
-      {...modalProps}
-      title={`Add new subgroup to '${rootGroup.display}'`}
-    >
+    <Modal {...modalProps} title={`Add new subgroup to '${rootGroup.display}'`}>
       <Form id="add-subgroup-form" action={action}>
         <ModalBody>
-          <Input
-            title="Name"
-            type="text"
-            name="name"
-            placeholder="Insert group name..."
-            required
-          />
+          <Field>
+            <Label data-required>Group Name</Label>
+            <Input
+              title="Name"
+              type="text"
+              name="name"
+              placeholder="Insert group name..."
+              required
+            />
+          </Field>
         </ModalBody>
         <ModalFooter>
-          <Button type="submit">Add Subgroup</Button>
-          <Button type="reset" onClick={modalProps.onClose}>
+          <Button
+            className="btn-tertiary"
+            type="reset"
+            onClick={modalProps.onClose}
+          >
             Cancel
+          </Button>
+          <Button className="btn-primary" type="submit">
+            Add Subgroup
           </Button>
         </ModalFooter>
       </Form>

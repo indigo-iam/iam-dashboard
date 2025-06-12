@@ -2,9 +2,12 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import Options from "@/components/options";
+"use client";
+
+import { Option, Options } from "@/components/options";
 import { ScimReference, User } from "@/models/scim";
-import RemoveMembership from "./remove-membership-button";
+import RemoveMembershipModal from "./remove-membership-modal";
+import { useState } from "react";
 
 export type GroupOptionsProps = {
   user: User;
@@ -13,9 +16,21 @@ export type GroupOptionsProps = {
 
 export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
   const { user, groupRef } = props;
+  const [show, setShow] = useState<"REMOVE_MEMBERSHIP">();
+  const close = () => setShow(undefined);
   return (
-    <Options>
-      <RemoveMembership user={user} groupRef={groupRef} />
-    </Options>
+    <>
+      <Options>
+        <Option onClick={() => setShow("REMOVE_MEMBERSHIP")} danger>
+          Leave
+        </Option>
+      </Options>
+      <RemoveMembershipModal
+        user={user}
+        groupRef={groupRef}
+        show={show === "REMOVE_MEMBERSHIP"}
+        onClose={close}
+      />
+    </>
   );
 }

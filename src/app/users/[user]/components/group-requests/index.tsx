@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { fetchGroupsRequests } from "@/services/group-requests";
-import InfoTable from "@/components/info-table";
 import { User } from "@/models/scim";
 import GroupRequestOptions from "./options";
 
@@ -23,40 +22,29 @@ export default async function GroupRequests(
   }
 
   const groupRequests = result.Resources;
-  const data = groupRequests.map(gp => {
-    return {
-      id: gp.uuid,
-      request: gp,
-      values: [
-        { name: "Group Name", value: gp.groupName },
-        { name: "Group ID", value: gp.groupUuid },
-      ],
-    };
-  });
 
   return (
     <div className="panel">
       <h2>Group Requests</h2>
-      <table className="w-full table-auto">
-        <tbody>
-          {data.map(d => {
-            return (
-              <tr className="tbl-tr" key={d.id}>
-                <td className="tbl-td">
-                  <InfoTable data={d.values} />
-                </td>
-                <td className="tbl-td text-center">
-                  <GroupRequestOptions
-                    user={user}
-                    isMe={isMe}
-                    groupRequest={d.request}
-                  />
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <ul className="iam-list-item w-full">
+        {groupRequests.map(req => {
+          return (
+            <li className="flex flex-row" key={req.uuid}>
+              <div className="flex grow flex-col">
+                <div className="inline-flex gap-1">
+                  <span className="font-bold">Group Name:</span>
+                  <span>{req.groupName}</span>
+                </div>
+                <div className="inline-flex gap-1">
+                  <span className="font-bold">Group ID:</span>
+                  <span>{req.groupUuid}</span>
+                </div>
+              </div>
+              <GroupRequestOptions user={user} isMe={isMe} groupRequest={req} />
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

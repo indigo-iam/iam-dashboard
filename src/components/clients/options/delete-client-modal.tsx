@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
-import InfoTable from "@/components/info-table";
 import { Client } from "@/models/client";
 import { deleteClient } from "@/services/clients";
 
@@ -17,17 +16,12 @@ export default function DeleteClientModal(
   props: Readonly<DeleteClientModalProps>
 ) {
   const { client, show, onClose, onDeleted } = props;
-
+  const { client_name, client_id } = client;
   const handleConfirm = async () => {
     await deleteClient(client.client_id);
     onClose();
     onDeleted?.();
   };
-
-  const data = [
-    { name: "Name", value: client.client_name },
-    { name: "Client ID", value: client.client_id },
-  ];
 
   return (
     <ConfirmModal
@@ -39,7 +33,16 @@ export default function DeleteClientModal(
       danger={true}
     >
       Are you sure you want to delete the following client?
-      <InfoTable data={data} />
+      <ul className="flex flex-col">
+        <li className="inline-flex gap-1">
+          <span className="font-bold">Name:</span>
+          <span>{client_name}</span>
+        </li>
+        <li className="inline-flex gap-1">
+          <span className="font-bold">Client ID:</span>
+          <span>{client_id}</span>
+        </li>
+      </ul>
     </ConfirmModal>
   );
 }

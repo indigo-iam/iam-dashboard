@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
-import InfoTable from "@/components/info-table";
 import { GroupRequest } from "@/models/group-requests";
 import { User } from "@/models/scim";
 import { abortGroupRequest } from "@/services/group-requests";
@@ -39,7 +38,16 @@ export default function DeleteGroupRequestModal(
       onConfirm={handleConfirm}
     >
       <p>The following group request will be removed</p>
-      <InfoTable className="mt-2" data={data} />
+      <ul className="flex flex-col">
+        <li className="inline-flex gap-1">
+          <span className="font-bold">Group Name:</span>
+          <span>{groupRequest.groupName}</span>
+        </li>
+        <li className="inline-flex gap-1">
+          <span className="font-bold">Group ID:</span>
+          <span>{groupRequest.groupUuid}</span>
+        </li>
+      </ul>
     </ConfirmModal>
   );
 }

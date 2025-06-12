@@ -73,18 +73,6 @@
   @apply dark:bg-primary w-full rounded border border-gray-300 bg-white px-2 py-1 disabled:bg-transparent disabled:text-slate-400 placeholder:disabled:text-gray-400 data-[invalid=true]:outline dark:border-white/30;
 }
 
-@utility tbl-th {
-  @apply bg-primary/5 border-b p-2 pt-8 first:rounded-tl-lg last:rounded-tr-lg;
-}
-
-@utility tbl-tr {
-  @apply border-primary/5 border-b last:border-none dark:border-white/5;
-}
-
-@utility tbl-td {
-  @apply p-2;
-}
-
 @utility iam-list-item {
   @apply dark:border-light flex flex-row border-b border-gray-200 p-2 last:border-transparent hover:rounded-md hover:border-transparent hover:bg-neutral-200 has-[+:hover]:border-transparent dark:hover:bg-neutral-200/10;
 }

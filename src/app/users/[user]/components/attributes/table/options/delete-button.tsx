@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
-import InfoTable from "@/components/info-table";
 import { Attribute } from "@/models/attributes";
 import { User } from "@/models/scim";
 import { deleteAttribute } from "@/services/users";
@@ -21,10 +20,6 @@ export default function DeleteUserModal(props: Readonly<DeleteButtonProps>) {
     await deleteAttribute(user.id, attr);
     onClose();
   };
-  const data = [
-    { name: "Attribute Name", value: attr.name },
-    { name: "Attribute Value", value: attr.value },
-  ];
   return (
     <ConfirmModal
       show={show}
@@ -38,7 +33,16 @@ export default function DeleteUserModal(props: Readonly<DeleteButtonProps>) {
         The following attribute will be removed from{" "}
         <b>{user.name?.formatted}</b> account:
       </p>
-      <InfoTable data={data} />
+      <ul className="flex flex-col">
+        <li className="inline-flex gap-1">
+          <span className="font-bold">Name:</span>
+          <span>{attr.name}</span>
+        </li>
+        <li className="inline-flex gap-1">
+          <span className="font-bold">Value:</span>
+          <span>{attr.value}</span>
+        </li>
+      </ul>
     </ConfirmModal>
   );
 }

@@ -4,7 +4,6 @@
 
 import { Group } from "@/models/groups";
 import { dateToHuman } from "@/utils/dates";
-import InfoTable from "@/components/info-table";
 
 type GroupInfoProps = {
   group: Group;
@@ -17,16 +16,23 @@ export default function GroupInfo(props: Readonly<GroupInfoProps>) {
   const created = group.meta.created
     ? dateToHuman(new Date(group.meta.created))
     : "N/A";
-
-  const data = [
-    { name: "Group Name", value: group.displayName },
-    { name: "Group Description", value: description ?? "No description." },
-    { name: "Created", value: created },
-  ];
   return (
     <div className="panel space-y-4">
       <h2 className="border-b">Group Information</h2>
-      <InfoTable data={data} />
+      <ul className="flex flex-col">
+        <li className="inline-flex gap-1">
+          <span className="font-bold">Name:</span>
+          <span>{group.displayName}</span>
+        </li>
+        <li className="inline-flex gap-1">
+          <span className="font-bold">Description:</span>
+          <span>{description}</span>
+        </li>
+        <li className="inline-flex gap-1">
+          <span className="font-bold">Created:</span>
+          <span>{created}</span>
+        </li>
+      </ul>
     </div>
   );
 }

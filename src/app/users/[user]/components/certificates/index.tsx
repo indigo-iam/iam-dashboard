@@ -4,18 +4,27 @@
 
 import { User } from "@/models/scim";
 import { Certificate } from "@/models/indigo-user";
-import InfoTable from "@/components/info-table";
 import LinkCertificateButton from "./link-certificate-button";
 import { TabPanel } from "@/components/tabs";
 
 const CertificateView = (props: { cert: Certificate }) => {
   const { cert } = props;
-  const data = [
-    { name: "Subject", value: cert.subjectDn },
-    { name: "Issuer", value: cert.issuerDn },
-    { name: "Last Modified", value: cert.lastModified },
-  ];
-  return <InfoTable data={data} />;
+  return (
+    <ul className="flex flex-col">
+      <li className="inline-flex gap-1">
+        <span className="font-bold">Subject:</span>
+        <span>{cert.subjectDn}</span>
+      </li>
+      <li className="inline-flex gap-1">
+        <span className="font-bold">Issuer:</span>
+        <span>{cert.issuerDn}</span>
+      </li>
+      <li className="inline-flex gap-1">
+        <span className="font-bold">Last modified:</span>
+        <span>{cert.lastModified}</span>
+      </li>
+    </ul>
+  );
 };
 
 type CertificateProps = {

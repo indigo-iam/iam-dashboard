@@ -4,20 +4,19 @@
 
 "use client";
 
-import { ArrowUpTrayIcon } from "@heroicons/react/24/solid";
+import { SearchGroups } from "@/app/components/search-groups";
 import { Form, Field, Label } from "@/components/form";
 import { Button } from "@/components/buttons";
-import { JoinGroupRequest } from "@/models/group-requests";
-import { submitGroupRequest } from "@/services/group-requests";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import { Textarea } from "@/components/textarea";
+import { JoinGroupRequest } from "@/models/group-requests";
 import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
+import { submitGroupRequest } from "@/services/group-requests";
 import { addUserToGroup } from "@/services/groups";
-import { Textarea } from "@/components/textarea";
-import InfoTable from "@/components/info-table";
 import { makeScimReferenceFromUser } from "@/utils/scim";
+import { ArrowUpTrayIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import { SearchGroups } from "@/app/components/search-groups";
 
 export interface JoinGroupModalProps extends ModalProps {
   user: User;
@@ -61,12 +60,6 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
     clearAndClose();
   };
 
-  const data = [
-    { name: "Name", value: selected?.displayName },
-    { name: "Group ID", value: selected?.id },
-    { name: "Labels", value: labels },
-  ];
-
   return (
     <Modal {...modalProps} onClose={clearAndClose}>
       <Form action={action}>
@@ -81,7 +74,20 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
             <p>
               Do you want to join group<b> {selected?.displayName}</b>?
             </p>
-            <InfoTable data={data} />
+            <ul className="flex flex-col">
+              <li className="inline-flex gap-1">
+                <span className="font-bold">Name:</span>
+                <span>{selected?.displayName}</span>
+              </li>
+              <li className="inline-flex gap-1">
+                <span className="font-bold">Group ID:</span>
+                <span>{selected?.id}</span>
+              </li>
+              <li className="inline-flex gap-1">
+                <span className="font-bold">Labels:</span>
+                <span>{labels}</span>
+              </li>
+            </ul>
           </div>
           {!isAdmin ? (
             <section className="flex flex-col gap-2">

@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
-import InfoTable from "@/components/info-table";
 import { SSHKey } from "@/models/indigo-user";
 import { User } from "@/models/scim";
 import { deleteSSHKey } from "@/services/users";
@@ -45,7 +44,20 @@ export default function DeleteSSHKeyModal(
       <p>
         The following SSH Key will be removed from <b>{user.name?.formatted}</b>
       </p>
-      <InfoTable data={data} className="mt-2" />
+      <ul className="flex flex-col">
+        <li className="inline-flex gap-1">
+          <span className="font-bold">Label:</span>
+          <span>{sshKey.display}</span>
+        </li>
+        <li className="inline-flex gap-1">
+          <span className="font-bold">Fingerprint:</span>
+          <span>{sshKey.fingerprint}</span>
+        </li>
+        <li className="inline-flex gap-1">
+          <span className="font-bold">Value:</span>
+          <span>{sshKey.value}</span>
+        </li>
+      </ul>
     </ConfirmModal>
   );
 }

@@ -19,27 +19,24 @@ export default async function AttributesTable(props: Readonly<TableProps>) {
   }
 
   return (
-    <table className="w-full table-auto rounded-lg">
-      <thead>
-        <tr>
-          <th className="tbl-th text-left">Name</th>
-          <th className="tbl-th text-left">Value</th>
-          <th className="tbl-th text-center"></th>
-        </tr>
-      </thead>
-      <tbody>
-        {attributes.map(attr => {
-          return (
-            <tr className="tbl-tr" key={attr.name}>
-              <td className="tbl-td">{attr.name}</td>
-              <td className="tbl-td">{attr.value}</td>
-              <td className="tbl-td w-1/12 text-center">
-                <AttributeOptions user={user} attr={attr} />
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+    <ul className="w-full">
+      {attributes.map(attr => {
+        return (
+          <li className="iam-list-item" key={attr.name}>
+            <div className="flex grow flex-col">
+              <div className="inline-flex gap-1">
+                <span className="font-bold">Name:</span>
+                <span>{attr.name}</span>
+              </div>
+              <div className="inline-flex gap-1">
+                <span className="font-bold">Value:</span>
+                <span>{attr.value}</span>
+              </div>
+            </div>
+            <AttributeOptions user={user} attr={attr} />
+          </li>
+        );
+      })}
+    </ul>
   );
 }

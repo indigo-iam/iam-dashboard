@@ -9,7 +9,6 @@ import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
 import { useState } from "react";
-import InfoTable from "@/components/info-table";
 import { addUserToGroup } from "@/services/groups";
 import { makeScimReferenceFromUser } from "@/utils/scim";
 import { SearchUsers } from "@/app/components/search-users";
@@ -35,11 +34,6 @@ export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
     }
   };
 
-  const data = [
-    { name: "Name", value: selectedUser?.name?.formatted ?? "unknown user" },
-    { name: "Username", value: selectedUser?.userName ?? "unknown username" },
-  ];
-
   return (
     <Modal onClose={clearAndClose} {...modalProps} title="Add Member to Group">
       <ModalBody>
@@ -52,7 +46,16 @@ export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
             Are you sure you want to add too group the following user to group{" "}
             <b>{group.displayName}</b>?
           </p>
-          <InfoTable data={data} />
+          <ul className="flex flex-col">
+            <li className="inline-flex gap-1">
+              <span className="font-bold">Name:</span>
+              <span>{selectedUser?.name?.formatted}</span>
+            </li>
+            <li className="inline-flex gap-1">
+              <span className="font-bold">Username:</span>
+              <span>{selectedUser?.userName}</span>
+            </li>
+          </ul>
         </div>
       </ModalBody>
       <ModalFooter>

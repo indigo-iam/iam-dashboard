@@ -4,6 +4,7 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { Client } from "@/models/client";
+import { editClient } from "@/services/clients";
 
 type DeleteScopeModalProps = {
   scope: string;
@@ -20,8 +21,11 @@ export default function DeleteScopeModal(
     const scopes = client.scope?.split(" ") ?? [];
     const find = scopes.findIndex(s => s === scope);
     if (find > -1) {
-      console.log("TBD");
+      scopes.splice(find, 1);
+      const scope = scopes.join(" ");
+      await editClient({ ...client, scope });
     }
+    onClose();
   };
   return (
     <ConfirmModal

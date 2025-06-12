@@ -9,6 +9,7 @@ import { Field, Form, Label } from "@/components/form";
 import { InputList } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter } from "@/components/modal";
 import { Client } from "@/models/client";
+import { editClient } from "@/services/clients";
 import { useState } from "react";
 
 type AddCustomScopeModalProps = {
@@ -18,10 +19,17 @@ type AddCustomScopeModalProps = {
 };
 
 export function AddCustomScopeModal(props: Readonly<AddCustomScopeModalProps>) {
-  const { show, onClose } = props;
+  const { client, show, onClose } = props;
+  const action = async (formData: FormData) => {
+    const newScope = formData.getAll("scope") as string[];
+    const scopes = (client.scope?.split(" ") ?? []).concat(newScope);
+    const scope = scopes.join(" ");
+    await editClient({ ...client, scope });
+    onClose();
+  };
   return (
     <Modal show={show} onClose={onClose} title="Add custom scope">
-      <Form>
+      <Form action={action}>
         <ModalBody>
           <Field>
             <Label>Enter one or more scope</Label>
@@ -37,7 +45,9 @@ export function AddCustomScopeModal(props: Readonly<AddCustomScopeModalProps>) {
           <Button className="btn-tertiary" type="reset" onClick={onClose}>
             Cancel
           </Button>
-          <Button className="btn-secondary">Add custom scopes</Button>
+          <Button className="btn-primary" type="submit">
+            Add custom scopes
+          </Button>
         </ModalFooter>
       </Form>
     </Modal>

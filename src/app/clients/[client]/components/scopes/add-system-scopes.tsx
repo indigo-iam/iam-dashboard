@@ -8,6 +8,7 @@ import { Button } from "@/components/buttons";
 import { Checkbox, Description, Field, Form, Label } from "@/components/form";
 import { Modal, ModalBody, ModalFooter } from "@/components/modal";
 import { Client, Scope } from "@/models/client";
+import { editClient } from "@/services/clients";
 import { useState } from "react";
 
 type AddScopeProps = {
@@ -22,9 +23,16 @@ interface AddScopeModalProps extends AddScopeProps {
 
 function AddScopeModal(props: Readonly<AddScopeModalProps>) {
   const { client, scopes, show, onClose } = props;
+  const action = async (formData: FormData) => {
+    const newScope = formData.getAll("scope") as string[];
+    const scopes = (client.scope?.split(" ") ?? []).concat(newScope);
+    const scope = scopes.join(" ");
+    await editClient({ ...client, scope });
+    onClose();
+  };
   return (
     <Modal show={show} onClose={onClose} title="Add system scopes">
-      <Form>
+      <Form action={action}>
         <ModalBody className="p-0">
           <ul>
             {scopes.map(s => (
@@ -33,12 +41,10 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
                 key={s.id}
                 className="dark:border-light dark:hover:bg-neutral-200/10; flex flex-row items-center gap-2 px-2 hover:rounded-md hover:border-transparent hover:bg-neutral-200"
               >
-                <Checkbox name="scope" />
+                <Checkbox name="scope" value={s.value} />
                 <div className="flex grow flex-col">
-                  <Label>
-                    <span className="font-semibold">{s.value}</span>
-                    <Description>{s.description}</Description>
-                  </Label>
+                  <Label>{s.value}</Label>
+                  <Description>{s.description}</Description>
                 </div>
               </Field>
             ))}
@@ -48,7 +54,9 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
           <Button className="btn-tertiary" onClick={onClose} type="reset">
             Cancel
           </Button>
-          <Button className="btn-secondary">Add scope(s)</Button>
+          <Button className="btn-primary" type="submit">
+            Add scope(s)
+          </Button>
         </ModalFooter>
       </Form>
     </Modal>

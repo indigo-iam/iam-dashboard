@@ -2,10 +2,10 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Group } from "@/models/groups";
 import Link from "next/link";
-import GroupOptions from "./options";
+import { Group } from "@/models/groups";
 import { dateToHuman } from "@/utils/dates";
+import GroupOptions from "./options";
 
 type RowProps = {
   group: Group;

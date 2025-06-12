@@ -9,16 +9,22 @@ type OptionProps = {
   onClick?: () => void;
   danger?: boolean;
   children?: React.ReactNode;
+  "data-test"?: string;
 };
 
 export function Option(props: Readonly<OptionProps>) {
   const { onClick, danger, children } = props;
+  console.log("ohhh", props["data-test"])
   const className = danger
     ? "text-danger hover:bg-danger hover:text-secondary p-2 text-start whitespace-nowrap focus:outline-none"
     : "hover:bg-gray-200 p-2 text-start whitespace-nowrap focus:outline-none";
   return (
     <MenuItem>
-      <button className={className} onClick={onClick}>
+      <button
+        className={className}
+        onClick={onClick}
+        data-test={props["data-test"]}
+      >
         {children}
       </button>
     </MenuItem>

@@ -11,7 +11,7 @@ export function Description(props: Readonly<DescriptionProps>) {
   return (
     <HeadlessDescription
       {...props}
-      className="text-primary/60 dark:text-secondary/60 text-sm pb-2"
+      className="text-primary/60 dark:text-secondary/60 text-xs pb-2"
     />
   );
 }

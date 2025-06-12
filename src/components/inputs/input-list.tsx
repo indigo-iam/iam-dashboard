@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { useRef, useState } from "react";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import { Input } from "@/components/inputs";

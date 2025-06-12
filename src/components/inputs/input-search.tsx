@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { Input } from "@/components/inputs";
 import { useRef } from "react";
 

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { Button } from "@/components/buttons";
 import { Textarea } from "@/components/textarea";
 import { ScopePolicy } from "@/models/scope-policies";

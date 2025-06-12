@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { Button } from "@/components/buttons";
 import { User } from "@/models/scim";
 import { useState } from "react";

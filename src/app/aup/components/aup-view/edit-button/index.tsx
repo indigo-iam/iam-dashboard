@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { Button } from "@/components/buttons";
 import { PencilIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { useEffect } from "react";
 import { Toaster, toast } from "sonner";
 import {

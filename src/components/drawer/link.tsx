@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { default as NextLink } from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 

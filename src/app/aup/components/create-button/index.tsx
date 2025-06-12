@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { useState } from "react";
 import CreateModal from "./modal";
 import { Button } from "@/components/buttons";

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { InputSearch } from "@/components/inputs";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 

@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Form, Description, FormSection } from "@/components/form";
+import { Form, Description, Field, Label } from "@/components/form";
 import { Select, SelectOption } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
@@ -35,20 +35,23 @@ export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
   return (
     <Modal show={show} onClose={onClose} title="Add New Scope">
       <Form action={action} onReset={() => setScopeType(options[0])}>
-        <ModalBody>
-          <FormSection title="Scope" htmlFor="scope">
+        <ModalBody className="space-y-4 pb-4">
+          <Field>
+            <Label>Scope</Label>
             <Description>Single string with no spaces.</Description>
             <Input id="scope" name="value" placeholder="Scope name" />
-          </FormSection>
-          <FormSection title="Description" htmlFor="description">
+          </Field>
+          <Field>
+            <Label>Description</Label>
             <Description>Single string with no spaces.</Description>
             <Input
               id="scope"
               name="description"
               placeholder="Scope description"
             />
-          </FormSection>
-          <FormSection title="Scope Type" htmlFor="type">
+          </Field>
+          <Field>
+            <Label>Scope Type</Label>
             <Description>
               <b>Default</b>: newly-created clients get this scope by default.{" "}
               <br />
@@ -64,7 +67,7 @@ export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
                 </SelectOption>
               ))}
             </Select>
-          </FormSection>
+          </Field>
         </ModalBody>
         <ModalFooter>
           <Button className="btn-tertiary" type="reset" onClick={onClose}>

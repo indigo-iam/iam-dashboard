@@ -25,7 +25,7 @@ export default function GroupRequestOptions(
   return (
     <>
       <Options>
-        <Option onClick={() => setShow("DELETE")} danger>
+        <Option onClick={() => setShow("DELETE")} data-danger>
           Delete
         </Option>
       </Options>

@@ -22,7 +22,7 @@ export default function AttributeOptions(props: Readonly<OptionsProps>) {
   return (
     <>
       <Options>
-        <Option onClick={() => setShow("DELETE_USER")} danger>
+        <Option onClick={() => setShow("DELETE_USER")} data-danger>
           Delete
         </Option>
       </Options>

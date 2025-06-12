@@ -21,7 +21,7 @@ export function ScopeOptions(props: Readonly<ScopeOptionsProps>) {
   return (
     <>
       <Options>
-        <Option onClick={() => setShow("DELETE")} danger>
+        <Option onClick={() => setShow("DELETE")} data-danger>
           Delete
         </Option>
       </Options>

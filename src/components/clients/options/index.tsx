@@ -21,7 +21,7 @@ export default function ClientOptions(props: Readonly<ClientOptionsProps>) {
   return (
     <>
       <Options>
-        <Option onClick={open} danger>
+        <Option onClick={open} data-danger>
           Delete
         </Option>
       </Options>

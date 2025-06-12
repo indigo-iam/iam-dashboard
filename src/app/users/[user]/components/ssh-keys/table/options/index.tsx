@@ -22,7 +22,7 @@ export default function SSHKeysOptions(props: Readonly<SSHKeysOptionsProps>) {
   return (
     <>
       <Options>
-        <Option onClick={() => setShow("DELETE")} danger>
+        <Option onClick={() => setShow("DELETE")} data-danger>
           Delete
         </Option>
       </Options>

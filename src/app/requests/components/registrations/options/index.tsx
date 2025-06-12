@@ -24,7 +24,7 @@ export default function RegistrationRequestsOptions(
     <>
       <Options>
         <Option onClick={() => setShow("APPROVE_REQUEST")}>Approve</Option>
-        <Option onClick={() => setShow("REJECT_REQUEST")} danger>
+        <Option onClick={() => setShow("REJECT_REQUEST")} data-danger>
           Reject
         </Option>
       </Options>

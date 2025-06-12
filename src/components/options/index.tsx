@@ -7,23 +7,18 @@ import { EllipsisHorizontalIcon } from "@heroicons/react/24/solid";
 
 type OptionProps = {
   onClick?: () => void;
-  danger?: boolean;
   children?: React.ReactNode;
+  "data-danger"?: boolean;
   "data-test"?: string;
 };
 
 export function Option(props: Readonly<OptionProps>) {
-  const { onClick, danger, children } = props;
-  console.log("ohhh", props["data-test"])
-  const className = danger
-    ? "text-danger hover:bg-danger hover:text-secondary p-2 text-start whitespace-nowrap focus:outline-none"
-    : "hover:bg-gray-200 p-2 text-start whitespace-nowrap focus:outline-none";
+  const { children, ...other } = props;
   return (
     <MenuItem>
       <button
-        className={className}
-        onClick={onClick}
-        data-test={props["data-test"]}
+        className="data-[danger]:hover:bg-danger hover:text-secondary data-[danger]:text-danger data-[danger]:hover:text-secondary p-2 text-start whitespace-nowrap hover:bg-gray-200 focus:outline-none dark:hover:bg-white/30"
+        {...other}
       >
         {children}
       </button>
@@ -41,7 +36,7 @@ export function Options(props: Readonly<OptionsProps>) {
     <Menu>
       <MenuButton
         data-test="option"
-        className="my-auto rounded-lg hover:bg-neutral-100 focus:outline-none data-open:bg-gray-200"
+        className="my-auto rounded-lg hover:bg-neutral-100 focus:outline-none data-open:bg-gray-200 dark:hover:bg-white/20 dark:data-open:bg-white/30"
       >
         <EllipsisHorizontalIcon className="text-primary/75 dark:text-secondary/75 size-8" />
       </MenuButton>

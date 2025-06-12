@@ -20,7 +20,7 @@ export default function OidcOptions(props: Readonly<OidcOptionsProps>) {
   return (
     <>
       <Options>
-        <Option onClick={() => setShow("UNLINK_ACCOUNT")} danger>
+        <Option onClick={() => setShow("UNLINK_ACCOUNT")} data-danger>
           Unlink account
         </Option>
       </Options>

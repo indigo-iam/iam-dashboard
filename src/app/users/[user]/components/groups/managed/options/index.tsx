@@ -22,7 +22,7 @@ export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
     <>
       <Options>
         <Option onClick={() => setShow("ADD_SUBGROUP")}>Add subgroup</Option>
-        <Option onClick={() => setShow("DELETE_GROUP")} danger>
+        <Option onClick={() => setShow("DELETE_GROUP")} data-danger>
           Delete group
         </Option>
       </Options>

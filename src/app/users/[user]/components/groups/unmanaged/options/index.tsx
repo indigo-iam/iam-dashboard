@@ -21,7 +21,7 @@ export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
   return (
     <>
       <Options>
-        <Option onClick={() => setShow("REMOVE_MEMBERSHIP")} danger>
+        <Option onClick={() => setShow("REMOVE_MEMBERSHIP")} data-danger>
           Leave
         </Option>
       </Options>

@@ -22,7 +22,7 @@ export default function ManagerOptions(props: Readonly<ManagerOptionsProps>) {
   return (
     <>
       <Options>
-        <Option onClick={() => setShow("REVOKE_MANAGER")} danger>
+        <Option onClick={() => setShow("REVOKE_MANAGER")} data-danger>
           Revoke
         </Option>
       </Options>

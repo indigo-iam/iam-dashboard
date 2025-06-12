@@ -20,7 +20,7 @@ export default function PolicyOptions(props: Readonly<PolicyOptionsProps>) {
   return (
     <>
       <Options>
-        <Option onClick={() => setShow("DELETE_POLICY")} danger>
+        <Option onClick={() => setShow("DELETE_POLICY")} data-danger>
           Delete
         </Option>
       </Options>

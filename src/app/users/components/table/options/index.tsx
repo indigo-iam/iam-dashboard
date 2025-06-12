@@ -24,7 +24,7 @@ export default function UserOptions(props: Readonly<UserOptions>) {
         <Option onClick={() => setShow("TOGGLE_STATUS")}>
           {user.active ? "Disable" : "Enable"}
         </Option>
-        <Option onClick={() => setShow("DELETE_USER")} danger>
+        <Option onClick={() => setShow("DELETE_USER")} data-danger>
           Delete
         </Option>
       </Options>

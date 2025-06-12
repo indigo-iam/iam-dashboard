@@ -20,7 +20,7 @@ export default function SAMLOptions(props: Readonly<SAMLOptionsProps>) {
   return (
     <>
       <Options>
-        <Option onClick={() => setShow("UNLINK_ACCOUNT")} danger>
+        <Option onClick={() => setShow("UNLINK_ACCOUNT")} data-danger>
           Unlink Account
         </Option>
       </Options>

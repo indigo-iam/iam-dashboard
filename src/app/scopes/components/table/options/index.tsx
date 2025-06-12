@@ -22,7 +22,7 @@ export default function ScopeOptions(props: Readonly<ScopeOptionsProps>) {
     <>
       <Options>
         <Option onClick={() => setShow("EDIT")}>Edit</Option>
-        <Option onClick={() => setShow("DELETE")} danger>
+        <Option onClick={() => setShow("DELETE")} data-danger>
           Delete
         </Option>
       </Options>

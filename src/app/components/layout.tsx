@@ -2,10 +2,12 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import NextLink from "next/link";
 import { Drawer, Link } from "@/components/drawer";
 import Notifications from "@/components/notifications";
-import { Logout } from "@/components/buttons";
+import { Button } from "@/components/buttons";
 import {
+  ArrowRightEndOnRectangleIcon,
   ClipboardDocumentCheckIcon,
   HomeIcon,
   InboxArrowDownIcon,
@@ -51,7 +53,11 @@ function SessionButtons() {
   return (
     <div className="flex justify-around border-b border-slate-700 p-2">
       <Notifications />
-      <Logout />
+      <NextLink href="/signout">
+        <Button className="text-secondary flex rounded-full p-2 hover:bg-white/10">
+          <ArrowRightEndOnRectangleIcon className="size-6" />
+        </Button>
+      </NextLink>
     </div>
   );
 }

@@ -59,7 +59,7 @@ const IamProvider: OIDCConfig<Profile> = {
 export const authConfig: NextAuthConfig = {
   providers: [IamProvider],
   session: { strategy: "jwt" },
-  pages: { signIn: "/auth/signin", signOut: "/auth/signout" },
+  pages: { signIn: "/signin", signOut: "/signout" },
   callbacks: {
     async jwt({ token, account, user }) {
       if (account?.access_token) {

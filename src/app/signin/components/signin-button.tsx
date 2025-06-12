@@ -4,12 +4,11 @@
 
 "use client";
 
-import { signOut } from "next-auth/react";
 import { useEffect } from "react";
 
-export default function Logout() {
+export function SignInButton() {
   useEffect(() => {
-    signOut();
-  }, []);
-  return <div>Signing out...</div>;
+    document.getElementById("signin-button")?.click();
+  });
+  return <button id="signin-button" type="submit" hidden />;
 }

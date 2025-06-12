@@ -9,7 +9,7 @@ import {
   ListboxButton,
   ListboxOption,
   ListboxOptions,
-} from "@/components/listbox";
+} from "./listbox";
 import { useState } from "react";
 
 export { ListboxOption as SelectOption };

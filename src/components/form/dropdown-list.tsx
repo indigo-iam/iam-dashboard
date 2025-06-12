@@ -10,7 +10,7 @@ import {
   ListboxButton,
   ListboxOption,
   ListboxOptions,
-} from "@/components/listbox";
+} from "./listbox";
 
 type DropdownListOption = {
   id: string;

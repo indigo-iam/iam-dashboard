@@ -41,7 +41,7 @@ export function NotificationsPopover(
     groupRequests.totalResults + registrationRequests.length;
 
   return (
-    <Popover className="">
+    <Popover>
       <PopoverButton className="rounded-full p-2 hover:bg-white/10">
         <BellIcon className="text-secondary size-6" />
         <Badge count={totalRequests} />

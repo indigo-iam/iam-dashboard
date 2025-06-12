@@ -33,7 +33,7 @@ Cypress.Commands.add("loginWithIam", (username: string, password: string) => {
   cy.session(
     username,
     () => {
-      cy.visit("/signin");
+      cy.visit("/");
       cy.origin(
         Cypress.env("IAM_AUTHORITY_URL"),
         { args: { username, password } },
@@ -49,6 +49,7 @@ Cypress.Commands.add("loginWithIam", (username: string, password: string) => {
     },
     {
       validate() {
+        cy.visit("/");
         cy.url().should("match", /\/users\/me$/);
       },
     }

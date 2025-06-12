@@ -37,7 +37,7 @@ function ClientAuthenticationSettings(
         return (
           <>
             <RegenerateClientSecret />
-            <ClientSecretJwt onStatusChange={onStatusChange} />;
+            <ClientSecretJwt onStatusChange={onStatusChange} />
           </>
         );
       }

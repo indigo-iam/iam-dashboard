@@ -8,10 +8,10 @@ function PreviousPage(props: Readonly<{ page: number }>) {
   const { page } = props;
   return (
     <div>
-      <div className="text-secondary bg-primary flex aspect-square size-8 items-center justify-center rounded-full">
+      <div className="text-secondary bg-primary dark:text-primary dark:border-secondary dark:bg-secondary flex aspect-square size-8 items-center justify-center rounded-full dark:border-3">
         {page + 1}
       </div>
-      <div className="border-primary m-auto h-12 w-0 border-l-3" />
+      <div className="border-primary dark:border-secondary m-auto h-12 w-0 border-l-3" />
     </div>
   );
 }
@@ -21,11 +21,11 @@ function CurrentPage(props: Readonly<{ page: number; totalPages: number }>) {
   const isLast = page === totalPages - 1;
   return (
     <div>
-      <div className="text-primary border-primary flex aspect-square size-8 items-center justify-center rounded-full border-3 bg-white">
+      <div className="text-primary border-primary dark:border-secondary dark:text-secondary flex aspect-square size-8 items-center justify-center rounded-full border-3 bg-transparent">
         {page + 1}
       </div>
       <div
-        className="m-auto h-12 w-0 border-l-3 border-gray-400 data-[last=true]:hidden"
+        className="dark:border-secondary m-auto h-12 w-0 border-l-3 border-gray-400 data-[last=true]:hidden"
         data-last={isLast}
       />
     </div>
@@ -72,10 +72,10 @@ export function Stepper(props: Readonly<StepperProps>) {
   }
 
   return (
-    <div className="m-auto pr-8">
+    <>
       <PreviousPages />
       <CurrentPage page={currentPage} totalPages={totalPages} />
       <NextPages />
-    </div>
+    </>
   );
 }

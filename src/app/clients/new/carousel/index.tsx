@@ -40,7 +40,9 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
 
   return (
     <div className="flex">
-      <Stepper currentPage={currentPage} totalPages={TOTAL_PAGES} />
+      <div className="p-8">
+        <Stepper currentPage={currentPage} totalPages={TOTAL_PAGES} />
+      </div>
       <div className="panel flex grow flex-col gap-4">
         <h2>{title}</h2>
         <Carousel selectedIndex={currentPage}>

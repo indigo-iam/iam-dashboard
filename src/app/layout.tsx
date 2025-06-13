@@ -20,7 +20,7 @@ export default async function RootLayout({
   const notification = await getNotification();
   return (
     <html lang="en">
-      <body className="text-primary dark:text-secondary dark:bg-extradark bg-gray-100">
+      <body className="text-primary dark:text-secondary bg-infn">
         <main>{children}</main>
         <ToasterPortal notification={notification} />
       </body>

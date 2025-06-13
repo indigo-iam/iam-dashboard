@@ -12,6 +12,8 @@ export default async function SignInPage() {
     "use server";
     if (!session) {
       await signIn("indigo-iam");
+    } else if (session.expired) {
+      redirect("/signout");
     } else {
       redirect("/");
     }

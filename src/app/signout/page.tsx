@@ -22,7 +22,7 @@ export default async function SignoutPage() {
     <div className="bg-secondary dark:bg-infn flex h-screen items-center justify-center">
       <form className="text-xl" action={action}>
         Signing out...
-        {/* <SignOutButton /> */}
+        <SignOutButton />
       </form>
     </div>
   );

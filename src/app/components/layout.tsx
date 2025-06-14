@@ -128,9 +128,7 @@ export async function Layout(props: Readonly<LayoutProps>) {
           {isAdmin && <OrganizationManagement />}
         </div>
       </Drawer>
-      <div className="bg-secondary dark:bg-dark inset-0 h-dvh p-4 md:px-16 md:py-8 xl:px-48">
-        {children}
-      </div>
+      <div className="p-4 md:px-16 md:py-8 xl:px-48">{children}</div>
     </div>
   );
 }

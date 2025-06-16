@@ -61,7 +61,7 @@ jobs:
           echo ${NEXT_ENV_BASE64} | base64 -d > .env
 
       - name: Start IAM Dashboard
-        run: docker run --rm -p 3000:80 --env-file .env cnafsoftwaredevel/iam-dashboard:test
+        run: docker run --rm -d -p 3000:80 --env-file .env cnafsoftwaredevel/iam-dashboard:test
 
       - name: "Run Playwright tests"
         run: npx playwright test

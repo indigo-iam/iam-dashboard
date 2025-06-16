@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { ToasterPortal } from "@/components/toaster";
 import { getNotification } from "@/services/notifications";
 import "@/app/app.css";
@@ -10,6 +10,10 @@ import "@/app/app.css";
 export const metadata: Metadata = {
   title: "INDIGO IAM",
   description: "INDIGO Identity Access Management",
+};
+
+export const viewport: Viewport = {
+  themeColor: "bg-infn",
 };
 
 export default async function RootLayout({
@@ -20,10 +24,8 @@ export default async function RootLayout({
   const notification = await getNotification();
   return (
     <html lang="en">
-      <body className="text-primary dark:text-secondary bg-infn">
-        <main className="bg-secondary dark:bg-dark fixed inset-0 overflow-auto">
-          {children}
-        </main>
+      <body className="text-primary dark:text-secondary bg-secondary dark:bg-dark">
+        <main>{children}</main>
         <ToasterPortal notification={notification} />
       </body>
     </html>

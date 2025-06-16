@@ -10,7 +10,7 @@ import { useRef } from "react";
 type InputSearchProps = {
   onChange: (filter: string) => void;
   onClear: () => void;
-  "data-test"?: string;
+  "data-testid"?: string;
 };
 
 export function InputSearch(props: Readonly<InputSearchProps>) {

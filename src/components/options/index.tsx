@@ -9,7 +9,7 @@ type OptionProps = {
   onClick?: () => void;
   children?: React.ReactNode;
   "data-danger"?: boolean;
-  "data-test"?: string;
+  "data-testid"?: string;
 };
 
 export function Option(props: Readonly<OptionProps>) {
@@ -35,7 +35,7 @@ export function Options(props: Readonly<OptionsProps>) {
   return (
     <Menu>
       <MenuButton
-        data-test="option"
+        data-testid="option"
         className="my-auto rounded-lg hover:bg-neutral-100 focus:outline-none data-open:bg-gray-200 dark:hover:bg-white/20 dark:data-open:bg-white/30"
       >
         <EllipsisHorizontalIcon className="text-primary/75 dark:text-secondary/75 size-8" />

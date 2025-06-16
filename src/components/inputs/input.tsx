@@ -8,7 +8,7 @@ import {
 } from "@headlessui/react";
 
 export interface InputProps extends HeadlessInputProps {
-  "data-test"?: string;
+  "data-testid"?: string;
 }
 
 export function Input(props: Readonly<InputProps>) {

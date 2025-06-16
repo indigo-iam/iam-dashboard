@@ -13,7 +13,7 @@ interface ConfirmModal extends ModalProps {
   cancelButtonText?: string;
   confirmButtonText?: string;
   danger?: boolean;
-  "data-test"?: string;
+  "data-testid"?: string;
 }
 
 export default function ConfirmModal(props: Readonly<ConfirmModal>) {

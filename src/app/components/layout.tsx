@@ -51,7 +51,7 @@ function UserLogo(props: Readonly<{ username?: string | null }>) {
 
 function SessionButtons() {
   return (
-    <div className="flex justify-around border-b border-slate-700 p-2">
+    <div className="flex justify-around border-b border-slate-700">
       <Notifications />
       <NextLink href="/signout">
         <Button className="text-secondary flex rounded-full p-2 hover:bg-white/10">
@@ -118,10 +118,10 @@ export async function Layout(props: Readonly<LayoutProps>) {
         {title}
       </h1>
       <Drawer title={title}>
-        <div className="fixed">
+        <div className="bg-infn sticky top-0 z-40">
           <LogoIam />
         </div>
-        <div className="fixed inset-0 mt-16 space-y-4 overflow-auto">
+        <div className="space-y-4">
           <UserLogo username={username} />
           <SessionButtons />
           <AccountManagement />

@@ -29,6 +29,7 @@ export function ComboboxInput(props: Readonly<ComboboxInputProps>) {
     <HeadlessComboboxInput
       className="iam-input"
       placeholder="Type to search..."
+      type="search"
       onChange={handleChange}
     />
   );

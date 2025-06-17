@@ -7,7 +7,7 @@
 import { Button } from "@/components/buttons";
 import { User } from "@/models/scim";
 import { useState } from "react";
-import AddAttributeModal from "./ modal";
+import AddAttributeModal from "./modal";
 
 type AddButtonProps = {
   user: User;

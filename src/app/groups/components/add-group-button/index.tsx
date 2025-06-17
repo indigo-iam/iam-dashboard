@@ -62,10 +62,10 @@ export default function AddGroupButton(props: Readonly<AddGroupButtonProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Modal show={show} onClose={close} title="Add Group" data-test="modal">
+      <Modal show={show} onClose={close} title="Add Group" data-testid="modal">
         <AddGroupForm onClose={close} onGroupAdded={onGroupAdded} />
       </Modal>
-      <Button className="btn-secondary" data-test="add-group" onClick={open}>
+      <Button className="btn-secondary" data-testid="add-group" onClick={open}>
         <PlusIcon className="my-auto size-5" />
         Add Group
       </Button>

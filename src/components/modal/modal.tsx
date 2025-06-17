@@ -19,7 +19,7 @@ export interface ModalProps {
   children?: ReactNode;
   show: boolean;
   onClose: () => void;
-  "data-test"?: string;
+  "data-testid"?: string;
 }
 
 export function Modal(props: Readonly<ModalProps>) {
@@ -31,7 +31,7 @@ export function Modal(props: Readonly<ModalProps>) {
         as="div"
         className="relative z-30 focus:outline-none"
         onClose={onClose}
-        data-test={props["data-test"]}
+        data-testid={props["data-testid"]}
       >
         <DialogBackdrop
           transition

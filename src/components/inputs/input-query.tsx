@@ -8,7 +8,7 @@ import { InputSearch } from "@/components/inputs";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type InputQueryProps = {
-  "data-test"?: string;
+  "data-testid"?: string;
 };
 
 export function InputQuery(props: Readonly<InputQueryProps>) {

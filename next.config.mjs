@@ -5,6 +5,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "standalone",
+  basePath: process.env.BASE_PATH, // this is evaluated at buildtime only
   redirects: async () => {
     return [
       {

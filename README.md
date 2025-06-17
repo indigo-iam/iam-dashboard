@@ -140,7 +140,7 @@ IAM_CLIENT_ID=<your_client_id>
 IAM_CLIENT_SECRET=<your_client_secret>
 IAM_SCOPES="openid profile scim:read scim:write iam:admin.read iam:admin.write"
 AUTH_SECRET=<authentication_secret>
-AUTH_URL=<dashboard_hostname>  # e.g. https://iam-dashboard.cloud.cnaf.infn.it
+AUTH_TRUST_HOST=true
 ```
 To start the application run
 
@@ -148,72 +148,61 @@ To start the application run
 docker run -p <some-port>:80 --env-file=prod.env cnafsoftwaredevel/iam-dashboard:latest
 ```
 
-## TODOs
+### Base Path
 
-### General
+To deploy a Next.js application under a sub-path of a domain you can use the
+`basePath` [config option](https://nextjs.org/docs/pages/api-reference/config/next-config-js/basePath).
 
-- [ ] Sudo mode (panic!)
-- [ ] Add Table component
+The `basePath` variable is read at *build time* and thus the dashboard must be
+compiled for each different `basePath`. It is possible to change the `basePath`
+variable using the `--build-arg BASE_PATH` Docker argument.
 
-### Home page
+For example, to deploy your application with the `/dashboard` using the sub-path
+run
 
-- [ ] Validate password before submission
-- [ ] What happens if I change password when there is no password at all?
-- [x] Finish the "Add to group" functionality
-- [x] Add "Change membership end time"
-- [ ] Add "Link external account" feature
-- [x] Add "Link Certificate"
-- [ ] Add "Request Certificate"
-- [ ] Add "Add managed proxy certificate"
-- [x] Add "Add ssh key"
-- [x] Add "Set attribute"
+```shell
+docker build . -t iam-dashboard --build-arg BASE_PATH=/dashboard
+```
 
-### Users Page
+## Deployment with Reverse Proxy
 
-- [x] Create the users table
-- [x] Add "Delete user" button per each row
-- [ ] Maybe add a multiple selection to delete multiple users in bulk
+This project provides a deployment model example base on Docker Compose.
+The setup is consists in the following micro-services:
 
-### Groups Page
+ - IAM Login Service
+ - MySQL
+ - IAM Dashboard
+ - NGINX
 
-- [x] Create the groups page
-- [x] Add "Add Root Group" feature
-- [x] Add "Add Subgroup" button per each row
-- [x] Add "Delete Group" button per each row
+Before launching the deployment, add `iam.test.example` to the localhost entry
+in your `/etc/hosts` file. It should look like the follwing
 
-### Requests Page
+```shell
+# /etc/hosts
+...
+127.0.0.1       localhost iam.test.example
+...
+```
 
-- [x] Create "Registration Request" tab
-- [X] Create "Group requests" tab
+Start the deployment with `docker compose up -d`. The old INDIGO IAM dashboard
+is now reachable at `iam.test.example:8080`. Create a new client a describe in
+the [IAM Client Configuration](#iam-client-configuration) section.
 
-### AUP Page
+Now create a `.local.env` file as described in
+[Create the env file](#create-the-env-file) section. It should look like
 
-- [x] Add "Edit AUP"
-- [x] Add "Request AUP Signature"
-- [x] Add "Delete AUP"
+```ini
+NODE_ENV=production
+IAM_AUTHORITY_URL=http://iam.test.example:8080
+IAM_CLIENT_ID=<your_client_id>
+IAM_CLIENT_SECRET=<your_client_secret>
+IAM_SCOPES="openid profile scim:read scim:write iam:admin.read iam:admin.write"
+AUTH_SECRET=<authentication_secret>
+AUTH_TRUST_HOST=true
+```
+Now restart the deployment running
 
-### Clients Page
-
-- [x] Add Clients table
-- [x] Add "New Client"
-- [x] Add "Edit client" per each row
-- [x] Add "Delete client" per each row
-- [x] Add Client "edit" page with tabs (todo, form submission):
-  - [x] Main (client name, client id, client description, redirect URIs, contacts, etc)
-  - [x] Credentials (Token endpoint auth method, client secret, registration access token, regenerate registration a.c., Public key set, JWK URI)
-  - [x] Scopes (System scope, Custom scope)
-  - [x] Grant types
-  - [x] Tokens (A.T. timeout, ID T. timeout, R.T settings & timeout, Device code timeout)
-  - [x] Crypto (PKCE settings)
-  - [x] Other info (Homepage URL, ToS, Policy)
-  - [ ] Owners (Show owners, assign owner)
-
-### Tokens Page
-
-- [ ] TBD
-
-### Scopes
-
-- [x] Add Scopes table
-- [x] Add "Edit Scope" button per each row (Description, default scope, restricted)
-- [x] Add "Delete scope" button per each row
+```shell
+docker compose down
+docker compose up -d
+```

@@ -19,12 +19,15 @@ import {
 } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { auth } from "@/auth";
+import { settings } from "@/config";
+
+const basePath = settings.basePath ?? "";
 
 function LogoIam() {
   return (
     <div className="flex">
       <Image
-        src="/cloud.png"
+        src={`${basePath}/cloud.png`}
         width="0"
         height="0"
         sizes="100vw"

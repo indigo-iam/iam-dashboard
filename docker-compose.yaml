@@ -22,17 +22,18 @@ services:
 
   dashboard:
     container_name: iam-dashboard
-    image: mcr.microsoft.com/devcontainers/typescript-node:1-20-bookworm
+    image: iam-dashboard
+    build:
+      context: .
+      args:
+        - BASE_PATH=/new-dashboard
+    env_file:
+      - .local.env
     depends_on:
       - backend
-    volumes:
-      - .:/workspace:cached
-    command: sleep infinity
-    environment:
-      - NEXT_TELEMETRY_DISABLED=1
 
   backend:
-    container_name: iam-backend
+    container_name: iam-login-service
     image: indigoiam/iam-login-service:latest
     restart: unless-stopped
     depends_on:
@@ -40,10 +41,10 @@ services:
     environment:
       IAM_JAVA_OPTS: -Dspring.profiles.active=mysql-test,oidc,registration
       TZ: Europe/Rome
-      IAM_PORT: 8081
-      IAM_HOST: localhost
-      IAM_BASE_URL: http://localhost:8081
-      IAM_ISSUER: http://localhost:8081
+      IAM_PORT: 8080
+      IAM_HOST: iam.test.example
+      IAM_BASE_URL: http://iam.test.example:8080
+      IAM_ISSUER: http://iam.test.example:8080
       IAM_KEY_STORE_LOCATION: file:/keys/json-keystore.jwks
       IAM_DB_PORT: 3306
       IAM_DB_USERNAME: iam
@@ -51,6 +52,8 @@ services:
       IAM_DB_HOST: database
       IAM_DATABASE_SHOW_SQL: false
       IAM_REGISTRATION_AUTHENTICATION_TYPE: oidc
+      IAM_ACCESS_TOKEN_INCLUDE_SCOPE: true
+      IAM_SCIM_INCLUDE_AUTHORITIES: true
       IAM_REGISTRATION_OIDC_ISSUER: ${REGISTRATION_OIDC_ISSUER:-https://example.org}
       IAM_ORGANISATION_NAME: cnafsd
     volumes:
@@ -59,6 +62,7 @@ services:
   nginx:
     image: nginx:1.24.0
     container_name: iam-nginx
+    hostname: iam.test.example
     restart: unless-stopped
     depends_on:
       - backend
@@ -66,7 +70,6 @@ services:
     command: ["nginx-debug", "-g", "daemon off;"]
     ports:
       - "8080:8080"
-      - "8081:8081"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf

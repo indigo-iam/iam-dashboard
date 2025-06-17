@@ -87,7 +87,7 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
               server establish a client authentication method suitable for the
               security requirements of the authorization server.
             </div>
-            <div className="flex min-w-2/3 flex-col gap-4 pb-4">
+            <div className="flex w-full flex-col gap-4 pb-4 lg:w-2/3">
               <Field>
                 <Label>Client Authentication</Label>
                 <Description>
@@ -118,7 +118,7 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
               even if a client is using a client secret or other form of client
               authentication like private_key_jwt.
             </div>
-            <div className="flex min-w-2/3 flex-col">
+            <div className="flex w-2/3 flex-col">
               <Field>
                 <Label>
                   Proof Key for Code Exchange (PKCE) challenge method

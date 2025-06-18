@@ -28,6 +28,10 @@ jobs:
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Add hosts to /etc/hosts
+        run: |
+            sudo echo "127.0.0.1 iam.test.example" | sudo tee -a /etc/hosts
+
       - name: Install dependencies
         run: npm ci
 

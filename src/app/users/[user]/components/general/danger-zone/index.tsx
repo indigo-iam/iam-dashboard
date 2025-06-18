@@ -23,7 +23,7 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
           Tokens are immediately revoked.
         </div>
       </div>
-      <div className="min-w-2/3">
+      <div className="w-full lg:w-2/3">
         <div className="flex flex-col justify-between gap-4">
           <div className="flex flex-wrap gap-4">
             <EditExpirationDate user={user} />

@@ -72,7 +72,7 @@ export default function GrantTypes(props: Readonly<{ client: Client }>) {
           Access/ID tokens
         </span>
       </div>
-      <Form className="flex min-w-2/3 flex-col gap-4" action={action}>
+      <Form className="flex w-full flex-col gap-4 lg:w-2/3" action={action}>
         <Field>
           <Label>Authorization Grant</Label>
           <Description>

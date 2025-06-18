@@ -23,7 +23,7 @@ export default async function Owners(props: Readonly<OwnersProps>) {
         Group owners can manage add and remove users and create and delete
         sub-groups.
       </div>
-      <Form className="flex min-w-2/3 flex-col gap-4">
+      <Form className="flex w-full flex-col gap-4 lg:w-2/3">
         <Field>
           <Label>Owners</Label>
           <Description>

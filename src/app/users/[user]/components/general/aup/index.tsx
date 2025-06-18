@@ -42,7 +42,7 @@ export async function Aup(props: Readonly<AupProps>) {
           eget gravida leo, dictum pharetra felis.
         </div>
       </div>
-      <div className="min-w-2/3 grow space-y-4">
+      <div className="w-full grow space-y-4 lg:w-2/3">
         <Form className="flex flex-col">
           <Field>
             <Label>Expiration</Label>

@@ -50,7 +50,7 @@ export function GeneralForm(props: Readonly<{ client: Client }>) {
           )}
         </div>
       </div>
-      <Form className="min-w-2/3 space-y-4" action={action}>
+      <Form className="w-full space-y-4 lg:w-2/3" action={action}>
         <Field>
           <Label data-required>Client Name</Label>
           <Description>Something users will recognize and trust.</Description>

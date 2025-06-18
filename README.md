@@ -155,13 +155,13 @@ To deploy a Next.js application under a sub-path of a domain you can use the
 
 The `basePath` variable is read at *build time* and thus the dashboard must be
 compiled for each different `basePath`. It is possible to change the `basePath`
-variable using the `--build-arg BASE_PATH` Docker argument.
+variable using the `--build-arg NEXT_PUBLIC_BASE_PATH` Docker argument.
 
 For example, to deploy your application with the `/dashboard` using the sub-path
 run
 
 ```shell
-docker build . -t iam-dashboard --build-arg BASE_PATH=/dashboard
+docker build . -t iam-dashboard --build-arg NEXT_PUBLIC_BASE_PATH=/dashboard
 ```
 
 ## Deployment with Reverse Proxy

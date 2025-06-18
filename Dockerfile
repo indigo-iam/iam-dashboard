@@ -17,7 +17,7 @@ RUN apk add --no-cache libc6-compat && \
 
 # Rebuild the source code only when needed
 FROM base AS builder
-ARG BASE_PATH
+ARG NEXT_PUBLIC_BASE_PATH
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules

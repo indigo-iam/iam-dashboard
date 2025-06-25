@@ -54,13 +54,6 @@ jobs:
           #   type=sha
           #   type=ref,event=tag
 
-      - name: Build docker
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          load: true
-          tags: cnafsoftwaredevel/iam-dashboard:test
-
       - name: Next.js secret env files
         env:
           NEXT_ENV_BASE64: ${{ secrets.NEXT_ENV_BASE64 }}

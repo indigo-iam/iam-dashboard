@@ -20,19 +20,24 @@ services:
     volumes:
       - iam-db:/var/lib/mysql
 
-  dashboard:
-    container_name: iam-dashboard
-    image: iam-dashboard
-    build:
-      context: .
-      args:
-        NEXT_PUBLIC_BASE_PATH: /new-dashboard
-    env_file:
-      - .local.env
+  client_registrant:
+    container_name: iam-client-registrant
+    entrypoint: /entrypoint.sh
     depends_on:
-      - backend
+      - database
+    image: mysql:latest
+    environment:
+      TZ: Europe/Rome
+      MYSQL_USER: iam
+      MYSQL_PASSWORD: pwd
+      MYSQL_DATABASE: iam
+    volumes:
+      - ./register_client.sh:/entrypoint.sh
+      - ./register_client.sql:/register_client.sql
+      - ./.template.env:/.template.env
+      - secrets:/secrets
 
-  backend:
+  login_service:
     container_name: iam-login-service
     image: indigoiam/iam-login-service:latest
     restart: unless-stopped
@@ -56,8 +61,28 @@ services:
       IAM_SCIM_INCLUDE_AUTHORITIES: true
       IAM_REGISTRATION_OIDC_ISSUER: ${REGISTRATION_OIDC_ISSUER:-https://example.org}
       IAM_ORGANISATION_NAME: cnafsd
+    healthcheck:
+      test: [CMD, "curl", "-f", "http://localhost:8080/actuator/health"]
     volumes:
       - ./json-keystore.jwks:/keys/json-keystore.jwks:ro
+
+  dashboard:
+    container_name: iam-dashboard
+    image: iam-dashboard
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_BASE_PATH: /new-dashboard
+    entrypoint: "/entrypoint.sh"
+    command: ["node", "server.js"]
+    volumes:
+      - secrets:/app
+      - ./wait_for_env.sh:/entrypoint.sh
+    depends_on:
+      login_service:
+        condition: service_healthy
+      client_registrant:
+        condition: service_completed_successfully
 
   nginx:
     image: nginx:1.24.0
@@ -65,8 +90,10 @@ services:
     hostname: iam.test.example
     restart: unless-stopped
     depends_on:
-      - backend
-      - dashboard
+      dashboard:
+        condition: service_started
+      login_service:
+        condition: service_healthy
     command: ["nginx-debug", "-g", "daemon off;"]
     ports:
       - "8080:8080"
@@ -76,3 +103,4 @@ services:
 
 volumes:
   iam-db:
+  secrets:

@@ -41,8 +41,16 @@ export const test = baseTest.extend<{}, { workerStorageState: string }>({
       await page.locator("#username").fill("admin");
       await page.locator("#password").fill("password");
       await page.locator("#login-submit").click();
-      await page.waitForURL("/new-dashboard");
 
+      // Check if client has to be authorized
+      await page.waitForLoadState("networkidle");
+      const authorizeButton = page.getByRole("button", { name: "Authorize" });
+      if (await authorizeButton.isVisible()) {
+        await authorizeButton.click();
+      }
+
+      // Redirect to new dashboard
+      await page.waitForURL("/new-dashboard");
       expect(await page.getByLabel("First Name").inputValue()).toBe("Admin");
       expect(await page.getByLabel("Last Name").inputValue()).toBe("User");
       expect(await page.getByLabel("Email").inputValue()).toBe(

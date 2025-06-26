@@ -30,8 +30,8 @@ INSERT INTO client_scope (
   (@owner_id, 'profile'),
   (@owner_id, 'scim:read'),
   (@owner_id, 'scim:write'),
-  (@owner_id, 'iam:admin.read');
-  (@owner_id, 'iam:admin.write'),
+  (@owner_id, 'iam:admin.read'),
+  (@owner_id, 'iam:admin.write');
 INSERT INTO client_redirect_uri (
   owner_id,
   redirect_uri

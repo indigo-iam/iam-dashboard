@@ -54,7 +54,7 @@ export async function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
           <div>Last modified {modified}.</div>
         </div>
       </div>
-      <Form className="min-w-2/3 grow space-y-2" action={action}>
+      <Form className="w-full grow space-y-2 lg:w-2/3" action={action}>
         <div className="flex flex-wrap gap-x-4">
           <Field className="flex max-w-full grow flex-col">
             <Label data-required>First Name</Label>

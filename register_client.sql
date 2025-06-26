@@ -6,7 +6,7 @@ INSERT INTO client_details (
   access_token_validity_seconds,
   code_challenge_method
 ) VALUES (
-  'iam-dashboard', 
+  '$CLIENT_NAME', 
   '$CLIENT_ID',
   '$CLIENT_SECRET',
   'SECRET_BASIC',
@@ -30,8 +30,8 @@ INSERT INTO client_scope (
   (@owner_id, 'profile'),
   (@owner_id, 'scim:read'),
   (@owner_id, 'scim:write'),
-  (@owner_id, 'iam:admin.write'),
   (@owner_id, 'iam:admin.read');
+  (@owner_id, 'iam:admin.write'),
 INSERT INTO client_redirect_uri (
   owner_id,
   redirect_uri

@@ -12,9 +12,9 @@ ENV_FILE="/app/.env"
 retry_count=0
 
 while [ ! -f $ENV_FILE ] && [ $retry_count -lt $MAX_RETRIES ]; do
-  echo "Waiting for $ENV_FILE file... (Attempt $((retry_count + 1)) of $MAX_RETRIES)"
-  sleep $DELAY
   retry_count=$((retry_count + 1))
+  echo "Waiting for $ENV_FILE file... (Attempt ${retry_count}) of $MAX_RETRIES)"
+  sleep $DELAY
 done
 
 if [ ! -f $ENV_FILE ]; then

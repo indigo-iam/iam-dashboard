@@ -44,7 +44,6 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autoprefixer": "^10",
-    "dotenv": "^16.5.0",
     "eslint": "^9",
     "eslint-config-next": "^15",
     "prettier": "^3",

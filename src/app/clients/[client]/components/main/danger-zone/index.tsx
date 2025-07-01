@@ -18,7 +18,7 @@ export function DangerZone(props: Readonly<{ client: Client }>) {
           and the old ones are immediately revoked.
         </span>
       </div>
-      <Form className="flex min-w-2/3 items-center justify-end">
+      <Form className="flex w-full items-center justify-end lg:w-2/3">
         <div className="flex flex-row gap-4">
           <ToggleStatusButton client={client} />
           <DeleteButton client={client} />

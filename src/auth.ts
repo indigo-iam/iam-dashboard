@@ -10,6 +10,8 @@ import type { User as IamUser } from "@/models/scim";
 import type { OIDCConfig } from "next-auth/providers";
 import { settings } from "@/config";
 
+const basePath = settings.basePath ?? "";
+
 declare module "next-auth/jwt" {
   interface JWT extends DefaultJWT {
     access_token: string;
@@ -43,7 +45,6 @@ const IamProvider: OIDCConfig<Profile> = {
     },
   },
   checks: ["pkce", "state"],
-
   profile: (profile: Profile, _: TokenSet): Awaitable<User> => {
     const user: User = {
       id: profile.sub ?? undefined,
@@ -57,8 +58,10 @@ const IamProvider: OIDCConfig<Profile> = {
 };
 
 export const authConfig: NextAuthConfig = {
+  debug: process.env.AUTH_DEBUG === "true",
   providers: [IamProvider],
   session: { strategy: "jwt" },
+  basePath: `${basePath}/api/auth`,
   pages: { signIn: "/signin", signOut: "/signout" },
   callbacks: {
     async jwt({ token, account, user }) {

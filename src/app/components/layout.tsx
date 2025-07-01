@@ -25,7 +25,7 @@ const basePath = settings.basePath ?? "";
 
 function LogoIam() {
   return (
-    <div className="flex">
+    <div className="flex px-4">
       <Image
         src={`${basePath}/cloud.png`}
         width="0"

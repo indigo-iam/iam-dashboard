@@ -58,7 +58,10 @@ function SessionButtons() {
     <div className="flex justify-around border-b border-slate-700">
       <Notifications />
       <NextLink href="/signout">
-        <Button className="text-secondary flex rounded-full p-2 hover:bg-white/10">
+        <Button
+          className="text-secondary flex rounded-full p-2 hover:bg-white/10"
+          aria-label="Sign Out"
+        >
           <ArrowRightEndOnRectangleIcon className="size-6" />
         </Button>
       </NextLink>

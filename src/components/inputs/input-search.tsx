@@ -5,19 +5,20 @@
 "use client";
 
 import { Input } from "@/components/inputs";
+import { InputProps } from "@headlessui/react";
 import { useRef } from "react";
 
-type InputSearchProps = {
-  onChange: (filter: string) => void;
+interface InputSearchProps extends InputProps {
+  onQueryChange: (filter: string) => void;
   onClear: () => void;
   "data-testid"?: string;
-};
+}
 
 export function InputSearch(props: Readonly<InputSearchProps>) {
-  const { onChange, onClear, ...others } = props;
+  const { onQueryChange, onClear, ...others } = props;
   const searchCallback = async (filter: string) => {
     if (filter.length > 2) {
-      onChange(filter);
+      onQueryChange(filter);
     }
   };
 

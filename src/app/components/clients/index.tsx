@@ -7,6 +7,7 @@ import { Status } from "@/components/badges";
 import { Client } from "@/models/client";
 import { dateToHuman } from "@/utils/dates";
 import ClientOptions from "./options";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 type RowProps = {
   client: Client;
@@ -63,6 +64,14 @@ type ClientsTableProps = {
 
 export function ClientsTable(props: Readonly<ClientsTableProps>) {
   const { clients } = props;
+  if (clients.length === 0) {
+    return (
+      <div className="flex flex-col items-center space-y-4">
+        <MagnifyingGlassIcon className="text-primary/60 size-16 dark:text-white/60" />
+        <span>No client found.</span>
+      </div>
+    );
+  }
   return (
     <ul className="w-full">
       {clients.map(client => (

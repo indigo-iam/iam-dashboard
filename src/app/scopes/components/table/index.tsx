@@ -5,6 +5,7 @@
 import { Scope } from "@/models/client";
 import ScopeTypeSelect from "./scope-type-select";
 import ScopeOptions from "./options";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 type ScopesTableProps = {
   scopes: Scope[];
@@ -12,6 +13,14 @@ type ScopesTableProps = {
 
 export default function ScopesTable(props: Readonly<ScopesTableProps>) {
   const { scopes } = props;
+  if (scopes.length === 0) {
+    return (
+      <div className="flex flex-col items-center space-y-4">
+        <MagnifyingGlassIcon className="text-primary/60 size-16 dark:text-white/60" />
+        <span>No scope found.</span>
+      </div>
+    );
+  }
   return (
     <ul>
       {scopes.map(scope => (

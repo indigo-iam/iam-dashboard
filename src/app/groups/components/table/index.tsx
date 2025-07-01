@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Group } from "@/models/groups";
 import { dateToHuman } from "@/utils/dates";
 import GroupOptions from "./options";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 type RowProps = {
   group: Group;
@@ -49,6 +50,14 @@ type TableProps = {
 
 export default async function GroupsTable(props: Readonly<TableProps>) {
   const { groups } = props;
+  if (groups.length === 0) {
+    return (
+      <div className="flex flex-col items-center space-y-4">
+        <MagnifyingGlassIcon className="text-primary/60 size-16 dark:text-white/60" />
+        <span>No group found.</span>
+      </div>
+    );
+  }
   return (
     <ul className="w-full table-auto">
       {groups.map(group => (

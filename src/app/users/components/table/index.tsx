@@ -7,6 +7,7 @@ import { Status } from "@/components/badges";
 import { User } from "@/models/scim";
 import { dateToHuman } from "@/utils/dates";
 import UserOptions from "./options";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 type RowProps = {
   user: User;
@@ -53,6 +54,14 @@ type UsersTableProps = {
 
 export default function UsersTable(props: Readonly<UsersTableProps>) {
   const { users } = props;
+  if (users.length === 0) {
+    return (
+      <div className="flex flex-col items-center">
+        <MagnifyingGlassIcon className="text-primary/60 size-16 dark:text-white/60" />
+        <span>No user found.</span>
+      </div>
+    );
+  }
   return (
     <ul className="w-full">
       {users.map(user => (

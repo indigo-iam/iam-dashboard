@@ -9,6 +9,7 @@ import { Button } from "@/components/buttons";
 import {
   ArrowRightEndOnRectangleIcon,
   ClipboardDocumentCheckIcon,
+  DocumentTextIcon,
   HomeIcon,
   InboxArrowDownIcon,
   RocketLaunchIcon,
@@ -96,7 +97,7 @@ function OrganizationManagement() {
         <ClipboardDocumentCheckIcon className="size-5" />
       </Link>
       <Link title="AUP" href="/aup">
-        <ClipboardDocumentCheckIcon className="size-5" />
+        <DocumentTextIcon className="size-5" />
       </Link>
       <Link title="Policies" href="/policies">
         <ScaleIcon className="size-5" />

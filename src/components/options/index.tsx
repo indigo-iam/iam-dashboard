@@ -36,13 +36,14 @@ export function Options(props: Readonly<OptionsProps>) {
     <Menu>
       <MenuButton
         data-testid="option"
-        className="my-auto rounded-lg hover:bg-neutral-100 focus:outline-none data-open:bg-gray-200 dark:hover:bg-white/20 dark:data-open:bg-white/30"
+        className="my-auto rounded-lg transition hover:bg-neutral-100 focus:outline-none data-open:bg-gray-200 dark:hover:bg-white/20 dark:data-open:bg-white/30"
       >
         <EllipsisHorizontalIcon className="text-primary/75 dark:text-secondary/75 size-8" />
       </MenuButton>
       <MenuItems
         anchor="bottom"
-        className="flex flex-col rounded-lg bg-gray-50 shadow focus:outline-none dark:bg-white/10 dark:backdrop-blur-lg"
+        transition
+        className="easy-out flex flex-col rounded-lg bg-gray-50 shadow transition focus:outline-none data-closed:opacity-0 dark:bg-white/10 dark:backdrop-blur-lg"
       >
         {children}
       </MenuItems>

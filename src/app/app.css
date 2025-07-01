@@ -38,7 +38,7 @@
 }
 
 @utility btn {
-  @apply flex min-w-fit gap-2 rounded-md p-1 px-2 text-base font-medium text-nowrap dark:font-normal;
+  @apply flex min-w-fit gap-2 rounded-md p-1 px-2 text-base font-medium text-nowrap transition ease-out dark:font-normal;
 }
 
 @utility btn-primary {
@@ -74,7 +74,7 @@
 }
 
 @utility iam-list-item {
-  @apply dark:border-light flex flex-row border-b border-gray-200 p-2 last:border-transparent hover:rounded-md hover:border-transparent hover:bg-neutral-200 has-[+:hover]:border-transparent dark:hover:bg-neutral-200/10;
+  @apply dark:border-light flex flex-row border-b border-gray-200 p-2 transition ease-out last:border-transparent hover:rounded-md hover:border-transparent hover:bg-neutral-200 has-[+:hover]:border-transparent dark:hover:bg-neutral-200/10;
 }
 
 @utility panel {

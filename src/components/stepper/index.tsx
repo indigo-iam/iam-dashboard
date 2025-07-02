@@ -8,7 +8,7 @@ function PreviousPage(props: Readonly<{ page: number }>) {
   const { page } = props;
   return (
     <div>
-      <div className="text-secondary bg-primary dark:text-primary dark:border-secondary dark:bg-secondary flex aspect-square size-8 items-center justify-center rounded-full dark:border-3">
+      <div className="text-secondary bg-primary dark:text-primary dark:border-light-gray dark:bg-light-gray flex aspect-square size-8 items-center justify-center rounded-full dark:border-3">
         {page + 1}
       </div>
       <div className="border-primary dark:border-secondary m-auto h-12 w-0 border-l-3" />
@@ -21,11 +21,11 @@ function CurrentPage(props: Readonly<{ page: number; totalPages: number }>) {
   const isLast = page === totalPages - 1;
   return (
     <div>
-      <div className="text-primary border-primary dark:border-secondary dark:text-secondary flex aspect-square size-8 items-center justify-center rounded-full border-3 bg-transparent">
+      <div className="text-primary border-primary dark:border-light-gray dark:text-light-gray flex aspect-square size-8 items-center justify-center rounded-full border-3 bg-transparent">
         {page + 1}
       </div>
       <div
-        className="dark:border-secondary m-auto h-12 w-0 border-l-3 border-gray-400 data-[last=true]:hidden"
+        className="dark:border-secondary/30 m-auto h-12 w-0 border-l-3 border-gray-400 data-[last=true]:hidden"
         data-last={isLast}
       />
     </div>
@@ -37,11 +37,11 @@ function NextPage(props: Readonly<{ page: number; totalPages: number }>) {
   const isLast = page === totalPages - 1;
   return (
     <div>
-      <div className="text-secondary flex size-8 items-center justify-center rounded-full bg-gray-400">
+      <div className="text-secondary dark:bg-secondary/30 flex size-8 items-center justify-center rounded-full bg-gray-400">
         {page + 1}
       </div>
       <div
-        className="m-auto h-12 w-0 border-l-3 border-gray-400 data-[last=true]:hidden"
+        className="dark:border-secondary/30 m-auto h-12 w-0 border-l-3 border-gray-400 data-[last=true]:hidden"
         data-last={isLast}
       />
     </div>

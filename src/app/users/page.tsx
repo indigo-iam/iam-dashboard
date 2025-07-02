@@ -31,9 +31,9 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
         <AddUserButton />
         <InputQuery
           title="Search client"
-          placeholder="Type to search a client..."
+          placeholder="Type to search a user..."
           data-testid="search-user"
-          aria-label="Search client"
+          aria-label="Search user"
         />
         <div className="panel">
           <UsersTable users={users} />

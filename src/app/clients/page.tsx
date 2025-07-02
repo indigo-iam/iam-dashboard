@@ -51,7 +51,7 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
         <Buttons />
         <InputQuery
           title="Search client"
-          placeholder="Type to search a client.."
+          placeholder="Type to search a client..."
           data-testid="search-client"
           aria-label="Search client"
         />

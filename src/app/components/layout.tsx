@@ -128,12 +128,12 @@ export async function Layout(props: Readonly<LayoutProps>) {
         <div className="bg-infn sticky top-0 z-40">
           <LogoIam />
         </div>
-        <div className="space-y-4">
+        <nav className="space-y-4">
           <UserLogo username={username} />
           <SessionButtons />
           <AccountManagement />
           {isAdmin && <OrganizationManagement />}
-        </div>
+        </nav>
       </Drawer>
       <div className="3xl:max-w-2/3 mx-auto p-4 md:px-16 md:py-8">
         {children}

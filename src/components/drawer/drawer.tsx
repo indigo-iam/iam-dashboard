@@ -39,7 +39,7 @@ export function Drawer(props: Readonly<DrawerProps>) {
       </header>
       <aside
         id="drawer"
-        className="bg-infn easy-in-out fixed inset-0 z-30 w-80 -translate-x-full space-y-4 overflow-auto duration-100 md:translate-x-0"
+        className="bg-infn dark:bg-infn-dark easy-in-out fixed inset-0 z-30 w-80 -translate-x-full space-y-4 overflow-auto duration-100 md:translate-x-0"
       >
         {children}
       </aside>

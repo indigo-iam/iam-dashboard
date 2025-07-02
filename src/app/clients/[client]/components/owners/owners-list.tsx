@@ -42,7 +42,6 @@ type OwnersProps = {
 
 export default function OwnersList(props: Readonly<OwnersProps>) {
   const { client, owners } = props;
-
   return (
     <div className="flex flex-col gap-2">
       <SearchUsers onSelect={user => addOwner(client, user)} />

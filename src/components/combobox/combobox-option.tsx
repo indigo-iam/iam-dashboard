@@ -13,7 +13,7 @@ export function ComboboxOption<T>(props: Readonly<ComboboxOptionProps<T>>) {
   const { value, children } = props;
   return (
     <HeadlessComboboxOption
-      className="px-2 py-1 hover:rounded-lg hover:bg-gray-200 data-[disabled]:bg-transparent dark:hover:bg-white/20 dark:data-[disabled]:bg-transparent"
+      className="p-2 hover:rounded-lg hover:bg-gray-200 data-[disabled]:bg-transparent dark:hover:bg-white/20 dark:data-[disabled]:bg-transparent"
       value={value}
     >
       {children}

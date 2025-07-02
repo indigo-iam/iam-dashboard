@@ -34,7 +34,7 @@ function Row(props: Readonly<RowProps>) {
           <div className="my-auto flex flex-col">
             <div className="inline-flex gap-2 sm:flex-col sm:items-end sm:gap-0 sm:px-2">
               <Status active={user.active ?? false} />
-              <small className="dark:text-extralight font-light">
+              <small className="dark:text-extralight font-light whitespace-nowrap">
                 Created {created}
               </small>
             </div>

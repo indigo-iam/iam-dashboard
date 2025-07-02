@@ -38,11 +38,11 @@ export async function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
 
   return (
     <div className="border-light-gray flex flex-col gap-4 border-b pb-4 lg:flex-row">
-      <div className="grow space-y-2 text-sm font-light">
+      <div className="w-full space-y-2 text-sm font-light lg:w-1/3">
         <div className="text-light dark:text-light-gray flex flex-wrap justify-between">
           <div className="flex gap-2">
             <IdentificationIcon className="my-auto size-5" />
-            UUID
+            <span className="font-semibold">UUID</span>
           </div>
           <Status active={user.active ?? false} />
         </div>
@@ -57,7 +57,7 @@ export async function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
           <div>Last modified {modified}.</div>
         </div>
       </div>
-      <Form className="w-full grow space-y-2 lg:w-2/3" action={action}>
+      <Form className="w-full space-y-4 lg:w-2/3" action={action}>
         <div className="flex flex-wrap gap-x-4">
           <Field className="flex max-w-full grow flex-col">
             <Label data-required>First Name</Label>

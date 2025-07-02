@@ -46,7 +46,11 @@ export default function Table(props: Readonly<TableProps>) {
   }
 
   if (sshKeys.length === 0) {
-    return <p className="font-light">No SSH keys found.</p>;
+    return (
+      <p className="dark:text-light-gray/80 p-2 font-light">
+        No SSH keys found.
+      </p>
+    );
   }
   return (
     <ul className="w-full">

@@ -14,7 +14,7 @@ type AttributesProps = {
 export function Attributes(props: Readonly<AttributesProps>) {
   const { user } = props;
   return (
-    <TabPanel className="panel space-y-4">
+    <TabPanel className="panel space-y-2">
       <h2 className="border-b">Attributes</h2>
       <AttributesTable user={user} />
       <AddAttributeButton user={user} />

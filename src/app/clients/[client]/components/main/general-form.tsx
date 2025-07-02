@@ -36,13 +36,13 @@ export function GeneralForm(props: Readonly<{ client: Client }>) {
 
   return (
     <div className="border-extralight/60 flex flex-col gap-4 pb-4 lg:flex-row">
-      <div className="grow space-y-2 text-sm font-light">
-        <div className="text-light dark:text-extralight/60 flex gap-2">
+      <div className="w-full space-y-2 text-sm font-light lg:w-1/3">
+        <div className="text-light dark:text-light-gray flex gap-2">
           <ComputerDesktopIcon className="my-auto size-5" />
-          <span>Status</span>
+          <span className="font-semibold">Status</span>
           <Status active={client.active ?? false} />
         </div>
-        <div className="text-extralight flex flex-col">
+        <div className="text-extralight dark:text-light-gray/80 flex flex-col">
           <span>Created {createdAt}.</span>
           <span>Status changed on {statusChangedOn}.</span>
           {client.dynamically_registered && (

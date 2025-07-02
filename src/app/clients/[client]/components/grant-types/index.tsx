@@ -58,7 +58,7 @@ export default function GrantTypes(props: Readonly<{ client: Client }>) {
 
   return (
     <TabPanel className="panel flex flex-col gap-4 lg:flex-row" unmount={false}>
-      <div className="text-extralight flex flex-col gap-2 text-sm">
+      <div className="text-extralight dark:text-light-gray/80 hidden flex-col gap-2 text-sm lg:flex lg:w-1/3">
         <span>
           Device code: allow the clients to obtain a token with OAuth2 device
           code flow
@@ -72,19 +72,12 @@ export default function GrantTypes(props: Readonly<{ client: Client }>) {
           Access/ID tokens
         </span>
       </div>
-      <Form className="flex w-full flex-col gap-4 lg:w-2/3" action={action}>
-        <Field>
-          <Label>Authorization Grant</Label>
-          <Description>
-            An authorization grant in OAuth 2.0 refers to the method an
-            application uses to obtain an access token.
-          </Description>
-          <AuthenticationFlow
-            client={client}
-            defaultValue={defaultGrantType(client)}
-            onStatusChange={setIsAuthGrantOk}
-          />
-        </Field>
+      <Form className="w-full space-y-4 lg:w-2/3" action={action}>
+        <AuthenticationFlow
+          client={client}
+          defaultValue={defaultGrantType(client)}
+          onStatusChange={setIsAuthGrantOk}
+        />
         <div className="flex flex-col">
           <Field>
             <Label>Other grant types</Label>

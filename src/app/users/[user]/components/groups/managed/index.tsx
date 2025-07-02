@@ -23,7 +23,7 @@ function Row(props: Readonly<RowProps>) {
         href={`/groups/${group.id}`}
       >
         {group.name}
-        <small className="dark:text-extralight">{group.id}</small>
+        <small className="dark:text-light-gray">{group.id}</small>
       </Link>
       <GroupOptions groupRef={groupRef} />
     </li>

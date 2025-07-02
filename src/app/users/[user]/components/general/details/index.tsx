@@ -39,17 +39,20 @@ export async function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
   return (
     <div className="border-light-gray flex flex-col gap-4 border-b pb-4 lg:flex-row">
       <div className="grow space-y-2 text-sm font-light">
-        <div className="text-light dark:text-extralight/60 flex flex-wrap justify-between">
+        <div className="text-light dark:text-light-gray flex flex-wrap justify-between">
           <div className="flex gap-2">
             <IdentificationIcon className="my-auto size-5" />
             UUID
           </div>
           <Status active={user.active ?? false} />
         </div>
-        <div className="text-extralight" data-testid="user-id">
+        <div
+          className="text-extralight dark:text-light-gray/80"
+          data-testid="user-id"
+        >
           {user.id}
         </div>
-        <div className="text-extralight">
+        <div className="text-extralight dark:text-light-gray/80">
           <div>Created {created}.</div>
           <div>Last modified {modified}.</div>
         </div>

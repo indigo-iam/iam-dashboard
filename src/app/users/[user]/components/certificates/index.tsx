@@ -11,16 +11,18 @@ const CertificateView = (props: { cert: Certificate }) => {
   const { cert } = props;
   return (
     <ul className="flex flex-col">
-      <li className="inline-flex gap-1">
+      <li className="dark:text-light-gray inline-flex gap-1">
         <span className="font-bold">Subject:</span>
         <span>{cert.subjectDn}</span>
       </li>
-      <li className="inline-flex gap-1">
+      <li className="dark:text-light-gray/80 inline-flex gap-1">
         <span className="font-bold">Issuer:</span>
         <span>{cert.issuerDn}</span>
       </li>
       <li className="inline-flex gap-1">
-        <span className="font-bold">Last modified:</span>
+        <span className="dark:text-light-gray/80 font-bold">
+          Last modified:
+        </span>
         <span>{cert.lastModified}</span>
       </li>
     </ul>
@@ -40,14 +42,14 @@ export async function Certificates(props: Readonly<CertificateProps>) {
   }
 
   return (
-    <TabPanel className="panel space-y-4">
+    <TabPanel className="panel space-y-2">
       <h2 className="border-b">X509 Certificates</h2>
       {certificates && certificates.length > 0 ? (
         certificates.map(cert => (
           <CertificateView key={cert.subjectDn + cert.issuerDn} cert={cert} />
         ))
       ) : (
-        <p className="dark:text-extralight font-light">
+        <p className="dark:text-light-gray/80 p-2 font-light">
           No certificates found.
         </p>
       )}

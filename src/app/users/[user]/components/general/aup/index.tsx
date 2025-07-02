@@ -34,10 +34,10 @@ export async function Aup(props: Readonly<AupProps>) {
   return (
     <div className="flex flex-col gap-4 py-4 last:pb-0 lg:flex-row">
       <div className="grow text-sm font-light">
-        <div className="text-light dark:text-extralight/60 py-1">
+        <div className="text-light dark:text-light-gray py-1">
           Acceptable Usage Policy
         </div>
-        <div className="text-extralight">
+        <div className="text-extralight dark:text-light-gray/80">
           Curabitur id libero vehicula, molestie lorem a, tempor tellus. Nulla
           eget gravida leo, dictum pharetra felis.
         </div>

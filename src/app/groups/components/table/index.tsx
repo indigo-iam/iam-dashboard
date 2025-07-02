@@ -26,13 +26,13 @@ function Row(props: Readonly<RowProps>) {
             href={`/groups/${group.id}`}
           >
             {group.displayName}
-            <small className="dark:text-extralight font-light">
+            <small className="dark:text-light-gray font-light">
               {group.id}
             </small>
           </Link>
           <div className="my-auto flex grow flex-col">
             <div className="inline-flex gap-2 sm:flex-col sm:items-end sm:gap-0">
-              <small className="dark:text-extralight px-2 font-light">
+              <small className="dark:text-light-gray/80 px-2 font-light">
                 Created {created}
               </small>
             </div>
@@ -53,7 +53,7 @@ export default async function GroupsTable(props: Readonly<TableProps>) {
   if (groups.length === 0) {
     return (
       <div className="flex flex-col items-center space-y-4">
-        <MagnifyingGlassIcon className="text-primary/60 size-16 dark:text-white/60" />
+        <MagnifyingGlassIcon className="text-primary/60 dark:text-light-gray/80 size-16" />
         <span>No group found.</span>
       </div>
     );

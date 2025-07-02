@@ -36,18 +36,18 @@ function Row(props: Readonly<RowProps>) {
           >
             <div className="flex flex-col hover:underline">
               <div className="font-bold">{client_name}</div>
-              <small className="dark:text-extralight">{client_id}</small>
+              <small className="dark:text-light-gray/80">{client_id}</small>
             </div>
-            <div
+            <span
               title={scopes}
-              className="dark:text-secondary line-clamp-1 text-xs font-light"
+              className="dark:text-light-gray line-clamp-1 text-xs font-light"
             >
               {scopes}
-            </div>
+            </span>
           </Link>
           <div className="flex flex-row gap-2 py-1 lg:flex-col lg:items-end lg:justify-center">
             <Status active={client.active} />
-            <small className="dark:text-extralight font-light whitespace-nowrap sm:text-right">
+            <small className="dark:text-light-gray/80 font-light whitespace-nowrap sm:text-right">
               Created {createdAt}
             </small>
           </div>

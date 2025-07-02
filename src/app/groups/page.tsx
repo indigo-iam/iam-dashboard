@@ -29,7 +29,12 @@ export default async function GroupsPage(props: Readonly<GroupsProps>) {
     <Layout title="Groups">
       <div className="space-y-4">
         <AddGroupButton />
-        <InputQuery data-testid="search-group" />
+        <InputQuery
+          title="Search group"
+          placeholder="Type to search a group..."
+          data-testid="search-group"
+          aria-label="Search group"
+        />
         <div className="panel">
           <GroupsTable groups={groups} />
         </div>

@@ -5,7 +5,6 @@
 import NextLink from "next/link";
 import { Drawer, Link } from "@/components/drawer";
 import Notifications from "@/components/notifications";
-import { Button } from "@/components/buttons";
 import {
   ArrowRightEndOnRectangleIcon,
   ClipboardDocumentCheckIcon,
@@ -55,15 +54,14 @@ function UserLogo(props: Readonly<{ username?: string | null }>) {
 
 function SessionButtons() {
   return (
-    <div className="flex justify-around border-b border-slate-700">
+    <div className="flex justify-around border-b border-slate-700 pb-2">
       <Notifications />
-      <NextLink href="/signout">
-        <Button
-          className="text-secondary flex rounded-full p-2 hover:bg-white/10"
-          aria-label="Sign Out"
-        >
-          <ArrowRightEndOnRectangleIcon className="size-6" />
-        </Button>
+      <NextLink
+        title="Signout"
+        href="/signout"
+        className="text-secondary flex rounded-full p-2 hover:bg-white/10"
+      >
+        <ArrowRightEndOnRectangleIcon className="size-6" />
       </NextLink>
     </div>
   );

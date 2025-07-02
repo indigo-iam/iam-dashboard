@@ -48,6 +48,7 @@ export function Link(props: Readonly<LinkProps>) {
       className="text-secondary flex items-center gap-1 rounded-lg p-2 text-base transition ease-in-out hover:bg-white/10 data-[selected=true]:bg-white/10"
       href={href}
       data-selected={selected ? "true" : "false"}
+      title={title}
     >
       {children}
       {title}

@@ -24,7 +24,7 @@ export default async function Policies() {
             <Label>Enter Policy</Label>
             <Description>Policy must in as JSON format</Description>
             <Textarea
-              className="textarea w-full font-mono"
+              className="iam-input w-full font-mono"
               placeholder="Insert policy as valid JSON"
             />
           </Field>

@@ -100,7 +100,7 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
                 id="group-request-notes"
                 name="group-request-notes"
                 placeholder="Explain why you want to be a member of group..."
-                className="textarea w-full"
+                className="iam-input w-full"
                 required={!isAdmin}
               />
             </section>

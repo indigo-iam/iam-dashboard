@@ -38,7 +38,7 @@ export default function RejectRequestModalProps(
           <p>To proceed provide a motivation that will sent to the user:</p>
           <Field className="flex flex-col">
             <Label data-required>Motivation</Label>
-            <Textarea name="motivation" className="textarea" required />
+            <Textarea name="motivation" className="iam-input" required />
           </Field>
         </ModalBody>
         <ModalFooter>

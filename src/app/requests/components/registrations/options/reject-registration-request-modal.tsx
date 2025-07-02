@@ -40,7 +40,7 @@ export default function RejectRegistrationRequestModal(
           </p>
           <p>To proceed provide a motivation that will be sent to the user:</p>
           <Label data-required>Motivation</Label>
-          <Textarea name="motivation" className="textarea" required />
+          <Textarea name="motivation" className="iam-input" required />
         </ModalBody>
         <ModalFooter>
           <Button

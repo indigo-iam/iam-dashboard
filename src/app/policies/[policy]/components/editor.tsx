@@ -38,7 +38,7 @@ export default function Editor(props: Readonly<EditorProps>) {
   return (
     <>
       <Textarea
-        className="overflow-hidden font-mono textarea w-full"
+        className="iam-input w-full overflow-hidden font-mono"
         rows={policy_str.split("\n").length}
         disabled={!editing}
         value={newPolicy}

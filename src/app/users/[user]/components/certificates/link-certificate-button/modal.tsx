@@ -53,7 +53,7 @@ function PEMField() {
       <Label data-required>Certificate</Label>
       <Textarea
         name="certificate"
-        className="textarea w-full"
+        className="iam-input w-full"
         required
         placeholder="Certificate..."
       />
@@ -110,7 +110,7 @@ export default function LinkCertificateModal(
             <Label>Optional Request Notes</Label>
             <Textarea
               name="notes"
-              className="textarea w-full"
+              className="iam-input w-full"
               placeholder="Notes..."
             />
           </Field>

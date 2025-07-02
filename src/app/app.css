@@ -70,10 +70,6 @@
   @apply btn hover:text-danger hover:underline active:font-bold active:tracking-tight;
 }
 
-@utility textarea {
-  @apply dark:bg-primary rounded border border-gray-300 bg-white p-2;
-}
-
 @utility iam-input {
   @apply dark:bg-dark w-full rounded border border-gray-300 bg-white px-2 py-1 disabled:bg-transparent disabled:text-gray-400 placeholder:disabled:text-gray-400 data-[invalid=true]:outline dark:border-white/30;
 }

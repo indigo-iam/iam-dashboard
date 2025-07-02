@@ -20,6 +20,9 @@
   --color-warning: var(--color-yellow-400);
   --color-danger: var(--color-red-700);
   --color-danger-hover: var(--color-red-800);
+  --breakpoint-3xl: 120rem;
+  --breakpoint-4xl: 140rem;
+  --breakpoint-5xl: 160rem;
 }
 
 @layer base {

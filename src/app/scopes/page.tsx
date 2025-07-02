@@ -31,7 +31,7 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
         <NewScopeButton />
         <InputQuery
           title="Search scope"
-          placeholder="Type to search a scope..."
+          placeholder="Type to search a scope"
           data-testid="search-scope"
           aria-label="Search scope"
         />

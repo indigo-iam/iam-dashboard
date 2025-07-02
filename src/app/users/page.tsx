@@ -31,7 +31,7 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
         <AddUserButton />
         <InputQuery
           title="Search client"
-          placeholder="Type to search a user..."
+          placeholder="Type to search a user"
           data-testid="search-user"
           aria-label="Search user"
         />

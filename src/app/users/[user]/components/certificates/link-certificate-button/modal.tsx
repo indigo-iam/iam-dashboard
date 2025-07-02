@@ -97,9 +97,10 @@ export default function LinkCertificateModal(
     <Modal show={show} onClose={close} title="Request Certificate Linking">
       <Form action={action}>
         <ModalBody>
-          <p>
-            <b>User</b> {user.displayName}
-          </p>
+          <Field>
+            <Label>User</Label>
+            <Input defaultValue={user.displayName} disabled />
+          </Field>
           <Field>
             <Label data-required>Label</Label>
             <Input required name="label" placeholder="Label..." />

@@ -8,7 +8,6 @@
 
 @theme {
   --color-infn: #002a44;
-  --color-infn-dark: #001e30;
   --color-primary: var(--color-slate-700);
   --color-light: var(--color-slate-600);
   --color-extralight: var(--color-gray-500);

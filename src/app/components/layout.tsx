@@ -119,11 +119,11 @@ export async function Layout(props: Readonly<LayoutProps>) {
   const username = session?.user?.name;
   return (
     <div className="mt-16 ml-0 md:mt-0 md:ml-80" id={title}>
-      <h1 className="text-primary dark:bg-dark dark:text-secondary z-10 flex h-0 items-center border-b border-b-gray-300 bg-gray-100 p-0 opacity-0 md:h-16 md:p-4 md:opacity-100">
+      <h1 className="text-primary dark:text-secondary z-10 flex h-0 items-center border-b border-b-gray-300 bg-gray-100 p-0 opacity-0 md:h-16 md:p-4 md:opacity-100 dark:bg-slate-950">
         {title}
       </h1>
       <Drawer title={title}>
-        <div className="bg-infn dark:bg-infn-dark sticky top-0 z-40">
+        <div className="bg-infn dark:bg-dark sticky top-0 z-40">
           <LogoIam />
         </div>
         <nav className="space-y-4">

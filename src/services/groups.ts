@@ -6,6 +6,7 @@
 
 import {
   Group,
+  GroupLabel,
   GroupsSearchResponse,
   ManagedGroupResponse,
 } from "@/models/groups";
@@ -263,4 +264,42 @@ export async function fetchManagedGroups(userId: string) {
   const url = `${BASE_URL}/iam/account/${userId}/managed-groups`;
   const response = await getItem<ManagedGroupResponse>(url);
   return response.managedGroups;
+}
+
+export async function addGroupLabel(groupId: string, label: GroupLabel) {
+  const url = `${BASE_URL}/iam/group/${groupId}/labels`;
+  const response = await authFetch(url, {
+    method: "PUT",
+    body: JSON.stringify(label),
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+  if (response.ok) {
+    revalidatePath(`/groups/${groupId}`);
+  } else {
+    const msg = await response.text();
+    await setNotification({
+      type: "error",
+      message: "Cannot add group label",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
+  }
+}
+
+export async function deleteGroupLabel(groupId: string, label: GroupLabel) {
+  const url = `${BASE_URL}/iam/group/${groupId}/labels?name=${label.name}`;
+  const response = await authFetch(url, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    revalidatePath(`/groups/${groupId}`);
+  } else {
+    const msg = await response.text();
+    await setNotification({
+      type: "error",
+      message: "Cannot delete label",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
+  }
 }

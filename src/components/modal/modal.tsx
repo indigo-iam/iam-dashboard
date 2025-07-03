@@ -45,7 +45,7 @@ export function Modal(props: Readonly<ModalProps>) {
             >
               <DialogTitle
                 as="div"
-                className="border-light-gray flex pb-2 text-xl font-bold"
+                className="border-light-gray flex text-xl font-bold"
               >
                 <h2>{title}</h2>
                 <button

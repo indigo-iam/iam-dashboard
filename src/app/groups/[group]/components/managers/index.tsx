@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { TabPanel } from "@/components/tabs";
 import { Group } from "@/models/groups";
 import { fetchGroupManagers } from "@/services/groups";
 import ManagersTable from "./table/table";
@@ -24,10 +25,10 @@ export default async function Managers(props: Readonly<ManagersProps>) {
   const managers = await fetchGroupManagers(group.id);
 
   return (
-    <div className="panel space-y-4">
+    <TabPanel className="panel space-y-4">
       <h2>Managers</h2>
       <ManagersTable group={group} managers={managers} />
       <AssignGroupManagerButton group={group} />
-    </div>
+    </TabPanel>
   );
 }

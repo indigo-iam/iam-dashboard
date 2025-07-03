@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { TabPanel } from "@/components/tabs";
 import { Group } from "@/models/groups";
 import SubgroupsTable from "./table";
 
@@ -12,9 +13,9 @@ type SubgroupsProps = {
 export default function Subgroups(props: Readonly<SubgroupsProps>) {
   const { group } = props;
   return (
-    <div className="panel space-y-4">
+    <TabPanel className="panel space-y-4">
       <h2>Subgroups</h2>
       <SubgroupsTable group={group} />
-    </div>
+    </TabPanel>
   );
 }

@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { TabPanel } from "@/components/tabs";
 import { Group } from "@/models/groups";
 import { fetchGroupMembersPage } from "@/services/groups";
 import MembersTable from "./table";
@@ -16,10 +17,10 @@ export default async function Members(props: Readonly<MembersProps>) {
   // TODO: pagination
   const members = (await fetchGroupMembersPage(group.id)).Resources;
   return (
-    <div className="panel space-y-4">
+    <TabPanel className="panel space-y-4">
       <h2>Members</h2>
       <MembersTable group={group} members={members} />
       <AddMemberButton group={group} />
-    </div>
+    </TabPanel>
   );
 }

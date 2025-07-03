@@ -5,11 +5,12 @@
 "use client";
 
 import { InputSearch } from "@/components/inputs";
+import { InputProps } from "@headlessui/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-type InputQueryProps = {
+interface InputQueryProps extends InputProps {
   "data-testid"?: string;
-};
+}
 
 export function InputQuery(props: Readonly<InputQueryProps>) {
   const searchParams = useSearchParams();
@@ -28,5 +29,7 @@ export function InputQuery(props: Readonly<InputQueryProps>) {
     router.push(`${pathname}?${params.toString()}`);
   };
 
-  return <InputSearch onChange={setQuery} onClear={clearQuery} {...props} />;
+  return (
+    <InputSearch onQueryChange={setQuery} onClear={clearQuery} {...props} />
+  );
 }

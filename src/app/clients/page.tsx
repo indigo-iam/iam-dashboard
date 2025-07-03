@@ -49,8 +49,13 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
     <Layout title={`${isMe ? "My Clients" : "Clients"}`}>
       <div className="space-y-4">
         <Buttons />
+        <InputQuery
+          title="Search client"
+          placeholder="Type to search a client"
+          data-testid="search-client"
+          aria-label="Search client"
+        />
         <div className="panel space-y-4">
-          <InputQuery />
           <Suspense fallback="Loading...">
             <ClientsTable clients={clients} />
           </Suspense>

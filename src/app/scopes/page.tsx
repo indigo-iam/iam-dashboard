@@ -29,7 +29,12 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
     <Layout title="Scopes">
       <div className="space-y-4">
         <NewScopeButton />
-        <InputQuery />
+        <InputQuery
+          title="Search scope"
+          placeholder="Type to search a scope"
+          data-testid="search-scope"
+          aria-label="Search scope"
+        />
         <div className="panel">
           <ScopesTable scopes={scopes.Resources} />
         </div>

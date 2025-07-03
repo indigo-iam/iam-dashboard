@@ -29,7 +29,12 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
     <Layout title="Users">
       <div className="space-y-4">
         <AddUserButton />
-        <InputQuery />
+        <InputQuery
+          title="Search client"
+          placeholder="Type to search a user"
+          data-testid="search-user"
+          aria-label="Search user"
+        />
         <div className="panel">
           <UsersTable users={users} />
         </div>

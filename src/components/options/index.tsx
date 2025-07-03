@@ -36,6 +36,7 @@ export function Options(props: Readonly<OptionsProps>) {
     <Menu>
       <MenuButton
         data-testid="option"
+        title="More"
         className="my-auto rounded-lg transition hover:bg-neutral-100 focus:outline-none data-open:bg-gray-200 dark:hover:bg-white/20 dark:data-open:bg-white/30"
       >
         <EllipsisHorizontalIcon className="text-primary/75 dark:text-secondary/75 size-8" />

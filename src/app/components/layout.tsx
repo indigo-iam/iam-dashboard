@@ -58,7 +58,10 @@ function SessionButtons() {
     <div className="flex justify-around border-b border-slate-700">
       <Notifications />
       <NextLink href="/signout">
-        <Button className="text-secondary flex rounded-full p-2 hover:bg-white/10">
+        <Button
+          className="text-secondary flex rounded-full p-2 hover:bg-white/10"
+          aria-label="Sign Out"
+        >
           <ArrowRightEndOnRectangleIcon className="size-6" />
         </Button>
       </NextLink>
@@ -125,14 +128,16 @@ export async function Layout(props: Readonly<LayoutProps>) {
         <div className="bg-infn sticky top-0 z-40">
           <LogoIam />
         </div>
-        <div className="space-y-4">
+        <nav className="space-y-4">
           <UserLogo username={username} />
           <SessionButtons />
           <AccountManagement />
           {isAdmin && <OrganizationManagement />}
-        </div>
+        </nav>
       </Drawer>
-      <div className="p-4 md:px-16 md:py-8 xl:px-48 2xl:px-64">{children}</div>
+      <div className="3xl:max-w-2/3 mx-auto p-4 md:px-16 md:py-8">
+        {children}
+      </div>
     </div>
   );
 }

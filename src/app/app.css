@@ -10,16 +10,19 @@
   --color-infn: #002a44;
   --color-primary: var(--color-slate-700);
   --color-light: var(--color-slate-600);
-  --color-extralight: var(--color-gray-400);
+  --color-extralight: var(--color-gray-500);
   --color-primary-hover: #183e56;
   --color-secondary: var(--color-gray-100);
   --color-dark: var(--color-gray-800);
   --color-extradark: var(--color-gray-900);
   --color-light-gray: var(--color-gray-300);
-  --color-success: var(--color-green-600);
+  --color-success: var(--color-green-700);
   --color-warning: var(--color-yellow-400);
-  --color-danger: var(--color-red-600);
+  --color-danger: var(--color-red-700);
   --color-danger-hover: var(--color-red-800);
+  --breakpoint-3xl: 120rem;
+  --breakpoint-4xl: 140rem;
+  --breakpoint-5xl: 160rem;
 }
 
 @layer base {

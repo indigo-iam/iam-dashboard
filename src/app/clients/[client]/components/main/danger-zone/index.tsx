@@ -10,7 +10,7 @@ import { ToggleStatusButton } from "./toggle-status-button";
 export function DangerZone(props: Readonly<{ client: Client }>) {
   const { client } = props;
   return (
-    <div className="flex flex-col gap-4 pt-4 lg:flex-row">
+    <div className="flex flex-col gap-8 pt-4 lg:flex-row">
       <div className="flex w-full flex-col space-y-2 text-sm font-light lg:w-1/3">
         <span className="text-danger dark:text-danger-light font-semibold">
           Danger Zone

@@ -32,7 +32,7 @@ export async function Aup(props: Readonly<AupProps>) {
   })();
 
   return (
-    <div className="flex flex-col gap-4 py-4 last:pb-0 lg:flex-row">
+    <div className="flex flex-col gap-8 py-4 last:pb-0 lg:flex-row">
       <div className="w-full text-sm font-light lg:w-1/3">
         <span className="text-light dark:text-light-gray py-1 font-semibold">
           Acceptable Usage Policy

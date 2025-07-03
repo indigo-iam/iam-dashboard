@@ -81,7 +81,7 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
     <TabPanel className="panel">
       <Form action={action} className="space-y-4">
         <div className="divide-light-gray divide-y">
-          <div className="flex flex-col gap-4 pb-4 lg:flex-row">
+          <div className="flex flex-col gap-8 pb-4 lg:flex-row">
             <div className="text-extralight flex w-full flex-col space-y-2 text-sm lg:w-1/3">
               <span className="dark:text-light-gray font-bold">
                 Authentication
@@ -116,7 +116,7 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
               </Field>
             </div>
           </div>
-          <div className="flex flex-col gap-4 pt-4 lg:flex-row">
+          <div className="flex flex-col gap-8 pt-4 lg:flex-row">
             <div className="text-extralight flex w-full flex-col space-y-2 text-sm lg:w-1/3">
               <span className="dark:text-light-gray font-semibold">
                 Advanced

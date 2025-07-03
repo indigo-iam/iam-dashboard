@@ -57,7 +57,7 @@ export default function GrantTypes(props: Readonly<{ client: Client }>) {
   const refreshToken = grant_types.includes("refresh_token");
 
   return (
-    <TabPanel className="panel flex flex-col gap-4 lg:flex-row" unmount={false}>
+    <TabPanel className="panel flex flex-col gap-8 lg:flex-row" unmount={false}>
       <div className="text-extralight dark:text-light-gray/80 hidden flex-col gap-2 text-sm lg:flex lg:w-1/3">
         <span>
           Device code: allow the clients to obtain a token with OAuth2 device

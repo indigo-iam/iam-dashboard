@@ -15,7 +15,7 @@ type DangerZoneProps = {
 export function DangerZone(props: Readonly<DangerZoneProps>) {
   const { user } = props;
   return (
-    <div className="border-light-gray flex flex-col gap-4 border-t py-4 lg:flex-row">
+    <div className="border-light-gray flex flex-col gap-8 border-t py-4 lg:flex-row">
       <div className="flex w-full flex-col text-sm font-light lg:w-1/3">
         <span className="text-danger dark:text-danger-light font-semibold">
           Danger zone

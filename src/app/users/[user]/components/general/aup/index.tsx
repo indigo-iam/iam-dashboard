@@ -33,17 +33,16 @@ export async function Aup(props: Readonly<AupProps>) {
 
   return (
     <div className="flex flex-col gap-4 py-4 last:pb-0 lg:flex-row">
-      <div className="grow text-sm font-light">
-        <div className="text-light dark:text-extralight/60 py-1">
+      <div className="w-full text-sm font-light lg:w-1/3">
+        <span className="text-light dark:text-light-gray py-1 font-semibold">
           Acceptable Usage Policy
-        </div>
-        <div className="text-extralight">
-          Curabitur id libero vehicula, molestie lorem a, tempor tellus. Nulla
-          eget gravida leo, dictum pharetra felis.
-        </div>
+        </span>
+        <p className="text-extralight dark:text-light-gray/80 whitespace-normal">
+          Curabitur id libero vehicula, molestie lorem a, tempor tellus.
+        </p>
       </div>
-      <div className="w-full grow space-y-4 lg:w-2/3">
-        <Form className="flex flex-col">
+      <div className="w-full space-y-8 lg:w-2/3">
+        <Form>
           <Field>
             <Label>Expiration</Label>
             <Input

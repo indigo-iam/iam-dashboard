@@ -2,11 +2,11 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { TabPanel } from "@/components/tabs";
 import { User } from "@/models/scim";
 import JoinGroupButton from "./join-group-button";
 import UnmanagedGroups from "./unmanaged";
 import ManagedGroups from "./managed";
-import { TabPanel } from "@/components/tabs";
 
 type UserGroupsProps = {
   user: User;

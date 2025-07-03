@@ -42,14 +42,17 @@ export function NotificationsPopover(
 
   return (
     <Popover>
-      <PopoverButton className="rounded-full p-2 hover:bg-white/10">
+      <PopoverButton
+        title="Notifications"
+        className="rounded-full p-2 hover:bg-white/10"
+      >
         <BellIcon className="text-secondary size-6" />
         <Badge count={totalRequests} />
       </PopoverButton>
       <PopoverPanel
         transition
         anchor="bottom"
-        className="items z-50 flex flex-col items-center divide-y divide-white/5 overflow-hidden rounded-xl bg-white p-4 text-sm/6 transition duration-200 ease-in-out [--anchor-gap:--spacing(5)] data-closed:-translate-y-1 data-closed:opacity-0"
+        className="items z-50 flex flex-col items-center overflow-hidden rounded-xl bg-white p-4 text-sm/6 transition duration-200 ease-in-out [--anchor-gap:--spacing(5)] data-closed:-translate-y-1 data-closed:opacity-0 dark:bg-slate-600"
       >
         {({ close }) => (
           <>

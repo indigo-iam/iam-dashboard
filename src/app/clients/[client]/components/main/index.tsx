@@ -14,7 +14,7 @@ type MainProps = {
 export default function Main(props: Readonly<MainProps>) {
   const { client } = props;
   return (
-    <TabPanel className="panel divide-y" unmount={false}>
+    <TabPanel className="panel divide-light-gray divide-y" unmount={false}>
       <GeneralForm client={client} />
       <DangerZone client={client} />
     </TabPanel>

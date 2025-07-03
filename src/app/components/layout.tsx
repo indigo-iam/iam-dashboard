@@ -5,7 +5,6 @@
 import NextLink from "next/link";
 import { Drawer, Link } from "@/components/drawer";
 import Notifications from "@/components/notifications";
-import { Button } from "@/components/buttons";
 import {
   ArrowRightEndOnRectangleIcon,
   ClipboardDocumentCheckIcon,
@@ -21,6 +20,7 @@ import {
 import Image from "next/image";
 import { auth } from "@/auth";
 import { settings } from "@/config";
+import { User } from "@/models/scim";
 
 const basePath = settings.basePath ?? "";
 
@@ -48,22 +48,23 @@ function UserLogo(props: Readonly<{ username?: string | null }>) {
   return (
     <div className="text-secondary flex items-center justify-center px-2">
       <UserCircleIcon className="size-12" />
-      <h2 className="px-4">{username ?? "Unknown user"}</h2>
+      <span className="px-4 text-2xl font-bold">
+        {username ?? "Unknown user"}
+      </span>
     </div>
   );
 }
 
 function SessionButtons() {
   return (
-    <div className="flex justify-around border-b border-slate-700">
+    <div className="flex justify-around border-b border-slate-700 pb-2">
       <Notifications />
-      <NextLink href="/signout">
-        <Button
-          className="text-secondary flex rounded-full p-2 hover:bg-white/10"
-          aria-label="Sign Out"
-        >
-          <ArrowRightEndOnRectangleIcon className="size-6" />
-        </Button>
+      <NextLink
+        title="Signout"
+        href="/signout"
+        className="text-secondary flex rounded-full p-2 hover:bg-white/10"
+      >
+        <ArrowRightEndOnRectangleIcon className="size-6" />
       </NextLink>
     </div>
   );
@@ -121,11 +122,11 @@ export async function Layout(props: Readonly<LayoutProps>) {
   const username = session?.user?.name;
   return (
     <div className="mt-16 ml-0 md:mt-0 md:ml-80" id={title}>
-      <h1 className="text-primary dark:bg-dark dark:text-secondary z-10 flex h-0 items-center border-b border-b-gray-300 bg-gray-100 p-0 opacity-0 md:h-16 md:p-4 md:opacity-100">
+      <h1 className="text-primary dark:text-secondary z-10 flex h-0 items-center border-b border-b-gray-300 bg-gray-100 p-0 opacity-0 md:h-16 md:p-4 md:opacity-100 dark:bg-slate-950">
         {title}
       </h1>
       <Drawer title={title}>
-        <div className="bg-infn sticky top-0 z-40">
+        <div className="bg-infn dark:bg-dark sticky top-0 z-40">
           <LogoIam />
         </div>
         <nav className="space-y-4">

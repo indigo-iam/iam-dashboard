@@ -32,36 +32,27 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
   const back = () => setCurrentPage(Math.max(0, currentPage - 1));
   const next = () => setCurrentPage(Math.min(currentPage + 1, TOTAL_PAGES));
 
-  const title = [
-    "General Settings",
-    "OpenID Connect - OAuth2",
-    "Other Settings",
-  ][currentPage];
-
   return (
-    <div className="flex">
+    <div className="flex justify-center">
       <div className="p-8">
         <Stepper currentPage={currentPage} totalPages={TOTAL_PAGES} />
       </div>
-      <div className="panel flex grow flex-col gap-4">
-        <h2>{title}</h2>
-        <Carousel selectedIndex={currentPage}>
-          <CarouselList>
-            <CarouselTab>General Settings</CarouselTab>
-            <CarouselTab>OIDC/OAuth2</CarouselTab>
-            <CarouselTab>Other Info</CarouselTab>
-          </CarouselList>
-          <CarouselPanels>
-            <GeneralSettings goBack={back} goNext={next} />
-            <OIDCSettings
-              systemScopes={systemScopes}
-              goBack={back}
-              goNext={next}
-            />
-            <OtherSettings goBack={back} />
-          </CarouselPanels>
-        </Carousel>
-      </div>
+      <Carousel selectedIndex={currentPage}>
+        <CarouselList>
+          <CarouselTab>General Settings</CarouselTab>
+          <CarouselTab>OIDC/OAuth2</CarouselTab>
+          <CarouselTab>Other Info</CarouselTab>
+        </CarouselList>
+        <CarouselPanels>
+          <GeneralSettings goNext={next} />
+          <OIDCSettings
+            systemScopes={systemScopes}
+            goBack={back}
+            goNext={next}
+          />
+          <OtherSettings goBack={back} />
+        </CarouselPanels>
+      </Carousel>
     </div>
   );
 }

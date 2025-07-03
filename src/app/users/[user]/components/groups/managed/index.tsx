@@ -23,7 +23,7 @@ function Row(props: Readonly<RowProps>) {
         href={`/groups/${group.id}`}
       >
         {group.name}
-        <small className="dark:text-extralight">{group.id}</small>
+        <small className="dark:text-light-gray">{group.id}</small>
       </Link>
       <GroupOptions groupRef={groupRef} />
     </li>
@@ -45,8 +45,8 @@ export default async function ManagedGroups(
   }
 
   return (
-    <div className="panel">
-      <h2 className="border-b">Managed Groups</h2>
+    <div className="panel space-y-4">
+      <h2>Managed Groups</h2>
       <ul className="w-full">
         {groups.map(group => (
           <Row key={group.id} group={group} />

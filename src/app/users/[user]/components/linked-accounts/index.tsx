@@ -13,8 +13,8 @@ const OidcIdView = (props: { oidcId: OidcId }) => {
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
-        <p>{oidcId.issuer}</p>
-        <small className="dark:text-extralight font-light">
+        <p className="dark:text-light-gray/80">{oidcId.issuer}</p>
+        <small className="dark:text-light-gray/80 font-light">
           {oidcId.subject}
         </small>
       </div>
@@ -29,8 +29,10 @@ const SamlIdView = (props: { samlId: SamlId }) => {
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
         <p className="break-all">{samlId.userId}</p>
-        <small className="dark:text-extralight break-all">{samlId.idpId}</small>
-        <small className="dark:text-extralight break-all">
+        <small className="dark:text-light-gray/80 break-all">
+          {samlId.idpId}
+        </small>
+        <small className="dark:text-light-gray/80 break-all">
           {samlId.attributeId}
         </small>
       </div>
@@ -43,7 +45,7 @@ function OidcAccounts(props: Readonly<{ oidcIds?: OidcId[] }>) {
   const { oidcIds } = props;
   if (!oidcIds || oidcIds.length === 0) {
     return (
-      <p className="dark:text-extralight p-2 font-light">
+      <p className="dark:text-light-gray/80 p-2 font-light">
         No OpenID connect linked accounts found.
       </p>
     );
@@ -89,12 +91,12 @@ export async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
   }
   return (
     <TabPanel className="space-y-6">
-      <div className="panel">
-        <h2 className="border-b">OpenID Connect</h2>
+      <div className="panel space-y-2">
+        <h2>OpenID Connect</h2>
         <OidcAccounts oidcIds={oidcIds} />
       </div>
-      <div className="panel">
-        <h2 className="border-b">SAML</h2>
+      <div className="panel space-y-2">
+        <h2>SAML</h2>
         <SamlAccounts samlIds={samlIds} />
       </div>
     </TabPanel>

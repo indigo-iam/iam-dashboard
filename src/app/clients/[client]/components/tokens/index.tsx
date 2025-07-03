@@ -17,7 +17,7 @@ function AccessToken(props: Readonly<{ client: Client }>) {
     require_auth_time,
   } = client;
   return (
-    <div className="flex flex-col gap-2 pb-4">
+    <div className="space-y-4 pb-4">
       <Field>
         <Label>Access Token timeout (seconds)</Label>
         <Input
@@ -56,7 +56,7 @@ function RefreshToken(props: Readonly<{ client: Client }>) {
     clear_access_tokens_on_refresh,
   } = client;
   return (
-    <div className="flex flex-col py-4">
+    <div className="flex flex-col gap-4 py-4">
       <Field>
         <Label>Refresh Token timeout (seconds)</Label>
         <Input
@@ -65,22 +65,24 @@ function RefreshToken(props: Readonly<{ client: Client }>) {
           defaultValue={refresh_token_validity_seconds}
         />
       </Field>
-      <Field className="flex flex-row items-center gap-2">
-        <Checkbox
-          name="reuse_refresh_token"
-          key={`reuse_refresh_token${reuse_refresh_token}`}
-          defaultChecked={reuse_refresh_token}
-        />
-        <Label>Reuse Refresh Token</Label>
-      </Field>
-      <Field className="flex flex-row items-center gap-2">
-        <Checkbox
-          name="clear_access_tokens_on_refresh"
-          key={`clear_access_tokens_on_refresh${clear_access_tokens_on_refresh}`}
-          defaultChecked={clear_access_tokens_on_refresh}
-        />
-        <Label>Clear Access Tokens on refresh</Label>
-      </Field>
+      <div>
+        <Field className="flex flex-row items-center gap-2">
+          <Checkbox
+            name="reuse_refresh_token"
+            key={`reuse_refresh_token${reuse_refresh_token}`}
+            defaultChecked={reuse_refresh_token}
+          />
+          <Label>Reuse Refresh Token</Label>
+        </Field>
+        <Field className="flex flex-row items-center gap-2">
+          <Checkbox
+            name="clear_access_tokens_on_refresh"
+            key={`clear_access_tokens_on_refresh${clear_access_tokens_on_refresh}`}
+            defaultChecked={clear_access_tokens_on_refresh}
+          />
+          <Label>Clear Access Tokens on refresh</Label>
+        </Field>
+      </div>
     </div>
   );
 }
@@ -89,7 +91,7 @@ function DeviceCode(props: Readonly<{ client: Client }>) {
   const { client } = props;
   const { device_code_validity_seconds } = client;
   return (
-    <div className="pt-4">
+    <div className="flex flex-col gap-4 pt-4">
       <Field>
         <Label>Device Code timeout (seconds)</Label>
         <Input
@@ -98,11 +100,11 @@ function DeviceCode(props: Readonly<{ client: Client }>) {
           name="device_code_validity_seconds"
           defaultValue={device_code_validity_seconds}
         />
-        <p className="text-secondary-400 mt-2 text-sm">
-          The control is disabled as the client is not authorized for the device
-          code grant type.
-        </p>
       </Field>
+      <p className="text-secondary-400 mt-2 text-sm">
+        The control is disabled as the client is not authorized for the device
+        code grant type.
+      </p>
     </div>
   );
 }
@@ -162,7 +164,7 @@ export default function Tokens(props: Readonly<TokensProps>) {
   return (
     <TabPanel className="panel">
       <Form action={action}>
-        <div className="divide-light-gray divide-y">
+        <div className="divide-light-gray dark:divide-light-gray/60 divide-y">
           <AccessToken client={client} />
           <RefreshToken client={client} />
           <DeviceCode client={client} />

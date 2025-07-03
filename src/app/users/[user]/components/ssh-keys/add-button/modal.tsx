@@ -46,7 +46,7 @@ export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
               id="ssh-key"
               name="ssh-key"
               title="SSH Key"
-              className="textarea w-full"
+              className="iam-input w-full"
               placeholder="SSH Key..."
               required={true}
             />

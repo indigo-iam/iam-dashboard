@@ -18,6 +18,7 @@ type AddUserFormProps = {
   onClose?: () => void;
   onUserAdded?: () => void;
 };
+
 function AddUserForm(props: Readonly<AddUserFormProps>) {
   const { onClose, onUserAdded } = props;
   const handleSubmit = async (formData: FormData) => {
@@ -41,46 +42,45 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
     onClose?.();
   };
   return (
-    <Form id="add-user-form" action={handleSubmit}>
-      <p>Enter new user data.</p>
+    <Form className="space-y-4" id="add-user-form" action={handleSubmit}>
       <ModalBody>
-        <Field>
+        <Field className="flex flex-col gap-1">
           <Label data-required>First Name</Label>
           <Input
             type="text"
             name="name"
             title="Name"
-            placeholder="First Name..."
+            placeholder="Enter first name"
             required
           />
         </Field>
-        <Field>
+        <Field className="flex flex-col gap-1">
           <Label data-required>Surname</Label>
           <Input
             type="text"
             name="surname"
             title="Surname"
-            placeholder="Surname"
+            placeholder="Enter surname"
             required
           />
         </Field>
-        <Field>
+        <Field className="flex flex-col gap-1">
           <Label data-required>Username</Label>
           <Input
             type="text"
             name="username"
             title="Username"
-            placeholder="Username"
+            placeholder="Enter username"
             required
           />
         </Field>
-        <Field>
+        <Field className="flex flex-col gap-1">
           <Label data-required>Email</Label>
           <Input
             type="email"
             name="email"
             title="Email"
-            placeholder="Email Name"
+            placeholder="Enter email"
             required
           />
         </Field>

@@ -33,9 +33,10 @@ export function DropdownList(props: Readonly<DropdownListProps>) {
   const listItems = items.map((item, index) => (
     <li key={item.id} className="mt-1 flex flex-row items-center gap-2">
       <button
+        title="Remove scope"
         type="button"
         onClick={() => removeItem(index)}
-        className="bg-secondary-100 hover:bg-danger hover:text-secondary dark:bg-secondary/60 dark:text-danger/80 w-5 rounded"
+        className="bg-secondary-100 hover:bg-danger hover:text-secondary dark:text-secondary/80 w-5 rounded dark:bg-transparent"
       >
         <XMarkIcon />
       </button>

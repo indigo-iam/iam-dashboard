@@ -82,12 +82,17 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
       <Form action={action} className="space-y-4">
         <div className="divide-light-gray divide-y">
           <div className="flex flex-col gap-4 pb-4 lg:flex-row">
-            <div className="text-extralight flex flex-col gap-2 text-sm lg:flex-row">
-              If the client type is confidential, the client and authorization
-              server establish a client authentication method suitable for the
-              security requirements of the authorization server.
+            <div className="text-extralight flex w-full flex-col space-y-2 text-sm lg:w-1/3">
+              <span className="dark:text-light-gray font-bold">
+                Authentication
+              </span>
+              <p className="dark:text-light-gray/80">
+                If the client type is confidential, the client and authorization
+                server establish a client authentication method suitable for the
+                security requirements of the authorization server.
+              </p>
             </div>
-            <div className="flex w-full flex-col gap-4 pb-4 lg:w-2/3">
+            <div className="w-full space-y-4 pb-4 lg:w-2/3">
               <Field>
                 <Label>Client Authentication</Label>
                 <Description>
@@ -112,13 +117,18 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
             </div>
           </div>
           <div className="flex flex-col gap-4 pt-4 lg:flex-row">
-            <div className="text-extralight col-span-full flex flex-col gap-2 text-sm sm:col-span-1">
-              PKCE is an extension to the Authorization Code flow to prevent
-              CSRF and authorization code injection attacks. PKCE is recommended
-              even if a client is using a client secret or other form of client
-              authentication like private_key_jwt.
+            <div className="text-extralight flex w-full flex-col space-y-2 text-sm lg:w-1/3">
+              <span className="dark:text-light-gray font-semibold">
+                Advanced
+              </span>
+              <p className="dark:text-light-gray/80">
+                PKCE is an extension to the Authorization Code flow to prevent
+                CSRF and authorization code injection attacks. PKCE is
+                recommended even if a client is using a client secret or other
+                form of client authentication like private_key_jwt.
+              </p>
             </div>
-            <div className="flex w-2/3 flex-col">
+            <div className="flex w-full flex-col lg:w-2/3">
               <Field>
                 <Label>
                   Proof Key for Code Exchange (PKCE) challenge method

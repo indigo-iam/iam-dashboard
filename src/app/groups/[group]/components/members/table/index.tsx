@@ -14,11 +14,11 @@ function Row(props: Readonly<{ member: ScimReference }>) {
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
         <Link
-          className="flex grow flex-col font-bold hover:underline"
+          className="flex grow flex-col font-medium hover:underline"
           href={`/users/${member.value}`}
         >
           {member.display}
-          <small className="font-light">{member.value}</small>
+          <small className="text-gray font-light">{member.value}</small>
         </Link>
       </div>
       <div className="flex flex-col">

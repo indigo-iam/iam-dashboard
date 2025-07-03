@@ -22,11 +22,9 @@ export default async function Policies() {
         <div>
           <AddPolicyButton />
         </div>
-        <div className="panel">
-          <h2 className="border-b">Policies</h2>
-          <div className="flex flex-col gap-2">
-            <PoliciesTable policies={policies} />
-          </div>
+        <div className="panel space-y-4">
+          <h2>Policies</h2>
+          <PoliciesTable policies={policies} />
         </div>
       </div>
     </Layout>

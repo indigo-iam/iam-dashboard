@@ -11,7 +11,7 @@ export type TabProps = {
 export default function Tab(props: Readonly<TabProps>) {
   const { children } = props;
   return (
-    <HeadlessUITab className="data-[selected]:text-primary data-[selected]:border-primary dark:data-[selected]:border-secondary dark:data-[selected]:text-secondary hover:border-primary dark:hover:border-secondary hover:text-shadow min-w-fit grow cursor-pointer overflow-hidden border-b-2 border-gray-400 p-2 text-sm tracking-wide text-gray-600 -outline-offset-2 hover:text-shadow-white/30 focus:not-data-focus:outline-none data-[selected]:border-b-2 data-[selected]:font-bold">
+    <HeadlessUITab className="dark:text-light-gray/80 text-gray min-w-fit grow cursor-pointer overflow-hidden border-b-2 border-gray-400 p-2 text-sm tracking-wide -outline-offset-2 hover:border-blue-500 hover:text-blue-500 focus:not-data-focus:outline-none  data-[selected]:border-blue-700 data-[selected]:font-bold data-[selected]:text-blue-600 dark:hover:border-blue-300 dark:hover:text-blue-300 dark:data-[selected]:border-sky-400 dark:data-[selected]:text-sky-500">
       {children}
     </HeadlessUITab>
   );

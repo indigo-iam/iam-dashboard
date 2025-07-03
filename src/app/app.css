@@ -15,6 +15,7 @@
   --color-secondary: var(--color-gray-100);
   --color-dark: var(--color-gray-800);
   --color-extradark: var(--color-gray-900);
+  --color-gray: var(--color-gray-500);
   --color-light-gray: var(--color-gray-300);
   --color-success: var(--color-green-700);
   --color-warning: var(--color-yellow-400);
@@ -28,10 +29,10 @@
 
 @layer base {
   h1 {
-    @apply text-2xl font-bold;
+    @apply text-4xl font-bold;
   }
   h2 {
-    @apply border-gray-300 pb-2 text-xl font-bold;
+    @apply border-gray-300 text-3xl font-bold;
   }
   h3 {
     @apply text-lg font-bold;
@@ -46,11 +47,11 @@
 }
 
 @utility btn-primary {
-  @apply btn border-primary bg-primary text-secondary disabled:border-primary/50 disabled:bg-primary/50 dark:border-secondary/30 dark:text-secondary border hover:bg-slate-600 active:bg-slate-800 disabled:dark:bg-gray-600 dark:disabled:text-white/40;
+  @apply btn text-secondary disabled:border-primary/50 disabled:bg-primary/50 dark:border-secondary/30 dark:text-secondary border bg-slate-700 hover:bg-slate-600 active:bg-slate-800 dark:border-none dark:bg-sky-600 dark:hover:bg-sky-700 dark:disabled:bg-sky-600/30 dark:disabled:text-white/40;
 }
 
 @utility btn-secondary {
-  @apply btn border-primary/30 text-primary hover:bg-primary/5 disabled:border-primary/50 disabled:bg-secondary/50 disabled:text-primary/50 dark:border-secondary/70 dark:text-secondary/90 active:bg-primary/10 border bg-gray-100 dark:bg-transparent dark:hover:bg-slate-600 dark:active:bg-slate-500;
+  @apply btn border-primary/30 text-primary hover:bg-primary/5 disabled:border-primary/50 disabled:bg-secondary/50 disabled:text-primary/50 dark:border-secondary/20 dark:text-secondary/90 active:bg-primary/10 dark:disabled:bg-light-gray/30 dark:disabled:text-secondary/50 border bg-gray-100 dark:bg-slate-700 dark:hover:bg-slate-600 dark:active:bg-slate-500;
 }
 
 @utility btn-tertiary {
@@ -74,9 +75,9 @@
 }
 
 @utility iam-list-item {
-  @apply dark:border-light flex flex-row border-b border-gray-200 p-2 transition ease-out last:border-transparent hover:rounded-md hover:border-transparent hover:bg-neutral-200 has-[+:hover]:border-transparent dark:hover:bg-neutral-200/10;
+  @apply dark:border-light flex flex-row border-b border-gray-200 p-2 py-4 transition duration-400 ease-out last:border-transparent hover:rounded-md hover:border-transparent hover:bg-neutral-200 has-[+:hover]:border-transparent dark:hover:bg-neutral-200/10;
 }
 
 @utility panel {
-  @apply dark:bg-dark border-light-gray rounded-lg bg-gray-50 p-4 shadow-md dark:border dark:border-slate-600;
+  @apply dark:bg-dark border-light-gray rounded-lg bg-gray-50 p-8 shadow-md dark:border dark:border-slate-600;
 }

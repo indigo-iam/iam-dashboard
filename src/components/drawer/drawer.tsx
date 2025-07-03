@@ -31,7 +31,7 @@ export function Drawer(props: Readonly<DrawerProps>) {
         onClick={toggleDrawer}
         data-show={show}
       />
-      <header className="bg-infn dark:bg-dark t-0 text-secondary fixed inset-0 z-30 flex h-16 items-center justify-between px-4 py-2 text-2xl font-bold md:hidden">
+      <header className="bg-infn t-0 text-secondary fixed inset-0 z-30 flex h-16 items-center justify-between px-4 py-2 text-2xl font-bold md:hidden">
         <span className="line-clamp-2">{title}</span>
         <Button className="flex" onClick={toggleDrawer}>
           <Bars3Icon className="p my-auto size-8 rounded fill-white hover:bg-white/30" />
@@ -39,7 +39,7 @@ export function Drawer(props: Readonly<DrawerProps>) {
       </header>
       <aside
         id="drawer"
-        className="bg-infn dark:bg-dark easy-in-out fixed inset-0 z-30 w-80 -translate-x-full space-y-4 overflow-auto duration-100 md:translate-x-0"
+        className="bg-infn easy-in-out fixed inset-0 z-30 w-80 -translate-x-full space-y-4 overflow-auto duration-100 md:translate-x-0"
       >
         {children}
       </aside>

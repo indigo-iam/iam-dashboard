@@ -89,8 +89,8 @@ export function InputList(props: Readonly<InputListProps>) {
   };
 
   return (
-    <div className="flex flex-col">
-      <div className="flex flex-row items-center gap-2">
+    <div className="">
+      <div className="flex gap-4">
         <Input
           id={id}
           onChange={event => setValue(event.target.value)}
@@ -99,12 +99,12 @@ export function InputList(props: Readonly<InputListProps>) {
           type={type}
         />
         <Button
-          className="btn-primary"
+          className="btn-primary items-center"
           type="button"
           onClick={handleClick}
           disabled={value.length === 0}
         >
-          <PlusIcon className="size-6" />
+          <PlusIcon className="size-5" />
           Add
         </Button>
       </div>

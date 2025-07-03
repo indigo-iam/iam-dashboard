@@ -21,20 +21,20 @@ function Row(props: Readonly<RowProps>) {
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
-        <div className="flex flex-col gap-2 sm:flex-row">
+        <div className="gap- flex flex-col sm:flex-row">
           <Link
-            className="flex grow flex-col font-bold break-all hover:underline"
+            className="flex grow flex-col font-medium break-all hover:underline"
             href={`/users/${user.id}`}
           >
             {user.name?.formatted}
-            <small className="dark:text-light-gray font-light">
+            <small className="text-gray dark:text-light-gray/60 font-light">
               {user.emails?.[0].value}
             </small>
           </Link>
           <div className="my-auto flex flex-col">
             <div className="inline-flex gap-2 sm:flex-col sm:items-end sm:gap-0 sm:px-2">
               <Status active={user.active ?? false} />
-              <small className="dark:text-light-gray/80 font-light whitespace-nowrap">
+              <small className="text-gray dark:text-light-gray/60 py-1 font-light whitespace-nowrap">
                 Created {created}
               </small>
             </div>

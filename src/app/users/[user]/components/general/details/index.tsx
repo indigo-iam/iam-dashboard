@@ -37,7 +37,7 @@ export async function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
     : "N/A";
 
   return (
-    <div className="border-light-gray flex flex-col gap-4 border-b pb-4 lg:flex-row">
+    <div className="border-light-gray dark:border-light-gray/30 flex flex-col gap-4 border-b pb-4 lg:flex-row">
       <div className="w-full space-y-2 text-sm font-light lg:w-1/3">
         <div className="text-light dark:text-light-gray flex flex-wrap justify-between">
           <div className="flex gap-2">
@@ -58,7 +58,7 @@ export async function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
         </div>
       </div>
       <Form className="w-full space-y-4 lg:w-2/3" action={action}>
-        <div className="flex flex-wrap gap-x-4">
+        <div className="flex flex-wrap gap-4">
           <Field className="flex max-w-full grow flex-col">
             <Label data-required>First Name</Label>
             <Input

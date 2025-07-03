@@ -17,7 +17,7 @@ export default async function Members(props: Readonly<MembersProps>) {
   const members = (await fetchGroupMembersPage(group.id)).Resources;
   return (
     <div className="panel space-y-4">
-      <h2 className="border-b">Members</h2>
+      <h2>Members</h2>
       <MembersTable group={group} members={members} />
       <AddMemberButton group={group} />
     </div>

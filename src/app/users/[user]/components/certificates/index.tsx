@@ -42,8 +42,8 @@ export async function Certificates(props: Readonly<CertificateProps>) {
   }
 
   return (
-    <TabPanel className="panel space-y-2">
-      <h2 className="border-b">X509 Certificates</h2>
+    <TabPanel className="panel space-y-4">
+      <h2>X509 Certificates</h2>
       {certificates && certificates.length > 0 ? (
         certificates.map(cert => (
           <CertificateView key={cert.subjectDn + cert.issuerDn} cert={cert} />

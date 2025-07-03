@@ -20,6 +20,7 @@ import {
 import Image from "next/image";
 import { auth } from "@/auth";
 import { settings } from "@/config";
+import { User } from "@/models/scim";
 
 const basePath = settings.basePath ?? "";
 
@@ -47,7 +48,9 @@ function UserLogo(props: Readonly<{ username?: string | null }>) {
   return (
     <div className="text-secondary flex items-center justify-center px-2">
       <UserCircleIcon className="size-12" />
-      <h2 className="px-4">{username ?? "Unknown user"}</h2>
+      <span className="px-4 text-2xl font-bold">
+        {username ?? "Unknown user"}
+      </span>
     </div>
   );
 }

@@ -41,7 +41,7 @@ export async function Aup(props: Readonly<AupProps>) {
           Curabitur id libero vehicula, molestie lorem a, tempor tellus.
         </p>
       </div>
-      <div className="w-full space-y-4 lg:w-2/3">
+      <div className="w-full space-y-8 lg:w-2/3">
         <Form>
           <Field>
             <Label>Expiration</Label>

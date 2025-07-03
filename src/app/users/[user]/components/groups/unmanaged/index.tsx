@@ -34,16 +34,16 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
   const { groups } = user;
   if (!groups || groups.length === 0) {
     return (
-      <div className="panel">
-        <h2 className="border-b">User Groups</h2>
+      <div className="panel space-y-4">
+        <h2>User Groups</h2>
         No groups found.
       </div>
     );
   }
 
   return (
-    <div className="panel">
-      <h2 className="border-b">Joined Groups</h2>
+    <div className="panel space-y-4">
+      <h2>Joined Groups</h2>
       <ul className="w-full">
         {groups.map(g => (
           <Row key={g.value} user={user} groupRef={g} />

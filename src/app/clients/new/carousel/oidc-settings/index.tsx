@@ -12,6 +12,7 @@ import { Button } from "@/components/buttons";
 import { CarouselPanel } from "@/components/carousel";
 import { Field, Label, Description, DropdownList } from "@/components/form";
 import { type Scope } from "@/models/client";
+import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 
 type OIDCSettingsProps = {
@@ -38,7 +39,8 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
   const canContinue = authFlowOk && clientAuthOk;
 
   return (
-    <CarouselPanel unmount={false} className="flex flex-col gap-4">
+    <CarouselPanel className="panel flex w-3xl flex-col gap-2" unmount={false}>
+      <h2>OpenID Connect - OAuth 2</h2>
       <AuthenticationFlow onStatusChange={setAuthFlowOk} />
       <Field>
         <Label>Client Authentication</Label>
@@ -61,8 +63,11 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
         />
       </Field>
       <div className="flex flex-row justify-end py-2">
-        <Button className="btn-tertiary" onClick={goBack}>
-          Back
+        <Button className="btn" onClick={goBack}>
+          <div className="flex items-center hover:border-b">
+            <ChevronLeftIcon className="-ml-2 size-5" />
+            Back
+          </div>
         </Button>
         <Button
           className="btn-secondary"

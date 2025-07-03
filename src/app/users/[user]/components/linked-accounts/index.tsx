@@ -92,11 +92,11 @@ export async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
   return (
     <TabPanel className="space-y-6">
       <div className="panel space-y-2">
-        <h2 className="border-b">OpenID Connect</h2>
+        <h2>OpenID Connect</h2>
         <OidcAccounts oidcIds={oidcIds} />
       </div>
       <div className="panel space-y-2">
-        <h2 className="border-b">SAML</h2>
+        <h2>SAML</h2>
         <SamlAccounts samlIds={samlIds} />
       </div>
     </TabPanel>

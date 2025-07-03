@@ -31,23 +31,25 @@ function Row(props: Readonly<RowProps>) {
       <div className="flex grow">
         <div className="flex grow flex-col lg:flex-row">
           <Link
-            className="flex grow flex-col gap-1 break-all"
+            className="flex grow flex-col gap-0.5 break-all hover:underline"
             href={`/clients/${client_id}`}
           >
-            <div className="flex flex-col hover:underline">
-              <div className="font-bold">{client_name}</div>
-              <small className="dark:text-light-gray/80">{client_id}</small>
+            <span className="font-medium">{client_name}</span>
+            <div className="flex flex-col">
+              <small className="text-gray dark:text-light-gray/60">
+                {client_id}
+              </small>
+              <span
+                title={scopes}
+                className="text-gray dark:text-light-gray/60 line-clamp-1 text-xs font-light"
+              >
+                {scopes}
+              </span>
             </div>
-            <span
-              title={scopes}
-              className="dark:text-light-gray line-clamp-1 text-xs font-light"
-            >
-              {scopes}
-            </span>
           </Link>
           <div className="flex flex-row gap-2 py-1 lg:flex-col lg:items-end lg:justify-center">
             <Status active={client.active} />
-            <small className="dark:text-light-gray/80 font-light whitespace-nowrap sm:text-right">
+            <small className="text-gray dark:text-light-gray/60 font-light whitespace-nowrap sm:text-right">
               Created {createdAt}
             </small>
           </div>

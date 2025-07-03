@@ -15,8 +15,8 @@ export function SSHKeys(props: Readonly<SSHKeysProps>) {
   const { user } = props;
 
   return (
-    <TabPanel className="panel space-y-2">
-      <h2 className="border-b">SSH Keys</h2>
+    <TabPanel className="panel space-y-4">
+      <h2>SSH Keys</h2>
       <Table user={user} />
       <AddSSHKeyButton user={user} />
     </TabPanel>

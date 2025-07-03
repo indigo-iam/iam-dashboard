@@ -9,12 +9,11 @@ import { Input } from "@/components/inputs";
 import { useState } from "react";
 
 type GeneralSettingsProps = {
-  goBack: () => void;
   goNext: () => void;
 };
 
 export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
-  const { goBack, goNext } = props;
+  const { goNext } = props;
   const [name, setName] = useState("");
 
   const handleClientNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +23,8 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
   const canContinue = name.length >= 4;
 
   return (
-    <CarouselPanel className="flex flex-col gap-2" id="culo" unmount={false}>
+    <CarouselPanel className="panel flex w-2xl flex-col gap-2" unmount={false}>
+      <h2>General Settings</h2>
       <Field className="flex flex-col">
         <Label data-required>Client Name</Label>
         <Description>
@@ -47,9 +47,6 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
         />
       </Field>
       <div className="flex flex-row justify-end py-2">
-        <Button className="btn-tertiary" onClick={goBack}>
-          Back
-        </Button>
         <Button
           className="btn-secondary"
           onClick={goNext}

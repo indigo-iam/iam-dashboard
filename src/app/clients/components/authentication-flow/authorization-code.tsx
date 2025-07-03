@@ -2,10 +2,9 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Field, Label } from "@/components/form";
+import { Description, Field, Label } from "@/components/form";
 import { InputList } from "@/components/inputs";
 import { Client } from "@/models/client";
-import { Description } from "@headlessui/react";
 import { useEffect } from "react";
 
 type AuthorizationCodeProps = {
@@ -29,9 +28,9 @@ export default function AuthorizationCode(
   });
 
   return (
-    <Field className="flex flex-col">
+    <Field>
       <Label data-required>Redirect URIs</Label>
-      <Description className="text-primary/60 dark:text-secondary/60 p-1 text-xs">
+      <Description>
         At least a valid Redirect URI is required when Authorization Code is
         selected.
       </Description>

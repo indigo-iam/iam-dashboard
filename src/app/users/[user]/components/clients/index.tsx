@@ -20,8 +20,8 @@ export async function UserClients(props: Readonly<UseClientsProps>) {
       <Link className="btn-secondary max-w-fit" href="/clients/new">
         New Client
       </Link>
-      <div className="panel">
-        <h2 className="border-b">Owned Clients</h2>
+      <div className="panel space-y-4">
+        <h2>Owned Clients</h2>
         <div className="flex flex-col gap-4">
           <ClientsTable clients={clients} />
         </div>

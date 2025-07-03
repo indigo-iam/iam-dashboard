@@ -25,7 +25,7 @@ export default async function Managers(props: Readonly<ManagersProps>) {
 
   return (
     <div className="panel space-y-4">
-      <h2 className="border-b">Managers</h2>
+      <h2>Managers</h2>
       <ManagersTable group={group} managers={managers} />
       <AssignGroupManagerButton group={group} />
     </div>

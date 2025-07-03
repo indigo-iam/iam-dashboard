@@ -35,7 +35,7 @@ export function GeneralForm(props: Readonly<{ client: Client }>) {
   }
 
   return (
-    <div className="border-extralight/60 flex flex-col gap-4 pb-4 lg:flex-row">
+    <div className="flex flex-col gap-4 pb-4 lg:flex-row">
       <div className="w-full space-y-2 text-sm font-light lg:w-1/3">
         <div className="text-light dark:text-light-gray flex gap-2">
           <ComputerDesktopIcon className="my-auto size-5" />

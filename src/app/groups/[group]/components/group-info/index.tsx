@@ -18,7 +18,7 @@ export default function GroupInfo(props: Readonly<GroupInfoProps>) {
     : "N/A";
   return (
     <div className="panel space-y-4">
-      <h2 className="border-b">Group Information</h2>
+      <h2>Group Information</h2>
       <ul className="flex flex-col">
         <li className="inline-flex gap-1">
           <span className="font-bold">Name:</span>

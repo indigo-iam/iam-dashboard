@@ -7,17 +7,20 @@ import { User } from "@/models/scim";
 import JoinGroupButton from "./join-group-button";
 import UnmanagedGroups from "./unmanaged";
 import ManagedGroups from "./managed";
+import { auth } from "@/auth";
 
 type UserGroupsProps = {
   user: User;
 };
 
-export function UserGroups(props: Readonly<UserGroupsProps>) {
+export async function UserGroups(props: Readonly<UserGroupsProps>) {
   const { user } = props;
+  const session = await auth();
+  const isAdmin = session?.is_admin;
   return (
     <TabPanel className="space-y-4">
-      <JoinGroupButton user={user} />
-      <UnmanagedGroups user={user} />
+      <JoinGroupButton user={user} isAdmin={isAdmin} />
+      <UnmanagedGroups user={user} isAdmin={isAdmin} />
       <ManagedGroups user={user} />
     </TabPanel>
   );

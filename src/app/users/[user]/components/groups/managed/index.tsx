@@ -32,6 +32,7 @@ function Row(props: Readonly<RowProps>) {
 
 type ManagedGroupsProps = {
   user: User;
+  isAdmin?: boolean;
 };
 
 export default async function ManagedGroups(

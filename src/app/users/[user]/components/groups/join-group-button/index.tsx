@@ -19,7 +19,7 @@ export default function JoinGroupButton(props: Readonly<JoinGroupButtonProps>) {
   const [show, setShow] = useState(false);
   const openModal = () => setShow(true);
   const closeModal = () => setShow(false);
-  const title = isAdmin ? "Join Group" : "Ask to Join Group";
+  const title = isAdmin ? "Assign Group" : "Ask to Join Group";
   return (
     <>
       <Button className="btn-secondary" onClick={openModal}>

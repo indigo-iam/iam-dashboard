@@ -58,7 +58,7 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
     return (
       <div className="panel space-y-4">
         <h2>User Groups</h2>
-        <p className="dark:text-secondary/60 p-2">No groups found.</p>
+        <p className="dark:text-secondary/60 text-gray p-2">No groups found.</p>
       </div>
     );
   }

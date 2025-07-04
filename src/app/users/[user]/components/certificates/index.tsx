@@ -49,7 +49,7 @@ export async function Certificates(props: Readonly<CertificateProps>) {
           <CertificateView key={cert.subjectDn + cert.issuerDn} cert={cert} />
         ))
       ) : (
-        <p className="dark:text-light-gray/80 p-2 font-light">
+        <p className="dark:text-secondary/60 text-gray p-2">
           No certificates found.
         </p>
       )}

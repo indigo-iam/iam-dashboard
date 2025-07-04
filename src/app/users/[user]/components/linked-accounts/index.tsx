@@ -26,9 +26,13 @@ const SamlIdView = (props: { samlId: SamlId }) => {
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
-        <p className="break-all">{samlId.userId}</p>
-        <p className="dark:text-secondary/60 break-all">{samlId.idpId}</p>
-        <p className="dark:text-secondary/60 break-all">{samlId.attributeId}</p>
+        <p className="break-all">{samlId.idpId}</p>
+        <p className="text-gray dark:text-secondary/60 text-sm break-all">
+          {samlId.userId}
+        </p>
+        <p className="text-gray dark:text-secondary/60 text-sm break-all">
+          {samlId.attributeId}
+        </p>
       </div>
       <SAMLOptions samlId={samlId} />
     </li>
@@ -39,7 +43,7 @@ function OidcAccounts(props: Readonly<{ oidcIds?: OidcId[] }>) {
   const { oidcIds } = props;
   if (!oidcIds || oidcIds.length === 0) {
     return (
-      <p className="dark:text-secondary/60 p-2">
+      <p className="text-gray dark:text-secondary/60 p-2">
         No OpenID connect linked accounts found.
       </p>
     );
@@ -57,7 +61,7 @@ function SamlAccounts(props: Readonly<{ samlIds?: SamlId[] }>) {
   const { samlIds } = props;
   if (!samlIds || samlIds.length === 0) {
     return (
-      <p className="dark:text-secondary/60 p-2">
+      <p className="text-gray dark:text-secondary/60 p-2">
         No linked SAML accounts found.
       </p>
     );

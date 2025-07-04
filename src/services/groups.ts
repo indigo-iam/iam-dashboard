@@ -16,7 +16,6 @@ import { Paginated } from "@/models/pagination";
 import { revalidatePath } from "next/cache";
 import { ScimReference, User } from "@/models/scim";
 import { setNotification } from "@/services/notifications";
-import { makeScimReferenceFromUser } from "@/utils/scim";
 
 const { BASE_URL } = settings;
 
@@ -187,8 +186,10 @@ export const addUserToGroup = async (
   }
 };
 
-export const removeUserFromGroup = async (groupId: string, user: User) => {
-  const userRef = makeScimReferenceFromUser(user);
+export const removeUserFromGroup = async (
+  groupId: string,
+  userRef: ScimReference
+) => {
   const body = {
     operations: [
       {

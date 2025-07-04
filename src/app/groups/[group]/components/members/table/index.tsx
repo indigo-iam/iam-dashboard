@@ -8,8 +8,8 @@ import { ScimReference } from "@/models/scim";
 import MemberOptions from "./options";
 import Link from "next/link";
 
-function Row(props: Readonly<{ member: ScimReference }>) {
-  const { member } = props;
+function Row(props: Readonly<{ member: ScimReference; group: Group }>) {
+  const { member, group } = props;
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
@@ -24,7 +24,7 @@ function Row(props: Readonly<{ member: ScimReference }>) {
         </Link>
       </div>
       <div className="flex flex-col">
-        <MemberOptions />
+        <MemberOptions userRef={member} group={group} />
       </div>
     </li>
   );
@@ -50,7 +50,7 @@ export default async function Members(props: Readonly<MembersProps>) {
   return (
     <ul className="w-full">
       {members.map(member => (
-        <Row key={member.value} member={member} />
+        <Row key={member.value} member={member} group={group} />
       ))}
     </ul>
   );

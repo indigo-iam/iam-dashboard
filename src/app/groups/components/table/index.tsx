@@ -30,7 +30,7 @@ function Row(props: Readonly<RowProps>) {
               {group.id}
             </p>
           </Link>
-          <p className="text-gray dark:text-secondary/50 my-auto flex flex-col text-sm">
+          <p className="text-gray dark:text-secondary/50 my-auto flex flex-col pr-2 text-sm">
             Created {created}
           </p>
         </div>
@@ -50,7 +50,7 @@ export default async function GroupsTable(props: Readonly<TableProps>) {
     return (
       <div className="flex flex-col items-center space-y-4">
         <MagnifyingGlassIcon className="text-primary/60 dark:text-light-gray/80 size-16" />
-        <span>No group found.</span>
+        <p>No group found.</p>
       </div>
     );
   }

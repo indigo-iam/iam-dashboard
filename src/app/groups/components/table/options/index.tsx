@@ -9,6 +9,7 @@ import { Group } from "@/models/groups";
 import AddSubgroupModal from "./add-subgroup-modal";
 import DeleteGroupModal from "./delete-group-modal";
 import { useState } from "react";
+import { makeScimReferenceFromGroup } from "@/utils/scim";
 
 export type GroupOptionsProps = {
   group: Group;
@@ -16,6 +17,7 @@ export type GroupOptionsProps = {
 
 export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
   const { group } = props;
+  const groupRef = makeScimReferenceFromGroup(group);
   const [show, setShow] = useState<"ADD_SUBGROUP" | "DELETE_GROUP">();
   const close = () => setShow(undefined);
   return (
@@ -36,7 +38,7 @@ export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
         onClose={close}
       />
       <DeleteGroupModal
-        group={group}
+        groupRef={groupRef}
         show={show === "DELETE_GROUP"}
         onClose={close}
       />

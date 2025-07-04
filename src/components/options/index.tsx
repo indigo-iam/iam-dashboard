@@ -17,7 +17,7 @@ export function Option(props: Readonly<OptionProps>) {
   return (
     <MenuItem>
       <button
-        className="data-[danger]:hover:bg-danger hover:text-secondary data-[danger]:text-danger dark:data-[danger]:text-danger-light data-[danger]:hover:text-secondary p-2 text-start whitespace-nowrap hover:bg-gray-200 focus:outline-none dark:hover:bg-white/30"
+        className="data-[danger]:hover:bg-danger hover:not:dark:text-light data-[danger]:text-danger dark:data-[danger]:text-danger-light data-[danger]:hover:text-secondary p-2 text-start whitespace-nowrap hover:bg-gray-200 focus:outline-none dark:hover:bg-white/30"
         {...other}
       >
         {children}

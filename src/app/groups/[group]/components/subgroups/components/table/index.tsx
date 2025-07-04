@@ -2,10 +2,12 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import GroupOptions from "@/app/groups/components/table/options";
 import { Group } from "@/models/groups";
 import { ScimReference } from "@/models/scim";
 import { fetchSubgroupsPage } from "@/services/groups";
 import Link from "next/link";
+import SubgroupOptions from "./options";
 
 function Row(props: Readonly<{ groupRef: ScimReference }>) {
   const { groupRef } = props;
@@ -20,6 +22,7 @@ function Row(props: Readonly<{ groupRef: ScimReference }>) {
           {groupRef.value}
         </p>
       </Link>
+      <SubgroupOptions groupRef={groupRef} />
     </li>
   );
 }

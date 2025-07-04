@@ -46,16 +46,14 @@ export default function AssignGroupManagerModal(
             Are you sure you want give manager privileges for group{" "}
             <b>{group.displayName}</b> to the following user?
           </p>
-          <ul className="flex flex-col">
-            <li className="inline-flex gap-1">
-              <span className="font-bold">Name:</span>{" "}
-              <span>{selectedUser?.name?.formatted}</span>
-            </li>
-            <li className="inline-flex gap-1">
-              <span className="font-bold">Username:</span>{" "}
-              <span>{selectedUser?.userName}</span>
-            </li>
-          </ul>
+          <div className="flex flex-col items-center">
+            <p className="text-lg">
+              {selectedUser?.name?.formatted} ({selectedUser?.userName})
+            </p>
+            <p className="text-primary/80 dark:text-secondary/60">
+              {selectedUser?.emails?.[0].value}
+            </p>
+          </div>
         </div>
       </ModalBody>
       <ModalFooter>

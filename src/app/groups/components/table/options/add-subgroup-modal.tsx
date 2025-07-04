@@ -46,9 +46,15 @@ export default function AddSubgroupModal(
           />
         </ModalBody>
         <ModalFooter>
-          <Button type="submit">Add Subgroup</Button>
-          <Button type="reset" onClick={modalProps.onClose}>
+          <Button
+            className="btn-tertiary"
+            type="reset"
+            onClick={modalProps.onClose}
+          >
             Cancel
+          </Button>
+          <Button className="btn-primary" type="submit">
+            Add Subgroup
           </Button>
         </ModalFooter>
       </Form>

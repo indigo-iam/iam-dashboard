@@ -20,7 +20,6 @@ import {
 import Image from "next/image";
 import { auth } from "@/auth";
 import { settings } from "@/config";
-import { User } from "@/models/scim";
 
 const basePath = settings.basePath ?? "";
 
@@ -70,44 +69,45 @@ function SessionButtons() {
   );
 }
 
-function AccountManagement() {
-  return (
-    <div className="px-6">
-      <span className="text-secondary font-bold">ACCOUNT MANAGEMENT</span>
-      <Link title="Home" href="/users/me">
-        <HomeIcon className="size-5" />
-      </Link>
-    </div>
-  );
-}
-
-function OrganizationManagement() {
-  return (
-    <div className="px-6">
-      <span className="text-secondary font-bold">ORGANIZATION MANAGEMENT</span>
-      <Link title="Users" href="/users">
-        <UserIcon className="size-5" />
-      </Link>
-      <Link title="Groups" href="/groups">
-        <UserGroupIcon className="size-5" />
-      </Link>
-      <Link title="Clients" href="/clients">
-        <RocketLaunchIcon className="size-5" />
-      </Link>
-      <Link title="Requests" href="/requests">
-        <InboxArrowDownIcon className="size-5" />
-      </Link>
-      <Link title="Scopes" href="/scopes">
-        <ClipboardDocumentCheckIcon className="size-5" />
-      </Link>
-      <Link title="AUP" href="/aup">
-        <DocumentTextIcon className="size-5" />
-      </Link>
-      <Link title="Policies" href="/policies">
-        <ScaleIcon className="size-5" />
-      </Link>
-    </div>
-  );
+function Links(props: Readonly<{ isAdmin: boolean }>) {
+  if (props.isAdmin) {
+    return (
+      <div className="px-6">
+        <Link title="Home" href="/users/me">
+          <HomeIcon className="size-5" />
+        </Link>
+        <Link title="Users" href="/users">
+          <UserIcon className="size-5" />
+        </Link>
+        <Link title="Groups" href="/groups">
+          <UserGroupIcon className="size-5" />
+        </Link>
+        <Link title="Clients" href="/clients">
+          <RocketLaunchIcon className="size-5" />
+        </Link>
+        <Link title="Requests" href="/requests">
+          <InboxArrowDownIcon className="size-5" />
+        </Link>
+        <Link title="Scopes" href="/scopes">
+          <ClipboardDocumentCheckIcon className="size-5" />
+        </Link>
+        <Link title="AUP" href="/aup">
+          <DocumentTextIcon className="size-5" />
+        </Link>
+        <Link title="Policies" href="/policies">
+          <ScaleIcon className="size-5" />
+        </Link>
+      </div>
+    );
+  } else {
+    return (
+      <div className="px-6">
+        <Link title="Home" href="/users/me">
+          <HomeIcon className="size-5" />
+        </Link>
+      </div>
+    );
+  }
 }
 
 type LayoutProps = {
@@ -132,8 +132,7 @@ export async function Layout(props: Readonly<LayoutProps>) {
         <nav className="space-y-4">
           <UserLogo username={username} />
           <SessionButtons />
-          <AccountManagement />
-          {isAdmin && <OrganizationManagement />}
+          <Links isAdmin={isAdmin} />
         </nav>
       </Drawer>
       <div className="3xl:max-w-2/3 mx-auto p-4 md:px-16 md:py-8 xl:max-w-3/4">

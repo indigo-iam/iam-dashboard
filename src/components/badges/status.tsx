@@ -9,13 +9,15 @@ type StatusProps = {
 export default function Status(props: Readonly<StatusProps>) {
   const { active } = props;
   const status = active ? "Active" : "Disabled";
+  const title = `${active ? "Active" : "Disabled"}`;
   return (
-    <small
-      title={`${active ? "Active" : "Disabled"}`}
-      className="data-[status=disabled] bg-danger data-[status=Active]:bg-success max-h-5 max-w-fit rounded-full p-0.5 px-2 text-xs text-white"
+    <span
+      title={title}
+      className="data-[status=disabled] bg-danger data-[status=Active]:bg-success flex size-4 max-w-fit flex-none items-center rounded-full p-0.5 px-2 text-xs text-white sm:h-5 sm:min-w-max"
       data-status={status}
+      aria-label={title}
     >
-      {status}
-    </small>
+      <span className="hidden sm:block">{status}</span>
+    </span>
   );
 }

@@ -13,10 +13,8 @@ const OidcIdView = (props: { oidcId: OidcId }) => {
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
-        <p className="dark:text-light-gray/80">{oidcId.issuer}</p>
-        <small className="dark:text-light-gray/80 font-light">
-          {oidcId.subject}
-        </small>
+        <p>{oidcId.issuer}</p>
+        <p className="dark:text-secondary/60 text-sm">id: {oidcId.subject}</p>
       </div>
       <OidcOptions oidcId={oidcId} />
     </li>
@@ -29,12 +27,8 @@ const SamlIdView = (props: { samlId: SamlId }) => {
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
         <p className="break-all">{samlId.userId}</p>
-        <small className="dark:text-light-gray/80 break-all">
-          {samlId.idpId}
-        </small>
-        <small className="dark:text-light-gray/80 break-all">
-          {samlId.attributeId}
-        </small>
+        <p className="dark:text-secondary/60 break-all">{samlId.idpId}</p>
+        <p className="dark:text-secondary/60 break-all">{samlId.attributeId}</p>
       </div>
       <SAMLOptions samlId={samlId} />
     </li>
@@ -45,7 +39,7 @@ function OidcAccounts(props: Readonly<{ oidcIds?: OidcId[] }>) {
   const { oidcIds } = props;
   if (!oidcIds || oidcIds.length === 0) {
     return (
-      <p className="dark:text-light-gray/80 p-2 font-light">
+      <p className="dark:text-secondary/60 p-2">
         No OpenID connect linked accounts found.
       </p>
     );
@@ -63,7 +57,7 @@ function SamlAccounts(props: Readonly<{ samlIds?: SamlId[] }>) {
   const { samlIds } = props;
   if (!samlIds || samlIds.length === 0) {
     return (
-      <p className="dark:text-extralight p-2 font-light">
+      <p className="dark:text-secondary/60 p-2">
         No linked SAML accounts found.
       </p>
     );

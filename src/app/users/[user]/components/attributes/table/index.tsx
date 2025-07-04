@@ -15,11 +15,7 @@ export default async function AttributesTable(props: Readonly<TableProps>) {
   const attributes = await fetchAttributes(user.id);
 
   if (!attributes || attributes.length === 0) {
-    return (
-      <p className="dark:text-light-gray/80 p-2 font-light">
-        No Attributes found.
-      </p>
-    );
+    return <p className="dark:text-secondary/60 p-2">No Attributes found.</p>;
   }
 
   return (

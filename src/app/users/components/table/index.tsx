@@ -21,22 +21,22 @@ function Row(props: Readonly<RowProps>) {
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
-        <div className="gap- flex flex-col sm:flex-row">
+        <div className="flex flex-col gap-2 sm:flex-row">
           <Link
-            className="flex grow flex-col font-medium break-all hover:underline"
+            className="flex grow flex-col break-all hover:underline"
             href={`/users/${user.id}`}
           >
             {user.name?.formatted}
-            <small className="text-gray dark:text-light-gray/60 font-light">
+            <p className="text-gray dark:text-secondary/70 text-sm">
               {user.emails?.[0].value}
-            </small>
+            </p>
           </Link>
           <div className="my-auto flex flex-col">
-            <div className="inline-flex gap-2 sm:flex-col sm:items-end sm:gap-0 sm:px-2">
+            <div className="inline-flex items-center gap-2 sm:flex-col sm:items-end sm:gap-0 sm:px-2">
               <Status active={user.active ?? false} />
-              <small className="text-gray dark:text-light-gray/60 py-1 font-light whitespace-nowrap">
+              <p className="text-gray dark:text-secondary/50 py-1 text-sm whitespace-nowrap">
                 Created {created}
-              </small>
+              </p>
             </div>
           </div>
         </div>
@@ -58,7 +58,7 @@ export default function UsersTable(props: Readonly<UsersTableProps>) {
     return (
       <div className="flex flex-col items-center">
         <MagnifyingGlassIcon className="text-primary/60 size-16 dark:text-white/60" />
-        <span>No user found.</span>
+        <p className="dark:text-secondary/60 p-2">No user found.</p>
       </div>
     );
   }

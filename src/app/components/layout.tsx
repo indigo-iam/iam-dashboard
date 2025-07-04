@@ -126,7 +126,7 @@ export async function Layout(props: Readonly<LayoutProps>) {
         {title}
       </h1>
       <Drawer title={title}>
-        <div className="bg-infn dark:bg-dark sticky top-0 z-40">
+        <div className="bg-infn sticky top-0 z-40">
           <LogoIam />
         </div>
         <nav className="space-y-4">

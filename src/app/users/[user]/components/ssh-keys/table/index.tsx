@@ -16,14 +16,14 @@ function SSHKeyView(props: Readonly<{ user: User; sshKey: SSHKey }>) {
     <li className="iam-list-item flex flex-row overflow-hidden">
       <div className="my-auto flex grow flex-col gap-1 truncate">
         <p className="text-lg">{sshKey.display}</p>
-        <small
-          className="text-gra dark:text-light-gray/80 truncate text-sm font-light"
+        <p
+          className="text-gray dark:text-secondary/60 truncate text-sm"
           title={sshKey.fingerprint}
         >
           {sshKey.fingerprint}
-        </small>
+        </p>
       </div>
-      <div className="dark:text-light-gray/80 text-gray my-auto hidden px-2 text-sm font-light sm:flex">
+      <div className="dark:text-secondary/80 text-gray my-auto hidden px-2 text-sm sm:flex">
         Created {createdAt}
       </div>
       <SSHKeysOptions user={user} sshKey={sshKey} />

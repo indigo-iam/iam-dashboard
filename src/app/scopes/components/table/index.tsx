@@ -17,7 +17,7 @@ export default function ScopesTable(props: Readonly<ScopesTableProps>) {
     return (
       <div className="flex flex-col items-center space-y-4">
         <MagnifyingGlassIcon className="text-primary/60 size-16 dark:text-white/60" />
-        <span>No scope found.</span>
+        <p>No scope found.</p>
       </div>
     );
   }
@@ -30,10 +30,10 @@ export default function ScopesTable(props: Readonly<ScopesTableProps>) {
         >
           <div className="flex grow flex-col gap-2 sm:flex-row sm:items-center sm:gap-0">
             <div className="flex grow flex-col">
-              <span className="font-medium">{scope.value}</span>
-              <small className="dark:text-light-gray/80 font-light">
+              <p>{scope.value}</p>
+              <p className="text-gray dark:text-secondary/70 text-sm">
                 {scope.description}
-              </small>
+              </p>
             </div>
             <ScopeTypeSelect key={scope.id} scope={scope} />
           </div>

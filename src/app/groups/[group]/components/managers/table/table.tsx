@@ -13,11 +13,13 @@ function Row(props: Readonly<{ manager: User; group: Group }>) {
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
         <Link
-          className="flex grow flex-col font-bold hover:underline"
+          className="flex grow flex-col hover:underline"
           href={`/users/${manager.id}`}
         >
           {manager.displayName}
-          <small className="font-light">{manager.id}</small>
+          <p className="text-gray dark:text-secondary-dark text-sm">
+            {manager.id}
+          </p>
         </Link>
       </div>
       <div className="flex flex-col">
@@ -36,7 +38,11 @@ export default function ManagersTable(props: Readonly<ManagerTableProps>) {
   const { group, managers } = props;
 
   if (managers.length === 0) {
-    return <p>This group has no managers.</p>;
+    return (
+      <p className="text-gray dark:text-secondary/60 p-2">
+        This group has no managers.
+      </p>
+    );
   }
 
   return (

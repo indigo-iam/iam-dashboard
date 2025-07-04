@@ -22,21 +22,17 @@ function Row(props: Readonly<RowProps>) {
       <div className="flex grow flex-col">
         <div className="flex flex-col gap-2 sm:flex-row">
           <Link
-            className="flex grow flex-col font-medium break-all hover:underline"
+            className="flex grow flex-col break-all hover:underline"
             href={`/groups/${group.id}`}
           >
             {group.displayName}
-            <small className="text-gray dark:text-light-gray/60 font-light">
+            <p className="text-gray dark:text-secondary/60 text-sm">
               {group.id}
-            </small>
+            </p>
           </Link>
-          <div className="my-auto flex flex-col">
-            <div className="inline-flex gap-2 sm:flex-col sm:items-end sm:gap-0">
-              <small className="text-gray dark:text-light-gray/60 px-2 font-light">
-                Created {created}
-              </small>
-            </div>
-          </div>
+          <p className="text-gray dark:text-secondary/50 my-auto flex flex-col text-sm">
+            Created {created}
+          </p>
         </div>
       </div>
       <GroupOptions group={group} />

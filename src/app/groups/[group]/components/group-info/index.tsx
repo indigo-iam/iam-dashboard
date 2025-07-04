@@ -32,12 +32,12 @@ export default function GroupInfo(props: Readonly<GroupInfoProps>) {
         <p className="mb-2" title="Description">
           {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description}
         </p>
-        <p className="text-gray dark:text-light-gray mb-2">{group.id}</p>
-        <p className="text-gray dark:text-light-gray flex items-center gap-2 text-sm">
+        <p className="text-gray dark:text-secondary/70 mb-2">{group.id}</p>
+        <p className="text-gray dark:text-secondary-dark flex items-center gap-2 text-sm">
           <CalendarDaysIcon className="size-4" />
           Created {created}
         </p>
-        <p className="text-gray dark:text-light-gray flex items-center gap-2 text-sm">
+        <p className="text-gray dark:text-secondary-dark flex items-center gap-2 text-sm">
           <ClockIcon className="size-4" />
           Modified {lastModified}
         </p>

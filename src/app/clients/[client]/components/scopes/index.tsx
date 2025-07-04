@@ -19,10 +19,10 @@ async function SystemScopes(props: Readonly<SystemScopesProps>) {
   return scopes.map(s => (
     <li className="iam-list-item" key={s.id}>
       <div className="flex grow flex-col">
-        <span className="font-bold">{s.value}</span>
-        <span className="dark:text-secondary line-clamp-1 text-xs font-light">
+        <p>{s.value}</p>
+        <p className="text-gray dark:text-secondary/60 line-clamp-1 text-sm">
           {s.description}
-        </span>
+        </p>
       </div>
       <div className="flex flex-col items-center">
         <ScopeOptions client={client} scope={s.value} />

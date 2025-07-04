@@ -17,11 +17,9 @@ function Row(props: Readonly<RowProps>) {
 
   const StaticView = () => {
     return (
-      <div className="flex grow flex-col font-bold">
+      <div className="flex grow flex-col">
         {groupRef.display}
-        <small className="dark:text-light-gray font-light">
-          {groupRef.value}
-        </small>
+        <p className="dark:text-secondary/60 text-sm">{groupRef.value}</p>
       </div>
     );
   };
@@ -30,12 +28,12 @@ function Row(props: Readonly<RowProps>) {
     return (
       <NextLink
         href={`/groups/${groupRef.value}`}
-        className="flex grow flex-col font-medium hover:underline"
+        className="flex grow flex-col hover:underline"
       >
         {groupRef.display}
-        <small className="text-gray dark:text-light-gray font-light">
+        <p className="text-gray dark:text-secondary/60 text-sm">
           {groupRef.value}
-        </small>
+        </p>
       </NextLink>
     );
   };
@@ -60,7 +58,7 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
     return (
       <div className="panel space-y-4">
         <h2>User Groups</h2>
-        No groups found.
+        <p className="dark:text-secondary/60 p-2">No groups found.</p>
       </div>
     );
   }

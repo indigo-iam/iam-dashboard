@@ -17,6 +17,12 @@ services:
     ports:
       - "3306:3306"
     restart: on-failure
+    healthcheck:
+      test:
+        ["CMD", "mysql", "-u", "iam", "-ppwd", "--execute", "SHOW DATABASES;"]
+      interval: 3s
+      retries: 5
+      timeout: 5s
     volumes:
       - iam-db:/var/lib/mysql
 
@@ -42,7 +48,8 @@ services:
     image: indigoiam/iam-login-service:latest
     restart: unless-stopped
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     environment:
       IAM_JAVA_OPTS: -Dspring.profiles.active=mysql-test,oidc,registration
       TZ: Europe/Rome

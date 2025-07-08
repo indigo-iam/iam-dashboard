@@ -62,6 +62,47 @@ Finally, in the **Crypto** section, enable PKCE with SHA-256 has algorithm.
 
 ## Development
 
+Development can be done locally (see below) or using Dev Containers which
+provides an already prepared environment.
+
+### Dev Containers
+
+#### Hosts file
+
+Before using Dev Containers, add `iam.test.example` to the localhost entry
+in your `/etc/hosts` file pointing to the localhost ip.
+
+It should look like the following
+
+```shell
+# /etc/hosts
+...
+127.0.0.1       localhost iam.test.example
+...
+```
+
+#### Start the project
+
+Open the project with VS Code and click "Open in container".
+
+When the environment is ready, open a Terminal within the dev container, install
+the dependencies with
+
+```shell
+npm install
+```
+
+and the run the application with
+
+```shell
+npm run dev
+```
+
+Now the dashboard is reachable at the address
+http://iam.test.example:8080/development.
+
+## Local development
+
 To launch the development environment, an installation of
 [Node.js](https://nodejs.org/en) is the only mandatory requirement.
 This project currently relies upon Node 22 LTS.
@@ -174,15 +215,8 @@ The setup is consists in the following micro-services:
  - IAM Dashboard
  - NGINX
 
-Before launching the deployment, add `iam.test.example` to the localhost entry
-in your `/etc/hosts` file. It should look like the follwing
-
-```shell
-# /etc/hosts
-...
-127.0.0.1       localhost iam.test.example
-...
-```
+Before launching the deployment, add `iam.test.example` es explained in
+[Hosts file](#hosts-file) section.
 
 Start the deployment with `docker compose up -d`. The old INDIGO IAM dashboard
 is now reachable at `iam.test.example:8080`. Create a new client a describe in

@@ -21,13 +21,15 @@ CLIENT_SECRET_HASH=$(htpasswd -bnBC 12 "" "${CLIENT_SECRET}")
 SCOPES="openid email profile scim:read scim:write iam:admin.read iam:admin.write"
 AUTH_SECRET=$(openssl rand -base64 32)
 REDIRECT_URI="${IAM_ENDPOINT}/new-dashboard/api/auth/callback/indigo-iam"
+REDIRECT_URI_DEVELOPMENT="${IAM_ENDPOINT}/development/api/auth/callback/indigo-iam"
 
 export CLIENT_NAME \
   CLIENT_ID \
   CLIENT_SECRET \
   CLIENT_SECRET_HASH \
   AUTH_SECRET \
-  REDIRECT_URI SCOPES
+  REDIRECT_URI SCOPES \
+  REDIRECT_URI_DEVELOPMENT
 
 query=$(envsubst < register_client.sql)
 

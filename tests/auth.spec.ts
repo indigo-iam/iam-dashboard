@@ -8,6 +8,6 @@ test("Login w/IAM", async ({ page }) => {
 
   await test.step("logout", async () => {
     await page.goto("/new-dashboard/signout");
-    await page.waitForURL("/login?logout");
+    await page.waitForURL("/login");
   });
 });

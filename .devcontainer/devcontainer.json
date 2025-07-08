@@ -2,13 +2,16 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
   "name": "IAM dashboard",
-  "dockerComposeFile": "../docker-compose.yaml",
-  "service": "dashboard",
+  "dockerComposeFile": [
+    "../docker-compose.yaml",
+    "docker-compose.extend.yaml"
+  ],
+  "service": "devcontainer",
   "workspaceFolder": "/workspace",
   "features": {
     "git": "os-provided"
   },
-  "postCreateCommand": "git config --global --add safe.directory /workspace && npm install",
+  "postCreateCommand": "git config --global --add safe.directory /workspace && rm /workspace/.env && cp /secrets/.env /workspace/.env",
   "customizations": {
     "vscode": {
       "settings": {

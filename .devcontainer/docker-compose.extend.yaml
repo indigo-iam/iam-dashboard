@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
+#
+# SPDX-License-Identifier: EUPL-1.2
+
+services:
+  devcontainer:
+    container_name: iam-devcontainer
+    image: node:lts
+    command: sleep infinity
+    depends_on:
+      client_registrant:
+        condition: service_completed_successfully
+    volumes:
+      - .:/workspace:cached
+      - secrets:/secrets
+    environment:
+      NEXT_PUBLIC_BASE_PATH: /development

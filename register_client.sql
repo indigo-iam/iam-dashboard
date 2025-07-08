@@ -35,7 +35,6 @@ INSERT INTO client_scope (
 INSERT INTO client_redirect_uri (
   owner_id,
   redirect_uri
-) VALUES (
-  @owner_id,
-  '$REDIRECT_URI'
-)
+) VALUES
+  (@owner_id, '$REDIRECT_URI'),
+  (@owner_id, '$REDIRECT_URI_DEVELOPMENT');

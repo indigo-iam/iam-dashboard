@@ -14,16 +14,20 @@ export default async function SignInPage(props: Readonly<SignInPageProps>) {
   const searchParams = await props.searchParams;
   const { error } = searchParams;
   const session = await auth();
-  async function action() {
-    "use server";
-    if (!session) {
-      await signIn("indigo-iam");
-    } else if (session.expired) {
+
+  if (session) {
+    if (session.expired) {
       redirect("/signout");
     } else {
       redirect("/");
     }
   }
+
+  async function action() {
+    "use server";
+    await signIn("indigo-iam");
+  }
+
   return (
     <div className="bg-secondary dark:bg-infn flex h-screen items-center justify-center">
       {error ? (

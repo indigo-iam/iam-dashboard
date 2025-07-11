@@ -7,7 +7,7 @@
 import { PaginatedGroupRequests } from "@/models/group-requests";
 import { Registration } from "@/models/registration";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
-import { BellIcon } from "@heroicons/react/16/solid";
+import { BellIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 type BadgeProps = {
@@ -31,22 +31,23 @@ function Badge(props: Readonly<BadgeProps>) {
 type NotificationsPopoverProps = {
   groupRequests: PaginatedGroupRequests;
   registrationRequests: Registration[];
+  className?: string;
 };
 
 export function NotificationsPopover(
   props: Readonly<NotificationsPopoverProps>
 ) {
-  const { groupRequests, registrationRequests } = props;
+  const { groupRequests, registrationRequests, className, ...others } = props;
   const totalRequests =
     groupRequests.totalResults + registrationRequests.length;
 
   return (
-    <Popover>
+    <Popover className={className} {...others}>
       <PopoverButton
         title="Notifications"
-        className="rounded-full p-2 hover:bg-white/10"
+        className="hover:bg-infn/10 rounded-full p-2"
       >
-        <BellIcon className="text-secondary size-6" />
+        <BellIcon className="text-secondary md:text-primary size-5" />
         <Badge count={totalRequests} />
       </PopoverButton>
       <PopoverPanel

@@ -7,17 +7,13 @@ import { toggleExpertMode } from "./actions";
 
 type ExpertModeSwitchProps = {
   defaultChecked: boolean;
-  isAdmin: boolean;
 };
 
 export async function ExpertModeSwitch(props: Readonly<ExpertModeSwitchProps>) {
-  const { defaultChecked, isAdmin } = props;
-  if (!isAdmin) {
-    return null;
-  }
+  const { defaultChecked } = props;
   return (
-    <div className="flex items-center gap-2">
-      <span className="text-sm">Expert mode</span>
+    <div className="flex gap-2">
+      <span className="text-sm whitespace-nowrap">Expert mode</span>
       <Switch
         defaultChecked={defaultChecked}
         onChange={toggleExpertMode}

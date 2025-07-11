@@ -59,7 +59,6 @@ function UserLogo(props: Readonly<{ username?: string | null }>) {
 function SessionButtons() {
   return (
     <div className="flex justify-around border-b border-slate-700 pb-2">
-      <Notifications />
       <NextLink
         title="Signout"
         href="/signout"
@@ -129,11 +128,12 @@ export async function Layout(props: Readonly<LayoutProps>) {
   return (
     <div id={title}>
       <header className="text-secondary md:text-primary bg-infn md:bg-secondary sticky top-0 flex grow justify-between border-b border-b-gray-300 p-4 md:ml-80">
-        <h1>{title}</h1>
-        <div className="flex gap-2">
-          <ExpertModeSwitch
-            isAdmin={isAdmin}
-            defaultChecked={expertModeEnabled}
+        <h2 className="my-auto text-2xl">{title}</h2>
+        <div className="flex items-center gap-2">
+          <ExpertModeSwitch defaultChecked={expertModeEnabled} />
+          <Notifications
+            className="hidden data-[visible=true]:block"
+            data-visible={isAdmin && expertModeEnabled}
           />
           <ToggleDrawerButton />
         </div>

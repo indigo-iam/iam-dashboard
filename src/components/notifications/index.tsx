@@ -4,19 +4,18 @@
 
 "use server";
 
-import { auth } from "@/auth";
 import { fetchGroupsRequests } from "@/services/group-requests";
 import { fetchRegistrationRequests } from "@/services/registration";
 import { NotificationsPopover } from "./popover";
 
-export default async function Notifications() {
-  const session = await auth();
-  const isAdmin = session?.is_admin;
+type NotificationsProps = {
+  className?: string;
+};
 
-  if (!isAdmin) {
-    return null;
-  }
-
+export default async function Notifications(
+  props: Readonly<NotificationsProps>
+) {
+  const { className, ...others } = props;
   const [registrationRequests, groupRequests] = await Promise.all([
     fetchRegistrationRequests(),
     fetchGroupsRequests(),
@@ -26,6 +25,8 @@ export default async function Notifications() {
     <NotificationsPopover
       groupRequests={groupRequests}
       registrationRequests={registrationRequests}
+      className={className}
+      {...others}
     />
   );
 }

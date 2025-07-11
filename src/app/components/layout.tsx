@@ -20,6 +20,8 @@ import {
 import Image from "next/image";
 import { auth } from "@/auth";
 import { settings } from "@/config";
+import { ExpertModeSwitch } from "./expert-mode-switch";
+import { cookies } from "next/headers";
 
 const basePath = settings.basePath ?? "";
 
@@ -69,8 +71,9 @@ function SessionButtons() {
   );
 }
 
-function Links(props: Readonly<{ isAdmin: boolean }>) {
-  if (props.isAdmin) {
+function Links(props: Readonly<{ isAdmin: boolean; expertMode: boolean }>) {
+  const { isAdmin, expertMode } = props;
+  if (isAdmin && expertMode) {
     return (
       <div className="px-6">
         <Link title="Home" href="/users/me">
@@ -120,11 +123,20 @@ export async function Layout(props: Readonly<LayoutProps>) {
   const session = await auth();
   const isAdmin = session?.is_admin ?? false;
   const username = session?.user?.name;
+  const cookiesStore = await cookies();
+  const expertModeEnabled =
+    cookiesStore.get("expert-mode")?.value === "enabled";
   return (
     <div id={title}>
       <header className="text-secondary md:text-primary bg-infn md:bg-secondary sticky top-0 flex grow justify-between border-b border-b-gray-300 p-4 md:ml-80">
         <h1>{title}</h1>
-        <ToggleDrawerButton />
+        <div className="flex gap-2">
+          <ExpertModeSwitch
+            isAdmin={isAdmin}
+            defaultChecked={expertModeEnabled}
+          />
+          <ToggleDrawerButton />
+        </div>
       </header>
       <Drawer>
         <div className="bg-infn sticky top-0 z-40">
@@ -133,7 +145,7 @@ export async function Layout(props: Readonly<LayoutProps>) {
         <nav className="space-y-4">
           <UserLogo username={username} />
           <SessionButtons />
-          <Links isAdmin={isAdmin} />
+          <Links isAdmin={isAdmin} expertMode={expertModeEnabled} />
         </nav>
       </Drawer>
       <div className="3xl:max-w-2/3 mx-auto p-4 md:ml-80 md:px-16 md:py-8 xl:max-w-3/4">

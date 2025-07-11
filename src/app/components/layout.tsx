@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import NextLink from "next/link";
-import { Drawer, Link } from "@/components/drawer";
+import { Drawer, Link, ToggleDrawerButton } from "@/components/drawer";
 import Notifications from "@/components/notifications";
 import {
   ArrowRightEndOnRectangleIcon,
@@ -121,11 +121,12 @@ export async function Layout(props: Readonly<LayoutProps>) {
   const isAdmin = session?.is_admin ?? false;
   const username = session?.user?.name;
   return (
-    <div className="mt-16 ml-0 md:mt-0 md:ml-80" id={title}>
-      <h1 className="text-primary dark:text-secondary z-10 flex h-0 items-center border-b border-b-gray-300 bg-gray-100 p-0 opacity-0 md:h-16 md:p-4 md:opacity-100 dark:bg-slate-950">
-        {title}
-      </h1>
-      <Drawer title={title}>
+    <div id={title}>
+      <header className="text-secondary md:text-primary bg-infn md:bg-secondary sticky top-0 flex grow justify-between border-b border-b-gray-300 p-4 md:ml-80">
+        <h1>{title}</h1>
+        <ToggleDrawerButton />
+      </header>
+      <Drawer>
         <div className="bg-infn sticky top-0 z-40">
           <LogoIam />
         </div>
@@ -135,7 +136,7 @@ export async function Layout(props: Readonly<LayoutProps>) {
           <Links isAdmin={isAdmin} />
         </nav>
       </Drawer>
-      <div className="3xl:max-w-2/3 mx-auto p-4 md:px-16 md:py-8 xl:max-w-3/4">
+      <div className="3xl:max-w-2/3 mx-auto p-4 md:ml-80 md:px-16 md:py-8 xl:max-w-3/4">
         {children}
       </div>
     </div>

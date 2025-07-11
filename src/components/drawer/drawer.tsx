@@ -5,44 +5,44 @@
 "use client";
 
 import { Button } from "@/components/buttons";
-import { Bars3Icon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { useEffect } from "react";
+
+export function toggleDrawer() {
+  const drawer = document.getElementById("drawer");
+  drawer?.toggleAttribute("data-open");
+}
 
 type DrawerProps = {
-  title?: string;
   children?: React.ReactNode;
 };
 
 export function Drawer(props: Readonly<DrawerProps>) {
-  const { title, children } = props;
-  const [show, setShow] = useState(false);
+  const { children } = props;
 
-  const toggleDrawer = () => {
+  const close = () => {
     const drawer = document.getElementById("drawer");
-    drawer?.classList.toggle("translate-x-0");
-    setShow(!show);
+    if (drawer?.hasAttribute("data-open")) {
+      drawer?.removeAttribute("data-open");
+    }
   };
 
+  useEffect(() => {
+    window.addEventListener("resize", close);
+    return () => {
+      window.removeEventListener("resize", close);
+    };
+  });
+
   return (
-    <>
+    <div id="drawer" className="group">
       <Button
         id="backdrop-drawer-button"
-        className="fixed inset-0 -z-10 bg-black/30 opacity-0 transition-opacity data-[show=true]:z-20 data-[show=true]:opacity-100 md:hidden"
+        className="fixed inset-0 -z-10 bg-black/30 opacity-0 transition-opacity group-data-[open]:z-30 group-data-[open]:opacity-100 md:hidden"
         onClick={toggleDrawer}
-        data-show={show}
       />
-      <header className="bg-infn t-0 text-secondary fixed inset-0 z-30 flex h-16 items-center justify-between px-4 py-2 text-2xl font-bold md:hidden">
-        <span className="line-clamp-2">{title}</span>
-        <Button className="flex" onClick={toggleDrawer}>
-          <Bars3Icon className="p my-auto size-8 rounded fill-white hover:bg-white/30" />
-        </Button>
-      </header>
-      <aside
-        id="drawer"
-        className="bg-infn easy-in-out fixed inset-0 z-30 w-80 -translate-x-full space-y-4 overflow-auto duration-100 md:translate-x-0"
-      >
+      <aside className="bg-infn easy-in-out fixed inset-0 z-30 w-80 -translate-x-full space-y-4 overflow-auto duration-100 group-data-[open]:translate-x-0 md:translate-x-0">
         {children}
       </aside>
-    </>
+    </div>
   );
 }

@@ -2,6 +2,9 @@ import { test, expect } from "./auth.fixture";
 
 test("Create and delete Group", async ({ page }) => {
   await test.step("add group", async () => {
+    await page.goto("/new-dashboard");
+    await page.getByRole("switch").click();
+    await page.waitForLoadState("networkidle");
     await page.goto("/new-dashboard/groups");
     await page.getByTestId("add-group").click();
     const modal = page.getByTestId("modal");

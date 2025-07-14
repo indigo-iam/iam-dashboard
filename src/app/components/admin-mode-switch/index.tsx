@@ -3,21 +3,21 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Switch } from "@headlessui/react";
-import { toggleExpertMode } from "./actions";
+import { toggleAdminMode } from "./actions";
 
-type ExpertModeSwitchProps = {
+type AdminModeSwitchProps = {
   defaultChecked: boolean;
 };
 
-export async function ExpertModeSwitch(props: Readonly<ExpertModeSwitchProps>) {
+export async function AdminModeSwitch(props: Readonly<AdminModeSwitchProps>) {
   const { defaultChecked } = props;
   return (
     <div className="flex gap-2">
-      <span className="text-sm whitespace-nowrap">Expert mode</span>
+      <span className="text-sm whitespace-nowrap">Admin mode</span>
       <Switch
         defaultChecked={defaultChecked}
-        onChange={toggleExpertMode}
-        name="expert-mode"
+        onChange={toggleAdminMode}
+        name="admin-mode"
         className="group data-checked:bg-danger inline-flex h-5 w-10 items-center rounded-full bg-gray-200 transition"
       >
         <span className="size-4 translate-x-1 rounded-full bg-white transition group-data-checked:translate-x-5" />

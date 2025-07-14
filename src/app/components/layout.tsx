@@ -20,7 +20,7 @@ import {
 import Image from "next/image";
 import { auth } from "@/auth";
 import { settings } from "@/config";
-import { ExpertModeSwitch } from "./expert-mode-switch";
+import { AdminModeSwitch } from "./admin-mode-switch";
 import { cookies } from "next/headers";
 
 const basePath = settings.basePath ?? "";
@@ -124,13 +124,13 @@ export async function Layout(props: Readonly<LayoutProps>) {
   const username = session?.user?.name;
   const cookiesStore = await cookies();
   const expertModeEnabled =
-    cookiesStore.get("expert-mode")?.value === "enabled";
+    cookiesStore.get("admin-mode")?.value === "enabled";
   return (
     <div id={title}>
       <header className="text-secondary md:text-primary bg-infn md:bg-secondary sticky top-0 flex grow justify-between border-b border-b-gray-300 p-4 md:ml-80">
         <h2 className="my-auto text-2xl">{title}</h2>
         <div className="flex items-center gap-2">
-          <ExpertModeSwitch defaultChecked={expertModeEnabled} />
+          <AdminModeSwitch defaultChecked={expertModeEnabled} />
           <Notifications
             className="hidden data-[visible=true]:block"
             data-visible={isAdmin && expertModeEnabled}

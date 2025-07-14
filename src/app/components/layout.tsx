@@ -13,7 +13,6 @@ import {
   InboxArrowDownIcon,
   RocketLaunchIcon,
   ScaleIcon,
-  UserCircleIcon,
   UserGroupIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
@@ -22,6 +21,7 @@ import { auth } from "@/auth";
 import { settings } from "@/config";
 import { AdminModeSwitch } from "./admin-mode-switch";
 import { cookies } from "next/headers";
+import { Gravatar } from "@/components/gravatar";
 
 const basePath = settings.basePath ?? "";
 
@@ -44,37 +44,38 @@ function LogoIam() {
   );
 }
 
-function UserLogo(props: Readonly<{ username?: string | null }>) {
-  const { username } = props;
+function UserLogo(
+  props: Readonly<{ username?: string | null; email?: string | null }>
+) {
+  const { username, email } = props;
   return (
-    <div className="text-secondary flex items-center justify-center px-2">
-      <UserCircleIcon className="size-12" />
-      <span className="px-4 text-2xl font-bold">
+    <div className="text-secondary flex items-center gap-4">
+      <Gravatar email={email} />
+      <span className="text-center text-xl font-bold">
         {username ?? "Unknown user"}
       </span>
     </div>
   );
 }
 
-function SessionButtons() {
+function Signout() {
   return (
-    <div className="flex justify-around border-b border-slate-700 pb-2">
-      <NextLink
-        title="Signout"
-        href="/signout"
-        className="text-secondary flex rounded-full p-2 hover:bg-white/10"
-      >
-        <ArrowRightEndOnRectangleIcon className="size-6" />
-      </NextLink>
-    </div>
+    <NextLink
+      title="Signout"
+      href="/signout"
+      className="text-secondary flex justify-center gap-4 rounded-md border border-white/30 bg-linear-to-b from-white/10 from-5% via-transparent via-50% to-white/10 to-95% p-2 hover:bg-white/10"
+    >
+      Sign Out
+      <ArrowRightEndOnRectangleIcon className="size-6" />
+    </NextLink>
   );
 }
 
-function Links(props: Readonly<{ isAdmin: boolean; expertMode: boolean }>) {
-  const { isAdmin, expertMode } = props;
-  if (isAdmin && expertMode) {
+function Links(props: Readonly<{ isAdmin: boolean; adminMode: boolean }>) {
+  const { isAdmin, adminMode } = props;
+  if (isAdmin && adminMode) {
     return (
-      <div className="px-6">
+      <div className="grow">
         <Link title="Home" href="/users/me">
           <HomeIcon className="size-5" />
         </Link>
@@ -103,7 +104,7 @@ function Links(props: Readonly<{ isAdmin: boolean; expertMode: boolean }>) {
     );
   } else {
     return (
-      <div className="px-6">
+      <div className="grow">
         <Link title="Home" href="/users/me">
           <HomeIcon className="size-5" />
         </Link>
@@ -122,31 +123,39 @@ export async function Layout(props: Readonly<LayoutProps>) {
   const session = await auth();
   const isAdmin = session?.is_admin ?? false;
   const username = session?.user?.name;
+  const email = session?.user?.email;
   const cookiesStore = await cookies();
-  const expertModeEnabled =
-    cookiesStore.get("admin-mode")?.value === "enabled";
+  const adminModeEnabled = cookiesStore.get("admin-mode")?.value === "enabled";
   return (
     <div id={title}>
       <header className="text-secondary md:text-primary bg-infn md:bg-secondary sticky top-0 flex grow justify-between border-b border-b-gray-300 p-4 md:ml-80">
         <h2 className="my-auto text-2xl">{title}</h2>
         <div className="flex items-center gap-2">
-          <AdminModeSwitch defaultChecked={expertModeEnabled} />
-          <Notifications
-            className="hidden data-[visible=true]:block"
-            data-visible={isAdmin && expertModeEnabled}
-          />
+          {isAdmin && (
+            <>
+              <AdminModeSwitch defaultChecked={adminModeEnabled} />
+              <Notifications
+                className="hidden data-[visible=true]:block"
+                data-visible={isAdmin && adminModeEnabled}
+              />
+            </>
+          )}
           <ToggleDrawerButton />
         </div>
       </header>
       <Drawer>
-        <div className="bg-infn sticky top-0 z-40">
-          <LogoIam />
+        <div className="flex h-full flex-col">
+          <div className="bg-infn sticky top-0 z-40">
+            <LogoIam />
+          </div>
+          <nav className="mt-4 flex grow flex-col justify-between p-6">
+            <Links isAdmin={isAdmin} adminMode={adminModeEnabled} />
+            <div className="space-y-2 border-t border-white/30 py-2">
+              <UserLogo username={username} email={email} />
+              <Signout />
+            </div>
+          </nav>
         </div>
-        <nav className="space-y-4">
-          <UserLogo username={username} />
-          <SessionButtons />
-          <Links isAdmin={isAdmin} expertMode={expertModeEnabled} />
-        </nav>
       </Drawer>
       <div className="3xl:max-w-2/3 mx-auto p-4 md:ml-80 md:px-16 md:py-8 xl:max-w-3/4">
         {children}

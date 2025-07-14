@@ -13,7 +13,7 @@ export async function AdminModeSwitch(props: Readonly<AdminModeSwitchProps>) {
   const { defaultChecked } = props;
   return (
     <div className="flex gap-2">
-      <span className="text-sm whitespace-nowrap">Admin mode</span>
+      <span className="text-sm whitespace-nowrap">Admin Mode</span>
       <Switch
         defaultChecked={defaultChecked}
         onChange={toggleAdminMode}

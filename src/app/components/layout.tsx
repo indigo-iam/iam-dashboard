@@ -128,7 +128,7 @@ export async function Layout(props: Readonly<LayoutProps>) {
   const adminModeEnabled = cookiesStore.get("admin-mode")?.value === "enabled";
   return (
     <div id={title}>
-      <header className="text-secondary md:text-primary bg-infn md:bg-secondary sticky top-0 flex grow justify-between border-b border-b-gray-300 p-4 md:ml-80">
+      <header className="text-secondary md:text-primary bg-infn dark:bg-infn dark:text-secondary md:bg-secondary sticky top-0 flex grow justify-between border-b border-b-gray-300 p-4 md:ml-80">
         <h2 className="my-auto text-2xl">{title}</h2>
         <div className="flex items-center gap-2">
           {isAdmin && (

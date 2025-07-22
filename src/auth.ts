@@ -42,6 +42,7 @@ const IamProvider: OIDCConfig<Profile> = {
   authorization: {
     params: {
       scope: process.env.IAM_SCOPES,
+      audience: process.env.IAM_AUTHORITY_URL,
     },
   },
   checks: ["pkce", "state"],

@@ -27,30 +27,30 @@ export default function AddAttributeModal(
   };
 
   return (
-    <Modal {...modalProps} title={`Set an attribute for user ${username}`}>
+    <Modal {...modalProps} title="Add user attribute">
       <Form action={action}>
         <ModalBody>
-          <div className="flex flex-row gap-2">
-            <b>User</b>
-            {username}
-          </div>
           <Field>
-            <Label> Attribute Name</Label>
+            <Label>Username</Label>
+            <Input defaultValue={username} disabled />
+          </Field>
+          <Field>
+            <Label data-required>Name</Label>
             <Input
               id="attr-name"
               title="Attribute Name"
               name="attr-name"
-              placeholder="Attribute Name..."
+              placeholder="Attribute name"
               required
             />
           </Field>
           <Field>
-            <Label>Attribute Value</Label>
+            <Label data-required>Value</Label>
             <Input
               id="attr-value"
               title="Attribute Value"
               name="attr-value"
-              placeholder="Attribute Value..."
+              placeholder="Attribute value"
               required
             />
           </Field>

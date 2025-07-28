@@ -43,7 +43,11 @@ export default function Registrations(props: Readonly<RegistrationsProps>) {
 
   if (requests.length === 0) {
     return (
-      <TabPanel className="panel">There are no pending requests.</TabPanel>
+      <TabPanel className="panel">
+        <p className="dark:text-secondary/60 text-gray p-2">
+          There are no pending registration requests.
+        </p>
+      </TabPanel>
     );
   }
 

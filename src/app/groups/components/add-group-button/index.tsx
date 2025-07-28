@@ -5,7 +5,7 @@
 "use client";
 
 import { Button } from "@/components/buttons";
-import { Form } from "@/components/form";
+import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter } from "@/components/modal";
 import { addGroup } from "@/services/groups";
@@ -28,13 +28,16 @@ function AddGroupForm(props: Readonly<AddGroupFormProps>) {
   return (
     <Form id="add-root-group-form" action={handleSubmit}>
       <ModalBody>
-        <Input
-          type="text"
-          name="groupName"
-          title="Name"
-          placeholder="Insert group name..."
-          required
-        />
+        <Field className="mb-8">
+          <Label data-required>Group Name</Label>
+          <Input
+            type="text"
+            name="groupName"
+            title="Name"
+            placeholder="Group name"
+            required
+          />
+        </Field>
       </ModalBody>
       <ModalFooter>
         <Button className="btn-tertiary" type="reset" onClick={onClose}>
@@ -44,7 +47,7 @@ function AddGroupForm(props: Readonly<AddGroupFormProps>) {
           Reset
         </Button>
         <Button className="btn-primary" type="submit">
-          Add Root Group
+          Add Group
         </Button>
       </ModalFooter>
     </Form>
@@ -62,7 +65,12 @@ export default function AddGroupButton(props: Readonly<AddGroupButtonProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Modal show={show} onClose={close} title="Add Group" data-testid="modal">
+      <Modal
+        show={show}
+        onClose={close}
+        title="Create new group"
+        data-testid="modal"
+      >
         <AddGroupForm onClose={close} onGroupAdded={onGroupAdded} />
       </Modal>
       <Button className="btn-secondary" data-testid="add-group" onClick={open}>

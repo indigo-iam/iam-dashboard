@@ -12,9 +12,9 @@ export function DangerZone(props: Readonly<{ client: Client }>) {
   return (
     <div className="flex flex-col gap-8 pt-4 lg:flex-row">
       <div className="flex w-full flex-col space-y-2 text-sm font-light lg:w-1/3">
-        <span className="text-danger dark:text-danger-light font-semibold">
+        <h5 className="text-danger dark:text-danger-light font-semibold">
           Danger Zone
-        </span>
+        </h5>
         <p className="text-extralight dark:text-light-gray/80">
           A disabled client cannot issue new Access Tokens and Refresh Tokens
           and the old ones are immediately revoked.

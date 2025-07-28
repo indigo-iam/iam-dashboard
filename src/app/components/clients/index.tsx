@@ -27,7 +27,7 @@ function Row(props: Readonly<RowProps>) {
     ? dateToHuman(new Date(client.created_at))
     : "N/A";
   return (
-    <li className="iam-list-item flex flex-row gap-2">
+    <li className="iam-list-item flex flex-row">
       <div className="flex grow">
         <div className="flex grow flex-col space-y-2 lg:flex-row">
           <Link
@@ -47,7 +47,7 @@ function Row(props: Readonly<RowProps>) {
               </p>
             </div>
           </Link>
-          <div className="flex flex-row items-center gap-2 lg:flex-col lg:items-end lg:justify-center">
+          <div className="flex flex-row items-center gap-2 px-2 lg:flex-col lg:items-end lg:justify-center">
             <Status active={client.active} />
             <p className="text-gray dark:text-secondary/50 text-sm whitespace-nowrap sm:text-right">
               Created {createdAt}

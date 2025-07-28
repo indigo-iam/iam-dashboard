@@ -33,7 +33,7 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
         <Input
           title="Client Name"
           name="client_name"
-          placeholder="The name of the client..."
+          placeholder="The name of the client"
           required
           onChange={handleClientNameChange}
         />
@@ -43,7 +43,7 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
         <Input
           title="Client Description"
           name="client_description"
-          placeholder="Client description..."
+          placeholder="Client description"
         />
       </Field>
       <div className="flex flex-row justify-end py-2">

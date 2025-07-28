@@ -48,6 +48,8 @@ function CertificateTypeRadio(
 }
 
 function PEMField() {
+  const placeholder =
+    "-----BEGIN PKCS12-----\nMIIF2gIBAzCCBf8GCSqGSIb3DQEHAaCCBf8wggVgMI...\n-----END PKCS12-----";
   return (
     <Field>
       <Label data-required>Certificate</Label>
@@ -55,7 +57,8 @@ function PEMField() {
         name="certificate"
         className="iam-input w-full"
         required
-        placeholder="Certificate..."
+        placeholder={placeholder}
+        rows={3}
       />
     </Field>
   );
@@ -103,7 +106,11 @@ export default function LinkCertificateModal(
           </Field>
           <Field>
             <Label data-required>Label</Label>
-            <Input required name="label" placeholder="Label..." />
+            <Input
+              required
+              name="label"
+              placeholder="Add a label to the certificate"
+            />
           </Field>
           {issuers ? <CertificateTypeRadio callback={setFormat} /> : null}
           {format === "pem" ? <PEMField /> : <IssuerField />}
@@ -112,7 +119,7 @@ export default function LinkCertificateModal(
             <Textarea
               name="notes"
               className="iam-input w-full"
-              placeholder="Notes..."
+              placeholder="Additional notes"
             />
           </Field>
         </ModalBody>

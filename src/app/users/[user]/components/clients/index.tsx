@@ -4,16 +4,19 @@
 
 import { ClientsTable } from "@/app/components/clients";
 import { TabPanel } from "@/components/tabs";
-import { getClientsPage } from "@/services/clients";
+import { User } from "@/models/scim";
+import { getClientsByAccount, getClientsPage } from "@/services/clients";
 import Link from "next/link";
 
 type UseClientsProps = {
-  isMe: boolean;
+  user: User;
 };
 
 export async function UserClients(props: Readonly<UseClientsProps>) {
-  const { isMe } = props;
-  const clientPage = await getClientsPage(100, 1, isMe);
+  const { user } = props;
+  // const clientPage = await getClientsByAccount(user.id, 100, 1);
+  const clientPage = await getClientsPage(100, 1, false);
+
   const clients = clientPage.Resources;
   return (
     <TabPanel className="space-y-4">

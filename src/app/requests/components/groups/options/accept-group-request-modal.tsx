@@ -5,8 +5,11 @@
 "use client";
 
 import ConfirmModal from "@/components/confirm-modal";
+import { Label } from "@/components/form";
+import { Textarea } from "@/components/textarea";
 import { GroupRequest } from "@/models/group-requests";
 import { approveGroupRequest } from "@/services/group-requests";
+import { Field } from "@headlessui/react";
 
 type DeleteGroupRequestButtonProps = {
   request: GroupRequest;
@@ -14,7 +17,7 @@ type DeleteGroupRequestButtonProps = {
   onClose: () => void;
 };
 
-export default function DeleteGroupRequestModal(
+export default function AcceptGroupRequestModal(
   props: Readonly<DeleteGroupRequestButtonProps>
 ) {
   const { request, show, onClose } = props;
@@ -30,15 +33,15 @@ export default function DeleteGroupRequestModal(
       onClose={onClose}
       onConfirm={action}
       title="Approve Group Request"
-      danger
     >
-      <p>
+      <p className="p-2">
         Are you sure you want the user <b>{request.userFullName}</b> to join the
         group <b>{request.groupName}</b>?
       </p>
-      <p className="text-center">
-        <i>{`"${request.notes}"`}</i>
-      </p>
+      <Field className="p-2">
+        <Label>Motivation</Label>
+        <Textarea className="iam-input" defaultValue={request.notes} disabled />
+      </Field>
     </ConfirmModal>
   );
 }

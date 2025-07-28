@@ -42,7 +42,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
         <TabPanels>
           <General user={user} isMe={isMe} />
           <UserGroups user={user} />
-          <UserClients isMe={isMe} />
+          <UserClients user={user} />
           <LinkedAccounts user={user} />
           <Certificates user={user} />
           <SSHKeys user={user} />

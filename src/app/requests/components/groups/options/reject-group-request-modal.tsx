@@ -35,11 +35,15 @@ export default function RejectRequestModalProps(
             <b>{request.groupName}</b> by the user <b>{request.userFullName}</b>
             ?
           </p>
-          <p>To proceed provide a motivation that will sent to the user:</p>
-          <Field className="flex flex-col">
-            <Label data-required>Motivation</Label>
-            <Textarea name="motivation" className="iam-input" required />
-          </Field>
+          <div>
+            <p className="text-sm">
+              Optionally, write a motivation that will sent to the user.
+            </p>
+            <Field>
+              <Label>Motivation</Label>
+              <Textarea name="motivation" className="iam-input" required />
+            </Field>
+          </div>
         </ModalBody>
         <ModalFooter>
           <Button

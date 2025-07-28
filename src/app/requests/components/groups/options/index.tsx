@@ -6,7 +6,7 @@
 
 import { Options, Option } from "@/components/options";
 import { GroupRequest } from "@/models/group-requests";
-import DeleteGroupRequestModal from "./delete-group-request-modal";
+import AcceptGroupRequestModal from "./accept-group-request-modal";
 import RejectRequestModalProps from "./reject-group-request-modal";
 import { useState } from "react";
 
@@ -18,21 +18,19 @@ export default function GroupRequestOptions(
   props: Readonly<GroupRequestOptionsProps>
 ) {
   const { request } = props;
-  const [show, setShow] = useState<"DELETE_REQUEST" | "REJECT_REQUEST">();
+  const [show, setShow] = useState<"ACCEPT_REQUEST" | "REJECT_REQUEST">();
   const close = () => setShow(undefined);
   return (
     <>
       <Options>
-        <Option onClick={() => setShow("DELETE_REQUEST")} data-danger>
-          Delete
-        </Option>
+        <Option onClick={() => setShow("ACCEPT_REQUEST")}>Accept</Option>
         <Option onClick={() => setShow("REJECT_REQUEST")} data-danger>
           Reject
         </Option>
       </Options>
-      <DeleteGroupRequestModal
+      <AcceptGroupRequestModal
         request={request}
-        show={show === "DELETE_REQUEST"}
+        show={show === "ACCEPT_REQUEST"}
         onClose={close}
       />
       <RejectRequestModalProps

@@ -52,6 +52,7 @@ cypress/screenshots/
 # secrets
 .devcontainer/devcontainer.env
 *.env
+*.env*
 nginx/conf.d/env/*.conf
 cypress.env.json
 

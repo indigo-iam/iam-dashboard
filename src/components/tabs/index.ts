@@ -2,5 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-export { default as Tab } from "./tab";
-export { TabGroup, TabPanels, TabList, TabPanel } from "@headlessui/react";
+export { Tab } from "./tab";
+export { TabGroup } from "./tab-group";
+export { TabPanels, TabList, TabPanel } from "@headlessui/react";

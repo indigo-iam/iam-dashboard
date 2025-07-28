@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { UserCircleIcon } from "@heroicons/react/24/solid";
+import Image from "next/image";
 import { createHash } from "node:crypto";
 
 type GravatarProps = {
@@ -23,7 +24,7 @@ export async function Gravatar(props: Readonly<GravatarProps>) {
   hash.update(email);
   const url = `https://gravatar.com/avatar/${hash.digest("hex")}?r=g&d=identicon`;
   return (
-    <img
+    <Image
       src={url}
       width="0"
       height="0"

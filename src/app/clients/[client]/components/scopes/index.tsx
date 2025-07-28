@@ -39,9 +39,16 @@ type CustomScopesProps = {
 async function CustomScopes(props: Readonly<CustomScopesProps>) {
   const { client, scopes } = props;
   return scopes.map(s => (
-    <li className="iam-list-item items-center" key={s}>
-      <span className="flex grow font-bold">{s}</span>
-      <ScopeOptions client={client} scope={s} />
+    <li className="iam-list-item" key={s}>
+      <div className="flex grow flex-col">
+        <p>{s}</p>
+        <p className="text-gray dark:text-secondary/60 line-clamp-1 text-sm">
+          (custom scope)
+        </p>
+      </div>
+      <div className="flex flex-col items-center">
+        <ScopeOptions client={client} scope={s} />
+      </div>
     </li>
   ));
 }

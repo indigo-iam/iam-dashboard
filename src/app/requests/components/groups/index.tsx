@@ -22,8 +22,8 @@ export function Row(props: Readonly<RowPros>) {
   return (
     <li className="iam-list-item flex flex-row items-center">
       <div className="flex grow flex-col">
-        <div className="space-x-1">
-          <span>User</span>
+        <p className="space-x-1">
+          User
           <Link
             href={`/users/${userUuid}`}
             className="space-x-1 break-all hover:underline"
@@ -31,16 +31,16 @@ export function Row(props: Readonly<RowPros>) {
             <span className="font-bold">{userFullName}</span>
             <span>({username})</span>
           </Link>
-          <span>asked to join group</span>
+          asked to join group
           <Link href={`/groups/${groupUuid}`} className="hover:underline">
             <span className="font-bold">{groupName}</span>
           </Link>
           .{" "}
-        </div>
+        </p>
         {request.notes && (
-          <span className="text-gray dark:text-secondary/60 line-clamp-1 text-sm">
+          <p className="text-gray dark:text-secondary/60 line-clamp-1 text-sm">
             Motivation: {request.notes}
-          </span>
+          </p>
         )}
       </div>
       <p className="text-gray dark:text-secondary/50 px-2 text-sm whitespace-nowrap sm:text-right">

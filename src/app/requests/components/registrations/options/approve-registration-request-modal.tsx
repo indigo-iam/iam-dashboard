@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
+import { Textarea } from "@/components/textarea";
 import { Registration } from "@/models/registration";
 import { approveRegistrationRequest } from "@/services/registration";
 
@@ -31,9 +32,8 @@ export default function ApproveRegistrationRequestModal(
         Are you sure you want to add the user{" "}
         <b>{`${request.givenname} ${request.familyname}`}?</b>
       </p>
-      <p className="text-center">
-        <i>{`"${request.notes}"`}</i>
-      </p>
+      <p>They provided the following motivation:</p>
+      <Textarea className="iam-input" defaultValue={request.notes} disabled />
     </ConfirmModal>
   );
 }

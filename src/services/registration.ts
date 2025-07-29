@@ -23,11 +23,11 @@ export async function approveRegistrationRequest(requestId: string) {
     method: "POST",
   });
   if (response.ok) {
-    setNotification({ type: "success", message: "User approved" });
+    await setNotification({ type: "success", message: "User approved" });
     revalidatePath("/requests");
   } else {
     const msg = await response.text();
-    setNotification({
+    await setNotification({
       type: "error",
       message: "Cannot approve user",
       subtitle: `Error ${response.status} ${msg}`,
@@ -47,11 +47,14 @@ export async function rejectRegistrationRequest(
     headers: { "content-type": "application/json" },
   });
   if (response.ok) {
-    setNotification({ type: "success", message: "User request rejected" });
+    await setNotification({
+      type: "success",
+      message: "User request rejected",
+    });
     revalidatePath("/requests");
   } else {
     const msg = await response.text();
-    setNotification({
+    await setNotification({
       type: "error",
       message: "Cannot reject user request",
       subtitle: `Error ${response.status} ${msg}`,

@@ -5,7 +5,7 @@
 import { ClientsTable } from "@/app/components/clients";
 import { TabPanel } from "@/components/tabs";
 import { User } from "@/models/scim";
-import { getClientsByAccount, getClientsPage } from "@/services/clients";
+import { getClientsPage } from "@/services/clients";
 import Link from "next/link";
 
 type UseClientsProps = {

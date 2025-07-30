@@ -55,6 +55,7 @@ USER nextjs
 
 ENV NODE_ENV=production
 ENV PORT=80
+ENV HOSTNAME=0.0.0.0
 EXPOSE ${PORT}
 
 # server.js is created by next build from the standalone output

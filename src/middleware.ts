@@ -15,16 +15,15 @@ export const config = {
 
 export default auth(async req => {
   const { nextUrl, auth } = req;
-  const cookiesStore = await cookies();
   if ((!auth || auth.expired) && nextUrl.pathname != `${BASE_PATH}/signin`) {
     const url = new URL(`${BASE_PATH}/signin`, nextUrl.origin);
     return NextResponse.redirect(url);
   }
-  if (
-    cookiesStore.get("admin-mode")?.value !== "enabled" &&
-    nextUrl.pathname !== "/users/me"
-  ) {
-    const url = new URL(`${BASE_PATH}/users/me`, nextUrl.origin);
+  const cookiesStore = await cookies();
+  const adminMode = cookiesStore.get("admin-mode")?.value;
+  const pathname = `${BASE_PATH}/users/me`;
+  if (adminMode !== "enabled" && nextUrl.pathname !== pathname) {
+    const url = new URL(pathname, nextUrl.origin);
     return NextResponse.redirect(url);
   }
   return NextResponse.next();

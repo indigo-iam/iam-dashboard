@@ -18,7 +18,7 @@ export async function AdminModeSwitch(props: Readonly<AdminModeSwitchProps>) {
         defaultChecked={defaultChecked}
         onChange={toggleAdminMode}
         name="admin-mode"
-        className="group data-checked:bg-danger inline-flex h-5 w-10 items-center rounded-full bg-gray-200 transition dark:bg-white/20"
+        className="group data-checked:bg-danger inline-flex h-5 w-10 items-center rounded-full bg-white/20 transition md:bg-gray-200 dark:bg-white/20"
       >
         <span className="size-4 translate-x-1 rounded-full bg-white transition group-data-checked:translate-x-5" />
       </Switch>

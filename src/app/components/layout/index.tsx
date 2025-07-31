@@ -125,7 +125,7 @@ export async function Layout(props: Readonly<LayoutProps>) {
   const cookiesStore = await cookies();
   const adminModeEnabled = cookiesStore.get("admin-mode")?.value === "enabled";
   return (
-    <div id={title}>
+    <div id={title} className="bg-success relative">
       <header className="text-secondary md:text-primary bg-infn dark:bg-infn dark:text-secondary md:bg-secondary sticky top-0 flex grow justify-between border-b border-b-gray-300 p-4 md:ml-80">
         <h2 className="my-auto text-2xl">{title}</h2>
         <div className="flex items-center gap-2">
@@ -155,8 +155,8 @@ export async function Layout(props: Readonly<LayoutProps>) {
           </nav>
         </div>
       </Drawer>
-      <div className="3xl:max-w-2/3 mx-auto p-4 md:ml-80 md:px-16 md:py-8 xl:max-w-3/4">
-        {children}
+      <div className="absolute top-16 right-0 p-4 md:left-80">
+        <div className="3xl:max-w-2/3 mx-auto xl:max-w-3/4">{children}</div>
       </div>
     </div>
   );

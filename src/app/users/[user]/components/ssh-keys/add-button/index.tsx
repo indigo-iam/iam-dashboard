@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+
 import { Button } from "@/components/buttons";
 import { User } from "@/models/scim";
 import AddSSHKeyModal from "./modal";
@@ -17,7 +18,6 @@ export default function AddSSHKeyButton(props: Readonly<AddSSHKeyButtonProps>) {
   const [show, setShow] = useState(false);
   const openModal = () => setShow(true);
   const closeModal = () => setShow(false);
-
   return (
     <>
       <Button className="btn-secondary" onClick={openModal}>

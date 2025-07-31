@@ -21,7 +21,6 @@ export function TabGroup(props: Readonly<TabGroupProps>) {
   }, [pathname]);
 
   function onTabChange(index: number) {
-    console.log("write");
     sessionStorage.setItem(`${pathname}?tabIndex`, index.toString());
     setIndex(index);
   }

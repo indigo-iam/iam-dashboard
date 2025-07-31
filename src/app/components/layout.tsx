@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import NextLink from "next/link";
-import { Drawer, Link, ToggleDrawerButton } from "@/components/drawer";
-import Notifications from "@/components/notifications";
+import { cookies } from "next/headers";
+import Image from "next/image";
 import {
   ArrowRightEndOnRectangleIcon,
   ClipboardDocumentCheckIcon,
@@ -18,7 +18,9 @@ import {
 } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { auth } from "@/auth";
-import { settings } from "@/config";
+import { Drawer, Link, ToggleDrawerButton } from "@/components/drawer";
+import { Gravatar } from "@/components/gravatar";
+import Notifications from "@/components/notifications";
 import { AdminModeSwitch } from "./admin-mode-switch";
 import { cookies } from "next/headers";
 import { Gravatar } from "@/components/gravatar";

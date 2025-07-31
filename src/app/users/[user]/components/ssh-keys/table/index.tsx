@@ -4,14 +4,14 @@
 
 import { SSHKey } from "@/models/indigo-user";
 import { User } from "@/models/scim";
-import SSHKeysOptions from "./options";
 import { dateToHuman } from "@/utils/dates";
+import SSHKeysOptions from "./options";
 
 function SSHKeyView(props: Readonly<{ user: User; sshKey: SSHKey }>) {
   const { user, sshKey } = props;
   const createdAt = sshKey.created
-    ? dateToHuman(new Date(sshKey.created!))
-    : undefined;
+    ? dateToHuman(new Date(sshKey.created))
+    : "N/A";
   return (
     <li className="iam-list-item flex flex-row overflow-hidden">
       <div className="my-auto flex grow flex-col gap-1 truncate">

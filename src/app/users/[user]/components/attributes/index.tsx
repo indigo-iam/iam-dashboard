@@ -11,7 +11,7 @@ type AttributesProps = {
   user: User;
 };
 
-export function Attributes(props: Readonly<AttributesProps>) {
+export async function Attributes(props: Readonly<AttributesProps>) {
   const { user } = props;
   return (
     <TabPanel className="panel space-y-4">

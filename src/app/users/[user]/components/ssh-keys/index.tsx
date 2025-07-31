@@ -11,9 +11,8 @@ type SSHKeysProps = {
   user: User;
 };
 
-export function SSHKeys(props: Readonly<SSHKeysProps>) {
+export async function SSHKeys(props: Readonly<SSHKeysProps>) {
   const { user } = props;
-
   return (
     <TabPanel className="panel space-y-4">
       <h2>SSH Keys</h2>

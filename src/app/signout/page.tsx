@@ -18,6 +18,7 @@ export default async function SignoutPage() {
     "use server";
     const cookiesStore = await cookies();
     cookiesStore.delete("JSESSIONID"); // logout from indigo-iam
+    cookiesStore.delete("SESSION"); // logout from indigo-iam
     await signOut();
   }
 

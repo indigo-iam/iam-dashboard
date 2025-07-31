@@ -117,6 +117,15 @@ export async function disableClient(client: Client) {
   }
 }
 
+export async function getClientsByAccount(
+  accountId: string,
+  count: number,
+  startIndex: number = 1
+) {
+  const url = `${BASE_URL}/iam/account/${accountId}/clients?startIndex=${startIndex}&count=${count}`;
+  return await getItem<Paginated<Client>>(url);
+}
+
 export const getClientsPage = async (
   count: number,
   startIndex: number = 1,

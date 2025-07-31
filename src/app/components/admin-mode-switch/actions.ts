@@ -4,7 +4,7 @@ import { cookies, headers } from "next/headers";
 import { settings } from "@/config";
 import { redirect } from "next/navigation";
 
-const basePath = settings.basePath ?? "";
+const { BASE_PATH } = settings;
 
 export async function toggleAdminMode(enabled: boolean) {
   const cookiesStore = await cookies();
@@ -13,7 +13,7 @@ export async function toggleAdminMode(enabled: boolean) {
     const headersList = await headers();
     const refer = headersList.get("referer") as string;
     const url = new URL(refer);
-    if (url.pathname !== `${basePath}/users/me`) {
+    if (url.pathname !== `${BASE_PATH}/users/me`) {
       redirect("/");
     }
   }

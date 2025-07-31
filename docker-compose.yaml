@@ -79,7 +79,7 @@ services:
     build:
       context: .
       args:
-        NEXT_PUBLIC_BASE_PATH: /new-dashboard
+        NEXT_PUBLIC_BASE_PATH: /ui
     entrypoint: "/entrypoint.sh"
     command: ["node", "server.js"]
     volumes:

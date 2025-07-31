@@ -4,5 +4,5 @@
 
 export const settings = {
   BASE_URL: process.env.IAM_AUTHORITY_URL,
-  basePath: process.env.NEXT_PUBLIC_BASE_PATH,
+  BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH ?? "",
 };

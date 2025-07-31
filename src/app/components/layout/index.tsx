@@ -16,22 +16,18 @@ import {
   UserGroupIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
-import Image from "next/image";
 import { auth } from "@/auth";
 import { Drawer, Link, ToggleDrawerButton } from "@/components/drawer";
 import { Gravatar } from "@/components/gravatar";
 import Notifications from "@/components/notifications";
-import { AdminModeSwitch } from "./admin-mode-switch";
-import { cookies } from "next/headers";
-import { Gravatar } from "@/components/gravatar";
-
-const basePath = settings.basePath ?? "";
+import { AdminModeSwitch } from "../admin-mode-switch";
+import cloud from "./cloud.png";
 
 function LogoIam() {
   return (
     <div className="flex px-4">
       <Image
-        src={`${basePath}/cloud.png`}
+        src={cloud}
         width="0"
         height="0"
         sizes="100vw"

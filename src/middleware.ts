@@ -7,7 +7,7 @@ import { auth } from "@/auth";
 import { cookies } from "next/headers";
 import { settings } from "@/config";
 
-const basePath = settings.basePath ?? "";
+const { BASE_PATH } = settings;
 
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico|signin|signout).*)"],
@@ -16,15 +16,15 @@ export const config = {
 export default auth(async req => {
   const { nextUrl, auth } = req;
   const cookiesStore = await cookies();
-  if ((!auth || auth.expired) && nextUrl.pathname != `${basePath}/signin`) {
-    const url = new URL(`${basePath}/signin`, nextUrl.origin);
+  if ((!auth || auth.expired) && nextUrl.pathname != `${BASE_PATH}/signin`) {
+    const url = new URL(`${BASE_PATH}/signin`, nextUrl.origin);
     return NextResponse.redirect(url);
   }
   if (
     cookiesStore.get("admin-mode")?.value !== "enabled" &&
     nextUrl.pathname !== "/users/me"
   ) {
-    const url = new URL(`${basePath}/users/me`, nextUrl.origin);
+    const url = new URL(`${BASE_PATH}/users/me`, nextUrl.origin);
     return NextResponse.redirect(url);
   }
   return NextResponse.next();

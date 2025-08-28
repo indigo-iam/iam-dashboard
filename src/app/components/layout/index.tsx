@@ -155,7 +155,7 @@ export async function Layout(props: Readonly<LayoutProps>) {
           </nav>
         </div>
       </Drawer>
-      <div className="absolute top-16 right-0 p-4 md:left-80">
+      <div className="absolute top-16 right-0 left-0 p-4 md:left-80">
         <div className="3xl:max-w-2/3 mx-auto xl:max-w-3/4">{children}</div>
       </div>
     </div>

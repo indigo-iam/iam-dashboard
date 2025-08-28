@@ -19,7 +19,7 @@ function Row(props: Readonly<RowProps>) {
     : "N/A";
   const Labels = () => {
     return (
-      <div className="flex flex-wrap gap-2">
+      <div className="flex grow flex-wrap items-center gap-2">
         {group["urn:indigo-dc:scim:schemas:IndigoGroup"].labels?.map(label => {
           return (
             <div
@@ -38,7 +38,7 @@ function Row(props: Readonly<RowProps>) {
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
-        <div className="flex flex-col gap-2 sm:flex-row">
+        <div className="flex flex-col gap-2 lg:flex-row">
           <Link
             className="flex min-w-72 flex-col break-all hover:underline"
             href={`/groups/${group.id}`}
@@ -48,7 +48,7 @@ function Row(props: Readonly<RowProps>) {
               {group.id}
             </p>
           </Link>
-          <div className="grow">
+          <div className="flex grow items-center">
             <Labels />
           </div>
           <p className="text-gray dark:text-secondary/50 my-auto flex flex-col pr-2 text-sm">

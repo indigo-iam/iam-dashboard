@@ -12,6 +12,8 @@ import {
   LinkedAccounts,
   UserClients,
   UserGroups,
+  ApprovedSites,
+  ActiveTokens,
 } from "./components";
 
 type UserPageProps = {
@@ -35,6 +37,8 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
           <Tab>GENERAL</Tab>
           <Tab>GROUPS</Tab>
           <Tab>CLIENTS</Tab>
+          <Tab>APPROVED SITES</Tab>
+          <Tab>ACTIVE TOKENS</Tab>
           <Tab>LINKED ACCOUNTS</Tab>
           <Tab>ATTRIBUTES</Tab>
         </TabList>
@@ -46,6 +50,8 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
             page={searchParams?.page}
             count={searchParams?.count}
           />
+          <ApprovedSites />
+          <ActiveTokens />
           <LinkedAccounts user={user} />
           <Attributes user={user} />
         </TabPanels>

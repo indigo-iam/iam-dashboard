@@ -18,6 +18,7 @@ import {
 
 type UserPageProps = {
   params: Promise<{ user: string }>;
+  searchParams?: Promise<{ count?: string; page?: string }>;
 };
 
 export default async function UserPage(props: Readonly<UserPageProps>) {
@@ -27,6 +28,8 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
   if (!user) {
     return <h1>User not found</h1>;
   }
+  const searchParams = await props.searchParams;
+
   return (
     <Layout title={user.name?.formatted}>
       <TabGroup className="space-y-8">
@@ -42,7 +45,11 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
         <TabPanels>
           <General user={user} isMe={isMe} />
           <UserGroups user={user} />
-          <UserClients user={user} />
+          <UserClients
+            user={user}
+            page={searchParams?.page}
+            count={searchParams?.count}
+          />
           <LinkedAccounts user={user} />
           <Certificates user={user} />
           <SSHKeys user={user} />

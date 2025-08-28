@@ -127,25 +127,15 @@ export async function getClientsByAccount(
 export async function getClientsPage(
   count: number,
   startIndex: number = 1,
-  me: boolean = false,
   filter?: string
 ) {
   let searchParams = `count=${count}&startIndex=${startIndex}`;
   let url: string;
-
-  if (me) {
-    url = `${BASE_URL}/iam/account/me/clients`;
-    // this is useless, since the endpoint doesn't not filter at all
-    if (filter) {
-      searchParams += `&filter=${filter}`;
-    }
+  if (filter) {
+    url = `${BASE_URL}/iam/api/search/clients`;
+    searchParams += `&searchType=name&search=${filter}`;
   } else {
-    if (filter) {
-      url = `${BASE_URL}/iam/api/search/clients`;
-      searchParams += `&searchType=name&search=${filter}`;
-    } else {
-      url = `${BASE_URL}/iam/api/clients`;
-    }
+    url = `${BASE_URL}/iam/api/clients`;
   }
   url += `?${searchParams}`;
   return await getItem<Paginated<Client>>(url);

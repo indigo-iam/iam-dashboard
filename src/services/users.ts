@@ -14,32 +14,34 @@ import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
 import { setNotification } from "@/services/notifications";
 import { settings } from "@/config";
 import { auth } from "@/auth";
+import { Group } from "@/models/groups";
 
 const { BASE_URL } = settings;
 
-export const fetchUser = async (uuid: string) =>
-  await getItem<User>(`${BASE_URL}/scim/Users/${uuid}`);
+export async function fetchUser(uuid: string) {
+  return await getItem<User>(`${BASE_URL}/scim/Users/${uuid}`);
+}
 
-export const searchUser = async (filter: string) => {
+export async function searchUser(filter: string) {
   const response = await getItem<Paginated<User>>(
     `${BASE_URL}/iam/account/search?count=100&startIndex=0&filter=${filter}`
   );
   return response.Resources;
-};
+}
 
-export const getUsersPage = async (
+export async function getUsersPage(
   count: number,
   startIndex: number = 1,
   filter?: string
-) => {
+) {
   let url = `${BASE_URL}/iam/account/search?count=${count}&startIndex=${startIndex}`;
   if (filter) {
     url += `&filter=${filter}`;
   }
   return await getItem<Paginated<User>>(url);
-};
+}
 
-export const addUser = async (user: ScimUser) => {
+export async function addUser(user: ScimUser) {
   let url = `${BASE_URL}/scim/Users`;
   const body = JSON.stringify(user);
   const response = await authFetch(url, {
@@ -58,7 +60,7 @@ export const addUser = async (user: ScimUser) => {
       subtitle: `Error ${response.status} ${msg}`,
     });
   }
-};
+}
 
 export async function patchUser(userId: string, formData: FormData) {
   const session = await auth();
@@ -126,7 +128,7 @@ export async function patchUser(userId: string, formData: FormData) {
   }
 }
 
-export const deleteUser = async (user: User) => {
+export async function deleteUser(user: User) {
   const url = `${BASE_URL}/scim/Users/${user.id}`;
   const response = await authFetch(url, {
     method: "DELETE",
@@ -143,13 +145,13 @@ export const deleteUser = async (user: User) => {
       subtitle: `Error ${response.status} ${msg}`,
     });
   }
-};
+}
 
-const patchUserSSHKey = async (
+async function patchUserSSHKey(
   userId: string,
   sshKey: SSHKey,
   op: "add" | "remove"
-) => {
+) {
   const body = {
     schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
     operations: [
@@ -184,15 +186,15 @@ const patchUserSSHKey = async (
       subtitle: `Error ${response.status} ${msg}`,
     });
   }
-};
+}
 
-export const addSSHKey = async (userId: string, sshKey: SSHKey) => {
+export async function addSSHKey(userId: string, sshKey: SSHKey) {
   await patchUserSSHKey(userId, sshKey, "add");
-};
+}
 
-export const deleteSSHKey = async (userId: string, sshKey: SSHKey) => {
+export async function deleteSSHKey(userId: string, sshKey: SSHKey) {
   await patchUserSSHKey(userId, sshKey, "remove");
-};
+}
 
 export async function fetchAttributes(userId: string) {
   const url = `${BASE_URL}/iam/account/${userId}/attributes`;

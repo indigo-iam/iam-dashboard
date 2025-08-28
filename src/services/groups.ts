@@ -19,37 +19,37 @@ import { setNotification } from "@/services/notifications";
 
 const { BASE_URL } = settings;
 
-export const fetchGroup = async (groupID: string) => {
+export async function fetchGroup(groupID: string) {
   let url = `${BASE_URL}/scim/Groups/${groupID}`;
   return await getItem<Group>(url);
-};
+}
 
-export const searchGroup = async (filter: string) => {
+export async function searchGroup(filter: string) {
   const response = await getItem<Paginated<Group>>(
     `${BASE_URL}/iam/group/search?count=100&startIndex=0&filter=${filter}`
   );
   return response.Resources;
-};
+}
 
-export const fetchSubgroupsPage = async (
+export async function fetchSubgroupsPage(
   groupID: string,
   count: number = 10,
   startIndex: number = 1
-) => {
+) {
   let url = `${BASE_URL}/scim/Groups/${groupID}/subgroups?count=${count}&startIndex=${startIndex}`;
   return await getItem<Paginated<ScimReference>>(url);
-};
+}
 
-export const fetchGroupMembersPage = async (
+export async function fetchGroupMembersPage(
   groupID: string,
   count: number = 10,
   startIndex: number = 1
-) => {
+) {
   let url = `${BASE_URL}/scim/Groups/${groupID}/members?count=${count}&startIndex=${startIndex}`;
   return await getItem<Paginated<ScimReference>>(url);
-};
+}
 
-export const fetchGroups = async () => {
+export async function fetchGroups() {
   let url = `${BASE_URL}/iam/group/search`;
   const response = await getItem<GroupsSearchResponse>(url);
   const { totalResults, itemsPerPage, startIndex } = response;
@@ -67,21 +67,21 @@ export const fetchGroups = async () => {
   const results = await Promise.all(requests);
   groups = groups.concat(results.flatMap(r => r.Resources));
   return groups;
-};
+}
 
-export const getGroupsPage = async (
+export async function getGroupsPage(
   count: number,
   startIndex: number = 1,
   filter?: string
-) => {
+) {
   let url = `${BASE_URL}/iam/group/search?count=${count}&startIndex=${startIndex}`;
   if (filter) {
     url += `&filter=${filter}`;
   }
   return await getItem<Paginated<Group>>(url);
-};
+}
 
-export const addGroup = async (groupName: string) => {
+export async function addGroup(groupName: string) {
   const body = {
     displayName: groupName,
     schemas: ["urn:ietf:params:scim:schemas:core:2.0:Group"],
@@ -103,9 +103,9 @@ export const addGroup = async (groupName: string) => {
       subtitle: `Error ${response.status} ${msg}`,
     });
   }
-};
+}
 
-export const deleteGroup = async (groupId: string) => {
+export async function deleteGroup(groupId: string) {
   const url = `${BASE_URL}/scim/Groups/${groupId}`;
   const response = await authFetch(url, { method: "DELETE" });
   if (response.ok) {
@@ -119,12 +119,12 @@ export const deleteGroup = async (groupId: string) => {
       subtitle: `Error ${response.status} ${msg}`,
     });
   }
-};
+}
 
-export const addSubgroup = async (
+export async function addSubgroup(
   groupName: string,
   parentGroup: ScimReference
-) => {
+) {
   const body = {
     displayName: groupName,
     schemas: ["urn:ietf:params:scim:schemas:core:2.0:Group"],
@@ -151,12 +151,9 @@ export const addSubgroup = async (
       subtitle: `Error ${response.status} ${msg}`,
     });
   }
-};
+}
 
-export const addUserToGroup = async (
-  groupId: string,
-  userRef: ScimReference
-) => {
+export async function addUserToGroup(groupId: string, userRef: ScimReference) {
   const body = {
     schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
     operations: [
@@ -184,12 +181,12 @@ export const addUserToGroup = async (
       subtitle: `Error ${response.status}, ${msg}`,
     });
   }
-};
+}
 
-export const removeUserFromGroup = async (
+export async function removeUserFromGroup(
   groupId: string,
   userRef: ScimReference
-) => {
+) {
   const body = {
     operations: [
       {
@@ -217,15 +214,15 @@ export const removeUserFromGroup = async (
       `Remove user membership failed with status ${response.status} ${msg}`
     );
   }
-};
+}
 
 // for some reason this API is not paginated
-export const fetchGroupManagers = async (groupId: string) => {
+export async function fetchGroupManagers(groupId: string) {
   const url = `${BASE_URL}/iam/group/${groupId}/group-managers`;
   return getItem<User[]>(url);
-};
+}
 
-export const assignGroupManager = async (groupId: string, userId: string) => {
+export async function assignGroupManager(groupId: string, userId: string) {
   const url = `${BASE_URL}/iam/account/${userId}/managed-groups/${groupId}`;
   const response = await authFetch(url, {
     method: "POST",
@@ -241,9 +238,9 @@ export const assignGroupManager = async (groupId: string, userId: string) => {
       subtitle: `Error ${response.status} ${msg}`,
     });
   }
-};
+}
 
-export const revokeGroupManager = async (groupId: string, userId: string) => {
+export async function revokeGroupManager(groupId: string, userId: string) {
   const url = `${BASE_URL}/iam/account/${userId}/managed-groups/${groupId}`;
   const response = await authFetch(url, {
     method: "DELETE",
@@ -259,7 +256,7 @@ export const revokeGroupManager = async (groupId: string, userId: string) => {
       subtitle: `Error ${response.status} ${msg}`,
     });
   }
-};
+}
 
 export async function fetchManagedGroups(userId: string) {
   const url = `${BASE_URL}/iam/account/${userId}/managed-groups`;

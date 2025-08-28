@@ -5,12 +5,11 @@
 "use server";
 
 import { Client, ClientRequest } from "@/models/client";
-import { authFetch, getItem } from "@/utils/fetch";
 import { User } from "@/models/scim";
 import { Paginated } from "@/models/pagination";
 import { setNotification } from "@/services/notifications";
-import { auth } from "@/auth";
 import { settings } from "@/config";
+import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -36,15 +35,14 @@ export async function registerClient(client: ClientRequest, isAdmin?: boolean) {
   }
 }
 
-export const getClient = async (clientId: string, isAdmin = false) => {
+export async function getClient(clientId: string, isAdmin = false) {
   const url = isAdmin
     ? `${BASE_URL}/iam/api/clients/${clientId}`
     : `${BASE_URL}/iam/api/client-registration/${clientId}`;
   return await getItem<Client>(url);
-};
+}
 
-export const deleteClient = async (clientId: string, isMe?: boolean) => {
-  const session = await auth();
+export async function deleteClient(clientId: string, isMe?: boolean) {
   const url = `${BASE_URL}/iam/api/client-registration/${clientId}`;
   const response = await authFetch(url, {
     method: "DELETE",
@@ -60,9 +58,9 @@ export const deleteClient = async (clientId: string, isMe?: boolean) => {
       subtitle: `Error ${response.status} ${msg}`,
     });
   }
-};
+}
 
-export const editClient = async (client: Client) => {
+export async function editClient(client: Client) {
   const { client_id } = client;
   const url = `${BASE_URL}/iam/api/clients/${client_id}`;
   const response = await authFetch(url, {
@@ -81,7 +79,7 @@ export const editClient = async (client: Client) => {
       subtitle: `Error ${response.status} ${msg}`,
     });
   }
-};
+}
 
 export async function enableClient(client: Client) {
   const { client_id } = client;
@@ -126,12 +124,12 @@ export async function getClientsByAccount(
   return await getItem<Paginated<Client>>(url);
 }
 
-export const getClientsPage = async (
+export async function getClientsPage(
   count: number,
   startIndex: number = 1,
   me: boolean = false,
   filter?: string
-) => {
+) {
   let searchParams = `count=${count}&startIndex=${startIndex}`;
   let url: string;
 
@@ -151,7 +149,7 @@ export const getClientsPage = async (
   }
   url += `?${searchParams}`;
   return await getItem<Paginated<Client>>(url);
-};
+}
 
 async function editOwner(
   client: Client,
@@ -182,17 +180,17 @@ export async function removeOwner(client: Client, user: User) {
   return editOwner(client, user, "DELETE");
 }
 
-export const getClientOwnersPage = async (
+export async function getClientOwnersPage(
   clientId: string,
   startIndex: number,
   count: number
-) => {
+) {
   return await getItem<Paginated<User>>(
     `${BASE_URL}/iam/api/clients/${clientId}/owners?startIndex=${startIndex}&count=${count}`
   );
-};
+}
 
-export const getClientOwners = async (clientId: string): Promise<User[]> => {
+export async function getClientOwners(clientId: string): Promise<User[]> {
   const count = 10;
   const firstPage = await getClientOwnersPage(clientId, 1, count);
   const { totalResults } = firstPage;
@@ -208,4 +206,4 @@ export const getClientOwners = async (clientId: string): Promise<User[]> => {
   } else {
     return firstPage.Resources;
   }
-};
+}

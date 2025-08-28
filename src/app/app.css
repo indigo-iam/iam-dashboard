@@ -43,7 +43,7 @@
 }
 
 @utility btn {
-  @apply flex min-w-fit gap-2 rounded-md p-1 px-2 text-base font-medium text-nowrap transition ease-out dark:font-normal;
+  @apply flex min-w-fit gap-2 rounded-md p-1 px-2 text-base font-normal text-nowrap transition ease-out;
 }
 
 @utility btn-primary {
@@ -51,7 +51,7 @@
 }
 
 @utility btn-secondary {
-  @apply btn border-primary/30 text-primary hover:bg-primary/5 disabled:border-primary/50 disabled:bg-secondary/50 disabled:text-primary/50 dark:border-secondary/20 dark:text-secondary/90 active:bg-primary/10 dark:disabled:bg-light-gray/30 dark:disabled:text-secondary/50 border bg-gray-100 dark:bg-slate-700 dark:hover:bg-slate-600 dark:active:bg-slate-500;
+  @apply btn border-primary/10 text-primary hover:bg-primary/5 disabled:border-primary/50 disabled:bg-secondary/50 disabled:text-primary/50 dark:border-secondary/20 dark:text-secondary/90 active:bg-primary/10 dark:disabled:bg-light-gray/30 dark:disabled:text-secondary/50 border bg-gray-100 dark:bg-slate-700 dark:hover:bg-slate-600 dark:active:bg-slate-500;
 }
 
 @utility btn-tertiary {
@@ -71,7 +71,7 @@
 }
 
 @utility iam-input {
-  @apply dark:bg-dark w-full rounded border border-gray-300 bg-white px-2 py-1 disabled:bg-transparent disabled:text-gray-400 placeholder:disabled:text-gray-400 data-[invalid=true]:outline dark:border-white/30;
+  @apply dark:bg-dark w-full rounded bg-neutral-100 px-2 py-1 disabled:text-gray-400 placeholder:disabled:text-gray-400 data-[invalid=true]:outline dark:border-white/30;
 }
 
 @utility iam-list-item {
@@ -79,5 +79,5 @@
 }
 
 @utility panel {
-  @apply dark:bg-dark border-light-gray rounded-lg bg-gray-50 p-4 shadow-md sm:p-8 dark:border dark:border-slate-600;
+  @apply dark:bg-dark border-light-gray rounded-lg bg-white p-4 shadow-md sm:p-8 dark:border dark:border-slate-600;
 }

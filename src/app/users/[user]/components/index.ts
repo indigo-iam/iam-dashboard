@@ -6,6 +6,4 @@ export { General } from "./general";
 export { UserGroups } from "./groups";
 export { UserClients } from "./clients";
 export { LinkedAccounts } from "./linked-accounts";
-export { Certificates } from "./certificates";
-export { SSHKeys } from "./ssh-keys";
 export { Attributes } from "./attributes";

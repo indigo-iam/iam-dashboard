@@ -32,7 +32,7 @@
     @apply text-4xl font-bold;
   }
   h2 {
-    @apply border-gray-300 text-3xl font-bold;
+    @apply border-gray-300 text-2xl font-bold;
   }
   h3 {
     @apply text-lg font-bold;

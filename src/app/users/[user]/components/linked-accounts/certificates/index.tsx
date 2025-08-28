@@ -5,7 +5,6 @@
 import { User } from "@/models/scim";
 import { Certificate } from "@/models/indigo-user";
 import LinkCertificateButton from "./link-certificate-button";
-import { TabPanel } from "@/components/tabs";
 
 const CertificateView = (props: { cert: Certificate }) => {
   const { cert } = props;
@@ -35,25 +34,32 @@ type CertificateProps = {
 
 export async function Certificates(props: Readonly<CertificateProps>) {
   const { user } = props;
-  let certificates: Certificate[] | undefined;
+  let certificates: Certificate[] = [];
 
   if (user["urn:indigo-dc:scim:schemas:IndigoUser"]) {
-    certificates = user["urn:indigo-dc:scim:schemas:IndigoUser"].certificates;
+    certificates =
+      user["urn:indigo-dc:scim:schemas:IndigoUser"].certificates ?? [];
   }
 
-  return (
-    <TabPanel className="panel space-y-4">
-      <h2>X509 Certificates</h2>
-      {certificates && certificates.length > 0 ? (
-        certificates.map(cert => (
-          <CertificateView key={cert.subjectDn + cert.issuerDn} cert={cert} />
-        ))
-      ) : (
+  if (certificates.length === 0) {
+    return (
+      <div className="panel space-y-2">
+        <h2>X509 Certificates</h2>
         <p className="dark:text-secondary/60 text-gray p-2">
           No certificates found.
         </p>
-      )}
+        <LinkCertificateButton user={user} />
+      </div>
+    );
+  }
+
+  return (
+    <div className="panel space-y-2">
+      <h2>X509 Certificates</h2>
+      {certificates.map(cert => (
+        <CertificateView key={cert.subjectDn + cert.issuerDn} cert={cert} />
+      ))}
       <LinkCertificateButton user={user} />
-    </TabPanel>
+    </div>
   );
 }

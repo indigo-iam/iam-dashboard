@@ -8,10 +8,8 @@ import { fetchMe } from "@/services/me";
 import { fetchUser } from "@/services/users";
 import {
   Attributes,
-  Certificates,
   General,
   LinkedAccounts,
-  SSHKeys,
   UserClients,
   UserGroups,
 } from "./components";
@@ -38,8 +36,6 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
           <Tab>GROUPS</Tab>
           <Tab>CLIENTS</Tab>
           <Tab>LINKED ACCOUNTS</Tab>
-          <Tab>CERTIFICATES</Tab>
-          <Tab>SSH KEYS</Tab>
           <Tab>ATTRIBUTES</Tab>
         </TabList>
         <TabPanels>
@@ -51,8 +47,6 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
             count={searchParams?.count}
           />
           <LinkedAccounts user={user} />
-          <Certificates user={user} />
-          <SSHKeys user={user} />
           <Attributes user={user} />
         </TabPanels>
       </TabGroup>

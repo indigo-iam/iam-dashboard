@@ -42,7 +42,7 @@ export default function GroupInfo(props: Readonly<GroupInfoProps>) {
           Modified {lastModified}
         </p>
       </div>
-      <div className="flex-break flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <AddLabel group={group} />
         {labels?.map(l => (
           <LabelView key={l.value + l.name} group={group} label={l} />

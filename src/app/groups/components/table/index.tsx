@@ -17,12 +17,30 @@ function Row(props: Readonly<RowProps>) {
   const created = group.meta?.created
     ? dateToHuman(new Date(group.meta.created))
     : "N/A";
+  const Labels = () => {
+    return (
+      <div className="flex flex-wrap gap-2">
+        {group["urn:indigo-dc:scim:schemas:IndigoGroup"].labels?.map(label => {
+          return (
+            <div
+              className="text-secondary flex items-center gap-1 rounded-full bg-sky-400 px-2 py-0.5 text-sm"
+              key={label.name}
+            >
+              <span>
+                <b>{label.name}</b> {label.value}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
         <div className="flex flex-col gap-2 sm:flex-row">
           <Link
-            className="flex grow flex-col break-all hover:underline"
+            className="flex min-w-72 flex-col break-all hover:underline"
             href={`/groups/${group.id}`}
           >
             {group.displayName}
@@ -30,6 +48,9 @@ function Row(props: Readonly<RowProps>) {
               {group.id}
             </p>
           </Link>
+          <div className="grow">
+            <Labels />
+          </div>
           <p className="text-gray dark:text-secondary/50 my-auto flex flex-col pr-2 text-sm">
             Created {created}
           </p>

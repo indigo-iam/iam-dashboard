@@ -13,8 +13,12 @@ export async function toggleAdminMode(enabled: boolean) {
     const headersList = await headers();
     const refer = headersList.get("referer") as string;
     const url = new URL(refer);
-    if (url.pathname !== `${BASE_PATH}/users/me`) {
-      redirect("/");
+    if (
+      url.pathname === `${BASE_PATH}/users/me` ||
+      url.pathname.startsWith(`${BASE_PATH}/clients`)
+    ) {
+      return;
     }
+    redirect("/");
   }
 }

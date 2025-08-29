@@ -106,6 +106,9 @@ function Links(props: Readonly<{ isAdmin: boolean; adminMode: boolean }>) {
         <Link title="Home" href="/users/me">
           <HomeIcon className="size-5" />
         </Link>
+        <Link title="Clients" href="/clients">
+          <RocketLaunchIcon className="size-5" />
+        </Link>
       </div>
     );
   }

@@ -22,7 +22,6 @@ export async function UserClients(props: Readonly<UseClientsProps>) {
   const startIndex = 1 + count * (page - 1);
   const clientPage = await getClientsByAccount(user.id, count, startIndex);
   const numberOfPages = Math.ceil(clientPage.totalResults / count) || 1;
-
   const clients = clientPage.Resources;
   return (
     <TabPanel className="space-y-4">

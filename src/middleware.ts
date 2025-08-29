@@ -21,7 +21,11 @@ export default auth(async req => {
   }
   const cookiesStore = await cookies();
   const adminMode = cookiesStore.get("admin-mode")?.value;
-  if (adminMode !== "enabled" && nextUrl.pathname !== "/users/me") {
+  if (
+    adminMode !== "enabled" &&
+    nextUrl.pathname !== "/users/me" &&
+    !nextUrl.pathname.startsWith("/clients")
+  ) {
     const url = new URL(`${BASE_PATH}/users/me`, nextUrl.origin);
     return NextResponse.redirect(url);
   }

@@ -2,10 +2,12 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { auth } from "@/auth";
+import { cookies } from "next/headers";
 import { ClientsTable } from "@/app/components/clients";
 import { Layout } from "@/app/components/layout";
 import { InputQuery } from "@/components/inputs";
-import { getClientsPage } from "@/services/clients";
+import { getClientsByAccount, getClientsPage } from "@/services/clients";
 import Paginator from "@/components/paginator";
 import { Button } from "@/components/buttons";
 import { PlusIcon } from "@heroicons/react/24/solid";
@@ -39,8 +41,17 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
   const count = searchParams?.count ? parseInt(searchParams.count) : 10;
   const page = searchParams?.page ? parseInt(searchParams.page) : 1;
   const query = searchParams?.query;
+  const session = await auth();
+  const userId = session?.user?.id ?? "";
+  const isAdmin = session?.is_admin ?? false;
+  const cookiesStore = await cookies();
+  const adminMode = cookiesStore.get("admin-mode")?.value === "enabled";
   const startIndex = 1 + count * (page - 1);
-  const clientPage = await getClientsPage(count, startIndex, query);
+
+  const clientPage =
+    isAdmin && adminMode
+      ? await getClientsPage(count, startIndex, query)
+      : await getClientsByAccount(userId, count, startIndex);
   const numberOfPages = Math.ceil(clientPage.totalResults / count) || 1;
   const clients = clientPage.Resources;
   return (

@@ -19,11 +19,11 @@ function Row(props: Readonly<RowProps>) {
     : "N/A";
   const Labels = () => {
     return (
-      <div className="flex grow flex-wrap items-center gap-2">
+      <div className="flex grow flex-wrap items-center gap-1">
         {group["urn:indigo-dc:scim:schemas:IndigoGroup"].labels?.map(label => {
           return (
             <div
-              className="text-secondary flex items-center gap-1 rounded-full bg-sky-400 px-2 py-0.5 text-sm"
+              className="text-secondary flex items-center gap-1 rounded-full bg-sky-600 px-2 py-0.5 text-xs dark:bg-sky-400"
               key={label.name}
             >
               <span>

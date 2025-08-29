@@ -6,7 +6,7 @@ import { auth } from "@/auth";
 import { cookies } from "next/headers";
 import { Layout } from "@/app/components/layout";
 import { TabGroup, TabList, TabPanels, Tab } from "@/components/tabs";
-import { getClient, getClientOwners } from "@/services/clients";
+import { getClient } from "@/services/clients";
 import {
   Main,
   Credentials,
@@ -24,24 +24,11 @@ export default async function Client(props: Readonly<ClientPageProps>) {
   const { params } = props;
   const clientId = (await params).client;
   const session = await auth();
-  const userId = session?.user?.id;
   const isAdmin = session?.is_admin ?? false;
   const cookiesStore = await cookies();
   const adminMode = cookiesStore.get("admin-mode")?.value === "enabled";
 
-  if (isAdmin && !adminMode) {
-    const owners = await getClientOwners(clientId);
-    const found = owners.findIndex(owner => owner.id === userId);
-    if (found === -1) {
-      return (
-        <Layout title="Not authorized">
-          <h2>You are not authorized to view this page.</h2>
-        </Layout>
-      );
-    }
-  }
-
-  const client = await getClient(clientId, isAdmin);
+  const client = await getClient(clientId, isAdmin && adminMode);
   if (client.error) {
     throw Error(client.error);
   }

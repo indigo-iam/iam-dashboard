@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { auth } from "@/auth";
+import { notFound } from "next/navigation";
 
 export async function authFetch(info: RequestInfo | URL, init?: RequestInit) {
   const session = await auth();
@@ -28,8 +29,12 @@ export const getItem: GetItem = async (endpoint: string | URL) => {
   } else {
     const error = await response.text();
     const status = response.status;
-    throw Error(
-      `getItem from ${endpoint} failed with status ${status}: ${error}`
-    );
+    if (status === 404) {
+      notFound();
+    } else {
+      throw Error(
+        `getItem from ${endpoint} failed with status ${status}: ${error}`
+      );
+    }
   }
 };

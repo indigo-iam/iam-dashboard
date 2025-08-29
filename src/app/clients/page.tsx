@@ -47,7 +47,6 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
   const cookiesStore = await cookies();
   const adminMode = cookiesStore.get("admin-mode")?.value === "enabled";
   const startIndex = 1 + count * (page - 1);
-
   const clientPage =
     isAdmin && adminMode
       ? await getClientsPage(count, startIndex, query)

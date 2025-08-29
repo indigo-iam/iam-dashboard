@@ -2,10 +2,11 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import ScopeIcon from "@/app/components/scope-icon";
 import { Scope } from "@/models/client";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import ScopeTypeSelect from "./scope-type-select";
 import ScopeOptions from "./options";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 type ScopesTableProps = {
   scopes: Scope[];
@@ -30,7 +31,13 @@ export default function ScopesTable(props: Readonly<ScopesTableProps>) {
         >
           <div className="flex grow flex-col gap-2 sm:flex-row sm:items-center sm:gap-0">
             <div className="flex grow flex-col">
-              <p>{scope.value}</p>
+              <div className="flex-inline flex items-center gap-2">
+                <ScopeIcon
+                  scope={scope}
+                  className="text-infn dark:text-secondary size-4"
+                />
+                <p>{scope.value}</p>
+              </div>
               <p className="text-gray dark:text-secondary/70 text-sm">
                 {scope.description}
               </p>

@@ -22,6 +22,7 @@ import { Gravatar } from "@/components/gravatar";
 import Notifications from "@/components/notifications";
 import { AdminModeSwitch } from "@/app/components/admin-mode-switch";
 import cloud from "./cloud.png";
+import { CookiesBanner } from "./cookies-banner";
 
 function LogoIam() {
   return (
@@ -128,8 +129,8 @@ export async function Layout(props: Readonly<LayoutProps>) {
   const cookiesStore = await cookies();
   const adminModeEnabled = cookiesStore.get("admin-mode")?.value === "enabled";
   return (
-    <div id={title} className="bg-success relative">
-      <header className="text-secondary md:text-primary bg-infn dark:bg-infn dark:text-secondary md:bg-secondary sticky top-0 flex grow justify-between border-b border-b-gray-300 p-4 md:ml-80">
+    <div id={title}>
+      <header className="text-secondary md:text-primary bg-infn dark:bg-infn dark:text-secondary md:bg-secondary fixed inset-x-0 top-0 z-10 flex grow justify-between border-b border-b-gray-300 p-4 md:ml-80">
         <h2 className="my-auto text-2xl">{title}</h2>
         <div className="flex items-center gap-2">
           {isAdmin && (
@@ -161,6 +162,7 @@ export async function Layout(props: Readonly<LayoutProps>) {
       <div className="absolute top-16 right-0 left-0 p-4 md:left-80">
         <div className="3xl:max-w-2/3 mx-auto xl:max-w-3/4">{children}</div>
       </div>
+      <CookiesBanner />
     </div>
   );
 }

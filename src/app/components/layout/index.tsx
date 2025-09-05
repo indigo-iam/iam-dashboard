@@ -20,7 +20,7 @@ import { auth } from "@/auth";
 import { Drawer, Link, ToggleDrawerButton } from "@/components/drawer";
 import { Gravatar } from "@/components/gravatar";
 import Notifications from "@/components/notifications";
-import { AdminModeSwitch } from "../admin-mode-switch";
+import { AdminModeSwitch } from "@/app/components/admin-mode-switch";
 import cloud from "./cloud.png";
 
 function LogoIam() {

@@ -14,7 +14,6 @@ import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
 import { setNotification } from "@/services/notifications";
 import { settings } from "@/config";
 import { auth } from "@/auth";
-import { Group } from "@/models/groups";
 
 const { BASE_URL } = settings;
 

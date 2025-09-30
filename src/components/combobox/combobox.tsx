@@ -17,7 +17,7 @@ type ComboboxProps<T> = {
 export  function Combobox<T>(props: Readonly<ComboboxProps<T>>) {
   const { onSelect: onSelected, onQueryChange, children } = props;
   return (
-    <HeadlessCombobox onChange={onSelected}>
+    <HeadlessCombobox onChange={(v) => onSelected(v as T)}>
       <div className="relative z-50">
         <ComboboxInput onChange={event => onQueryChange(event.target.value)} />
         <ComboboxOptions>{children}</ComboboxOptions>

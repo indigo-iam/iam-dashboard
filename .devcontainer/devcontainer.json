@@ -8,9 +8,6 @@
   ],
   "service": "devcontainer",
   "workspaceFolder": "/workspace",
-  "features": {
-    "git": "os-provided"
-  },
   "postCreateCommand": "git config --global --add safe.directory /workspace && rm /workspace/.env && cp /secrets/.env /workspace/.env",
   "customizations": {
     "vscode": {

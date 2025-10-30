@@ -25,7 +25,7 @@ and create a new client with the configuration described below.
 ### Redirect URIs
 
 In the client main page, add all needed redirect uris, in the form of
-`<IAM_URL>/auth/callback/indigo-iam` (without the trailing `/`).
+`<IAM_URL>/api/auth/callback/indigo-iam` (without the trailing `/`).
 
 To enable development of the dashboard on your local machine, the redirect uri
 must be
@@ -98,8 +98,7 @@ and the run the application with
 npm run dev
 ```
 
-Now the dashboard is reachable at the address
-http://iam.test.example:8080/development.
+Now the dashboard is reachable at the address http://iam.test.example:8080/dev.
 
 ## Local development
 
@@ -198,11 +197,11 @@ The `basePath` variable is read at *build time* and thus the dashboard must be
 compiled for each different `basePath`. It is possible to change the `basePath`
 variable using the `--build-arg NEXT_PUBLIC_BASE_PATH` Docker argument.
 
-For example, to deploy your application with the `/dashboard` using the sub-path
+For example, to deploy your application with the `/ui` using the sub-path
 run
 
 ```shell
-docker build . -t iam-dashboard --build-arg NEXT_PUBLIC_BASE_PATH=/dashboard
+docker build . -t iam-dashboard --build-arg NEXT_PUBLIC_BASE_PATH=/ui
 ```
 
 ## Deployment with Reverse Proxy

@@ -14,4 +14,4 @@ services:
       - .:/workspace:cached
       - secrets:/secrets
     environment:
-      NEXT_PUBLIC_BASE_PATH: /development
+      NEXT_PUBLIC_BASE_PATH: /dev

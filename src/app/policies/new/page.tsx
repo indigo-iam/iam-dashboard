@@ -3,9 +3,8 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Layout } from "@/app/components/layout";
-import { Textarea } from "@/components/textarea";
 import ConfirmButton from "./components/confirm-button";
-import { Description, Field, Label } from "@/components/form";
+import { Field } from "@/components/form";
 
 export default async function Policies() {
   return (
@@ -21,7 +20,7 @@ export default async function Policies() {
         </p>
         <div className="panel space-y-4">
           <Field>
-            
+
           </Field>
           <ConfirmButton />
         </div>

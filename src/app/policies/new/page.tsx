@@ -11,6 +11,12 @@ const ruleOptions = [
   {id: "deny", name: "DENY"}
 ];
 
+const matchingPolicyOptions = [
+  {id: "eq", name: "EQ"},
+  {id: "regexp", name: "REGEXP"},
+  {id: "path", name: "PATH"}
+];
+
 const defaultVal = {id: "value", name: "VALUE"};
 
 export default async function Policies() {
@@ -28,7 +34,7 @@ export default async function Policies() {
         <div className="panel space-y-4">
           <Field>
             <Label>Description</Label>
-            <Description>Something users will recognize and trust.</Description>
+            <Description>Something users will recognize and trust</Description>
             <Input 
               type="text"
               name="description"
@@ -53,12 +59,12 @@ export default async function Policies() {
 
             <Field className="grow">
               <Label>Matching Policy</Label>
-              <Description>Something users will recognize and trust.</Description>
+              <Description>Select the mathing policy and write the following string/regular expression/wlcg</Description>
               <div className="flex gap-1">
                 <Select name="rule" defaultValue={defaultVal}>
-                  {ruleOptions.map(rule => (
-                    <SelectOption key={rule.id} value={rule}>
-                      {rule.name}
+                  {matchingPolicyOptions.map(mp => (
+                    <SelectOption key={mp.id} value={mp}>
+                      {mp.name}
                     </SelectOption>
                   ))}
                 </Select>

@@ -3,7 +3,8 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Layout } from "@/app/components/layout";
-import { Field } from "@/components/form";
+import { Field, Label, Description } from "@/components/form";
+import { Input } from "@/components/inputs";
 
 export default async function Policies() {
   return (
@@ -19,7 +20,15 @@ export default async function Policies() {
         </p>
         <div className="panel space-y-4">
           <Field>
-            
+            <Label>Description</Label>
+            <Description>Something users will recognize and trust.</Description>
+            <Input 
+              type="text"
+              name="description"
+              title="Description"
+              placeholder="Default Permit ALL policy"
+              required
+            />
           </Field>
         </div>
       </div>

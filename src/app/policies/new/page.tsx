@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Layout } from "@/app/components/layout";
+import { Field } from "@/components/form";
 
 export default async function Policies() {
   return (
@@ -16,6 +17,11 @@ export default async function Policies() {
           tempus sit amet enim eget consequat. Phasellus sit amet fringilla mi,
           id hendrerit quam.
         </p>
+        <div className="panel space-y-4">
+          <Field>
+            
+          </Field>
+        </div>
       </div>
     </Layout>
   );

@@ -3,8 +3,15 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Layout } from "@/app/components/layout";
-import { Field, Label, Description } from "@/components/form";
+import { Field, Label, Description, Select, SelectOption } from "@/components/form";
 import { Input } from "@/components/inputs";
+
+const ruleOptions = [
+  {id: "permit", name: "PERMIT"},
+  {id: "deny", name: "DENY"}
+];
+
+const defaultVal = {id: "value", name: "VALUE"};
 
 export default async function Policies() {
   return (
@@ -30,6 +37,41 @@ export default async function Policies() {
               required
             />
           </Field>
+
+          <div className="flex gap-3">
+            <Field>
+              <Label>Rule</Label>
+              <Description>Select Permit or Deny</Description>
+              <Select name="rule" defaultValue={defaultVal}>
+                {ruleOptions.map(rule => (
+                  <SelectOption key={rule.id} value={rule}>
+                    {rule.name}
+                  </SelectOption>
+                ))}
+              </Select>
+            </Field>
+
+            <Field className="grow">
+              <Label>Matching Policy</Label>
+              <Description>Something users will recognize and trust.</Description>
+              <div className="flex gap-1">
+                <Select name="rule" defaultValue={defaultVal}>
+                  {ruleOptions.map(rule => (
+                    <SelectOption key={rule.id} value={rule}>
+                      {rule.name}
+                    </SelectOption>
+                  ))}
+                </Select>
+                <Input 
+                  type="text"
+                  name="description"
+                  title="Description"
+                  placeholder="String / Regular expression / WLCG"
+                  required
+                />
+              </div>
+            </Field>
+          </div>
         </div>
       </div>
     </Layout>

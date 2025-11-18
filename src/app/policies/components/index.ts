@@ -4,3 +4,4 @@
 
 export { default as PoliciesTable } from "./table";
 export { default as AddPolicyButton } from "./add-policy-button";
+export { default as FormScopePolicies } from "./form-scope-policies";

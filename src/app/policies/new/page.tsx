@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Layout } from "@/app/components/layout";
-//import { FormScopePolicies } from "../components";
 
 export default async function Policies() {
   return (
@@ -18,7 +17,6 @@ export default async function Policies() {
           id hendrerit quam.
         </p>
       </div>
-      {/*<FormScopePolicies />*/}
     </Layout>
   );
 }

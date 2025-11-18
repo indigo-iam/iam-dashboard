@@ -18,7 +18,7 @@ const matchingPolicyOptions = [
 
 const defaultVal = {id: "value", name: "VALUE"};
 
-export default function FormScopePolicies() {
+export default function ScopePoliciesForm() {
   return (
     <div className="panel space-y-4">
       <Field>

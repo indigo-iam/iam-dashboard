@@ -4,6 +4,17 @@
 
 import { Field, Label, Description, Select, SelectOption } from "@/components/form";
 import { Input } from "@/components/inputs";
+import { ScopePolicy } from "@/models/scope-policies";
+
+type ScopePoliciesProps = {
+  policy?: ScopePolicy;
+}
+
+const defaultValues = {
+  description: "Default Permit ALL policy",
+  rule: "VALUE",
+  matchingPolicy: "VALUE",
+}
 
 const ruleOptions = [
   {id: "permit", name: "PERMIT"},
@@ -16,9 +27,11 @@ const matchingPolicyOptions = [
   {id: "path", name: "PATH"}
 ];
 
-const defaultVal = {id: "value", name: "VALUE"};
+export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
+  const policy = props.policy ?? defaultValues;
+  const rule = {id: policy.rule, name: policy.rule};
+  const matchingPolicy = {id: policy.matchingPolicy, name: policy.matchingPolicy};
 
-export default function ScopePoliciesForm() {
   return (
     <div className="panel space-y-4">
       <Field>
@@ -28,16 +41,16 @@ export default function ScopePoliciesForm() {
           type="text"
           name="description"
           title="Description"
-          placeholder="Default Permit ALL policy"
+          placeholder={policy.description}
           required
         />
       </Field>
 
-      <div className="flex gap-3">
+      <div className="flex gap-5">
         <Field>
           <Label>Rule</Label>
-          <Description>Select Permit or Deny</Description>
-          <Select name="rule" defaultValue={defaultVal}>
+          <Description>Select permit or deny</Description>
+          <Select name="rule" defaultValue={rule}>
             {ruleOptions.map(rule => (
               <SelectOption key={rule.id} value={rule}>
               {rule.name}
@@ -48,22 +61,15 @@ export default function ScopePoliciesForm() {
 
         <Field className="grow">
           <Label>Matching Policy</Label>
-          <Description>Select the mathing policy and write the following string/regular expression/wlcg</Description>
+          <Description>Select the right mathing policy</Description>
           <div className="flex gap-1">
-            <Select name="rule" defaultValue={defaultVal}>
+            <Select name="rule" defaultValue={matchingPolicy}>
               {matchingPolicyOptions.map(mp => (
               <SelectOption key={mp.id} value={mp}>
                   {mp.name}
               </SelectOption>
               ))}
             </Select>
-            <Input 
-              type="text"
-              name="description"
-              title="Description"
-              placeholder="String / Regular expression / WLCG"
-              required
-            />
           </div>
         </Field>
       </div>

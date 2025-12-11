@@ -4,7 +4,7 @@
 
 import { Layout } from "@/app/components/layout";
 import { fetchScopePolicy } from "@/services/scope-policies";
-import Editor from "./components/editor";
+import { ScopePoliciesForm } from "../components";
 
 type PolicyPageProps = {
   params: Promise<{ policy: number }>;
@@ -18,7 +18,7 @@ export default async function PolicyPage(props: Readonly<PolicyPageProps>) {
     <Layout title="Edit Scope Policy">
       <div className="panel space-y-4">
         <h2>{policy.description}</h2>
-        <Editor policy={policy} />
+        <ScopePoliciesForm policy={policy}/>
       </div>
     </Layout>
   );

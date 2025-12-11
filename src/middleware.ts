@@ -7,7 +7,7 @@ import { auth } from "@/auth";
 import { cookies } from "next/headers";
 import { settings } from "@/config";
 
-const { BASE_PATH } = settings;
+const { IAM_DASHBOARD_BASE_PATH } = settings;
 
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico|signin|signout).*)"],
@@ -15,8 +15,8 @@ export const config = {
 
 export default auth(async req => {
   const { nextUrl, auth } = req;
-  if ((!auth || auth.expired) && nextUrl.pathname != `${BASE_PATH}/signin`) {
-    const url = new URL(`${BASE_PATH}/signin`, nextUrl.origin);
+  if ((!auth || auth.expired) && nextUrl.pathname != `${IAM_DASHBOARD_BASE_PATH}/signin`) {
+    const url = new URL(`${IAM_DASHBOARD_BASE_PATH}/signin`, nextUrl.origin);
     return NextResponse.redirect(url);
   }
   const cookiesStore = await cookies();
@@ -26,7 +26,7 @@ export default auth(async req => {
     nextUrl.pathname !== "/users/me" &&
     !nextUrl.pathname.startsWith("/clients")
   ) {
-    const url = new URL(`${BASE_PATH}/users/me`, nextUrl.origin);
+    const url = new URL(`${IAM_DASHBOARD_BASE_PATH}/users/me`, nextUrl.origin);
     return NextResponse.redirect(url);
   }
   return NextResponse.next();

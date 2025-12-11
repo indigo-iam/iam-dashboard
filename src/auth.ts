@@ -10,7 +10,7 @@ import type { User as IamUser } from "@/models/scim";
 import type { OIDCConfig } from "next-auth/providers";
 import { settings } from "@/config";
 
-const { IAM_API_URL, BASE_PATH } = settings;
+const { IAM_API_URL, IAM_DASHBOARD_BASE_PATH } = settings;
 
 declare module "next-auth/jwt" {
   interface JWT extends DefaultJWT {
@@ -62,7 +62,7 @@ export const authConfig: NextAuthConfig = {
   debug: process.env.AUTH_DEBUG === "true",
   providers: [IamProvider],
   session: { strategy: "jwt" },
-  basePath: `${BASE_PATH}/api/auth`,
+  basePath: `${IAM_DASHBOARD_BASE_PATH}/api/auth`,
   pages: { signIn: "/signin", signOut: "/signout" },
   callbacks: {
     async jwt({ token, account, user }) {

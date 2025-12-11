@@ -6,7 +6,7 @@ import { NextRequest } from "next/server";
 import { handlers } from "@/auth";
 import { settings } from "@/config";
 
-const { BASE_PATH } = settings;
+const { IAM_DASHBOARD_BASE_PATH } = settings;
 
 // Workaround to make basePath work
 // https://github.com/nextauthjs/next-auth/discussions/12160
@@ -21,7 +21,7 @@ function rewriteRequest(request: NextRequest) {
     ? detectedProtocol
     : detectedProtocol + ":";
   const url = new URL(
-    `${_protocol}//${detectedHost}${BASE_PATH}${pathname}${request.nextUrl.search}`
+    `${_protocol}//${detectedHost}${IAM_DASHBOARD_BASE_PATH}${pathname}${request.nextUrl.search}`
   );
   return new NextRequest(url, request);
 }

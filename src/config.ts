@@ -3,6 +3,6 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 export const settings = {
-  BASE_URL: process.env.IAM_AUTHORITY_URL,
+  IAM_API_URL: process.env.IAM_AUTHORITY_URL,
   BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH ?? "",
 };

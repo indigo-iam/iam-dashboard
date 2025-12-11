@@ -10,7 +10,7 @@ import type { User as IamUser } from "@/models/scim";
 import type { OIDCConfig } from "next-auth/providers";
 import { settings } from "@/config";
 
-const { BASE_URL, BASE_PATH } = settings;
+const { IAM_API_URL, BASE_PATH } = settings;
 
 declare module "next-auth/jwt" {
   interface JWT extends DefaultJWT {
@@ -100,7 +100,7 @@ async function fetchMe(access_token: string): Promise<IamUser> {
     },
   };
 
-  const response = await fetch(`${BASE_URL}/scim/Me`, info);
+  const response = await fetch(`${IAM_API_URL}/scim/Me`, info);
   if (!response.ok) {
     throw Error("cannot fetch Me during authorization");
   }

@@ -8,8 +8,8 @@ import { settings } from "@/config";
 import { getItem } from "@/utils/fetch";
 import { User } from "@/models/scim";
 
-const { BASE_URL } = settings;
+const { IAM_API_URL } = settings;
 
 export async function fetchMe() {
-  return getItem<User>(`${BASE_URL}/scim/Me`);
+  return getItem<User>(`${IAM_API_URL}/scim/Me`);
 }

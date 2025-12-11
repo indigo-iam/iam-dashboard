@@ -10,10 +10,10 @@ import { CertLinkRequest } from "@/models/certs";
 import { authFetch } from "@/utils/fetch";
 import { settings } from "@/config";
 
-const { BASE_URL } = settings;
+const { IAM_API_URL } = settings;
 
 export async function sendCertificateLinkRequest(request: CertLinkRequest) {
-  const url = `${BASE_URL}/iam/cert_link_requests`;
+  const url = `${IAM_API_URL}/iam/cert_link_requests`;
   const body = JSON.stringify(request);
   const response = await authFetch(url, {
     method: "POST",

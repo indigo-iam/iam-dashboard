@@ -4,8 +4,10 @@
 
 import { Layout } from "@/app/components/layout";
 import { Tab, TabGroup, TabList, TabPanels } from "@/components/tabs";
+import { getSession } from "@/auth/server";
 import { fetchMe } from "@/services/me";
 import { fetchUser } from "@/services/users";
+import { redirect } from "next/navigation";
 import {
   Attributes,
   General,
@@ -22,6 +24,10 @@ type UserPageProps = {
 };
 
 export default async function UserPage(props: Readonly<UserPageProps>) {
+  const session = await getSession();
+  if (!session) {
+    redirect("/");
+  }
   const userId = (await props.params).user;
   const isMe = userId === "me";
   const user = isMe ? await fetchMe() : await fetchUser(userId);
@@ -44,7 +50,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
         </TabList>
         <TabPanels>
           <General user={user} isMe={isMe} />
-          <UserGroups user={user} />
+          <UserGroups user={user} isAdmin={session.user.isAdmin} />
           <UserClients
             user={user}
             page={searchParams?.page}

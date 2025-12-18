@@ -13,7 +13,7 @@ import { Paginated } from "@/models/pagination";
 import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
 import { setNotification } from "@/services/notifications";
 import { settings } from "@/config";
-import { auth } from "@/auth";
+import { getSession } from "@/auth/server";
 
 const { IAM_API_URL } = settings;
 
@@ -62,8 +62,8 @@ export async function addUser(user: ScimUser) {
 }
 
 export async function patchUser(userId: string, formData: FormData) {
-  const session = await auth();
-  const isMe = session?.user?.id === userId;
+  const session = await getSession();
+  const isMe = session?.user?.sub === userId;
   const op: ScimRequest = {
     schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
     operations: [],
@@ -104,7 +104,9 @@ export async function patchUser(userId: string, formData: FormData) {
     };
     op.operations.push(mailOp);
   }
-  const url = isMe ? `${IAM_API_URL}/scim/Me` : `${IAM_API_URL}/scim/Users/${userId}`;
+  const url = isMe
+    ? `${IAM_API_URL}/scim/Me`
+    : `${IAM_API_URL}/scim/Users/${userId}`;
   const response = await authFetch(url, {
     body: JSON.stringify(op),
     method: "PATCH",

@@ -2,19 +2,24 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { getSession } from "@/auth/server";
 import { Layout } from "@/app/components/layout";
 import { Form } from "@/components/form";
 import { fetchOpenIdConfiguration } from "@/services/openid-configuration";
 import { fetchScopes } from "@/services/scopes";
 import { registerClient } from "@/services/clients";
 import { ClientRequest } from "@/models/client";
+import { redirect } from "next/navigation";
 import { NewClientCarousel } from "./carousel";
-import { auth } from "@/auth";
 
 export default async function NewClient() {
   const scopes = await fetchScopes();
   const openIdConfiguration = await fetchOpenIdConfiguration();
-  const session = await auth();
+  const session = await getSession();
+  if (!session) {
+    redirect("/");
+  }
+  const { user } = session;
 
   const action = async (formData: FormData) => {
     "use server";
@@ -68,7 +73,7 @@ export default async function NewClient() {
     if (policy_uri) {
       request.policy_uri = policy_uri;
     }
-    await registerClient(request, session?.is_admin);
+    await registerClient(request, user.isAdmin);
   };
 
   return (

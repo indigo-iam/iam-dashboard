@@ -2,32 +2,17 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { NextResponse } from "next/server";
-import { auth } from "@/auth";
-import { cookies } from "next/headers";
-import { settings } from "@/config";
-
-const { IAM_DASHBOARD_BASE_PATH } = settings;
+import { NextRequest, NextResponse } from "next/server";
+import { getSessionCookie } from "better-auth/cookies";
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|signin|signout).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|signin).*)"],
 };
 
-export default auth(async req => {
-  const { nextUrl, auth } = req;
-  if ((!auth || auth.expired) && nextUrl.pathname != `${IAM_DASHBOARD_BASE_PATH}/signin`) {
-    const url = new URL(`${IAM_DASHBOARD_BASE_PATH}/signin`, nextUrl.origin);
-    return NextResponse.redirect(url);
-  }
-  const cookiesStore = await cookies();
-  const adminMode = cookiesStore.get("admin-mode")?.value;
-  if (
-    adminMode !== "enabled" &&
-    nextUrl.pathname !== "/users/me" &&
-    !nextUrl.pathname.startsWith("/clients")
-  ) {
-    const url = new URL(`${IAM_DASHBOARD_BASE_PATH}/users/me`, nextUrl.origin);
-    return NextResponse.redirect(url);
+export async function middleware(request: NextRequest) {
+  const sessionCookie = getSessionCookie(request);
+  if (!sessionCookie) {
+    return NextResponse.redirect(new URL("/signin", request.url));
   }
   return NextResponse.next();
-});
+}

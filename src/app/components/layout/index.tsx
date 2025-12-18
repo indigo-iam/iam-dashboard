@@ -2,11 +2,10 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import NextLink from "next/link";
 import { cookies } from "next/headers";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import {
-  ArrowRightEndOnRectangleIcon,
   ClipboardDocumentCheckIcon,
   DocumentTextIcon,
   HomeIcon,
@@ -16,13 +15,14 @@ import {
   UserGroupIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
-import { auth } from "@/auth";
+import { getSession } from "@/auth/server";
 import { Drawer, Link, ToggleDrawerButton } from "@/components/drawer";
 import { Gravatar } from "@/components/gravatar";
 import Notifications from "@/components/notifications";
 import { AdminModeSwitch } from "@/app/components/admin-mode-switch";
 import cloud from "./cloud.png";
 import { CookiesBanner } from "./cookies-banner";
+import { SignoutButton } from "./signout-button";
 
 function LogoIam() {
   return (
@@ -54,19 +54,6 @@ function UserLogo(
         {username ?? "Unknown user"}
       </span>
     </div>
-  );
-}
-
-function Signout() {
-  return (
-    <NextLink
-      title="Signout"
-      href="/signout"
-      className="text-secondary flex justify-center gap-4 rounded-md border border-white/30 bg-linear-to-b from-white/10 from-5% via-transparent via-50% to-white/10 to-95% p-2 hover:bg-white/10"
-    >
-      Sign Out
-      <ArrowRightEndOnRectangleIcon className="size-6" />
-    </NextLink>
   );
 }
 
@@ -122,10 +109,12 @@ type LayoutProps = {
 
 export async function Layout(props: Readonly<LayoutProps>) {
   const { title, children } = props;
-  const session = await auth();
-  const isAdmin = session?.is_admin ?? false;
-  const username = session?.user?.name;
-  const email = session?.user?.email;
+  const session = await getSession();
+  if (!session) {
+    redirect("/");
+  }
+  const { user } = session;
+  const { isAdmin, name, email } = user;
   const cookiesStore = await cookies();
   const adminModeEnabled = cookiesStore.get("admin-mode")?.value === "enabled";
   return (
@@ -153,8 +142,8 @@ export async function Layout(props: Readonly<LayoutProps>) {
           <nav className="mt-4 flex grow flex-col justify-between p-6">
             <Links isAdmin={isAdmin} adminMode={adminModeEnabled} />
             <div className="space-y-2 border-t border-white/30 py-2">
-              <UserLogo username={username} email={email} />
-              <Signout />
+              <UserLogo username={name} email={email} />
+              <SignoutButton />
             </div>
           </nav>
         </div>

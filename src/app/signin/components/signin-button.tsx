@@ -5,10 +5,14 @@
 "use client";
 
 import { useEffect } from "react";
+import { auth } from "@/auth/client";
 
 export function SignInButton() {
   useEffect(() => {
-    document.getElementById("signin-button")?.click();
+    auth.signIn.oauth2({
+      providerId: "indigo-iam",
+      callbackURL: "/",
+    });
   });
-  return <button id="signin-button" type="submit" hidden />;
+  return null;
 }

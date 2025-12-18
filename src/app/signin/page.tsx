@@ -3,41 +3,19 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { redirect } from "next/navigation";
-import { auth, signIn } from "@/auth";
+import { getSession } from "@/auth/server";
 import { SignInButton } from "./components/signin-button";
 
-type SignInPageProps = {
-  searchParams: Promise<{ error?: string }>;
-};
-
-export default async function SignInPage(props: Readonly<SignInPageProps>) {
-  const searchParams = await props.searchParams;
-  const { error } = searchParams;
-  const session = await auth();
-
+export default async function SignInPage() {
+  const session = await getSession();
   if (session) {
-    if (session.expired) {
-      redirect("/signout");
-    } else {
-      redirect("/");
-    }
-  }
-
-  async function action() {
-    "use server";
-    await signIn("indigo-iam");
+    redirect("/");
   }
 
   return (
     <div className="bg-secondary dark:bg-infn flex h-screen items-center justify-center">
-      {error ? (
-        <span>{error}</span>
-      ) : (
-        <form className="text-xl" action={action}>
-          Redirecting to login page...
-          <SignInButton />
-        </form>
-      )}
+      Redirecting to login page...
+      <SignInButton />
     </div>
   );
 }

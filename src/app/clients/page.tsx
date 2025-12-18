@@ -2,8 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { auth } from "@/auth";
 import { cookies } from "next/headers";
+import { getSession } from "@/auth/server";
 import { ClientsTable } from "@/app/components/clients";
 import { Layout } from "@/app/components/layout";
 import { InputQuery } from "@/components/inputs";
@@ -13,6 +13,7 @@ import { Button } from "@/components/buttons";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { Suspense } from "react";
+import { redirect } from "next/navigation";
 
 function Buttons() {
   return (
@@ -37,20 +38,22 @@ type ClientsProps = {
 };
 
 export default async function ClientsPage(props: Readonly<ClientsProps>) {
+  const session = await getSession();
+  if (!session) {
+    redirect("/");
+  }
+  const { user } = session;
   const searchParams = await props.searchParams;
   const count = searchParams?.count ? parseInt(searchParams.count) : 10;
   const page = searchParams?.page ? parseInt(searchParams.page) : 1;
   const query = searchParams?.query;
-  const session = await auth();
-  const userId = session?.user?.id ?? "";
-  const isAdmin = session?.is_admin ?? false;
   const cookiesStore = await cookies();
   const adminMode = cookiesStore.get("admin-mode")?.value === "enabled";
   const startIndex = 1 + count * (page - 1);
   const clientPage =
-    isAdmin && adminMode
+    user.isAdmin && adminMode
       ? await getClientsPage(count, startIndex, query)
-      : await getClientsByAccount(userId, count, startIndex);
+      : await getClientsByAccount(user.sub, count, startIndex);
   const numberOfPages = Math.ceil(clientPage.totalResults / count) || 1;
   const clients = clientPage.Resources;
   return (

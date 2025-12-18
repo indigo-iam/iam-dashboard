@@ -2,23 +2,14 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { auth } from "@/auth";
+import { getAccessToken } from "@/auth/server";
 import { notFound } from "next/navigation";
 
 export async function authFetch(info: RequestInfo | URL, init?: RequestInit) {
-  const session = await auth();
-  if (!session) {
-    throw Error("Session not ready");
-  }
-
-  const { access_token } = session;
-  const options: RequestInit = init ?? {};
-  let { headers } = options;
-  options.headers = {
-    ...headers,
-    authorization: `Bearer ${access_token}`,
-  };
-  return fetch(info, options);
+  const { accessToken } = await getAccessToken();
+  const authorization = `Bearer ${accessToken}`;
+  const headers = { ...init?.headers, authorization };
+  return fetch(info, { headers });
 }
 
 type GetItem = <T>(endpoint: string | URL) => Promise<T>;

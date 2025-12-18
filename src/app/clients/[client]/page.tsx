@@ -2,11 +2,12 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { auth } from "@/auth";
-import { cookies } from "next/headers";
+import { getSession } from "@/auth/server";
 import { Layout } from "@/app/components/layout";
 import { TabGroup, TabList, TabPanels, Tab } from "@/components/tabs";
 import { getClient } from "@/services/clients";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import {
   Main,
   Credentials,
@@ -23,12 +24,16 @@ type ClientPageProps = {
 export default async function Client(props: Readonly<ClientPageProps>) {
   const { params } = props;
   const clientId = (await params).client;
-  const session = await auth();
-  const isAdmin = session?.is_admin ?? false;
+  const session = await getSession();
+  if (!session) {
+    redirect("/");
+  }
+  const { user } = session;
+
   const cookiesStore = await cookies();
   const adminMode = cookiesStore.get("admin-mode")?.value === "enabled";
 
-  const client = await getClient(clientId, isAdmin && adminMode);
+  const client = await getClient(clientId, user.isAdmin && adminMode);
   if (client.error) {
     throw Error(client.error);
   }
@@ -42,7 +47,7 @@ export default async function Client(props: Readonly<ClientPageProps>) {
           <Tab>SCOPES</Tab>
           <Tab>GRANT TYPES</Tab>
           <Tab>TOKENS</Tab>
-          {isAdmin ? <Tab>OWNERS</Tab> : null}
+          {user.isAdmin ? <Tab>OWNERS</Tab> : null}
         </TabList>
         <TabPanels>
           <Main client={client} />
@@ -50,7 +55,7 @@ export default async function Client(props: Readonly<ClientPageProps>) {
           <Scopes client={client} />
           <GrantTypes client={client} />
           <Tokens client={client} />
-          {isAdmin ? <Owners client={client} /> : null}
+          {user.isAdmin ? <Owners client={client} /> : null}
         </TabPanels>
       </TabGroup>
     </Layout>

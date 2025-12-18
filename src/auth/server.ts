@@ -98,7 +98,7 @@ async function fetchMe(access_token: string): Promise<IamUser> {
     headers: { authorization },
   });
   if (!response.ok) {
-    throw Error("cannot fetch Me during authorization");
+    throw new Error("cannot fetch Me during authorization");
   }
   return await response.json();
 }

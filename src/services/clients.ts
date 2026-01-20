@@ -15,7 +15,7 @@ import { redirect } from "next/navigation";
 
 const { BASE_URL } = settings;
 
-export async function registerClient(client: ClientRequest, isAdmin?: boolean) {
+export async function registerClient(client: ClientRequest, isAdmin?: boolean): Promise<Client | undefined> {
   const response = await authFetch(`${BASE_URL}/iam/api/client-registration`, {
     body: JSON.stringify(client),
     method: "POST",
@@ -24,7 +24,7 @@ export async function registerClient(client: ClientRequest, isAdmin?: boolean) {
 
   if (response.ok) {
     await setNotification({ type: "success", message: "Client created" });
-    isAdmin ? redirect("/clients") : redirect("/clients?me");
+    return await response.json();
   } else {
     const msg = await response.text();
     await setNotification({

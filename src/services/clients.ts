@@ -4,11 +4,11 @@
 
 "use server";
 
-import { Client, ClientRequest } from "@/models/client";
-import { User } from "@/models/scim";
-import { Paginated } from "@/models/pagination";
-import { setNotification } from "@/services/notifications";
 import { settings } from "@/config";
+import { Client, ClientRequest } from "@/models/client";
+import { Paginated } from "@/models/pagination";
+import { User } from "@/models/scim";
+import { setNotification } from "@/services/notifications";
 import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -195,5 +195,22 @@ export async function getClientOwners(clientId: string): Promise<User[]> {
     return firstPage.Resources.concat(users);
   } else {
     return firstPage.Resources;
+  }
+}
+
+export async function regenerateClientSecret(clientId: string) {
+  const url = `${BASE_URL}/iam/api/clients/${clientId}/secret`;
+  const response = await authFetch(url, { method: "POST" });
+  if (response.ok) {
+    await setNotification({ type: "success", message: "Client secret regenerated" });
+    const { client_secret } = await response.json();
+    return client_secret;
+  } else {
+    const msg = await response.text();
+    await setNotification({
+      type: "error",
+      message: "Cannot regenerate client secret",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 }

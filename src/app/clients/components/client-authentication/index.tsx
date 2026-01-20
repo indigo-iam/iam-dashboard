@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 
 type ClientAuthenticationSettingsProps = {
   authMethod: string;
+  clientId: string;
   showRegenerateSecret?: boolean;
   onStatusChange?: (status: boolean) => void;
 };
@@ -24,19 +25,19 @@ function ClientAuthenticationSettings(
   switch (authMethod) {
     case "client_secret_basic":
       if (showRegenerateSecret) {
-        return <RegenerateClientSecret />;
+        return <RegenerateClientSecret clientId={props.clientId} />;
       }
       return null;
     case "client_secret_post":
       if (showRegenerateSecret) {
-        return <RegenerateClientSecret />;
+        return <RegenerateClientSecret clientId={props.clientId} />;
       }
       return null;
     case "client_secret_jwt":
       if (showRegenerateSecret) {
         return (
           <>
-            <RegenerateClientSecret />
+            <RegenerateClientSecret clientId={props.clientId} />
             <ClientSecretJwt onStatusChange={onStatusChange} />
           </>
         );
@@ -55,13 +56,14 @@ type ClientAuthenticationProps = {
   name: string;
   defaultValue?: SelectOption;
   showRegenerateClientSecret?: boolean;
+  clientId: string;
   onStatusChange?: (status: boolean) => void;
 };
 
 export function ClientAuthentication(
   props: Readonly<ClientAuthenticationProps>
 ) {
-  const { name, defaultValue, showRegenerateClientSecret, onStatusChange } =
+  const { name, defaultValue, showRegenerateClientSecret, onStatusChange, clientId } =
     props;
 
   const [authMethod, setAuthMethod] = useState(defaultValue);
@@ -94,6 +96,7 @@ export function ClientAuthentication(
           authMethod={authMethod.id}
           showRegenerateSecret={showRegenerateClientSecret}
           onStatusChange={onStatusChange}
+          clientId={clientId}
         />
       )}
     </div>

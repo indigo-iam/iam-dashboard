@@ -102,6 +102,7 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
                   name="token_endpoint_auth_method"
                   showRegenerateClientSecret={true}
                   defaultValue={defaultValue}
+                  clientId={client.client_id}
                 />
               </Field>
               <Field>

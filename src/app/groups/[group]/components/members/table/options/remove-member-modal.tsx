@@ -5,21 +5,21 @@
 import ConfirmModal from "@/components/confirm-modal";
 import { ModalProps } from "@/components/modal";
 import { Group } from "@/models/groups";
-import { User } from "@/models/scim";
-import { removeUserFromGroup } from "@/services/groups";
+import { ScimReference } from "@/models/scim";
+import { removeUserByRefFromGroup } from "@/services/groups";
 
 interface RevokeMemberFromGroupModalProps extends ModalProps {
-  user: User;
+  userRef: ScimReference;
   group: Group;
 }
 
 export default function RemoveMemberFromGroupModal(
   props: Readonly<RevokeMemberFromGroupModalProps>
 ) {
-  const { user, group, ...modalProps } = props;
+  const { userRef, group, ...modalProps } = props;
 
   const action = async () => {
-    await removeUserFromGroup(group.id, user);
+    await removeUserByRefFromGroup(group.id, userRef);
   };
   return (
     <ConfirmModal
@@ -30,7 +30,7 @@ export default function RemoveMemberFromGroupModal(
     >
       <p>Are you sure you want to remove user </p>
       <p className="flex justify-center">
-        <b>{user.displayName}</b> ({user.id})
+        <b>{userRef.display}</b> ({userRef.value})
       </p>
       <p>
         from group <b>{group.displayName}</b>?

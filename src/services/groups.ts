@@ -205,6 +205,13 @@ export async function addUserToGroup(groupId: string, user: User) {
 
 export async function removeUserFromGroup(groupId: string, user: User) {
   const userRef = makeScimReferenceFromUser(user);
+  await removeUserByRefFromGroup(groupId, userRef);
+}
+
+export async function removeUserByRefFromGroup(
+  groupId: string,
+  userRef: ScimReference
+) {
   const body = {
     operations: [
       {

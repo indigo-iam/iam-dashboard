@@ -17,25 +17,20 @@ type SecretProps = {
 };
 
 export function InputSecret(props: Readonly<SecretProps>) {
+  const { secretValue } = props;
   const [isVisible, setIsVisible] = useState(false);
-
-  const toggleVisibility = () => {
-    setIsVisible(!isVisible);
-  };
+  const icon = isVisible ? (
+    <EyeSlashIcon className="size-5 dark:text-white/60" />
+  ) : (
+    <EyeIcon className="size-5 dark:text-white/60" />
+  );
+  const toggleVisibility = () => setIsVisible(!isVisible);
 
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(props.secretValue);
+      await navigator.clipboard.writeText(secretValue);
     } catch (err) {
-      console.error('Error during clipboard copy:', err);
-    }
-  };
-
-  const changeIcon = () => {
-    if (isVisible) {
-      return <EyeSlashIcon className="size-5 dark:text-white/60" />
-    } else {
-      return <EyeIcon className="size-5 dark:text-white/60" />
+      console.error("Error during clipboard copy:", err);
     }
   };
 
@@ -43,23 +38,24 @@ export function InputSecret(props: Readonly<SecretProps>) {
     <div className="flex w-full break-all rounded-md border border-white/30 bg-gray-100 dark:bg-gray-800 bg-border">
       <div className="w-full px-3 py-2">
         <input
-          type={isVisible ? 'text' : 'password'}
+          type={isVisible ? "text" : "password"}
           readOnly
-          className="w-full bg-gray-100 dark:bg-gray-800 bg-border focus:outline-none"
-          value={props.secretValue}
+          className="bg-border w-full bg-gray-100 focus:outline-none dark:bg-gray-800"
+          value={secretValue}
         />
       </div>
 
-      <div className="flex items-center gl-button-group btn-group bg-white/30 dark:bg-gray-400 border-white/30 rounded">
+      <div className="flex items-center rounded border-white/30 bg-white/30 dark:bg-gray-400">
         <Button
+          title={isVisible ? "hide secret" : "show secret"}
           onClick={toggleVisibility}
-          className="ml-2 mr-1 underline border-white/30 bg-white-30 dark:bg-gray-400 gl-button-focus focus:outline-none"
+          className="bg-white-30 gl-button-focus mr-1 ml-2 border-white/30 underline focus:outline-none dark:bg-gray-400"
         >
-          {changeIcon()}
+          {icon}
         </Button>
-
         <Button
-          className="ml-1 mr-2 underline border-white/30 bg-white-30 dark:bg-gray-400 gl-button-focus focus:outline-none"
+          title="copy secret"
+          className="bg-white-30 gl-button-focus mr-2 ml-1 border-white/30 underline focus:outline-none dark:bg-gray-400"
           onClick={copyToClipboard}
         >
           <ClipboardDocumentIcon className="size-5 dark:text-white/60" />

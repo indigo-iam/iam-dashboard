@@ -202,7 +202,6 @@ export async function regenerateClientSecret(clientId: string) {
   const url = `${BASE_URL}/iam/api/clients/${clientId}/secret`;
   const response = await authFetch(url, { method: "POST" });
   if (response.ok) {
-    await setNotification({ type: "success", message: "Client secret regenerated" });
     const { client_secret } = await response.json();
     return client_secret;
   } else {

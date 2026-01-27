@@ -13,39 +13,33 @@ import { useState } from "react";
 
 export function RegenerateClientSecret(props: Readonly<{ clientId: string }>) {
   const { clientId } = props;
-  const [secretValue, setSecretValue] = useState<string | null>(null);
+  const [secretValue, setSecretValue] = useState<string>();
   const [show, setShow] = useState(false);
-  const [displaySecret, setDisplaySecret] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
 
   const action = async () => {
-    await regenerateClientSecret(clientId).then((newSecret) => {
-      setSecretValue(newSecret);
-      setDisplaySecret(true);
-    }).catch((err) => {
-      console.error("Error regenerating client secret:", err);
-    });
+    const res = await regenerateClientSecret(clientId);
+    setSecretValue(res.client_secret);
   };
 
-  const showClientSecret = () => {
-    if (secretValue && displaySecret) {
-      return (
-        <div className="mt-4">
-          <div className="max-w-80 bg-gray-100 dark:bg-gray-800 rounded">
-            <InputSecret secretValue={secretValue} >
-            </InputSecret>
-          </div>
+  function showClientSecret(secretValue: string) {
+    return (
+      <div className="mt-4">
+        <div className="max-w-80 rounded bg-gray-100 dark:bg-gray-800">
+          <InputSecret secretValue={secretValue} />
         </div>
-      );
-    }
+      </div>
+    );
   }
 
   return (
     <Field>
       <Label>Regenerate Client Secret</Label>
       <Description>Generate a new secret for this client</Description>
-      <Button className="btn-secondary" onClick={open}>Regenerate Secret</Button>
+      <Button className="btn-secondary" onClick={open}>
+        Regenerate Secret
+      </Button>
       <ConfirmModal
         show={show}
         onClose={close}
@@ -53,9 +47,10 @@ export function RegenerateClientSecret(props: Readonly<{ clientId: string }>) {
         danger
         title="Regenerate Client Secret"
       >
-        Are you sure you want to regenerate the client secret? The previous secret will no longer be valid.
+        Are you sure you want to regenerate the client secret? The previous
+        secret will no longer be valid.
       </ConfirmModal>
-      {showClientSecret()}
+      {!!secretValue && showClientSecret(secretValue)}
     </Field>
   );
 }

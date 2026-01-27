@@ -35,7 +35,7 @@ export function InputSecret(props: Readonly<SecretProps>) {
   };
 
   return (
-    <div className="flex w-full break-all rounded-md border border-white/30 bg-gray-100 dark:bg-gray-800 bg-border">
+    <div className="bg-border flex w-full rounded-md border border-white/30 bg-gray-100 break-all dark:bg-gray-800">
       <div className="w-full px-3 py-2">
         <input
           type={isVisible ? "text" : "password"}

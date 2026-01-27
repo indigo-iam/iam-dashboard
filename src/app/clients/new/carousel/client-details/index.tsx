@@ -41,37 +41,36 @@ export default function ClientDetails(props: {
 
       <Field className="flex flex-col gap-1">
         <Label>Client Name:</Label>
-        <h3 className="break-all p-2 rounded" >
-          {props.newClient?.client_name || ""}
+        <h3 className="rounded p-2 break-all">
+          {newClient?.client_name ?? ""}
         </h3>
       </Field>
 
       <Field className="flex flex-col gap-1">
         <Label>Client ID:</Label>
-        <h3 className="break-all p-2 rounded" >
-          {props.newClient?.client_id}
-        </h3>
+        <h3 className="rounded p-2 break-all">{newClient?.client_id ?? ""}</h3>
       </Field>
 
-      <Field className="flex flex-col gap-1" >
-        {<ClientSecret clientDetails={props.newClient} />}
+      <Field className="flex flex-col gap-1">
+        <ClientSecret clientDetails={newClient} />
       </Field>
 
-      <br />
-      <div className="flex w-full flex-col text-sm font-light lg:w-4/5">
-        <span className="text-danger dark:text-danger-light font-semibold">
-          WARNING
-        </span>
-        <p className="text-sm dark:text-light-gray/80 dark:bg-gray-800 ">
-          The client secret is shown only once in this screen.
-          Make sure to copy it and store it in a safe place before click on continue button.
-        </p>
-      </div>
-
-      <div className="flex flex-row justify-end py-2">
-        <Button className="btn-secondary" onClick={changePage}>
-          Continue
-        </Button>
+      <div className="mt-4 mr-16 flex w-full flex-row items-end justify-end">
+        <div className="ml-0 flex flex-col text-sm font-light">
+          <h4 className="text-danger dark:text-danger-light font-semibold">
+            WARNING
+          </h4>
+          <p className="dark:text-light-gray/80 text-sm dark:bg-gray-800">
+            The client secret is shown only once in this screen. Make sure to
+            securely save the client secret. You won't be able to access it
+            again.
+          </p>
+        </div>
+        <div>
+          <Button className="btn-secondary" onClick={changePage}>
+            Continue
+          </Button>
+        </div>
       </div>
     </CarouselPanel>
   );

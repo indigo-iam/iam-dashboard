@@ -11,7 +11,7 @@ import path from "path";
 export * from "@playwright/test";
 
 export const IAM_DASHBOARD_URL =
-  process.env.IAM_DASHBOARD_URL ?? "iam.test.example:8080/ui";
+  process.env.IAM_DASHBOARD_URL ?? "http://iam.test.example:8080/ui";
 
 export const test = baseTest.extend<{}, { workerStorageState: string }>({
   // Use the same storage state for all tests in this worker.

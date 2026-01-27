@@ -7,9 +7,13 @@ import { notFound } from "next/navigation";
 
 export async function authFetch(info: RequestInfo | URL, init?: RequestInit) {
   const { accessToken } = await getAccessToken();
-  const authorization = `Bearer ${accessToken}`;
-  const headers = { ...init?.headers, authorization };
-  return fetch(info, { headers });
+  const options: RequestInit = init ?? {};
+  let { headers } = options;
+  options.headers = {
+    ...headers,
+    authorization: `Bearer ${accessToken}`,
+  };
+  return fetch(info, options);
 }
 
 type GetItem = <T>(endpoint: string | URL) => Promise<T>;

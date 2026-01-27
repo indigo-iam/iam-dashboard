@@ -15,7 +15,7 @@ import {
   UserGroupIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
-import { getSession } from "@/auth/server";
+import { getSession } from "@/auth";
 import { Drawer, Link, ToggleDrawerButton } from "@/components/drawer";
 import { Gravatar } from "@/components/gravatar";
 import Notifications from "@/components/notifications";

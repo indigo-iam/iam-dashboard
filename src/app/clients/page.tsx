@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { cookies } from "next/headers";
-import { getSession } from "@/auth/server";
+import { getSession } from "@/auth";
 import { ClientsTable } from "@/app/components/clients";
 import { Layout } from "@/app/components/layout";
 import { InputQuery } from "@/components/inputs";

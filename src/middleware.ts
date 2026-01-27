@@ -4,6 +4,9 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
+import { settings } from "./config";
+
+const { IAM_DASHBOARD_BASE_PATH } = settings;
 
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico|signin).*)"],
@@ -11,8 +14,9 @@ export const config = {
 
 export async function middleware(request: NextRequest) {
   const sessionCookie = getSessionCookie(request);
-  if (!sessionCookie) {
-    return NextResponse.redirect(new URL("/signin", request.url));
+  if (sessionCookie) {
+    return NextResponse.next();
   }
-  return NextResponse.next();
+  const url = new URL(`${IAM_DASHBOARD_BASE_PATH}/signin`, request.url);
+  return NextResponse.redirect(url);
 }

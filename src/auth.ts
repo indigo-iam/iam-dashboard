@@ -16,16 +16,18 @@ function decodeJWT(token: string) {
 
 const {
   IAM_API_URL,
-  IAM_AUTH_SECRET,
-  IAM_DASHBOARD_BASE_URL,
-  IAM_DASHBOARD_CLIENT_ID,
-  IAM_DASHBOARD_CLIENT_SECRET,
-  IAM_DASHBOARD_SCOPES,
+  IAM_DASHBOARD_URL,
+  IAM_DASHBOARD_AUTH_SECRET,
+  IAM_DASHBOARD_OIDC_CLIENT_ID,
+  IAM_DASHBOARD_OIDC_CLIENT_SECRET,
+  IAM_DASHBOARD_OIDC_SCOPES,
 } = settings;
 
+const baseURL = `${IAM_DASHBOARD_URL}/api/auth`;
+
 export const auth = betterAuth({
-  baseURL: IAM_DASHBOARD_BASE_URL,
-  secret: IAM_AUTH_SECRET,
+  baseURL,
+  secret: IAM_DASHBOARD_AUTH_SECRET,
   user: {
     additionalFields: {
       isAdmin: {
@@ -42,15 +44,22 @@ export const auth = betterAuth({
       },
     },
   },
+  logger: {
+    level: "debug",
+    disabled: false,
+    log: (level, message, ...args) => {
+      console.debug(`[BetterAuth][${level}] ${message}`, ...args);
+    },
+  },
   plugins: [
     genericOAuth({
       config: [
         {
           providerId: "indigo-iam",
           discoveryUrl: `${IAM_API_URL}/.well-known/openid-configuration`,
-          clientId: IAM_DASHBOARD_CLIENT_ID,
-          clientSecret: IAM_DASHBOARD_CLIENT_SECRET,
-          scopes: IAM_DASHBOARD_SCOPES?.split(" "),
+          clientId: IAM_DASHBOARD_OIDC_CLIENT_ID,
+          clientSecret: IAM_DASHBOARD_OIDC_CLIENT_SECRET,
+          scopes: IAM_DASHBOARD_OIDC_SCOPES?.split(" "),
           getUserInfo: async tokens => {
             const { idToken, accessToken } = tokens;
             if (!idToken || !accessToken) {
@@ -92,8 +101,8 @@ export const auth = betterAuth({
   },
 });
 
-async function fetchMe(access_token: string): Promise<IamUser> {
-  const authorization = `Bearer ${access_token}`;
+async function fetchMe(accessToken: string): Promise<IamUser> {
+  const authorization = `Bearer ${accessToken}`;
   const response = await fetch(`${IAM_API_URL}/scim/Me`, {
     headers: { authorization },
   });
@@ -123,7 +132,7 @@ export async function getAccessToken() {
 
 export async function signIn() {
   const { url } = await auth.api.signInWithOAuth2({
-    body: { providerId: "indigo-iam" },
+    body: { providerId: "indigo-iam", callbackURL: IAM_DASHBOARD_URL },
   });
   redirect(url);
 }

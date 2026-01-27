@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { getAccessToken } from "@/auth/server";
+import { getAccessToken } from "@/auth";
 import { notFound } from "next/navigation";
 
 export async function authFetch(info: RequestInfo | URL, init?: RequestInit) {

@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { getSession } from "@/auth/server";
+import { getSession } from "@/auth";
 import { Layout } from "@/app/components/layout";
 import { TabGroup, TabList, TabPanels, Tab } from "@/components/tabs";
 import { getClient } from "@/services/clients";

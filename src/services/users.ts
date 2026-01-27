@@ -13,7 +13,7 @@ import { Paginated } from "@/models/pagination";
 import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
 import { setNotification } from "@/services/notifications";
 import { settings } from "@/config";
-import { getSession } from "@/auth/server";
+import { getSession } from "@/auth";
 
 const { IAM_API_URL } = settings;
 

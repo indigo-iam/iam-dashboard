@@ -79,7 +79,7 @@ services:
     build:
       context: .
       args:
-        NEXT_PUBLIC_BASE_PATH: /ui
+        IAM_DASHBOARD_URL: http://iam.test.example:8080/ui
     entrypoint: "/entrypoint.sh"
     command: ["node", "server.js"]
     volumes:

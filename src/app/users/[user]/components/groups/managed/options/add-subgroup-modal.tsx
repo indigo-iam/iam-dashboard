@@ -6,11 +6,11 @@ import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
-import { ScimReference } from "@/models/scim";
-import { addSubgroup } from "@/services/groups";
+import { ManagedGroup } from "@/models/groups";
+import { addSubgroup, addSubgroupToManagedGroup } from "@/services/groups";
 
 interface AddSubgroupModalProps extends ModalProps {
-  rootGroup: ScimReference;
+  rootGroup: ManagedGroup;
   onAdded?: () => void;
 }
 export default function AddSubgroupModal(
@@ -20,7 +20,7 @@ export default function AddSubgroupModal(
   const action = async (formData: FormData) => {
     const name = formData.get("name") as string;
     if (rootGroup) {
-      await addSubgroup(name, rootGroup);
+      await addSubgroupToManagedGroup(name, rootGroup);
       onAdded?.();
       modalProps.onClose();
     } else {
@@ -28,7 +28,10 @@ export default function AddSubgroupModal(
     }
   };
   return (
-    <Modal {...modalProps} title={`Add new subgroup to '${rootGroup.display}'`}>
+    <Modal
+      {...modalProps}
+      title={`Add new subgroup to '${rootGroup.name}'`}
+    >
       <Form id="add-subgroup-form" action={action}>
         <ModalBody>
           <Field>

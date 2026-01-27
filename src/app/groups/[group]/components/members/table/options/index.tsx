@@ -6,17 +6,17 @@
 
 import { Option, Options } from "@/components/options";
 import RemoveMemberFromGroupModal from "./remove-member-modal";
-import { ScimReference } from "@/models/scim";
+import { User } from "@/models/scim";
 import { Group } from "@/models/groups";
 import { useState } from "react";
 
 type MemberOptionsProps = {
-  userRef: ScimReference;
+  user: User;
   group: Group;
 };
 
 export default function MemberOptions(props: Readonly<MemberOptionsProps>) {
-  const { userRef, group } = props;
+  const { user, group } = props;
   const [show, setShow] = useState<"REMOVE_MEMBER">();
   const close = () => setShow(undefined);
   return (
@@ -28,7 +28,7 @@ export default function MemberOptions(props: Readonly<MemberOptionsProps>) {
       </Options>
       <RemoveMemberFromGroupModal
         onClose={close}
-        userRef={userRef}
+        user={user}
         group={group}
         show={show === "REMOVE_MEMBER"}
       />

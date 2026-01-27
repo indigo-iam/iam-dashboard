@@ -15,7 +15,6 @@ type RowProps = {
 
 function Row(props: Readonly<RowProps>) {
   const { group } = props;
-  const groupRef = makeScimReferenceFromManagedGroup(group);
   return (
     <li className="iam-list-item flex flex-row">
       <Link
@@ -25,7 +24,7 @@ function Row(props: Readonly<RowProps>) {
         {group.name}
         <p className="text-gray dark:text-secondary/60 text-sm">{group.id}</p>
       </Link>
-      <GroupOptions groupRef={groupRef} />
+      <GroupOptions group={group} />
     </li>
   );
 }

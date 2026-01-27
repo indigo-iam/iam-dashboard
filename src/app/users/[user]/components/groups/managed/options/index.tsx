@@ -5,17 +5,17 @@
 "use client";
 
 import { Options, Option } from "@/components/options";
-import { ScimReference } from "@/models/scim";
+import { ManagedGroup } from "@/models/groups";
 import AddSubgroupModal from "./add-subgroup-modal";
-import DeleteGroupModal from "./delete-group-modal";
+import DeleteManagedGroupModal from "./delete-managed-group-modal";
 import { useState } from "react";
 
 export type GroupOptionsProps = {
-  groupRef: ScimReference;
+  group: ManagedGroup;
 };
 
 export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
-  const { groupRef } = props;
+  const { group } = props;
   const [show, setShow] = useState<"ADD_SUBGROUP" | "DELETE_GROUP">();
   const close = () => setShow(undefined);
   return (
@@ -27,12 +27,12 @@ export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
         </Option>
       </Options>
       <AddSubgroupModal
-        rootGroup={groupRef}
+        rootGroup={group}
         show={show === "ADD_SUBGROUP"}
         onClose={close}
       />
-      <DeleteGroupModal
-        groupRef={groupRef}
+      <DeleteManagedGroupModal
+        group={group}
         show={show === "DELETE_GROUP"}
         onClose={close}
       />

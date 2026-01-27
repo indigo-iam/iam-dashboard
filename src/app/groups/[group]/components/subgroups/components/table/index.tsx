@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import GroupOptions from "@/app/groups/components/table/options";
 import { Group } from "@/models/groups";
 import { ScimReference } from "@/models/scim";
 import { fetchSubgroupsPage } from "@/services/groups";

@@ -4,27 +4,32 @@
 
 import { Group } from "@/models/groups";
 import { fetchGroupMembersPage } from "@/services/groups";
-import { ScimReference } from "@/models/scim";
+import { ScimReference, User } from "@/models/scim";
 import MemberOptions from "./options";
 import Link from "next/link";
 
-function Row(props: Readonly<{ member: ScimReference; group: Group }>) {
-  const { member, group } = props;
+type RowProps = {
+  user: User;
+  group: Group;
+};
+
+function Row(props: Readonly<RowProps>) {
+  const { user, group } = props;
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
         <Link
           className="flex grow flex-col hover:underline"
-          href={`/users/${member.value}`}
+          href={`/users/${user.id}`}
         >
-          {member.display}
+          {user.displayName}
           <p className="text-gray dark:text-secondary-dark text-sm">
-            {member.value}
+            {user.id}
           </p>
         </Link>
       </div>
       <div className="flex flex-col">
-        <MemberOptions userRef={member} group={group} />
+        <MemberOptions user={user} group={group} />
       </div>
     </li>
   );
@@ -49,9 +54,9 @@ export default async function Members(props: Readonly<MembersProps>) {
 
   return (
     <ul className="w-full">
-      {members.map(member => (
-        <Row key={member.value} member={member} group={group} />
-      ))}
+      {/*{members.map(member => (
+        <Row key={member.id} user={member} group={group} />
+      ))}*/}
     </ul>
   );
 }

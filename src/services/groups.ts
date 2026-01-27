@@ -8,6 +8,7 @@ import {
   Group,
   GroupLabel,
   GroupsSearchResponse,
+  ManagedGroup,
   ManagedGroupResponse,
 } from "@/models/groups";
 import { authFetch, getItem } from "@/utils/fetch";
@@ -16,6 +17,11 @@ import { Paginated } from "@/models/pagination";
 import { revalidatePath } from "next/cache";
 import { ScimReference, User } from "@/models/scim";
 import { setNotification } from "@/services/notifications";
+import {
+  makeScimReferenceFromGroup,
+  makeScimReferenceFromManagedGroup,
+  makeScimReferenceFromUser,
+} from "@/utils/scim";
 
 const { IAM_API_URL } = settings;
 
@@ -121,16 +127,29 @@ export async function deleteGroup(groupId: string) {
   }
 }
 
-export async function addSubgroup(
+export async function addSubgroup(groupName: string, parentGroup: Group) {
+  const parentGroupRef = makeScimReferenceFromGroup(parentGroup);
+  await addSubgroupByRef(groupName, parentGroupRef);
+}
+
+export async function addSubgroupToManagedGroup(
   groupName: string,
-  parentGroup: ScimReference
+  parentGroup: ManagedGroup
+) {
+  const parentGroupRef = makeScimReferenceFromManagedGroup(parentGroup);
+  await addSubgroupByRef(groupName, parentGroupRef);
+}
+
+export async function addSubgroupByRef(
+  groupName: string,
+  parentGroupRef: ScimReference
 ) {
   const body = {
     displayName: groupName,
     schemas: ["urn:ietf:params:scim:schemas:core:2.0:Group"],
     "urn:indigo-dc:scim:schemas:IndigoGroup": {
       parentGroup: {
-        ...parentGroup,
+        ...parentGroupRef,
       },
     },
   };
@@ -153,7 +172,8 @@ export async function addSubgroup(
   }
 }
 
-export async function addUserToGroup(groupId: string, userRef: ScimReference) {
+export async function addUserToGroup(groupId: string, user: User) {
+  const userRef = makeScimReferenceFromUser(user);
   const body = {
     schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
     operations: [
@@ -183,10 +203,8 @@ export async function addUserToGroup(groupId: string, userRef: ScimReference) {
   }
 }
 
-export async function removeUserFromGroup(
-  groupId: string,
-  userRef: ScimReference
-) {
+export async function removeUserFromGroup(groupId: string, user: User) {
+  const userRef = makeScimReferenceFromUser(user);
   const body = {
     operations: [
       {

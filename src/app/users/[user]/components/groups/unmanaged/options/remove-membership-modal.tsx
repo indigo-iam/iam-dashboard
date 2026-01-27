@@ -7,7 +7,6 @@
 import { ScimReference, User } from "@/models/scim";
 import { removeUserFromGroup } from "@/services/groups";
 import ConfirmModal from "@/components/confirm-modal";
-import { makeScimReferenceFromUser } from "@/utils/scim";
 
 export type RemoveMembershipModalProps = {
   user: User;
@@ -22,8 +21,7 @@ export default function RemoveMembershipModal(
   const { user, groupRef, show, onClose } = props;
 
   const handleConfirm = async () => {
-    const userRef = makeScimReferenceFromUser(user);
-    await removeUserFromGroup(groupRef.value, userRef);
+    await removeUserFromGroup(groupRef.value, user);
     onClose();
   };
 

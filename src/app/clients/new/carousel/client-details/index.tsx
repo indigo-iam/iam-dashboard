@@ -18,11 +18,6 @@ export default function ClientDetails(props: {
   const { newClient, isAdmin } = props;
 
   function changePage() {
-    const event = new CustomEvent("nextPage");
-    window.dispatchEvent(event);
-
-
-    // Logic to change the carousel page goes here
     isAdmin ? redirect("/clients") : redirect("/clients?me");
   }
 

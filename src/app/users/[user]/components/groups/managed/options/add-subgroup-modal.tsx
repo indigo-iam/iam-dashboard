@@ -7,7 +7,7 @@ import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { ManagedGroup } from "@/models/groups";
-import { addSubgroup, addSubgroupToManagedGroup } from "@/services/groups";
+import { addSubgroupToManagedGroup } from "@/services/groups";
 
 interface AddSubgroupModalProps extends ModalProps {
   rootGroup: ManagedGroup;
@@ -28,10 +28,7 @@ export default function AddSubgroupModal(
     }
   };
   return (
-    <Modal
-      {...modalProps}
-      title={`Add new subgroup to '${rootGroup.name}'`}
-    >
+    <Modal {...modalProps} title={`Add new subgroup to '${rootGroup.name}'`}>
       <Form id="add-subgroup-form" action={action}>
         <ModalBody>
           <Field>

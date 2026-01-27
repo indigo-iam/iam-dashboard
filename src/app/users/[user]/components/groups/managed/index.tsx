@@ -7,7 +7,6 @@ import { fetchManagedGroups } from "@/services/groups";
 import { ManagedGroup } from "@/models/groups";
 import Link from "next/link";
 import GroupOptions from "./options";
-import { makeScimReferenceFromManagedGroup } from "@/utils/scim";
 
 type RowProps = {
   group: ManagedGroup;

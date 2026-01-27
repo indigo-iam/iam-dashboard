@@ -11,9 +11,11 @@ import { InputSecret } from "@/app/components/input-secret";
 import { Client } from "@/models/client";
 import { redirect } from "next/navigation";
 
-
-export default function ClientDetails(props: { newClient: Client | undefined }) {
-  const isAdmin = sessionStorage.getItem("isAdmin") === "true" || false;
+export default function ClientDetails(props: {
+  newClient?: Client;
+  isAdmin: boolean;
+}) {
+  const { newClient, isAdmin } = props;
 
   function changePage() {
     const event = new CustomEvent("nextPage");

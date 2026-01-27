@@ -15,7 +15,7 @@ import { redirect } from "next/navigation";
 
 const { BASE_URL } = settings;
 
-export async function registerClient(client: ClientRequest, isAdmin?: boolean): Promise<Client | undefined> {
+export async function registerClient(client: ClientRequest) {
   const response = await authFetch(`${BASE_URL}/iam/api/client-registration`, {
     body: JSON.stringify(client),
     method: "POST",

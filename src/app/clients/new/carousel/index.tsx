@@ -90,15 +90,13 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
     }
 
     const save = async () => {
-      // "use server";
-      const resp = await registerClient(request, isAdmin);
-      setNewClient(resp)
-    }
+      const res = await registerClient(request);
+      setNewClient(res);
+    };
 
     save();
     next();
   };
-  console.log(newClient);
 
   return (
     <div className="flex justify-center">
@@ -121,7 +119,7 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
               goNext={next}
             />
             <OtherSettings goBack={back} />
-            <ClientDetails newClient={newClient} />
+            <ClientDetails newClient={newClient} isAdmin={isAdmin} />
           </CarouselPanels>
         </Carousel>
       </Form>

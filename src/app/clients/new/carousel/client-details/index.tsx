@@ -4,10 +4,10 @@
 
 "use client";
 
+import { InputSecret } from "@/app/components/input-secret";
 import { Button } from "@/components/buttons";
 import { CarouselPanel } from "@/components/carousel";
 import { Field, Label } from "@/components/form";
-import { InputSecret } from "@/app/components/input-secret";
 import { Client } from "@/models/client";
 import { redirect } from "next/navigation";
 

@@ -5,11 +5,11 @@
 "use client";
 
 import { Select, SelectOption } from "@/components/form";
+import { useEffect, useState } from "react";
 import ClientSecretJwt from "./client-secret-jwt";
 import PrivateKeyJwt from "./private-key-jwt";
-import { TOKEN_ENDPOINT_AUTH_VALUES } from "./utils";
 import { RegenerateClientSecret } from "./regenerate-client-secret";
-import { useEffect, useState } from "react";
+import { TOKEN_ENDPOINT_AUTH_VALUES } from "./utils";
 
 type ClientAuthenticationSettingsProps = {
   authMethod: string;

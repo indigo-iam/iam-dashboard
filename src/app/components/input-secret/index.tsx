@@ -2,15 +2,15 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-'use client';
+"use client";
 
-import { useState } from "react";
-import { Button } from "../../../components/buttons";
+import { Button } from "@/components/buttons";
 import {
   ClipboardDocumentIcon,
   EyeIcon,
   EyeSlashIcon,
-} from '@heroicons/react/24/solid';
+} from "@heroicons/react/24/solid";
+import { useState } from "react";
 
 type SecretProps = {
   secretValue: string;

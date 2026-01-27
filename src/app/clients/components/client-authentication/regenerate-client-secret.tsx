@@ -4,11 +4,11 @@
 
 "use client";
 
-import { Button } from "@/components/buttons";
-import { Description, Field, Label } from "@/components/form";
 import { InputSecret } from "@/app/components/input-secret";
-import { regenerateClientSecret } from "@/services/clients";
+import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
+import { Description, Field, Label } from "@/components/form";
+import { regenerateClientSecret } from "@/services/clients";
 import { useState } from "react";
 
 export function RegenerateClientSecret(props: Readonly<{ clientId: string }>) {

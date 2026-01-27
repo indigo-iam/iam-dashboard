@@ -7,20 +7,19 @@
 import {
   Carousel,
   CarouselList,
-  CarouselTab,
   CarouselPanels,
+  CarouselTab,
 } from "@/components/carousel";
+import { Form } from "@/components/form";
+import { Stepper } from "@/components/stepper";
+import { Client, ClientRequest, Scope } from "@/models/client";
+import { OpenIdConfiguration } from "@/models/openid-configuration";
+import { registerClient } from "@/services/clients";
+import { useState } from "react";
+import ClientDetails from "./client-details";
 import GeneralSettings from "./general-settings";
 import OIDCSettings from "./oidc-settings";
 import OtherSettings from "./other-settings";
-import ClientDetails from "./client-details";
-import { useState } from "react";
-import { ClientRequest, Scope } from "@/models/client";
-import { OpenIdConfiguration } from "@/models/openid-configuration";
-import { Stepper } from "@/components/stepper";
-import { Client } from "@/models/client";
-import { Form } from "@/components/form";
-import { registerClient } from "@/services/clients";
 
 const TOTAL_PAGES = 4;
 
@@ -38,7 +37,6 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
   const next = () => setCurrentPage(Math.min(currentPage + 1, TOTAL_PAGES));
 
   const action = (formData: FormData) => {
-
     const request: ClientRequest = {
       redirect_uris: formData.getAll("redirect_uris") as string[],
       client_name: formData.get("client_name") as string,

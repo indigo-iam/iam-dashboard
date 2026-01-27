@@ -10,7 +10,11 @@ const IAM_DASHBOARD_OIDC_CLIENT_SECRET =
 const IAM_DASHBOARD_OIDC_SCOPES = process.env.IAM_DASHBOARD_OIDC_SCOPES;
 const IAM_API_URL = process.env.IAM_API_URL;
 
-const url = new URL(IAM_DASHBOARD_URL!);
+if (!IAM_DASHBOARD_URL) {
+  throw new Error("IAM_DASHBOARD_URL variable is undefined");
+}
+
+const url = new URL(IAM_DASHBOARD_URL);
 const IAM_DASHBOARD_BASE_PATH = url.pathname === "/" ? "" : url.pathname;
 
 export const settings = {

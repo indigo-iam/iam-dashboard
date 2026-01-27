@@ -64,7 +64,7 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: "docker compose up",
+    command: "docker compose up --build",
     url: "http://iam.test.example:8080/ui",
     reuseExistingServer: !process.env.CI,
     timeout: 10 * 60000,

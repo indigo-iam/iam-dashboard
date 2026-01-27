@@ -21,18 +21,16 @@ export default function ClientDetails(props: {
     isAdmin ? redirect("/clients") : redirect("/clients?me");
   }
 
-  function ClientSecret({ clientDetails }: { clientDetails: Client | undefined }) {
-    const hasSecret = clientDetails?.client_secret !== undefined;
-    if (clientDetails !== undefined && clientDetails?.client_secret !== undefined) {
-      return (
-        <Field className="flex flex-col gap-1" >
-          <Label>Client Secret:</Label>
-          <InputSecret secretValue={clientDetails!.client_secret}></InputSecret>
-        </Field>
-      );
-    } else {
+  function ClientSecret({ clientDetails }: { clientDetails?: Client }) {
+    if (!clientDetails?.client_secret) {
       return;
     }
+    return (
+      <Field className="flex flex-col gap-1">
+        <Label>Client Secret:</Label>
+        <InputSecret secretValue={clientDetails.client_secret} />
+      </Field>
+    );
   }
 
   return (

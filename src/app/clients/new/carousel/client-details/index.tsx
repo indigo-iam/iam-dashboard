@@ -59,9 +59,9 @@ export default function ClientDetails(props: {
             WARNING
           </h4>
           <p className="dark:text-light-gray/80 text-sm dark:bg-gray-800">
-            The client secret is shown only once in this screen. Make sure to
-            securely save the client secret. You won't be able to access it
-            again.
+            {
+              "The client secret is shown only once in this screen. Make sure to securely save the client secret. You won't be able to access it again."
+            }
           </p>
         </div>
         <div>

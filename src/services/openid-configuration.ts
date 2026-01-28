@@ -7,12 +7,12 @@
 import { settings } from "@/config";
 import { OpenIdConfiguration } from "@/models/openid-configuration";
 
-const { BASE_URL } = settings;
+const { IAM_API_URL } = settings;
 
 export const fetchOpenIdConfiguration: () => Promise<OpenIdConfiguration> =
   async () => {
     const response = await fetch(
-      `${BASE_URL}/.well-known/openid-configuration`
+      `${IAM_API_URL}/.well-known/openid-configuration`
     );
     return response.json();
   };

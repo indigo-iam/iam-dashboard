@@ -2,109 +2,145 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import NextAuth from "next-auth";
-import type { NextAuthConfig } from "next-auth";
-import type { DefaultJWT } from "next-auth/jwt";
-import type { Profile, User, Awaitable, TokenSet } from "@auth/core/types";
-import type { User as IamUser } from "@/models/scim";
-import type { OIDCConfig } from "next-auth/providers";
 import { settings } from "@/config";
+import type { User as IamUser } from "@/models/scim";
+import { betterAuth } from "better-auth";
+import { genericOAuth } from "better-auth/plugins";
+import { headers, cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { nextCookies } from "better-auth/next-js";
 
-const { BASE_URL, BASE_PATH } = settings;
-
-declare module "next-auth/jwt" {
-  interface JWT extends DefaultJWT {
-    access_token: string;
-    expires_at: number;
-    is_admin: boolean;
-    userId: string;
-  }
+function decodeJWT(token: string) {
+  return JSON.parse(atob(token.split(".")[1]));
 }
 
-declare module "next-auth" {
-  interface User {
-    sub: string;
-  }
-  interface Session {
-    access_token: string;
-    is_admin: boolean;
-    expired: boolean;
-  }
-}
+const {
+  IAM_API_URL,
+  IAM_DASHBOARD_BASE_URL,
+  IAM_DASHBOARD_BASE_PATH,
+  IAM_DASHBOARD_AUTH_SECRET,
+  IAM_DASHBOARD_OIDC_CLIENT_ID,
+  IAM_DASHBOARD_OIDC_CLIENT_SECRET,
+  IAM_DASHBOARD_OIDC_SCOPES,
+} = settings;
 
-const IamProvider: OIDCConfig<Profile> = {
-  id: "indigo-iam",
-  name: "Indigo-IAM",
-  type: "oidc",
-  issuer: process.env.IAM_AUTHORITY_URL,
-  clientId: process.env.IAM_CLIENT_ID,
-  clientSecret: process.env.IAM_CLIENT_SECRET,
-  authorization: {
-    params: {
-      scope: process.env.IAM_SCOPES,
-      audience: process.env.IAM_AUTHORITY_URL,
+export const auth = betterAuth({
+  baseURL: `${IAM_DASHBOARD_BASE_URL}${IAM_DASHBOARD_BASE_PATH}/api/auth`,
+  secret: IAM_DASHBOARD_AUTH_SECRET,
+  user: {
+    additionalFields: {
+      isAdmin: {
+        type: "boolean",
+        defaultValue: false,
+        required: true,
+        input: false,
+      },
+      sub: {
+        type: "string",
+        defaultValue: "",
+        required: true,
+        input: false,
+      },
     },
   },
-  checks: ["pkce", "state"],
-  profile: (profile: Profile, _: TokenSet): Awaitable<User> => {
-    const user: User = {
-      id: profile.sub ?? undefined,
-      name: profile.name ?? undefined,
-      email: profile.email ?? undefined,
-      image: profile.picture ?? undefined,
-      sub: profile.sub as string,
-    };
-    return user;
-  },
-};
-
-export const authConfig: NextAuthConfig = {
-  debug: process.env.AUTH_DEBUG === "true",
-  providers: [IamProvider],
-  session: { strategy: "jwt" },
-  basePath: `${BASE_PATH}/api/auth`,
-  pages: { signIn: "/signin", signOut: "/signout" },
-  callbacks: {
-    async jwt({ token, account, user }) {
-      if (account?.access_token) {
-        // first time login, save access token and expiration
-        const { access_token } = account;
-        const expires_at = (account.expires_at ?? 0) * 1000;
-        const me = await fetchMe(access_token);
-        const indigoUser = me["urn:indigo-dc:scim:schemas:IndigoUser"];
-        const is_admin =
-          indigoUser?.authorities?.includes("ROLE_ADMIN") ?? false;
-        token.userId = user.sub;
-        return { ...token, access_token, is_admin, expires_at };
-      }
-      return token;
-    },
-    async authorized({ auth }) {
-      return !!auth && !auth.expired;
-    },
-    async session({ session, token }) {
-      const { access_token, expires_at, is_admin } = token;
-      session.user.id = token.userId;
-      session.access_token = access_token;
-      session.is_admin = is_admin;
-      session.expired = expires_at < Date.now();
-      return session;
+  logger: {
+    level: "debug",
+    disabled: false,
+    log: (level, message, ...args) => {
+      console.debug(`[BetterAuth][${level}] ${message}`, ...args);
     },
   },
-};
-
-async function fetchMe(access_token: string): Promise<IamUser> {
-  const info = {
-    headers: {
-      authorization: `Bearer ${access_token}`,
+  plugins: [
+    genericOAuth({
+      config: [
+        {
+          providerId: "indigo-iam",
+          discoveryUrl: `${IAM_API_URL}/.well-known/openid-configuration`,
+          clientId: IAM_DASHBOARD_OIDC_CLIENT_ID,
+          clientSecret: IAM_DASHBOARD_OIDC_CLIENT_SECRET,
+          scopes: IAM_DASHBOARD_OIDC_SCOPES?.split(" "),
+          getUserInfo: async tokens => {
+            const { idToken, accessToken } = tokens;
+            if (!idToken || !accessToken) {
+              // returning null will raise an exception during the login flow
+              return null;
+            }
+            const profile = decodeJWT(idToken);
+            const me = await fetchMe(accessToken);
+            const indigoUser = me["urn:indigo-dc:scim:schemas:IndigoUser"];
+            const isAdmin =
+              indigoUser?.authorities?.includes("ROLE_ADMIN") ?? false;
+            return {
+              id: profile.sub,
+              emailVerified: profile.email_verified ?? false,
+              name: profile.name,
+              email: profile.email,
+              sub: profile.sub,
+              isAdmin,
+            };
+          },
+        },
+      ],
+    }),
+    nextCookies(),
+  ],
+  session: {
+    expiresIn: 3600,
+    disableSessionRefresh: true,
+    cookieCache: {
+      strategy: "jwe",
+      enabled: true,
+      maxAge: 3600,
     },
-  };
+  },
+  account: {
+    storeStateStrategy: "cookie",
+    storeAccountCookie: true, // Store account data after OAuth flow in a cookie (useful for database-less flows)
+    updateAccountOnSignIn: true,
+  },
+});
 
-  const response = await fetch(`${BASE_URL}/scim/Me`, info);
+async function fetchMe(accessToken: string): Promise<IamUser> {
+  const authorization = `Bearer ${accessToken}`;
+  const response = await fetch(`${IAM_API_URL}/scim/Me`, {
+    headers: { authorization },
+  });
   if (!response.ok) {
-    throw Error("cannot fetch Me during authorization");
+    throw new Error("cannot fetch Me during authorization");
   }
   return await response.json();
 }
 
-export const { auth, handlers, signIn, signOut } = NextAuth(authConfig);
+export type User = typeof auth.$Infer.Session.user;
+export type Session = typeof auth.$Infer.Session;
+
+export async function getSession(): Promise<Session | null> {
+  return await auth.api.getSession({
+    headers: await headers(),
+  });
+}
+
+export async function getAccessToken() {
+  return await auth.api.getAccessToken({
+    body: {
+      providerId: "indigo-iam",
+    },
+    headers: await headers(),
+  });
+}
+
+export async function signIn() {
+  const { url } = await auth.api.signInWithOAuth2({
+    body: {
+      providerId: "indigo-iam",
+      callbackURL: `${IAM_DASHBOARD_BASE_URL}${IAM_DASHBOARD_BASE_PATH}`,
+    },
+  });
+  redirect(url);
+}
+
+export async function signOut() {
+  await auth.api.signOut({ headers: await headers() });
+  const cookiesStore = await cookies();
+  cookiesStore.getAll().forEach(c => cookiesStore.delete(c.name));
+}

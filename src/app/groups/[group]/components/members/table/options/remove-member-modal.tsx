@@ -6,7 +6,7 @@ import ConfirmModal from "@/components/confirm-modal";
 import { ModalProps } from "@/components/modal";
 import { Group } from "@/models/groups";
 import { ScimReference } from "@/models/scim";
-import { removeUserFromGroup } from "@/services/groups";
+import { removeUserByRefFromGroup } from "@/services/groups";
 
 interface RevokeMemberFromGroupModalProps extends ModalProps {
   userRef: ScimReference;
@@ -19,7 +19,7 @@ export default function RemoveMemberFromGroupModal(
   const { userRef, group, ...modalProps } = props;
 
   const action = async () => {
-    await removeUserFromGroup(group.id, userRef);
+    await removeUserByRefFromGroup(group.id, userRef);
   };
   return (
     <ConfirmModal

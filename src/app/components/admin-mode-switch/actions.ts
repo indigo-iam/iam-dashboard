@@ -4,7 +4,7 @@ import { cookies, headers } from "next/headers";
 import { settings } from "@/config";
 import { redirect } from "next/navigation";
 
-const { BASE_PATH } = settings;
+const { IAM_DASHBOARD_BASE_PATH } = settings;
 
 export async function toggleAdminMode(enabled: boolean) {
   const cookiesStore = await cookies();
@@ -14,8 +14,8 @@ export async function toggleAdminMode(enabled: boolean) {
     const refer = headersList.get("referer") as string;
     const url = new URL(refer);
     if (
-      url.pathname === `${BASE_PATH}/users/me` ||
-      url.pathname.startsWith(`${BASE_PATH}/clients`)
+      url.pathname === `${IAM_DASHBOARD_BASE_PATH}/users/me` ||
+      url.pathname.startsWith(`${IAM_DASHBOARD_BASE_PATH}/clients`)
     ) {
       return;
     }

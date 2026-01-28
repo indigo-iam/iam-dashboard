@@ -17,7 +17,7 @@ RUN apk add --no-cache libc6-compat && \
 
 # Rebuild the source code only when needed
 FROM base AS builder
-ARG NEXT_PUBLIC_BASE_PATH
+ARG IAM_DASHBOARD_BASE_PATH
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
@@ -29,7 +29,8 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
-RUN npm run build
+# Generate a random secret to silence build warnings/errors
+RUN AUTH_SECRET=$(base64 < /dev/urandom | head -c 32) npm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner
@@ -41,7 +42,8 @@ ENV NEXT_TELEMETRY_DISABLED=1
 # COPY --from=builder /app/public ./public
 
 # Set the correct permission for prerender cache
-RUN addgroup --system --gid 1001 nodejs && \
+RUN apk add curl && \
+  addgroup --system --gid 1001 nodejs && \
   adduser --system --uid 1001 nextjs && \
   mkdir .next && \
   chown nextjs:nodejs .next

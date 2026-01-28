@@ -14,10 +14,10 @@ import { settings } from "@/config";
 import { revalidatePath } from "next/cache";
 import { setNotification } from "@/services/notifications";
 
-const { BASE_URL } = settings;
+const { IAM_API_URL } = settings;
 
 export const fetchGroupsRequests = async (username?: string) => {
-  let url = `${BASE_URL}/iam/group_requests?status=PENDING`;
+  let url = `${IAM_API_URL}/iam/group_requests?status=PENDING`;
   if (username) {
     url += `&username=${username}`;
   }
@@ -25,7 +25,7 @@ export const fetchGroupsRequests = async (username?: string) => {
 };
 
 export const submitGroupRequest = async (req: JoinGroupRequest) => {
-  const url = `${BASE_URL}/iam/group_requests`;
+  const url = `${IAM_API_URL}/iam/group_requests`;
   const response = await authFetch(url, {
     method: "POST",
     body: JSON.stringify(req),
@@ -47,7 +47,7 @@ export const submitGroupRequest = async (req: JoinGroupRequest) => {
 };
 
 export const approveGroupRequest = async (requestId: string) => {
-  const url = `${BASE_URL}/iam/group_requests/${requestId}/approve`;
+  const url = `${IAM_API_URL}/iam/group_requests/${requestId}/approve`;
   const response = await authFetch(url, {
     method: "POST",
   });
@@ -71,7 +71,7 @@ export const rejectGroupRequest = async (
   requestId: string,
   motivation: string
 ) => {
-  const url = `${BASE_URL}/iam/group_requests/${requestId}/reject?motivation=${motivation}`;
+  const url = `${IAM_API_URL}/iam/group_requests/${requestId}/reject?motivation=${motivation}`;
   const response = await authFetch(url, {
     method: "POST",
   });
@@ -89,7 +89,7 @@ export const rejectGroupRequest = async (
 };
 
 export const abortGroupRequest = async (userId: string, req: GroupRequest) => {
-  const url = `${BASE_URL}/iam/group_requests/${req.uuid}`;
+  const url = `${IAM_API_URL}/iam/group_requests/${req.uuid}`;
   const response = await authFetch(url, {
     method: "DELETE",
   });

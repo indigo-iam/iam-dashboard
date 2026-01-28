@@ -11,10 +11,10 @@ import { revalidatePath } from "next/cache";
 import { Paginated } from "@/models/pagination";
 import { setNotification } from "@/services/notifications";
 
-const { BASE_URL } = settings;
+const { IAM_API_URL } = settings;
 
 export async function fetchScopes() {
-  return getItem<Scope[]>(`${BASE_URL}/api/scopes`);
+  return getItem<Scope[]>(`${IAM_API_URL}/api/scopes`);
 }
 
 export async function fetchPaginatedScopes(
@@ -36,7 +36,7 @@ export async function fetchPaginatedScopes(
 }
 
 export async function addScope(scope: RawScope) {
-  const url = `${BASE_URL}/api/scopes`;
+  const url = `${IAM_API_URL}/api/scopes`;
   const response = await authFetch(url, {
     method: "POST",
     body: JSON.stringify(scope),
@@ -56,7 +56,7 @@ export async function addScope(scope: RawScope) {
 }
 
 export async function deleteScope(scope: Scope) {
-  const url = `${BASE_URL}/api/scopes/${scope.id}`;
+  const url = `${IAM_API_URL}/api/scopes/${scope.id}`;
   const response = await authFetch(url, {
     method: "DELETE",
   });
@@ -74,7 +74,7 @@ export async function deleteScope(scope: Scope) {
 }
 
 export async function editScope(scope: Scope) {
-  const url = `${BASE_URL}/api/scopes/${scope.id}`;
+  const url = `${IAM_API_URL}/api/scopes/${scope.id}`;
   const response = await authFetch(url, {
     method: "PUT",
     headers: { "content-type": "application/json" },

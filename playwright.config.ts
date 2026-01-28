@@ -18,7 +18,10 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: "http://iam.test.example:8080/",
+    // https://github.com/microsoft/playwright/issues/22592#issuecomment-1519991484
+    baseURL: process.env.IAM_DASHBOARD_URL
+      ? `${process.env.IAM_DASHBOARD_URL}/`
+      : "http://iam.test.example:8080/ui/",
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
@@ -65,7 +68,7 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: {
     command: "docker compose up --build",
-    url: "http://iam.test.example:8080/ui",
+    url: "http://iam.test.example:8080",
     reuseExistingServer: !process.env.CI,
     timeout: 10 * 60000,
     gracefulShutdown: { signal: "SIGTERM", timeout: 5000 },

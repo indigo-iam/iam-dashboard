@@ -7,17 +7,17 @@ import { toNextJsHandler } from "better-auth/next-js";
 import { NextRequest } from "next/server";
 import { settings } from "@/config";
 
-const { IAM_DASHBOARD_URL } = settings;
-
+const { IAM_DASHBOARD_BASE_URL, IAM_DASHBOARD_BASE_PATH } = settings;
 const handlers = toNextJsHandler(auth);
-const baseURL = IAM_DASHBOARD_URL;
 
 // Workaround to support different basePath
 // https://github.com/better-auth/better-auth/issues/4715#issuecomment-3439681277
 
 function rewriteRequest(req: NextRequest) {
   const { search, pathname } = req.nextUrl;
-  const url = new URL(`${baseURL}${pathname}`);
+  const url = new URL(
+    `${IAM_DASHBOARD_BASE_URL}${IAM_DASHBOARD_BASE_PATH}${pathname}`
+  );
   url.search = search;
   return new NextRequest(url, req);
 }

@@ -79,7 +79,7 @@ services:
     build:
       context: .
       args:
-        IAM_DASHBOARD_URL: http://iam.test.example:8080/ui
+        IAM_DASHBOARD_BASE_PATH: /ui
     entrypoint: "/entrypoint.sh"
     command: ["node", "server.js"]
     volumes:

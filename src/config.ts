@@ -2,7 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-const IAM_DASHBOARD_URL = process.env.IAM_DASHBOARD_URL;
+const IAM_DASHBOARD_BASE_URL = process.env.IAM_DASHBOARD_BASE_URL;
+const IAM_DASHBOARD_BASE_PATH = process.env.IAM_DASHBOARD_BASE_PATH ?? "";
 const IAM_DASHBOARD_AUTH_SECRET = process.env.IAM_DASHBOARD_AUTH_SECRET ?? "";
 const IAM_DASHBOARD_OIDC_CLIENT_ID = process.env.IAM_DASHBOARD_OIDC_CLIENT_ID!;
 const IAM_DASHBOARD_OIDC_CLIENT_SECRET =
@@ -10,16 +11,9 @@ const IAM_DASHBOARD_OIDC_CLIENT_SECRET =
 const IAM_DASHBOARD_OIDC_SCOPES = process.env.IAM_DASHBOARD_OIDC_SCOPES;
 const IAM_API_URL = process.env.IAM_API_URL;
 
-if (!IAM_DASHBOARD_URL) {
-  throw new Error("IAM_DASHBOARD_URL variable is undefined");
-}
-
-const url = new URL(IAM_DASHBOARD_URL);
-const IAM_DASHBOARD_BASE_PATH = url.pathname === "/" ? "" : url.pathname;
-
 export const settings = {
   IAM_API_URL,
-  IAM_DASHBOARD_URL,
+  IAM_DASHBOARD_BASE_URL,
   IAM_DASHBOARD_BASE_PATH,
   IAM_DASHBOARD_AUTH_SECRET,
   IAM_DASHBOARD_OIDC_CLIENT_ID,

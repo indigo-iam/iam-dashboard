@@ -10,9 +10,6 @@ import path from "path";
 
 export * from "@playwright/test";
 
-export const IAM_DASHBOARD_URL =
-  process.env.IAM_DASHBOARD_URL ?? "http://iam.test.example:8080/ui";
-
 export const test = baseTest.extend<{}, { workerStorageState: string }>({
   // Use the same storage state for all tests in this worker.
   storageState: ({ workerStorageState }, use) => use(workerStorageState),
@@ -39,7 +36,7 @@ export const test = baseTest.extend<{}, { workerStorageState: string }>({
         baseURL: test.info().project.use.baseURL,
       });
       // Perform authentication steps. Replace these actions with your own.
-      await page.goto(IAM_DASHBOARD_URL);
+      await page.goto("./");
       await page.locator("#username").fill("admin");
       await page.locator("#password").fill("password");
       await page.locator("#login-submit").click();
@@ -52,7 +49,7 @@ export const test = baseTest.extend<{}, { workerStorageState: string }>({
       }
 
       // Redirect to new dashboard
-      await page.waitForURL(`${IAM_DASHBOARD_URL}/users/me`);
+      await page.waitForURL("./users/me");
       expect(await page.getByLabel("First Name").inputValue()).toBe("Admin");
       expect(await page.getByLabel("Last Name").inputValue()).toBe("User");
       expect(await page.getByLabel("Email").inputValue()).toBe(

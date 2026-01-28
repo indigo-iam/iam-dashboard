@@ -16,17 +16,16 @@ function decodeJWT(token: string) {
 
 const {
   IAM_API_URL,
-  IAM_DASHBOARD_URL,
+  IAM_DASHBOARD_BASE_URL,
+  IAM_DASHBOARD_BASE_PATH,
   IAM_DASHBOARD_AUTH_SECRET,
   IAM_DASHBOARD_OIDC_CLIENT_ID,
   IAM_DASHBOARD_OIDC_CLIENT_SECRET,
   IAM_DASHBOARD_OIDC_SCOPES,
 } = settings;
 
-const baseURL = `${IAM_DASHBOARD_URL}/api/auth`;
-
 export const auth = betterAuth({
-  baseURL,
+  baseURL: `${IAM_DASHBOARD_BASE_URL}${IAM_DASHBOARD_BASE_PATH}/api/auth`,
   secret: IAM_DASHBOARD_AUTH_SECRET,
   user: {
     additionalFields: {
@@ -132,7 +131,10 @@ export async function getAccessToken() {
 
 export async function signIn() {
   const { url } = await auth.api.signInWithOAuth2({
-    body: { providerId: "indigo-iam", callbackURL: IAM_DASHBOARD_URL },
+    body: {
+      providerId: "indigo-iam",
+      callbackURL: `${IAM_DASHBOARD_BASE_URL}${IAM_DASHBOARD_BASE_PATH}`,
+    },
   });
   redirect(url);
 }

@@ -115,7 +115,8 @@ following variables:
 # .env
 NODE_ENV=debug
 IAM_API_URL=https://iam-dev.cloud.cnaf.infn.it # or http://localhost:8081
-IAM_DASHBOARD_URL=https://iam-dev.cloud.cnaf.infn.it/ui # or http://localhost:3000
+IAM_DASHBOARD_BASE_URL=http://iam.test.example:8080
+IAM_DASHBOARD_BASE_PATH=/ui # optional
 IAM_DASHBOARD_OIDC_CLIENT_ID=<your_client_id>
 IAM_DASHBOARD_OIDC_CLIENT_SECRET=<your_client_secret>
 IAM_DASHBOARD_OIDC_SCOPES="openid profile scim:read scim:write iam:admin.read iam:admin.write"

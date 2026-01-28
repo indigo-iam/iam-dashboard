@@ -5,12 +5,12 @@
 "use client";
 
 import {
-  ClientAuthentication,
   AuthenticationFlow,
+  ClientAuthentication,
 } from "@/app/clients/components";
 import { Button } from "@/components/buttons";
 import { CarouselPanel } from "@/components/carousel";
-import { Field, Label, Description, DropdownList } from "@/components/form";
+import { Description, DropdownList, Field, Label } from "@/components/form";
 import { type Scope } from "@/models/client";
 import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
@@ -50,6 +50,7 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
         <ClientAuthentication
           name="token_endpoint_auth_method"
           onStatusChange={setClientAuthOk}
+          clientId=""
         />
       </Field>
       <Field>

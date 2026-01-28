@@ -19,8 +19,8 @@ export function RegenerateClientSecret(props: Readonly<{ clientId: string }>) {
   const close = () => setShow(false);
 
   const action = async () => {
-    const res = await regenerateClientSecret(clientId);
-    setSecretValue(res.client_secret);
+    const { client_secret } = await regenerateClientSecret(clientId);
+    setSecretValue(client_secret);
   };
 
   function showClientSecret(secretValue: string) {

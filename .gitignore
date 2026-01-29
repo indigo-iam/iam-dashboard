@@ -55,6 +55,7 @@ cypress/screenshots/
 .devcontainer/devcontainer.env
 *.env
 *.env*
+!.template.env
 nginx/conf.d/env/*.conf
 cypress.env.json
 

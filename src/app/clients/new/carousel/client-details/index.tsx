@@ -1,0 +1,94 @@
+// SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
+//
+// SPDX-License-Identifier: EUPL-1.2
+
+"use client";
+
+import { InputSecret } from "@/app/components/input-secret";
+import { Button } from "@/components/buttons";
+import { CarouselPanel } from "@/components/carousel";
+import { Field, Label } from "@/components/form";
+import { Client } from "@/models/client";
+import { redirect } from "next/navigation";
+
+type WarningSecretProps = {
+  secret?: string;
+};
+
+function WarningSecret(props: Readonly<WarningSecretProps>) {
+  const { secret } = props;
+  if (!secret) {
+    return;
+  }
+  return (
+    <div className="ml-0 flex flex-col text-sm font-light">
+      <h4 className="text-danger dark:text-danger-light font-semibold">
+        WARNING
+      </h4>
+      <p className="dark:text-light-gray/80 text-sm dark:bg-gray-800">
+        The client secret is shown only once in this screen. Make sure to
+        securely save the client secret. You won&apos;t be able to access it
+        again.
+      </p>
+    </div>
+  );
+}
+
+type ClientSecretProps = {
+  clientDetails?: Client;
+};
+
+function ClientSecret(props: Readonly<ClientSecretProps>) {
+  const { clientDetails } = props;
+  if (!clientDetails?.client_secret) {
+    return;
+  }
+  return (
+    <Field className="flex flex-col gap-1">
+      <Label>Client Secret:</Label>
+      <InputSecret secretValue={clientDetails.client_secret} />
+    </Field>
+  );
+}
+
+type ClientDetailsProps = {
+  client?: Client;
+  isAdmin: boolean;
+};
+
+export default function ClientDetails(props: Readonly<ClientDetailsProps>) {
+  const { client, isAdmin } = props;
+
+  function changePage() {
+    isAdmin ? redirect("/clients") : redirect("/clients?me");
+  }
+
+  return (
+    <CarouselPanel className="panel flex w-2xl flex-col gap-2" unmount={false}>
+      <h2>Client Details</h2>
+
+      <Field className="flex flex-col gap-1">
+        <Label>Client Name:</Label>
+        <h3 className="rounded p-2 break-all">{client?.client_name ?? ""}</h3>
+      </Field>
+
+      <Field className="flex flex-col gap-1">
+        <Label>Client ID:</Label>
+        <h3 className="rounded p-2 break-all">{client?.client_id ?? ""}</h3>
+      </Field>
+
+      <Field className="flex flex-col gap-1">
+        <ClientSecret clientDetails={client} />
+      </Field>
+
+      <div className="mt-4 mr-16 flex w-full flex-row items-end justify-end">
+        <WarningSecret secret={client?.client_secret} />
+        <div>
+          <Button className="btn-secondary" onClick={changePage}>
+            Continue
+          </Button>
+        </div>
+      </div>
+    </CarouselPanel>
+  );
+}

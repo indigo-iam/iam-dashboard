@@ -4,27 +4,30 @@
 
 "use server";
 
-import { Client, ClientRequest } from "@/models/client";
-import { User } from "@/models/scim";
-import { Paginated } from "@/models/pagination";
-import { setNotification } from "@/services/notifications";
 import { settings } from "@/config";
+import { Client, ClientRequest } from "@/models/client";
+import { Paginated } from "@/models/pagination";
+import { User } from "@/models/scim";
+import { setNotification } from "@/services/notifications";
 import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 const { IAM_API_URL } = settings;
 
-export async function registerClient(client: ClientRequest, isAdmin?: boolean) {
-  const response = await authFetch(`${IAM_API_URL}/iam/api/client-registration`, {
-    body: JSON.stringify(client),
-    method: "POST",
-    headers: { "content-type": "application/json" },
-  });
+export async function registerClient(client: ClientRequest) {
+  const response = await authFetch(
+    `${IAM_API_URL}/iam/api/client-registration`,
+    {
+      body: JSON.stringify(client),
+      method: "POST",
+      headers: { "content-type": "application/json" },
+    }
+  );
 
   if (response.ok) {
     await setNotification({ type: "success", message: "Client created" });
-    isAdmin ? redirect("/clients") : redirect("/clients?me");
+    return await response.json();
   } else {
     const msg = await response.text();
     await setNotification({
@@ -195,5 +198,21 @@ export async function getClientOwners(clientId: string): Promise<User[]> {
     return firstPage.Resources.concat(users);
   } else {
     return firstPage.Resources;
+  }
+}
+
+export async function rotateClientSecret(clientId: string) {
+  const url = `${IAM_API_URL}/iam/api/clients/${clientId}/secret`;
+  const response = await authFetch(url, { method: "POST" });
+  if (response.ok) {
+    const { client_secret } = await response.json();
+    return client_secret as string | undefined;
+  } else {
+    const msg = await response.text();
+    await setNotification({
+      type: "error",
+      message: "Cannot rotate client secret",
+      subtitle: `Error ${response.status} ${msg}`,
+    });
   }
 }

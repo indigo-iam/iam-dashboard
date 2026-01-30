@@ -56,7 +56,7 @@ interface CredentialsProps {
 
 export default function Credentials(props: Readonly<CredentialsProps>) {
   const { client } = props;
-  const { token_endpoint_auth_method } = client;
+  const { token_endpoint_auth_method, client_id } = client;
 
   const defaultValue =
     TOKEN_ENDPOINT_AUTH_VALUES.find(
@@ -100,8 +100,8 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
                 </Description>
                 <ClientAuthentication
                   name="token_endpoint_auth_method"
-                  showRegenerateClientSecret={true}
                   defaultValue={defaultValue}
+                  clientId={client_id}
                 />
               </Field>
               <Field>

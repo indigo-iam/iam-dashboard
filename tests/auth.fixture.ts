@@ -36,7 +36,7 @@ export const test = baseTest.extend<{}, { workerStorageState: string }>({
         baseURL: test.info().project.use.baseURL,
       });
       // Perform authentication steps. Replace these actions with your own.
-      await page.goto("/ui");
+      await page.goto("./");
       await page.locator("#username").fill("admin");
       await page.locator("#password").fill("password");
       await page.locator("#login-submit").click();
@@ -49,11 +49,15 @@ export const test = baseTest.extend<{}, { workerStorageState: string }>({
       }
 
       // Redirect to new dashboard
-      await page.waitForURL("/ui/users/me");
+      await page.waitForURL("./users/me");
       expect(await page.getByLabel("First Name").inputValue()).toBe("Admin");
       expect(await page.getByLabel("Last Name").inputValue()).toBe("User");
       expect(await page.getByLabel("Email").inputValue()).toBe(
         "1_admin@iam.test"
+      );
+
+      await page.evaluate(() =>
+        localStorage.setItem("cookiesBanner", "hidden")
       );
 
       // End of authentication steps.

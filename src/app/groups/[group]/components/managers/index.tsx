@@ -2,12 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { getSession } from "@/auth";
 import { TabPanel } from "@/components/tabs";
 import { Group } from "@/models/groups";
 import { fetchGroupManagers } from "@/services/groups";
 import ManagersTable from "./table/table";
 import AssignGroupManagerButton from "./assign-button";
-import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 type ManagersProps = {
   group: Group;
@@ -15,10 +16,13 @@ type ManagersProps = {
 
 export default async function Managers(props: Readonly<ManagersProps>) {
   const { group } = props;
-  const session = await auth();
-  const isAdmin = session?.is_admin ?? false;
+  const session = await getSession();
+  if (!session) {
+    redirect("/");
+  }
+  const { user } = session;
 
-  if (!isAdmin) {
+  if (!user.isAdmin) {
     return null;
   }
 

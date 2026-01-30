@@ -6,11 +6,11 @@ import { Group, ManagedGroup } from "@/models/groups";
 import { ScimReference, User } from "@/models/scim";
 import { settings } from "@/config";
 
-const { BASE_URL } = settings;
+const { IAM_API_URL } = settings;
 
 export function makeScimReferenceFromUser(user: User): ScimReference {
   return {
-    $ref: `${BASE_URL}/scim/Users/${user.id}`,
+    $ref: `${IAM_API_URL}/scim/Users/${user.id}`,
     display: user.userName!,
     value: user.id,
   };
@@ -18,7 +18,7 @@ export function makeScimReferenceFromUser(user: User): ScimReference {
 
 export function makeScimReferenceFromGroup(group: Group): ScimReference {
   return {
-    $ref: `${BASE_URL}/scim/Groups/${group.id}`,
+    $ref: `${IAM_API_URL}/scim/Groups/${group.id}`,
     display: group.displayName,
     value: group.id,
   };
@@ -28,7 +28,7 @@ export function makeScimReferenceFromManagedGroup(
   group: ManagedGroup
 ): ScimReference {
   return {
-    $ref: `${BASE_URL}/scim/Groups/${group.id}`,
+    $ref: `${IAM_API_URL}/scim/Groups/${group.id}`,
     display: group.name,
     value: group.id,
   };

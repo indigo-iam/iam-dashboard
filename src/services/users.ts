@@ -13,17 +13,17 @@ import { Paginated } from "@/models/pagination";
 import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
 import { setNotification } from "@/services/notifications";
 import { settings } from "@/config";
-import { auth } from "@/auth";
+import { getSession } from "@/auth";
 
-const { BASE_URL } = settings;
+const { IAM_API_URL } = settings;
 
 export async function fetchUser(uuid: string) {
-  return await getItem<User>(`${BASE_URL}/scim/Users/${uuid}`);
+  return await getItem<User>(`${IAM_API_URL}/scim/Users/${uuid}`);
 }
 
 export async function searchUser(filter: string) {
   const response = await getItem<Paginated<User>>(
-    `${BASE_URL}/iam/account/search?count=100&startIndex=0&filter=${filter}`
+    `${IAM_API_URL}/iam/account/search?count=100&startIndex=0&filter=${filter}`
   );
   return response.Resources;
 }
@@ -33,7 +33,7 @@ export async function getUsersPage(
   startIndex: number = 1,
   filter?: string
 ) {
-  let url = `${BASE_URL}/iam/account/search?count=${count}&startIndex=${startIndex}`;
+  let url = `${IAM_API_URL}/iam/account/search?count=${count}&startIndex=${startIndex}`;
   if (filter) {
     url += `&filter=${filter}`;
   }
@@ -41,7 +41,7 @@ export async function getUsersPage(
 }
 
 export async function addUser(user: ScimUser) {
-  let url = `${BASE_URL}/scim/Users`;
+  let url = `${IAM_API_URL}/scim/Users`;
   const body = JSON.stringify(user);
   const response = await authFetch(url, {
     body,
@@ -62,8 +62,8 @@ export async function addUser(user: ScimUser) {
 }
 
 export async function patchUser(userId: string, formData: FormData) {
-  const session = await auth();
-  const isMe = session?.user?.id === userId;
+  const session = await getSession();
+  const isMe = session?.user?.sub === userId;
   const op: ScimRequest = {
     schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
     operations: [],
@@ -104,7 +104,9 @@ export async function patchUser(userId: string, formData: FormData) {
     };
     op.operations.push(mailOp);
   }
-  const url = isMe ? `${BASE_URL}/scim/Me` : `${BASE_URL}/scim/Users/${userId}`;
+  const url = isMe
+    ? `${IAM_API_URL}/scim/Me`
+    : `${IAM_API_URL}/scim/Users/${userId}`;
   const response = await authFetch(url, {
     body: JSON.stringify(op),
     method: "PATCH",
@@ -128,7 +130,7 @@ export async function patchUser(userId: string, formData: FormData) {
 }
 
 export async function deleteUser(user: User) {
-  const url = `${BASE_URL}/scim/Users/${user.id}`;
+  const url = `${IAM_API_URL}/scim/Users/${user.id}`;
   const response = await authFetch(url, {
     method: "DELETE",
     headers: { "content-type": "application/scim+json" },
@@ -165,7 +167,7 @@ async function patchUserSSHKey(
     ],
   };
 
-  const url = `${BASE_URL}/scim/Users/${userId}`;
+  const url = `${IAM_API_URL}/scim/Users/${userId}`;
   const response = await authFetch(url, {
     body: JSON.stringify(body),
     method: "PATCH",
@@ -196,12 +198,12 @@ export async function deleteSSHKey(userId: string, sshKey: SSHKey) {
 }
 
 export async function fetchAttributes(userId: string) {
-  const url = `${BASE_URL}/iam/account/${userId}/attributes`;
+  const url = `${IAM_API_URL}/iam/account/${userId}/attributes`;
   return await getItem<Attribute[]>(url);
 }
 
 export async function addAttribute(userId: string, attr: Attribute) {
-  const url = `${BASE_URL}/iam/account/${userId}/attributes`;
+  const url = `${IAM_API_URL}/iam/account/${userId}/attributes`;
   const body = JSON.stringify(attr);
   const response = await authFetch(url, {
     body,
@@ -223,7 +225,7 @@ export async function addAttribute(userId: string, attr: Attribute) {
 }
 
 export async function deleteAttribute(userId: string, attr: Attribute) {
-  const url = `${BASE_URL}/iam/account/${userId}/attributes?name=${attr.name}`;
+  const url = `${IAM_API_URL}/iam/account/${userId}/attributes?name=${attr.name}`;
   const response = await authFetch(url, {
     method: "DELETE",
   });
@@ -240,7 +242,7 @@ export async function deleteAttribute(userId: string, attr: Attribute) {
 }
 
 export async function changeMembershipEndTime(userId: string, date: string) {
-  const url = `${BASE_URL}/iam/account/${userId}/endTime`;
+  const url = `${IAM_API_URL}/iam/account/${userId}/endTime`;
   const body = JSON.stringify({ endTime: date });
   const response = await authFetch(url, {
     method: "PUT",
@@ -266,7 +268,7 @@ export async function changeMembershipEndTime(userId: string, date: string) {
 }
 
 export async function revokeMembershipEndTime(userId: string) {
-  const url = `${BASE_URL}/iam/account/${userId}/endTime`;
+  const url = `${IAM_API_URL}/iam/account/${userId}/endTime`;
   const body = JSON.stringify({});
   const response = await authFetch(url, {
     method: "PUT",
@@ -292,7 +294,7 @@ export async function revokeMembershipEndTime(userId: string) {
 }
 
 export async function changeUserStatus(userId: string, newStatus: boolean) {
-  const url = `${BASE_URL}/scim/Users/${userId}`;
+  const url = `${IAM_API_URL}/scim/Users/${userId}`;
   const patchRequest: ScimRequest = {
     schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
     operations: [
@@ -327,7 +329,7 @@ export async function changeUserStatus(userId: string, newStatus: boolean) {
 }
 
 export async function requestAUPSignature(userId: string) {
-  const url = `${BASE_URL}/iam/aup/signature/${userId}`;
+  const url = `${IAM_API_URL}/iam/aup/signature/${userId}`;
   const response = await authFetch(url, {
     method: "DELETE",
   });
@@ -348,7 +350,7 @@ export async function requestAUPSignature(userId: string) {
 }
 
 export async function signAUP(userId: string) {
-  const url = `${BASE_URL}/iam/aup/signature/${userId}`;
+  const url = `${IAM_API_URL}/iam/aup/signature/${userId}`;
   const body = JSON.stringify({ signatureTime: new Date().toISOString() });
   const response = await authFetch(url, {
     method: "PATCH",
@@ -369,7 +371,7 @@ export async function signAUP(userId: string) {
 }
 
 export async function changePassword(user: User, formData: FormData) {
-  const url = `${BASE_URL}/iam/password-update`;
+  const url = `${IAM_API_URL}/iam/password-update`;
   const response = await authFetch(url, {
     method: "POST",
     body: formData,
@@ -388,14 +390,14 @@ export async function changePassword(user: User, formData: FormData) {
 }
 
 export async function statusMFA() {
-  const url = `${BASE_URL}/iam/multi-factor-settings/`;
+  const url = `${IAM_API_URL}/iam/multi-factor-settings/`;
   const response = await authFetch(url);
   const payload = await response.json();
   return payload.authenticatorAppActive === true;
 }
 
 export async function addMFASecret() {
-  const url = `${BASE_URL}/iam/authenticator-app/add-secret`;
+  const url = `${IAM_API_URL}/iam/authenticator-app/add-secret`;
   const response = await authFetch(url, {
     method: "PUT",
   });
@@ -409,7 +411,7 @@ export async function addMFASecret() {
 }
 
 export async function enableMFA(formData: FormData) {
-  const url = `${BASE_URL}/iam/authenticator-app/enable`;
+  const url = `${IAM_API_URL}/iam/authenticator-app/enable`;
   const response = await authFetch(url, {
     method: "POST",
     body: formData,
@@ -426,7 +428,7 @@ export async function enableMFA(formData: FormData) {
 }
 
 export async function disableMFA(formData: FormData) {
-  const url = `${BASE_URL}/iam/authenticator-app/disable`;
+  const url = `${IAM_API_URL}/iam/authenticator-app/disable`;
   const response = await authFetch(url, {
     method: "POST",
     body: formData,

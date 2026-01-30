@@ -13,14 +13,17 @@ import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-const { BASE_URL } = settings;
+const { IAM_API_URL } = settings;
 
 export async function registerClient(client: ClientRequest) {
-  const response = await authFetch(`${BASE_URL}/iam/api/client-registration`, {
-    body: JSON.stringify(client),
-    method: "POST",
-    headers: { "content-type": "application/json" },
-  });
+  const response = await authFetch(
+    `${IAM_API_URL}/iam/api/client-registration`,
+    {
+      body: JSON.stringify(client),
+      method: "POST",
+      headers: { "content-type": "application/json" },
+    }
+  );
 
   if (response.ok) {
     await setNotification({ type: "success", message: "Client created" });
@@ -37,13 +40,13 @@ export async function registerClient(client: ClientRequest) {
 
 export async function getClient(clientId: string, isAdmin = false) {
   const url = isAdmin
-    ? `${BASE_URL}/iam/api/clients/${clientId}`
-    : `${BASE_URL}/iam/api/client-registration/${clientId}`;
+    ? `${IAM_API_URL}/iam/api/clients/${clientId}`
+    : `${IAM_API_URL}/iam/api/client-registration/${clientId}`;
   return await getItem<Client>(url);
 }
 
 export async function deleteClient(clientId: string, isMe?: boolean) {
-  const url = `${BASE_URL}/iam/api/client-registration/${clientId}`;
+  const url = `${IAM_API_URL}/iam/api/client-registration/${clientId}`;
   const response = await authFetch(url, {
     method: "DELETE",
   });
@@ -62,7 +65,7 @@ export async function deleteClient(clientId: string, isMe?: boolean) {
 
 export async function editClient(client: Client) {
   const { client_id } = client;
-  const url = `${BASE_URL}/iam/api/clients/${client_id}`;
+  const url = `${IAM_API_URL}/iam/api/clients/${client_id}`;
   const response = await authFetch(url, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -83,7 +86,7 @@ export async function editClient(client: Client) {
 
 export async function enableClient(client: Client) {
   const { client_id } = client;
-  const url = `${BASE_URL}/iam/api/clients/${client_id}/enable`;
+  const url = `${IAM_API_URL}/iam/api/clients/${client_id}/enable`;
   const response = await authFetch(url, { method: "PATCH" });
   if (response.ok) {
     await setNotification({ type: "success", message: "Client enabled" });
@@ -100,7 +103,7 @@ export async function enableClient(client: Client) {
 
 export async function disableClient(client: Client) {
   const { client_id } = client;
-  const url = `${BASE_URL}/iam/api/clients/${client_id}/disable`;
+  const url = `${IAM_API_URL}/iam/api/clients/${client_id}/disable`;
   const response = await authFetch(url, { method: "PATCH" });
   if (response.ok) {
     await setNotification({ type: "success", message: "Client disabled" });
@@ -120,7 +123,7 @@ export async function getClientsByAccount(
   count: number,
   startIndex: number = 1
 ) {
-  const url = `${BASE_URL}/iam/account/${accountId}/clients?startIndex=${startIndex}&count=${count}`;
+  const url = `${IAM_API_URL}/iam/account/${accountId}/clients?startIndex=${startIndex}&count=${count}`;
   return await getItem<Paginated<Client>>(url);
 }
 
@@ -132,10 +135,10 @@ export async function getClientsPage(
   let searchParams = `count=${count}&startIndex=${startIndex}`;
   let url: string;
   if (filter) {
-    url = `${BASE_URL}/iam/api/search/clients`;
+    url = `${IAM_API_URL}/iam/api/search/clients`;
     searchParams += `&searchType=name&search=${filter}`;
   } else {
-    url = `${BASE_URL}/iam/api/clients`;
+    url = `${IAM_API_URL}/iam/api/clients`;
   }
   url += `?${searchParams}`;
   return await getItem<Paginated<Client>>(url);
@@ -147,7 +150,7 @@ async function editOwner(
   method: "POST" | "DELETE"
 ) {
   const { client_id } = client;
-  const url = `${BASE_URL}/iam/api/clients/${client_id}/owners/${user.id}`;
+  const url = `${IAM_API_URL}/iam/api/clients/${client_id}/owners/${user.id}`;
   const response = await authFetch(url, { method });
   if (response.ok) {
     await setNotification({ type: "success", message: "Client saved" });
@@ -176,7 +179,7 @@ export async function getClientOwnersPage(
   count: number
 ) {
   return await getItem<Paginated<User>>(
-    `${BASE_URL}/iam/api/clients/${clientId}/owners?startIndex=${startIndex}&count=${count}`
+    `${IAM_API_URL}/iam/api/clients/${clientId}/owners?startIndex=${startIndex}&count=${count}`
   );
 }
 
@@ -199,7 +202,7 @@ export async function getClientOwners(clientId: string): Promise<User[]> {
 }
 
 export async function rotateClientSecret(clientId: string) {
-  const url = `${BASE_URL}/iam/api/clients/${clientId}/secret`;
+  const url = `${IAM_API_URL}/iam/api/clients/${clientId}/secret`;
   const response = await authFetch(url, { method: "POST" });
   if (response.ok) {
     const { client_secret } = await response.json();

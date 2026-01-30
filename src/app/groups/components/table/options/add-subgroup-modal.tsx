@@ -8,7 +8,6 @@ import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Group } from "@/models/groups";
 import { addSubgroup } from "@/services/groups";
-import { makeScimReferenceFromGroup } from "@/utils/scim";
 
 interface AddSubgroupModalProps extends ModalProps {
   rootGroup: Group;
@@ -18,12 +17,11 @@ export default function AddSubgroupModal(
   props: Readonly<AddSubgroupModalProps>
 ) {
   const { rootGroup, onAdded, ...modalProps } = props;
-  const rootGroupRef = makeScimReferenceFromGroup(rootGroup);
 
   const action = async (formData: FormData) => {
     const name = formData.get("name") as string;
     if (rootGroup) {
-      await addSubgroup(name, rootGroupRef);
+      await addSubgroup(name, rootGroup);
       onAdded?.();
       modalProps.onClose();
     } else {
@@ -33,7 +31,7 @@ export default function AddSubgroupModal(
   return (
     <Modal
       {...modalProps}
-      title={`Add new subgroup to '${rootGroupRef.display}'`}
+      title={`Add new subgroup to '${rootGroup.displayName}'`}
     >
       <Form id="add-subgroup-form" action={action}>
         <ModalBody>

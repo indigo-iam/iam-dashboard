@@ -25,7 +25,7 @@ and create a new client with the configuration described below.
 ### Redirect URIs
 
 In the client main page, add all needed redirect uris, in the form of
-`<IAM_URL>/api/auth/callback/indigo-iam` (without the trailing `/`).
+`<IAM_URL>/api/oauth2/callback/indigo-iam` (without the trailing `/`).
 
 To enable development of the dashboard on your local machine, the redirect uri
 must be
@@ -104,7 +104,7 @@ Now the dashboard is reachable at the address http://iam.test.example:8080/dev.
 
 To launch the development environment, an installation of
 [Node.js](https://nodejs.org/en) is the only mandatory requirement.
-This project currently relies upon Node 22 LTS.
+This project currently relies upon Node 24 LTS.
 
 ### Create the `.env` file
 
@@ -114,14 +114,17 @@ following variables:
 ```shell
 # .env
 NODE_ENV=debug
-IAM_AUTHORITY_URL=https://iam-dev.cloud.cnaf.infn.it # or http://localhost:8081
-IAM_CLIENT_ID=<your_client_id>
-IAM_CLIENT_SECRET=<your_client_secret>
-IAM_SCOPES="openid profile scim:read scim:write iam:admin.read iam:admin.write"
-AUTH_SECRET=<authentication_secret>                  # see below
+IAM_API_URL=https://iam-dev.cloud.cnaf.infn.it # or http://localhost:8081
+IAM_DASHBOARD_BASE_URL=http://iam.test.example:8080
+IAM_DASHBOARD_BASE_PATH=/ui # optional
+IAM_DASHBOARD_OIDC_CLIENT_ID=<your_client_id>
+IAM_DASHBOARD_OIDC_CLIENT_SECRET=<your_client_secret>
+IAM_DASHBOARD_OIDC_SCOPES="openid profile scim:read scim:write iam:admin.read iam:admin.write"
+IAM_DASHBOARD_AUTH_SECRET=<authentication_secret> # see below
+OTEL_EXPORTER_OTLP_ENDPOINT="https://otello.cloud.cnaf.infn.it:8443/collector"
 ```
 
-**Imporant**: `AUTH_SECRET` is a variable to securely protect session cookies
+**Important**: `IAM_AUTH_SECRET` is a variable to securely protect session cookies
 for authentication. You could generate a secret running
 
 ```shell

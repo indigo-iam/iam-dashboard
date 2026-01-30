@@ -8,10 +8,9 @@ import { Button } from "@/components/buttons";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
-import { useState } from "react";
 import { addUserToGroup } from "@/services/groups";
-import { makeScimReferenceFromUser } from "@/utils/scim";
 import { SearchUsers } from "@/app/components/search-users";
+import { useState } from "react";
 
 interface AddMemberModalProps extends ModalProps {
   group: Group;
@@ -28,8 +27,7 @@ export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
 
   const addMember = async () => {
     if (selectedUser?.id) {
-      const userRef = makeScimReferenceFromUser(selectedUser);
-      await addUserToGroup(group.id, userRef);
+      await addUserToGroup(group.id, selectedUser);
       clearAndClose();
     }
   };

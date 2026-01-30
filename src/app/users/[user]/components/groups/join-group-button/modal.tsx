@@ -14,7 +14,6 @@ import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
 import { submitGroupRequest } from "@/services/group-requests";
 import { addUserToGroup } from "@/services/groups";
-import { makeScimReferenceFromUser } from "@/utils/scim";
 import { ArrowUpTrayIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 
@@ -47,8 +46,7 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
 
   const action = async (formData: FormData) => {
     if (isAdmin && selected) {
-      const userRef = makeScimReferenceFromUser(user);
-      await addUserToGroup(selected.id, userRef);
+      await addUserToGroup(selected.id, user);
     } else {
       const req: JoinGroupRequest = {
         notes: formData.get("group-request-notes") as string,

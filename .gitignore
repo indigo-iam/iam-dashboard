@@ -38,6 +38,7 @@ next-env.d.ts
 # editor directories and files
 .vscode/*
 !.vscode/extensions.json
+.zed
 .idea
 .DS_Store
 *.suo
@@ -45,6 +46,7 @@ next-env.d.ts
 *.njsproj
 *.sln
 *.sw?
+codebook.toml
 
 # cypress
 cypress/screenshots/
@@ -53,6 +55,7 @@ cypress/screenshots/
 .devcontainer/devcontainer.env
 *.env
 *.env*
+!.template.env
 nginx/conf.d/env/*.conf
 cypress.env.json
 

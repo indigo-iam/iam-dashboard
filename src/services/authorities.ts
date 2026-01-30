@@ -9,10 +9,10 @@ import { setNotification } from "@/services/notifications";
 import { settings } from "@/config";
 import { revalidatePath } from "next/cache";
 
-const { BASE_URL } = settings;
+const { IAM_API_URL } = settings;
 
 export const assignAdminPrivileges = async (userId: string) => {
-  let url = `${BASE_URL}/iam/account/${userId}/authorities?authority=ROLE_ADMIN`;
+  let url = `${IAM_API_URL}/iam/account/${userId}/authorities?authority=ROLE_ADMIN`;
   const response = await authFetch(url, {
     method: "POST",
   });
@@ -33,7 +33,7 @@ export const assignAdminPrivileges = async (userId: string) => {
 };
 
 export const revokeAdminPrivileges = async (userId: string) => {
-  let url = `${BASE_URL}/iam/account/${userId}/authorities?authority=ROLE_ADMIN`;
+  let url = `${IAM_API_URL}/iam/account/${userId}/authorities?authority=ROLE_ADMIN`;
   const response = await authFetch(url, {
     method: "DELETE",
   });

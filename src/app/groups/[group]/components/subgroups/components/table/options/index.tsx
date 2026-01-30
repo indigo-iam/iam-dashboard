@@ -4,9 +4,9 @@
 
 "use client";
 
-import DeleteGroupModal from "@/app/groups/components/table/options/delete-group-modal";
 import { Options, Option } from "@/components/options";
 import { ScimReference } from "@/models/scim";
+import DeleteSubgroupModal from "./delete-subgroup-modal";
 import { useState } from "react";
 
 type SubgroupOptionsProps = {
@@ -24,7 +24,7 @@ export default function SubgroupOptions(props: Readonly<SubgroupOptionsProps>) {
           Delete subgroup
         </Option>
       </Options>
-      <DeleteGroupModal
+      <DeleteSubgroupModal
         groupRef={groupRef}
         show={show === "DELETE_SUBGROUP"}
         onClose={close}

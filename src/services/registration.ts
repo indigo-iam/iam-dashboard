@@ -10,15 +10,15 @@ import { setNotification } from "@/services/notifications";
 import { settings } from "@/config";
 import { revalidatePath } from "next/cache";
 
-const { BASE_URL } = settings;
+const { IAM_API_URL } = settings;
 
 export async function fetchRegistrationRequests() {
-  let url = `${BASE_URL}/registration/list/pending`;
+  let url = `${IAM_API_URL}/registration/list/pending`;
   return await getItem<Registration[]>(url);
 }
 
 export async function approveRegistrationRequest(requestId: string) {
-  const url = `${BASE_URL}/registration/approve/${requestId}`;
+  const url = `${IAM_API_URL}/registration/approve/${requestId}`;
   const response = await authFetch(url, {
     method: "POST",
   });
@@ -39,7 +39,7 @@ export async function rejectRegistrationRequest(
   requestId: string,
   motivation: string
 ) {
-  const url = `${BASE_URL}/registration/reject/${requestId}`;
+  const url = `${IAM_API_URL}/registration/reject/${requestId}`;
   const body = JSON.stringify({ motivation });
   const response = await authFetch(url, {
     method: "POST",

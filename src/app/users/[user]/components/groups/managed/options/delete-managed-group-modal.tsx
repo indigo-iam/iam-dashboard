@@ -3,22 +3,22 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
-import { ScimReference } from "@/models/scim";
+import { ManagedGroup } from "@/models/groups";
 import { deleteGroup } from "@/services/groups";
 
-interface DeleteGroupModalProps {
-  groupRef: ScimReference;
+interface DeleteManagedroupModalProps {
+  group: ManagedGroup;
   show: boolean;
   onClose: () => void;
   onDeleted?: () => void;
 }
-export default function DeleteGroupModal(
-  props: Readonly<DeleteGroupModalProps>
+export default function DeleteManagedGroupModal(
+  props: Readonly<DeleteManagedroupModalProps>
 ) {
-  const { groupRef, show, onClose, onDeleted } = props;
+  const { group, show, onClose, onDeleted } = props;
 
   const handleConfirm = async () => {
-    await deleteGroup(groupRef.value);
+    await deleteGroup(group.id);
     onClose();
     onDeleted?.();
   };
@@ -33,7 +33,7 @@ export default function DeleteGroupModal(
       data-testid="modal"
       danger
     >
-      Are you sure you want to delete group <b>{groupRef?.display}</b>?
+      Are you sure you want to delete group <b>{group.name}</b>?
     </ConfirmModal>
   );
 }

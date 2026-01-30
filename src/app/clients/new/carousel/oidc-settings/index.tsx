@@ -50,7 +50,6 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
         <ClientAuthentication
           name="token_endpoint_auth_method"
           onStatusChange={setClientAuthOk}
-          clientId=""
         />
       </Field>
       <Field>

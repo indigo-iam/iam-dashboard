@@ -13,7 +13,7 @@ import { TOKEN_ENDPOINT_AUTH_VALUES } from "./utils";
 
 type ClientAuthenticationSettingsProps = {
   authMethod: string;
-  clientId: string;
+  clientId?: string;
   onStatusChange?: (status: boolean) => void;
 };
 
@@ -54,7 +54,7 @@ function ClientAuthenticationSettings(
 type ClientAuthenticationProps = {
   name: string;
   defaultValue?: SelectOption;
-  clientId: string;
+  clientId?: string;
   onStatusChange?: (status: boolean) => void;
 };
 

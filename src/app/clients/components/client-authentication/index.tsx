@@ -8,7 +8,7 @@ import { Select, SelectOption } from "@/components/form";
 import { useEffect, useState } from "react";
 import ClientSecretJwt from "./client-secret-jwt";
 import PrivateKeyJwt from "./private-key-jwt";
-import { RegenerateClientSecret } from "./regenerate-client-secret";
+import { RotateClientSecret } from "./rotate-client-secret";
 import { TOKEN_ENDPOINT_AUTH_VALUES } from "./utils";
 
 type ClientAuthenticationSettingsProps = {
@@ -25,19 +25,19 @@ function ClientAuthenticationSettings(
   switch (authMethod) {
     case "client_secret_basic":
       if (showRegenerateSecret) {
-        return <RegenerateClientSecret clientId={clientId} />;
+        return <RotateClientSecret clientId={clientId} />;
       }
       return null;
     case "client_secret_post":
       if (showRegenerateSecret) {
-        return <RegenerateClientSecret clientId={clientId} />;
+        return <RotateClientSecret clientId={clientId} />;
       }
       return null;
     case "client_secret_jwt":
       if (showRegenerateSecret) {
         return (
           <>
-            <RegenerateClientSecret clientId={clientId} />
+            <RotateClientSecret clientId={clientId} />
             <ClientSecretJwt onStatusChange={onStatusChange} />
           </>
         );

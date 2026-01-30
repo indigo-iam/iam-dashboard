@@ -8,10 +8,27 @@ import { InputSecret } from "@/app/components/input-secret";
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
 import { Description, Field, Label } from "@/components/form";
-import { regenerateClientSecret } from "@/services/clients";
+import { rotateClientSecret } from "@/services/clients";
 import { useState } from "react";
 
-export function RegenerateClientSecret(props: Readonly<{ clientId: string }>) {
+type ClientSecretViewProps = {
+  secretValue: string;
+};
+
+function ClientSecretView(props: Readonly<ClientSecretViewProps>) {
+  const { secretValue } = props;
+  return (
+    <div className="mt-4 max-w-80 rounded bg-gray-100 dark:bg-gray-800">
+      <InputSecret secretValue={secretValue} />
+    </div>
+  );
+}
+
+type RotateClientSecretProps = {
+  clientId: string;
+};
+
+export function RotateClientSecret(props: Readonly<{ clientId: string }>) {
   const { clientId } = props;
   const [secret, setSecret] = useState<string | undefined>();
   const [show, setShow] = useState(false);
@@ -19,19 +36,9 @@ export function RegenerateClientSecret(props: Readonly<{ clientId: string }>) {
   const close = () => setShow(false);
 
   const action = async () => {
-    const secret = await regenerateClientSecret(clientId);
+    const secret = await rotateClientSecret(clientId);
     setSecret(secret);
   };
-
-  function showClientSecret(secretValue: string) {
-    return (
-      <div className="mt-4">
-        <div className="max-w-80 rounded bg-gray-100 dark:bg-gray-800">
-          <InputSecret secretValue={secretValue} />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <Field>
@@ -50,7 +57,7 @@ export function RegenerateClientSecret(props: Readonly<{ clientId: string }>) {
         Are you sure you want to regenerate the client secret? The previous
         secret will no longer be valid.
       </ConfirmModal>
-      {!!secret && showClientSecret(secret)}
+      {secret && <ClientSecretView secretValue={secret} />}
     </Field>
   );
 }

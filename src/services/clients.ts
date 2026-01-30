@@ -198,7 +198,7 @@ export async function getClientOwners(clientId: string): Promise<User[]> {
   }
 }
 
-export async function regenerateClientSecret(clientId: string) {
+export async function rotateClientSecret(clientId: string) {
   const url = `${BASE_URL}/iam/api/clients/${clientId}/secret`;
   const response = await authFetch(url, { method: "POST" });
   if (response.ok) {
@@ -208,7 +208,7 @@ export async function regenerateClientSecret(clientId: string) {
     const msg = await response.text();
     await setNotification({
       type: "error",
-      message: "Cannot regenerate client secret",
+      message: "Cannot rotate client secret",
       subtitle: `Error ${response.status} ${msg}`,
     });
   }

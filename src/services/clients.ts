@@ -203,7 +203,7 @@ export async function regenerateClientSecret(clientId: string) {
   const response = await authFetch(url, { method: "POST" });
   if (response.ok) {
     const { client_secret } = await response.json();
-    return client_secret;
+    return client_secret as string | undefined;
   } else {
     const msg = await response.text();
     await setNotification({

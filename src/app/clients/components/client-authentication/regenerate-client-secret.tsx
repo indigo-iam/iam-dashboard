@@ -13,14 +13,14 @@ import { useState } from "react";
 
 export function RegenerateClientSecret(props: Readonly<{ clientId: string }>) {
   const { clientId } = props;
-  const [secretValue, setSecretValue] = useState<string>();
+  const [secret, setSecret] = useState<string | undefined>();
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
 
   const action = async () => {
-    const { client_secret } = await regenerateClientSecret(clientId);
-    setSecretValue(client_secret);
+    const secret = await regenerateClientSecret(clientId);
+    setSecret(secret);
   };
 
   function showClientSecret(secretValue: string) {
@@ -50,7 +50,7 @@ export function RegenerateClientSecret(props: Readonly<{ clientId: string }>) {
         Are you sure you want to regenerate the client secret? The previous
         secret will no longer be valid.
       </ConfirmModal>
-      {!!secretValue && showClientSecret(secretValue)}
+      {!!secret && showClientSecret(secret)}
     </Field>
   );
 }

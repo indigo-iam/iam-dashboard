@@ -32,7 +32,7 @@ type NewClientCarouselProps = {
 export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
   const { systemScopes, isAdmin } = props;
   const [currentPage, setCurrentPage] = useState(0);
-  const [newClient, setNewClient] = useState<Client>();
+  const [client, setClient] = useState<Client>();
   const back = () => setCurrentPage(Math.max(0, currentPage - 1));
   const next = () => setCurrentPage(Math.min(currentPage + 1, TOTAL_PAGES));
 
@@ -89,7 +89,7 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
 
     const save = async () => {
       const res = await registerClient(request);
-      setNewClient(res);
+      setClient(res);
     };
 
     save();
@@ -117,7 +117,7 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
               goNext={next}
             />
             <OtherSettings goBack={back} />
-            <ClientDetails newClient={newClient} isAdmin={isAdmin} />
+            <ClientDetails client={client} isAdmin={isAdmin} />
           </CarouselPanels>
         </Carousel>
       </Form>

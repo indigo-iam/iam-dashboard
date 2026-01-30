@@ -16,16 +16,22 @@ type SecretProps = {
   secretValue: string;
 };
 
+type IconProps = {
+  secretIsVisible: boolean;
+};
+
+function Icon(props: Readonly<IconProps>) {
+  const { secretIsVisible } = props;
+  if (secretIsVisible) {
+    return <EyeSlashIcon className="size-5 dark:text-white/60" />;
+  }
+  return <EyeIcon className="size-5 dark:text-white/60" />;
+}
+
 export function InputSecret(props: Readonly<SecretProps>) {
   const { secretValue } = props;
   const [isVisible, setIsVisible] = useState(false);
-  const icon = isVisible ? (
-    <EyeSlashIcon className="size-5 dark:text-white/60" />
-  ) : (
-    <EyeIcon className="size-5 dark:text-white/60" />
-  );
   const toggleVisibility = () => setIsVisible(!isVisible);
-
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(secretValue);
@@ -47,11 +53,11 @@ export function InputSecret(props: Readonly<SecretProps>) {
 
       <div className="flex items-center rounded border-white/30 bg-white/30 dark:bg-gray-400">
         <Button
-          title={isVisible ? "hide secret" : "show secret"}
+          title="show/hide secret"
           onClick={toggleVisibility}
           className="bg-white-30 gl-button-focus mr-1 ml-2 border-white/30 underline focus:outline-none dark:bg-gray-400"
         >
-          {icon}
+          <Icon secretIsVisible={isVisible} />
         </Button>
         <Button
           title="copy secret"

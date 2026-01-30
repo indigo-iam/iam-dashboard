@@ -11,26 +11,56 @@ import { Field, Label } from "@/components/form";
 import { Client } from "@/models/client";
 import { redirect } from "next/navigation";
 
-export default function ClientDetails(props: {
-  newClient?: Client;
+type WarningSecretProps = {
+  secret?: string;
+};
+
+function WarningSecret(props: Readonly<WarningSecretProps>) {
+  const { secret } = props;
+  if (!secret) {
+    return;
+  }
+  return (
+    <div className="ml-0 flex flex-col text-sm font-light">
+      <h4 className="text-danger dark:text-danger-light font-semibold">
+        WARNING
+      </h4>
+      <p className="dark:text-light-gray/80 text-sm dark:bg-gray-800">
+        The client secret is shown only once in this screen. Make sure to
+        securely save the client secret. You won&apos;t be able to access it
+        again.
+      </p>
+    </div>
+  );
+}
+
+type ClientSecretProps = {
+  clientDetails?: Client;
+};
+
+function ClientSecret(props: Readonly<ClientSecretProps>) {
+  const { clientDetails } = props;
+  if (!clientDetails?.client_secret) {
+    return;
+  }
+  return (
+    <Field className="flex flex-col gap-1">
+      <Label>Client Secret:</Label>
+      <InputSecret secretValue={clientDetails.client_secret} />
+    </Field>
+  );
+}
+
+type ClientDetailsProps = {
+  client?: Client;
   isAdmin: boolean;
-}) {
-  const { newClient, isAdmin } = props;
+};
+
+export default function ClientDetails(props: Readonly<ClientDetailsProps>) {
+  const { client, isAdmin } = props;
 
   function changePage() {
     isAdmin ? redirect("/clients") : redirect("/clients?me");
-  }
-
-  function ClientSecret({ clientDetails }: { clientDetails?: Client }) {
-    if (!clientDetails?.client_secret) {
-      return;
-    }
-    return (
-      <Field className="flex flex-col gap-1">
-        <Label>Client Secret:</Label>
-        <InputSecret secretValue={clientDetails.client_secret} />
-      </Field>
-    );
   }
 
   return (
@@ -39,31 +69,20 @@ export default function ClientDetails(props: {
 
       <Field className="flex flex-col gap-1">
         <Label>Client Name:</Label>
-        <h3 className="rounded p-2 break-all">
-          {newClient?.client_name ?? ""}
-        </h3>
+        <h3 className="rounded p-2 break-all">{client?.client_name ?? ""}</h3>
       </Field>
 
       <Field className="flex flex-col gap-1">
         <Label>Client ID:</Label>
-        <h3 className="rounded p-2 break-all">{newClient?.client_id ?? ""}</h3>
+        <h3 className="rounded p-2 break-all">{client?.client_id ?? ""}</h3>
       </Field>
 
       <Field className="flex flex-col gap-1">
-        <ClientSecret clientDetails={newClient} />
+        <ClientSecret clientDetails={client} />
       </Field>
 
       <div className="mt-4 mr-16 flex w-full flex-row items-end justify-end">
-        <div className="ml-0 flex flex-col text-sm font-light">
-          <h4 className="text-danger dark:text-danger-light font-semibold">
-            WARNING
-          </h4>
-          <p className="dark:text-light-gray/80 text-sm dark:bg-gray-800">
-            {
-              "The client secret is shown only once in this screen. Make sure to securely save the client secret. You won't be able to access it again."
-            }
-          </p>
-        </div>
+        <WarningSecret secret={client?.client_secret} />
         <div>
           <Button className="btn-secondary" onClick={changePage}>
             Continue

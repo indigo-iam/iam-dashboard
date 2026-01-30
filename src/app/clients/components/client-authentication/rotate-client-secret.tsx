@@ -28,7 +28,7 @@ type RotateClientSecretProps = {
   clientId: string;
 };
 
-export function RotateClientSecret(props: Readonly<{ clientId: string }>) {
+export function RotateClientSecret(props: Readonly<RotateClientSecretProps>) {
   const { clientId } = props;
   const [secret, setSecret] = useState<string | undefined>();
   const [show, setShow] = useState(false);

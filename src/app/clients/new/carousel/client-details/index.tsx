@@ -8,45 +8,23 @@ import { InputSecret } from "@/app/components/input-secret";
 import { Button } from "@/components/buttons";
 import { CarouselPanel } from "@/components/carousel";
 import { Field, Label } from "@/components/form";
+import { Input } from "@/components/inputs";
 import { Client } from "@/models/client";
 import { redirect } from "next/navigation";
 
-type WarningSecretProps = {
+type ClientSecretProps = {
   secret?: string;
 };
 
-function WarningSecret(props: Readonly<WarningSecretProps>) {
-  const { secret } = props;
-  if (!secret) {
-    return;
-  }
-  return (
-    <div className="ml-0 flex flex-col text-sm font-light">
-      <h4 className="text-danger dark:text-danger-light font-semibold">
-        WARNING
-      </h4>
-      <p className="dark:text-light-gray/80 text-sm dark:bg-gray-800">
-        The client secret is shown only once in this screen. Make sure to
-        securely save the client secret. You won&apos;t be able to access it
-        again.
-      </p>
-    </div>
-  );
-}
-
-type ClientSecretProps = {
-  clientDetails?: Client;
-};
-
 function ClientSecret(props: Readonly<ClientSecretProps>) {
-  const { clientDetails } = props;
-  if (!clientDetails?.client_secret) {
-    return;
-  }
+  const { secret } = props;
   return (
     <Field className="flex flex-col gap-1">
       <Label>Client Secret:</Label>
-      <InputSecret secretValue={clientDetails.client_secret} />
+      <InputSecret value={secret} />
+      <small>
+        Make sure you save it - you won&apos;t be able to access it again.
+      </small>
     </Field>
   );
 }
@@ -68,26 +46,25 @@ export default function ClientDetails(props: Readonly<ClientDetailsProps>) {
       <h2>Client Details</h2>
 
       <Field className="flex flex-col gap-1">
-        <Label>Client Name:</Label>
-        <h3 className="rounded p-2 break-all">{client?.client_name ?? ""}</h3>
+        <Label>Client Name</Label>
+        <Input defaultValue={client?.client_name} disabled />
       </Field>
 
       <Field className="flex flex-col gap-1">
-        <Label>Client ID:</Label>
-        <h3 className="rounded p-2 break-all">{client?.client_id ?? ""}</h3>
+        <Label>Client ID</Label>
+        <Input defaultValue={client?.client_id} disabled />
       </Field>
 
-      <Field className="flex flex-col gap-1">
-        <ClientSecret clientDetails={client} />
-      </Field>
+      {client?.client_secret && (
+        <Field className="flex flex-col gap-1">
+          <ClientSecret secret={client?.client_secret} />
+        </Field>
+      )}
 
       <div className="mt-4 mr-16 flex w-full flex-row items-end justify-end">
-        <WarningSecret secret={client?.client_secret} />
-        <div>
-          <Button className="btn-secondary" onClick={changePage}>
-            Continue
-          </Button>
-        </div>
+        <Button className="btn-secondary" onClick={changePage}>
+          Continue
+        </Button>
       </div>
     </CarouselPanel>
   );

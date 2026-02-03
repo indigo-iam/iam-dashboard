@@ -12,14 +12,14 @@ import { rotateClientSecret } from "@/services/clients";
 import { useState } from "react";
 
 type ClientSecretViewProps = {
-  secretValue: string;
+  secret: string;
 };
 
 function ClientSecretView(props: Readonly<ClientSecretViewProps>) {
-  const { secretValue } = props;
+  const { secret } = props;
   return (
     <div className="mt-4 max-w-80 rounded bg-gray-100 dark:bg-gray-800">
-      <InputSecret secretValue={secretValue} />
+      <InputSecret value={secret} />
     </div>
   );
 }
@@ -57,7 +57,7 @@ export function RotateClientSecret(props: Readonly<RotateClientSecretProps>) {
         Are you sure you want to regenerate the client secret? The previous
         secret will no longer be valid.
       </ConfirmModal>
-      {secret && <ClientSecretView secretValue={secret} />}
+      {secret && <ClientSecretView secret={secret} />}
     </Field>
   );
 }

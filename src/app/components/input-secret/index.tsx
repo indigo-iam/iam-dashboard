@@ -12,10 +12,6 @@ import {
 } from "@heroicons/react/24/solid";
 import { useState } from "react";
 
-type SecretProps = {
-  secretValue: string;
-};
-
 type IconProps = {
   secretIsVisible: boolean;
 };
@@ -28,40 +24,41 @@ function Icon(props: Readonly<IconProps>) {
   return <EyeIcon className="size-5 dark:text-white/60" />;
 }
 
-export function InputSecret(props: Readonly<SecretProps>) {
-  const { secretValue } = props;
+type InputSecretProps = {
+  value?: string;
+};
+
+export function InputSecret(props: Readonly<InputSecretProps>) {
+  const { value } = props;
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(secretValue);
+      await navigator.clipboard.writeText(value ?? "");
     } catch (err) {
       console.error("Error during clipboard copy:", err);
     }
   };
 
   return (
-    <div className="bg-border flex w-full rounded-md border border-white/30 bg-gray-100 break-all dark:bg-gray-800">
-      <div className="w-full px-3 py-2">
-        <input
-          type={isVisible ? "text" : "password"}
-          readOnly
-          className="bg-border w-full bg-gray-100 focus:outline-none dark:bg-gray-800"
-          value={secretValue}
-        />
-      </div>
-
-      <div className="flex items-center rounded border-white/30 bg-white/30 dark:bg-gray-400">
+    <div className="iam-input divide-primary/10 flex divide-x p-0!">
+      <input
+        type={isVisible ? "text" : "password"}
+        readOnly
+        className="bg-border w-full p-2 focus:outline-none dark:bg-gray-800"
+        value={value}
+      />
+      <div className="flex items-center rounded">
         <Button
-          title="show/hide secret"
+          title="Show/Hide secret"
           onClick={toggleVisibility}
-          className="bg-white-30 gl-button-focus mr-1 ml-2 border-white/30 underline focus:outline-none dark:bg-gray-400"
+          className="btn-secondary h-full items-center rounded-none border-0 border-r"
         >
           <Icon secretIsVisible={isVisible} />
         </Button>
         <Button
-          title="copy secret"
-          className="bg-white-30 gl-button-focus mr-2 ml-1 border-white/30 underline focus:outline-none dark:bg-gray-400"
+          title="Copy secret"
+          className="btn-secondary h-full items-center rounded-none rounded-r border-0"
           onClick={copyToClipboard}
         >
           <ClipboardDocumentIcon className="size-5 dark:text-white/60" />

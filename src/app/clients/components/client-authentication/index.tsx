@@ -5,38 +5,38 @@
 "use client";
 
 import { Select, SelectOption } from "@/components/form";
+import { useEffect, useState } from "react";
 import ClientSecretJwt from "./client-secret-jwt";
 import PrivateKeyJwt from "./private-key-jwt";
+import { RotateClientSecret } from "./rotate-client-secret";
 import { TOKEN_ENDPOINT_AUTH_VALUES } from "./utils";
-import { RegenerateClientSecret } from "./regenerate-client-secret";
-import { useEffect, useState } from "react";
 
 type ClientAuthenticationSettingsProps = {
   authMethod: string;
-  showRegenerateSecret?: boolean;
+  clientId?: string;
   onStatusChange?: (status: boolean) => void;
 };
 
 function ClientAuthenticationSettings(
   props: Readonly<ClientAuthenticationSettingsProps>
 ) {
-  const { authMethod, showRegenerateSecret, onStatusChange } = props;
+  const { authMethod, onStatusChange, clientId } = props;
   switch (authMethod) {
     case "client_secret_basic":
-      if (showRegenerateSecret) {
-        return <RegenerateClientSecret />;
+      if (clientId) {
+        return <RotateClientSecret clientId={clientId} />;
       }
       return null;
     case "client_secret_post":
-      if (showRegenerateSecret) {
-        return <RegenerateClientSecret />;
+      if (clientId) {
+        return <RotateClientSecret clientId={clientId} />;
       }
       return null;
     case "client_secret_jwt":
-      if (showRegenerateSecret) {
+      if (clientId) {
         return (
           <>
-            <RegenerateClientSecret />
+            <RotateClientSecret clientId={clientId} />
             <ClientSecretJwt onStatusChange={onStatusChange} />
           </>
         );
@@ -54,15 +54,14 @@ function ClientAuthenticationSettings(
 type ClientAuthenticationProps = {
   name: string;
   defaultValue?: SelectOption;
-  showRegenerateClientSecret?: boolean;
+  clientId?: string;
   onStatusChange?: (status: boolean) => void;
 };
 
 export function ClientAuthentication(
   props: Readonly<ClientAuthenticationProps>
 ) {
-  const { name, defaultValue, showRegenerateClientSecret, onStatusChange } =
-    props;
+  const { name, defaultValue, onStatusChange, clientId } = props;
 
   const [authMethod, setAuthMethod] = useState(defaultValue);
 
@@ -92,8 +91,8 @@ export function ClientAuthentication(
       {authMethod && (
         <ClientAuthenticationSettings
           authMethod={authMethod.id}
-          showRegenerateSecret={showRegenerateClientSecret}
           onStatusChange={onStatusChange}
+          clientId={clientId}
         />
       )}
     </div>

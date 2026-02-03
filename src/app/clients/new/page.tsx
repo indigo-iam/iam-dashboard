@@ -2,13 +2,10 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { getSession } from "@/auth";
 import { Layout } from "@/app/components/layout";
-import { Form } from "@/components/form";
+import { getSession } from "@/auth";
 import { fetchOpenIdConfiguration } from "@/services/openid-configuration";
 import { fetchScopes } from "@/services/scopes";
-import { registerClient } from "@/services/clients";
-import { ClientRequest } from "@/models/client";
 import { redirect } from "next/navigation";
 import { NewClientCarousel } from "./carousel";
 
@@ -19,71 +16,14 @@ export default async function NewClient() {
   if (!session) {
     redirect("/");
   }
-  const { user } = session;
-
-  const action = async (formData: FormData) => {
-    "use server";
-
-    const request: ClientRequest = {
-      redirect_uris: formData.getAll("redirect_uris") as string[],
-      client_name: formData.get("client_name") as string,
-      client_description: (formData.get("client_description") as string) ?? "",
-      contacts: formData.getAll("contacts") as string[],
-      token_endpoint_auth_method: formData.get(
-        "token_endpoint_auth_method[id]"
-      ) as string,
-      scope: "",
-      grant_types: [formData.get("grant_type[id]") as string],
-    };
-
-    const scopes: string[] = [];
-    const it = formData.keys();
-    let result = it.next();
-    while (!result.done) {
-      const key = result.value;
-      if (key.startsWith("scope") && key.includes("[name]")) {
-        scopes.push(formData.get(key) as string);
-      }
-      result = it.next();
-    }
-
-    request.scope = scopes.join(" ");
-
-    const jwk_uri = formData.get("jwk_uri") as string | undefined;
-    const jwk = formData.get("jwk") as string | undefined;
-
-    if (jwk_uri) {
-      request.jwk_uri = jwk_uri;
-    } else if (jwk) {
-      request.jwk = jwk;
-    }
-
-    const client_uri = formData.get("client_uri") as string | undefined;
-    const tos_uri = formData.get("tos_uri") as string | undefined;
-    const policy_uri = formData.get("policy_uri") as string | undefined;
-
-    if (client_uri) {
-      request.client_uri = client_uri;
-    }
-
-    if (tos_uri) {
-      request.tos_uri = tos_uri;
-    }
-
-    if (policy_uri) {
-      request.policy_uri = policy_uri;
-    }
-    await registerClient(request, user.isAdmin);
-  };
 
   return (
     <Layout title="Create New Client">
-      <Form action={action}>
-        <NewClientCarousel
-          systemScopes={scopes}
-          openIdConfiguration={openIdConfiguration}
-        />
-      </Form>
+      <NewClientCarousel
+        systemScopes={scopes}
+        openIdConfiguration={openIdConfiguration}
+        isAdmin={session?.user?.isAdmin ?? false}
+      />
     </Layout>
   );
 }

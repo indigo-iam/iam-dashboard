@@ -42,20 +42,20 @@ export function RotateClientSecret(props: Readonly<RotateClientSecretProps>) {
 
   return (
     <Field>
-      <Label>Regenerate Client Secret</Label>
+      <Label>Rotate Client Secret</Label>
       <Description>Generate a new secret for this client</Description>
       <Button className="btn-secondary" onClick={open}>
-        Regenerate Secret
+        Rotate Secret
       </Button>
       <ConfirmModal
         show={show}
         onClose={close}
         onConfirm={action}
         danger
-        title="Regenerate Client Secret"
+        title="Rotate Client Secret"
       >
-        Are you sure you want to regenerate the client secret? The previous
-        secret will no longer be valid.
+        Are you sure you want to rotate the client secret? The previous secret
+        will no longer be valid.
       </ConfirmModal>
       {secret && <ClientSecretView secret={secret} />}
     </Field>

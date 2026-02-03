@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { getSession } from "@/auth";
 import { Layout } from "@/app/components/layout";
 import { getSession } from "@/auth";
 import { fetchOpenIdConfiguration } from "@/services/openid-configuration";

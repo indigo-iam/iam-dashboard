@@ -43,13 +43,6 @@ export const auth = betterAuth({
       },
     },
   },
-  logger: {
-    level: "debug",
-    disabled: false,
-    log: (level, message, ...args) => {
-      console.debug(`[BetterAuth][${level}] ${message}`, ...args);
-    },
-  },
   plugins: [
     genericOAuth({
       config: [

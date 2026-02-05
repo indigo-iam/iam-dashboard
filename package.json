@@ -28,7 +28,7 @@
     "@heroicons/react": "^2",
     "@vercel/otel": "^2.0.0",
     "better-auth": "^1.4",
-    "next": "^15",
+    "next": "^16",
     "react": "^19",
     "react-dom": "^19",
     "sharp": "^0.34",

@@ -4,7 +4,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
-import { settings } from "./config";
+import { settings } from "@/config";
 
 const { IAM_DASHBOARD_BASE_PATH } = settings;
 

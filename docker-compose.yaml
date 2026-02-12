@@ -30,7 +30,8 @@ services:
     container_name: iam-client-registrant
     entrypoint: /entrypoint.sh
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     image: mysql:latest
     environment:
       TZ: Europe/Rome

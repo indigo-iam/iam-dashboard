@@ -14,7 +14,20 @@ const { IAM_API_URL } = settings;
 const AUP_URL = `${IAM_API_URL}/iam/aup`;
 
 export async function fetchAUP() {
-  return await getItem<AUP>(AUP_URL);
+  const response = await authFetch(AUP_URL);
+  if (response.ok) {
+    return (await response.json()) as AUP;
+  } else {
+    if (response.status === 404) {
+      return;
+    }
+    const msg = await response.text();
+    await setNotification({
+      type: "error",
+      message: "Cannot fetch AUP",
+      subtitle: `Error: ${response.status} ${msg}`,
+    });
+  }
 }
 
 export async function createAUP(aup: AUPCreate) {

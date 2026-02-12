@@ -48,6 +48,37 @@ function NextPage(props: Readonly<{ page: number; totalPages: number }>) {
   );
 }
 
+type PreviousPagesProps = {
+  previousPages: number[];
+};
+
+function PreviousPages(props: Readonly<PreviousPagesProps>) {
+  const { previousPages } = props;
+  return (
+    <>
+      {previousPages.map(i => (
+        <PreviousPage key={`step-${i}`} page={i} />
+      ))}
+    </>
+  );
+}
+
+type NextPagesProps = {
+  nextPages: number[];
+  totalPages: number;
+};
+
+function NextPages(props: Readonly<NextPagesProps>) {
+  const { nextPages, totalPages } = props;
+  return (
+    <>
+      {nextPages.map(i => (
+        <NextPage key={`step-${i}`} page={i} totalPages={totalPages} />
+      ))}
+    </>
+  );
+}
+
 type StepperProps = {
   currentPage: number;
   totalPages: number;
@@ -56,26 +87,13 @@ type StepperProps = {
 export function Stepper(props: Readonly<StepperProps>) {
   const { currentPage, totalPages } = props;
   const lastPage = totalPages - 1;
-
-  // if currentPage == 0, previousPage is an empty array
   const previousPages = arrayRange(0, currentPage - 1);
   const nextPages = arrayRange(currentPage + 1, lastPage);
-
-  function PreviousPages() {
-    return previousPages.map(i => <PreviousPage key={`step-${i}`} page={i} />);
-  }
-
-  function NextPages() {
-    return nextPages.map(i => (
-      <NextPage key={`step-${i}`} page={i} totalPages={totalPages} />
-    ));
-  }
-
   return (
     <>
-      <PreviousPages />
+      <PreviousPages previousPages={previousPages} />
       <CurrentPage page={currentPage} totalPages={totalPages} />
-      <NextPages />
+      <NextPages nextPages={nextPages} totalPages={totalPages} />
     </>
   );
 }

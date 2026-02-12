@@ -9,6 +9,32 @@ import { fetchAUP } from "@/services/aup";
 import { dateToHuman } from "@/utils/dates";
 import { RequestSignature } from "./request-signature";
 
+async function getExpirationDate(user: User) {
+  const aupSignatureTime =
+    user["urn:indigo-dc:scim:schemas:IndigoUser"]?.aupSignatureTime;
+  if (!aupSignatureTime) {
+    return {
+      expiresAt: "N/A",
+      expired: false,
+    };
+  }
+  const aup = await fetchAUP();
+  if (!aup) {
+    return {
+      expiresAt: "N/A",
+      expired: false,
+    };
+  }
+  const aupSignatureDate = new Date(aupSignatureTime);
+  const aupExpirationDate = new Date(
+    aupSignatureDate.getTime() + aup.signatureValidityInDays * 86400000
+  );
+  return {
+    expiresAt: dateToHuman(aupExpirationDate),
+    expired: aupExpirationDate < new Date(),
+  };
+}
+
 type AupProps = {
   user: User;
   isMe: boolean;
@@ -16,20 +42,7 @@ type AupProps = {
 
 export async function Aup(props: Readonly<AupProps>) {
   const { user, isMe } = props;
-  const [aupExpiresIn, expired] = await (async () => {
-    const aupSignatureTime =
-      user["urn:indigo-dc:scim:schemas:IndigoUser"]?.aupSignatureTime;
-    if (!aupSignatureTime) {
-      return ["N/A", false];
-    }
-    const aup = await fetchAUP();
-    const aupSignatureDate = new Date(aupSignatureTime);
-    const aupExpirationDate = new Date(
-      aupSignatureDate.getTime() + aup.signatureValidityInDays * 86400000
-    );
-    const expired = aupExpirationDate < new Date();
-    return [dateToHuman(aupExpirationDate), expired];
-  })();
+  const { expiresAt, expired } = await getExpirationDate(user);
 
   return (
     <div className="flex flex-col gap-8 py-4 last:pb-0 lg:flex-row">
@@ -45,11 +58,7 @@ export async function Aup(props: Readonly<AupProps>) {
         <Form>
           <Field>
             <Label>Expiration</Label>
-            <Input
-              data-invalid={expired}
-              disabled
-              defaultValue={aupExpiresIn}
-            />
+            <Input data-invalid={expired} disabled defaultValue={expiresAt} />
           </Field>
         </Form>
         <RequestSignature user={user} isMe={isMe} />

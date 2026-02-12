@@ -1,17 +1,22 @@
 "use client";
 
+import { useSessionStorage } from "@/utils/hooks";
 import { useEffect, useState } from "react";
 
 export function CookiesBanner() {
   const [show, setShow] = useState(false);
+  const { getItem, setItem } = useSessionStorage();
 
   useEffect(() => {
-    const bannerHidden = localStorage.getItem("cookiesBanner");
-    setShow(bannerHidden !== "hidden");
-  }, []);
+    async function hideBanner() {
+      const bannerHidden = getItem("cookiesBanner");
+      setShow(bannerHidden !== "hidden");
+    }
+    hideBanner();
+  }, [getItem]);
 
   async function accept() {
-    localStorage.setItem("cookiesBanner", "hidden");
+    setItem("cookiesBanner", "hidden");
     setShow(false);
   }
 

@@ -8,6 +8,23 @@ import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { User } from "@/models/scim";
 import { deleteUser } from "@/services/users";
 
+type RowProps = {
+  title: string;
+  value?: string;
+};
+
+function Row(props: Readonly<RowProps>) {
+  const { title, value } = props;
+  return (
+    <tr>
+      <td className="px-2">
+        <b>{title}</b>
+      </td>
+      <td>{value}</td>
+    </tr>
+  );
+}
+
 interface DeleteUserModalProps extends ModalProps {
   user?: User;
   onUserDeleted?: () => void;
@@ -22,18 +39,6 @@ export default function DeleteUserModal(props: Readonly<DeleteUserModalProps>) {
       onUserDeleted?.();
       modalProps.onClose();
     }
-  };
-
-  const Row = (props: Readonly<{ title: string; value?: string }>) => {
-    const { title, value } = props;
-    return (
-      <tr>
-        <td className="px-2">
-          <b>{title}</b>
-        </td>
-        <td>{value}</td>
-      </tr>
-    );
   };
 
   const createdAt = user?.meta?.created

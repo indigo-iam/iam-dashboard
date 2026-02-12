@@ -6,6 +6,39 @@ import { ScimReference, User } from "@/models/scim";
 import NextLink from "next/link";
 import GroupOptions from "./options";
 
+type StaticViewProps = {
+  groupRef: ScimReference;
+};
+
+function StaticView(props: Readonly<StaticViewProps>) {
+  const { groupRef } = props;
+  return (
+    <div className="flex grow flex-col">
+      {groupRef.display}
+      <p className="dark:text-secondary/60 text-sm">{groupRef.value}</p>
+    </div>
+  );
+}
+
+type LinkViewProps = {
+  groupRef: ScimReference;
+};
+
+function LinkView(props: Readonly<LinkViewProps>) {
+  const { groupRef } = props;
+  return (
+    <NextLink
+      href={`/groups/${groupRef.value}`}
+      className="flex grow flex-col hover:underline"
+    >
+      {groupRef.display}
+      <p className="text-gray dark:text-secondary/60 text-sm">
+        {groupRef.value}
+      </p>
+    </NextLink>
+  );
+}
+
 type RowProps = {
   user: User;
   groupRef: ScimReference;
@@ -14,33 +47,13 @@ type RowProps = {
 
 function Row(props: Readonly<RowProps>) {
   const { user, groupRef, isAdmin } = props;
-
-  const StaticView = () => {
-    return (
-      <div className="flex grow flex-col">
-        {groupRef.display}
-        <p className="dark:text-secondary/60 text-sm">{groupRef.value}</p>
-      </div>
-    );
-  };
-
-  const LinkView = () => {
-    return (
-      <NextLink
-        href={`/groups/${groupRef.value}`}
-        className="flex grow flex-col hover:underline"
-      >
-        {groupRef.display}
-        <p className="text-gray dark:text-secondary/60 text-sm">
-          {groupRef.value}
-        </p>
-      </NextLink>
-    );
-  };
-
   return (
     <li className="iam-list-item flex flex-row">
-      {isAdmin ? <LinkView /> : <StaticView />}
+      {isAdmin ? (
+        <LinkView groupRef={groupRef} />
+      ) : (
+        <StaticView groupRef={groupRef} />
+      )}
       <GroupOptions groupRef={groupRef} user={user} />
     </li>
   );

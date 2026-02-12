@@ -7,7 +7,7 @@
 import { setNotification } from "@/services/notifications";
 import { AUP, AUPCreate, AUPPatch } from "@/models/aup";
 import { settings } from "@/config";
-import { authFetch, getItem } from "@/utils/fetch";
+import { authFetch } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
 
 const { IAM_API_URL } = settings;

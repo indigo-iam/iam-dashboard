@@ -54,7 +54,8 @@ jobs:
         with:
           images: cnafsoftwaredevel/iam-dashboard
           tags: |
-            type=ref,event=tag
+            type=ref,event=branch
+            type=ref,event=pr
 
       - name: Build and export to Docker
         uses: docker/build-push-action@v6
@@ -79,9 +80,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           build-args: IAM_DASHBOARD_BASE_PATH=/ui
-          push: ${{ github.ref == 'refs/heads/main' }}
-          tags: |
-            cnafsoftwaredevel/iam-dashboard:latest
-            ${{ steps.meta.outputs.tags }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64

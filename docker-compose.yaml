@@ -76,7 +76,7 @@ services:
 
   dashboard:
     container_name: iam-dashboard
-    image: iam-dashboard
+    image: iam-dashboard:test
     build:
       context: .
       args:

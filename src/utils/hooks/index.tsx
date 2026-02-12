@@ -9,7 +9,7 @@ export function useSessionStorage() {
 
   useEffect(() => {
     (async () => {
-      setStorage(window.sessionStorage);
+      setStorage(sessionStorage);
     })();
   }, []);
 

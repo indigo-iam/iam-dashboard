@@ -8,6 +8,30 @@ import { dateToHuman } from "@/utils/dates";
 import GroupOptions from "./options";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
+type LabelsProps = {
+  group: Group;
+};
+
+function Labels(props: Readonly<LabelsProps>) {
+  const { group } = props;
+  return (
+    <div className="flex grow flex-wrap items-center gap-1">
+      {group["urn:indigo-dc:scim:schemas:IndigoGroup"].labels?.map(label => {
+        return (
+          <div
+            className="text-secondary flex items-center gap-1 rounded-full bg-sky-600 px-2 py-0.5 text-xs dark:bg-sky-400"
+            key={label.name}
+          >
+            <span>
+              <b>{label.name}</b> {label.value}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 type RowProps = {
   group: Group;
 };
@@ -17,24 +41,6 @@ function Row(props: Readonly<RowProps>) {
   const created = group.meta?.created
     ? dateToHuman(new Date(group.meta.created))
     : "N/A";
-  const Labels = () => {
-    return (
-      <div className="flex grow flex-wrap items-center gap-1">
-        {group["urn:indigo-dc:scim:schemas:IndigoGroup"].labels?.map(label => {
-          return (
-            <div
-              className="text-secondary flex items-center gap-1 rounded-full bg-sky-600 px-2 py-0.5 text-xs dark:bg-sky-400"
-              key={label.name}
-            >
-              <span>
-                <b>{label.name}</b> {label.value}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
@@ -49,7 +55,7 @@ function Row(props: Readonly<RowProps>) {
             </p>
           </Link>
           <div className="flex grow items-center">
-            <Labels />
+            <Labels group={group} />
           </div>
           <p className="text-gray dark:text-secondary/50 my-auto flex flex-col pr-2 text-sm">
             Created {created}

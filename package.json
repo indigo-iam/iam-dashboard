@@ -1,7 +1,7 @@
 {
   "name": "iam-dashboard",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "release": {
     "branches": [
       "+([0-9])?(.{+([0-9]),x}).x",
@@ -28,7 +28,7 @@
     "@heroicons/react": "^2",
     "@vercel/otel": "^2.0.0",
     "better-auth": "^1.4",
-    "next": "^15",
+    "next": "^16",
     "react": "^19",
     "react-dom": "^19",
     "sharp": "^0.34",

@@ -4,7 +4,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
-import { settings } from "./config";
+import { settings } from "@/config";
 
 const { IAM_DASHBOARD_BASE_PATH } = settings;
 
@@ -12,7 +12,7 @@ export const config = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico|signin).*)"],
 };
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const sessionCookie = getSessionCookie(request);
   if (sessionCookie) {
     return NextResponse.next();

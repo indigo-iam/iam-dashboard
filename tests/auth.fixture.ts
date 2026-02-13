@@ -50,14 +50,15 @@ export const test = baseTest.extend<{}, { workerStorageState: string }>({
 
       // Redirect to new dashboard
       await page.waitForURL("./users/me");
+      const dismissButton = page.getByText("I understand");
+      if (await dismissButton.isVisible()) {
+        dismissButton.click();
+        await page.waitForTimeout(500)
+      }
       expect(await page.getByLabel("First Name").inputValue()).toBe("Admin");
       expect(await page.getByLabel("Last Name").inputValue()).toBe("User");
       expect(await page.getByLabel("Email").inputValue()).toBe(
         "1_admin@iam.test"
-      );
-
-      await page.evaluate(() =>
-        localStorage.setItem("cookiesBanner", "hidden")
       );
 
       // End of authentication steps.

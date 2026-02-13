@@ -8,16 +8,8 @@ import { AupView, CreateButton } from "./components/";
 import { DocumentTextIcon } from "@heroicons/react/24/solid";
 
 export default async function AUP() {
-  try {
-    const aup = await fetchAUP();
-    return (
-      <Layout title="Acceptable Usage Policy">
-        <div className="panel">
-          <AupView aup={aup} />
-        </div>
-      </Layout>
-    );
-  } catch (err) {
+  const aup = await fetchAUP();
+  if (!aup) {
     return (
       <Layout title="Acceptable Usage Policy">
         <div className="flex flex-col items-center space-y-4">
@@ -30,4 +22,11 @@ export default async function AUP() {
       </Layout>
     );
   }
+  return (
+    <Layout title="Acceptable Usage Policy">
+      <div className="panel">
+        <AupView aup={aup} />
+      </div>
+    </Layout>
+  );
 }

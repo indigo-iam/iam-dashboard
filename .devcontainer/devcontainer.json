@@ -1,19 +1,16 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
-  "name": "IAM dashboard",
-  "dockerComposeFile": [
-    "../docker-compose.yaml",
-    "docker-compose.extend.yaml"
-  ],
+  "name": "IAM Dashboard",
+  "dockerComposeFile": ["../docker-compose.yaml", "docker-compose.extend.yaml"],
   "service": "devcontainer",
   "workspaceFolder": "/workspace",
-  "postCreateCommand": "git config --global --add safe.directory /workspace && rm /workspace/.env && cp /secrets/.env /workspace/.env",
+  "postCreateCommand": "git config --global --add safe.directory /workspace",
   "customizations": {
     "vscode": {
       "settings": {
         "remote.autoForwardPorts": false,
-        "extensions.verifySignature": false // need for macOS users https://github.com/microsoft/vscode-remote-release/issues/8169
+        "extensions.verifySignature": false, // need for macOS users https://github.com/microsoft/vscode-remote-release/issues/8169
       },
       "extensions": [
         "wayou.vscode-todo-highligh",
@@ -23,10 +20,10 @@
         "ms-vscode.vscode-typescript-next",
         "GitHub.vscode-github-actions",
         "streetsidesoftware.code-spell-checker",
-        "SonarSource.sonarlint-vscode"
-      ]
-    }
+        "SonarSource.sonarlint-vscode",
+      ],
+    },
   },
   "shutdownAction": "stopCompose",
-  "remoteUser": "node"
+  "remoteUser": "indigoiam",
 }

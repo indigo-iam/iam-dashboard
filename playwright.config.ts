@@ -1,5 +1,9 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const baseURL = process.env.IAM_DASHBOARD_BASE_URL
+  ? `${process.env.IAM_DASHBOARD_BASE_URL}${process.env.IAM_DASHBOARD_BASE_PATH ?? ""}/`
+  : "https://iam.test.example/ui/";
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -19,12 +23,18 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // https://github.com/microsoft/playwright/issues/22592#issuecomment-1519991484
-    baseURL: process.env.IAM_DASHBOARD_URL
-      ? `${process.env.IAM_DASHBOARD_URL}/`
-      : "http://iam.test.example:8080/ui/",
+    // trailing '/' is required!!
+    baseURL,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
+    clientCertificates: [
+      {
+        origin: "https://iam.test.example",
+        certPath: "./assets/trust/star_test_example.cert.pem",
+        keyPath: "./assets/trust/star_test_example.key.pem",
+      },
+    ],
   },
 
   /* Configure projects for major browsers */
@@ -53,9 +63,12 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
+  // Remember to export NODE_EXTRA_CA_CERTS=assets/trust/star_test_example_ca.pem
   webServer: {
-    command: "docker compose up -d",
-    url: "http://iam.test.example:8080",
+    command: process.env.IAM_DEVCONTAINER
+      ? "npm run dev"
+      : "docker compose up -d",
+    url: "https://iam.test.example",
     reuseExistingServer: true,
     timeout: 10 * 60000,
     gracefulShutdown: { signal: "SIGTERM", timeout: 5000 },

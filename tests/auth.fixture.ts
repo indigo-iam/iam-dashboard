@@ -2,71 +2,44 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-// https://playwright.dev/docs/auth
-
 import { test as baseTest, expect } from "@playwright/test";
-import fs from "fs";
-import path from "path";
+export { expect } from "@playwright/test";
 
-export * from "@playwright/test";
+export const test = baseTest.extend({
+  page: async ({ page }, use) => {
+    await page.goto("./");
+    await page.locator("#username").fill("admin");
+    await page.locator("#password").fill("password");
+    await page.locator("#login-submit").click();
 
-export const test = baseTest.extend<{}, { workerStorageState: string }>({
-  // Use the same storage state for all tests in this worker.
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  storageState: ({ workerStorageState }, use) => use(workerStorageState),
+    // Check if client has to be authorized
+    await page.waitForLoadState("networkidle");
+    const authorizeButton = page.getByRole("button", { name: "Authorize" });
+    if (await authorizeButton.isVisible()) {
+      await authorizeButton.click();
+    }
 
-  // Authenticate once per worker with a worker-scoped fixture.
-  workerStorageState: [
-    async ({ browser }, use) => {
-      // Use parallelIndex as a unique identifier for each worker.
-      const id = test.info().parallelIndex;
-      const fileName = path.resolve(
-        test.info().project.outputDir,
-        `.auth/${id}.json`
-      );
+    // Redirect to new dashboard
+    await page.waitForURL("./users/me");
+    const dismissButton = page.getByText("I understand");
+    if (await dismissButton.isVisible()) {
+      dismissButton.click();
+      await page.waitForTimeout(500);
+    }
 
-      if (fs.existsSync(fileName)) {
-        // Reuse existing authentication state if any.
-        await use(fileName);
-        return;
-      }
+    // const cookiesBanner = page.getByTestId("cookies-banner");
+    // await expect(cookiesBanner).toBeVisible();
+    // const dismissButton = page.locator("#accept-cookies-button");
+    // if (await dismissButton.isVisible()) {
+    //   dismissButton.click();
+    // }
 
-      // Important: make sure we authenticate in a clean environment by unsetting storage state.
-      const page = await browser.newPage({
-        storageState: undefined,
-        baseURL: test.info().project.use.baseURL,
-      });
-      // Perform authentication steps. Replace these actions with your own.
-      await page.goto("./");
-      await page.locator("#username").fill("admin");
-      await page.locator("#password").fill("password");
-      await page.locator("#login-submit").click();
-
-      // Check if client has to be authorized
-      await page.waitForLoadState("networkidle");
-      const authorizeButton = page.getByRole("button", { name: "Authorize" });
-      if (await authorizeButton.isVisible()) {
-        await authorizeButton.click();
-      }
-
-      // Redirect to new dashboard
-      await page.waitForURL("./users/me");
-      const dismissButton = page.getByText("I understand");
-      if (await dismissButton.isVisible()) {
-        dismissButton.click();
-        await page.waitForTimeout(500)
-      }
-      expect(await page.getByLabel("First Name").inputValue()).toBe("Admin");
-      expect(await page.getByLabel("Last Name").inputValue()).toBe("User");
-      expect(await page.getByLabel("Email").inputValue()).toBe(
-        "1_admin@iam.test"
-      );
-
-      // End of authentication steps.
-      await page.context().storageState({ path: fileName });
-      await page.close();
-      await use(fileName);
-    },
-    { scope: "worker" },
-  ],
+    expect(await page.getByLabel("First Name").inputValue()).toBe("Admin");
+    expect(await page.getByLabel("Last Name").inputValue()).toBe("User");
+    expect(await page.getByLabel("Email").inputValue()).toBe(
+      "1_admin@iam.test"
+    );
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    await use(page);
+  },
 });

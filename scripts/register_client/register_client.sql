@@ -1,19 +1,19 @@
 INSERT INTO client_details (
   client_name,
-  client_id, 
+  client_id,
   client_secret,
   token_endpoint_auth_method,
   access_token_validity_seconds,
   code_challenge_method
 ) VALUES (
-  '$CLIENT_NAME', 
-  '$CLIENT_ID',
-  '$CLIENT_SECRET',
+  '$IAM_DASHBOARD_CLIENT_NAME',
+  '$IAM_DASHBOARD_OIDC_CLIENT_ID',
+  '$IAM_DASHBOARD_OIDC_CLIENT_SECRET',
   'SECRET_BASIC',
   3600,
   'S256'
 );
-SET @owner_id=(SELECT id from client_details WHERE client_id='$CLIENT_ID');
+SET @owner_id=(SELECT id from client_details WHERE client_id='$IAM_DASHBOARD_OIDC_CLIENT_ID');
 INSERT INTO client_grant_type (
   owner_id,
   grant_type
@@ -24,7 +24,7 @@ INSERT INTO client_grant_type (
 INSERT INTO client_scope (
   owner_id,
   scope
-) VALUES 
+) VALUES
   (@owner_id, 'openid'),
   (@owner_id, 'email'),
   (@owner_id, 'profile'),
@@ -36,5 +36,6 @@ INSERT INTO client_redirect_uri (
   owner_id,
   redirect_uri
 ) VALUES
-  (@owner_id, '$REDIRECT_URI'),
-  (@owner_id, '$REDIRECT_URI_DEVELOPMENT');
+  (@owner_id, '$IAM_DASHBOARD_REDIRECT_URI'),
+  (@owner_id, '$IAM_DASHBOARD_REDIRECT_URI_DEVELOPMENT'),
+  (@owner_id, '$IAM_DASHBOARD_REDIRECT_URI_DEVCONTAINER');

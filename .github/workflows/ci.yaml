@@ -18,6 +18,8 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     environment: "Release"
+    env:
+      NODE_EXTRA_CA_CERTS: "${{ github.workspace }}/assets/trust/star_test_example_ca.pem"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,8 +37,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Add hosts to /etc/hosts
-        run: |
-          sudo echo "127.0.0.1 iam.test.example" | sudo tee -a /etc/hosts
+        run: sudo echo "127.0.0.1 iam.test.example" | sudo tee -a /etc/hosts
+
+      - name: Make self-signed CA and *.test.example certificate
+        run: scripts/trust/setup_trust.sh assets/trust
 
       - name: Install dependencies
         run: npm ci
@@ -44,7 +48,7 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-      - name: "Install Playwright browsers"
+      - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
       - name: Docker Metadata
@@ -67,8 +71,11 @@ jobs:
       - name: Load test environment
         run: docker compose up -d
 
-      - name: "Run Playwright tests"
+      - name: Run Playwright tests
         run: npx playwright test
+
+      - name: Cleanup test environment
+        run: docker compose down --remove-orphans --volumes
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}

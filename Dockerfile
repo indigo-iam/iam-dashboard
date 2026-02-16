@@ -30,7 +30,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
 # Generate a random secret to silence build warnings/errors
-RUN AUTH_SECRET=$(base64 < /dev/urandom | head -c 32) npm run build
+RUN IAM_DASHBOARD_AUTH_SECRET=$(base64 < /dev/urandom | head -c 32) npm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner

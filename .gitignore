@@ -48,16 +48,15 @@ next-env.d.ts
 *.sw?
 codebook.toml
 
-# cypress
-cypress/screenshots/
-
 # secrets
 .devcontainer/devcontainer.env
 *.env
 *.env*
 !.template.env
-nginx/conf.d/env/*.conf
-cypress.env.json
+*.key*
+assets/trust/*
+!assets/trust/.gitkeep
+
 
 # Playwright
 node_modules/

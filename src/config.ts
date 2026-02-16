@@ -9,7 +9,7 @@ const IAM_DASHBOARD_AUTH_SECRET = process.env.IAM_DASHBOARD_AUTH_SECRET ?? "";
 const IAM_DASHBOARD_OIDC_CLIENT_ID = process.env.IAM_DASHBOARD_OIDC_CLIENT_ID!;
 const IAM_DASHBOARD_OIDC_CLIENT_SECRET =
   process.env.IAM_DASHBOARD_OIDC_CLIENT_SECRET;
-const IAM_DASHBOARD_OIDC_SCOPES = process.env.IAM_DASHBOARD_OIDC_SCOPES;
+const IAM_DASHBOARD_OIDC_SCOPES = "openid email profile scim:read scim:write iam:admin.read iam:admin.write"
 const IAM_API_URL = process.env.IAM_API_URL;
 
 export const settings = {

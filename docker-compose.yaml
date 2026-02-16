@@ -28,7 +28,7 @@ services:
 
   client_registrant:
     container_name: iam-client-registrant
-    entrypoint: /entrypoint.sh
+    entrypoint: /register_client/register_client.sh
     depends_on:
       database:
         condition: service_healthy
@@ -39,9 +39,7 @@ services:
       MYSQL_PASSWORD: pwd
       MYSQL_DATABASE: iam
     volumes:
-      - ./register_client.sh:/entrypoint.sh
-      - ./register_client.sql:/register_client.sql
-      - ./.template.env:/.template.env
+      - ./scripts/register_client:/register_client
       - secrets:/secrets
 
   login_service:
@@ -56,8 +54,8 @@ services:
       TZ: Europe/Rome
       IAM_PORT: 8080
       IAM_HOST: iam.test.example
-      IAM_BASE_URL: http://iam.test.example:8080
-      IAM_ISSUER: http://iam.test.example:8080
+      IAM_BASE_URL: https://iam.test.example
+      IAM_ISSUER: https://iam.test.example
       IAM_KEY_STORE_LOCATION: file:/keys/json-keystore.jwks
       IAM_DB_PORT: 3306
       IAM_DB_USERNAME: iam
@@ -81,19 +79,22 @@ services:
       context: .
       args:
         IAM_DASHBOARD_BASE_PATH: /ui
-    entrypoint: "/entrypoint.sh"
+    entrypoint: "/register_client/wait_for_env.sh"
     command: ["node", "server.js"]
-    volumes:
-      - secrets:/app
-      - ./wait_for_env.sh:/entrypoint.sh
     depends_on:
       login_service:
         condition: service_healthy
       client_registrant:
         condition: service_completed_successfully
+    volumes:
+      - secrets:/app
+      - ./scripts/register_client:/register_client
+      - ./assets/trust/star_test_example_ca.pem:/etc/ssl/certs/star_test_example_ca.pem
+    environment:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/star_test_example_ca.pem
 
   nginx:
-    image: nginx:1.24.0
+    image: nginx:stable
     container_name: iam-nginx
     hostname: iam.test.example
     restart: unless-stopped
@@ -104,8 +105,10 @@ services:
         condition: service_healthy
     command: ["nginx-debug", "-g", "daemon off;"]
     ports:
-      - "8080:8080"
+      - "443:443"
+      - "80:80"
     volumes:
+      - ./assets/trust:/etc/nginx/certs
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
 

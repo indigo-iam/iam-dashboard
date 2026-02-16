@@ -323,7 +323,7 @@ builds an image called `iam-dashboard:test`, located at https://iam.test.example
 By default, Playwright will run tests against the `https://iam.test.example/ui`
 endpoint, to the the final image that will be built during the CI/CD pipeline.
 
-### 3.5.1 Install Playwright browser.
+### 3.5.1 Install Playwright browsers
 
 To run the tests, Playwright browser must be installed first, or on your local
 machine or inside the Dev Container.

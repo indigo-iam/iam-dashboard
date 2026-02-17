@@ -25,7 +25,7 @@ export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
         <Option
           onClick={() => setShow("DELETE_GROUP")}
           data-danger
-          data-testid="delete"
+          data-testid="delete-group-opt"
         >
           Delete group
         </Option>

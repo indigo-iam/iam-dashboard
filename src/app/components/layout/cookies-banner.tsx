@@ -12,11 +12,13 @@ async function acceptCookies() {
 
 export async function CookiesBanner() {
   const cookiesStore = await cookies();
-  const show = cookiesStore.get("iam_cookies")?.value !== "accepted";
+  const state =
+    cookiesStore.get("iam_cookies")?.value !== "accepted" ? "show" : "hide";
   return (
     <footer
-      className="pointer-events-none fixed inset-x-0 bottom-0 z-50 translate-y-full p-4 transition duration-500 data-[cookies=show]:translate-y-0"
-      data-cookies={show ? "show" : "hide"}
+      className="pointer-events-none visible fixed inset-x-0 bottom-0 z-50 translate-y-0 p-4 transition-all duration-500 data-[state=hide]:invisible data-[state=hide]:translate-y-full"
+      data-state={state}
+      data-testid="accept-cookies-banner"
     >
       <form
         action={acceptCookies}
@@ -29,7 +31,6 @@ export async function CookiesBanner() {
         <button
           className="font-semibold underline hover:cursor-pointer"
           type="submit"
-          data-testid="accept-cookie-btn"
         >
           I understand
         </button>

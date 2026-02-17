@@ -1,5 +1,5 @@
 import { test, expect } from "./auth.fixture";
-import crypto from "crypto";
+import crypto from "node:crypto";
 
 function sha256(s: string) {
   const hash = crypto.createHash("sha256");

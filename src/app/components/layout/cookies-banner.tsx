@@ -12,8 +12,8 @@ async function acceptCookies() {
 
 export async function CookiesBanner() {
   const cookiesStore = await cookies();
-  const state =
-    cookiesStore.get("iam_cookies")?.value !== "accepted" ? "show" : "hide";
+  const cookie = cookiesStore.get("iam_cookies");
+  const state = cookie?.value === "accepted" ? "hide" : "show";
   return (
     <footer
       className="pointer-events-none visible fixed inset-x-0 bottom-0 z-50 translate-y-0 p-4 transition-all duration-500 data-[state=hide]:invisible data-[state=hide]:translate-y-full"

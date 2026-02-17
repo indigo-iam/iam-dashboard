@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { NextRequest, NextResponse } from "next/server";
-import { getSessionCookie } from "better-auth/cookies";
 import { settings } from "@/config";
+import { getSession } from "@/auth";
 
 const { IAM_DASHBOARD_BASE_PATH } = settings;
 
@@ -13,8 +13,7 @@ export const config = {
 };
 
 export async function proxy(request: NextRequest) {
-  const sessionCookie = getSessionCookie(request);
-  if (sessionCookie) {
+  if (await getSession()) {
     return NextResponse.next();
   }
   const url = new URL(`${IAM_DASHBOARD_BASE_PATH}/signin`, request.url);

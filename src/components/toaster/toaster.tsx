@@ -66,9 +66,8 @@ const CustomToast = (props: {
   type: NotificationType;
 }) => {
   const { title, subtitle, dismiss, type } = props;
-
   return (
-    <div className={"flex w-96"}>
+    <div className={"flex w-96"} data-testid="toast">
       <div className="text:primary dark:text-secondary w-full rounded-lg border border-gray-300 bg-white p-3 shadow-lg dark:border-gray-800 dark:bg-slate-800">
         <div className="flex w-full items-center">
           <div className="mr-4 w-5">

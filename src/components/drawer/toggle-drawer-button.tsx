@@ -10,7 +10,12 @@ import { toggleDrawer } from "./drawer";
 
 export function ToggleDrawerButton() {
   return (
-    <Button className="md:hidden" onClick={toggleDrawer}>
+    <Button
+      className="md:hidden"
+      onClick={toggleDrawer}
+      title="Menu"
+      data-testid="menu-btn"
+    >
       <Bars3Icon className="p my-auto size-8 rounded fill-white hover:bg-white/30" />
     </Button>
   );

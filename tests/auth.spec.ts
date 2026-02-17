@@ -5,8 +5,4 @@ test("Login w/IAM", async ({ page }) => {
     await page.goto("./");
     expect(await page.getByLabel("Username").inputValue()).toBe("admin");
   });
-
-  await test.step("logout", async () => {
-    await page.getByTestId("signout-button").click();
-  });
 });

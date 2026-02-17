@@ -54,6 +54,7 @@ export function InputSearch(props: Readonly<InputSearchProps>) {
       <button
         className="text-extralight hover:text-primary"
         onClick={clearSearch}
+        title="Clear search"
       >
         <XCircleIcon className="size-4" />
       </button>

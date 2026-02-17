@@ -1,8 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const baseURL = process.env.IAM_DASHBOARD_BASE_URL
-  ? `${process.env.IAM_DASHBOARD_BASE_URL}${process.env.IAM_DASHBOARD_BASE_PATH ?? ""}/`
-  : "https://iam.test.example/ui/";
+const basePath = process.env.IAM_DASHBOARD_BASE_PATH ?? "/ui";
+const baseURL = `https://iam.test.example${basePath}/`; // trailing '/' is required
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -52,14 +51,14 @@ export default defineConfig({
       use: { ...devices["Desktop Safari"] },
     },
     /* Test against mobile viewports. */
-    // {
-    //   name: "Mobile Chrome",
-    //   use: { ...devices["Pixel 5"] },
-    // },
-    // {
-    //   name: "Mobile Safari",
-    //   use: { ...devices["iPhone 12"] },
-    // },
+    {
+      name: "Mobile Chrome",
+      use: { ...devices["Pixel 5"] },
+    },
+    {
+      name: "Mobile Safari",
+      use: { ...devices["iPhone 12"] },
+    },
   ],
 
   /* Run your local dev server before starting the tests */

@@ -57,7 +57,9 @@ export async function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
       <Form className="w-full space-y-4 lg:w-2/3" action={action}>
         <div className="flex flex-wrap gap-4">
           <Field className="flex max-w-full grow flex-col">
-            <Label data-required>First Name</Label>
+            <Label htmlFor="given-name" data-required>
+              First Name
+            </Label>
             <Input
               required
               type="text"
@@ -68,7 +70,9 @@ export async function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
             />
           </Field>
           <Field className="flex max-w-full grow flex-col">
-            <Label data-required>Last Name</Label>
+            <Label htmlFor="family-name" data-required>
+              Last Name
+            </Label>
             <Input
               required
               type="text"
@@ -80,11 +84,13 @@ export async function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
           </Field>
         </div>
         <Field className="flex flex-col">
-          <Label>Username</Label>
-          <Input defaultValue={user.userName} disabled />
+          <Label htmlFor="username">Username</Label>
+          <Input name="username" defaultValue={user.userName} disabled />
         </Field>
         <Field className="flex flex-col">
-          <Label data-required>Email</Label>
+          <Label htmlFor="email" data-required>
+            Email
+          </Label>
           <Input
             required
             type="email"

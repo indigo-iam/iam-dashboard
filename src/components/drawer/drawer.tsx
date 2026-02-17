@@ -34,13 +34,16 @@ export function Drawer(props: Readonly<DrawerProps>) {
   });
 
   return (
-    <div id="drawer" className="group">
+    <div id="drawer" className="group" data-testid="drawer">
       <Button
         id="backdrop-drawer-button"
-        className="fixed inset-0 -z-10 bg-black/30 opacity-0 transition-opacity group-data-[open]:z-30 group-data-[open]:opacity-100 md:hidden"
+        className="fixed inset-0 -z-10 bg-black/30 opacity-0 transition-opacity group-data-open:z-30 group-data-open:opacity-100 md:hidden"
         onClick={toggleDrawer}
       />
-      <aside className="bg-infn easy-in-out fixed inset-0 z-30 w-80 -translate-x-full space-y-4 overflow-auto duration-100 group-data-[open]:translate-x-0 md:translate-x-0">
+      <aside
+        className="bg-infn easy-in-out invisible fixed inset-0 z-30 w-80 -translate-x-full space-y-4 overflow-auto duration-100 group-data-open:visible group-data-open:translate-x-0 md:visible md:translate-x-0"
+        data-testid="sidebar"
+      >
         {children}
       </aside>
     </div>

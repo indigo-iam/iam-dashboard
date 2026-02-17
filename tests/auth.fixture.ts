@@ -7,39 +7,38 @@ export { expect } from "@playwright/test";
 
 export const test = baseTest.extend({
   page: async ({ page }, use) => {
+    test.slow();
     await page.goto("./");
     await page.locator("#username").fill("admin");
     await page.locator("#password").fill("password");
     await page.locator("#login-submit").click();
 
     // Check if client has to be authorized
-    await page.waitForLoadState("networkidle");
+    const title = "Approval Required for iam-dashboard";
+    await expect(page.getByText(title)).toBeVisible();
+    await page.getByLabel("prompt me again next time").check();
     const authorizeButton = page.getByRole("button", { name: "Authorize" });
-    if (await authorizeButton.isVisible()) {
-      await authorizeButton.click();
-    }
+    await authorizeButton.click();
 
     // Redirect to new dashboard
     await page.waitForURL("./users/me");
-    const dismissButton = page.getByText("I understand");
-    if (await dismissButton.isVisible()) {
-      dismissButton.click();
-      await page.waitForTimeout(500);
-    }
+    const cookiesBanner = page.getByTestId("accept-cookies-banner");
+    await expect(cookiesBanner).toBeVisible();
+    await cookiesBanner.getByRole("button").click();
+    await expect(page.getByTestId("accept-cookies-banner")).toBeHidden();
 
-    // const cookiesBanner = page.getByTestId("cookies-banner");
-    // await expect(cookiesBanner).toBeVisible();
-    // const dismissButton = page.locator("#accept-cookies-button");
-    // if (await dismissButton.isVisible()) {
-    //   dismissButton.click();
-    // }
+    await expect(page.getByLabel("First Name")).toHaveValue("Admin");
+    await expect(page.getByLabel("Last Name")).toHaveValue("User");
+    await expect(page.getByLabel("Email")).toHaveValue("1_admin@iam.test");
 
-    expect(await page.getByLabel("First Name").inputValue()).toBe("Admin");
-    expect(await page.getByLabel("Last Name").inputValue()).toBe("User");
-    expect(await page.getByLabel("Email").inputValue()).toBe(
-      "1_admin@iam.test"
-    );
     // eslint-disable-next-line react-hooks/rules-of-hooks
     await use(page);
+
+    // Logout
+    if (await page.getByTestId("signout-btn").isHidden()) {
+      await page.getByTestId("menu-btn").click();
+      await page.getByTestId("sidebar").waitFor({ state: "visible" });
+    }
+    await page.getByTestId("signout-btn").click();
   },
 });

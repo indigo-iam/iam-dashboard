@@ -11,9 +11,10 @@ working_directory=$(dirname $(realpath $0))
 function print_secrets() {
   echo "Client ID:     ${IAM_DASHBOARD_OIDC_CLIENT_ID}"
   echo "Client Secret: ${IAM_DASHBOARD_OIDC_CLIENT_SECRET}"
+  return 0
 }
 
-if [ -f "/secrets/.env" ]; then
+if [[ -f "/secrets/.env" ]]; then
   IAM_DASHBOARD_OIDC_CLIENT_ID=$(grep IAM_DASHBOARD_OIDC_CLIENT_ID "/secrets/.env" | awk -F'=' '{print $2}')
   IAM_DASHBOARD_OIDC_CLIENT_SECRET=$(grep "IAM_DASHBOARD_OIDC_CLIENT_SECRET" /secrets/.env | awk -F'=' '{print $2}')
   print_secrets

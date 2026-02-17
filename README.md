@@ -399,7 +399,7 @@ and run tests in other shell with:
 
 ```bash
 export NODE_EXTRA_CA_CERTS="$(pwd)/assets/trust/star_test_example_ca.pem"
-npx playwright test [--ui]
+IAM_DASHBOARD_BASE_PATH=/dev npx playwright test [--ui]
 ```
 
 ### 3.5.3 Run tests inside Dev Container

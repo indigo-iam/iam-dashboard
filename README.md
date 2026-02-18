@@ -88,7 +88,7 @@ IAM_DASHBOARD_BASE_PATH=/ui
 IAM_DASHBOARD_OIDC_CLIENT_ID="<your_client_id>"
 IAM_DASHBOARD_OIDC_CLIENT_SECRET="<your_client_secret>"
 IAM_DASHBOARD_AUTH_SECRET="<authentication_secret>"
-OTEL_EXPORTER_OTLP_ENDPOINT="https://your.otel.example/collector"
+IAM_DASHBOARD_OTEL_EXPORTER_OTLP_ENDPOINT="https://your.otel.example/collector"
 ```
 
 To start the application execute:
@@ -202,7 +202,6 @@ IAM_DASHBOARD_BASE_PATH=/devcontainer                    # note the base path
 IAM_DASHBOARD_OIDC_CLIENT_ID=1d70f1a4-d38f-44be-811d-98e25d574431
 IAM_DASHBOARD_OIDC_CLIENT_SECRET=35971fb2-d6e7-4180-9330-6b3b842f04c4
 IAM_DASHBOARD_AUTH_SECRET=mHkwsMan8G6REekPvvzsMFPg594nUfkgmZRBcQV3SzQ=
-OTEL_EXPORTER_OTLP_ENDPOINT="https://otello.cloud.cnaf.infn.it:8443/collector"
 ```
 
 Then install the dependencies with:
@@ -280,7 +279,6 @@ IAM_DASHBOARD_BASE_PATH=/dev                    # note the base path
 IAM_DASHBOARD_OIDC_CLIENT_ID=1d70f1a4-d38f-44be-811d-98e25d574431
 IAM_DASHBOARD_OIDC_CLIENT_SECRET=35971fb2-d6e7-4180-9330-6b3b842f04c4
 IAM_DASHBOARD_AUTH_SECRET=mHkwsMan8G6REekPvvzsMFPg594nUfkgmZRBcQV3SzQ=
-OTEL_EXPORTER_OTLP_ENDPOINT="https://otello.cloud.cnaf.infn.it:8443/collector"
 ```
 
 First install the required dependencies with:

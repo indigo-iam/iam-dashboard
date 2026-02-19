@@ -46,7 +46,7 @@ function loadOidcClientSecret() {
 }
 
 function loadOidcScopes() {
-  return "openid email profile scim:read";
+  return "openid email profile scim:read scim:write";
 }
 
 function loadOidcAdminScopes() {

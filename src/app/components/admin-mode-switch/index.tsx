@@ -46,13 +46,12 @@ export function AdminModeSwitch(props: Readonly<AdminModeSwitchProps>) {
       router.push(url);
     });
   }
-
   return (
     <>
       {isPending && <Loading />}
       <form className="flex gap-2" onSubmit={onSubmit}>
         <span className="text-sm whitespace-nowrap">Admin Mode</span>
-        <Switch defaultChecked={defaultChecked} />
+        <Switch defaultChecked={defaultChecked} title="Admin Mode" />
       </form>
     </>
   );

@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { test as baseTest, expect } from "@playwright/test";
+import { test as baseTest, expect, Page } from "@playwright/test";
 export { expect } from "@playwright/test";
 
 export const test = baseTest.extend({
@@ -14,11 +14,7 @@ export const test = baseTest.extend({
     await page.locator("#login-submit").click();
 
     // Check if client has to be authorized
-    const title = "Approval Required for iam-dashboard";
-    await expect(page.getByText(title)).toBeVisible();
-    await page.getByLabel("prompt me again next time").check();
-    const authorizeButton = page.getByRole("button", { name: "Authorize" });
-    await authorizeButton.click();
+    await checkClientAuthorization(page);
 
     // Redirect to new dashboard
     await page.waitForURL("./users/me");
@@ -42,3 +38,11 @@ export const test = baseTest.extend({
     await page.getByTestId("signout-btn").click();
   },
 });
+
+export async function checkClientAuthorization(page: Page) {
+  const title = "Approval Required for iam-dashboard";
+  await expect(page.getByText(title)).toBeVisible();
+  await page.getByLabel("prompt me again next time").check();
+  const authorizeButton = page.getByRole("button", { name: "Authorize" });
+  await authorizeButton.click();
+}

@@ -1,4 +1,4 @@
-import { test, expect } from "./auth.fixture";
+import { test, expect, checkClientAuthorization } from "./auth.fixture";
 import crypto from "node:crypto";
 
 function sha256(s: string) {
@@ -15,7 +15,10 @@ function groupNameByIndex(index: number) {
 
 test("Create and delete group", async ({ page }) => {
   await test.step("add group", async () => {
-    await page.getByRole("switch").click();
+    // enable admin mode
+    await page.getByRole("switch", { name: "Admin Mode" }).click();
+    await checkClientAuthorization(page);
+
     await page.goto("./groups");
     await page.getByTestId("add-group").click();
     // use hashes in order to have an exact 1 match from the search bar

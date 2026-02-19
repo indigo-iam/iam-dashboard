@@ -4,12 +4,8 @@
 
 "use client";
 
-import { Switch as HUISwitch } from "@headlessui/react";
+import { Switch as HUISwitch, SwitchProps } from "@headlessui/react";
 import { useRef } from "react";
-
-type SwitchProps = {
-  defaultChecked?: boolean;
-};
 
 export default function Switch(props: Readonly<SwitchProps>) {
   const { defaultChecked } = props;
@@ -22,9 +18,9 @@ export default function Switch(props: Readonly<SwitchProps>) {
   return (
     <>
       <HUISwitch
+        {...props}
         type="submit"
         name="admin_mode"
-        defaultChecked={defaultChecked}
         onClick={handleChange}
         className="group data-checked:bg-danger inline-flex h-5 w-10 items-center rounded-full bg-white/20 transition md:bg-gray-200 dark:bg-white/20"
       >

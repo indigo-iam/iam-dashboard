@@ -42,7 +42,6 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
     redirect("/");
   }
 
-  const { sub } = session?.user;
   const isAdmin = await isUserAdmin();
   const searchParams = await props.searchParams;
   const count = searchParams?.count ? parseInt(searchParams.count) : 10;
@@ -51,7 +50,7 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
   const startIndex = 1 + count * (page - 1);
   const clientPage = isAdmin
     ? await getClientsPage(count, startIndex, query)
-    : await getClientsByAccount(sub, count, startIndex);
+    : await getClientsByAccount(session.user?.sub, count, startIndex);
   const numberOfPages = Math.ceil(clientPage.totalResults / count) || 1;
   const clients = clientPage.Resources;
   return (

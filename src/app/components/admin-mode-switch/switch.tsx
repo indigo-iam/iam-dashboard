@@ -8,7 +8,6 @@ import { Switch as HUISwitch, SwitchProps } from "@headlessui/react";
 import { useRef } from "react";
 
 export default function Switch(props: Readonly<SwitchProps>) {
-  const { defaultChecked } = props;
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   function handleChange() {

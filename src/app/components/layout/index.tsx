@@ -14,7 +14,7 @@ import {
   UserGroupIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
-import { getAccessToken, getSession, isUserAdmin } from "@/auth";
+import { getSession, isUserAdmin } from "@/auth";
 import { Drawer, Link, ToggleDrawerButton } from "@/components/drawer";
 import { Gravatar } from "@/components/gravatar";
 import Notifications from "@/components/notifications";

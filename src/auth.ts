@@ -5,7 +5,7 @@
 import { settings } from "@/config";
 import type { User as IamUser } from "@/models/scim";
 import { betterAuth } from "better-auth";
-import { genericOAuth, customSession } from "better-auth/plugins";
+import { genericOAuth } from "better-auth/plugins";
 import { headers, cookies } from "next/headers";
 import { nextCookies } from "better-auth/next-js";
 

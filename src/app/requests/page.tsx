@@ -2,14 +2,24 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { getSession, isUserAdmin } from "@/auth";
 import { Layout } from "@/app/components/layout";
 import { Tab, TabGroup, TabList, TabPanels } from "@/components/tabs";
 import { fetchGroupsRequests } from "@/services/group-requests";
 import { fetchRegistrationRequests } from "@/services/registration";
 import { Groups, Registrations } from "./components";
 import { CertificateLinkRequests } from "./components/certificates";
+import { redirect } from "next/navigation";
 
 export default async function Requests() {
+  const session = await getSession();
+  if (!session) {
+    redirect("/signin");
+  }
+  const isAdmin = await isUserAdmin();
+  if (!isAdmin) {
+    redirect("/");
+  }
   const groupRequests = await fetchGroupsRequests();
   const registrationRequests = await fetchRegistrationRequests();
   const certLinkRequests = [];

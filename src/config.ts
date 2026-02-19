@@ -46,6 +46,10 @@ function loadOidcClientSecret() {
 }
 
 function loadOidcScopes() {
+  return "openid email profile scim:read";
+}
+
+function loadOidcAdminScopes() {
   return "openid email profile scim:read scim:write iam:admin.read iam:admin.write";
 }
 
@@ -65,5 +69,6 @@ export const settings = {
   IAM_DASHBOARD_OIDC_CLIENT_ID: loadOidcClientId(),
   IAM_DASHBOARD_OIDC_CLIENT_SECRET: loadOidcClientSecret(),
   IAM_DASHBOARD_OIDC_SCOPES: loadOidcScopes(),
+  IAM_DASHBOARD_OIDC_ADMIN_SCOPES: loadOidcAdminScopes(),
   IAM_DASHBOARD_OTEL_EXPORTER_OTLP_ENDPOINT: loadOtelExporterOtlpEndpoint(),
 };

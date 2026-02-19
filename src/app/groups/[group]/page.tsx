@@ -1,16 +1,22 @@
 // SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
 //
 // SPDX-License-Identifier: EUPL-1.2
+import { getSession } from "@/auth";
 import { Layout } from "@/app/components/layout";
 import { TabGroup, TabList, TabPanels, Tab } from "@/components/tabs";
 import { GroupInfo, Managers, Members, Subgroups } from "./components";
 import { fetchGroup } from "@/services/groups";
+import { redirect } from "next/navigation";
 
 type GroupPageProps = {
   params: Promise<{ group: string }>;
 };
 
 export default async function GroupPage(props: Readonly<GroupPageProps>) {
+  const session = await getSession();
+  if (!session) {
+    redirect("/signin");
+  }
   const { params } = props;
   const groupID = (await params).group;
   const group = await fetchGroup(groupID);

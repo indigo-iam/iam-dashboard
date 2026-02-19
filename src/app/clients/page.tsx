@@ -2,8 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { cookies } from "next/headers";
-import { getSession } from "@/auth";
+import { getSession, isUserAdmin } from "@/auth";
 import { ClientsTable } from "@/app/components/clients";
 import { Layout } from "@/app/components/layout";
 import { InputQuery } from "@/components/inputs";
@@ -42,18 +41,16 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
   if (!session) {
     redirect("/");
   }
-  const { user } = session;
+
+  const isAdmin = await isUserAdmin();
   const searchParams = await props.searchParams;
   const count = searchParams?.count ? parseInt(searchParams.count) : 10;
   const page = searchParams?.page ? parseInt(searchParams.page) : 1;
   const query = searchParams?.query;
-  const cookiesStore = await cookies();
-  const adminMode = cookiesStore.get("admin-mode")?.value === "enabled";
   const startIndex = 1 + count * (page - 1);
-  const clientPage =
-    user.isAdmin && adminMode
-      ? await getClientsPage(count, startIndex, query)
-      : await getClientsByAccount(user.sub, count, startIndex);
+  const clientPage = isAdmin
+    ? await getClientsPage(count, startIndex, query)
+    : await getClientsByAccount(session.user?.sub, count, startIndex);
   const numberOfPages = Math.ceil(clientPage.totalResults / count) || 1;
   const clients = clientPage.Resources;
   return (

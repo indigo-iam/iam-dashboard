@@ -2,11 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { getSession, isUserAdmin } from "@/auth";
 import { Layout } from "@/app/components/layout";
 import Paginator from "@/components/paginator";
 import { InputQuery } from "@/components/inputs";
 import { fetchPaginatedScopes } from "@/services/scopes";
 import { NewScopeButton, ScopesTable } from "./components";
+import { redirect } from "next/navigation";
 
 type ScopeProps = {
   searchParams?: Promise<{
@@ -17,6 +19,14 @@ type ScopeProps = {
 };
 
 export default async function Scopes(props: Readonly<ScopeProps>) {
+  const session = await getSession();
+  if (!session) {
+    redirect("/signin");
+  }
+  const isAdmin = await isUserAdmin();
+  if (!isAdmin) {
+    redirect("/");
+  }
   const searchParams = await props.searchParams;
   const count = searchParams?.count ? parseInt(searchParams.count) : 10;
   const page = searchParams?.page ? parseInt(searchParams.page) : 1;
@@ -24,7 +34,6 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
   const startIndex = count * (page - 1);
   const scopes = await fetchPaginatedScopes(count, startIndex, query);
   const numberOfPages = Math.ceil(scopes.totalResults / count);
-
   return (
     <Layout title="Scopes">
       <div className="space-y-4">

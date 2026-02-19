@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { getSession } from "@/auth";
+import { getSession, isUserAdmin } from "@/auth";
 import { TabPanel } from "@/components/tabs";
 import { Group } from "@/models/groups";
 import { fetchGroupManagers } from "@/services/groups";
@@ -18,11 +18,10 @@ export default async function Managers(props: Readonly<ManagersProps>) {
   const { group } = props;
   const session = await getSession();
   if (!session) {
-    redirect("/");
+    redirect("/signin");
   }
-  const { user } = session;
-
-  if (!user.isAdmin) {
+  const isAdmin = await isUserAdmin();
+  if (isAdmin) {
     return null;
   }
 

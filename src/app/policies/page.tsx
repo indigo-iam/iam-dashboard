@@ -2,11 +2,21 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { getSession, isUserAdmin } from "@/auth";
 import { Layout } from "@/app/components/layout";
 import { fetchScopePolicies } from "@/services/scope-policies";
 import { AddPolicyButton, PoliciesTable } from "./components";
+import { redirect } from "next/navigation";
 
 export default async function Policies() {
+  const session = await getSession();
+  if (!session) {
+    redirect("/signin");
+  }
+  const isAdmin = await isUserAdmin();
+  if (!isAdmin) {
+    redirect("/");
+  }
   const policies = await fetchScopePolicies();
   return (
     <Layout title="Scope Policies">

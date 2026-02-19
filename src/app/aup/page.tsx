@@ -2,12 +2,22 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { getSession, isUserAdmin } from "@/auth";
 import { Layout } from "@/app/components/layout";
 import { fetchAUP } from "@/services/aup";
 import { AupView, CreateButton } from "./components/";
 import { DocumentTextIcon } from "@heroicons/react/24/solid";
+import { redirect } from "next/navigation";
 
 export default async function AUP() {
+  const session = await getSession();
+  if (!session) {
+    redirect("/signin");
+  }
+  const isAdmin = await isUserAdmin();
+  if (!isAdmin) {
+    redirect("/");
+  }
   const aup = await fetchAUP();
   if (!aup) {
     return (

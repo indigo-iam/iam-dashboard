@@ -4,21 +4,18 @@
 
 import { redirect } from "next/navigation";
 import { getSession, signIn } from "@/auth";
-import { settings } from "@/config";
 import { SignInButton } from "./components/signin-button";
-
-const { IAM_DASHBOARD_BASE_PATH } = settings;
-const basePath = IAM_DASHBOARD_BASE_PATH === "" ? "/" : IAM_DASHBOARD_BASE_PATH;
 
 export default async function SignInPage() {
   const session = await getSession();
   if (session) {
-    redirect(basePath);
+    redirect("/");
   }
 
   async function action() {
     "use server";
-    await signIn();
+    const url = await signIn("default");
+    redirect(url);
   }
 
   return (

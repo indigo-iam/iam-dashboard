@@ -8,6 +8,7 @@ import { betterAuth } from "better-auth";
 import { genericOAuth } from "better-auth/plugins";
 import { headers, cookies } from "next/headers";
 import { nextCookies } from "better-auth/next-js";
+import Database from "better-sqlite3";
 
 function decodeJWT(token: string) {
   return JSON.parse(atob(token.split(".")[1]));
@@ -27,6 +28,7 @@ const {
 export const auth = betterAuth({
   baseURL: `${IAM_DASHBOARD_BASE_URL}${IAM_DASHBOARD_BASE_PATH}/api/auth`,
   secret: IAM_DASHBOARD_AUTH_SECRET,
+  database: new Database("./sqlite.db"),
   user: {
     additionalFields: {
       hasRoleAdmin: {
@@ -75,16 +77,10 @@ export const auth = betterAuth({
   ],
   session: {
     expiresIn: 3600,
-    disableSessionRefresh: true,
-    cookieCache: {
-      strategy: "jwe",
-      enabled: true,
-      maxAge: 3600,
-    },
   },
   account: {
-    storeStateStrategy: "cookie",
-    storeAccountCookie: true, // Store account data after OAuth flow in a cookie (useful for database-less flows)
+    storeStateStrategy: "database",
+    storeAccountCookie: false,
     updateAccountOnSignIn: true,
   },
 });
@@ -144,7 +140,7 @@ export async function signIn(role: "default" | "admin" = "default") {
       scopes,
     },
   });
-  return url; // /authorize endpoint
+  return url; // '/authorize' endpoint
 }
 
 export async function signOut(fromLoginService = false) {

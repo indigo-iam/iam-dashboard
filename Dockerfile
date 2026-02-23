@@ -28,9 +28,14 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
+ENV NEXT_PHASE=phase-production-build
 
-# Generate a random secret to silence build warnings/errors
-RUN IAM_DASHBOARD_AUTH_SECRET=$(base64 < /dev/urandom | head -c 32) npm run build
+# Generate a random secret to silence build warnings/errors and create sqlite.db
+RUN pwd && ls -lah && \
+  export IAM_DASHBOARD_AUTH_SECRET=$(base64 < /dev/urandom | head -c 32) && \
+  npx @better-auth/cli generate --yes && \
+  npx @better-auth/cli migrate --yes  && \
+  npm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner
@@ -45,6 +50,8 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN apk add curl && \
   addgroup --system --gid 1001 nodejs && \
   adduser --system --uid 1001 nextjs && \
+  addgroup nextjs nodejs && \
+  chown -R nextjs:nodejs /app && \
   mkdir .next && \
   chown nextjs:nodejs .next
 
@@ -52,6 +59,8 @@ RUN apk add curl && \
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/sqlite.db ./sqlite.db
+COPY ./docker/entrypoint.sh /entrypoint.sh
 
 USER nextjs
 

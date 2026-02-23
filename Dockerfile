@@ -31,7 +31,7 @@ ENV NODE_ENV=production
 ENV NEXT_PHASE=phase-production-build
 
 # Generate a random secret to silence build warnings/errors and create sqlite.db
-RUN pwd && ls -lah && \
+RUN \
   export IAM_DASHBOARD_AUTH_SECRET=$(base64 < /dev/urandom | head -c 32) && \
   npx @better-auth/cli generate --yes && \
   npx @better-auth/cli migrate --yes  && \
@@ -60,7 +60,6 @@ RUN apk add curl && \
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/sqlite.db ./sqlite.db
-COPY ./docker/entrypoint.sh /entrypoint.sh
 
 USER nextjs
 

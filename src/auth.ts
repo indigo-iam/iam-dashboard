@@ -5,6 +5,7 @@
 import { settings } from "@/config";
 import type { User as IamUser } from "@/models/scim";
 import { betterAuth } from "better-auth";
+import type { BetterAuthOptions, OAuth2Tokens } from "better-auth";
 import { genericOAuth } from "better-auth/plugins";
 import { headers, cookies } from "next/headers";
 import { nextCookies } from "better-auth/next-js";
@@ -25,7 +26,9 @@ const {
   IAM_DASHBOARD_OIDC_ADMIN_SCOPES,
 } = settings;
 
-export const auth = betterAuth({
+const discoveryUrl = `${IAM_API_URL}/.well-known/openid-configuration`;
+
+export const authConfig = {
   baseURL: `${IAM_DASHBOARD_BASE_URL}${IAM_DASHBOARD_BASE_PATH}/api/auth`,
   secret: IAM_DASHBOARD_AUTH_SECRET,
   database: new Database("./sqlite.db"),
@@ -49,7 +52,7 @@ export const auth = betterAuth({
       config: [
         {
           providerId: "indigo-iam",
-          discoveryUrl: `${IAM_API_URL}/.well-known/openid-configuration`,
+          discoveryUrl: discoveryUrl,
           clientId: IAM_DASHBOARD_OIDC_CLIENT_ID,
           clientSecret: IAM_DASHBOARD_OIDC_CLIENT_SECRET,
           scopes: IAM_DASHBOARD_OIDC_SCOPES?.split(" "),
@@ -83,8 +86,9 @@ export const auth = betterAuth({
     storeAccountCookie: false,
     updateAccountOnSignIn: true,
   },
-});
+} satisfies BetterAuthOptions;
 
+export const auth = betterAuth(authConfig);
 export type User = typeof auth.$Infer.Session.user;
 export type Session = typeof auth.$Infer.Session;
 
@@ -116,6 +120,10 @@ export async function getAccessToken() {
   });
 }
 
+async function wellKnown() {
+  const response = await fetch(discoveryUrl);
+  return await response.json();
+}
 // For unknown reasons, setting isAdmin in the getUserInfo function does not
 // get update between each session, despite the same check on scopes.
 // Although calling this function every time is required to known if the

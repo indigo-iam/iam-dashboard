@@ -32,9 +32,7 @@ ENV NEXT_PHASE=phase-production-build
 
 # Generate a random secret to silence build warnings/errors and create sqlite.db
 RUN \
-  export IAM_DASHBOARD_AUTH_SECRET=$(base64 < /dev/urandom | head -c 32) && \
-  npx @better-auth/cli generate --yes && \
-  npx @better-auth/cli migrate --yes  && \
+  IAM_DASHBOARD_AUTH_SECRET=$(base64 < /dev/urandom | head -c 32) \
   npm run build
 
 # Production image, copy all the files and run next
@@ -59,7 +57,6 @@ RUN apk add curl && \
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/sqlite.db ./sqlite.db
 
 USER nextjs
 

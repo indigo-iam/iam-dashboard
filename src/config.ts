@@ -4,6 +4,8 @@
 
 import packageInfo from "../package.json";
 
+const isBuilding = process.env.NEXT_PHASE === "phase-production-build";
+
 function loadEnvVariable(key: string, defaultValue?: string) {
   if (process.env[key]) {
     return process.env[key];
@@ -11,14 +13,16 @@ function loadEnvVariable(key: string, defaultValue?: string) {
   if (defaultValue !== undefined) {
     return defaultValue;
   }
-  if (process.env.NEXT_PHASE === "phase-production-build") {
+  if (isBuilding) {
     return "";
   }
   throw Error(`${key} environment variable not set`);
 }
 
 function loadApiUrl() {
-  return loadEnvVariable("IAM_API_URL");
+  return isBuilding
+    ? "https://iam.test.example"
+    : loadEnvVariable("IAM_API_URL");
 }
 
 function loadAppVersion() {
@@ -26,7 +30,9 @@ function loadAppVersion() {
 }
 
 function loadBaseUrl() {
-  return loadEnvVariable("IAM_DASHBOARD_BASE_URL", "https://iam.test.example");
+  return isBuilding
+    ? "https://iam.test.example"
+    : loadEnvVariable("IAM_DASHBOARD_BASE_URL");
 }
 
 function loadBasePath() {
@@ -52,6 +58,14 @@ function loadOidcScopes() {
 function loadOidcAdminScopes() {
   return "openid email profile scim:read scim:write iam:admin.read iam:admin.write";
 }
+
+// function loadOidcScopes() {
+// return "openid email profile offline_access scim:read scim:write";
+// }
+
+// function loadOidcAdminScopes() {
+// return "openid email profile offline_access scim:read scim:write iam:admin.read iam:admin.write";
+// }
 
 function loadOtelExporterOtlpEndpoint() {
   return loadEnvVariable(

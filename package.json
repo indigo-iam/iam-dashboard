@@ -36,7 +36,6 @@
     "sonner": "^2"
   },
   "devDependencies": {
-    "@better-auth/cli": "^1.4",
     "@playwright/test": "^1.53.0",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/postcss": "^4.1",

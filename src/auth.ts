@@ -28,67 +28,69 @@ const {
 
 const discoveryUrl = `${IAM_API_URL}/.well-known/openid-configuration`;
 
-export const authConfig = {
-  baseURL: `${IAM_DASHBOARD_BASE_URL}${IAM_DASHBOARD_BASE_PATH}/api/auth`,
-  secret: IAM_DASHBOARD_AUTH_SECRET,
-  database: new Database("./sqlite.db"),
-  user: {
-    additionalFields: {
-      hasRoleAdmin: {
-        type: "boolean",
-        defaultValue: false,
-        input: false,
-      },
-      sub: {
-        type: "string",
-        defaultValue: "",
-        required: true,
-        input: false,
+export const authConfig = (db: Database.Database) => {
+  return {
+    baseURL: `${IAM_DASHBOARD_BASE_URL}${IAM_DASHBOARD_BASE_PATH}/api/auth`,
+    secret: IAM_DASHBOARD_AUTH_SECRET,
+    database: db,
+    user: {
+      additionalFields: {
+        hasRoleAdmin: {
+          type: "boolean",
+          defaultValue: false,
+          input: false,
+        },
+        sub: {
+          type: "string",
+          defaultValue: "",
+          required: true,
+          input: false,
+        },
       },
     },
-  },
-  plugins: [
-    genericOAuth({
-      config: [
-        {
-          providerId: "indigo-iam",
-          discoveryUrl: discoveryUrl,
-          clientId: IAM_DASHBOARD_OIDC_CLIENT_ID,
-          clientSecret: IAM_DASHBOARD_OIDC_CLIENT_SECRET,
-          scopes: IAM_DASHBOARD_OIDC_SCOPES?.split(" "),
-          getUserInfo: async tokens => {
-            const { idToken, accessToken } = tokens;
-            if (!idToken || !accessToken) {
-              // returning null will raise an exception during the login flow
-              return null;
-            }
-            const hasRoleAdmin = await fetchRoleAdmin(accessToken);
-            const profile = decodeJWT(idToken);
-            return {
-              id: profile.sub,
-              emailVerified: profile.email_verified ?? false,
-              name: profile.name,
-              email: profile.email,
-              sub: profile.sub,
-              hasRoleAdmin,
-            };
+    plugins: [
+      genericOAuth({
+        config: [
+          {
+            providerId: "indigo-iam",
+            discoveryUrl: discoveryUrl,
+            clientId: IAM_DASHBOARD_OIDC_CLIENT_ID,
+            clientSecret: IAM_DASHBOARD_OIDC_CLIENT_SECRET,
+            scopes: IAM_DASHBOARD_OIDC_SCOPES?.split(" "),
+            getUserInfo: async tokens => {
+              const { idToken, accessToken } = tokens;
+              if (!idToken || !accessToken) {
+                // returning null will raise an exception during the login flow
+                return null;
+              }
+              const hasRoleAdmin = await fetchRoleAdmin(accessToken);
+              const profile = decodeJWT(idToken);
+              return {
+                id: profile.sub,
+                emailVerified: profile.email_verified ?? false,
+                name: profile.name,
+                email: profile.email,
+                sub: profile.sub,
+                hasRoleAdmin,
+              };
+            },
           },
-        },
-      ],
-    }),
-    nextCookies(),
-  ],
-  session: {
-    expiresIn: 3600,
-  },
-  account: {
-    storeStateStrategy: "database",
-    storeAccountCookie: false,
-    updateAccountOnSignIn: true,
-  },
-} satisfies BetterAuthOptions;
+        ],
+      }),
+      nextCookies(),
+    ],
+    session: {
+      expiresIn: 3600,
+    },
+    account: {
+      storeStateStrategy: "database",
+      storeAccountCookie: false,
+      updateAccountOnSignIn: true,
+    },
+  } satisfies BetterAuthOptions;
+};
 
-export const auth = betterAuth(authConfig);
+export const auth = betterAuth(authConfig(globalThis.db));
 export type User = typeof auth.$Infer.Session.user;
 export type Session = typeof auth.$Infer.Session;
 

@@ -21,8 +21,15 @@ import { OTLPHttpJsonTraceExporter, registerOTel } from "@vercel/otel";
 import { getMigrations } from "better-auth/db";
 import { settings } from "./config";
 import { authConfig } from "./auth";
+import Database from "better-sqlite3";
 
 const { IAM_DASHBOARD_OTEL_EXPORTER_OTLP_ENDPOINT } = settings;
+
+// sqlite database must have global scope because it is in memory, otherwise
+// it will be closed after the migrations and reopened in an empty state.
+declare global {
+  var db: Database.Database;
+}
 
 function setupOtel() {
   registerOTel({
@@ -38,7 +45,8 @@ function setupOtel() {
 
 async function setupAuthDb() {
   console.log("Initializing database schema...");
-  const migrations = await getMigrations(authConfig);
+  globalThis.db = new Database(":memory:");
+  const migrations = await getMigrations(authConfig(db));
   const { toBeCreated, toBeAdded, runMigrations } = migrations;
   if (toBeCreated.length + toBeAdded.length > 0) {
     try {
@@ -49,6 +57,7 @@ async function setupAuthDb() {
     }
     console.log("Done.");
   } else {
+    // it should be logged only for not in memory databases
     console.log("Database already initialized, nothing to do.");
   }
 }

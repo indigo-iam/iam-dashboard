@@ -52,20 +52,12 @@ function loadOidcClientSecret() {
 }
 
 function loadOidcScopes() {
-  return "openid email profile scim:read scim:write";
+  return "openid email profile offline_access scim:read scim:write";
 }
 
 function loadOidcAdminScopes() {
-  return "openid email profile scim:read scim:write iam:admin.read iam:admin.write";
+  return "openid email profile offline_access scim:read scim:write iam:admin.read iam:admin.write";
 }
-
-// function loadOidcScopes() {
-// return "openid email profile offline_access scim:read scim:write";
-// }
-
-// function loadOidcAdminScopes() {
-// return "openid email profile offline_access scim:read scim:write iam:admin.read iam:admin.write";
-// }
 
 function loadOtelExporterOtlpEndpoint() {
   return loadEnvVariable(

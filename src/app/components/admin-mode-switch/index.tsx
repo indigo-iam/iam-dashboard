@@ -4,10 +4,9 @@
 
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useTransition } from "react";
+import { refreshTokenWithRole } from "./actions";
 import Switch from "./switch";
-import { signInWithRole } from "./actions";
 
 function Spinner() {
   return (
@@ -34,7 +33,6 @@ type AdminModeSwitchProps = {
 
 export function AdminModeSwitch(props: Readonly<AdminModeSwitchProps>) {
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
   const { defaultChecked } = props;
 
   function onSubmit(event: React.SubmitEvent<HTMLFormElement>) {
@@ -42,8 +40,7 @@ export function AdminModeSwitch(props: Readonly<AdminModeSwitchProps>) {
     startTransition(async () => {
       const formData = new FormData(event.currentTarget);
       const role = formData.get("admin_mode") === "on" ? "admin" : "default";
-      const url = await signInWithRole(role);
-      router.push(url);
+      await refreshTokenWithRole(role);
     });
   }
   return (

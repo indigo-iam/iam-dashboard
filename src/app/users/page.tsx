@@ -25,7 +25,7 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
   }
   const isAdmin = await isUserAdmin();
   if (!isAdmin) {
-    redirect("/");
+    redirect("/users/me");
   }
   const searchParams = await props.searchParams;
   const count = searchParams?.count ? parseInt(searchParams.count) : 10;

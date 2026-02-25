@@ -14,7 +14,7 @@ export default async function SignInPage() {
 
   async function action() {
     "use server";
-    const url = await signIn("default");
+    const url = await signIn();
     redirect(url);
   }
 

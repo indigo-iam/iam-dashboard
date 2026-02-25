@@ -1,4 +1,4 @@
-import { test, expect, checkClientAuthorization } from "./auth.fixture";
+import { test, expect } from "./auth.fixture";
 import crypto from "node:crypto";
 
 function sha256(s: string) {
@@ -17,7 +17,6 @@ test("Create and delete group", async ({ page }) => {
   await test.step("add group", async () => {
     // enable admin mode
     await page.getByRole("switch", { name: "Admin Mode" }).click();
-    await checkClientAuthorization(page);
 
     await page.goto("./groups");
     await page.getByTestId("add-group").click();

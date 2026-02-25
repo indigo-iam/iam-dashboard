@@ -4,9 +4,17 @@
 
 "use server";
 
-import { signIn, signOut } from "@/auth";
+import { updateAccessToken } from "@/auth";
+import { settings } from "@/config";
+import { refresh } from "next/cache";
 
-export async function signInWithRole(role: "admin" | "default") {
-  await signOut();
-  return await signIn(role);
+const { IAM_DASHBOARD_OIDC_SCOPES, IAM_DASHBOARD_OIDC_ADMIN_SCOPES } = settings;
+
+export async function refreshTokenWithRole(role: "admin" | "default") {
+  await updateAccessToken(
+    role === "admin"
+      ? IAM_DASHBOARD_OIDC_ADMIN_SCOPES
+      : IAM_DASHBOARD_OIDC_SCOPES
+  );
+  refresh();
 }

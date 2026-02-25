@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 export function SignoutButton() {
   const logout = async () => {
     "use server";
-    await signOut(true);
+    await signOut();
     redirect("/");
   };
   return (

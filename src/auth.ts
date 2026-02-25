@@ -28,6 +28,129 @@ const {
 
 const discoveryUrl = `${IAM_API_URL}/.well-known/openid-configuration`;
 
+async function wellKnown() {
+  const response = await fetch(discoveryUrl);
+  return await response.json();
+}
+
+export async function refreshAccessToken(refreshToken: string, scope?: string) {
+  const body = new URLSearchParams();
+  body.append("grant_type", "refresh_token");
+  body.append("refresh_token", refreshToken);
+  body.append("client_id", IAM_DASHBOARD_OIDC_CLIENT_ID);
+  body.append("client_secret", IAM_DASHBOARD_OIDC_CLIENT_SECRET);
+  if (scope) {
+    body.append("scope", scope);
+  }
+  const { token_endpoint } = await wellKnown();
+  const res = await fetch(token_endpoint, {
+    method: "POST",
+    body,
+  });
+
+  const data = await res.json();
+  const tokens: OAuth2Tokens = {
+    accessToken: data.access_token,
+    refreshToken: data.refresh_token,
+    tokenType: data.token_type,
+    scopes: data.scope?.split(" "),
+    idToken: data.id_token,
+  };
+
+  if (data.expires_in) {
+    const now = new Date();
+    tokens.accessTokenExpiresAt = new Date(
+      now.getTime() + data.expires_in * 1000
+    );
+  }
+
+  if (data.refresh_token_expires_in) {
+    const now = new Date();
+    tokens.refreshTokenExpiresAt = new Date(
+      now.getTime() + data.refresh_token_expires_in * 1000
+    );
+  }
+  return tokens;
+}
+
+const indigoIam = () =>
+  genericOAuth({
+    config: [
+      {
+        providerId: "indigo-iam",
+        discoveryUrl: discoveryUrl,
+        clientId: IAM_DASHBOARD_OIDC_CLIENT_ID,
+        clientSecret: IAM_DASHBOARD_OIDC_CLIENT_SECRET,
+        scopes: IAM_DASHBOARD_OIDC_ADMIN_SCOPES?.split(" "),
+        pkce: true,
+        getToken: async ({ code, codeVerifier, redirectURI }) => {
+          /*
+          1. At login, asks for highest privileges, i.e., admin scopes.
+          2. If IAM returns those scopes, the user is an admin
+          3. If the user is an admin, immediately refresh the token with
+             default scopes.
+          */
+          // 1. Login with admin scopes
+          const { token_endpoint } = await wellKnown();
+          const body = new URLSearchParams();
+          body.append("client_id", IAM_DASHBOARD_OIDC_CLIENT_ID);
+          body.append("client_secret", IAM_DASHBOARD_OIDC_CLIENT_SECRET);
+          body.append("scope", IAM_DASHBOARD_OIDC_ADMIN_SCOPES);
+          body.append("code", code);
+          body.append("redirect_uri", redirectURI);
+          body.append("grant_type", "authorization_code");
+          if (codeVerifier) {
+            body.append("code_verifier", codeVerifier);
+          }
+
+          const response = await fetch(token_endpoint, {
+            method: "POST",
+            body,
+          });
+          const data = await response.json();
+          const tokens = {
+            accessToken: data.access_token,
+            refreshToken: data.refresh_token,
+            accessTokenExpiresAt: new Date(Date.now() + data.expires_in * 1000),
+            scopes: data.scope?.split(" ") ?? [],
+            raw: data,
+          } satisfies OAuth2Tokens;
+
+          // 2. Check if the users received admin scopes
+          if (data.scope?.includes("iam:admin")) {
+            console.debug(
+              "Logged as admin, refreshing token with down scopes."
+            );
+            // 3. Refresh the token with lower scopes
+            return await refreshAccessToken(
+              tokens.refreshToken,
+              IAM_DASHBOARD_OIDC_SCOPES
+            );
+          }
+          return tokens;
+        },
+        getUserInfo: async tokens => {
+          const { idToken, accessToken } = tokens;
+          if (!idToken || !accessToken) {
+            // returning null will raise an exception during the login flow
+            console.error("failed to get user info: access token not found");
+            return null;
+          }
+          const hasRoleAdmin = await fetchRoleAdmin(accessToken);
+          const profile = decodeJWT(idToken);
+          return {
+            id: profile.sub,
+            emailVerified: profile.email_verified ?? false,
+            name: profile.name,
+            email: profile.email,
+            sub: profile.sub,
+            hasRoleAdmin,
+          };
+        },
+      },
+    ],
+  });
+
 export const authConfig = (db: Database.Database) => {
   return {
     baseURL: `${IAM_DASHBOARD_BASE_URL}${IAM_DASHBOARD_BASE_PATH}/api/auth`,
@@ -48,37 +171,7 @@ export const authConfig = (db: Database.Database) => {
         },
       },
     },
-    plugins: [
-      genericOAuth({
-        config: [
-          {
-            providerId: "indigo-iam",
-            discoveryUrl: discoveryUrl,
-            clientId: IAM_DASHBOARD_OIDC_CLIENT_ID,
-            clientSecret: IAM_DASHBOARD_OIDC_CLIENT_SECRET,
-            scopes: IAM_DASHBOARD_OIDC_SCOPES?.split(" "),
-            getUserInfo: async tokens => {
-              const { idToken, accessToken } = tokens;
-              if (!idToken || !accessToken) {
-                // returning null will raise an exception during the login flow
-                return null;
-              }
-              const hasRoleAdmin = await fetchRoleAdmin(accessToken);
-              const profile = decodeJWT(idToken);
-              return {
-                id: profile.sub,
-                emailVerified: profile.email_verified ?? false,
-                name: profile.name,
-                email: profile.email,
-                sub: profile.sub,
-                hasRoleAdmin,
-              };
-            },
-          },
-        ],
-      }),
-      nextCookies(),
-    ],
+    plugins: [indigoIam(), nextCookies()],
     session: {
       expiresIn: 3600,
     },
@@ -122,27 +215,47 @@ export async function getAccessToken() {
   });
 }
 
-async function wellKnown() {
-  const response = await fetch(discoveryUrl);
-  return await response.json();
-}
-// For unknown reasons, setting isAdmin in the getUserInfo function does not
-// get update between each session, despite the same check on scopes.
-// Although calling this function every time is required to known if the
-// current user is an admin or not, the cost could be beneficial in terms of
-// synchronization
-export async function isUserAdmin() {
-  const { scopes } = await getAccessToken();
-  return scopes ? scopes.findIndex(s => s.includes("iam:admin")) > 0 : false;
+/*
+  Perform a refresh token flow with defined scope and save new tokens in the
+  database
+*/
+export async function updateAccessToken(scope: string) {
+  const session = await getSession();
+  if (!session) {
+    console.error("Session not found");
+    return;
+  }
+  const ctx = await auth.$context;
+  const [account] = await ctx.internalAdapter.findAccountByUserId(
+    session.user.id
+  );
+  if (account.refreshToken) {
+    try {
+      const tokens = await refreshAccessToken(account.refreshToken, scope);
+      await ctx.internalAdapter.updateAccount(account.id, {
+        accessToken: tokens.accessToken,
+        accessTokenExpiresAt: tokens.accessTokenExpiresAt,
+        refreshToken: tokens.refreshToken,
+        refreshTokenExpiresAt: tokens.refreshTokenExpiresAt,
+        scope: tokens.scopes?.join(" "),
+      });
+      console.debug("Refreshed access token.");
+      return tokens.accessToken;
+    } catch (e: any) {
+      console.error("Failed to refresh access token:", e);
+      return null;
+    }
+  }
+  return account.accessToken;
 }
 
-export async function signIn(role: "default" | "admin" = "default") {
-  console.debug(`Signin in with role '${role}'...`);
-  const scope =
-    role === "admin"
-      ? IAM_DASHBOARD_OIDC_ADMIN_SCOPES
-      : IAM_DASHBOARD_OIDC_SCOPES;
-  const scopes = scope.split(" ");
+export async function isUserAdmin() {
+  const { scopes } = await getAccessToken();
+  return scopes.join(" ").includes("iam:admin");
+}
+
+export async function signIn() {
+  const scopes = IAM_DASHBOARD_OIDC_ADMIN_SCOPES.split(" ");
   const { url } = await auth.api.signInWithOAuth2({
     body: {
       providerId: "indigo-iam",
@@ -153,10 +266,8 @@ export async function signIn(role: "default" | "admin" = "default") {
   return url; // '/authorize' endpoint
 }
 
-export async function signOut(fromLoginService = false) {
-  if (fromLoginService) {
-    const cookiesStore = await cookies();
-    cookiesStore.delete("JSESSIONID");
-  }
+export async function signOut() {
+  const cookiesStore = await cookies();
+  cookiesStore.delete("JSESSIONID");
   await auth.api.signOut({ headers: await headers() });
 }

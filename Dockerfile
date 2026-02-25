@@ -30,7 +30,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 ENV NEXT_PHASE=phase-production-build
 
-# Generate a random secret to silence build warnings/errors and create sqlite.db
+# Generate a random secret to silence build warnings/errors
 RUN \
   IAM_DASHBOARD_AUTH_SECRET=$(base64 < /dev/urandom | head -c 32) \
   npm run build

@@ -350,10 +350,10 @@ export async function requestAUPSignature(userId: string) {
 }
 
 export async function signAUP(userId: string) {
-  const url = `${IAM_API_URL}/iam/aup/signature/${userId}`;
+  const url = `${IAM_API_URL}/iam/aup/signature`;
   const body = JSON.stringify({ signatureTime: new Date().toISOString() });
   const response = await authFetch(url, {
-    method: "PATCH",
+    method: "POST",
     headers: { "content-type": "application/json" },
     body,
   });
@@ -362,7 +362,7 @@ export async function signAUP(userId: string) {
     revalidatePath(`/user/${userId}`);
   } else {
     const msg = await response.text();
-    setNotification({
+    await setNotification({
       type: "error",
       message: "Cannot sign AUP",
       subtitle: `Error ${response.status} ${msg}`,

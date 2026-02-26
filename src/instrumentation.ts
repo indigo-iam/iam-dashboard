@@ -23,7 +23,12 @@ import { settings } from "./config";
 import { authConfig } from "./auth";
 import Database from "better-sqlite3";
 
-const { IAM_DASHBOARD_OTEL_EXPORTER_OTLP_ENDPOINT } = settings;
+// prettier-ignore
+const {
+  IAM_DASHBOARD_APP_VERSION,
+  IAM_DASHBOARD_BASE_URL,
+  IAM_DASHBOARD_OTEL_EXPORTER_OTLP_ENDPOINT
+} = settings;
 
 // sqlite database must have global scope because it is in memory, otherwise
 // it will be closed after the migrations and reopened in an empty state.
@@ -39,6 +44,9 @@ function setupOtel() {
     }),
     attributes: {
       "service.namespace": "indigo-iam",
+      "service.name": "iam-dashboard",
+      "service.version": IAM_DASHBOARD_APP_VERSION,
+      "host.name": new URL(IAM_DASHBOARD_BASE_URL).hostname,
     },
   });
 }

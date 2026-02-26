@@ -166,15 +166,14 @@ export const authConfig = (db: Database.Database) => {
               await ctx.context.internalAdapter.findAccountByUserId(
                 sessionData.userId
               );
-            const { idToken, accessToken } = account;
-            if (!idToken || !accessToken) {
+            const { accessToken } = account;
+            if (!accessToken) {
               throw new Error(
                 "failed to get user info: access token not found"
               );
             }
             const hasRoleAdmin = await fetchRoleAdmin(accessToken);
-            const profile = decodeJWT(idToken);
-            return { data: { ...sessionData, hasRoleAdmin, profile } };
+            return { data: { ...sessionData, hasRoleAdmin } };
           },
         },
       },

@@ -19,9 +19,12 @@ import { Drawer, Link, ToggleDrawerButton } from "@/components/drawer";
 import { Gravatar } from "@/components/gravatar";
 import Notifications from "@/components/notifications";
 import { AdminModeSwitch } from "@/app/components/admin-mode-switch";
+import { settings } from "@/config";
 import cloud from "./cloud.png";
 import { CookiesBanner } from "./cookies-banner";
 import { SignoutButton } from "./signout-button";
+
+const { IAM_DASHBOARD_APP_VERSION } = settings;
 
 function LogoIam() {
   return (
@@ -145,6 +148,9 @@ export async function Layout(props: Readonly<LayoutProps>) {
               <SignoutButton />
             </div>
           </nav>
+          <div className="text-secondary w-full bg-slate-600 p-1 text-center text-sm">
+            v{IAM_DASHBOARD_APP_VERSION}
+          </div>
         </div>
       </Drawer>
       <div className="absolute top-16 right-0 left-0 p-4 md:left-80">

@@ -7,8 +7,6 @@ name: ci
 on:
   workflow_dispatch:
   push:
-    branches:
-      - "**"
     paths-ignore:
       - README.md
       - LICENSE

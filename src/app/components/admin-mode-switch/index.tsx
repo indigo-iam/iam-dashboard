@@ -18,8 +18,8 @@ function Spinner() {
 
 function Loading() {
   return (
-    <div className="fixed inset-0 z-50 bg-gray-600/50 backdrop-blur-sm">
-      <div className="text-secondary mx-auto mt-48 h-16 w-16">
+    <div className="fixed inset-0 z-50 flex items-center bg-gray-600/50 backdrop-blur-sm">
+      <div className="text-secondary m-auto h-16 w-16">
         <Spinner />
         <p className="text-secondary mt-8 text-xl">Loading...</p>
       </div>

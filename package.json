@@ -1,7 +1,7 @@
 {
   "name": "iam-dashboard",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.3.0-rc.0",
   "release": {
     "branches": [
       "+([0-9])?(.{+([0-9]),x}).x",

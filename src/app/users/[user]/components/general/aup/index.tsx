@@ -23,9 +23,11 @@ async function getExpirationDate(user: User, aup: AUP) {
   aupExpirationDate.setDate(
     aupExpirationDate.getDate() + aup.signatureValidityInDays
   );
+  const expiresAt = dateToHuman(aupExpirationDate);
+  const expired = aupExpirationDate < new Date();
   return {
-    expiresAt: dateToHuman(aupExpirationDate),
-    expired: aupExpirationDate < new Date(),
+    expiresAt: expired ? `Expired ${expiresAt}` : `Expires ${expiresAt}`,
+    expired,
   };
 }
 

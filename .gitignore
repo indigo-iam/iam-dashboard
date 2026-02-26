@@ -56,7 +56,8 @@ codebook.toml
 *.key*
 assets/trust/*
 !assets/trust/.gitkeep
-
+sqlite.db
+better_auth_migrations/
 
 # Playwright
 node_modules/

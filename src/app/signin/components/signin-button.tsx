@@ -4,11 +4,19 @@
 
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export function SignInButton() {
+  const loadingRef = useRef(false);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
   useEffect(() => {
-    document.getElementById("signin-button")?.click();
+    if (!loadingRef.current) {
+      document.getElementById("signin-button")?.click();
+      loadingRef.current = false;
+    }
+    return () => {
+      loadingRef.current = false;
+    };
   });
-  return <button id="signin-button" type="submit" hidden />;
+  return <button id="signin-button" ref={buttonRef} type="submit" hidden />;
 }

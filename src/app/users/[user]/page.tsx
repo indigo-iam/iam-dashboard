@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { getSession } from "@/auth";
+import { getSession, isUserAdmin } from "@/auth";
 import { Layout } from "@/app/components/layout";
 import { Tab, TabGroup, TabList, TabPanels } from "@/components/tabs";
 import { fetchMe } from "@/services/me";
@@ -26,7 +26,7 @@ type UserPageProps = {
 export default async function UserPage(props: Readonly<UserPageProps>) {
   const session = await getSession();
   if (!session) {
-    redirect("/");
+    redirect("/signin");
   }
   const userId = (await props.params).user;
   const isMe = userId === "me";
@@ -35,7 +35,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
     return <h1>User not found</h1>;
   }
   const searchParams = await props.searchParams;
-
+  const isAdmin = await isUserAdmin();
   return (
     <Layout title={user.name?.formatted}>
       <TabGroup className="space-y-8">
@@ -50,7 +50,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
         </TabList>
         <TabPanels>
           <General user={user} isMe={isMe} />
-          <UserGroups user={user} isAdmin={session.user.isAdmin} />
+          <UserGroups user={user} isAdmin={isAdmin} />
           <UserClients
             user={user}
             page={searchParams?.page}

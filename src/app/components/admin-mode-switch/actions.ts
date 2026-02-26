@@ -1,24 +1,20 @@
+// SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
+//
+// SPDX-License-Identifier: EUPL-1.2
+
 "use server";
 
-import { cookies, headers } from "next/headers";
+import { updateAccessToken } from "@/auth";
 import { settings } from "@/config";
-import { redirect } from "next/navigation";
+import { refresh } from "next/cache";
 
-const { IAM_DASHBOARD_BASE_PATH } = settings;
+const { IAM_DASHBOARD_OIDC_SCOPES, IAM_DASHBOARD_OIDC_ADMIN_SCOPES } = settings;
 
-export async function toggleAdminMode(enabled: boolean) {
-  const cookiesStore = await cookies();
-  cookiesStore.set("admin-mode", enabled ? "enabled" : "disabled");
-  if (!enabled) {
-    const headersList = await headers();
-    const refer = headersList.get("referer") as string;
-    const url = new URL(refer);
-    if (
-      url.pathname === `${IAM_DASHBOARD_BASE_PATH}/users/me` ||
-      url.pathname.startsWith(`${IAM_DASHBOARD_BASE_PATH}/clients`)
-    ) {
-      return;
-    }
-    redirect("/");
-  }
+export async function refreshTokenWithRole(role: "admin" | "default") {
+  await updateAccessToken(
+    role === "admin"
+      ? IAM_DASHBOARD_OIDC_ADMIN_SCOPES
+      : IAM_DASHBOARD_OIDC_SCOPES
+  );
+  refresh();
 }

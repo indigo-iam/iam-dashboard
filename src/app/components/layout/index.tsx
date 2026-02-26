@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { cookies } from "next/headers";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import {
@@ -15,7 +14,7 @@ import {
   UserGroupIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
-import { getSession } from "@/auth";
+import { getSession, isUserAdmin } from "@/auth";
 import { Drawer, Link, ToggleDrawerButton } from "@/components/drawer";
 import { Gravatar } from "@/components/gravatar";
 import Notifications from "@/components/notifications";
@@ -111,23 +110,23 @@ export async function Layout(props: Readonly<LayoutProps>) {
   const { title, children } = props;
   const session = await getSession();
   if (!session) {
-    redirect("/");
+    redirect("/signin");
   }
   const { user } = session;
-  const { isAdmin, name, email } = user;
-  const cookiesStore = await cookies();
-  const adminModeEnabled = cookiesStore.get("admin-mode")?.value === "enabled";
+  const { name, email } = user;
+  const hasRoleAdmin = session.session.hasRoleAdmin;
+  const isAdmin = await isUserAdmin();
   return (
     <div id={title}>
-      <header className="text-secondary md:text-primary bg-infn dark:bg-infn dark:text-secondary md:bg-secondary fixed inset-x-0 top-0 z-10 flex grow justify-between border-b border-b-gray-300 p-4 md:ml-80">
+      <header className="text-secondary md:text-primary bg-infn dark:bg-infn dark:text-secondary md:bg-secondary fixed inset-x-0 top-0 z-40 flex grow justify-between border-b border-b-gray-300 p-4 md:ml-80">
         <h2 className="my-auto text-2xl">{title}</h2>
         <div className="flex items-center gap-2">
-          {isAdmin && (
+          {hasRoleAdmin && (
             <>
-              <AdminModeSwitch defaultChecked={adminModeEnabled} />
+              <AdminModeSwitch defaultChecked={isAdmin} />
               <Notifications
                 className="hidden data-[visible=true]:block"
-                data-visible={isAdmin && adminModeEnabled}
+                data-visible={isAdmin && hasRoleAdmin}
               />
             </>
           )}
@@ -140,7 +139,7 @@ export async function Layout(props: Readonly<LayoutProps>) {
             <LogoIam />
           </div>
           <nav className="mt-4 flex grow flex-col justify-between p-6">
-            <Links isAdmin={isAdmin} adminMode={adminModeEnabled} />
+            <Links isAdmin={hasRoleAdmin} adminMode={isAdmin} />
             <div className="space-y-2 border-t border-white/30 py-2">
               <UserLogo username={name} email={email} />
               <SignoutButton />

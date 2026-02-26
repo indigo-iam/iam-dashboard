@@ -28,9 +28,12 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
+ENV NEXT_PHASE=phase-production-build
 
 # Generate a random secret to silence build warnings/errors
-RUN IAM_DASHBOARD_AUTH_SECRET=$(base64 < /dev/urandom | head -c 32) npm run build
+RUN \
+  IAM_DASHBOARD_AUTH_SECRET=$(base64 < /dev/urandom | head -c 32) \
+  npm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner
@@ -45,6 +48,8 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN apk add curl && \
   addgroup --system --gid 1001 nodejs && \
   adduser --system --uid 1001 nextjs && \
+  addgroup nextjs nodejs && \
+  chown -R nextjs:nodejs /app && \
   mkdir .next && \
   chown nextjs:nodejs .next
 

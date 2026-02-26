@@ -2,26 +2,54 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Switch } from "@headlessui/react";
-import { toggleAdminMode } from "./actions";
+"use client";
+
+import { useTransition } from "react";
+import { refreshTokenWithRole } from "./actions";
+import Switch from "./switch";
+
+function Spinner() {
+  return (
+    <div className="inline-block h-full w-full animate-spin rounded-full border-[6px] border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]">
+      <span className="absolute! -m-px! h-px! w-px! overflow-hidden! border-0! p-0! whitespace-nowrap! [clip:rect(0,0,0,0)]!" />
+    </div>
+  );
+}
+
+function Loading() {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center bg-gray-600/50 backdrop-blur-sm">
+      <div className="text-secondary m-auto h-16 w-16">
+        <Spinner />
+        <p className="text-secondary mt-8 text-xl">Loading...</p>
+      </div>
+    </div>
+  );
+}
 
 type AdminModeSwitchProps = {
   defaultChecked: boolean;
 };
 
-export async function AdminModeSwitch(props: Readonly<AdminModeSwitchProps>) {
+export function AdminModeSwitch(props: Readonly<AdminModeSwitchProps>) {
+  const [isPending, startTransition] = useTransition();
   const { defaultChecked } = props;
+
+  function onSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    startTransition(async () => {
+      const formData = new FormData(event.currentTarget);
+      const role = formData.get("admin_mode") === "on" ? "admin" : "default";
+      await refreshTokenWithRole(role);
+    });
+  }
   return (
-    <div className="flex gap-2">
-      <span className="text-sm whitespace-nowrap">Admin Mode</span>
-      <Switch
-        defaultChecked={defaultChecked}
-        onChange={toggleAdminMode}
-        name="admin-mode"
-        className="group data-checked:bg-danger inline-flex h-5 w-10 items-center rounded-full bg-white/20 transition md:bg-gray-200 dark:bg-white/20"
-      >
-        <span className="size-4 translate-x-1 rounded-full bg-white transition group-data-checked:translate-x-5" />
-      </Switch>
-    </div>
+    <>
+      {isPending && <Loading />}
+      <form className="flex gap-2" onSubmit={onSubmit}>
+        <span className="text-sm whitespace-nowrap">Admin Mode</span>
+        <Switch defaultChecked={defaultChecked} title="Admin Mode" />
+      </form>
+    </>
   );
 }

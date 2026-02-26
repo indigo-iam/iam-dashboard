@@ -17,10 +17,9 @@ SET @owner_id=(SELECT id from client_details WHERE client_id='$IAM_DASHBOARD_OID
 INSERT INTO client_grant_type (
   owner_id,
   grant_type
-) VALUES (
-  @owner_id,
-  'authorization_code'
-);
+) VALUES
+(@owner_id, 'authorization_code'),
+(@owner_id, 'refresh_token');
 INSERT INTO client_scope (
   owner_id,
   scope
@@ -28,6 +27,7 @@ INSERT INTO client_scope (
   (@owner_id, 'openid'),
   (@owner_id, 'email'),
   (@owner_id, 'profile'),
+  (@owner_id, 'offline_access'),
   (@owner_id, 'scim:read'),
   (@owner_id, 'scim:write'),
   (@owner_id, 'iam:admin.read'),

@@ -129,24 +129,6 @@ const indigoIam = () =>
           }
           return tokens;
         },
-        getUserInfo: async tokens => {
-          const { idToken, accessToken } = tokens;
-          if (!idToken || !accessToken) {
-            // returning null will raise an exception during the login flow
-            console.error("failed to get user info: access token not found");
-            return null;
-          }
-          const hasRoleAdmin = await fetchRoleAdmin(accessToken);
-          const profile = decodeJWT(idToken);
-          return {
-            id: profile.sub,
-            emailVerified: profile.email_verified ?? false,
-            name: profile.name,
-            email: profile.email,
-            sub: profile.sub,
-            hasRoleAdmin,
-          };
-        },
       },
     ],
   });
@@ -158,28 +140,51 @@ export const authConfig = (db: Database.Database) => {
     database: db,
     user: {
       additionalFields: {
-        hasRoleAdmin: {
-          type: "boolean",
-          defaultValue: false,
-          input: false,
-        },
         sub: {
           type: "string",
-          defaultValue: "",
-          required: true,
           input: false,
         },
       },
     },
-    plugins: [indigoIam(), nextCookies()],
     session: {
       expiresIn: 3600,
+      additionalFields: {
+        hasRoleAdmin: {
+          type: "boolean",
+          defaultValue: false,
+        },
+      },
+    },
+    databaseHooks: {
+      session: {
+        create: {
+          before: async (sessionData, ctx) => {
+            if (!ctx) {
+              return { data: { ...sessionData } };
+            }
+            const [account] =
+              await ctx.context.internalAdapter.findAccountByUserId(
+                sessionData.userId
+              );
+            const { idToken, accessToken } = account;
+            if (!idToken || !accessToken) {
+              throw new Error(
+                "failed to get user info: access token not found"
+              );
+            }
+            const hasRoleAdmin = await fetchRoleAdmin(accessToken);
+            const profile = decodeJWT(idToken);
+            return { data: { ...sessionData, hasRoleAdmin, profile } };
+          },
+        },
+      },
     },
     account: {
       storeStateStrategy: "database",
       storeAccountCookie: false,
       updateAccountOnSignIn: true,
     },
+    plugins: [indigoIam(), nextCookies()],
   } satisfies BetterAuthOptions;
 };
 

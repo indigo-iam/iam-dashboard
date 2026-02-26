@@ -113,7 +113,8 @@ export async function Layout(props: Readonly<LayoutProps>) {
     redirect("/signin");
   }
   const { user } = session;
-  const { hasRoleAdmin, name, email } = user;
+  const { name, email } = user;
+  const hasRoleAdmin = session.session.hasRoleAdmin;
   const isAdmin = await isUserAdmin();
   return (
     <div id={title}>

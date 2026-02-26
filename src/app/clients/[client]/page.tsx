@@ -27,8 +27,7 @@ export default async function Client(props: Readonly<ClientPageProps>) {
   if (!session) {
     redirect("/signin");
   }
-  const { user } = session;
-  const { hasRoleAdmin } = user;
+  const { hasRoleAdmin } = session.session;
   const isAdmin = await isUserAdmin();
 
   const client = await getClient(clientId, hasRoleAdmin && isAdmin);

@@ -272,7 +272,7 @@ export async function signIn() {
 }
 
 export async function signOut() {
+  await auth.api.signOut({ headers: await headers() });
   const cookiesStore = await cookies();
   cookiesStore.delete("JSESSIONID");
-  await auth.api.signOut({ headers: await headers() });
 }

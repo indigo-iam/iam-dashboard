@@ -273,5 +273,6 @@ export async function signIn() {
 export async function signOut() {
   await auth.api.signOut({ headers: await headers() });
   const cookiesStore = await cookies();
-  cookiesStore.delete("JSESSIONID");
+  cookiesStore.delete("JSESSIONID"); // With Redis disabled
+  cookiesStore.delete("SESSION"); // With Redis enabled
 }

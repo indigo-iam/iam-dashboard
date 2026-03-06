@@ -11,9 +11,6 @@ import { headers, cookies } from "next/headers";
 import { nextCookies } from "better-auth/next-js";
 import Database from "better-sqlite3";
 
-function decodeJWT(token: string) {
-  return JSON.parse(atob(token.split(".")[1]));
-}
 
 const {
   IAM_API_URL,

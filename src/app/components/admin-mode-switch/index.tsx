@@ -28,7 +28,7 @@ function Loading() {
 }
 
 type AdminModeSwitchProps = {
-  defaultChecked: boolean;
+  defaultChecked?: boolean;
 };
 
 export function AdminModeSwitch(props: Readonly<AdminModeSwitchProps>) {

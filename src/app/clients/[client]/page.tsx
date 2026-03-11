@@ -3,10 +3,8 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { getSession, isUserAdmin } from "@/auth";
-import { Layout } from "@/app/components/layout";
 import { TabGroup, TabList, TabPanels, Tab } from "@/components/tabs";
 import { getClient } from "@/services/clients";
-import { redirect } from "next/navigation";
 import {
   Main,
   Credentials,
@@ -15,6 +13,9 @@ import {
   Tokens,
   Owners,
 } from "./components";
+
+import { RocketLaunchIcon } from "@heroicons/react/24/solid";
+import { redirect } from "next/navigation";
 
 type ClientPageProps = {
   params: Promise<{ client: string }>;
@@ -36,8 +37,12 @@ export default async function Client(props: Readonly<ClientPageProps>) {
   }
 
   return (
-    <Layout title={client.client_name}>
-      <TabGroup className="space-y-8">
+    <section>
+      <header className="section-header">
+        <RocketLaunchIcon className="size-5" />
+        <h2 className="text-base font-normal">{client.client_name}</h2>
+      </header>
+      <TabGroup className="content">
         <TabList className="flex overflow-auto">
           <Tab>GENERAL</Tab>
           <Tab>CREDENTIALS</Tab>
@@ -55,6 +60,6 @@ export default async function Client(props: Readonly<ClientPageProps>) {
           {isAdmin ? <Owners client={client} /> : null}
         </TabPanels>
       </TabGroup>
-    </Layout>
+    </section>
   );
 }

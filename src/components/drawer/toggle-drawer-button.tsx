@@ -16,7 +16,7 @@ export function ToggleDrawerButton() {
       title="Menu"
       data-testid="menu-btn"
     >
-      <Bars3Icon className="p my-auto size-8 rounded fill-white hover:bg-white/30" />
+      <Bars3Icon className="fill-secondary size-8 cursor-pointer rounded-xl p-1 hover:bg-white/10" />
     </Button>
   );
 }

@@ -47,7 +47,7 @@ export function NotificationsPopover(
         title="Notifications"
         className="hover:bg-infn/10 rounded-full p-2 dark:hover:bg-white/10"
       >
-        <BellIcon className="text-secondary dark:text-secondary md:text-primary size-5" />
+        <BellIcon className="text-secondary dark:text-secondary size-5" />
         <Badge count={totalRequests} />
       </PopoverButton>
       <PopoverPanel

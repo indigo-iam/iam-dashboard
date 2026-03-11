@@ -37,7 +37,7 @@ export async function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
     : "N/A";
 
   return (
-    <div className="border-light-gray dark:border-light-gray/30 flex flex-col gap-8 border-b pb-4 lg:flex-row">
+    <div className="flex flex-col gap-8 pb-4 lg:flex-row">
       <div className="text-extralight dark:text-light-gray/80 w-full space-y-2 text-sm font-light lg:w-1/3">
         <div className="flex flex-wrap justify-between">
           <div className="flex gap-2">

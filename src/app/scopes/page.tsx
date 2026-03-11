@@ -3,12 +3,12 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { getSession, isUserAdmin } from "@/auth";
-import { Layout } from "@/app/components/layout";
 import Paginator from "@/components/paginator";
 import { InputQuery } from "@/components/inputs";
 import { fetchPaginatedScopes } from "@/services/scopes";
 import { NewScopeButton, ScopesTable } from "./components";
 import { redirect } from "next/navigation";
+import { ClipboardDocumentCheckIcon } from "@heroicons/react/24/solid";
 
 type ScopeProps = {
   searchParams?: Promise<{
@@ -35,20 +35,26 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
   const scopes = await fetchPaginatedScopes(count, startIndex, query);
   const numberOfPages = Math.ceil(scopes.totalResults / count);
   return (
-    <Layout title="Scopes">
-      <div className="space-y-4">
-        <NewScopeButton />
-        <InputQuery
-          title="Search scope"
-          placeholder="Type to search a scope"
-          data-testid="search-scope"
-          aria-label="Search scope"
-        />
+    <section className="space-y-4">
+      <header className="section-header">
+        <ClipboardDocumentCheckIcon className="size-5" />
+        <h2 className="text-base font-normal">Scopes</h2>
+      </header>
+      <div className="content">
+        <div className="flex gap-2">
+          <InputQuery
+            title="Search scope"
+            placeholder="Type to search a scope"
+            data-testid="search-scope"
+            aria-label="Search scope"
+          />
+          <NewScopeButton />
+        </div>
         <div className="panel">
           <ScopesTable scopes={scopes.Resources} />
         </div>
         <Paginator numberOfPages={numberOfPages} />
       </div>
-    </Layout>
+    </section>
   );
 }

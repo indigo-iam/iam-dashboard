@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Layout } from "@/app/components/layout";
 import { getSession, isUserAdmin } from "@/auth";
 import { fetchOpenIdConfiguration } from "@/services/openid-configuration";
 import { fetchScopes } from "@/services/scopes";
@@ -18,12 +17,10 @@ export default async function NewClient() {
   }
   const isAdmin = await isUserAdmin();
   return (
-    <Layout title="Create New Client">
-      <NewClientCarousel
-        systemScopes={scopes}
-        openIdConfiguration={openIdConfiguration}
-        isAdmin={isAdmin}
-      />
-    </Layout>
+    <NewClientCarousel
+      systemScopes={scopes}
+      openIdConfiguration={openIdConfiguration}
+      isAdmin={isAdmin}
+    />
   );
 }

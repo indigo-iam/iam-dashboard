@@ -2,8 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { UserIcon } from "@heroicons/react/24/solid";
 import { getSession, isUserAdmin } from "@/auth";
-import { Layout } from "@/app/components/layout";
 import { Tab, TabGroup, TabList, TabPanels } from "@/components/tabs";
 import { fetchMe } from "@/services/me";
 import { fetchUser } from "@/services/users";
@@ -30,15 +30,23 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
   }
   const userId = (await props.params).user;
   const isMe = userId === "me";
+
   const user = isMe ? await fetchMe() : await fetchUser(userId);
   if (!user) {
     return <h1>User not found</h1>;
   }
   const searchParams = await props.searchParams;
   const isAdmin = await isUserAdmin();
+  if (!isMe && !isAdmin) {
+    redirect("/");
+  }
   return (
-    <Layout title={user.name?.formatted}>
-      <TabGroup className="space-y-8">
+    <section>
+      <header className="section-header">
+        <UserIcon className="size-5" />
+        <h2 className="text-base font-normal">{user.name?.formatted}</h2>
+      </header>
+      <TabGroup className="content">
         <TabList className="flex overflow-auto">
           <Tab>GENERAL</Tab>
           <Tab>GROUPS</Tab>
@@ -62,6 +70,6 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
           <Attributes user={user} />
         </TabPanels>
       </TabGroup>
-    </Layout>
+    </section>
   );
 }

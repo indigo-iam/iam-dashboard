@@ -17,7 +17,7 @@ export function SignoutButton() {
       <button
         type="submit"
         name="Sign Out"
-        className="text-secondary flex w-full justify-center gap-4 rounded-md border border-white/30 bg-linear-to-b from-white/10 from-5% via-transparent via-50% to-white/10 to-95% p-2 hover:bg-white/10"
+        className="text-secondary flex w-4/5 mx-auto justify-center gap-4 rounded-md border border-white/30 bg-linear-to-b from-white/10 from-5% via-transparent via-50% to-white/10 to-95% p-2 hover:bg-white/10"
         data-testid="signout-btn"
       >
         Sign Out

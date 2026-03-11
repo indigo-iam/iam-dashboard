@@ -16,10 +16,10 @@ type GeneralProps = {
 export async function General(props: Readonly<GeneralProps>) {
   const { user, isMe } = props;
   return (
-    <TabPanel className="panel">
+    <TabPanel className="panel divide-light-gray dark:divide-light-gray/30 divide-y">
       <UserDetailsForm user={user} isMe={isMe} />
       <Aup user={user} isMe={isMe} />
-      {isMe ? null : <DangerZone user={user} />}
+      {!isMe && <DangerZone user={user} />}
     </TabPanel>
   );
 }

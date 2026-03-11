@@ -2,11 +2,11 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Layout } from "@/app/components/layout";
 import { getGroupsPage } from "@/services/groups";
 import { AddGroupButton, GroupsTable } from "./components";
 import { InputQuery } from "@/components/inputs";
 import Paginator from "@/components/paginator";
+import { UserGroupIcon } from "@heroicons/react/24/solid";
 
 type GroupsProps = {
   searchParams?: Promise<{
@@ -26,20 +26,26 @@ export default async function GroupsPage(props: Readonly<GroupsProps>) {
   const numberOfPages = Math.ceil(groupsPage.totalResults / count);
   const groups = groupsPage.Resources;
   return (
-    <Layout title="Groups">
-      <div className="space-y-4">
-        <AddGroupButton />
-        <InputQuery
-          title="Search group"
-          placeholder="Type to search a group"
-          data-testid="search-group"
-          aria-label="Search group"
-        />
+    <section>
+      <header className="section-header">
+        <UserGroupIcon className="size-5" />
+        <h2 className="text-base font-normal">Groups</h2>
+      </header>
+      <div className="content">
+        <div className="flex justify-between gap-4">
+          <InputQuery
+            title="Search group"
+            placeholder="Type to search a group"
+            data-testid="search-group"
+            aria-label="Search group"
+          />
+          <AddGroupButton />
+        </div>
         <div className="panel">
           <GroupsTable groups={groups} />
         </div>
         <Paginator numberOfPages={numberOfPages} />
       </div>
-    </Layout>
+    </section>
   );
 }

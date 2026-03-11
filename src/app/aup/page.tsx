@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { getSession, isUserAdmin } from "@/auth";
-import { Layout } from "@/app/components/layout";
 import { fetchAUP } from "@/services/aup";
 import { AupView, CreateButton } from "./components/";
 import { DocumentTextIcon } from "@heroicons/react/24/solid";
@@ -21,22 +20,32 @@ export default async function AUP() {
   const aup = await fetchAUP();
   if (!aup) {
     return (
-      <Layout title="Acceptable Usage Policy">
-        <div className="flex flex-col items-center space-y-4">
+      <section>
+        <header className="section-header">
+          <DocumentTextIcon className="size-5" />
+          <h2 className="text-base font-normal">Acceptable Usage Policy</h2>
+        </header>
+        <div className="content flex flex-col items-center space-y-4">
           <DocumentTextIcon className="text-primary/50 mt-32 size-48 dark:text-white/60" />
           <span className="text-center text-xl">
             AUP is not defined for this organization.
           </span>
           <CreateButton />
         </div>
-      </Layout>
+      </section>
     );
   }
   return (
-    <Layout title="Acceptable Usage Policy">
-      <div className="panel">
-        <AupView aup={aup} />
+    <section>
+      <header className="section-header">
+        <DocumentTextIcon className="size-5" />
+        <h2 className="text-base font-normal">Acceptable Usage Policy</h2>
+      </header>
+      <div className="content">
+        <div className="panel">
+          <AupView aup={aup} />
+        </div>
       </div>
-    </Layout>
+    </section>
   );
 }

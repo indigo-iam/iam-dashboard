@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 import { getSession } from "@/auth";
-import { Layout } from "@/app/components/layout";
 import { TabGroup, TabList, TabPanels, Tab } from "@/components/tabs";
 import { GroupInfo, Managers, Members, Subgroups } from "./components";
 import { fetchGroup } from "@/services/groups";
@@ -21,8 +20,11 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
   const groupID = (await params).group;
   const group = await fetchGroup(groupID);
   return (
-    <Layout title={group.displayName}>
-      <TabGroup className="space-y-8">
+    <section>
+      <header className="section-header">
+        <h2 className="text-base font-normal">{group.displayName}</h2>
+      </header>
+      <TabGroup className="content">
         <TabList className="flex overflow-auto">
           <Tab>GENERAL</Tab>
           <Tab>SUBGROUPS</Tab>
@@ -36,6 +38,6 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
           <Members group={group} />
         </TabPanels>
       </TabGroup>
-    </Layout>
+    </section>
   );
 }

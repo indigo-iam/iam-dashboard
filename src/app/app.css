@@ -8,6 +8,7 @@
 
 @theme {
   --color-infn: #002a44;
+  --color-infn-light: #005083;
   --color-primary: var(--color-neutral-950);
   --color-light: var(--color-slate-600);
   --color-extralight: var(--color-gray-500);
@@ -43,7 +44,7 @@
 }
 
 @utility btn {
-  @apply flex min-w-fit gap-2 rounded-md p-1 px-2 text-base font-normal text-nowrap transition ease-out;
+  @apply flex min-w-fit cursor-pointer gap-2 rounded-md p-1 px-2 text-base font-normal text-nowrap transition ease-out;
 }
 
 @utility btn-primary {
@@ -79,5 +80,13 @@
 }
 
 @utility panel {
-  @apply dark:bg-dark border-light-gray rounded-lg bg-white p-4 shadow-md sm:p-8 dark:border dark:border-slate-600;
+  @apply dark:bg-dark border-light-gray rounded-lg bg-white px-4 py-2 shadow-md sm:p-8 dark:border dark:border-slate-600;
+}
+
+@utility section-header {
+  @apply dark:text-secondary dark:border-light flex items-center gap-2 border-b border-gray-200 bg-white/75 p-4 font-normal text-sky-950 shadow-md dark:bg-sky-900/30;
+}
+
+@utility content {
+  @apply 3xl:px-64 space-y-8 px-8 py-4 md:px-16 2xl:px-32;
 }

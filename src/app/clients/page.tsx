@@ -4,15 +4,15 @@
 
 import { getSession, isUserAdmin } from "@/auth";
 import { ClientsTable } from "@/app/components/clients";
-import { Layout } from "@/app/components/layout";
 import { InputQuery } from "@/components/inputs";
 import { getClientsByAccount, getClientsPage } from "@/services/clients";
 import Paginator from "@/components/paginator";
 import { Button } from "@/components/buttons";
-import { PlusIcon } from "@heroicons/react/24/solid";
+
 import Link from "next/link";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
+import { PlusIcon, RocketLaunchIcon } from "@heroicons/react/24/solid";
 
 function Buttons() {
   return (
@@ -54,15 +54,21 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
   const numberOfPages = Math.ceil(clientPage.totalResults / count) || 1;
   const clients = clientPage.Resources;
   return (
-    <Layout title="Clients">
-      <div className="space-y-4">
-        <Buttons />
-        <InputQuery
-          title="Search client"
-          placeholder="Type to search a client"
-          data-testid="search-client"
-          aria-label="Search client"
-        />
+    <section>
+      <header className="section-header">
+        <RocketLaunchIcon className="size-5" />
+        <h2 className="text-base font-normal">Clients</h2>
+      </header>
+      <div className="content">
+        <div className="flex items-center justify-between gap-2">
+          <InputQuery
+            title="Search client"
+            placeholder="Type to search a client"
+            data-testid="search-client"
+            aria-label="Search client"
+          />
+          <Buttons />
+        </div>
         <div className="panel space-y-4">
           <Suspense fallback="Loading...">
             <ClientsTable clients={clients} />
@@ -70,6 +76,6 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
         </div>
         <Paginator numberOfPages={numberOfPages} />
       </div>
-    </Layout>
+    </section>
   );
 }

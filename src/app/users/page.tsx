@@ -2,13 +2,14 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Layout } from "@/app/components/layout";
-import { getUsersPage } from "@/services/users";
+import { getSession, isUserAdmin } from "@/auth";
 import { InputQuery } from "@/components/inputs";
 import Paginator from "@/components/paginator";
+import { getUsersPage } from "@/services/users";
 import { AddUserButton, UsersTable } from "./components";
-import { getSession, isUserAdmin } from "@/auth";
+
 import { redirect } from "next/navigation";
+import { UsersIcon } from "@heroicons/react/24/solid";
 
 type UsersProps = {
   searchParams?: Promise<{
@@ -36,20 +37,26 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
   const numberOfPages = Math.ceil(usersPage.totalResults / count) || 1;
   const users = usersPage.Resources;
   return (
-    <Layout title="Users">
-      <div className="space-y-4">
-        <AddUserButton />
-        <InputQuery
-          title="Search client"
-          placeholder="Type to search a user"
-          data-testid="search-user"
-          aria-label="Search user"
-        />
+    <section>
+      <header className="section-header">
+        <UsersIcon className="size-5" />
+        <h2 className="text-base font-normal">Users</h2>
+      </header>
+      <div className="content">
+        <div className="flex items-center justify-between gap-2">
+          <InputQuery
+            title="Search client"
+            placeholder="Type to search a user"
+            data-testid="search-user"
+            aria-label="Search user"
+          />
+          <AddUserButton />
+        </div>
         <div className="panel">
           <UsersTable users={users} />
         </div>
         <Paginator numberOfPages={numberOfPages} />
       </div>
-    </Layout>
+    </section>
   );
 }

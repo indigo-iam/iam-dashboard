@@ -3,10 +3,10 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { getSession, isUserAdmin } from "@/auth";
-import { Layout } from "@/app/components/layout";
 import { fetchScopePolicies } from "@/services/scope-policies";
 import { AddPolicyButton, PoliciesTable } from "./components";
 import { redirect } from "next/navigation";
+import { ScaleIcon } from "@heroicons/react/24/solid";
 
 export default async function Policies() {
   const session = await getSession();
@@ -19,8 +19,12 @@ export default async function Policies() {
   }
   const policies = await fetchScopePolicies();
   return (
-    <Layout title="Scope Policies">
-      <div className="space-y-4">
+    <section className="space-y-4">
+      <header className="section-header">
+        <ScaleIcon className="size-5" />
+        <h2 className="text-base font-normal">Scope Policies</h2>
+      </header>
+      <div className="content">
         <p className="font-light">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in
           accumsan leo. Suspendisse potenti. Pellentesque habitant morbi
@@ -32,11 +36,10 @@ export default async function Policies() {
         <div>
           <AddPolicyButton />
         </div>
-        <div className="panel space-y-4">
-          <h2>Policies</h2>
+        <div className="panel">
           <PoliciesTable policies={policies} />
         </div>
       </div>
-    </Layout>
+    </section>
   );
 }

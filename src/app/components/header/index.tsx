@@ -2,41 +2,33 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { AdminModeSwitch } from "@/app/components/admin-mode-switch";
 import { ToggleDrawerButton } from "@/components/drawer/toggle-drawer-button";
-import { Gravatar } from "@/components/gravatar";
 import Notifications from "@/components/notifications";
+import { UserPopover } from "./user-popover";
 
 type HeaderProps = {
   hasRoleAdmin?: boolean;
   isAdmin?: boolean;
-  email?: string;
 };
 
 export async function Header(props: Readonly<HeaderProps>) {
-  const { hasRoleAdmin, isAdmin, email } = props;
+  const { hasRoleAdmin, isAdmin } = props;
   return (
-    <header className="t-0 text-secondary sticky top-0 z-50 flex justify-between border-b border-b-gray-400 bg-sky-900 px-4 py-2 md:px-8 dark:bg-sky-900/75">
+    <header className="t-0 text-secondary sticky top-0 z-50 flex h-14 justify-between border-b border-b-gray-400 bg-sky-900 px-4 py-2 md:px-8 dark:bg-sky-900/75">
       <div className="flex gap-2">
         <ToggleDrawerButton />
         <h2 className="my-auto text-xl font-light">
-          IAM for
-          <span className="font-bold"> cnafsd</span>
+          IAM for <b className="font-bold">cnafsd</b>
         </h2>
       </div>
       <div className="flex items-center gap-2">
         {hasRoleAdmin && (
-          <>
-            <AdminModeSwitch defaultChecked={isAdmin} />
-            <Notifications
-              className="hidden data-[visible=true]:block"
-              data-visible={isAdmin && hasRoleAdmin}
-            />
-            <div className="size-8">
-              <Gravatar email={email} />
-            </div>
-          </>
+          <Notifications
+            className="hidden data-[visible=true]:block"
+            data-visible={isAdmin && hasRoleAdmin}
+          />
         )}
+        <UserPopover hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
       </div>
     </header>
   );

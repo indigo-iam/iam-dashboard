@@ -71,6 +71,10 @@
   @apply btn hover:text-danger hover:underline active:font-bold active:tracking-tight;
 }
 
+@utility btn-user-popover {
+  @apply text-light dark:text-secondary mx-auto flex w-full items-center gap-2 rounded-md p-2 transition hover:bg-gray-200 dark:hover:bg-white/10;
+}
+
 @utility iam-input {
   @apply data-[invalid=true]:outline-danger data-[invalid=true]:text-danger w-full rounded border-none bg-neutral-100 px-2 py-1 disabled:text-gray-500 placeholder:disabled:text-gray-400 data-[invalid=true]:outline dark:bg-white/10;
 }

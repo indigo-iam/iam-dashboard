@@ -7,7 +7,7 @@ import { Input } from "@/components/inputs";
 import { AUP } from "@/models/aup";
 import { User } from "@/models/scim";
 import { fetchAUP } from "@/services/aup";
-import { dateToHuman } from "@/utils/dates";
+import { dateToHuman, getDate } from "@/utils/dates";
 import { RequestSignature } from "./request-signature";
 
 async function getExpirationDate(user: User, aup: AUP) {
@@ -24,7 +24,7 @@ async function getExpirationDate(user: User, aup: AUP) {
     aupExpirationDate.getDate() + aup.signatureValidityInDays
   );
   const expiresAt = dateToHuman(aupExpirationDate);
-  const expired = aupExpirationDate < new Date();
+  const expired = aupExpirationDate < getDate();
   return {
     expiresAt: expired ? `Expired ${expiresAt}` : `Expires ${expiresAt}`,
     expired,

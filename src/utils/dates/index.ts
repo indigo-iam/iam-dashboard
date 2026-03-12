@@ -2,11 +2,17 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { cache } from "react";
+
+// https://next-intl.dev/blog/date-formatting-nextjs
+export const getNow = cache(() => Date.now());
+export const getDate = cache(() => new Date());
+
 export function dateToHuman(date: Date): string {
-  const now = Date.now();
+  const now = getNow();
   const delta = now - date.getTime();
   const sign = delta >= 0 ? -1 : 1;
-  
+
   if (delta >= 0 && delta < 86400000) {
     return "today";
   }

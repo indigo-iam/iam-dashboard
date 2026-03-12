@@ -36,7 +36,7 @@ export async function UserPopover(props: Readonly<UserPopoverProps>) {
         <div className="divide-light-gray dark:divide-light-gray/30 space-y-4 divide-y">
           <div className="flex gap-2 pb-2">
             <Gravatar email={email} />
-            <div className="flex flex-col leading-normal">
+            <div className="text-light dark:text-secondary flex flex-col leading-normal">
               <span>{user.name?.formatted}</span>
               <b>{user.displayName}</b>
             </div>

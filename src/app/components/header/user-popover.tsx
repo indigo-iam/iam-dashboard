@@ -21,7 +21,11 @@ export async function UserPopover(props: Readonly<UserPopoverProps>) {
 
   return (
     <Popover>
-      <PopoverButton className="flex items-center hover:cursor-pointer">
+      <PopoverButton
+        className="flex items-center hover:cursor-pointer"
+        title="Open user menu"
+        data-testid="user-menu-btn"
+      >
         <Gravatar email={email} />
       </PopoverButton>
       <PopoverPanel

@@ -51,7 +51,7 @@ function ActiveTokenView(props: Readonly<ActiveTokenViewProps>) {
 export async function ActiveTokens() {
   const activeTokens = await getActiveTokens();
   return (
-    <TabPanel className="panel">
+    <TabPanel className="panel" unmount={false}>
       <h2>Active Tokens</h2>
       <ul>
         {activeTokens.map(token => (

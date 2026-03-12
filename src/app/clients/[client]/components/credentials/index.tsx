@@ -78,7 +78,7 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
   }
 
   return (
-    <TabPanel className="panel">
+    <TabPanel className="panel" unmount={false}>
       <Form action={action} className="space-y-4">
         <div className="divide-light-gray divide-y">
           <div className="flex flex-col gap-8 pb-4 lg:flex-row">

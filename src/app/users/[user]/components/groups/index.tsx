@@ -16,7 +16,7 @@ type UserGroupsProps = {
 export async function UserGroups(props: Readonly<UserGroupsProps>) {
   const { user, isAdmin } = props;
   return (
-    <TabPanel className="space-y-4">
+    <TabPanel className="space-y-4" unmount={false}>
       <JoinGroupButton user={user} isAdmin={isAdmin} />
       <UnmanagedGroups user={user} isAdmin={isAdmin} />
       <ManagedGroups user={user} />

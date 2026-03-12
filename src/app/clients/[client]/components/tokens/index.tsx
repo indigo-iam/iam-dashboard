@@ -162,7 +162,7 @@ export default function Tokens(props: Readonly<TokensProps>) {
   };
 
   return (
-    <TabPanel className="panel">
+    <TabPanel className="panel" unmount={false}>
       <Form action={action}>
         <div className="divide-light-gray dark:divide-light-gray/60 divide-y">
           <AccessToken client={client} />

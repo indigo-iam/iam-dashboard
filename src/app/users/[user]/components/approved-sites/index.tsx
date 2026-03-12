@@ -54,7 +54,7 @@ function ApprovedSite(props: Readonly<ApprovedSiteProps>) {
 export async function ApprovedSites() {
   const approvedSites = await getApprovedSites();
   return (
-    <TabPanel className="panel">
+    <TabPanel className="panel" unmount={false}>
       <h2>Approved Sites</h2>
       <ul>
         {approvedSites.map(site => (

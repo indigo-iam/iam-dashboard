@@ -20,8 +20,8 @@ function Badge(props: Readonly<BadgeProps>) {
     return null;
   }
   return (
-    <div className="relative -top-8">
-      <div className="bg-danger text-secondary absolute z-30 inline-flex size-5 items-center justify-center rounded-full p-2 text-xs">
+    <div className="relative -top-5 right-3">
+      <div className="bg-danger text-secondary absolute z-30 inline-flex size-5 items-center justify-center rounded-full p-1 text-xs">
         {count}
       </div>
     </div>
@@ -45,9 +45,9 @@ export function NotificationsPopover(
     <Popover className={className} {...others}>
       <PopoverButton
         title="Notifications"
-        className="hover:bg-white/10 flex size-8 items-center justify-center rounded-full p-1 dark:hover:bg-white/10"
+        className="flex size-8 items-center justify-center rounded-full p-1 hover:bg-white/10 dark:hover:bg-white/10"
       >
-        <BellIcon className="text-secondary dark:text-secondary size-5" />
+        <BellIcon className="text-secondary dark:text-secondary size-6" />
         <Badge count={totalRequests} />
       </PopoverButton>
       <PopoverPanel

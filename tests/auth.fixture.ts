@@ -31,10 +31,7 @@ export const test = baseTest.extend({
     await use(page);
 
     // Logout
-    if (await page.getByTestId("signout-btn").isHidden()) {
-      await page.getByTestId("user-menu-btn").click();
-      await page.getByTestId("sidebar").waitFor({ state: "visible" });
-    }
+    await page.getByTestId("user-menu-btn").click();
     await page.getByTestId("signout-btn").click();
   },
 });

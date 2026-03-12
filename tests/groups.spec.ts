@@ -16,7 +16,8 @@ function groupNameByIndex(index: number) {
 test("Create and delete group", async ({ page }) => {
   await test.step("add group", async () => {
     // enable admin mode
-    await page.getByRole("switch", { name: "Admin Mode" }).click();
+    await page.getByTestId("user-menu-btn").click();
+    await page.getByText("Admin mode").click();
 
     await page.goto("./groups");
     await page.getByTestId("add-group").click();

@@ -5,7 +5,7 @@
 import TabPanel from "@/components/tabs/tab-panel";
 import { ActiveToken } from "@/models/sites";
 import { getActiveTokens } from "@/services/sites";
-import { dateToHuman } from "@/utils/dates";
+import { dateToHuman, getDate } from "@/utils/dates";
 import Link from "next/link";
 import { ActiveTokenOptions } from "./options";
 
@@ -16,12 +16,15 @@ type ActiveTokenViewProps = {
 function ActiveTokenView(props: Readonly<ActiveTokenViewProps>) {
   const { token } = props;
   const scopes = token.scopes.join(" ");
-  const expireDate = dateToHuman(new Date(token.expiration));
+  const expiration = new Date(token.expiration);
+  const expiresAt = dateToHuman(expiration);
+  const expired = expiration < getDate();
+  const tokenStr = `${token.value?.slice(0, 8)}...${token.value?.slice(-8)}`
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow">
         <div className="flex grow flex-col gap-0.5 break-all">
-          {token.value?.slice(0, 5)}...
+          {tokenStr}
           <div className="flex flex-col">
             <Link
               className="text-gray dark:text-secondary/70 text-sm hover:underline"
@@ -39,7 +42,7 @@ function ActiveTokenView(props: Readonly<ActiveTokenViewProps>) {
         </div>
         <div className="flex flex-row items-center gap-2 px-2 lg:flex-col lg:items-end lg:justify-center">
           <p className="text-gray dark:text-secondary/50 text-sm whitespace-nowrap sm:text-right">
-            Expires {expireDate}
+            {expired ? `Expired ${expiresAt}` : `Expires ${expiresAt}`}
           </p>
         </div>
       </div>

@@ -5,6 +5,7 @@
 import { ToggleDrawerButton } from "@/components/drawer/toggle-drawer-button";
 import Notifications from "@/components/notifications";
 import { UserPopover } from "./user-popover";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 type HeaderProps = {
   hasRoleAdmin?: boolean;
@@ -23,10 +24,18 @@ export async function Header(props: Readonly<HeaderProps>) {
       </div>
       <div className="flex items-center gap-4">
         {hasRoleAdmin && (
-          <Notifications
-            className="hidden data-[visible=true]:block"
-            data-visible={isAdmin && hasRoleAdmin}
-          />
+          <>
+            {isAdmin && (
+              <span className="bg-danger flex items-center gap-1 rounded px-2 py-1 text-xs">
+                <ExclamationTriangleIcon className="size-4" />
+                admin mode
+              </span>
+            )}
+            <Notifications
+              className="hidden data-[visible=true]:block"
+              data-visible={isAdmin && hasRoleAdmin}
+            />
+          </>
         )}
         <UserPopover hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
       </div>

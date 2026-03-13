@@ -43,7 +43,7 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
   };
 
   return (
-    <div className="flex items-center justify-between px-4 pb-2">
+    <div className="flex items-center justify-between px-4 pb-2 text-sm">
       <div className="flex items-center space-x-2">
         <span>
           Page {currentPage} of {numberOfPages}

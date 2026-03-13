@@ -48,7 +48,9 @@ export async function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
           </div>
           <Status active={user.active ?? false} />
         </div>
-        <p data-testid="user-id">User ID: {user.id}</p>
+        <p className="break-all" data-testid="user-id">
+          {user.id}
+        </p>
         <div>
           <p>Created {created}.</p>
           <p>Last modified {modified}.</p>

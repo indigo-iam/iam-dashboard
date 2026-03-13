@@ -19,27 +19,23 @@ function Row(props: Readonly<RowProps>) {
     : "N/A";
   return (
     <li className="iam-list-item flex flex-row items-center">
-      <div className="flex grow flex-col">
-        <p className="flex flex-row gap-1">
-          User
-          <Link
-            className="inline-flex gap-1 underline"
-            href={`/users/${request.accountId}`}
-          >
-            <span className="inline-flex font-bold">{`${request.givenname} ${request.familyname}`}</span>
-            <span className="inline-flex">({request.username})</span>
-          </Link>
-          applied for an account.
-        </p>
-        {request.notes && (
-          <p className="text-gray dark:text-secondary/60 line-clamp-1 text-sm">
+      <div className="flex grow flex-col space-y-2 lg:flex-row">
+        <Link
+          className="grow space-y-2 hover:underline"
+          href={`/users/${request.accountId}`}
+        >
+          <p>
+            User <b>{`${request.givenname} ${request.familyname}`}</b> (
+            <i>{request.username}</i>) applied for an account.
+          </p>
+          <p className="text-gray dark:text-secondary/60 text-sm">
             Motivation: {request.notes}
           </p>
-        )}
+        </Link>
+        <p className="text-gray dark:text-secondary/50 flex items-center text-sm whitespace-nowrap lg:px-2 lg:text-right">
+          Sent {creationTime}
+        </p>
       </div>
-      <p className="text-gray dark:text-secondary/50 px-2 text-sm whitespace-nowrap sm:text-right">
-        Sent {creationTime}
-      </p>{" "}
       <RegistrationRequestsOptions request={request} />
     </li>
   );
@@ -51,7 +47,6 @@ type RegistrationsProps = {
 
 export default function Registrations(props: Readonly<RegistrationsProps>) {
   const { requests } = props;
-
   if (requests.length === 0) {
     return (
       <TabPanel className="panel">

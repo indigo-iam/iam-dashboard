@@ -46,7 +46,7 @@ function Row(props: Readonly<RowProps>) {
       <div className="flex grow flex-col">
         <div className="flex flex-col gap-2 lg:flex-row">
           <Link
-            className="flex min-w-72 flex-col break-all hover:underline"
+            className="flex flex-col break-all hover:underline"
             href={`/groups/${group.id}`}
           >
             {group.displayName}

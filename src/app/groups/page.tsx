@@ -26,20 +26,20 @@ export default async function GroupsPage(props: Readonly<GroupsProps>) {
   const numberOfPages = Math.ceil(groupsPage.totalResults / count);
   const groups = groupsPage.Resources;
   return (
-    <section>
+    <section className="space-y-4">
       <header className="section-header">
         <UserGroupIcon className="size-5" />
         <h2 className="text-base font-normal">Groups</h2>
       </header>
       <div className="content">
-        <div className="flex justify-between gap-4">
+        <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
+          <AddGroupButton />
           <InputQuery
             title="Search group"
             placeholder="Type to search a group"
             data-testid="search-group"
             aria-label="Search group"
           />
-          <AddGroupButton />
         </div>
         <div className="panel">
           <GroupsTable groups={groups} />

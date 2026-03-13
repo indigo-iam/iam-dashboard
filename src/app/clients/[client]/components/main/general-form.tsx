@@ -47,7 +47,7 @@ export function GeneralForm(props: Readonly<{ client: Client }>) {
         <div className="flex flex-col gap-2">
           <p>Created {createdAt}.</p>
           <div>
-            <p>Status changed on {statusChangedOn}.</p>
+            <p>Status changed {statusChangedOn}.</p>
             {client.dynamically_registered && <p>Dynamically registered.</p>}
           </div>
         </div>

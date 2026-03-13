@@ -21,7 +21,7 @@ export async function Header(props: Readonly<HeaderProps>) {
           IAM for <b className="font-bold">cnafsd</b>
         </h2>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-4">
         {hasRoleAdmin && (
           <Notifications
             className="hidden data-[visible=true]:block"

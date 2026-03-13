@@ -41,14 +41,14 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
         <h2 className="text-base font-normal">Scopes</h2>
       </header>
       <div className="content">
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
+          <NewScopeButton />
           <InputQuery
             title="Search scope"
             placeholder="Type to search a scope"
             data-testid="search-scope"
             aria-label="Search scope"
           />
-          <NewScopeButton />
         </div>
         <div className="panel">
           <ScopesTable scopes={scopes.Resources} />

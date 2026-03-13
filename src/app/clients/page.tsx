@@ -54,13 +54,13 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
   const numberOfPages = Math.ceil(clientPage.totalResults / count) || 1;
   const clients = clientPage.Resources;
   return (
-    <section>
+    <section className="space-y-4">
       <header className="section-header">
         <RocketLaunchIcon className="size-5" />
         <h2 className="text-base font-normal">Clients</h2>
       </header>
       <div className="content">
-        <div className="flex flex-col gap-2 lg:flex-row">
+        <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
           <Buttons />
           <InputQuery
             title="Search client"
@@ -69,7 +69,7 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
             aria-label="Search client"
           />
         </div>
-        <div className="panel space-y-4">
+        <div className="panel">
           <Suspense fallback="Loading...">
             <ClientsTable clients={clients} />
           </Suspense>

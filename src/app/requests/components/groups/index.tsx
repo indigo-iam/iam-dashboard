@@ -21,31 +21,23 @@ export function Row(props: Readonly<RowPros>) {
 
   return (
     <li className="iam-list-item flex flex-row items-center">
-      <div className="flex grow flex-col">
-        <p className="space-x-1">
-          User{" "}
-          <Link
-            href={`/users/${userUuid}`}
-            className="space-x-1 break-all hover:underline"
-          >
-            <span className="font-bold">{userFullName}</span>
-            <span>({username})</span>
-          </Link>
-          asked to join group{" "}
-          <Link href={`/groups/${groupUuid}`} className="hover:underline">
-            <span className="font-bold">{groupName}</span>
-          </Link>
-          .
-        </p>
-        {request.notes && (
-          <p className="text-gray dark:text-secondary/60 ml-4 line-clamp-1 text-sm">
+      <div className="flex grow flex-col space-y-2 lg:flex-row">
+        <Link
+          href={`/users/${userUuid}`}
+          className="grow space-y-2 hover:underline"
+        >
+          <p>
+            User <b>{userFullName}</b> (<i>{username}</i>) asked to join group{" "}
+            <b>{groupName}</b>.
+          </p>
+          <p className="text-gray dark:text-secondary/60 text-sm">
             Motivation: {request.notes}
           </p>
-        )}
+        </Link>
+        <p className="text-gray dark:text-secondary/50 flex items-center text-sm whitespace-nowrap lg:px-2 lg:text-right">
+          Sent {creationTime}
+        </p>
       </div>
-      <p className="text-gray dark:text-secondary/50 px-2 text-sm whitespace-nowrap sm:text-right">
-        Sent {creationTime}
-      </p>{" "}
       <GroupRequestOptions request={request} />
     </li>
   );

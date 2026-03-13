@@ -26,9 +26,9 @@ export function Metadata(props: Readonly<{ client: Client }>) {
       </div>
       <div className="text-extralight flex flex-col">
         <span>Created {createdAt}.</span>
-        <span>Status changed on {statusChangedOn}.</span>
+        <span>Status changed {statusChangedOn}.</span>
         {client.dynamically_registered && <span>Dynamically registered.</span>}
       </div>
     </div>
   );
-} 
+}

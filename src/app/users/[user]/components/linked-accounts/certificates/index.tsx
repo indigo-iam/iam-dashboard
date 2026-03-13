@@ -8,23 +8,26 @@ import LinkCertificateButton from "./link-certificate-button";
 
 const CertificateView = (props: { cert: Certificate }) => {
   const { cert } = props;
+  const lastModified = cert.lastModified
+    ? new Date(cert.lastModified).toLocaleString()
+    : "N/A";
   return (
-    <ul className="flex flex-col">
-      <li className="dark:text-light-gray inline-flex gap-1">
-        <span className="font-bold">Subject:</span>
-        <span>{cert.subjectDn}</span>
-      </li>
-      <li className="dark:text-light-gray/80 inline-flex gap-1">
-        <span className="font-bold">Issuer:</span>
-        <span>{cert.issuerDn}</span>
-      </li>
-      <li className="inline-flex gap-1">
-        <span className="dark:text-light-gray/80 font-bold">
-          Last modified:
-        </span>
-        <span>{cert.lastModified}</span>
-      </li>
-    </ul>
+    <div className="iam-list-item flex-col space-y-2">
+      <div>
+        <p className="text-light dark:text-secondary/75 text-xs">Subject</p>
+        <p className="text-sm">{cert.subjectDn}</p>
+      </div>
+      <div>
+        <p className="text-light dark:text-secondary/75 text-xs">Issuer</p>
+        <p className="text-sm">{cert.issuerDn}</p>
+      </div>
+      <div>
+        <p className="text-light dark:text-secondary/75 text-xs">
+          Last modified
+        </p>
+        <p className="text-xs">{lastModified}</p>
+      </div>
+    </div>
   );
 };
 

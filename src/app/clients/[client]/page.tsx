@@ -42,7 +42,7 @@ export default async function Client(props: Readonly<ClientPageProps>) {
         <RocketLaunchIcon className="size-5" />
         <h2 className="text-base font-normal">{client.client_name}</h2>
       </header>
-      <TabGroup className="content">
+      <TabGroup className="content space-y-8">
         <TabList className="flex overflow-auto">
           <Tab>GENERAL</Tab>
           <Tab>CREDENTIALS</Tab>

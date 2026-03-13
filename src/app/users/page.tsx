@@ -52,7 +52,6 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
           data-testid="search-user"
           aria-label="Search user"
         />
-
         <div className="panel">
           <UsersTable users={users} />
         </div>

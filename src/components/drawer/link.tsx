@@ -7,6 +7,8 @@
 import { default as NextLink } from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 
+import { toggleDrawer } from "./drawer";
+
 export type LinkProps = {
   title: string;
   href: string;
@@ -44,14 +46,16 @@ export function Link(props: Readonly<LinkProps>) {
   }
 
   return (
-    <NextLink
-      className="text- text-secondary/95 flex items-center gap-1 rounded-lg p-2 text-base transition ease-in-out hover:bg-white/10 data-[selected=true]:bg-white/10"
-      href={href}
-      data-selected={selected ? "true" : "false"}
-      title={title}
-    >
-      {children}
-      {title}
-    </NextLink>
+    <button className="md:disabled w-full" onClick={toggleDrawer}>
+      <NextLink
+        href={href}
+        className="text-secondary/95 flex items-center gap-1 rounded-lg p-2 text-base transition ease-in-out hover:bg-white/10 data-[selected=true]:bg-white/10"
+        data-selected={selected ? "true" : "false"}
+        title={title}
+      >
+        {children}
+        {title}
+      </NextLink>
+    </button>
   );
 }

@@ -37,7 +37,7 @@ export function Drawer(props: Readonly<DrawerProps>) {
     <div id="drawer" className="group" data-testid="drawer">
       <Button
         id="backdrop-drawer-button"
-        className="invisible fixed inset-0 z-20 bg-black/30 opacity-0 transition-opacity group-data-open:visible group-data-open:z-30 group-data-open:opacity-100 md:invisible"
+        className="invisible fixed inset-0 z-20 bg-black/30 opacity-0 transition-opacity group-data-open:visible group-data-open:z-30 group-data-open:opacity-100 md:hidden"
         onClick={toggleDrawer}
       />
       <aside

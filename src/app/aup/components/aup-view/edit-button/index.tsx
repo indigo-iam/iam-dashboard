@@ -23,7 +23,7 @@ export default function EditButton(props: Readonly<EditButtonProps>) {
     <>
       <EditModal show={isShown} onClose={hide} aup={aup} />
       <Button className="btn-secondary" onClick={show}>
-        <PencilIcon className="my-auto size-5" />
+        <PencilIcon className="size-4" />
         Edit AUP
       </Button>
     </>

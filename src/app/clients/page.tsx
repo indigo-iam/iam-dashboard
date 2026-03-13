@@ -19,7 +19,7 @@ function Buttons() {
     <div className="flex flex-row gap-2">
       <Link href="/clients/new">
         <Button className="btn-secondary">
-          <PlusIcon className="my-auto size-5" />
+          <PlusIcon className="size-4" />
           New client
         </Button>
       </Link>
@@ -60,14 +60,14 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
         <h2 className="text-base font-normal">Clients</h2>
       </header>
       <div className="content">
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex flex-col gap-2 lg:flex-row">
+          <Buttons />
           <InputQuery
             title="Search client"
             placeholder="Type to search a client"
             data-testid="search-client"
             aria-label="Search client"
           />
-          <Buttons />
         </div>
         <div className="panel space-y-4">
           <Suspense fallback="Loading...">

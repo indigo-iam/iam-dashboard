@@ -113,7 +113,7 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
             Cancel
           </Button>
           <Button className="btn-primary" type="submit">
-            <ArrowUpTrayIcon className="my-auto size-5" />
+            <ArrowUpTrayIcon className="size-4" />
             Add group
           </Button>
         </ModalFooter>

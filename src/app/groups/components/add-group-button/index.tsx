@@ -74,7 +74,7 @@ export default function AddGroupButton(props: Readonly<AddGroupButtonProps>) {
         <AddGroupForm onClose={close} onGroupAdded={onGroupAdded} />
       </Modal>
       <Button className="btn-secondary" data-testid="add-group" onClick={open}>
-        <PlusIcon className="my-auto size-5" />
+        <PlusIcon className="size-4" />
         Add Group
       </Button>
     </>

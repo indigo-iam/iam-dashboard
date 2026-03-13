@@ -26,11 +26,7 @@ export default function EditModal(props: Readonly<EditModalProps>) {
   };
 
   return (
-    <Modal
-      title="Edit the Acceptable Usage Policy for this organization"
-      show={show}
-      onClose={onClose}
-    >
+    <Modal title="Edit AUP for this organization" show={show} onClose={onClose}>
       <Form action={action}>
         <ModalBody>
           <Field>
@@ -70,12 +66,12 @@ export default function EditModal(props: Readonly<EditModalProps>) {
             </Description>
           </Field>
           <section>
-            <p className="text-light py-2">
+            <p className="text-light dark:text-secondary/75 text-md py-2">
               Editing the AUP will <b>not</b> trigger an AUP signature request
             </p>
-            <p className="text-xs">
+            <p className="text-light dark:text-secondary/60 text-xs">
               If you want to request a signature from users for the updated AUP,
-              use the &quotRequest AUP signature&quot button in the AUP
+              use the &quot;Request AUP signature&quot; button in the AUP
               management page.
             </p>
           </section>

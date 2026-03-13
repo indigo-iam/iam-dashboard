@@ -20,7 +20,7 @@ function Buttons() {
       <Link href="/clients/new">
         <Button className="btn-secondary">
           <PlusIcon className="size-4" />
-          New
+          New client
         </Button>
       </Link>
       <Button className="btn-secondary">Redeem</Button>

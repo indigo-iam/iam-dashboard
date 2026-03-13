@@ -2,11 +2,12 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import Link from "next/link";
+
 import TabPanel from "@/components/tabs/tab-panel";
 import { ActiveToken } from "@/models/sites";
 import { getActiveTokens } from "@/services/sites";
 import { dateToHuman, getDate } from "@/utils/dates";
-import Link from "next/link";
 import { ActiveTokenOptions } from "./options";
 
 type ActiveTokenViewProps = {

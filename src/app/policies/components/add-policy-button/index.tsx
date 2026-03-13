@@ -11,7 +11,7 @@ export default function AddPolicyButton() {
     <Link href="/policies/new">
       <Button className="btn-secondary">
         <PlusIcon className="size-4" />
-        Add new policy
+        New policy
       </Button>
     </Link>
   );

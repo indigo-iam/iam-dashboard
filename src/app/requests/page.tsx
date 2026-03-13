@@ -29,7 +29,7 @@ export default async function Requests() {
         <InboxArrowDownIcon className="size-5" />
         <h2 className="text-base font-normal">Requests</h2>
       </header>
-      <TabGroup className="content">
+      <TabGroup className="content space-y-4">
         <TabList className="flex overflow-auto text-xl">
           <Tab>{`REGISTRATION REQUESTS (${registrationRequests.length})`}</Tab>
           <Tab>{`GROUP REQUESTS (${groupRequests.totalResults})`}</Tab>

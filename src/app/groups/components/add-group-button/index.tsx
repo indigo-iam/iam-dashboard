@@ -47,7 +47,7 @@ function AddGroupForm(props: Readonly<AddGroupFormProps>) {
           Reset
         </Button>
         <Button className="btn-primary" type="submit">
-          Add Group
+          Add group
         </Button>
       </ModalFooter>
     </Form>
@@ -75,7 +75,7 @@ export default function AddGroupButton(props: Readonly<AddGroupButtonProps>) {
       </Modal>
       <Button className="btn-secondary" data-testid="add-group" onClick={open}>
         <PlusIcon className="size-4" />
-        Add Group
+        New group
       </Button>
     </>
   );

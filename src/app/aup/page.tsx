@@ -20,7 +20,7 @@ export default async function AUP() {
   const aup = await fetchAUP();
   if (!aup) {
     return (
-      <section className="space-y-4">
+      <section>
         <header className="section-header">
           <DocumentTextIcon className="size-5" />
           <h2 className="text-base font-normal">Acceptable Usage Policy</h2>
@@ -41,7 +41,7 @@ export default async function AUP() {
         <DocumentTextIcon className="size-5" />
         <h2 className="text-base font-normal">Acceptable Usage Policy</h2>
       </header>
-      <div className="content">
+      <div className="content space-y-4">
         <div className="panel">
           <AupView aup={aup} />
         </div>

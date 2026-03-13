@@ -92,5 +92,5 @@
 }
 
 @utility content {
-  @apply 3xl:px-64 space-y-8 px-8 py-4 md:px-16 2xl:px-32;
+  @apply 3xl:px-64 px-8 py-4 md:px-16 2xl:px-32;
 }

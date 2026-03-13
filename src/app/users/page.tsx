@@ -37,21 +37,22 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
   const numberOfPages = Math.ceil(usersPage.totalResults / count) || 1;
   const users = usersPage.Resources;
   return (
-    <section className="space-y-4">
+    <section>
       <header className="section-header">
-        <UsersIcon className="size-5" />
-        <h2 className="text-base font-normal">Users</h2>
-      </header>
-      <div className="content">
-        <div className="item-center flex flex-col gap-2 lg:flex-row">
-          <AddUserButton />
-          <InputQuery
-            title="Search client"
-            placeholder="Type to search a user"
-            data-testid="search-user"
-            aria-label="Search user"
-          />
+        <div className="flex grow gap-2">
+          <UsersIcon className="size-5" />
+          <h2 className="text-base font-normal">Users</h2>
         </div>
+        <AddUserButton />
+      </header>
+      <div className="content space-y-4">
+        <InputQuery
+          title="Search client"
+          placeholder="Type to search a user"
+          data-testid="search-user"
+          aria-label="Search user"
+        />
+
         <div className="panel">
           <UsersTable users={users} />
         </div>

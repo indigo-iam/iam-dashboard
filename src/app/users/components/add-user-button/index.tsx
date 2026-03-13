@@ -133,11 +133,11 @@ export default function AddUser(props: Readonly<AddUserProps>) {
         show={show}
         onClose={close}
         onUserAdded={onUserAdded}
-        title="Add User"
+        title="Add user"
       />
       <Button className="btn-secondary" onClick={open}>
-        <UserPlusIcon className="my-auto size-5" />
-        Add User
+        <UserPlusIcon className="size-4" />
+        Add user
       </Button>
     </>
   );

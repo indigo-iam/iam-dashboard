@@ -20,10 +20,10 @@ function Buttons() {
       <Link href="/clients/new">
         <Button className="btn-secondary">
           <PlusIcon className="size-4" />
-          New client
+          New
         </Button>
       </Link>
-      <Button className="btn-secondary">Redeem client</Button>
+      <Button className="btn-secondary">Redeem</Button>
     </div>
   );
 }
@@ -54,21 +54,21 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
   const numberOfPages = Math.ceil(clientPage.totalResults / count) || 1;
   const clients = clientPage.Resources;
   return (
-    <section className="space-y-4">
-      <header className="section-header">
-        <RocketLaunchIcon className="size-5" />
-        <h2 className="text-base font-normal">Clients</h2>
-      </header>
-      <div className="content">
-        <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
-          <Buttons />
-          <InputQuery
-            title="Search client"
-            placeholder="Type to search a client"
-            data-testid="search-client"
-            aria-label="Search client"
-          />
+    <section>
+      <header className="section-header justify-between">
+        <div className="flex items-center gap-2">
+          <RocketLaunchIcon className="size-5" />
+          <h2 className="text-base font-normal">Clients</h2>
         </div>
+        <Buttons />
+      </header>
+      <div className="content space-y-4">
+        <InputQuery
+          title="Search client"
+          placeholder="Type to search a client"
+          data-testid="search-client"
+          aria-label="Search client"
+        />
         <div className="panel">
           <Suspense fallback="Loading...">
             <ClientsTable clients={clients} />

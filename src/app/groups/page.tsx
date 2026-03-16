@@ -2,11 +2,14 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { getGroupsPage } from "@/services/groups";
-import { AddGroupButton, GroupsTable } from "./components";
+import { redirect } from "next/navigation";
+import { UserGroupIcon } from "@heroicons/react/24/solid";
+
+import { getSession } from "@/auth";
 import { InputQuery } from "@/components/inputs";
 import Paginator from "@/components/paginator";
-import { UserGroupIcon } from "@heroicons/react/24/solid";
+import { getGroupsPage } from "@/services/groups";
+import { AddGroupButton, GroupsTable } from "./components";
 
 type GroupsProps = {
   searchParams?: Promise<{
@@ -17,6 +20,10 @@ type GroupsProps = {
 };
 
 export default async function GroupsPage(props: Readonly<GroupsProps>) {
+  const session = await getSession();
+  if (!session) {
+    redirect("/signin");
+  }
   const searchParams = await props.searchParams;
   const count = searchParams?.count ? parseInt(searchParams.count) : 10;
   const page = searchParams?.page ? parseInt(searchParams.page) : 1;

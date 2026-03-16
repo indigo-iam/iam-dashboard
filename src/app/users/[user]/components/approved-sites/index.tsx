@@ -25,23 +25,23 @@ function ApprovedSite(props: Readonly<ApprovedSiteProps>) {
           href={`/clients/${site.clientId}`}
         >
           {"We don't have the name"}
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-0.5">
             <p className="text-gray dark:text-secondary/70 text-sm">
               {site.clientId}
             </p>
             <p
               title={scopes}
-              className="text-gray dark:text-secondary/60 line-clamp-1 max-w-md text-sm"
+              className="text-gray dark:text-secondary/60 line-clamp-1 max-w-md text-sm font-light"
             >
               {scopes}
             </p>
           </div>
         </Link>
         <div className="flex flex-col px-2 lg:justify-center">
-          <p className="text-gray dark:text-secondary/50 text-sm whitespace-nowrap lg:text-right">
+          <p className="text-gray dark:text-secondary/50 text-sm font-light whitespace-nowrap lg:text-right">
             Last access {accessDate}
           </p>
-          <p className="text-gray dark:text-secondary/50 text-sm whitespace-nowrap lg:text-right">
+          <p className="text-gray dark:text-secondary/50 text-sm font-light whitespace-nowrap lg:text-right">
             Authorized {creationDate}
           </p>
         </div>

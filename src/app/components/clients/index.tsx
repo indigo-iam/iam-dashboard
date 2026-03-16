@@ -30,10 +30,10 @@ function Row(props: Readonly<RowProps>) {
       <div className="flex grow">
         <div className="flex grow flex-col space-y-2 lg:flex-row lg:space-y-0">
           <Link
-            className="flex grow flex-col gap-0.5 break-all"
+            className="flex grow flex-col break-all"
             href={`/clients/${client_id}`}
           >
-            {client_name}
+            <p>{client_name}</p>
             <div className="flex flex-col">
               <p className="text-gray dark:text-secondary/70 text-md font-light">
                 {client.client_description}
@@ -46,7 +46,7 @@ function Row(props: Readonly<RowProps>) {
               </p>
             </div>
           </Link>
-          <div className="flex flex-row items-center gap-1 lg:flex-col lg:items-end lg:justify-center lg:px-2">
+          <div className="flex flex-row items-center gap-0.5 lg:flex-col lg:items-end lg:justify-center lg:px-2">
             <Status active={client.active} />
             <p className="text-gray dark:text-secondary/50 text-sm font-light whitespace-nowrap sm:text-right">
               Created {createdAt}

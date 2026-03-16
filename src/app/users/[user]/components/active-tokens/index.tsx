@@ -20,17 +20,17 @@ function ActiveTokenView(props: Readonly<ActiveTokenViewProps>) {
   const expiration = new Date(token.expiration);
   const expiresAt = dateToHuman(expiration);
   const expired = expiration < getDate();
-  const tokenStr = `${token.value?.slice(0, 4)}...${token.value?.slice(-12)}`;
+  const tokenStr = `${token.value?.slice(0, 8)}...${token.value?.slice(-24)}`;
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
         <Link
-          className="text-gray dark:text-secondary/70 flex grow flex-col text-sm lg:flex-row"
+          className="dark:text-secondary/70 flex grow flex-col gap-0.5 lg:flex-row"
           href={`/clients/${token.clientId}`}
         >
           <div className="flex grow flex-col gap-0.5 break-all">
             <p>{tokenStr}</p>
-            <p>{token.clientId}</p>
+            <p className="text-gray text-sm">{token.clientId}</p>
             <p
               title={scopes}
               className="text-gray dark:text-secondary/60 line-clamp-1 max-w-md text-sm font-light"

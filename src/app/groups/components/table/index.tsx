@@ -13,9 +13,13 @@ type LabelsProps = {
 
 function Labels(props: Readonly<LabelsProps>) {
   const { group } = props;
+  const labels = group["urn:indigo-dc:scim:schemas:IndigoGroup"].labels;
+  if (!labels || labels.length === 0) {
+    return null;
+  }
   return (
-    <div className="flex grow flex-wrap items-center gap-1">
-      {group["urn:indigo-dc:scim:schemas:IndigoGroup"].labels?.map(label => {
+    <div className="flex grow flex-wrap items-center gap-1 pt-1.5">
+      {labels?.map(label => {
         return (
           <div
             className="text-secondary flex items-center gap-1 rounded-full bg-sky-600 px-2 py-0.5 text-xs dark:bg-sky-400"
@@ -44,7 +48,7 @@ function Row(props: Readonly<RowProps>) {
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
         <Link
-          className="flex grow flex-col break-all lg:flex-row"
+          className="flex grow flex-col gap-0 break-all lg:flex-row lg:gap-2"
           href={`/groups/${group.id}`}
         >
           <div className="flex flex-col">

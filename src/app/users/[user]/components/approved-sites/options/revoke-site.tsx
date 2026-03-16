@@ -4,6 +4,7 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { Site } from "@/models/sites";
+import { revokeSite } from "@/services/sites";
 
 type RevokeSiteProps = {
   site: Site;
@@ -13,12 +14,17 @@ type RevokeSiteProps = {
 
 export function RevokeSite(props: Readonly<RevokeSiteProps>) {
   const { site, show, onClose } = props;
+  const action = async () => {
+    revokeSite(site.id.toString());
+  };
   return (
     <ConfirmModal
       show={show}
       onClose={onClose}
-      confirmButtonText="Revoke"
       title="Revoke Site"
+      confirmButtonText="Revoke"
+      onConfirm={action}
+      danger
     >
       <p>Are you sure you want to revoke the following token?</p>
       <p>{site.id}</p>

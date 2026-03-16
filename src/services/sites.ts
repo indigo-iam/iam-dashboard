@@ -7,6 +7,7 @@
 import { settings } from "@/config";
 import { ActiveToken, Site } from "@/models/sites";
 import { authFetch } from "@/utils/fetch";
+import { setNotification } from "./notifications";
 
 const { IAM_API_URL } = settings;
 
@@ -20,4 +21,20 @@ export async function getActiveTokens(): Promise<ActiveToken[]> {
   const url = `${IAM_API_URL}/api/tokens/access`;
   const response = await authFetch(url);
   return await response.json();
+}
+
+export async function revokeSite(siteId: string) {
+  const url = `${IAM_API_URL}/api/approved/${siteId}`;
+  const response = await authFetch(url, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    await setNotification({ type: "success", message: "Site revoked" });
+  } else {
+    const msg = await response.text();
+    await setNotification({
+      type: "error",
+      message: `Revoking site failed with status ${response.status}, error: ${msg}`,
+    });
+  }
 }

@@ -81,10 +81,6 @@ export default function GrantTypes(props: Readonly<{ client: Client }>) {
         <div className="flex flex-col">
           <Field>
             <Label>Other grant types</Label>
-            <Description>
-              Authorize the users to obtain an access token with supplementary
-              grants.
-            </Description>
           </Field>
           <Field className="inline-flex items-center gap-2">
             <Checkbox
@@ -116,6 +112,12 @@ export default function GrantTypes(props: Readonly<{ client: Client }>) {
               defaultChecked={grant_types.includes("refresh_token")}
             />
             <Label>Refresh Token</Label>
+          </Field>
+          <Field>
+            <Description>
+              Authorize the users to obtain an access token with supplementary
+              grants.
+            </Description>
           </Field>
         </div>
         <div className="flex flex-row justify-end">

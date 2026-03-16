@@ -67,7 +67,6 @@ export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
     <>
       <Field>
         <Label>Authentication Flow</Label>
-        <Description>A little description.</Description>
         <Select
           name="grant_type"
           defaultValue={defaultOption}
@@ -79,6 +78,7 @@ export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
             </SelectOption>
           ))}
         </Select>
+        <Description>A little description.</Description>
       </Field>
       <AuthenticationFlowSettings
         client={client}

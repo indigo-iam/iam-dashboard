@@ -95,9 +95,6 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
             <div className="w-full space-y-4 pb-4 lg:w-2/3">
               <Field>
                 <Label>Client Authentication</Label>
-                <Description>
-                  How the client authenticate to the Token Endpoint.
-                </Description>
                 <ClientAuthentication
                   name="token_endpoint_auth_method"
                   defaultValue={defaultValue}
@@ -106,13 +103,13 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
               </Field>
               <Field>
                 <Label>Registration Access Token</Label>
+                <Button className="btn-secondary">
+                  Rotate Registration Access Token
+                </Button>
                 <Description>
                   Registration access token provides management access to the
                   client.
                 </Description>
-                <Button className="btn-secondary">
-                  Regenerate Registration Access Token
-                </Button>
               </Field>
             </div>
           </div>

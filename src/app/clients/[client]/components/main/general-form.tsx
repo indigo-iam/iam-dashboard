@@ -55,7 +55,6 @@ export function GeneralForm(props: Readonly<{ client: Client }>) {
       <Form className="w-full space-y-4 lg:w-2/3" action={action}>
         <Field>
           <Label data-required>Client Name</Label>
-          <Description>Something users will recognize and trust.</Description>
           <Input
             required
             type="text"
@@ -63,10 +62,10 @@ export function GeneralForm(props: Readonly<{ client: Client }>) {
             minLength={2}
             defaultValue={client.client_name}
           />
+          <Description>Something users will recognize and trust.</Description>
         </Field>
         <Field>
           <Label data-required>Client ID</Label>
-          <Description>The UUID of this client.</Description>
           <Input
             required
             type="text"
@@ -75,55 +74,55 @@ export function GeneralForm(props: Readonly<{ client: Client }>) {
             disabled={true}
             defaultValue={client.client_id}
           />
+          <Description>The UUID of this client.</Description>
         </Field>
         <Field>
           <Label>Description</Label>
-          <Description>
-            This is displayed to all users of your application.
-          </Description>
           <Textarea
             name="client_description"
             className="iam-input"
             placeholder="Client description..."
             defaultValue={client.client_description}
           />
+          <Description>
+            This is displayed to all users of your application.
+          </Description>
         </Field>
         <Field>
           <Label>Homepage URL</Label>
-          <Description>
-            {
-              "URL for the client's home page, which will be displayed to the user in the consent page."
-            }
-          </Description>
           <Input
             name="client_uri"
             placeholder="https://app.example.org"
             defaultValue={client.client_uri}
           />
+          <Description>
+            URL for the client&apos;s home page, which will be displayed to the
+            user in the consent page.
+          </Description>
         </Field>
         <Field>
           <Label>Terms of service</Label>
-          <Description>
-            URL of the Terms of Service for this client, will be displayed to
-            the user in the consent page.
-          </Description>
           <Input
             name="tos_uri"
             placeholder={"https://app.example.org/tos.html"}
             defaultValue={client.tos_uri}
           />
+          <Description>
+            URL of the Terms of Service for this client, will be displayed to
+            the user in the consent page.
+          </Description>
         </Field>
         <Field>
           <Label>Policy statement</Label>
-          <Description>
-            URL of the Policy statement for this client, will be displayed to
-            the user in the consent page.
-          </Description>
           <Input
             name="policy_uri"
             placeholder="https://app.example.org/policy.html"
             defaultValue={client.policy_uri}
           />
+          <Description>
+            URL of the Policy statement for this client, will be displayed to
+            the user in the consent page.
+          </Description>
         </Field>
         <div className="flex justify-end">
           <Button className="btn-tertiary" type="reset">

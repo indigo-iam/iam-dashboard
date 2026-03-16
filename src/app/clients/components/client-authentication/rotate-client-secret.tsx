@@ -42,11 +42,13 @@ export function RotateClientSecret(props: Readonly<RotateClientSecretProps>) {
 
   return (
     <Field>
-      <Label>Rotate Client Secret</Label>
-      <Description>Generate a new secret for this client</Description>
+      <Label>Generate a new secret for this client</Label>
       <Button className="btn-secondary" onClick={open}>
         Rotate Secret
       </Button>
+      <Description>
+        Clients secrets provides authentication for this client.
+      </Description>
       <ConfirmModal
         show={show}
         onClose={close}

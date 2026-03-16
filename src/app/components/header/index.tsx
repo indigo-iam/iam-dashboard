@@ -29,7 +29,7 @@ export async function Header(props: Readonly<HeaderProps>) {
         {hasRoleAdmin && (
           <>
             {isAdmin && (
-              <p className="flex items-center gap-1 rounded bg-orange-50 px-2 py-1 text-xs text-orange-400">
+              <p className="flex items-center gap-1 rounded bg-orange-50 px-2 py-1 text-xs text-orange-400 dark:bg-orange-400 dark:text-orange-50">
                 <ExclamationTriangleIcon className="size-4" />
                 <span className="hidden md:inline-block">admin mode</span>
                 <span className="inline-block md:hidden">admin</span>

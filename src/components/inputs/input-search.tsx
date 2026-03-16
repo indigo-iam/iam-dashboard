@@ -41,7 +41,7 @@ export function InputSearch(props: Readonly<InputSearchProps>) {
   };
 
   return (
-    <div className="flex items-center gap-2 rounded border border-neutral-200 bg-white px-2 py-1 outline-blue-600 focus-within:outline dark:bg-white/10">
+    <div className="dark:bg-dark flex items-center gap-2 rounded border border-neutral-200 bg-white px-2 py-1 outline-blue-600 focus-within:outline dark:border-slate-600">
       <MagnifyingGlassIcon className="size-6 text-gray-400" />
       <Input
         onKeyUp={() => delayedSearch()}

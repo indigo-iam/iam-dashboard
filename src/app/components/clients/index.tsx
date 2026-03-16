@@ -35,7 +35,7 @@ function Row(props: Readonly<RowProps>) {
           >
             <p>{client_name}</p>
             <div className="flex flex-col">
-              <p className="text-gray dark:text-secondary/70 text-md font-light">
+              <p className="text-gray dark:text-secondary/70 text-sm font-light">
                 {client.client_description}
               </p>
               <p

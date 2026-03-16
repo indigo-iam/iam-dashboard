@@ -28,7 +28,7 @@ export function AddCustomScopeModal(props: Readonly<AddCustomScopeModalProps>) {
     onClose();
   };
   return (
-    <Modal show={show} onClose={onClose} title="Add custom scope">
+    <Modal show={show} onClose={onClose} title="New custom scope">
       <Form action={action}>
         <ModalBody>
           <Field>
@@ -46,7 +46,7 @@ export function AddCustomScopeModal(props: Readonly<AddCustomScopeModalProps>) {
             Cancel
           </Button>
           <Button className="btn-primary" type="submit">
-            Add custom scopes
+            New custom scopes
           </Button>
         </ModalFooter>
       </Form>
@@ -62,7 +62,7 @@ export function AddCustomScope(props: Readonly<{ client: Client }>) {
   return (
     <>
       <Button className="btn-secondary" onClick={open}>
-        Add custom scope
+        New custom scope
       </Button>
       <AddCustomScopeModal show={show} onClose={close} client={client} />
     </>

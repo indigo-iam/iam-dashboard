@@ -73,12 +73,17 @@ export default async function Scopes(props: Readonly<ScopesProps>) {
   );
 
   return (
-    <TabPanel className="space-y-4" unmount={false}>
-      <div className="flex flex-wrap gap-2">
-        <AddScopeButton client={client} scopes={unusedSystemScopes} />
-        <AddCustomScope client={client} />
+    <TabPanel className="panel space-y-4" unmount={false}>
+      <div className="flex">
+        <h3 className="grow py-2">Active scopes</h3>
+        <div className="inline-block">
+          <div className="flex gap-2">
+            <AddScopeButton client={client} scopes={unusedSystemScopes} />
+            <AddCustomScope client={client} />
+          </div>
+        </div>
       </div>
-      <ul className="panel flex flex-col gap-2">
+      <ul className="flex flex-col gap-2">
         <SystemScopes client={client} scopes={clientSystemScopes} />
         <CustomScopes client={client} scopes={customScopesNames} />
       </ul>

@@ -39,12 +39,14 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
               <Field
                 as="li"
                 key={s.id}
-                className="dark:border-light dark:hover:bg-neutral-200/10; flex flex-row items-center gap-2 px-2 hover:rounded-md hover:border-transparent hover:bg-neutral-200"
+                className="dark:border-light dark:hover:bg-neutral-200/10; flex flex-row items-center gap-2 p-2 hover:rounded-md hover:border-transparent hover:bg-neutral-200 dark:hover:bg-light"
               >
                 <Checkbox name="scope" value={s.value} />
                 <div className="flex grow flex-col">
-                  <Label>{s.value}</Label>
-                  <Description>{s.description}</Description>
+                  <p className="text-light dark:text-secondary/70">{s.value}</p>
+                  <p className="text-light dark:text-secondary/70 text-sm font-light">
+                    {s.description}
+                  </p>
                 </div>
               </Field>
             ))}

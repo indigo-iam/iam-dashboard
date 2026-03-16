@@ -13,11 +13,11 @@ export default function Status(props: Readonly<StatusProps>) {
   return (
     <span
       title={title}
-      className="bg-danger data-[status=Active]:bg-success flex max-w-fit items-center rounded-full p-0.5 px-2 text-xs text-white"
+      className="text-danger bg-danger data-[status=Active]:bg-success flex max-w-fit items-center rounded-full p-1 text-xs font-medium lg:bg-red-200 lg:data-[status=Active]:text-lime-700 lg:px-3 lg:data-[status=Active]:bg-lime-100"
       data-status={status}
       aria-label={title}
     >
-      <span className="inline-block">{status}</span>
+      <span className="hidden lg:inline-block">{status}</span>
     </span>
   );
 }

@@ -24,7 +24,7 @@ export default function ToggleUserStatusModal(
     <ConfirmModal
       show={show}
       onClose={onClose}
-      title={user.active ? "Disable User" : "Enable User"}
+      title={user.active ? "Disable user" : "Enable user"}
       onConfirm={action}
     >
       <p>

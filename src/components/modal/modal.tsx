@@ -35,13 +35,13 @@ export function Modal(props: Readonly<ModalProps>) {
       >
         <DialogBackdrop
           transition
-          className="fixed inset-0 bg-black/30 duration-300 data-[closed]:opacity-0"
+          className="fixed inset-0 bg-black/30 duration-300 data-closed:opacity-0"
         />
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="mt-38 flex min-h-32 justify-center p-4">
             <DialogPanel
               transition
-              className="text-primary dark:text-secondary dark:bg-dark z-50 w-full max-w-xl space-y-4 rounded-2xl bg-white p-8 shadow-2xl duration-300 ease-out data-[closed]:transform-[scale-95] data-[closed]:opacity-0"
+              className="text-primary dark:text-secondary dark:bg-dark z-50 w-full max-w-xl space-y-4 rounded-2xl bg-white p-8 shadow-2xl duration-300 ease-out data-closed:transform-[scale-95] data-closed:opacity-0"
             >
               <DialogTitle
                 as="div"
@@ -55,7 +55,7 @@ export function Modal(props: Readonly<ModalProps>) {
                   onClick={onClose}
                 >
                   <div
-                    className="dark:hover:text-secondary dark:text-secondary/60 dark:hover:bg-gray size-7 rounded-full bg-neutral-300 p-[3px] text-neutral-500 hover:bg-neutral-400 dark:bg-white/25"
+                    className="dark:hover:text-secondary dark:text-secondary/60 dark:hover:bg-gray size-7 rounded-full bg-neutral-300 p-0.75 text-neutral-500 hover:bg-neutral-400 dark:bg-white/25"
                     aria-label="close"
                   >
                     <XMarkIcon />

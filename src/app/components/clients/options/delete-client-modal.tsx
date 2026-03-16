@@ -6,7 +6,7 @@ import ConfirmModal from "@/components/confirm-modal";
 import { Client } from "@/models/client";
 import { deleteClient } from "@/services/clients";
 
-interface DeleteClientModalProps {
+type DeleteClientModalProps = {
   client: Client;
   show: boolean;
   onClose: () => void;

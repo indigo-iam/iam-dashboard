@@ -17,7 +17,7 @@ export function Option(props: Readonly<OptionProps>) {
   return (
     <MenuItem>
       <button
-        className="data-danger:hover:bg-danger hover:not:dark:text-light data-danger:text-danger dark:data-danger:text-danger-light data-danger:hover:text-secondary p-2 text-start whitespace-nowrap hover:bg-gray-200 focus:outline-none dark:hover:bg-white/30"
+        className="data-danger:hover:bg-danger hover:not:dark:text-light data-danger:text-danger dark:data-danger:text-danger-light data-danger:hover:text-secondary cursor-pointer p-2 text-start whitespace-nowrap hover:bg-gray-200 focus:outline-none dark:hover:bg-white/30"
         {...other}
       >
         {children}
@@ -37,7 +37,7 @@ export function Options(props: Readonly<OptionsProps>) {
       <MenuButton
         data-testid="option"
         title="More"
-        className="my-auto rounded-lg transition hover:bg-neutral-100 focus:outline-none data-open:bg-gray-200 dark:hover:bg-white/20 dark:data-open:bg-white/30"
+        className="my-auto cursor-pointer rounded-lg transition hover:bg-neutral-100 focus:outline-none data-open:bg-gray-200 dark:hover:bg-white/20 dark:data-open:bg-white/30"
       >
         <EllipsisHorizontalIcon className="text-primary/75 dark:text-secondary/75 size-8" />
       </MenuButton>

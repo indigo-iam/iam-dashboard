@@ -20,32 +20,28 @@ function ActiveTokenView(props: Readonly<ActiveTokenViewProps>) {
   const expiration = new Date(token.expiration);
   const expiresAt = dateToHuman(expiration);
   const expired = expiration < getDate();
-  const tokenStr = `${token.value?.slice(0, 8)}...${token.value?.slice(-8)}`;
+  const tokenStr = `${token.value?.slice(0, 4)}...${token.value?.slice(-12)}`;
   return (
     <li className="iam-list-item flex flex-row">
-      <div className="flex grow flex-col lg:flex-row">
-        <div className="flex grow flex-col gap-0.5 break-all">
-          {tokenStr}
-          <div className="flex flex-col">
-            <Link
-              className="text-gray dark:text-secondary/70 text-sm hover:underline"
-              href={`/clients/${token.clientId}`}
+      <div className="flex grow flex-col">
+        <Link
+          className="text-gray dark:text-secondary/70 flex grow flex-col text-sm lg:flex-row"
+          href={`/clients/${token.clientId}`}
+        >
+          <div className="flex grow flex-col gap-0.5 break-all">
+            <p>{tokenStr}</p>
+            <p>{token.clientId}</p>
+            <p
+              title={scopes}
+              className="text-gray dark:text-secondary/60 line-clamp-1 max-w-md text-sm font-light"
             >
-              {token.clientId}
-              <p
-                title={scopes}
-                className="text-gray dark:text-secondary/60 line-clamp-1 text-sm"
-              >
-                {scopes}
-              </p>
-            </Link>
+              {scopes}
+            </p>
           </div>
-        </div>
-        <div className="flex flex-row items-center gap-2 px-0 lg:flex-col lg:items-end lg:justify-center lg:px-2">
-          <p className="text-gray dark:text-secondary/50 text-sm whitespace-nowrap sm:text-right">
+          <p className="text-gray dark:text-secondary/50 flex items-center py-1 text-sm font-light whitespace-nowrap lg:text-right">
             {expired ? `Expired ${expiresAt}` : `Expires ${expiresAt}`}
           </p>
-        </div>
+        </Link>
       </div>
       <ActiveTokenOptions token={token} />
     </li>
@@ -56,7 +52,7 @@ export async function ActiveTokens() {
   const activeTokens = await getActiveTokens();
   return (
     <TabPanel className="panel" unmount={false}>
-      <h2>Active Tokens</h2>
+      <h2 className="py-2">Active Tokens</h2>
       <ul>
         {activeTokens.map(token => (
           <ActiveTokenView token={token} key={token.id} />

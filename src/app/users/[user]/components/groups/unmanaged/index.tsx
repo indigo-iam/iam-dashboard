@@ -27,10 +27,7 @@ type LinkViewProps = {
 function LinkView(props: Readonly<LinkViewProps>) {
   const { groupRef } = props;
   return (
-    <NextLink
-      href={`/groups/${groupRef.value}`}
-      className="flex grow flex-col hover:underline"
-    >
+    <NextLink href={`/groups/${groupRef.value}`} className="flex grow flex-col">
       {groupRef.display}
       <p className="text-gray dark:text-secondary/60 text-sm">
         {groupRef.value}

@@ -25,12 +25,14 @@ function ActiveTokenView(props: Readonly<ActiveTokenViewProps>) {
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
         <Link
-          className="dark:text-secondary/70 flex grow flex-col gap-0.5 lg:flex-row"
+          className="flex grow flex-col gap-0.5 lg:flex-row"
           href={`/clients/${token.clientId}`}
         >
           <div className="flex grow flex-col gap-0.5 break-all">
             <p>{tokenStr}</p>
-            <p className="text-gray text-sm">{token.clientId}</p>
+            <p className="text-gray dark:text-secondary/70 text-sm">
+              {token.clientId}
+            </p>
             <p
               title={scopes}
               className="text-gray dark:text-secondary/60 line-clamp-1 max-w-md text-sm font-light"

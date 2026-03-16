@@ -13,7 +13,7 @@ export default function Status(props: Readonly<StatusProps>) {
   return (
     <span
       title={title}
-      className="text-danger bg-danger data-[status=Active]:bg-success dark:lg:bg-danger dark:text-secondary dark:lg:data-[status=Active]:bg-success dark:lg:data-[status=Active]:text-secondary flex max-w-fit items-center rounded-full p-1 text-xs font-medium lg:bg-red-200 lg:px-3 lg:data-[status=Active]:bg-lime-100 lg:data-[status=Active]:text-lime-700"
+      className="text-danger bg-danger data-[status=Active]:bg-success dark:lg:bg-danger dark:text-secondary dark:lg:data-[status=Active]:bg-success dark:lg:data-[status=Active]:text-secondary flex max-w-fit items-center rounded-full p-0.5 text-xs font-medium lg:bg-red-200 lg:px-2 lg:data-[status=Active]:bg-lime-100 lg:data-[status=Active]:text-lime-700"
       data-status={status}
       aria-label={title}
     >

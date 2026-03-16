@@ -20,10 +20,7 @@ function Row(props: Readonly<RowProps>) {
   return (
     <li className="iam-list-item flex flex-row items-center">
       <div className="flex grow flex-col space-y-2 lg:flex-row">
-        <Link
-          className="grow space-y-2 hover:underline"
-          href={`/users/${request.accountId}`}
-        >
+        <Link className="grow space-y-2" href={`/users/${request.accountId}`}>
           <p>
             User <b>{`${request.givenname} ${request.familyname}`}</b> (
             <i>{request.username}</i>) applied for an account.

@@ -5,7 +5,6 @@
 import Link from "next/link";
 import { Status } from "@/components/badges";
 import { User } from "@/models/scim";
-import { dateToHuman } from "@/utils/dates";
 import UserOptions from "./options";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
@@ -16,25 +15,25 @@ type RowProps = {
 function Row(props: Readonly<RowProps>) {
   const { user } = props;
   const created = user.meta?.created
-    ? dateToHuman(new Date(user.meta.created))
+    ? new Date(user.meta.created).toLocaleString()
     : "N/A";
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
-        <div className="flex flex-col gap-2 sm:flex-row">
+        <div className="flex flex-col lg:flex-row lg:gap-2">
           <Link
-            className="flex grow flex-col break-all hover:underline"
+            className="items text-md flex grow flex-col justify-center break-all hover:underline"
             href={`/users/${user.id}`}
           >
             {user.name?.formatted}
-            <p className="text-gray dark:text-secondary/70 text-sm">
+            <p className="text-gray dark:text-secondary/70 text-sm font-light">
               {user.emails?.[0].value}
             </p>
           </Link>
           <div className="my-auto flex flex-col">
-            <div className="inline-flex items-center gap-2 sm:flex-col sm:items-end sm:gap-0 sm:px-2">
+            <div className="inline-flex items-center gap-2 lg:flex-col lg:items-end lg:gap-1">
               <Status active={user.active ?? false} />
-              <p className="text-gray dark:text-secondary/50 py-1 text-sm whitespace-nowrap">
+              <p className="text-gray dark:text-secondary/50 py-1 text-sm font-light whitespace-nowrap lg:p-0">
                 Created {created}
               </p>
             </div>

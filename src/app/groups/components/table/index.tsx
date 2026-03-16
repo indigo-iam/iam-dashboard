@@ -4,7 +4,6 @@
 
 import Link from "next/link";
 import { Group } from "@/models/groups";
-import { dateToHuman } from "@/utils/dates";
 import GroupOptions from "./options";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
@@ -39,28 +38,28 @@ type RowProps = {
 function Row(props: Readonly<RowProps>) {
   const { group } = props;
   const created = group.meta?.created
-    ? dateToHuman(new Date(group.meta.created))
+    ? new Date(group.meta.created).toLocaleString()
     : "N/A";
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
-        <div className="flex flex-col gap-2 lg:flex-row">
-          <Link
-            className="flex flex-col break-all hover:underline"
-            href={`/groups/${group.id}`}
-          >
+        <Link
+          className="flex grow flex-col break-all lg:flex-row"
+          href={`/groups/${group.id}`}
+        >
+          <div className="flex flex-col">
             {group.displayName}
-            <p className="text-gray dark:text-secondary/60 text-sm">
-              {group.id}
+            <p className="text-gray dark:text-secondary/60 text-sm font-light">
+              {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description}
             </p>
-          </Link>
+          </div>
           <div className="flex grow items-center">
             <Labels group={group} />
           </div>
-          <p className="text-gray dark:text-secondary/50 my-auto flex flex-col pr-2 text-sm">
+          <p className="text-gray dark:text-secondary/50 my-auto flex flex-col py-1 pr-2 text-sm font-light">
             Created {created}
           </p>
-        </div>
+        </Link>
       </div>
       <GroupOptions group={group} />
     </li>

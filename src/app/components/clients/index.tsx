@@ -5,7 +5,6 @@
 import Link from "next/link";
 import { Status } from "@/components/badges";
 import { Client } from "@/models/client";
-import { dateToHuman } from "@/utils/dates";
 import ClientOptions from "./options";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
@@ -24,32 +23,32 @@ function Row(props: Readonly<RowProps>) {
   const { client_id, client_name, scope } = client;
   const scopes = scope ? sortScopes(scope) : undefined;
   const createdAt = client.created_at
-    ? dateToHuman(new Date(client.created_at))
+    ? new Date(client.created_at).toLocaleString()
     : "N/A";
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow">
-        <div className="flex grow flex-col space-y-2 lg:flex-row">
+        <div className="flex grow flex-col space-y-2 lg:flex-row lg:space-y-0">
           <Link
-            className="flex grow flex-col gap-0.5 break-all hover:underline"
+            className="flex grow flex-col gap-0.5 break-all"
             href={`/clients/${client_id}`}
           >
             {client_name}
             <div className="flex flex-col">
-              <p className="text-gray dark:text-secondary/70 text-sm">
-                {client_id}
+              <p className="text-gray dark:text-secondary/70 text-md font-light">
+                {client.client_description}
               </p>
               <p
                 title={scopes}
-                className="text-gray dark:text-secondary/60 line-clamp-1 text-sm"
+                className="dark:text-secondary/60 text-gray line-clamp-1 max-w-md text-sm font-light"
               >
                 {scopes}
               </p>
             </div>
           </Link>
-          <div className="flex flex-row items-center gap-2 lg:flex-col lg:items-end lg:justify-center lg:px-2">
+          <div className="flex flex-row items-center gap-1 lg:flex-col lg:items-end lg:justify-center lg:px-2">
             <Status active={client.active} />
-            <p className="text-gray dark:text-secondary/50 text-sm whitespace-nowrap sm:text-right">
+            <p className="text-gray dark:text-secondary/50 text-sm font-light whitespace-nowrap sm:text-right">
               Created {createdAt}
             </p>
           </div>

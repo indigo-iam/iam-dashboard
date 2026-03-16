@@ -20,9 +20,9 @@ export async function UserPopover(props: Readonly<UserPopoverProps>) {
   const email = user.emails?.[0].value;
 
   return (
-    <Popover>
+    <Popover className="relative size-8">
       <PopoverButton
-        className="hover:cursor-pointer flex-none"
+        className="hover:cursor-pointer"
         title="Open user menu"
         data-testid="user-menu-btn"
       >
@@ -34,7 +34,7 @@ export async function UserPopover(props: Readonly<UserPopoverProps>) {
         className="items text-light flex w-56 flex-col overflow-hidden rounded-xl bg-white p-4 text-sm/6 shadow transition duration-200 ease-in-out [--anchor-gap:--spacing(5)] data-closed:-translate-y-1 data-closed:opacity-0 dark:bg-slate-600"
       >
         <div className="divide-light-gray dark:divide-light-gray/30 space-y-4 divide-y">
-          <div className="flex gap-2 pb-2">
+          <div className="flex items-center gap-2 pb-2">
             <Gravatar email={email} />
             <div className="text-light dark:text-secondary flex flex-col leading-normal">
               <span>{user.name?.formatted}</span>

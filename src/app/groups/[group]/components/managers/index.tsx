@@ -8,6 +8,7 @@ import { Group } from "@/models/groups";
 import { fetchGroupManagers } from "@/services/groups";
 import ManagersTable from "./table/table";
 import AssignGroupManagerButton from "./assign-button";
+
 import { redirect } from "next/navigation";
 
 type ManagersProps = {
@@ -20,18 +21,24 @@ export default async function Managers(props: Readonly<ManagersProps>) {
   if (!session) {
     redirect("/signin");
   }
-  const isAdmin = await isUserAdmin();
-  if (isAdmin) {
-    return null;
-  }
-
   const managers = await fetchGroupManagers(group.id);
-
+  if (!managers) {
+    return (
+      <TabPanel className="panel space-y-4">
+        <h2 className="grow">Managers</h2>
+        <p className="text-gray dark:text-secondary/60 p-2">
+          This groups has no managers.
+        </p>
+      </TabPanel>
+    );
+  }
   return (
     <TabPanel className="panel space-y-4">
-      <h2>Managers</h2>
+      <div className="flex">
+        <h2 className="grow">Managers</h2>
+        <AssignGroupManagerButton group={group} />
+      </div>
       <ManagersTable group={group} managers={managers} />
-      <AssignGroupManagerButton group={group} />
     </TabPanel>
   );
 }

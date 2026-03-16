@@ -2,5 +2,9 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-export { default as GroupsTable } from "./table";
+export {
+  AdminGroupsTable,
+  UserGroupsTable,
+  UserManagedGroupsTable,
+} from "./table";
 export { default as AddGroupButton } from "./add-group-button";

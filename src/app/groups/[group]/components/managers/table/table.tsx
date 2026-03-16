@@ -12,13 +12,10 @@ function Row(props: Readonly<{ manager: User; group: Group }>) {
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
-        <Link
-          className="flex grow flex-col hover:underline"
-          href={`/users/${manager.id}`}
-        >
-          {manager.displayName}
-          <p className="text-gray dark:text-secondary-dark text-sm">
-            {manager.id}
+        <Link className="flex grow flex-col" href={`/users/${manager.id}`}>
+          {manager.name?.formatted}
+          <p className="text-gray dark:text-secondary/60 text-sm font-light">
+            {manager.emails?.[0].value}
           </p>
         </Link>
       </div>

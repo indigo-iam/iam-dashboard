@@ -1,7 +1,8 @@
 // SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
 //
 // SPDX-License-Identifier: EUPL-1.2
-import { getSession } from "@/auth";
+
+import { getSession, isUserAdmin } from "@/auth";
 import { TabGroup, TabList, TabPanels, Tab } from "@/components/tabs";
 import { GroupInfo, Managers, Members, Subgroups } from "./components";
 import { fetchGroup } from "@/services/groups";
@@ -21,6 +22,10 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
   const { params } = props;
   const groupID = (await params).group;
   const group = await fetchGroup(groupID);
+  if (!group) {
+    redirect("/groups");
+  }
+  const isAdmin = await isUserAdmin();
   return (
     <section className="container">
       <header className="section-header">
@@ -31,14 +36,14 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
         <TabList className="flex overflow-auto">
           <Tab>GENERAL</Tab>
           <Tab>SUBGROUPS</Tab>
-          <Tab>MANAGERS</Tab>
+          {isAdmin && <Tab>MANAGERS</Tab>}
           <Tab>MEMBERS</Tab>
         </TabList>
         <TabPanels>
           <GroupInfo group={group} />
           <Subgroups group={group} />
-          <Managers group={group} />
-          <Members group={group} />
+          {isAdmin && <Managers group={group} />}
+          <Members group={group} isAdmin={isAdmin} />
         </TabPanels>
       </TabGroup>
     </section>

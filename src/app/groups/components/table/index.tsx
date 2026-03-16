@@ -3,9 +3,11 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import Link from "next/link";
-import { Group } from "@/models/groups";
-import GroupOptions from "./options";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+
+import { Group, ManagedGroup } from "@/models/groups";
+import { ScimReference } from "@/models/scim";
+import GroupOptions from "./options";
 
 type LabelsProps = {
   group: Group;
@@ -70,11 +72,11 @@ function Row(props: Readonly<RowProps>) {
   );
 }
 
-type TableProps = {
+type AdminGroupsTableProps = {
   groups: Group[];
 };
 
-export default async function GroupsTable(props: Readonly<TableProps>) {
+export async function AdminGroupsTable(props: Readonly<AdminGroupsTableProps>) {
   const { groups } = props;
   if (groups.length === 0) {
     return (
@@ -89,6 +91,56 @@ export default async function GroupsTable(props: Readonly<TableProps>) {
       {groups.map(group => (
         <Row key={group.id} group={group} />
       ))}
+    </ul>
+  );
+}
+
+type UserGroupsTablesProps = {
+  groupRefs: ScimReference[];
+};
+
+export async function UserGroupsTable(props: Readonly<UserGroupsTablesProps>) {
+  const { groupRefs } = props;
+  return (
+    <ul>
+      {groupRefs.map(g => {
+        return (
+          <li key={g.value} className="iam-list-item">
+            <div className="flex flex-col">
+              <p>{g.display}</p>
+              <p className="text-light dark:text-secondary/60 text-sm font-light">
+                {g.value}
+              </p>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+type UserManagedGroupsTableProps = {
+  groups: ManagedGroup[];
+};
+
+export async function UserManagedGroupsTable(
+  props: Readonly<UserManagedGroupsTableProps>
+) {
+  const { groups } = props;
+  return (
+    <ul>
+      {groups.map(g => {
+        return (
+          <li key={g.id} className="iam-list-item">
+            <Link className="w-full" href={`/groups/${g.id}`}>
+              <p>{g.name}</p>
+              <p className="text-light dark:text-secondary/60 text-sm font-light">
+                {g.id}
+              </p>
+            </Link>
+          </li>
+        );
+      })}
     </ul>
   );
 }

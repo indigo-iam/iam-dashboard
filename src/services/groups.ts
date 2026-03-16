@@ -14,7 +14,6 @@ import {
 import { authFetch, getItem } from "@/utils/fetch";
 import { settings } from "@/config";
 import { Paginated } from "@/models/pagination";
-import { revalidatePath } from "next/cache";
 import { ScimReference, User } from "@/models/scim";
 import { setNotification } from "@/services/notifications";
 import {
@@ -23,11 +22,20 @@ import {
   makeScimReferenceFromUser,
 } from "@/utils/scim";
 
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+
 const { IAM_API_URL } = settings;
 
 export async function fetchGroup(groupID: string) {
   let url = `${IAM_API_URL}/scim/Groups/${groupID}`;
-  return await getItem<Group>(url);
+  const response = await authFetch(url);
+  if (response.ok) {
+    return (await response.json()) as Group;
+  }
+  if (status === "403") {
+    redirect("/groups");
+  }
 }
 
 export async function searchGroup(filter: string) {
@@ -244,7 +252,15 @@ export async function removeUserByRefFromGroup(
 // for some reason this API is not paginated
 export async function fetchGroupManagers(groupId: string) {
   const url = `${IAM_API_URL}/iam/group/${groupId}/group-managers`;
-  return getItem<User[]>(url);
+  const response = await authFetch(url);
+  if (response.ok) {
+    return (await response.json()) as User[];
+  } else {
+    const msg = await response.text();
+    console.error(
+      `Failed to fetch groups manager with status: ${response.status}, ${msg}`
+    );
+  }
 }
 
 export async function assignGroupManager(groupId: string, userId: string) {

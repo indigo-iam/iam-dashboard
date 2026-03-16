@@ -10,17 +10,24 @@ import AddMemberButton from "./add-button";
 
 type MembersProps = {
   group: Group;
+  isAdmin?: boolean;
 };
 
 export default async function Members(props: Readonly<MembersProps>) {
-  const { group } = props;
+  const { group, isAdmin } = props;
   // TODO: pagination
   const members = (await fetchGroupMembersPage(group.id)).Resources;
   return (
     <TabPanel className="panel space-y-4">
-      <h2>Members</h2>
+      {isAdmin ? (
+        <div className="flex">
+          <h2 className="grow">Members</h2>
+          <AddMemberButton group={group} />
+        </div>
+      ) : (
+        <h2 className="grow">Members</h2>
+      )}
       <MembersTable group={group} members={members} />
-      <AddMemberButton group={group} />
     </TabPanel>
   );
 }

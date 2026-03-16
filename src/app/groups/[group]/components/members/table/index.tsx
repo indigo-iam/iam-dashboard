@@ -6,6 +6,7 @@ import { Group } from "@/models/groups";
 import { fetchGroupMembersPage } from "@/services/groups";
 import { ScimReference } from "@/models/scim";
 import MemberOptions from "./options";
+
 import Link from "next/link";
 
 type RowProps = {
@@ -20,7 +21,7 @@ function Row(props: Readonly<RowProps>) {
       <div className="flex grow flex-col">
         <Link className="flex grow flex-col" href={`/users/${userRef.value}`}>
           {userRef.display}
-          <p className="text-gray dark:text-secondary-dark text-sm">
+          <p className="text-gray dark:text-secondary/60 text-sm font-light">
             {userRef.value}
           </p>
         </Link>

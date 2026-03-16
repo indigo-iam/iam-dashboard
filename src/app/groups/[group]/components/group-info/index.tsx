@@ -26,13 +26,15 @@ export default function GroupInfo(props: Readonly<GroupInfoProps>) {
     <TabPanel className="panel space-y-4">
       <h2>Group Information</h2>
       <div>
-        <h3 className="mb-2 text-2xl" title="Group Name">
+        <h3 className="mb-2 text-xl" title="Group Name">
           {group.displayName}
         </h3>
-        <p className="mb-2" title="Description">
+        <p className="text-gray mb-2" title="Description">
           {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description}
         </p>
-        <p className="text-gray dark:text-secondary/70 mb-2">{group.id}</p>
+        <p className="text-gray dark:text-secondary/70 mb-2 text-sm break-all">
+          {group.id}
+        </p>
         <p className="text-gray dark:text-secondary-dark flex items-center gap-2 text-sm">
           <CalendarDaysIcon className="size-4" />
           Created {created}

@@ -20,16 +20,16 @@ function Row(props: Readonly<RowProps>) {
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
-        <div className="flex flex-col lg:flex-row lg:gap-2">
-          <Link
-            className="items text-md flex grow flex-col justify-center break-all hover:underline"
-            href={`/users/${user.id}`}
-          >
+        <Link
+          className="text-md flex grow flex-col break-all lg:flex-row"
+          href={`/users/${user.id}`}
+        >
+          <div className="grow flex-col">
             {user.name?.formatted}
             <p className="text-gray dark:text-secondary/70 text-sm font-light">
               {user.emails?.[0].value}
             </p>
-          </Link>
+          </div>
           <div className="my-auto flex flex-col">
             <div className="inline-flex items-center gap-2 lg:flex-col lg:items-end lg:gap-1">
               <Status active={user.active ?? false} />
@@ -38,11 +38,9 @@ function Row(props: Readonly<RowProps>) {
               </p>
             </div>
           </div>
-        </div>
+        </Link>
       </div>
-      <div className="flex flex-col justify-center">
-        <UserOptions user={user} />
-      </div>
+      <UserOptions user={user} />
     </li>
   );
 }

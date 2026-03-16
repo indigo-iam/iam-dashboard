@@ -18,10 +18,7 @@ function Row(props: Readonly<RowProps>) {
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
-        <Link
-          className="flex grow flex-col hover:underline"
-          href={`/users/${userRef.value}`}
-        >
+        <Link className="flex grow flex-col" href={`/users/${userRef.value}`}>
           {userRef.display}
           <p className="text-gray dark:text-secondary-dark text-sm">
             {userRef.value}

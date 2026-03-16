@@ -24,14 +24,13 @@ export function Gravatar(props: Readonly<GravatarProps>) {
     return <FallbackImage />;
   }
   const url = getGravatarURL(email);
-
   return (
     <Image
       src={url}
       width="100"
       height="100"
       sizes="100vw"
-      className="my-auto w-8 min-w-8 rounded-full"
+      className="size-8 rounded-full"
       placeholder={placeholder}
       alt="Gravatar"
     />

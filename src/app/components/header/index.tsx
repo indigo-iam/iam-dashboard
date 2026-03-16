@@ -25,25 +25,23 @@ export async function Header(props: Readonly<HeaderProps>) {
           </h2>
         </div>
       </div>
-      <div className="flex flex-col">
-        <div className="flex items-center justify-end gap-4">
-          {hasRoleAdmin && (
-            <>
-              {isAdmin && (
-                <p className="bg-danger flex items-center gap-1 rounded px-2 py-1 text-xs">
-                  <ExclamationTriangleIcon className="size-4" />
-                  <span className="hidden md:inline-block">admin mode</span>
-                  <span className="inline-block md:hidden">admin</span>
-                </p>
-              )}
-              <Notifications
-                className="hidden data-[visible=true]:block"
-                data-visible={isAdmin && hasRoleAdmin}
-              />
-            </>
-          )}
-          <UserPopover hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
-        </div>
+      <div className="flex items-center gap-2">
+        {hasRoleAdmin && (
+          <>
+            {isAdmin && (
+              <p className="bg-danger flex items-center gap-1 rounded px-2 py-1 text-xs">
+                <ExclamationTriangleIcon className="size-4" />
+                <span className="hidden md:inline-block">admin mode</span>
+                <span className="inline-block md:hidden">admin</span>
+              </p>
+            )}
+            <Notifications
+              className="hidden data-[visible=true]:block"
+              data-visible={isAdmin && hasRoleAdmin}
+            />
+          </>
+        )}
+        <UserPopover hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
       </div>
     </header>
   );

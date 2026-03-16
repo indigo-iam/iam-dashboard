@@ -80,7 +80,7 @@ export async function Sidebar(props: Readonly<SidebarProps>) {
   return (
     <Drawer>
       <div className="flex h-full flex-col">
-        <nav className="flex grow flex-col justify-between px-6 py-8">
+        <nav className="flex grow flex-col overflow-y-auto px-6 py-8">
           <Links hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
           <div className="p-2">
             <Link

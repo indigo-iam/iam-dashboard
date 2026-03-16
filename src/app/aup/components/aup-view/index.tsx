@@ -4,7 +4,6 @@
 
 import { Form, Field, Label, Description } from "@/components/form";
 import { Input } from "@/components/inputs/input";
-import Link from "@/components/link";
 import { AUP } from "@/models/aup";
 import { dateToHuman } from "@/utils/dates";
 import EditButton from "./edit-button";
@@ -54,7 +53,7 @@ export default function AupView(props: Readonly<AupViewProps>) {
           </Description>
         </Field>
       </Form>
-      <div className="flex flex-row gap-2">
+      <div className="flex flex-wrap gap-2">
         <EditButton aup={aup} />
         <RequestSignatureButton />
         <DeleteButton />

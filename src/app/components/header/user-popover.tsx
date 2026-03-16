@@ -22,7 +22,7 @@ export async function UserPopover(props: Readonly<UserPopoverProps>) {
   return (
     <Popover>
       <PopoverButton
-        className="flex items-center hover:cursor-pointer"
+        className="hover:cursor-pointer flex-none"
         title="Open user menu"
         data-testid="user-menu-btn"
       >

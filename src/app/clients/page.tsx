@@ -54,7 +54,7 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
   const numberOfPages = Math.ceil(clientPage.totalResults / count) || 1;
   const clients = clientPage.Resources;
   return (
-    <section>
+    <section className="container">
       <header className="section-header justify-between">
         <div className="flex items-center gap-2">
           <RocketLaunchIcon className="size-5" />

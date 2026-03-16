@@ -35,7 +35,7 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
   const scopes = await fetchPaginatedScopes(count, startIndex, query);
   const numberOfPages = Math.ceil(scopes.totalResults / count);
   return (
-    <section>
+    <section className="container">
       <header className="section-header">
         <div className="flex grow gap-2">
           <ClipboardDocumentCheckIcon className="size-5" />

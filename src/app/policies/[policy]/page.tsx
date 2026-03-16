@@ -24,7 +24,7 @@ export default async function PolicyPage(props: Readonly<PolicyPageProps>) {
   const id = (await params).policy;
   const policy = await fetchScopePolicy(id);
   return (
-    <section>
+    <section className="container">
       <header className="section-header">
         <h2 className="text-base font-normal">Edit Scope Policy</h2>
       </header>

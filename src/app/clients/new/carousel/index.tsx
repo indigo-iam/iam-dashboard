@@ -99,7 +99,7 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
   };
 
   return (
-    <section className="space-y-4">
+    <section className="container space-y-4">
       <header className="section-header">
         <RocketLaunchIcon className="size-5" />
         <h2 className="text-base font-normal">New client</h2>

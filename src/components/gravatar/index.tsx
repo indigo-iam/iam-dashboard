@@ -31,7 +31,7 @@ export function Gravatar(props: Readonly<GravatarProps>) {
       width="100"
       height="100"
       sizes="100vw"
-      className="my-auto w-8 rounded-full"
+      className="my-auto w-8 min-w-8 rounded-full"
       placeholder={placeholder}
       alt="Gravatar"
     />

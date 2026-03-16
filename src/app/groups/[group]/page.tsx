@@ -20,11 +20,11 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
   const groupID = (await params).group;
   const group = await fetchGroup(groupID);
   return (
-    <section>
+    <section className="container">
       <header className="section-header">
         <h2 className="text-base font-normal">{group.displayName}</h2>
       </header>
-      <TabGroup className="content">
+      <TabGroup className="content space-y-8">
         <TabList className="flex overflow-auto">
           <Tab>GENERAL</Tab>
           <Tab>SUBGROUPS</Tab>

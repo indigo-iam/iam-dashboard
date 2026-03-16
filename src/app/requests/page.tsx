@@ -24,7 +24,7 @@ export default async function Requests() {
   const registrationRequests = await fetchRegistrationRequests();
   const certLinkRequests = [];
   return (
-    <section>
+    <section className="container">
       <header className="section-header">
         <InboxArrowDownIcon className="size-5" />
         <h2 className="text-base font-normal">Requests</h2>

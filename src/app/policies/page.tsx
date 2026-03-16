@@ -19,7 +19,7 @@ export default async function Policies() {
   }
   const policies = await fetchScopePolicies();
   return (
-    <section>
+    <section className="container">
       <header className="section-header">
         <div className="flex grow gap-2">
           <ScaleIcon className="size-5" />

@@ -37,7 +37,7 @@ export default async function Client(props: Readonly<ClientPageProps>) {
   }
 
   return (
-    <section>
+    <section className="container">
       <header className="section-header">
         <RocketLaunchIcon className="size-5" />
         <h2 className="text-base font-normal">{client.client_name}</h2>

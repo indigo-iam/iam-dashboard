@@ -14,30 +14,36 @@ type HeaderProps = {
 
 export async function Header(props: Readonly<HeaderProps>) {
   const { hasRoleAdmin, isAdmin } = props;
+  const organization = "cnafsd";
   return (
-    <header className="t-0 text-secondary sticky top-0 z-50 flex h-14 justify-between border-b border-b-gray-400 bg-sky-900 px-4 py-2 md:px-8 dark:bg-sky-900/75">
-      <div className="flex gap-2">
-        <ToggleDrawerButton />
-        <h2 className="my-auto text-xl font-light">
-          IAM for <b className="font-bold">cnafsd</b>
-        </h2>
+    <header className="t-0 text-secondary fixed inset-0 top-0 z-50 flex h-14 border-b border-b-gray-400 bg-sky-900 px-4 py-2 md:px-8 dark:bg-sky-900">
+      <div className="flex grow flex-col truncate">
+        <div className="flex grow gap-2">
+          <ToggleDrawerButton />
+          <h2 className="my-auto truncate text-xl font-light">
+            IAM for <b>{organization}</b>
+          </h2>
+        </div>
       </div>
-      <div className="flex items-center gap-4">
-        {hasRoleAdmin && (
-          <>
-            {isAdmin && (
-              <span className="bg-danger flex items-center gap-1 rounded px-2 py-1 text-xs">
-                <ExclamationTriangleIcon className="size-4" />
-                admin mode
-              </span>
-            )}
-            <Notifications
-              className="hidden data-[visible=true]:block"
-              data-visible={isAdmin && hasRoleAdmin}
-            />
-          </>
-        )}
-        <UserPopover hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
+      <div className="flex flex-col">
+        <div className="flex items-center justify-end gap-4">
+          {hasRoleAdmin && (
+            <>
+              {isAdmin && (
+                <p className="bg-danger flex items-center gap-1 rounded px-2 py-1 text-xs">
+                  <ExclamationTriangleIcon className="size-4" />
+                  <span className="hidden md:inline-block">admin mode</span>
+                  <span className="inline-block md:hidden">admin</span>
+                </p>
+              )}
+              <Notifications
+                className="hidden data-[visible=true]:block"
+                data-visible={isAdmin && hasRoleAdmin}
+              />
+            </>
+          )}
+          <UserPopover hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
+        </div>
       </div>
     </header>
   );

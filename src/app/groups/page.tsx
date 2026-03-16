@@ -26,7 +26,7 @@ export default async function GroupsPage(props: Readonly<GroupsProps>) {
   const numberOfPages = Math.ceil(groupsPage.totalResults / count);
   const groups = groupsPage.Resources;
   return (
-    <section>
+    <section className="container">
       <header className="section-header">
         <div className="flex grow gap-2">
           <UserGroupIcon className="size-5" />

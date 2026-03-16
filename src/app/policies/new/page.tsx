@@ -18,7 +18,7 @@ const POLICY_EXAMPLE = `{
 
 export default async function Policies() {
   return (
-    <section>
+    <section className="container">
       <header className="section-header">
         <h2 className="text-base font-normal">Create Scope Policy</h2>
       </header>

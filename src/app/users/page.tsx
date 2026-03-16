@@ -37,7 +37,7 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
   const numberOfPages = Math.ceil(usersPage.totalResults / count) || 1;
   const users = usersPage.Resources;
   return (
-    <section>
+    <section className="container">
       <header className="section-header">
         <div className="flex grow gap-2">
           <UsersIcon className="size-5" />

@@ -41,7 +41,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
     redirect("/");
   }
   return (
-    <section>
+    <section className="container">
       <header className="section-header">
         <UserIcon className="size-5" />
         <h2 className="text-base font-normal">{user.name?.formatted}</h2>

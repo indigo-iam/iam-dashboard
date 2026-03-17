@@ -18,6 +18,7 @@ test("Create and delete group", async ({ page }) => {
     // enable admin mode
     await page.getByTestId("user-menu-btn").click();
     await page.getByText("Admin mode").click();
+    await expect(page.getByTestId("admin-mode-label")).toBeVisible();
 
     await page.goto("./groups");
     await page.getByTestId("add-group").click();
@@ -31,9 +32,7 @@ test("Create and delete group", async ({ page }) => {
     await expect(toast.getByText("Group created")).toBeVisible();
     // check group has been created
     await page.goto("./groups");
-    await page
-      .getByTestId("search-group")
-      .pressSequentially(groupName, { delay: 100 });
+    await page.getByTestId("search-group").pressSequentially(groupName);
     const options = page.getByTitle("More");
     await expect(options).toHaveCount(1);
   });
@@ -42,9 +41,7 @@ test("Create and delete group", async ({ page }) => {
     await page.goto("./groups");
     // expect to find only one group
     const groupName = groupNameByIndex(test.info().workerIndex);
-    await page
-      .getByTestId("search-group")
-      .pressSequentially(groupName, { delay: 100 });
+    await page.getByTestId("search-group").pressSequentially(groupName);
     const options = page.getByTitle("More");
     await expect(options).toHaveCount(1);
     // click delete option and confirm

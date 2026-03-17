@@ -16,7 +16,7 @@ export async function Header(props: Readonly<HeaderProps>) {
   const { hasRoleAdmin, isAdmin } = props;
   const organization = "cnafsd";
   return (
-    <header className="t-0 fixed inset-0 top-0 z-50 flex h-14 border-b border-b-gray-400 bg-sky-900 px-4 py-2 text-white md:px-8 dark:bg-sky-980">
+    <header className="t-0 dark:bg-sky-980 fixed inset-0 top-0 z-50 flex h-14 border-b border-b-gray-400 bg-sky-900 px-4 py-2 text-white md:px-8">
       <div className="flex grow flex-col truncate">
         <div className="flex grow gap-2">
           <ToggleDrawerButton />
@@ -29,7 +29,10 @@ export async function Header(props: Readonly<HeaderProps>) {
         {hasRoleAdmin && (
           <>
             {isAdmin && (
-              <p className="flex items-center gap-1 rounded bg-orange-50 px-2 py-1 text-xs text-orange-400 dark:bg-orange-400 dark:text-orange-50">
+              <p
+                className="flex items-center gap-1 rounded bg-orange-50 px-2 py-1 text-xs text-orange-400 dark:bg-orange-400 dark:text-orange-50"
+                data-testid="admin-mode-label"
+              >
                 <ExclamationTriangleIcon className="size-4" />
                 <span className="hidden md:inline-block">admin mode</span>
                 <span className="inline-block md:hidden">admin</span>

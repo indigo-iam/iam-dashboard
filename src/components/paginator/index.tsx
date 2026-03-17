@@ -14,7 +14,7 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const className =
-  "flex p-0.5 ml-0 bg-white text-gray-300 border border-primary/10 hover:bg-gray-300 dark:bg-secondary/50 dark:text-white dark:hover:text-gray-950 dark:hover:bg-white/70 first:rounded-l-lg last:rounded-r-lg data-[disabled=true]:opacity-30 data-[disabled=true]:pointer-events-none";
+  "flex p-0.5 ml-0 bg-white text-gray-300 border border-gray-300 hover:bg-gray-200 dark:bg-secondary/50    first:rounded-l-lg last:rounded-r-lg data-[disabled=true]:opacity-30 data-[disabled=true]:pointer-events-none hover:text-gray-500 dark:bg-gray-700 dark:border-gray-400 dark:text-gray-500 dark:hover:bg-gray-600 dark:hover:text-gray-400";
 
 export interface PaginatorProps {
   numberOfPages: number;
@@ -52,7 +52,7 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
         <select
           id="items-per-page"
           value={itemsPerPage}
-          className="block rounded-lg border border-gray-300 bg-gray-50 p-1 text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-white/10 dark:text-white/50"
+          className="block rounded-lg border border-gray-300 bg-gray-50 p-1 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-400 dark:bg-white/10 dark:text-white/50"
           onChange={e => onChangeItemsPerPage(parseInt(e.currentTarget.value))}
           aria-label="Items per page"
         >

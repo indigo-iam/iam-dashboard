@@ -41,18 +41,18 @@ export function InputSearch(props: Readonly<InputSearchProps>) {
   };
 
   return (
-    <div className="dark:bg-dark flex items-center gap-2 rounded border border-neutral-200 bg-white px-2 py-1 outline-blue-600 focus-within:outline dark:border-slate-600">
-      <MagnifyingGlassIcon className="size-6 text-gray-400" />
+    <div className="panel flex items-center gap-2 px-2 py-1 outline-blue-600 focus-within:outline">
+      <MagnifyingGlassIcon className="size-6 text-gray-400 dark:text-gray-500" />
       <Input
         onKeyUp={() => delayedSearch()}
         placeholder="Type to search..."
         value={value}
-        className="w-full outline-hidden"
+        className="w-full outline-hidden dark:text-white"
         onChange={e => setValue(e.currentTarget.value)}
         {...others}
       />
       <button
-        className="text-extralight hover:text-primary"
+        className="text-gray-300 hover:cursor-pointer hover:text-gray-950 dark:text-gray-400 dark:hover:text-gray-500"
         onClick={clearSearch}
         title="Clear search"
       >

@@ -8,6 +8,8 @@
 
 @import "./variables/theme.css";
 
+@import "./base/typography.css";
+
 @import "./components/buttons.css";
 @import "./components/cards.css";
 @import "./components/headers.css";

@@ -5,7 +5,7 @@
 export const ModalFooter = (props: { children?: React.ReactNode }) => {
   const { children } = props;
   return (
-    <div className="border-light-gray dark:border-light-gray/30 bottom-0 flex min-h-8 justify-end space-x-2">
+    <div className="bottom-0 flex min-h-8 justify-end space-x-2 border-gray-500 dark:border-gray-500/30">
       {children}
     </div>
   );

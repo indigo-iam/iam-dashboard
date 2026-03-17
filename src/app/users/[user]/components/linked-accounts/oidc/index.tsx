@@ -11,8 +11,8 @@ function OidcIdView(props: { oidcId: OidcId }) {
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
-        <p>{oidcId.issuer}</p>
-        <p className="dark:text-secondary/60 text-sm">id: {oidcId.subject}</p>
+        <p className="text-gray-950 dark:text-gray-100">{oidcId.issuer}</p>
+        <p className="text-sm font-light">id: {oidcId.subject}</p>
       </div>
       <OidcOptions oidcId={oidcId} />
     </li>
@@ -29,10 +29,8 @@ export function OidcAccounts(props: Readonly<OidcAccountsProps>) {
   if (oidcIds.length === 0) {
     return (
       <div className="panel space-y-2">
-        <h2>OpenID Connect</h2>
-        <p className="text-gray dark:text-secondary/60 p-2">
-          No OpenID connect linked accounts found.
-        </p>
+        <h2 className="text-gray-950 dark:text-gray-100">OpenID Connect</h2>
+        <p>No OpenID connect linked accounts found.</p>
       </div>
     );
   }

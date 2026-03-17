@@ -20,7 +20,7 @@ export default function LabelView(props: Readonly<LabelProps>) {
   return (
     <form
       action={action}
-      className="text-secondary flex items-center gap-1 rounded-full bg-sky-400 px-2 py-0.5 text-sm"
+      className="flex items-center gap-1 rounded-full bg-sky-400 px-2 py-0.5 text-sm text-white"
     >
       <span>
         <b>{label.name}</b> {label.value}
@@ -29,8 +29,9 @@ export default function LabelView(props: Readonly<LabelProps>) {
         id={`delete-label-${label.name}`}
         title={`Delete ${label.name} ${label.value}`.trimEnd()}
         type="submit"
+        className="cursor-pointer"
       >
-        <XCircleIcon className="hover:text-light-gray size-4" />
+        <XCircleIcon className="size-4 hover:text-gray-300" />
       </button>
     </form>
   );

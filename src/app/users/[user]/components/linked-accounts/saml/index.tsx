@@ -11,13 +11,11 @@ function SamlIdView(props: { samlId: SamlId }) {
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
-        <p className="break-all">{samlId.idpId}</p>
-        <p className="text-gray dark:text-secondary/60 text-sm break-all">
-          {samlId.userId}
+        <p className="break-all text-gray-950 dark:text-gray-100">
+          {samlId.idpId}
         </p>
-        <p className="text-gray dark:text-secondary/60 text-sm break-all">
-          {samlId.attributeId}
-        </p>
+        <p className="text-sm font-light">{samlId.userId}</p>
+        <p className="text-sm font-light">{samlId.attributeId}</p>
       </div>
       <SAMLOptions samlId={samlId} />
     </li>
@@ -35,7 +33,7 @@ export function SamlAccounts(props: Readonly<SamlAccountsProps>) {
     return (
       <div className="panel space-y-2">
         <h2>SAML</h2>
-        <p className="text-gray dark:text-secondary/60 p-2">
+        <p className="text-gray p-2 dark:text-white/60">
           No linked SAML accounts found.
         </p>
       </div>

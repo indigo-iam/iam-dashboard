@@ -30,19 +30,19 @@ export default function GroupInfo(props: Readonly<GroupInfoProps>) {
           {group.displayName}
         </h3>
         <p
-          className="text-gray dark:text-secondary/70 mb-2"
+          className="text-gray dark:text-white/70 mb-2"
           title="Description"
         >
           {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description}
         </p>
-        <p className="text-gray dark:text-secondary/60 mb-2 text-sm font-light break-all">
+        <p className="text-gray dark:text-white/60 mb-2 text-sm font-light break-all">
           {group.id}
         </p>
-        <p className="text-gray dark:text-secondary/60 flex items-center gap-2 text-sm font-light">
+        <p className="text-gray dark:text-white/60 flex items-center gap-2 text-sm font-light">
           <CalendarDaysIcon className="size-4" />
           Created {created}
         </p>
-        <p className="text-gray dark:text-secondary/60 flex items-center gap-2 text-sm font-light">
+        <p className="text-gray dark:text-white/60 flex items-center gap-2 text-sm font-light">
           <ClockIcon className="size-4" />
           Modified {lastModified}
         </p>

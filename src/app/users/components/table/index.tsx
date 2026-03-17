@@ -18,22 +18,22 @@ function Row(props: Readonly<RowProps>) {
     ? new Date(user.meta.created).toLocaleString()
     : "N/A";
   return (
-    <li className="iam-list-item flex flex-row">
+    <li className="iam-list-item flex flex-row lg:gap-2">
       <div className="flex grow flex-col">
         <Link
           className="text-md flex grow flex-col break-all lg:flex-row"
           href={`/users/${user.id}`}
         >
           <div className="grow flex-col">
-            {user.name?.formatted}
-            <p className="text-gray dark:text-secondary/70 text-sm font-light">
-              {user.emails?.[0].value}
+            <p className="text-gray-950 dark:text-gray-100">
+              {user.name?.formatted}
             </p>
+            <p className="text-sm font-light">{user.emails?.[0].value}</p>
           </div>
           <div className="my-auto flex flex-col">
             <div className="inline-flex items-center gap-2 lg:flex-col lg:items-end lg:gap-1">
               <Status active={user.active ?? false} />
-              <p className="text-gray dark:text-secondary/50 py-1 text-xs font-light whitespace-nowrap lg:p-0">
+              <p className="py-1 text-xs font-light whitespace-nowrap lg:p-0">
                 Created {created}
               </p>
             </div>
@@ -54,8 +54,8 @@ export default function UsersTable(props: Readonly<UsersTableProps>) {
   if (users.length === 0) {
     return (
       <div className="flex flex-col items-center">
-        <MagnifyingGlassIcon className="text-primary/60 size-16 dark:text-white/60" />
-        <p className="dark:text-secondary/60 p-2">No user found.</p>
+        <MagnifyingGlassIcon className="size-16" />
+        <p className="p-2 dark:text-white/60">No user found.</p>
       </div>
     );
   }

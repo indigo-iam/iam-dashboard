@@ -66,10 +66,10 @@ export default function EditModal(props: Readonly<EditModalProps>) {
             </Description>
           </Field>
           <section>
-            <p className="text-light dark:text-secondary/75 text-md py-2">
+            <p className="text-md py-2 text-gray-500 dark:text-white/75">
               Editing the AUP will <b>not</b> trigger an AUP signature request
             </p>
-            <p className="text-light dark:text-secondary/60 text-xs">
+            <p className="text-xs text-gray-500 dark:text-white/60">
               If you want to request a signature from users for the updated AUP,
               use the &quot;Request AUP signature&quot; button in the AUP
               management page.

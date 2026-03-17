@@ -80,13 +80,11 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
   return (
     <TabPanel className="panel" unmount={false}>
       <Form action={action} className="space-y-4">
-        <div className="divide-light-gray divide-y">
+        <div className="divide-y">
           <div className="flex flex-col gap-8 pb-4 lg:flex-row">
-            <div className="text-extralight flex w-full flex-col space-y-2 lg:w-1/3">
-              <h5 className="dark:text-light-gray text-sm font-bold">
-                Authentication
-              </h5>
-              <p className="text-extralight dark:text-light-gray/80 text-sm font-light">
+            <div className="flex w-full flex-col space-y-2 lg:w-1/3">
+              <h5 className="text-sm font-bold">Authentication</h5>
+              <p className="text-sm font-light">
                 If the client type is confidential, the client and authorization
                 server establish a client authentication method suitable for the
                 security requirements of the authorization server.
@@ -114,11 +112,9 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
             </div>
           </div>
           <div className="flex flex-col gap-8 pt-4 lg:flex-row">
-            <div className="text-extralight flex w-full flex-col space-y-2 lg:w-1/3">
-              <h5 className="dark:text-light-gray text-sm font-semibold">
-                Advanced
-              </h5>
-              <p className="dark:text-light-gray/80 text-sm font-light">
+            <div className="flex w-full flex-col space-y-2 lg:w-1/3">
+              <h5 className="text-sm font-semibold">Advanced</h5>
+              <p className="text-sm font-light">
                 PKCE is an extension to the Authorization Code flow to prevent
                 CSRF and authorization code injection attacks. PKCE is
                 recommended even if a client is using a client secret or other

@@ -14,17 +14,15 @@ const CertificateView = (props: { cert: Certificate }) => {
   return (
     <div className="iam-list-item flex-col space-y-2">
       <div>
-        <p className="text-light dark:text-secondary/75 text-xs">Subject</p>
+        <p className="text-xs">Subject</p>
         <p className="text-sm">{cert.subjectDn}</p>
       </div>
       <div>
-        <p className="text-light dark:text-secondary/75 text-xs">Issuer</p>
+        <p className="text-xs">Issuer</p>
         <p className="text-sm">{cert.issuerDn}</p>
       </div>
       <div>
-        <p className="text-light dark:text-secondary/75 text-xs">
-          Last modified
-        </p>
+        <p className="text-xs">Last modified</p>
         <p className="text-xs">{lastModified}</p>
       </div>
     </div>
@@ -48,7 +46,7 @@ export async function Certificates(props: Readonly<CertificateProps>) {
     return (
       <div className="panel space-y-2">
         <h2>X509 Certificates</h2>
-        <p className="dark:text-secondary/60 text-gray p-2">
+        <p className="text-gray p-2 dark:text-white/60">
           No certificates found.
         </p>
         <LinkCertificateButton user={user} />

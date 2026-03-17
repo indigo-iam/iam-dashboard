@@ -26,29 +26,27 @@ function Row(props: Readonly<RowProps>) {
     ? new Date(client.created_at).toLocaleString()
     : "N/A";
   return (
-    <li className="iam-list-item flex flex-row">
+    <li className="iam-list-item flex flex-row lg:gap-2">
       <div className="flex grow">
         <div className="flex grow flex-col space-y-2 lg:flex-row lg:space-y-0">
           <Link
             className="flex grow flex-col break-all"
             href={`/clients/${client_id}`}
           >
-            <p>{client_name}</p>
+            <p className="text-gray-950 dark:text-gray-100">{client_name}</p>
             <div className="flex flex-col">
-              <p className="text-gray dark:text-secondary/70 text-sm font-light">
-                {client.client_description}
-              </p>
+              <p className="text-sm font-light">{client.client_description}</p>
               <p
                 title={scopes}
-                className="dark:text-secondary/60 text-gray line-clamp-1 max-w-md text-sm font-light"
+                className="line-clamp-1 max-w-md text-sm font-light"
               >
                 {scopes}
               </p>
             </div>
           </Link>
-          <div className="flex flex-row items-center gap-1.5 lg:flex-col lg:items-end lg:justify-center lg:px-4">
+          <div className="flex flex-row items-center gap-1.5 lg:flex-col lg:items-end lg:justify-center">
             <Status active={client.active} />
-            <p className="text-gray dark:text-secondary/50 text-xs font-light whitespace-nowrap sm:text-right">
+            <p className="text-xs font-light whitespace-nowrap sm:text-right">
               Created {createdAt}
             </p>
           </div>
@@ -68,7 +66,7 @@ export function ClientsTable(props: Readonly<ClientsTableProps>) {
   if (clients.length === 0) {
     return (
       <div className="flex flex-col items-center space-y-4">
-        <MagnifyingGlassIcon className="text-primary/60 size-16 dark:text-white/60" />
+        <MagnifyingGlassIcon className="size-16 text-gray-400 dark:text-white/60" />
         <span>No client found.</span>
       </div>
     );

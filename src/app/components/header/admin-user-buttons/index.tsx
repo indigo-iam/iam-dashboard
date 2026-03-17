@@ -29,7 +29,7 @@ export function AdminModeButton() {
         type="submit"
         name="Switch to admin"
         data-testid="admin-mode-btn"
-        className="btn-user-popover"
+        className="btn-popover"
       >
         <BuildingLibraryIcon className="size-5" />
         Admin mode
@@ -57,7 +57,7 @@ export function UserModeButton() {
         type="submit"
         name="Switch to user mode"
         data-testid="user-mode-btn"
-        className="btn-user-popover"
+        className="btn-popover"
       >
         <UserIcon className="size-5" />
         User mode

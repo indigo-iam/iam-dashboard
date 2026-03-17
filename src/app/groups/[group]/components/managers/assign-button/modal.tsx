@@ -50,7 +50,7 @@ export default function AssignGroupManagerModal(
             <p className="text-lg">
               {selectedUser?.name?.formatted} ({selectedUser?.userName})
             </p>
-            <p className="text-primary/80 dark:text-secondary/60">
+            <p className="text-gray-200 dark:text-white/60">
               {selectedUser?.emails?.[0].value}
             </p>
           </div>

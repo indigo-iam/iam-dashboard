@@ -58,19 +58,26 @@ export default function GrantTypes(props: Readonly<{ client: Client }>) {
 
   return (
     <TabPanel className="panel flex flex-col gap-8 lg:flex-row" unmount={false}>
-      <div className="text-extralight dark:text-light-gray/80 hidden flex-col gap-2 text-sm lg:flex lg:w-1/3">
-        <span>
-          Device code: allow the clients to obtain a token with OAuth2 device
-          code flow
-        </span>
-        <span>
-          Token Exchange: allow the client to obtain its own tokens given a
-          separate set of tokens.
-        </span>
-        <span>
-          Refresh Token: attach the refresh token to the client in addition to
-          Access/ID tokens
-        </span>
+      <div className="hidden flex-col gap-2 text-sm font-light lg:flex lg:w-1/3">
+        <p>
+          <b className="font-bold text-gray-950 dark:text-white">
+            Device code:
+          </b>{" "}
+          allow the clients to obtain a token with OAuth2 device code flow
+        </p>
+        <p>
+          <b className="font-bold text-gray-950 dark:text-white">
+            Token Exchange:
+          </b>{" "}
+          allow the client to obtain its own tokens given a separate set of
+          tokens.
+        </p>
+        <p>
+          <b className="font-bold text-gray-950 dark:text-white">
+            Refresh Token:
+          </b>{" "}
+          attach the refresh token to the client in addition to Access/ID tokens
+        </p>
       </div>
       <Form className="w-full space-y-4 lg:w-2/3" action={action}>
         <AuthenticationFlow

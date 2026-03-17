@@ -17,7 +17,7 @@ export function Option(props: Readonly<OptionProps>) {
   return (
     <MenuItem>
       <button
-        className="hover:not:dark:text-light data-danger:text-danger dark:data-danger:text-danger-light cursor-pointer rounded px-2 py-1.5 text-start text-sm whitespace-nowrap hover:bg-neutral-100 focus:outline-none dark:hover:bg-white/30"
+        className="hover:not:dark:text-gray-500 data-danger:text-danger dark:data-danger:text-danger-light btn-popover px-2 py-1.5 text-start text-sm whitespace-nowrap focus:outline-none"
         {...other}
       >
         {children}
@@ -37,14 +37,14 @@ export function Options(props: Readonly<OptionsProps>) {
       <MenuButton
         data-testid="option"
         title="More"
-        className="hover:border-light-gray data-open:border-light-gray dark:hover:border-light-gray/60 dark:data-open:border-light-gray/60 my-auto cursor-pointer rounded border border-transparent transition hover:bg-neutral-100 focus:outline-none data-open:bg-gray-200 dark:hover:bg-white/20 dark:data-open:bg-white/30"
+        className="my-auto cursor-pointer rounded-md border border-transparent transition hover:border-gray-500 hover:bg-neutral-100 focus:outline-none data-open:border-gray-300 data-open:bg-gray-200 dark:hover:border-gray-500 dark:hover:bg-white/20 dark:data-open:border-gray-200 dark:data-open:bg-white/30"
       >
-        <EllipsisHorizontalIcon className="text-primary/75 dark:text-secondary/75 size-8" />
+        <EllipsisHorizontalIcon className="size-8 text-gray-800 dark:text-white/75" />
       </MenuButton>
       <MenuItems
         anchor="bottom"
         transition
-        className="easy-out flex flex-col rounded-lg border border-gray-100 bg-white p-2 shadow-lg transition focus:outline-none data-closed:opacity-0 dark:bg-white/10 dark:backdrop-blur-lg"
+        className="easy-out overlay flex flex-col p-2 data-closed:opacity-0"
       >
         {children}
       </MenuItems>

@@ -41,21 +41,21 @@ export function Modal(props: Readonly<ModalProps>) {
           <div className="mt-38 flex min-h-32 justify-center p-4">
             <DialogPanel
               transition
-              className="text-primary dark:text-secondary dark:bg-dark z-50 w-full max-w-xl space-y-4 rounded-2xl bg-white p-8 shadow-2xl duration-300 ease-out data-closed:transform-[scale-95] data-closed:opacity-0"
+              className="z-50 w-full max-w-xl space-y-4 rounded-2xl bg-white p-8 shadow-2xl duration-300 ease-out data-closed:transform-[scale-95] data-closed:opacity-0 dark:bg-gray-900 dark:text-white"
             >
               <DialogTitle
                 as="div"
-                className="border-light-gray flex text-xl font-bold"
+                className="flex border-gray-500 text-xl font-bold"
               >
                 <h2>{title}</h2>
                 <button
                   title="Close"
-                  className="mr-0 ml-auto"
+                  className="mr-0 ml-auto cursor-pointer"
                   type="reset"
                   onClick={onClose}
                 >
                   <div
-                    className="dark:hover:text-secondary dark:text-secondary/60 dark:hover:bg-gray size-7 rounded-full bg-neutral-300 p-0.75 text-neutral-500 hover:bg-neutral-400 dark:bg-white/25"
+                    className="dark:hover:bg-gray size-7 rounded-full bg-neutral-300 p-0.75 text-neutral-500 hover:bg-neutral-400 dark:bg-white/25 dark:text-white/60 dark:hover:text-white"
                     aria-label="close"
                   >
                     <XMarkIcon />

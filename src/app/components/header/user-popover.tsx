@@ -31,14 +31,16 @@ export async function UserPopover(props: Readonly<UserPopoverProps>) {
       <PopoverPanel
         transition
         anchor="bottom end"
-        className="items text-light flex w-56 flex-col overflow-hidden rounded-xl bg-white p-4 text-sm/6 shadow transition duration-200 ease-in-out [--anchor-gap:--spacing(5)] data-closed:-translate-y-1 data-closed:opacity-0 dark:bg-slate-600"
+        className="items overlay flex w-56 flex-col overflow-hidden ease-in-out [--anchor-gap:--spacing(5)] data-closed:-translate-y-1 data-closed:opacity-0"
       >
-        <div className="divide-light-gray dark:divide-light-gray/30 space-y-4 divide-y">
+        <div className="space-y-2 divide-y divide-gray-200 dark:divide-gray-400">
           <div className="flex items-center gap-2 pb-2">
             <Gravatar email={email} />
-            <div className="text-light dark:text-secondary flex flex-col leading-normal">
-              <span>{user.name?.formatted}</span>
-              <b>{user.displayName}</b>
+            <div className="flex flex-col leading-normal">
+              <p>{user.name?.formatted}</p>
+              <p>
+                <b>{user.displayName}</b>
+              </p>
             </div>
           </div>
           <div>

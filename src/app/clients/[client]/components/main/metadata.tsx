@@ -18,7 +18,7 @@ export function Metadata(props: Readonly<{ client: Client }>) {
   return (
     <div className="col-span-full space-y-2 text-sm font-light sm:col-span-1">
       <div>
-        <div className="text-light dark:text-extralight/60 flex gap-2">
+        <div className="flex gap-2 text-gray-500 dark:text-gray-300">
           <ComputerDesktopIcon className="my-auto size-5" />
           <span>Status</span>
           <Status active={client.active ?? false} />

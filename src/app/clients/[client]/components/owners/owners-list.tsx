@@ -24,7 +24,7 @@ function OwnerList(props: Readonly<OwnersListProps>) {
           <button
             type="button"
             onClick={() => onClick?.(index)}
-            className="bg-secondary-100 hover:bg-danger hover:text-secondary w-5 rounded"
+            className="bg-secondary-100 hover:bg-danger hover:text-white w-5 rounded"
           >
             <XMarkIcon />
           </button>

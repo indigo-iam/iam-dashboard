@@ -55,7 +55,7 @@ export function InputList(props: Readonly<InputListProps>) {
       <button
         type="button"
         onClick={() => removeItem(index)}
-        className="bg-secondary-100 hover:bg-danger hover:text-secondary dark:bg-secondary/60 dark:text-danger/80 w-5 rounded"
+        className="bg-secondary-100 hover:bg-danger hover:text-white dark:bg-secondary/60 dark:text-danger/80 w-5 rounded"
       >
         <XMarkIcon />
       </button>

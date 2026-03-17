@@ -41,7 +41,7 @@ let Icon = (props: Readonly<{ type: NotificationType }>) => {
   switch (type) {
     case "info":
       return (
-        <InformationCircleIcon key="circle-icon" className="text-primary" />
+        <InformationCircleIcon key="circle-icon" className="text-gray-950" />
       );
     case "success":
       return <CheckCircleIcon key="check-icon" className="text-success" />;
@@ -68,7 +68,7 @@ const CustomToast = (props: {
   const { title, subtitle, dismiss, type } = props;
   return (
     <div className={"flex w-96"} data-testid="toast">
-      <div className="text:primary dark:text-secondary w-full rounded-lg border border-gray-300 bg-white p-3 shadow-lg dark:border-gray-800 dark:bg-slate-800">
+      <div className="text:primary w-full rounded-lg border border-gray-300 bg-white p-3 shadow-lg dark:border-gray-800 dark:bg-slate-800 dark:text-white">
         <div className="flex w-full items-center">
           <div className="mr-4 w-5">
             <Icon type={type} />

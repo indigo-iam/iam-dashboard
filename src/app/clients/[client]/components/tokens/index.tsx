@@ -101,7 +101,7 @@ function DeviceCode(props: Readonly<{ client: Client }>) {
           defaultValue={device_code_validity_seconds}
         />
       </Field>
-      <p className="text-secondary-400 mt-2 text-sm">
+      <p className="text-white-400 mt-2 text-sm">
         The control is disabled as the client is not authorized for the device
         code grant type.
       </p>
@@ -164,7 +164,7 @@ export default function Tokens(props: Readonly<TokensProps>) {
   return (
     <TabPanel className="panel" unmount={false}>
       <Form action={action}>
-        <div className="divide-light-gray dark:divide-light-gray/60 divide-y">
+        <div className="divide-y">
           <AccessToken client={client} />
           <RefreshToken client={client} />
           <DeviceCode client={client} />

@@ -16,12 +16,9 @@ function Row(props: Readonly<RowProps>) {
   const { group } = props;
   return (
     <li className="iam-list-item flex flex-row">
-      <Link
-        className="flex grow flex-col hover:underline"
-        href={`/groups/${group.id}`}
-      >
-        {group.name}
-        <p className="text-gray dark:text-secondary/60 text-sm">{group.id}</p>
+      <Link className="flex grow flex-col" href={`/groups/${group.id}`}>
+        <p className="text-gray-950 dark:text-gray-100">{group.name}</p>
+        <p className="text-sm font-light">{group.id}</p>
       </Link>
       <GroupOptions group={group} />
     </li>

@@ -20,7 +20,7 @@ async function SystemScopes(props: Readonly<SystemScopesProps>) {
     <li className="iam-list-item" key={s.id}>
       <div className="flex grow flex-col">
         <p>{s.value}</p>
-        <p className="text-gray dark:text-secondary/60 line-clamp-1 text-sm">
+        <p className="text-gray dark:text-white/60 line-clamp-1 text-sm">
           {s.description}
         </p>
       </div>
@@ -42,7 +42,7 @@ async function CustomScopes(props: Readonly<CustomScopesProps>) {
     <li className="iam-list-item" key={s}>
       <div className="flex grow flex-col">
         <p>{s}</p>
-        <p className="text-gray dark:text-secondary/60 line-clamp-1 text-sm">
+        <p className="text-gray dark:text-white/60 line-clamp-1 text-sm">
           (custom scope)
         </p>
       </div>

@@ -92,7 +92,7 @@ export function AddLabel(props: Readonly<AddLabelProps>) {
       />
       <Button
         title="Add group label"
-        className="bg-light-gray dark:bg-gray hover:dark:bg-light-gray/60 flex items-center rounded-full py-0.5 pr-3 pl-1 text-sm hover:bg-gray-400/60"
+        className="flex cursor-pointer items-center rounded-full bg-gray-300 py-0.5 pr-3 pl-1 text-sm hover:bg-gray-400/60 dark:bg-gray-400 dark:text-white hover:dark:bg-gray-300"
         type="button"
         onClick={open}
       >

@@ -20,7 +20,7 @@ export function SignoutButton() {
         type="submit"
         name="Sign out"
         data-testid="signout-btn"
-        className="btn-user-popover"
+        className="btn-popover"
       >
         <ArrowRightStartOnRectangleIcon className="size-5" />
         Sign out

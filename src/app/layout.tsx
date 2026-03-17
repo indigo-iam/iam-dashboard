@@ -32,7 +32,7 @@ export default async function RootLayout(props: Readonly<RootLayoutProps>) {
   if (!session) {
     return (
       <html lang="en">
-        <body className="text-primary dark:text-secondary bg-secondary dark:bg-extradark">
+        <body className="body">
           <main>{children}</main>
         </body>
       </html>
@@ -44,7 +44,7 @@ export default async function RootLayout(props: Readonly<RootLayoutProps>) {
   const notification = await getNotification();
   return (
     <html lang="en">
-      <body className="text-primary dark:text-secondary dark:bg-extradark">
+      <body className="body">
         {/*this div is required by https://github.com/tailwindlabs/headlessui/issues/2752*/}
         <div>
           <Header hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />

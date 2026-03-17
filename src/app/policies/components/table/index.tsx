@@ -17,7 +17,7 @@ function Row(props: Readonly<{ policy: ScopePolicy }>) {
     <div className="iam-list-item flex flex-row items-center">
       <Link className="flex grow flex-col" href={`/policies/${policy.id}`}>
         {policy.description}
-        <p className="text-gray dark:text-secondary/60 text-sm">{scopes}</p>
+        <p className="text-gray dark:text-white/60 text-sm">{scopes}</p>
       </Link>
       <PolicyOptions policy={policy} />
     </div>

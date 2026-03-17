@@ -100,7 +100,7 @@ export async function Sidebar(props: Readonly<SidebarProps>) {
             </Link>
           </div>
         </nav>
-        <div className="text-secondary w-full bg-slate-600 p-1 text-center text-sm">
+        <div className="text-white w-full bg-slate-600 p-1 text-center text-sm">
           v{IAM_DASHBOARD_APP_VERSION}
         </div>
       </div>

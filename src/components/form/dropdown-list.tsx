@@ -36,7 +36,7 @@ export function DropdownList(props: Readonly<DropdownListProps>) {
         title="Remove scope"
         type="button"
         onClick={() => removeItem(index)}
-        className="bg-secondary-100 hover:bg-danger hover:text-secondary dark:text-secondary/80 w-5 rounded dark:bg-transparent"
+        className="bg-secondary-100 hover:bg-danger hover:text-white dark:text-white/80 w-5 rounded dark:bg-transparent"
       >
         <XMarkIcon />
       </button>

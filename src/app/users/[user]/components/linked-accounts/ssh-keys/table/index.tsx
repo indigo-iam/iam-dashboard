@@ -15,15 +15,14 @@ function SSHKeyView(props: Readonly<{ user: User; sshKey: SSHKey }>) {
   return (
     <li className="iam-list-item flex flex-row overflow-hidden">
       <div className="my-auto flex grow flex-col gap-1 truncate">
-        <p className="text-lg">{sshKey.display}</p>
-        <p
-          className="text-gray dark:text-secondary/60 truncate text-sm"
-          title={sshKey.fingerprint}
-        >
+        <p className="text-lg text-gray-950 dark:text-gray-100">
+          {sshKey.display}
+        </p>
+        <p className="text-gray truncate text-sm" title={sshKey.fingerprint}>
           {sshKey.fingerprint}
         </p>
       </div>
-      <div className="dark:text-secondary/80 text-gray my-auto hidden px-2 text-sm sm:flex">
+      <div className="my-auto hidden px-2 text-sm font-light sm:flex">
         Created {createdAt}
       </div>
       <SSHKeysOptions user={user} sshKey={sshKey} />
@@ -47,7 +46,7 @@ export default function Table(props: Readonly<TableProps>) {
 
   if (sshKeys.length === 0) {
     return (
-      <p className="dark:text-secondary/60 text-gray p-2">No SSH keys found.</p>
+      <p className="text-gray p-2 dark:text-white/60">No SSH keys found.</p>
     );
   }
   return (

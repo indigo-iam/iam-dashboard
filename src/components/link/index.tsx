@@ -14,7 +14,7 @@ export default function Link(props: Readonly<LinkProps>) {
   return (
     <NextLink
       href={href}
-      className="font-medium text-primary-600 underline dark:text-primary-400"
+      className="font-medium text-gray-600 underline dark:text-gray-200"
     >
       {children}
     </NextLink>

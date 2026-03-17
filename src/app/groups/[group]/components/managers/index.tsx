@@ -26,7 +26,7 @@ export default async function Managers(props: Readonly<ManagersProps>) {
     return (
       <TabPanel className="panel space-y-4">
         <h2 className="grow">Managers</h2>
-        <p className="text-gray dark:text-secondary/60 p-2">
+        <p className="text-gray dark:text-white/60 p-2">
           This groups has no managers.
         </p>
       </TabPanel>

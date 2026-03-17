@@ -16,9 +16,9 @@ export function Loading() {
       id="loading"
       className="invisible fixed inset-0 z-50 flex items-center bg-gray-600/50 backdrop-blur-sm data-loading:visible"
     >
-      <div className="text-secondary m-auto h-16 w-16">
+      <div className="text-white m-auto h-16 w-16">
         <Spinner />
-        <p className="text-secondary mt-8 text-xl">Loading...</p>
+        <p className="text-white mt-8 text-xl">Loading...</p>
       </div>
     </div>
   );

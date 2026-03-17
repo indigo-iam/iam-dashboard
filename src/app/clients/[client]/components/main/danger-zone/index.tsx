@@ -15,7 +15,7 @@ export function DangerZone(props: Readonly<{ client: Client }>) {
         <h5 className="text-danger dark:text-danger-light font-semibold">
           Danger Zone
         </h5>
-        <p className="text-extralight dark:text-light-gray/80">
+        <p>
           A disabled client cannot issue new Access Tokens and Refresh Tokens
           and the old ones are immediately revoked.
         </p>

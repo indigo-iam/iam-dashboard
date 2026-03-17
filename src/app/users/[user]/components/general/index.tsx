@@ -16,10 +16,7 @@ type GeneralProps = {
 export async function General(props: Readonly<GeneralProps>) {
   const { user, isMe } = props;
   return (
-    <TabPanel
-      className="panel divide-light-gray dark:divide-light-gray/30 divide-y"
-      unmount={false}
-    >
+    <TabPanel className="panel divide-y" unmount={false}>
       <UserDetailsForm user={user} isMe={isMe} />
       <Aup user={user} isMe={isMe} />
       {!isMe && <DangerZone user={user} />}

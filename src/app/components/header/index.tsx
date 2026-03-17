@@ -16,12 +16,12 @@ export async function Header(props: Readonly<HeaderProps>) {
   const { hasRoleAdmin, isAdmin } = props;
   const organization = "cnafsd";
   return (
-    <header className="t-0 text-secondary fixed inset-0 top-0 z-50 flex h-14 border-b border-b-gray-400 bg-sky-900 px-4 py-2 md:px-8 dark:bg-sky-900">
+    <header className="t-0 fixed inset-0 top-0 z-50 flex h-14 border-b border-b-gray-400 bg-sky-900 px-4 py-2 text-white md:px-8 dark:bg-sky-900">
       <div className="flex grow flex-col truncate">
         <div className="flex grow gap-2">
           <ToggleDrawerButton />
-          <h2 className="my-auto truncate text-xl font-light">
-            IAM for <b>{organization}</b>
+          <h2 className="my-auto truncate text-xl font-light text-white">
+            IAM for <b className="text-white">{organization}</b>
           </h2>
         </div>
       </div>

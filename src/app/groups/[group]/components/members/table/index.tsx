@@ -21,7 +21,7 @@ function Row(props: Readonly<RowProps>) {
       <div className="flex grow flex-col">
         <Link className="flex grow flex-col" href={`/users/${userRef.value}`}>
           {userRef.display}
-          <p className="text-gray dark:text-secondary/60 text-sm font-light">
+          <p className="text-gray dark:text-white/60 text-sm font-light">
             {userRef.value}
           </p>
         </Link>
@@ -44,7 +44,7 @@ export default async function Members(props: Readonly<MembersProps>) {
 
   if (members.length === 0) {
     return (
-      <p className="text-gray dark:text-secondary/60 p-2">
+      <p className="text-gray dark:text-white/60 p-2">
         This group has no members.
       </p>
     );

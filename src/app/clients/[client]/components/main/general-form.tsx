@@ -36,12 +36,10 @@ export function GeneralForm(props: Readonly<{ client: Client }>) {
 
   return (
     <div className="flex flex-col gap-8 pb-4 lg:flex-row">
-      <div className="text-extralight dark:text-light-gray/80 w-full space-y-2 text-sm font-light lg:w-1/3">
+      <div className="w-full space-y-2 text-sm font-light lg:w-1/3">
         <div className="flex gap-2">
           <ComputerDesktopIcon className="my-auto size-5" />
-          <h5 className="text-light dark:text-light-gray font-semibold">
-            Status
-          </h5>
+          <h5 className="font-semibold">Status</h5>
           <Status active={client.active ?? false} />
         </div>
         <div className="flex flex-col gap-2">

@@ -45,8 +45,8 @@ export async function Aup(props: Readonly<AupProps>) {
   const { expiresAt, expired } = await getExpirationDate(user, aup);
   return (
     <div className="flex flex-col gap-8 py-4 last:pb-0 lg:flex-row">
-      <div className="text-extralight dark:text-light-gray/80 w-full text-sm font-light lg:w-1/3">
-        <h5 className="text-light dark:text-light-gray py-1 font-semibold">
+      <div className="w-full text-sm font-light text-gray-200 lg:w-1/3 dark:text-gray-300/80">
+        <h5 className="py-1 font-semibold text-gray-500 dark:text-gray-300">
           Acceptable Usage Policy
         </h5>
         <p className="whitespace-normal">

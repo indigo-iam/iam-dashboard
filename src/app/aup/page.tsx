@@ -26,7 +26,7 @@ export default async function AUP() {
           <h2 className="text-base font-normal">Acceptable Usage Policy</h2>
         </header>
         <div className="content flex flex-col space-y-4 lg:items-center">
-          <DocumentTextIcon className="text-primary/50 mt-32 size-48 dark:text-white/60" />
+          <DocumentTextIcon className="mt-32 size-48 text-gray-500 dark:text-white/60" />
           <span className="text-center text-xl">
             AUP is not defined for this organization.
           </span>

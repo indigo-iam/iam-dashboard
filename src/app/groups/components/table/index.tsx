@@ -24,11 +24,11 @@ function Labels(props: Readonly<LabelsProps>) {
       {labels?.map(label => {
         return (
           <div
-            className="text-secondary flex items-center gap-1 rounded-full bg-sky-600 px-2 py-0.5 text-xs dark:bg-sky-400"
+            className="flex items-center gap-1 rounded-full bg-sky-600 px-2 py-0.5 text-xs text-white dark:bg-sky-400"
             key={label.name}
           >
             <span>
-              <b>{label.name}</b> {label.value}
+              <b className="text-white">{label.name}</b> {label.value}
             </span>
           </div>
         );
@@ -54,15 +54,17 @@ function Row(props: Readonly<RowProps>) {
           href={`/groups/${group.id}`}
         >
           <div className="flex flex-col lg:justify-center">
-            {group.displayName}
-            <p className="text-gray dark:text-secondary/60 text-sm font-light">
+            <p className="text-gray-950 dark:text-gray-100">
+              {group.displayName}
+            </p>
+            <p className="text-sm font-light">
               {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description}
             </p>
           </div>
           <div className="flex grow items-center">
             <Labels group={group} />
           </div>
-          <p className="text-gray dark:text-secondary/50 my-auto flex flex-col py-1 pr-2 text-xs font-light">
+          <p className="my-auto flex flex-col py-1 pr-2 text-xs font-light">
             Created {created}
           </p>
         </Link>
@@ -81,7 +83,7 @@ export async function AdminGroupsTable(props: Readonly<AdminGroupsTableProps>) {
   if (groups.length === 0) {
     return (
       <div className="flex flex-col items-center space-y-4">
-        <MagnifyingGlassIcon className="text-primary/60 dark:text-light-gray/80 size-16" />
+        <MagnifyingGlassIcon className="size-16 text-gray-400 dark:text-gray-300/80" />
         <p>No group found.</p>
       </div>
     );
@@ -108,7 +110,7 @@ export async function UserGroupsTable(props: Readonly<UserGroupsTablesProps>) {
           <li key={g.value} className="iam-list-item">
             <div className="flex flex-col">
               <p>{g.display}</p>
-              <p className="text-light dark:text-secondary/60 text-sm font-light">
+              <p className="text-sm font-light text-gray-300 dark:text-white/60">
                 {g.value}
               </p>
             </div>
@@ -134,7 +136,7 @@ export async function UserManagedGroupsTable(
           <li key={g.id} className="iam-list-item">
             <Link className="w-full" href={`/groups/${g.id}`}>
               <p>{g.name}</p>
-              <p className="text-light dark:text-secondary/60 text-sm font-light">
+              <p className="text-sm font-light text-gray-300 dark:text-white/60">
                 {g.id}
               </p>
             </Link>

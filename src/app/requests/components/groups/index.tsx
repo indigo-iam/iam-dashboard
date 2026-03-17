@@ -27,15 +27,13 @@ export function Row(props: Readonly<RowPros>) {
           className="flex grow flex-col lg:flex-row"
         >
           <div className="flex grow flex-col">
-            <p>
+            <p className="text-gray-950 dark:text-gray-100">
               User <b>{userFullName}</b> (<i>{username}</i>) asked to join group{" "}
               <b>{groupName}</b>.
             </p>
-            <p className="text-gray dark:text-secondary/60 text-sm">
-              Motivation: {request.notes}
-            </p>
+            <p className="text-sm">Motivation: {request.notes}</p>
           </div>
-          <p className="text-gray dark:text-secondary/50 flex items-center text-xs whitespace-nowrap lg:px-2 lg:text-right">
+          <p className="flex items-center text-xs whitespace-nowrap lg:px-2 lg:text-right">
             Sent {creationTime}
           </p>
         </Link>

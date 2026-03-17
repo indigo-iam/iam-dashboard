@@ -29,18 +29,16 @@ function ActiveTokenView(props: Readonly<ActiveTokenViewProps>) {
           href={`/clients/${token.clientId}`}
         >
           <div className="flex grow flex-col gap-0.5 break-all">
-            <p>{tokenStr}</p>
-            <p className="text-gray dark:text-secondary/70 text-sm">
-              {token.clientId}
-            </p>
+            <p className="text-gray-800 dark:text-gray-200">{tokenStr}</p>
+            <p className="text-sm">{token.clientId}</p>
             <p
               title={scopes}
-              className="text-gray dark:text-secondary/60 line-clamp-1 max-w-md text-sm font-light"
+              className="line-clamp-1 max-w-md text-sm font-light"
             >
               {scopes}
             </p>
           </div>
-          <p className="text-gray dark:text-secondary/50 flex items-center py-1 text-xs font-light whitespace-nowrap lg:px-2 lg:text-right">
+          <p className="flex items-center py-1 text-xs font-light whitespace-nowrap lg:px-2 lg:text-right">
             {expired ? `Expired ${expiresAt}` : `Expires ${expiresAt}`}
           </p>
         </Link>

@@ -14,7 +14,7 @@ function Row(props: Readonly<{ manager: User; group: Group }>) {
       <div className="flex grow flex-col">
         <Link className="flex grow flex-col" href={`/users/${manager.id}`}>
           {manager.name?.formatted}
-          <p className="text-gray dark:text-secondary/60 text-sm font-light">
+          <p className="text-gray dark:text-white/60 text-sm font-light">
             {manager.emails?.[0].value}
           </p>
         </Link>
@@ -36,7 +36,7 @@ export default function ManagersTable(props: Readonly<ManagerTableProps>) {
 
   if (managers.length === 0) {
     return (
-      <p className="text-gray dark:text-secondary/60 p-2">
+      <p className="text-gray dark:text-white/60 p-2">
         This group has no managers.
       </p>
     );

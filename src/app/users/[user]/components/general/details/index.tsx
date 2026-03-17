@@ -38,13 +38,11 @@ export async function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
 
   return (
     <div className="flex flex-col gap-8 pb-4 lg:flex-row">
-      <div className="text-extralight dark:text-light-gray/80 w-full space-y-2 text-sm font-light lg:w-1/3">
+      <div className="w-full space-y-2 text-sm font-light lg:w-1/3">
         <div className="flex flex-wrap justify-between">
           <div className="flex gap-2">
             <IdentificationIcon className="my-auto size-5" />
-            <h5 className="text-light dark:text-light-gray font-semibold">
-              General
-            </h5>
+            <h5 className="font-semibold">General</h5>
           </div>
           <Status active={user.active ?? false} />
         </div>

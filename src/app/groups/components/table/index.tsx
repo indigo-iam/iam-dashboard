@@ -20,7 +20,7 @@ function Labels(props: Readonly<LabelsProps>) {
     return null;
   }
   return (
-    <div className="flex grow flex-wrap items-center gap-1 pt-1.5">
+    <div className="flex grow flex-wrap items-center gap-1 pt-1.5 lg:p-0">
       {labels?.map(label => {
         return (
           <div
@@ -53,7 +53,7 @@ function Row(props: Readonly<RowProps>) {
           className="flex grow flex-col gap-0 break-all lg:flex-row lg:gap-2"
           href={`/groups/${group.id}`}
         >
-          <div className="flex flex-col">
+          <div className="flex flex-col lg:justify-center">
             {group.displayName}
             <p className="text-gray dark:text-secondary/60 text-sm font-light">
               {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description}

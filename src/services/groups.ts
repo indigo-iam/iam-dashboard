@@ -119,6 +119,32 @@ export async function addGroup(groupName: string) {
   }
 }
 
+export async function editGroup(groupId: string, description?: string | null) {
+  const url = `${IAM_API_URL}/iam/group/${groupId}`;
+  const body = JSON.stringify({
+    id: groupId,
+    description,
+  });
+  const response = await authFetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body,
+  });
+  if (response.ok) {
+    await setNotification({ type: "success", message: "Group edited" });
+    revalidatePath(`/groups/${groupId}`);
+  } else {
+    const msg = await response.text();
+    await setNotification({
+      type: "error",
+      message: "Cannot edit group",
+      subtitle: `Error ${response.status}: ${msg}`,
+    });
+  }
+}
+
 export async function deleteGroup(groupId: string) {
   const url = `${IAM_API_URL}/scim/Groups/${groupId}`;
   const response = await authFetch(url, { method: "DELETE" });

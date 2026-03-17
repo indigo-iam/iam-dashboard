@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+export { default as EditGroupButton } from "./edit";
 export { default as GroupInfo } from "./group-info";
 export { default as Managers } from "./managers";
 export { default as Members } from "./members";

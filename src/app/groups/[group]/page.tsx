@@ -4,7 +4,13 @@
 
 import { getSession, isUserAdmin } from "@/auth";
 import { TabGroup, TabList, TabPanels, Tab } from "@/components/tabs";
-import { GroupInfo, Managers, Members, Subgroups } from "./components";
+import {
+  GroupInfo,
+  Managers,
+  Members,
+  Subgroups,
+  EditGroupButton,
+} from "./components";
 import { fetchGroup } from "@/services/groups";
 
 import { redirect } from "next/navigation";
@@ -29,8 +35,11 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
   return (
     <section className="container">
       <header className="section-header">
-        <UserGroupIcon className="size-5" />
-        <h2 className="text-base font-normal">{group.displayName}</h2>
+        <div className="flex grow gap-2">
+          <UserGroupIcon className="size-5" />
+          <h2 className="text-base font-normal">{group.displayName}</h2>
+        </div>
+        <EditGroupButton group={group} />
       </header>
       <TabGroup className="content space-y-8">
         <TabList className="flex overflow-auto">

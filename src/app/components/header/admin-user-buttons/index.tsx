@@ -7,6 +7,7 @@
 import { CloseButton } from "@headlessui/react";
 import { BuildingLibraryIcon, UserIcon } from "@heroicons/react/24/outline";
 import { setAdminMode, setUserMode } from "./actions";
+import { refresh } from "next/cache";
 
 export function AdminModeButton() {
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
@@ -14,7 +15,8 @@ export function AdminModeButton() {
     const element = document.getElementById("loading");
     element?.setAttribute("data-loading", "");
     await setAdminMode();
-    window.location.reload();
+    refresh();
+    element?.removeAttribute("data-loading");
   }
   return (
     <form onSubmit={submit}>

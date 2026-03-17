@@ -29,7 +29,7 @@ function Links(props: Readonly<LinksProps>) {
   const { hasRoleAdmin, isAdmin } = props;
   if (hasRoleAdmin && isAdmin) {
     return (
-      <div className="grow">
+      <div className="grow space-y-1">
         <Link title="Home" href="/users/me">
           <HomeIcon className="size-5" />
         </Link>
@@ -58,7 +58,7 @@ function Links(props: Readonly<LinksProps>) {
     );
   } else {
     return (
-      <div className="grow">
+      <div className="grow space-y-1">
         <Link title="Home" href="/users/me">
           <HomeIcon className="size-5" />
         </Link>
@@ -85,7 +85,7 @@ export async function Sidebar(props: Readonly<SidebarProps>) {
       <div className="flex h-full flex-col">
         <nav className="flex grow flex-col overflow-y-auto px-6 py-8">
           <Links hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
-          <div className="p-2">
+          <div className="space-y-1 p-2">
             <Link
               title="Privacy Policy"
               href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
@@ -100,7 +100,7 @@ export async function Sidebar(props: Readonly<SidebarProps>) {
             </Link>
           </div>
         </nav>
-        <div className="text-white w-full bg-slate-600 p-1 text-center text-sm">
+        <div className="w-full bg-slate-600 p-1 text-center text-sm text-white">
           v{IAM_DASHBOARD_APP_VERSION}
         </div>
       </div>

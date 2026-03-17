@@ -41,7 +41,7 @@ export function Modal(props: Readonly<ModalProps>) {
           <div className="mt-38 flex min-h-32 justify-center p-4">
             <DialogPanel
               transition
-              className="z-50 w-full max-w-xl space-y-4 rounded-2xl bg-white p-8 shadow-2xl duration-300 ease-out data-closed:transform-[scale-95] data-closed:opacity-0 dark:bg-gray-900 dark:text-white"
+              className="z-50 w-full max-w-xl space-y-4 rounded-2xl bg-white p-8 shadow-2xl duration-300 ease-out data-closed:transform-[scale-95] data-closed:opacity-0 dark:bg-gray-800 dark:text-white"
             >
               <DialogTitle
                 as="div"

@@ -7,17 +7,21 @@
 import { CloseButton } from "@headlessui/react";
 import { BuildingLibraryIcon, UserIcon } from "@heroicons/react/24/outline";
 import { setAdminMode, setUserMode } from "./actions";
-import { refresh } from "next/cache";
+import { startTransition } from "react";
 
 export function AdminModeButton() {
-  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+  function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
-    const element = document.getElementById("loading");
-    element?.setAttribute("data-loading", "");
-    await setAdminMode();
-    refresh();
-    element?.removeAttribute("data-loading");
+    const loading = document.getElementById("loading");
+    loading?.setAttribute("data-loading", "");
+    startTransition(async () => {
+      await setAdminMode();
+      startTransition(() => {
+        loading?.removeAttribute("data-loading");
+      });
+    });
   }
+
   return (
     <form onSubmit={submit}>
       <CloseButton
@@ -34,13 +38,18 @@ export function AdminModeButton() {
 }
 
 export function UserModeButton() {
-  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+  function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
-    const element = document.getElementById("loading");
-    element?.setAttribute("data-loading", "");
-    await setUserMode();
-    window.location.reload();
+    const loading = document.getElementById("loading");
+    startTransition(async () => {
+      loading?.setAttribute("data-loading", "");
+      await setUserMode();
+      startTransition(() => {
+        loading?.removeAttribute("data-loading");
+      });
+    });
   }
+
   return (
     <form onSubmit={submit}>
       <CloseButton

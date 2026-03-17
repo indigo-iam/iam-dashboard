@@ -19,34 +19,35 @@ export default function ToggleStatusModal(
   props: Readonly<ToggleStatusModalProps>
 ) {
   const { client, show, onClose } = props;
-  const { client_name, client_id } = client;
+  const { client_name, client_id, active } = client;
+  const title = `${active ? "Disable" : "Enable"} client ${client_name}`;
+
   const handleConfirm = async () => {
     active ? await disableClient(client) : await enableClient(client);
     onClose();
   };
-  const { active } = client;
+
   return (
     <ConfirmModal
       show={show}
       onClose={onClose}
       confirmButtonText={`${active ? "Disable" : "Enable"} Client`}
       onConfirm={handleConfirm}
+      title={title}
       danger={active}
     >
       <p>
         Are you sure you want to {active ? "disable" : "enable"} the following
         client?
       </p>
-      <Form>
-        <Field>
-          <Label>Client name</Label>
-          <Input defaultValue={client_name} disabled />
-        </Field>
-        <Field>
-          <Label>Client id</Label>
-          <Input defaultValue={client_id} disabled />
-        </Field>
-      </Form>
+      <Field>
+        <Label>Client name</Label>
+        <Input defaultValue={client_name} disabled />
+      </Field>
+      <Field>
+        <Label>Client id</Label>
+        <Input defaultValue={client_id} disabled />
+      </Field>
     </ConfirmModal>
   );
 }

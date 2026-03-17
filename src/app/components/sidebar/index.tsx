@@ -62,10 +62,10 @@ function Links(props: Readonly<LinksProps>) {
         <Link title="Home" href="/users/me">
           <HomeIcon className="size-5" />
         </Link>
-        <Link title={`${isAdmin ? "Groups" : "My Groups"}`} href="/groups">
+        <Link title={`${isAdmin ? "Groups" : "My groups"}`} href="/groups">
           <UserGroupIcon className="size-5" />
         </Link>
-        <Link title={`${isAdmin ? "Client" : "My Clients"}`} href="/clients">
+        <Link title={`${isAdmin ? "Client" : "My clients"}`} href="/clients">
           <RocketLaunchIcon className="size-5" />
         </Link>
       </div>

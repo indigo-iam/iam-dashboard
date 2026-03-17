@@ -27,9 +27,6 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
       <h2>General Settings</h2>
       <Field className="flex flex-col">
         <Label data-required>Client Name</Label>
-        <Description>
-          Client name must be at least four characters long.
-        </Description>
         <Input
           title="Client Name"
           name="client_name"
@@ -37,6 +34,9 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
           required
           onChange={handleClientNameChange}
         />
+        <Description>
+          Client name must be at least four characters long.
+        </Description>
       </Field>
       <Field className="flex flex-col gap-2">
         <Label>Client Description</Label>

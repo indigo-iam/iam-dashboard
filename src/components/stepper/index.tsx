@@ -8,7 +8,7 @@ function PreviousPage(props: Readonly<{ page: number }>) {
   const { page } = props;
   return (
     <div>
-      <div className="bg-infn flex aspect-square size-8 items-center justify-center rounded-full text-white dark:border-3 dark:border-gray-300 dark:bg-gray-300 dark:text-gray-950">
+      <div className="bg-infn flex aspect-square size-8 items-center justify-center rounded-full text-white dark:border-3 dark:border-gray-300 dark:bg-gray-300 dark:font-bold dark:text-gray-950">
         {page + 1}
       </div>
       <div className="border-infn dark:border-secondary m-auto h-12 w-0 border-l-3" />
@@ -21,9 +21,9 @@ function CurrentPage(props: Readonly<{ page: number; totalPages: number }>) {
   const isLast = page === totalPages - 1;
   return (
     <div>
-      <div className="border-infn flex aspect-square size-8 items-center justify-center rounded-full border-3 bg-transparent text-gray-950 dark:border-gray-300 dark:text-gray-500">
+      <span className="flex aspect-square size-8 items-center justify-center rounded-full border-3 bg-transparent text-gray-950 dark:border-gray-300 dark:text-gray-200">
         {page + 1}
-      </div>
+      </span>
       <div
         className="dark:border-secondary/30 m-auto h-12 w-0 border-l-3 border-gray-400 data-[last=true]:hidden"
         data-last={isLast}
@@ -37,7 +37,7 @@ function NextPage(props: Readonly<{ page: number; totalPages: number }>) {
   const isLast = page === totalPages - 1;
   return (
     <div>
-      <div className="dark:bg-secondary/30 flex size-8 items-center justify-center rounded-full bg-gray-400 text-white">
+      <div className="dark:gray-400 flex size-8 items-center justify-center rounded-full border-gray-500 bg-gray-400 text-white dark:border-3 dark:bg-white/10 dark:text-gray-500">
         {page + 1}
       </div>
       <div

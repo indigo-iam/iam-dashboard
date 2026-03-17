@@ -5,6 +5,7 @@
 "use client";
 
 import { Button } from "@/components/buttons";
+import { Input } from "@/components/inputs";
 import {
   ClipboardDocumentIcon,
   EyeIcon,
@@ -41,24 +42,19 @@ export function InputSecret(props: Readonly<InputSecretProps>) {
   };
 
   return (
-    <div className="iam-input divide-primary/10 flex divide-x p-0!">
-      <input
-        type={isVisible ? "text" : "password"}
-        readOnly
-        className="bg-border w-full p-2 focus:outline-none dark:bg-gray-800"
-        value={value}
-      />
+    <div className="iam-input divide-primary/10 flex divide-x p-0! font-mono text-sm">
+      <Input type={isVisible ? "text" : "password"} readOnly value={value} />
       <div className="flex items-center rounded">
         <Button
           title="Show/Hide secret"
           onClick={toggleVisibility}
-          className="btn-secondary h-full items-center rounded-none border-0 border-r"
+          className="btn-secondary h-full items-center rounded-none border-0 border-r dark:border-t dark:border-b dark:border-gray-700"
         >
           <Icon secretIsVisible={isVisible} />
         </Button>
         <Button
           title="Copy secret"
-          className="btn-secondary h-full items-center rounded-none rounded-r border-0"
+          className="btn-secondary h-full items-center rounded-none rounded-r border-0 dark:border dark:border-gray-700"
           onClick={copyToClipboard}
         >
           <ClipboardDocumentIcon className="size-5 dark:text-white/60" />

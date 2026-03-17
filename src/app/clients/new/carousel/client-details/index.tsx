@@ -20,7 +20,7 @@ function ClientSecret(props: Readonly<ClientSecretProps>) {
   const { secret } = props;
   return (
     <Field className="flex flex-col gap-1">
-      <Label>Client Secret:</Label>
+      <Label>Client secret</Label>
       <InputSecret value={secret} />
       <small>
         Make sure you save it - you won&apos;t be able to access it again.

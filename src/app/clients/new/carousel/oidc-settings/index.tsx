@@ -63,8 +63,8 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
         />
       </Field>
       <div className="flex flex-row justify-end py-2">
-        <Button className="btn" onClick={goBack}>
-          <div className="flex items-center hover:border-b">
+        <Button className="btn-tertiary" onClick={goBack}>
+          <div className="flex items-center">
             <ChevronLeftIcon className="-ml-2 size-5" />
             Back
           </div>

@@ -5,6 +5,6 @@ Dockerfile
 *.env
 env/
 envs/
-node_modules
-.next
-sqlite.db
+node_modules/
+.next/
+*.db

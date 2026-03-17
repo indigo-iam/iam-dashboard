@@ -18,7 +18,7 @@ Documentation: https://nextjs.org/docs/pages/guides/instrumentation
 */
 
 import { OTLPHttpJsonTraceExporter, registerOTel } from "@vercel/otel";
-import { getMigrations } from "better-auth/db";
+import { getMigrations } from "better-auth/db/migration";
 import { settings } from "./config";
 import { authConfig } from "./auth";
 import Database from "better-sqlite3";

@@ -62,7 +62,7 @@ function Row(props: Readonly<RowProps>) {
           <div className="flex grow items-center">
             <Labels group={group} />
           </div>
-          <p className="text-gray dark:text-secondary/50 my-auto flex flex-col py-1 pr-2 text-sm font-light">
+          <p className="text-gray dark:text-secondary/50 my-auto flex flex-col py-1 pr-2 text-xs font-light">
             Created {created}
           </p>
         </Link>

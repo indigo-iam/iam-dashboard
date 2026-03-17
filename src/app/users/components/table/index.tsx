@@ -33,7 +33,7 @@ function Row(props: Readonly<RowProps>) {
           <div className="my-auto flex flex-col">
             <div className="inline-flex items-center gap-2 lg:flex-col lg:items-end lg:gap-1">
               <Status active={user.active ?? false} />
-              <p className="text-gray dark:text-secondary/50 py-1 text-sm font-light whitespace-nowrap lg:p-0">
+              <p className="text-gray dark:text-secondary/50 py-1 text-xs font-light whitespace-nowrap lg:p-0">
                 Created {created}
               </p>
             </div>

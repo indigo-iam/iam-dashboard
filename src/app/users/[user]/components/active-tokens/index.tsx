@@ -40,7 +40,7 @@ function ActiveTokenView(props: Readonly<ActiveTokenViewProps>) {
               {scopes}
             </p>
           </div>
-          <p className="text-gray dark:text-secondary/50 flex items-center py-1 text-sm font-light whitespace-nowrap lg:text-right">
+          <p className="text-gray dark:text-secondary/50 flex items-center py-1 text-xs font-light whitespace-nowrap lg:px-2 lg:text-right">
             {expired ? `Expired ${expiresAt}` : `Expires ${expiresAt}`}
           </p>
         </Link>

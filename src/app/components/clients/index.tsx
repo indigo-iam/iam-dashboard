@@ -48,7 +48,7 @@ function Row(props: Readonly<RowProps>) {
           </Link>
           <div className="flex flex-row items-center gap-0.5 lg:flex-col lg:items-end lg:justify-center lg:px-2">
             <Status active={client.active} />
-            <p className="text-gray dark:text-secondary/50 text-sm font-light whitespace-nowrap sm:text-right">
+            <p className="text-gray dark:text-secondary/50 text-xs font-light whitespace-nowrap sm:text-right">
               Created {createdAt}
             </p>
           </div>

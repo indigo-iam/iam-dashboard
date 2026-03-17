@@ -29,7 +29,7 @@ function Row(props: Readonly<RowProps>) {
             Motivation: {request.notes}
           </p>
         </Link>
-        <p className="text-gray dark:text-secondary/50 flex items-center text-sm whitespace-nowrap lg:px-2 lg:text-right">
+        <p className="text-gray dark:text-secondary/50 flex items-center text-xs whitespace-nowrap lg:px-2 lg:text-right">
           Sent {creationTime}
         </p>
       </div>

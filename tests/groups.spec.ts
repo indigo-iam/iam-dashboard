@@ -31,7 +31,9 @@ test("Create and delete group", async ({ page }) => {
     await expect(toast.getByText("Group created")).toBeVisible();
     // check group has been created
     await page.goto("./groups");
-    await page.getByTestId("search-group").pressSequentially(groupName);
+    await page
+      .getByTestId("search-group")
+      .pressSequentially(groupName, { delay: 100 });
     const options = page.getByTitle("More");
     await expect(options).toHaveCount(1);
   });

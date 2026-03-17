@@ -11,7 +11,7 @@ import { Sidebar } from "@/app/components/sidebar";
 import { ToasterPortal } from "@/components/toaster";
 import { getNotification } from "@/services/notifications";
 import { Loading } from "@/components/loading";
-import "@/app/app.css";
+import "@/styles/main.css";
 
 export const metadata: Metadata = {
   title: "INDIGO IAM",

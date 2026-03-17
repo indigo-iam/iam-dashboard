@@ -9,6 +9,7 @@ import { Group } from "@/models/groups";
 import AddSubgroupModal from "./add-subgroup-modal";
 import DeleteGroupModal from "./delete-group-modal";
 import { useState } from "react";
+import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 export type GroupOptionsProps = {
   group: Group;
@@ -21,13 +22,21 @@ export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
   return (
     <>
       <Options>
-        <Option onClick={() => setShow("ADD_SUBGROUP")}>Add subgroup</Option>
+        <Option onClick={() => setShow("ADD_SUBGROUP")}>
+          <div className="flex items-center gap-1">
+            <PlusCircleIcon className="size-5" />
+            <span className="inline-block">Add subgroup</span>
+          </div>
+        </Option>
         <Option
           onClick={() => setShow("DELETE_GROUP")}
           data-danger
           data-testid="delete-group-opt"
         >
-          Delete group
+          <div className="flex items-center gap-1">
+            <TrashIcon className="size-5" />
+            <span className="inline-block">Delete group</span>
+          </div>
         </Option>
       </Options>
       <AddSubgroupModal

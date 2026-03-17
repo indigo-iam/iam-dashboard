@@ -1,0 +1,15 @@
+/*
+ * SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
+ *
+ * SPDX-License-Identifier: EUPL-1.2
+ */
+
+@import "tailwindcss";
+
+@import "./variables/theme.css";
+
+@import "./components/buttons.css";
+@import "./components/cards.css";
+@import "./components/headers.css";
+@import "./components/inputs.css";
+@import "./components/lists.css";

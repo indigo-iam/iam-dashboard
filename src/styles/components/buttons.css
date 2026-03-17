@@ -1,0 +1,37 @@
+/*
+ * SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
+ *
+ * SPDX-License-Identifier: EUPL-1.2
+ */
+
+@utility btn {
+  @apply flex max-w-fit min-w-fit cursor-pointer items-center gap-1 rounded-md p-1 px-2 text-sm font-normal text-nowrap transition ease-out;
+}
+
+@utility btn-primary {
+  @apply btn text-secondary disabled:border-primary/50 disabled:bg-primary/50 dark:border-secondary/30 dark:text-secondary border bg-slate-700 hover:bg-slate-600 active:bg-slate-800 dark:border-none dark:bg-sky-600 dark:hover:bg-sky-700 dark:disabled:bg-sky-600/30 dark:disabled:text-white/40;
+}
+
+@utility btn-secondary {
+  @apply btn border-primary/10 text-primary hover:bg-primary/5 disabled:border-primary/50 disabled:bg-secondary/50 disabled:text-primary/50 dark:border-secondary/20 dark:text-secondary/90 active:bg-primary/10 dark:disabled:bg-light-gray/30 dark:disabled:text-secondary/50 border bg-gray-100 dark:bg-slate-700 dark:hover:bg-slate-600 dark:active:bg-slate-500;
+}
+
+@utility btn-tertiary {
+  @apply btn hover:underline active:font-bold active:tracking-tight;
+}
+
+@utility btn-danger {
+  @apply btn bg-danger text-secondary disabled:bg-danger/50 border-none hover:bg-red-500 active:bg-red-800;
+}
+
+@utility btn-danger-secondary {
+  @apply btn border-danger bg-secondary text-danger hover:bg-danger hover:text-secondary disabled:border-danger/50 disabled:hover:bg-danger/50 dark:bg-primary border;
+}
+
+@utility btn-danger-tertiary {
+  @apply btn hover:text-danger hover:underline active:font-bold active:tracking-tight;
+}
+
+@utility btn-user-popover {
+  @apply text-light dark:text-secondary mx-auto flex w-full items-center gap-2 rounded-md p-2 transition hover:bg-gray-200 dark:hover:bg-white/10;
+}

@@ -48,7 +48,7 @@ export function Drawer(props: Readonly<DrawerProps>) {
       />
       <aside
         id="drawer"
-        className="easy-in-out over visible fixed inset-0 top-14 z-30 w-0 -translate-x-full overflow-hidden bg-sky-950 duration-100 data-open:visible data-open:w-80 data-open:translate-x-0 md:visible md:w-80 md:translate-x-0"
+        className="easy-in-out over visible fixed inset-0 top-14 z-30 w-0 -translate-x-full overflow-hidden bg-sky-950 duration-100 data-open:visible data-open:w-80 data-open:translate-x-0 md:visible md:w-80 md:translate-x-0 dark:bg-gray-800"
         data-testid="sidebar"
       >
         {children}

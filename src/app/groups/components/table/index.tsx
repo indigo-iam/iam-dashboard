@@ -135,10 +135,8 @@ export async function UserManagedGroupsTable(
         return (
           <li key={g.id} className="iam-list-item">
             <Link className="w-full" href={`/groups/${g.id}`}>
-              <p>{g.name}</p>
-              <p className="text-sm font-light text-gray-300 dark:text-white/60">
-                {g.id}
-              </p>
+              <p className="text-gray-950 dark:text-white">{g.name}</p>
+              <p className="text-sm font-light">{g.id}</p>
             </Link>
           </li>
         );

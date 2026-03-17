@@ -20,7 +20,7 @@ export default function LabelView(props: Readonly<LabelProps>) {
   return (
     <form
       action={action}
-      className="flex items-center gap-1 rounded-full bg-sky-400 px-2 py-0.5 text-sm text-white"
+      className="flex items-center gap-1 rounded-full bg-sky-500 px-2 py-0.5 text-sm text-white dark:bg-sky-800/30 dark:text-sky-400/80"
     >
       <span>
         <b>{label.name}</b> {label.value}

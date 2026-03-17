@@ -24,11 +24,11 @@ function Labels(props: Readonly<LabelsProps>) {
       {labels?.map(label => {
         return (
           <div
-            className="flex items-center gap-1 rounded-full bg-sky-600 px-2 py-0.5 text-xs text-white dark:bg-sky-400"
+            className="flex items-center gap-1 rounded-full bg-sky-600 px-2 py-0.5 text-xs text-white dark:bg-sky-800/30 dark:text-sky-400/70"
             key={label.name}
           >
             <span>
-              <b className="text-white">{label.name}</b> {label.value}
+              <b>{label.name}</b> {label.value}
             </span>
           </div>
         );

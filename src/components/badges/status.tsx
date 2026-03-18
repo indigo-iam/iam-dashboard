@@ -8,16 +8,15 @@ type StatusProps = {
 
 export default function Status(props: Readonly<StatusProps>) {
   const { active } = props;
-  const status = active ? "Active" : "Disabled";
   const title = `${active ? "Active" : "Disabled"}`;
   return (
-    <span
+    <div
       title={title}
-      className="text-danger bg-danger data-[status=Active]:bg-success dark:lg:bg-danger dark:text-white dark:lg:data-[status=Active]:bg-success dark:lg:data-[status=Active]:text-white flex max-w-fit items-center rounded-full p-1.5 text-xs font-medium lg:bg-red-200 lg:p-0.5 lg:px-2 lg:data-[status=Active]:bg-green-100 lg:data-[status=Active]:text-green-700"
-      data-status={status}
+      className="text-danger data-[enabled=true]:text-success rounded-full bg-red-100 px-2 py-0.5 text-xs data-[enabled=true]:bg-green-100"
+      data-enabled={active}
       aria-label={title}
     >
-      <span className="hidden lg:inline-block">{status}</span>
-    </span>
+      <span className="inline-block">{title}</span>
+    </div>
   );
 }

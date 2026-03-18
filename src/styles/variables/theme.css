@@ -18,7 +18,7 @@
 
 @layer base {
   * {
-    @apply border-gray-200 dark:border-gray-600;
+    @apply border-gray-200 dark:border-gray-700;
   }
   body {
     @apply bg-gray-100 text-gray-950 dark:bg-gray-900 dark:text-white;

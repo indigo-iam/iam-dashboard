@@ -17,7 +17,7 @@
 }
 
 @utility btn-tertiary {
-  @apply btn hover:underline active:font-bold active:tracking-tight dark:text-white;
+  @apply btn text-gray-950 hover:underline active:font-bold active:tracking-tight dark:text-white;
 }
 
 @utility btn-danger {

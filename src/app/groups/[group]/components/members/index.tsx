@@ -20,7 +20,7 @@ export default async function Members(props: Readonly<MembersProps>) {
   return (
     <TabPanel className="panel space-y-4">
       {isAdmin ? (
-        <div className="flex">
+        <div className="flex flex-wrap">
           <h2 className="grow">Members</h2>
           <AddMemberButton group={group} />
         </div>

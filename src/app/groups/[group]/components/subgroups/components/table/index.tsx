@@ -12,11 +12,14 @@ function Row(props: Readonly<{ groupRef: ScimReference }>) {
   const { groupRef } = props;
   return (
     <li className="iam-list-item flex flex-row">
-      <Link className="flex grow flex-col" href={`/groups/${groupRef.value}`}>
-        {groupRef.display}
-        <p className="text-gray dark:text-white-dark text-sm">
-          {groupRef.value}
+      <Link
+        className="flex w-0 grow flex-col"
+        href={`/groups/${groupRef.value}`}
+      >
+        <p className="truncate text-gray-950 dark:text-gray-200">
+          {groupRef.display}
         </p>
+        <p className="truncate text-sm font-light">{groupRef.value}</p>
       </Link>
       <SubgroupOptions groupRef={groupRef} />
     </li>
@@ -36,11 +39,7 @@ export default async function SubgroupsTable(
   const subgroups = firstPage.Resources;
 
   if (subgroups.length === 0) {
-    return (
-      <p className="text-gray dark:text-white/60 p-2">
-        This group has no subgroups.
-      </p>
-    );
+    return <p>This group has no subgroups.</p>;
   }
 
   return (

@@ -2,11 +2,11 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { getSession, isUserAdmin } from "@/auth";
+import { getSession } from "@/auth";
 import { TabPanel } from "@/components/tabs";
 import { Group } from "@/models/groups";
 import { fetchGroupManagers } from "@/services/groups";
-import ManagersTable from "./table/table";
+import ManagersTable from "./table";
 import AssignGroupManagerButton from "./assign-button";
 
 import { redirect } from "next/navigation";
@@ -21,20 +21,10 @@ export default async function Managers(props: Readonly<ManagersProps>) {
   if (!session) {
     redirect("/signin");
   }
-  const managers = await fetchGroupManagers(group.id);
-  if (!managers) {
-    return (
-      <TabPanel className="panel space-y-4">
-        <h2 className="grow">Managers</h2>
-        <p className="text-gray dark:text-white/60 p-2">
-          This groups has no managers.
-        </p>
-      </TabPanel>
-    );
-  }
+  const managers = (await fetchGroupManagers(group.id)) ?? [];
   return (
     <TabPanel className="panel space-y-4">
-      <div className="flex">
+      <div className="flex flex-wrap gap-2">
         <h2 className="grow">Managers</h2>
         <AssignGroupManagerButton group={group} />
       </div>

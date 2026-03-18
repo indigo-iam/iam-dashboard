@@ -27,29 +27,26 @@ function Row(props: Readonly<RowProps>) {
     : "N/A";
   return (
     <li className="iam-list-item flex flex-row lg:gap-2">
-      <div className="flex grow">
-        <div className="flex grow flex-col space-y-2 lg:flex-row lg:space-y-0">
-          <Link
-            className="flex grow flex-col break-all"
-            href={`/clients/${client_id}`}
-          >
-            <p className="text-gray-950 dark:text-gray-100">{client_name}</p>
-            <div className="flex flex-col">
-              <p className="text-sm font-light">{client.client_description}</p>
-              <p
-                title={scopes}
-                className="line-clamp-1 max-w-md text-sm font-light"
-              >
-                {scopes}
-              </p>
-            </div>
-          </Link>
-          <div className="flex flex-row items-center gap-1.5 lg:flex-col lg:items-end lg:justify-center">
-            <Status active={client.active} />
-            <p className="text-xs font-light whitespace-nowrap sm:text-right">
-              Created {createdAt}
+      <div className="flex w-0 grow flex-col space-y-2 lg:flex-row lg:space-y-0">
+        <Link
+          className="flex grow flex-col lg:w-0"
+          href={`/clients/${client_id}`}
+        >
+          <p className="text-gray-950 dark:text-gray-100">{client_name}</p>
+          <div className="flex flex-col">
+            <p className="truncate text-sm font-light">
+              {client.client_description}
+            </p>
+            <p title={scopes} className="truncate text-sm font-light">
+              {scopes}
             </p>
           </div>
+        </Link>
+        <div className="flex flex-row items-center gap-1.5 lg:flex-col lg:items-end lg:justify-center">
+          <Status active={client.active} autoHide={true} />
+          <p className="text-xs font-light whitespace-nowrap sm:text-right">
+            Created {createdAt}
+          </p>
         </div>
       </div>
       <ClientOptions client={client} />

@@ -18,17 +18,14 @@ function Row(props: Readonly<RowProps>) {
   const { userRef, group } = props;
   return (
     <li className="iam-list-item flex flex-row">
-      <div className="flex grow flex-col">
-        <Link className="flex grow flex-col" href={`/users/${userRef.value}`}>
+      <Link className="flex w-0 grow flex-col" href={`/users/${userRef.value}`}>
+        <p className="truncate text-gray-950 dark:text-gray-200">
           {userRef.display}
-          <p className="text-gray dark:text-white/60 text-sm font-light">
-            {userRef.value}
-          </p>
-        </Link>
-      </div>
-      <div className="flex flex-col">
-        <MemberOptions userRef={userRef} group={group} />
-      </div>
+        </p>
+        <p className="truncate text-sm font-light">{userRef.value}</p>
+      </Link>
+
+      <MemberOptions userRef={userRef} group={group} />
     </li>
   );
 }
@@ -43,11 +40,7 @@ export default async function Members(props: Readonly<MembersProps>) {
   const members = (await fetchGroupMembersPage(group.id)).Resources;
 
   if (members.length === 0) {
-    return (
-      <p className="text-gray dark:text-white/60 p-2">
-        This group has no members.
-      </p>
-    );
+    return <p>This group has no members.</p>;
   }
 
   return (

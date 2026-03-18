@@ -15,31 +15,27 @@ type RowProps = {
 function Row(props: Readonly<RowProps>) {
   const { user } = props;
   const created = user.meta?.created
-    ? new Date(user.meta.created).toLocaleString()
+    ? new Date(user.meta.created).toDateString()
     : "N/A";
   return (
     <li className="iam-list-item flex flex-row lg:gap-2">
-      <div className="flex grow flex-col">
-        <Link
-          className="text-md flex grow flex-col break-all lg:flex-row"
-          href={`/users/${user.id}`}
-        >
-          <div className="grow flex-col">
-            <p className="text-gray-950 dark:text-gray-100">
-              {user.name?.formatted}
-            </p>
-            <p className="text-sm font-light">{user.emails?.[0].value}</p>
+      <Link
+        className="text-md flex grow flex-col break-all lg:flex-row"
+        href={`/users/${user.id}`}
+      >
+        <div className="grow flex-col">
+          <p className="text-gray-950 dark:text-gray-100">
+            {user.name?.formatted}
+          </p>
+          <p className="text-sm font-light">{user.emails?.[0].value}</p>
+        </div>
+        <div className="my-auto flex flex-col">
+          <div className="flew-wrap flex items-center gap-2 lg:flex-col lg:items-end lg:gap-1">
+            <Status active={user.active ?? false} autoHide={true}/>
+            <p className="py-1 text-xs font-light lg:p-0">Created {created}</p>
           </div>
-          <div className="my-auto flex flex-col">
-            <div className="inline-flex items-center gap-2 lg:flex-col lg:items-end lg:gap-1">
-              <Status active={user.active ?? false} />
-              <p className="py-1 text-xs font-light whitespace-nowrap lg:p-0">
-                Created {created}
-              </p>
-            </div>
-          </div>
-        </Link>
-      </div>
+        </div>
+      </Link>
       <UserOptions user={user} />
     </li>
   );

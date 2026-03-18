@@ -15,7 +15,7 @@ export default function Subgroups(props: Readonly<SubgroupsProps>) {
   const { group } = props;
   return (
     <TabPanel className="panel space-y-4">
-      <div className="flex">
+      <div className="flex flex-wrap gap-2">
         <h2 className="grow">Subgroups</h2>
         <AddSubgroupButton group={group} />
       </div>

@@ -29,13 +29,13 @@ export default function ScopesTable(props: Readonly<ScopesTableProps>) {
           className="iam-list-item flex-row items-center gap-2"
           key={scope.id}
         >
-          <div className="flex grow flex-col gap-2 sm:flex-row sm:items-center sm:gap-0">
-            <div className="flex grow flex-col">
+          <div className="flex grow flex-col gap-2 lg:flex-row lg:items-center lg:gap-0">
+            <div className="flex grow flex-col lg:w-0">
               <div className="flex-inline flex items-center gap-2 text-gray-950 dark:text-gray-100">
                 <ScopeIcon scope={scope} className="text-infn size-4" />
-                <p>{scope.value}</p>
+                <p className="truncate">{scope.value}</p>
               </div>
-              <p className="text-sm font-light">{scope.description}</p>
+              <p className="truncate text-sm font-light">{scope.description}</p>
             </div>
             <ScopeTypeSelect key={scope.id} scope={scope} />
           </div>

@@ -11,17 +11,15 @@ function Row(props: Readonly<{ manager: User; group: Group }>) {
   const { manager, group } = props;
   return (
     <li className="iam-list-item flex flex-row">
-      <div className="flex grow flex-col">
-        <Link className="flex grow flex-col" href={`/users/${manager.id}`}>
+      <Link className="flex w-0 grow flex-col" href={`/users/${manager.id}`}>
+        <p className="truncate text-gray-950 dark:text-gray-200">
           {manager.name?.formatted}
-          <p className="text-gray dark:text-white/60 text-sm font-light">
-            {manager.emails?.[0].value}
-          </p>
-        </Link>
-      </div>
-      <div className="flex flex-col">
-        <ManagerOptions manager={manager} group={group} />
-      </div>
+        </p>
+        <p className="truncate text-sm font-light">
+          {manager.emails?.[0].value}
+        </p>
+      </Link>
+      <ManagerOptions manager={manager} group={group} />
     </li>
   );
 }
@@ -33,15 +31,9 @@ type ManagerTableProps = {
 
 export default function ManagersTable(props: Readonly<ManagerTableProps>) {
   const { group, managers } = props;
-
   if (managers.length === 0) {
-    return (
-      <p className="text-gray dark:text-white/60 p-2">
-        This group has no managers.
-      </p>
-    );
+    return <p>This group has no managers.</p>;
   }
-
   return (
     <ul className="w-full">
       {managers.map(manager => (

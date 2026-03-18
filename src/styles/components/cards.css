@@ -13,7 +13,7 @@
 }
 
 @utility panel {
-  @apply rounded-lg border bg-white p-4 text-gray-700 sm:px-8 sm:py-4 dark:divide-gray-200 dark:border dark:bg-gray-800 dark:text-gray-400;
+  @apply rounded-lg border bg-white p-4 text-gray-500 sm:px-8 sm:py-4 dark:border dark:bg-gray-800 dark:text-gray-400;
 }
 
 @utility overlay {

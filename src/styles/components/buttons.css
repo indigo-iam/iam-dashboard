@@ -29,7 +29,7 @@
 }
 
 @utility btn-danger-tertiary {
-  @apply btn hover:text-danger hover:underline active:font-bold active:tracking-tight dark:text-white;
+  @apply btn hover:text-danger text-gray-950 hover:underline active:font-bold active:tracking-tight dark:text-white;
 }
 
 @utility btn-popover {

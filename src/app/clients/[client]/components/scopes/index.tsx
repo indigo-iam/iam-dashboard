@@ -19,10 +19,8 @@ async function SystemScopes(props: Readonly<SystemScopesProps>) {
   return scopes.map(s => (
     <li className="iam-list-item" key={s.id}>
       <div className="flex grow flex-col">
-        <p>{s.value}</p>
-        <p className="text-gray dark:text-white/60 line-clamp-1 text-sm">
-          {s.description}
-        </p>
+        <p className="text-gray-950 dark:text-gray-200">{s.value}</p>
+        <p className="text-xs">{s.description}</p>
       </div>
       <div className="flex flex-col items-center">
         <ScopeOptions client={client} scope={s.value} />
@@ -41,10 +39,8 @@ async function CustomScopes(props: Readonly<CustomScopesProps>) {
   return scopes.map(s => (
     <li className="iam-list-item" key={s}>
       <div className="flex grow flex-col">
-        <p>{s}</p>
-        <p className="text-gray dark:text-white/60 line-clamp-1 text-sm">
-          (custom scope)
-        </p>
+        <p className="text-gray-950 dark:text-gray-200">{s}</p>
+        <p className="text-xs">(custom scope)</p>
       </div>
       <div className="flex flex-col items-center">
         <ScopeOptions client={client} scope={s} />

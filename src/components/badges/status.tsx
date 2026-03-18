@@ -12,7 +12,7 @@ export default function Status(props: Readonly<StatusProps>) {
   return (
     <div
       title={title}
-      className="text-danger data-[enabled=true]:text-success rounded-full bg-red-100 px-2 py-0.5 text-xs data-[enabled=true]:bg-green-100"
+      className="text-danger data-[enabled=true]:text-success dark:bg-danger dark:data-[enabled=true]:bg-success rounded-full bg-red-100 px-2 py-0.5 text-xs data-[enabled=true]:bg-green-100 dark:text-white dark:data-[enabled=true]:text-white"
       data-enabled={active}
       aria-label={title}
     >

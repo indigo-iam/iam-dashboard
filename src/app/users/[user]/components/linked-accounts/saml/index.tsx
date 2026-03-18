@@ -33,9 +33,7 @@ export function SamlAccounts(props: Readonly<SamlAccountsProps>) {
     return (
       <div className="panel space-y-2">
         <h2>SAML</h2>
-        <p className="text-gray p-2 dark:text-white/60">
-          No linked SAML accounts found.
-        </p>
+        <p>No linked SAML accounts found.</p>
       </div>
     );
   }

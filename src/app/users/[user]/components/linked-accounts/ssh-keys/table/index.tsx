@@ -36,18 +36,13 @@ type TableProps = {
 
 export default function Table(props: Readonly<TableProps>) {
   const { user } = props;
-
   const indigoUser = user["urn:indigo-dc:scim:schemas:IndigoUser"];
   let sshKeys: SSHKey[] = [];
-
   if (indigoUser?.sshKeys) {
     sshKeys = indigoUser.sshKeys;
   }
-
   if (sshKeys.length === 0) {
-    return (
-      <p className="text-gray p-2 dark:text-white/60">No SSH keys found.</p>
-    );
+    return <p>No SSH keys found.</p>;
   }
   return (
     <ul className="w-full">

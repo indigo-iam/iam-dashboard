@@ -46,9 +46,7 @@ export async function Certificates(props: Readonly<CertificateProps>) {
     return (
       <div className="panel space-y-2">
         <h2>X509 Certificates</h2>
-        <p className="text-gray p-2 dark:text-white/60">
-          No certificates found.
-        </p>
+        <p>No certificates found.</p>
         <LinkCertificateButton user={user} />
       </div>
     );

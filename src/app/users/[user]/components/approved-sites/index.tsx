@@ -49,6 +49,14 @@ function ApprovedSite(props: Readonly<ApprovedSiteProps>) {
 
 export async function ApprovedSites() {
   const approvedSites = await getApprovedSites();
+  if (approvedSites.length === 0) {
+    return (
+      <TabPanel className="panel" unmount={false}>
+        <h2 className="py-2">Approved Sites</h2>
+        <p>No approved sites found.</p>
+      </TabPanel>
+    );
+  }
   return (
     <TabPanel className="panel" unmount={false}>
       <h2 className="py-2">Approved Sites</h2>

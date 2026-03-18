@@ -65,8 +65,8 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
   if (!groups || groups.length === 0) {
     return (
       <div className="panel space-y-4">
-        <h2>User Groups</h2>
-        <p className="text-gray p-2 dark:text-white/60">No groups found.</p>
+        <h2>Joined Groups</h2>
+        <p>No groups found.</p>
       </div>
     );
   }

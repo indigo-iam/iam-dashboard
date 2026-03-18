@@ -36,20 +36,20 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
   const numberOfPages = Math.ceil(scopes.totalResults / count);
   return (
     <section>
-      <header className="section-header">
+      <header className="section-header flex flex-wrap gap-2">
         <div className="flex grow gap-2">
           <ClipboardDocumentCheckIcon className="size-5" />
           <h2 className="text-base font-normal">Scopes</h2>
         </div>
-        <NewScopeButton />
-      </header>
-      <div className="container space-y-4">
         <InputQuery
           title="Search scope"
           placeholder="Type to search a scope"
           data-testid="search-scope"
           aria-label="Search scope"
         />
+        <NewScopeButton />
+      </header>
+      <div className="container space-y-4">
         <div className="panel">
           <ScopesTable scopes={scopes.Resources} />
         </div>

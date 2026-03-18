@@ -38,20 +38,20 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
   const users = usersPage.Resources;
   return (
     <section>
-      <header className="section-header">
+      <header className="section-header flex flex-wrap gap-2">
         <div className="flex grow gap-2">
           <UsersIcon className="size-5" />
           <h2 className="text-base font-normal">Users</h2>
         </div>
-        <AddUserButton />
-      </header>
-      <div className="container space-y-4">
         <InputQuery
           title="Search client"
           placeholder="Type to search a user"
           data-testid="search-user"
           aria-label="Search user"
         />
+        <AddUserButton />
+      </header>
+      <div className="container space-y-4">
         <div className="panel">
           <UsersTable users={users} />
         </div>

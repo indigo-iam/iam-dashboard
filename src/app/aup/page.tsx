@@ -22,11 +22,9 @@ export default async function AUP() {
     return (
       <section>
         <header className="section-header flex flex-wrap items-center gap-2">
-          <div className="flex w-0 grow items-center gap-2">
+          <div className="flex grow items-center gap-2">
             <DocumentTextIcon className="size-5" />
-            <h2 className="truncate text-base font-normal">
-              Acceptable Usage Policy
-            </h2>
+            <h2 className="text-base font-normal">Acceptable Usage Policy</h2>
           </div>
           <CreateButton />
         </header>

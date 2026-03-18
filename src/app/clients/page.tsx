@@ -55,20 +55,20 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
   const clients = clientPage.Resources;
   return (
     <section>
-      <header className="section-header justify-between">
-        <div className="flex items-center gap-2">
+      <header className="section-header flex flex-wrap gap-2">
+        <div className="flex grow items-center gap-2">
           <RocketLaunchIcon className="size-5" />
           <h2 className="text-base font-normal">Clients</h2>
         </div>
-        <Buttons />
-      </header>
-      <div className="container space-y-4">
         <InputQuery
           title="Search client"
           placeholder="Type to search a client"
           data-testid="search-client"
           aria-label="Search client"
         />
+        <Buttons />
+      </header>
+      <div className="container space-y-4">
         <div className="panel">
           <Suspense fallback="Loading...">
             <ClientsTable clients={clients} />

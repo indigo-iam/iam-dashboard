@@ -20,7 +20,7 @@ export default async function Policies() {
   const policies = await fetchScopePolicies();
   return (
     <section>
-      <header className="section-header">
+      <header className="section-header flex flex-wrap gap-2">
         <div className="flex grow gap-2">
           <ScaleIcon className="size-5" />
           <h2 className="text-base font-normal">Scope Policies</h2>

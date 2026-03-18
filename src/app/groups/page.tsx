@@ -36,20 +36,20 @@ async function AdminPage(props: Readonly<GroupsProps>) {
   const groups = groupsPage.Resources;
   return (
     <section>
-      <header className="section-header">
+      <header className="section-header flex flex-wrap gap-2">
         <div className="flex grow gap-2">
           <UserGroupIcon className="size-5" />
           <h2 className="text-base font-normal">Groups</h2>
         </div>
-        <AddGroupButton />
-      </header>
-      <div className="container space-y-4">
         <InputQuery
           title="Search group"
           placeholder="Type to search a group"
           data-testid="search-group"
           aria-label="Search group"
         />
+        <AddGroupButton />
+      </header>
+      <div className="container space-y-4">
         <div className="panel">
           <AdminGroupsTable groups={groups} />
         </div>
@@ -65,10 +65,10 @@ async function UserPage() {
   const groups = me.groups ?? [];
   return (
     <section>
-      <header className="section-header">
+      <header className="section-header flex flex-wrap gap-2">
         <div className="flex grow gap-2">
           <UserGroupIcon className="size-5" />
-          <h2 className="text-base font-normal">My Groups</h2>
+          <h2 className="text-base font-normal">My groups</h2>
         </div>
         <AddGroupButton />
       </header>

@@ -42,19 +42,19 @@ export function InputSecret(props: Readonly<InputSecretProps>) {
   };
 
   return (
-    <div className="iam-input divide-primary/10 flex divide-x p-0! font-mono text-sm">
+    <div className="iam-input flex divide-x p-0! font-mono text-sm">
       <Input type={isVisible ? "text" : "password"} readOnly value={value} />
       <div className="flex items-center rounded">
         <Button
           title="Show/Hide secret"
           onClick={toggleVisibility}
-          className="btn-secondary h-full items-center rounded-none border-0 border-r dark:border-t dark:border-b dark:border-gray-700"
+          className="btn-secondary h-full items-center rounded-none border-0 border-r dark:border-t dark:border-b"
         >
           <Icon secretIsVisible={isVisible} />
         </Button>
         <Button
           title="Copy secret"
-          className="btn-secondary h-full items-center rounded-none rounded-r border-0 dark:border dark:border-gray-700"
+          className="btn-secondary h-full items-center rounded-none rounded-r border-0 dark:border"
           onClick={copyToClipboard}
         >
           <ClipboardDocumentIcon className="size-5 dark:text-white/60" />

@@ -12,7 +12,7 @@ interface LabelProps extends HeadlessLabelProps {}
 export function Label(props: Readonly<LabelProps>) {
   return (
     <HeadlessLabel
-      className="data-required:after:text-danger block pb-1.5 text-sm text-gray-500 data-required:after:content-['*'] dark:text-white"
+      className="data-required:after:text-danger block pb-1.5 text-sm text-gray-600 data-required:after:content-['*'] dark:text-white"
       {...props}
     />
   );

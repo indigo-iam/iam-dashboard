@@ -9,7 +9,7 @@
     @apply text-4xl font-bold text-gray-950 dark:text-gray-100;
   }
   h2 {
-    @apply border-gray-300 text-2xl font-bold text-gray-950 dark:text-gray-100;
+    @apply text-2xl font-bold text-gray-950 dark:text-gray-100;
   }
   h3 {
     @apply text-lg font-bold text-gray-950 dark:text-gray-100;

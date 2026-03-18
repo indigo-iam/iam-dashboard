@@ -37,7 +37,7 @@ export function Options(props: Readonly<OptionsProps>) {
       <MenuButton
         data-testid="option"
         title="More"
-        className="my-auto cursor-pointer rounded-md border border-transparent transition hover:border-gray-500 hover:bg-neutral-100 focus:outline-none data-open:border-gray-300 data-open:bg-gray-200 dark:hover:border-gray-500 dark:hover:bg-white/20 dark:data-open:border-gray-200 dark:data-open:bg-white/30"
+        className="my-auto cursor-pointer rounded-md transition hover:bg-gray-200 focus:outline-none data-open:bg-gray-200 dark:hover:bg-gray-500 dark:data-active:bg-gray-200 dark:data-open:bg-gray-500"
       >
         <EllipsisHorizontalIcon className="size-8 text-gray-800 dark:text-white/75" />
       </MenuButton>

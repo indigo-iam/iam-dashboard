@@ -68,7 +68,7 @@ const CustomToast = (props: {
   const { title, subtitle, dismiss, type } = props;
   return (
     <div className={"flex w-96"} data-testid="toast">
-      <div className="text:primary w-full rounded-lg border border-gray-300 bg-white p-3 shadow-lg dark:border-gray-800 dark:bg-slate-800 dark:text-white">
+      <div className="text:primary w-full rounded-lg border bg-white p-3 shadow-lg dark:bg-slate-800 dark:text-white">
         <div className="flex w-full items-center">
           <div className="mr-4 w-5">
             <Icon type={type} />

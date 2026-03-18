@@ -33,7 +33,7 @@ export async function UserPopover(props: Readonly<UserPopoverProps>) {
         anchor="bottom end"
         className="items overlay flex w-56 flex-col overflow-hidden ease-in-out [--anchor-gap:--spacing(5)] data-closed:-translate-y-1 data-closed:opacity-0"
       >
-        <div className="space-y-2 divide-y divide-gray-200 dark:divide-gray-400">
+        <div className="space-y-2">
           <div className="flex items-center gap-2 pb-2">
             <Gravatar email={email} />
             <div className="flex flex-col leading-normal">

@@ -20,15 +20,17 @@ function OwnerList(props: Readonly<OwnersListProps>) {
   return (
     <ul>
       {owners.map((owner, index) => (
-        <li key={owner.id} className="mt-1 flex flex-row items-center gap-2">
+        <li key={owner.id} className="flex items-center gap-2">
           <button
             type="button"
             onClick={() => onClick?.(index)}
-            className="bg-secondary-100 hover:bg-danger hover:text-white w-5 rounded"
+            className="bg-secondary-100 hover:bg-danger w-5 rounded hover:text-white"
           >
             <XMarkIcon />
           </button>
-          <b>{owner.name?.formatted}</b> ({owner.emails?.[0].value})
+          <p>
+            <b>{owner.name?.formatted}hello</b> ({owner.emails?.[0].value})
+          </p>
         </li>
       ))}
     </ul>

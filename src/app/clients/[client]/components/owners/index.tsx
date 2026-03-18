@@ -16,7 +16,6 @@ export default async function Owners(props: Readonly<OwnersProps>) {
   const { client } = props;
   const { client_id } = client;
   const owners = await getClientOwners(client_id);
-
   return (
     <TabPanel
       className="panel flex flex-col gap-8 pb-4 lg:flex-row"

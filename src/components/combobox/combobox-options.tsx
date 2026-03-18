@@ -12,7 +12,7 @@ export function ComboboxOptions(props: Readonly<ComboboxOptionsProps>) {
   const { children } = props;
   return (
     <HeadlessComboboxOptions
-      className="bg-secondary z-50 w-(--input-width) rounded-lg p-2 shadow dark:bg-white/10 dark:backdrop-blur-md"
+      className="overlay z-50 w-(--input-width) p-2"
       anchor="bottom"
     >
       {children}

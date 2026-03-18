@@ -35,7 +35,7 @@ export default function ScopesTable(props: Readonly<ScopesTableProps>) {
                 <ScopeIcon scope={scope} className="text-infn size-4" />
                 <p>{scope.value}</p>
               </div>
-              <p className="text-sm">{scope.description}</p>
+              <p className="text-sm font-light">{scope.description}</p>
             </div>
             <ScopeTypeSelect key={scope.id} scope={scope} />
           </div>

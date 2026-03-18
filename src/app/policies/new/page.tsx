@@ -18,11 +18,11 @@ const POLICY_EXAMPLE = `{
 
 export default async function Policies() {
   return (
-    <section className="container">
+    <section>
       <header className="section-header">
         <h2 className="text-base font-normal">Create Scope Policy</h2>
       </header>
-      <div className="content">
+      <div className="container">
         <div className="space-y-4">
           <p className="font-light">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in

@@ -5,5 +5,5 @@
  */
 
 @utility section-header {
-  @apply sticky top-14 flex items-center gap-2 border-b bg-white p-4 font-normal text-sky-950 dark:bg-gray-900 dark:text-white;
+  @apply sticky top-14 flex w-full items-center gap-2 border-b bg-white p-4 font-normal text-sky-950 dark:bg-gray-900 dark:text-white;
 }

@@ -20,7 +20,6 @@ import GeneralSettings from "./general-settings";
 import OIDCSettings from "./oidc-settings";
 import OtherSettings from "./other-settings";
 
-import { RocketLaunchIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 
 const TOTAL_PAGES = 4;
@@ -99,36 +98,30 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
   };
 
   return (
-    <section className="container space-y-4">
-      <header className="section-header">
-        <RocketLaunchIcon className="size-5" />
-        <h2 className="text-base font-normal">New client</h2>
-      </header>
-      <div className="flex justify-center">
-        <div className="p-8">
-          <Stepper currentPage={currentPage} totalPages={TOTAL_PAGES} />
-        </div>
-        <Form action={action}>
-          <Carousel selectedIndex={currentPage}>
-            <CarouselList>
-              <CarouselTab>General Settings</CarouselTab>
-              <CarouselTab>OIDC/OAuth2</CarouselTab>
-              <CarouselTab>Other Info</CarouselTab>
-              <CarouselTab>Client Details</CarouselTab>
-            </CarouselList>
-            <CarouselPanels>
-              <GeneralSettings goNext={next} />
-              <OIDCSettings
-                systemScopes={systemScopes}
-                goBack={back}
-                goNext={next}
-              />
-              <OtherSettings goBack={back} />
-              <ClientDetails client={client} isAdmin={isAdmin} />
-            </CarouselPanels>
-          </Carousel>
-        </Form>
+    <div className="flex items-center justify-center">
+      <div className="pr-8">
+        <Stepper currentPage={currentPage} totalPages={TOTAL_PAGES} />
       </div>
-    </section>
+      <Form action={action}>
+        <Carousel selectedIndex={currentPage}>
+          <CarouselList>
+            <CarouselTab>General Settings</CarouselTab>
+            <CarouselTab>OIDC/OAuth2</CarouselTab>
+            <CarouselTab>Other Info</CarouselTab>
+            <CarouselTab>Client Details</CarouselTab>
+          </CarouselList>
+          <CarouselPanels>
+            <GeneralSettings goNext={next} />
+            <OIDCSettings
+              systemScopes={systemScopes}
+              goBack={back}
+              goNext={next}
+            />
+            <OtherSettings goBack={back} />
+            <ClientDetails client={client} isAdmin={isAdmin} />
+          </CarouselPanels>
+        </Carousel>
+      </Form>
+    </div>
   );
 }

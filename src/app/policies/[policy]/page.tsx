@@ -24,11 +24,11 @@ export default async function PolicyPage(props: Readonly<PolicyPageProps>) {
   const id = (await params).policy;
   const policy = await fetchScopePolicy(id);
   return (
-    <section className="container">
+    <section>
       <header className="section-header">
         <h2 className="text-base font-normal">Edit Scope Policy</h2>
       </header>
-      <div className="content">
+      <div className="container">
         <div className="panel space-y-4">
           <h2>{policy.description}</h2>
           <Editor policy={policy} />

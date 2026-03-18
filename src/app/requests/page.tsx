@@ -24,12 +24,12 @@ export default async function Requests() {
   const registrationRequests = await fetchRegistrationRequests();
   const certLinkRequests = [];
   return (
-    <section className="container">
+    <section>
       <header className="section-header">
         <InboxArrowDownIcon className="size-5" />
         <h2 className="text-base font-normal">Requests</h2>
       </header>
-      <TabGroup className="content space-y-4">
+      <TabGroup className="container space-y-4">
         <TabList className="flex overflow-auto text-xl">
           <Tab>{`REGISTRATION REQUESTS (${registrationRequests.length})`}</Tab>
           <Tab>{`GROUP REQUESTS (${groupRequests.totalResults})`}</Tab>

@@ -35,7 +35,7 @@ async function AdminPage(props: Readonly<GroupsProps>) {
   const numberOfPages = Math.ceil(groupsPage.totalResults / count);
   const groups = groupsPage.Resources;
   return (
-    <section className="container">
+    <section>
       <header className="section-header">
         <div className="flex grow gap-2">
           <UserGroupIcon className="size-5" />
@@ -43,7 +43,7 @@ async function AdminPage(props: Readonly<GroupsProps>) {
         </div>
         <AddGroupButton />
       </header>
-      <div className="content space-y-4">
+      <div className="container space-y-4">
         <InputQuery
           title="Search group"
           placeholder="Type to search a group"
@@ -64,7 +64,7 @@ async function UserPage() {
   const managedGroups = await fetchManagedGroups(me.id);
   const groups = me.groups ?? [];
   return (
-    <section className="container">
+    <section>
       <header className="section-header">
         <div className="flex grow gap-2">
           <UserGroupIcon className="size-5" />
@@ -72,7 +72,7 @@ async function UserPage() {
         </div>
         <AddGroupButton />
       </header>
-      <div className="content space-y-4">
+      <div className="container space-y-4">
         <div className="panel">
           <h3 className="py-2">Unmanaged groups</h3>
           {groups.length > 0 ? (

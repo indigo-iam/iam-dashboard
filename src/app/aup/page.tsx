@@ -20,12 +20,12 @@ export default async function AUP() {
   const aup = await fetchAUP();
   if (!aup) {
     return (
-      <section className="container">
+      <section>
         <header className="section-header">
           <DocumentTextIcon className="size-5" />
           <h2 className="text-base font-normal">Acceptable Usage Policy</h2>
         </header>
-        <div className="content flex flex-col space-y-4 lg:items-center">
+        <div className="container flex flex-col space-y-4 lg:items-center">
           <DocumentTextIcon className="mt-32 size-48 text-gray-500 dark:text-white/60" />
           <span className="text-center text-xl">
             AUP is not defined for this organization.
@@ -36,12 +36,12 @@ export default async function AUP() {
     );
   }
   return (
-    <section className="container">
+    <section>
       <header className="section-header">
         <DocumentTextIcon className="size-5" />
         <h2 className="text-base font-normal">Acceptable Usage Policy</h2>
       </header>
-      <div className="content space-y-4">
+      <div className="container space-y-4">
         <div className="panel">
           <AupView aup={aup} />
         </div>

@@ -41,12 +41,12 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
     redirect("/");
   }
   return (
-    <section className="container">
+    <section>
       <header className="section-header">
         <UserIcon className="size-5" />
         <h2 className="text-base font-normal">{user.name?.formatted}</h2>
       </header>
-      <TabGroup className="content space-y-8">
+      <TabGroup className="container space-y-8">
         <TabList className="flex overflow-auto">
           <Tab>GENERAL</Tab>
           <Tab>GROUPS</Tab>

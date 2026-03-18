@@ -4,13 +4,6 @@
  * SPDX-License-Identifier: EUPL-1.2
  */
 
-@utility container {
-  @apply flex max-w-full flex-col pt-14 md:pl-80;
-}
-
-@utility content {
-  @apply 3xl:px-64 4xl:px-96 px-8 py-4 md:px-16 2xl:px-32;
-}
 
 @utility panel {
   @apply rounded-lg border bg-white p-4 text-gray-500 sm:px-8 sm:py-4 dark:border dark:bg-gray-800 dark:text-gray-400;

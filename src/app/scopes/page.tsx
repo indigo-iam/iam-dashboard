@@ -35,7 +35,7 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
   const scopes = await fetchPaginatedScopes(count, startIndex, query);
   const numberOfPages = Math.ceil(scopes.totalResults / count);
   return (
-    <section className="container">
+    <section>
       <header className="section-header">
         <div className="flex grow gap-2">
           <ClipboardDocumentCheckIcon className="size-5" />
@@ -43,7 +43,7 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
         </div>
         <NewScopeButton />
       </header>
-      <div className="content space-y-4">
+      <div className="container space-y-4">
         <InputQuery
           title="Search scope"
           placeholder="Type to search a scope"

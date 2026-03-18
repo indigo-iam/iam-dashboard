@@ -33,7 +33,7 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
   }
   const isAdmin = await isUserAdmin();
   return (
-    <section className="container">
+    <section>
       <header className="section-header">
         <div className="flex grow gap-2">
           <UserGroupIcon className="size-5" />
@@ -41,7 +41,7 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
         </div>
         <EditGroupButton group={group} />
       </header>
-      <TabGroup className="content space-y-8">
+      <TabGroup className="container space-y-8">
         <TabList className="flex overflow-auto">
           <Tab>GENERAL</Tab>
           <Tab>SUBGROUPS</Tab>

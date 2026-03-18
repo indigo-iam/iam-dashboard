@@ -19,7 +19,7 @@ export default async function Policies() {
   }
   const policies = await fetchScopePolicies();
   return (
-    <section className="container">
+    <section>
       <header className="section-header">
         <div className="flex grow gap-2">
           <ScaleIcon className="size-5" />
@@ -27,7 +27,7 @@ export default async function Policies() {
         </div>
         <AddPolicyButton />
       </header>
-      <div className="content space-y-4">
+      <div className="container space-y-4">
         <p className="font-light">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in
           accumsan leo. Suspendisse potenti. Pellentesque habitant morbi

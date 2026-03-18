@@ -29,7 +29,7 @@ function ActiveTokenView(props: Readonly<ActiveTokenViewProps>) {
           href={`/clients/${token.clientId}`}
         >
           <div className="flex grow flex-col gap-0.5 break-all">
-            <p className="text-gray-800 dark:text-gray-200">{tokenStr}</p>
+            <p className="text-gray-950 dark:text-gray-200">{tokenStr}</p>
             <p className="text-sm">{token.clientId}</p>
             <p
               title={scopes}

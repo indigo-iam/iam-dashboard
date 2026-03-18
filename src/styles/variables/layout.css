@@ -1,0 +1,19 @@
+/*
+ * SPDX-FileCopyrightText: 2025 Istituto Nazionale di Fisica Nucleare
+ *
+ * SPDX-License-Identifier: EUPL-1.2
+ */
+
+@layer base {
+  section {
+    @apply flex flex-col items-center;
+  }
+}
+
+@utility container {
+  @apply 3xl:px-80 4xl:px-92 px-4 py-8 sm:px-8 md:px-16 lg:px-16 xl:px-32 2xl:px-64;
+}
+
+@utility content {
+  @apply mt-14 md:ml-80;
+}

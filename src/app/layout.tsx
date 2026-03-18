@@ -44,13 +44,13 @@ export default async function RootLayout(props: Readonly<RootLayoutProps>) {
   const notification = await getNotification();
   return (
     <html lang="en">
-      <body className="body">
+      <body>
         {/*this div is required by https://github.com/tailwindlabs/headlessui/issues/2752*/}
         <div>
           <Header hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
           <main>
             <Sidebar hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
-            <div className="w-full">{children}</div>
+            <div className="content">{children}</div>
           </main>
           <CookiesBanner />
           <ToasterPortal notification={notification} />

@@ -109,10 +109,8 @@ export async function UserGroupsTable(props: Readonly<UserGroupsTablesProps>) {
         return (
           <li key={g.value} className="iam-list-item">
             <div className="flex flex-col">
-              <p>{g.display}</p>
-              <p className="text-sm font-light text-gray-300 dark:text-white/60">
-                {g.value}
-              </p>
+              <p className="text-gray-950 dark:text-white">{g.display}</p>
+              <p className="text-sm font-light">{g.value}</p>
             </div>
           </li>
         );

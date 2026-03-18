@@ -33,5 +33,5 @@
 }
 
 @utility btn-popover {
-  @apply mx-auto flex w-full cursor-pointer items-center gap-2 rounded-md p-2 text-gray-500 transition hover:bg-gray-200 dark:text-white dark:hover:bg-white/10;
+  @apply mx-auto flex w-full cursor-pointer items-center gap-2 rounded-md p-2 text-gray-700 transition hover:bg-gray-200 dark:text-white dark:hover:bg-white/10;
 }

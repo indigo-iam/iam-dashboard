@@ -18,11 +18,6 @@ export const test = baseTest.extend({
 
     // Redirect to new dashboard
     await page.waitForURL("./users/me");
-    const cookiesBanner = page.getByTestId("accept-cookies-banner");
-    await expect(cookiesBanner).toBeVisible();
-    await cookiesBanner.getByRole("button").click();
-    await expect(page.getByTestId("accept-cookies-banner")).toBeHidden();
-
     await expect(page.getByLabel("First Name")).toHaveValue("Admin");
     await expect(page.getByLabel("Last Name")).toHaveValue("User");
     await expect(page.getByLabel("Email")).toHaveValue("1_admin@iam.test");

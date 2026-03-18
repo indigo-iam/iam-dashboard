@@ -6,7 +6,6 @@ import type { Metadata, Viewport } from "next";
 
 import { getSession, isUserAdmin } from "@/auth";
 import { Header } from "@/app/components/header";
-import { CookiesBanner } from "@/app/components/sidebar/cookies-banner";
 import { Sidebar } from "@/app/components/sidebar";
 import { ToasterPortal } from "@/components/toaster";
 import { getNotification } from "@/services/notifications";
@@ -52,7 +51,6 @@ export default async function RootLayout(props: Readonly<RootLayoutProps>) {
             <Sidebar hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
             <div className="content">{children}</div>
           </main>
-          <CookiesBanner />
           <ToasterPortal notification={notification} />
           <Loading />
         </div>

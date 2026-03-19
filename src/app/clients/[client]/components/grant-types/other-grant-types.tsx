@@ -43,7 +43,7 @@ export function OtherGrantTypes(props: Readonly<OtherGrantTypesProps>) {
           </p>
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col lg:w-2/3">
         <Field>
           <Label>Other grant types</Label>
         </Field>

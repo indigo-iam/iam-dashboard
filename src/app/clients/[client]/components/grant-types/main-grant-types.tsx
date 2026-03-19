@@ -50,7 +50,7 @@ export function MainGrantTypes(props: Readonly<MainGrantTypesProps>) {
           </p>
         </div>
       </div>
-      <div>
+      <div className="lg:w-2/3">
         <AuthenticationFlow
           client={client}
           defaultValue={defaultGrantType(client)}

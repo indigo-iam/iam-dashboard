@@ -16,6 +16,7 @@ import {
   UserManagedGroupsTable,
 } from "./components";
 import { fetchMe } from "@/services/me";
+import JoinGroupButton from "../users/[user]/components/groups/join-group-button";
 
 type GroupsProps = {
   searchParams?: Promise<{
@@ -70,7 +71,7 @@ async function UserPage() {
           <UserGroupIcon className="size-5" />
           <h2 className="text-base font-normal">My groups</h2>
         </div>
-        <AddGroupButton />
+        <JoinGroupButton user={me} />
       </header>
       <div className="container space-y-4">
         <div className="panel">

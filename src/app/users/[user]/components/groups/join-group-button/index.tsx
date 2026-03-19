@@ -8,6 +8,7 @@ import { Button } from "@/components/buttons";
 import { User } from "@/models/scim";
 import { JoinGroupModal } from "./modal";
 import { useState } from "react";
+import { UserPlusIcon } from "@heroicons/react/24/outline";
 
 type JoinGroupButtonProps = {
   user: User;
@@ -19,16 +20,18 @@ export default function JoinGroupButton(props: Readonly<JoinGroupButtonProps>) {
   const [show, setShow] = useState(false);
   const openModal = () => setShow(true);
   const closeModal = () => setShow(false);
-  const title = isAdmin ? "Assign Group" : "Ask to Join Group";
   return (
     <>
-      <Button className="btn-secondary" onClick={openModal}>
-        {title}
+      <Button
+        className="btn-secondary flex items-center gap-1"
+        onClick={openModal}
+      >
+        <UserPlusIcon className="size-4" />
+        <span>Join group</span>
       </Button>
       <JoinGroupModal
-        title={title}
+        title="Join group"
         user={user}
-        groups={[]}
         show={show}
         onClose={closeModal}
         isAdmin={isAdmin}

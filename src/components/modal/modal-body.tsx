@@ -9,5 +9,5 @@ type ModalBodyProps = {
 
 export const ModalBody = (props: Readonly<ModalBodyProps>) => {
   const { className, children } = props;
-  return <div className={className ?? "space-y-4 p-4"}>{children}</div>;
+  return <div className={className ?? "space-y-4 px-2 py-4"}>{children}</div>;
 };

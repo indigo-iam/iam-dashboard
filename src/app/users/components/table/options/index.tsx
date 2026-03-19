@@ -8,6 +8,12 @@ import { Options, Option } from "@/components/options";
 import { User } from "@/models/scim";
 import ToggleUserStatusModal from "./user-status-modal";
 import DeleteUserModal from "./delete-user-modal";
+
+import {
+  PowerIcon,
+  PlayCircleIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 import { useState } from "react";
 
 type UserOptions = {
@@ -21,11 +27,26 @@ export default function UserOptions(props: Readonly<UserOptions>) {
   return (
     <>
       <Options>
-        <Option onClick={() => setShow("TOGGLE_STATUS")}>
-          {user.active ? "Disable" : "Enable"}
-        </Option>
+        {user.active ? (
+          <Option onClick={() => setShow("TOGGLE_STATUS")} data-danger>
+            <div className="flex items-center gap-1">
+              <PowerIcon className="size-4" />
+              <span>Disable</span>
+            </div>
+          </Option>
+        ) : (
+          <Option onClick={() => setShow("TOGGLE_STATUS")}>
+            <div className="flex items-center gap-1">
+              <PlayCircleIcon className="size-4" />
+              <span>Enable</span>
+            </div>
+          </Option>
+        )}
         <Option onClick={() => setShow("DELETE_USER")} data-danger>
-          Delete
+          <div className="flex items-center gap-1">
+            <TrashIcon className="size-4" />
+            <span>Disable</span>
+          </div>
         </Option>
       </Options>
       <ToggleUserStatusModal

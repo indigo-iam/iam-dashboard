@@ -8,6 +8,8 @@ import { Options, Option } from "@/components/options";
 import { Scope } from "@/models/client";
 import EditScopeModal from "./edit-scope-modal";
 import DeleteScopeModal from "./delete-scope-modal";
+
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
 type ScopeOptionsProps = {
@@ -21,9 +23,17 @@ export default function ScopeOptions(props: Readonly<ScopeOptionsProps>) {
   return (
     <>
       <Options>
-        <Option onClick={() => setShow("EDIT")}>Edit</Option>
+        <Option onClick={() => setShow("EDIT")}>
+          <div className="flex items-center gap-1">
+            <PencilSquareIcon className="size-4" />
+            <span>Edit</span>
+          </div>
+        </Option>
         <Option onClick={() => setShow("DELETE")} data-danger>
-          Delete
+          <div className="flex items-center gap-1">
+            <TrashIcon className="size-4" />
+            <span>Delete</span>
+          </div>
         </Option>
       </Options>
       <EditScopeModal scope={scope} show={show === "EDIT"} onClose={close} />

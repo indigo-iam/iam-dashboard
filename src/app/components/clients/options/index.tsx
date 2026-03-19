@@ -5,6 +5,11 @@
 "use client";
 
 import { useState } from "react";
+import {
+  PlayCircleIcon,
+  PowerIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 
 import { Options, Option } from "@/components/options";
 import { Client } from "@/models/client";
@@ -27,13 +32,24 @@ export default function ClientOptions(props: Readonly<ClientOptionsProps>) {
       <Options>
         {active ? (
           <Option onClick={openToggleStatus} data-danger={active}>
-            Disable
+            <div className="flex items-center gap-1">
+              <PowerIcon className="size-4" />
+              <span>Disable</span>
+            </div>
           </Option>
         ) : (
-          <Option onClick={openToggleStatus}>Enable</Option>
+          <Option onClick={openToggleStatus}>
+            <div className="flex items-center gap-1">
+              <PlayCircleIcon className="size-4" />
+              <span>Enable</span>
+            </div>
+          </Option>
         )}
         <Option onClick={openDelete} data-danger>
-          Delete
+          <div className="flex items-center gap-1">
+            <TrashIcon className="size-4" />
+            <span>Delete</span>
+          </div>
         </Option>
       </Options>
       <ToggleStatusModal

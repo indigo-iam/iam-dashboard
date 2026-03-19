@@ -45,13 +45,18 @@ export async function Aup(props: Readonly<AupProps>) {
   const { expiresAt, expired } = await getExpirationDate(user, aup);
   return (
     <div className="flex flex-col gap-8 py-4 last:pb-0 lg:flex-row">
-      <div className="w-full text-sm font-light text-gray-200 lg:w-1/3 dark:text-gray-300/80">
-        <h5 className="py-1 font-semibold text-gray-500 dark:text-gray-300">
-          Acceptable Usage Policy
-        </h5>
-        <p className="whitespace-normal">
-          Curabitur id libero vehicula, molestie lorem a, tempor tellus.
-        </p>
+      <div className="w-full space-y-2 text-sm font-light lg:w-1/3">
+        <h5 className="font-semibold">Acceptable Usage Policy</h5>
+        <div className="space-y-1">
+          <p className="whitespace-normal">
+            In order to use this service the AUP must be signed by the user.
+          </p>
+          <p>Here it is possible to re-sign the AUP before it expired.</p>
+          <p>
+            Once the AUP is expired, the user is asked to sign the new AUP at
+            login.
+          </p>
+        </div>
       </div>
       <div className="w-full space-y-4 lg:w-2/3">
         <Form>

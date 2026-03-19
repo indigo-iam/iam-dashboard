@@ -7,4 +7,5 @@ export {
   UserGroupsTable,
   UserManagedGroupsTable,
 } from "./table";
+export * from "./requests-table";
 export { default as AddGroupButton } from "./add-group-button";

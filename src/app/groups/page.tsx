@@ -12,11 +12,13 @@ import { fetchManagedGroups, getGroupsPage } from "@/services/groups";
 import {
   AddGroupButton,
   AdminGroupsTable,
+  GroupRequestsTable,
   UserGroupsTable,
   UserManagedGroupsTable,
 } from "./components";
 import { fetchMe } from "@/services/me";
-import JoinGroupButton from "../users/[user]/components/groups/join-group-button";
+import JoinGroupButton from "@/app/users/[user]/components/groups/join-group-button";
+import { fetchGroupsRequests } from "@/services/group-requests";
 
 type GroupsProps = {
   searchParams?: Promise<{
@@ -63,6 +65,8 @@ async function AdminPage(props: Readonly<GroupsProps>) {
 async function UserPage() {
   const me = await fetchMe();
   const managedGroups = await fetchManagedGroups(me.id);
+  const requestsPage = await fetchGroupsRequests();
+  const requests = requestsPage.Resources;
   const groups = me.groups ?? [];
   return (
     <section>
@@ -74,6 +78,12 @@ async function UserPage() {
         <JoinGroupButton user={me} />
       </header>
       <div className="container space-y-4">
+        {requests.length > 0 ? (
+          <div className="panel">
+            <h3 className="py-2">Requests sent</h3>
+            <GroupRequestsTable user={me} requests={requests} />
+          </div>
+        ) : null}
         <div className="panel">
           <h3 className="py-2">Unmanaged groups</h3>
           {groups.length > 0 ? (

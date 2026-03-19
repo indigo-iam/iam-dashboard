@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Checkbox as HeadlessCheckbox } from "@headlessui/react";
+import { Checkbox as HeadlessCheckbox, Label } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/16/solid";
 
 export interface CheckboxState<T> {
@@ -29,5 +29,24 @@ export function Checkbox(props: Readonly<CheckboxProps>) {
     >
       <CheckIcon className="hidden size-4 fill-gray-700 group-data-checked:block dark:fill-gray-300" />
     </HeadlessCheckbox>
+  );
+}
+
+type LabeledCheckboxProps = CheckboxProps & {
+  children?: React.ReactNode;
+};
+
+export function LabeledCheckbox(props: Readonly<LabeledCheckboxProps>) {
+  const { children, ...checkboxProps } = props;
+  return (
+    <div className="flex flex-row items-center gap-2">
+      <HeadlessCheckbox
+        {...checkboxProps}
+        className="group flex aspect-square size-4 items-center rounded border bg-white dark:bg-gray-800"
+      >
+        <CheckIcon className="hidden size-4 fill-gray-700 group-data-checked:block dark:fill-gray-300" />
+      </HeadlessCheckbox>
+      <Label className="text-sm">{children}</Label>
+    </div>
   );
 }

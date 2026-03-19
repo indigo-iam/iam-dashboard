@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-export { Checkbox } from "./checkbox";
+export { LabeledCheckbox, Checkbox } from "./checkbox";
 export { Description } from "./description";
 export { DropdownList } from "./dropdown-list";
 export { Form } from "./form";

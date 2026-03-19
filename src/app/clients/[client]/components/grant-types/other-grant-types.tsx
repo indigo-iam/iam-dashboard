@@ -2,21 +2,21 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Checkbox, Description, Field, Label } from "@/components/form";
+import { Description, Field, Label, LabeledCheckbox } from "@/components/form";
 import { Client } from "@/models/client";
 
 type OtherGrantTypesProps = {
   client: Client;
 };
 
-const deviceTokenKey = "urn:ietf:params:oauth:grant-type:device_code";
+const deviceCodeKey = "urn:ietf:params:oauth:grant-type:device_code";
 const tokenExchangeKey = "urn:ietf:params:oauth:grant-type:token-exchange";
 const refreshTokenKey = "refresh_token";
 
 export function OtherGrantTypes(props: Readonly<OtherGrantTypesProps>) {
   const { client } = props;
   const { grant_types } = client;
-  const deviceCode = grant_types.includes(deviceTokenKey);
+  const deviceCode = grant_types.includes(deviceCodeKey);
   const tokenExchange = grant_types.includes(tokenExchangeKey);
   const refreshToken = grant_types.includes(refreshTokenKey);
   return (
@@ -47,36 +47,35 @@ export function OtherGrantTypes(props: Readonly<OtherGrantTypesProps>) {
         <Field>
           <Label>Other grant types</Label>
         </Field>
-        <Field className="inline-flex items-center gap-2">
-          <Checkbox
+        <Field>
+          <LabeledCheckbox
             name="grant_type"
-            value="urn:ietf:params:oauth:grant-type:device_code"
+            value={deviceCodeKey}
             key={`device_code${deviceCode}`}
-            defaultChecked={grant_types.includes(
-              "urn:ietf:params:oauth:grant-type:device_code"
-            )}
-          />
-          <Label>Device Code</Label>
+            defaultChecked={deviceCode}
+          >
+            Device code
+          </LabeledCheckbox>
         </Field>
-        <Field className="inline-flex items-center gap-2">
-          <Checkbox
+        <Field>
+          <LabeledCheckbox
             name="grant_type"
-            value="urn:ietf:params:oauth:grant-type:token-exchange"
+            value={tokenExchangeKey}
             key={`token-exchange${tokenExchange}`}
-            defaultChecked={grant_types.includes(
-              "urn:ietf:params:oauth:grant-type:token-exchange"
-            )}
-          />
-          <Label>Token Exchange</Label>
+            defaultChecked={tokenExchange}
+          >
+            Token Exchange
+          </LabeledCheckbox>
         </Field>
-        <Field className="inline-flex items-center gap-2">
-          <Checkbox
+        <Field>
+          <LabeledCheckbox
             name="grant_type"
-            value="refresh_token"
+            value={refreshTokenKey}
             key={`refresh_token${refreshToken}`}
-            defaultChecked={grant_types.includes("refresh_token")}
-          />
-          <Label>Refresh Token</Label>
+            defaultChecked={refreshToken}
+          >
+            Refresh Token
+          </LabeledCheckbox>
         </Field>
         <Field>
           <Description>

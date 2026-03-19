@@ -38,20 +38,27 @@ export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
         <ModalBody className="space-y-4 pb-4">
           <Field>
             <Label>Scope</Label>
-            <Description>Single string with no spaces.</Description>
             <Input id="scope" name="value" placeholder="Scope name" />
+            <Description>Single string with no spaces.</Description>
           </Field>
           <Field>
             <Label>Description</Label>
-            <Description>Single string with no spaces.</Description>
             <Input
               id="scope"
               name="description"
               placeholder="Scope description"
             />
+            <Description>Single string with no spaces.</Description>
           </Field>
           <Field>
             <Label>Scope Type</Label>
+            <Select name="scope-type" defaultValue={scopeType}>
+              {options.map(option => (
+                <SelectOption key={option.id} value={option}>
+                  {option.name}
+                </SelectOption>
+              ))}
+            </Select>
             <Description>
               <b>Default</b>: newly-created clients get this scope by default.{" "}
               <br />
@@ -60,13 +67,6 @@ export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
               resources. <br />
               <b>None</b>: none of above.
             </Description>
-            <Select name="scope-type" defaultValue={scopeType}>
-              {options.map(option => (
-                <SelectOption key={option.id} value={option}>
-                  {option.name}
-                </SelectOption>
-              ))}
-            </Select>
           </Field>
         </ModalBody>
         <ModalFooter>

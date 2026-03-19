@@ -16,8 +16,8 @@ export function DangerZone(props: Readonly<{ client: Client }>) {
           Danger Zone
         </h5>
         <p>
-          A disabled client cannot issue new Access Tokens and Refresh Tokens
-          and the old ones are immediately revoked.
+          A disabled client cannot issue new tokens and the old ones are
+          immediately revoked.
         </p>
       </div>
       <Form className="flex w-full items-center justify-end lg:w-2/3">

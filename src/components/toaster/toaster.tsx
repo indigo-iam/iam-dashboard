@@ -41,13 +41,21 @@ let Icon = (props: Readonly<{ type: NotificationType }>) => {
   switch (type) {
     case "info":
       return (
-        <InformationCircleIcon key="circle-icon" className="text-gray-950" />
+        <InformationCircleIcon
+          key="circle-icon"
+          className="size-6 text-gray-950"
+        />
       );
     case "success":
-      return <CheckCircleIcon key="check-icon" className="text-success" />;
+      return (
+        <CheckCircleIcon key="check-icon" className="text-success size-6" />
+      );
     case "warning":
       return (
-        <ExclamationTriangleIcon key="danger-icon" className="text-warning" />
+        <ExclamationTriangleIcon
+          key="danger-icon"
+          className="text-warning size-6"
+        />
       );
     case "error":
       return (
@@ -67,25 +75,22 @@ const CustomToast = (props: {
 }) => {
   const { title, subtitle, dismiss, type } = props;
   return (
-    <div className={"flex w-96"} data-testid="toast">
-      <div className="text:primary w-full rounded-lg border bg-white p-3 shadow-lg dark:bg-slate-800 dark:text-white">
-        <div className="flex w-full items-center">
-          <div className="mr-4 w-5">
-            <Icon type={type} />
-          </div>
-          <div className="mr-6 ml-2">
-            <span className="font-semibold">{title}</span>
-            <span className="block text-gray-500">{subtitle}</span>
-          </div>
-          <div className="m-auto mr-0">
-            <button
-              className="hover:bg-secondary w-8 rounded-full p-1.25 text-neutral-500 dark:hover:bg-white/10"
-              onClick={dismiss}
-            >
-              <XCircleIcon />
-            </button>
+    <div className="w-80" data-testid="toast">
+      <div className="overlay flex w-full items-center border p-3">
+        <div className="flex grow items-center gap-2">
+          <Icon type={type} />
+          <div>
+            <p className="text-normal font-semibold">{title}</p>
+            <p className="block text-sm text-gray-500">{subtitle}</p>
           </div>
         </div>
+        <button
+          title="Close"
+          className="w-8 cursor-pointer rounded-full p-1.25 text-gray-500 hover:bg-gray-300 dark:text-gray-200 dark:hover:bg-gray-500"
+          onClick={dismiss}
+        >
+          <XCircleIcon />
+        </button>
       </div>
     </div>
   );

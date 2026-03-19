@@ -30,6 +30,7 @@ test("Create and delete group", async ({ page }) => {
     const toast = page.getByTestId("toast");
     await expect(toast).toBeVisible();
     await expect(toast.getByText("Group created")).toBeVisible();
+    await toast.getByTitle("Close").click();
     // check group has been created
     await page.goto("./groups");
     await page.getByTestId("search-group").pressSequentially(groupName);
@@ -53,6 +54,7 @@ test("Create and delete group", async ({ page }) => {
     const toast = page.getByTestId("toast");
     await expect(toast).toBeVisible();
     await expect(toast.getByText("Group deleted")).toBeVisible();
+    await toast.getByTitle("Close").click();
     // check group has been deleted
     await page.getByTitle("Clear search").click();
     await page

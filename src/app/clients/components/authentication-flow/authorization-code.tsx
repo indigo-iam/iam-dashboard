@@ -30,10 +30,6 @@ export default function AuthorizationCode(
   return (
     <Field>
       <Label data-required>Redirect URIs</Label>
-      <Description>
-        At least a valid Redirect URI is required when Authorization Code is
-        selected.
-      </Description>
       <InputList
         originalItems={redirect_uris}
         name="redirect_uris"
@@ -42,6 +38,10 @@ export default function AuthorizationCode(
         onChange={handleRedirectURIChange}
         required
       />
+      <Description>
+        At least a valid Redirect URI is required when Authorization Code is
+        selected.
+      </Description>
     </Field>
   );
 }

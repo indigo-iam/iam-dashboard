@@ -2,8 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { getAccessToken } from "@/auth";
-import { notFound } from "next/navigation";
+import { getAccessToken, signOut } from "@/auth";
+import { notFound, redirect } from "next/navigation";
 
 export async function authFetch(info: RequestInfo | URL, init?: RequestInit) {
   const { accessToken } = await getAccessToken();
@@ -26,6 +26,11 @@ export const getItem: GetItem = async (endpoint: string | URL) => {
     const status = response.status;
     if (status === 404) {
       notFound();
+    } else if (status === 401) {
+      // handle aup expired during active session
+      await signOut();
+      console.warn(error);
+      redirect("/signin");
     } else {
       throw Error(
         `getItem from ${endpoint} failed with status ${status}: ${error}`

@@ -64,7 +64,7 @@ export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
   };
 
   return (
-    <>
+    <div className="space-y-2">
       <Field>
         <Label>Authentication Flow</Label>
         <Select
@@ -78,13 +78,15 @@ export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
             </SelectOption>
           ))}
         </Select>
-        <Description>A little description.</Description>
+        <Description>
+          The authentication flow to receive an access token.
+        </Description>
       </Field>
       <AuthenticationFlowSettings
         client={client}
         onStatusChange={onStatusChange}
         grantType={selectedGrantType.id as GrantType}
       />
-    </>
+    </div>
   );
 }

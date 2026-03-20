@@ -10,6 +10,7 @@ import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
 import { assignGroupManager } from "@/services/groups";
+
 import { useState } from "react";
 
 interface AssignGroupManagerModalProps extends ModalProps {
@@ -35,10 +36,13 @@ export default function AssignGroupManagerModal(
   };
 
   return (
-    <Modal onClose={clearAndClose} {...modalProps} title="Assign Group Manager">
+    <Modal onClose={clearAndClose} {...modalProps} title="Assign group manager">
       <ModalBody>
         <div className="space-y-4" hidden={!!selectedUser}>
-          <p>Type to search for an user</p>
+          <p>
+            Type to search for an user to make them manager of group{" "}
+            <b>{group.displayName}</b>
+          </p>
           <SearchUsers onSelect={setSelectedUser} />
         </div>
         <div className="space-y-4" hidden={!selectedUser}>

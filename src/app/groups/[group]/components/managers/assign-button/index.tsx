@@ -23,7 +23,7 @@ export default function AssignGroupManagerButton(
   return (
     <>
       <Button className="btn-secondary" onClick={openModal}>
-        Assign Group Manager
+        Assign manager
       </Button>
       <AssignGroupManagerModal show={show} onClose={closeModal} group={group} />
     </>

@@ -23,9 +23,9 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
   const canContinue = name.length >= 4;
 
   return (
-    <CarouselPanel className="panel flex w-2xl flex-col gap-2" unmount={false}>
+    <CarouselPanel className="panel flex flex-col gap-2" unmount={false}>
       <h2>General Settings</h2>
-      <Field className="flex flex-col">
+      <Field>
         <Label data-required>Client Name</Label>
         <Input
           title="Client Name"
@@ -38,7 +38,7 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
           Client name must be at least four characters long.
         </Description>
       </Field>
-      <Field className="flex flex-col gap-2">
+      <Field>
         <Label>Client Description</Label>
         <Input
           title="Client Description"

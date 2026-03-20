@@ -39,7 +39,7 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
   const canContinue = authFlowOk && clientAuthOk;
 
   return (
-    <CarouselPanel className="panel flex w-3xl flex-col gap-2" unmount={false}>
+    <CarouselPanel className="panel flex flex-col gap-2" unmount={false}>
       <h2>OpenID Connect - OAuth 2</h2>
       <AuthenticationFlow onStatusChange={setAuthFlowOk} />
       <Field>

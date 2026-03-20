@@ -16,9 +16,9 @@ export default function OtherSettings(props: Readonly<OtherSettingsProps>) {
   const { goBack } = props;
   const canSave = true;
   return (
-    <CarouselPanel className="panel flex w-2xl flex-col gap-2" unmount={false}>
+    <CarouselPanel className="panel flex flex-col gap-2" unmount={false}>
       <h2>Other Settings</h2>
-      <Field className="flex flex-col gap-1">
+      <Field>
         <Label>Home Page</Label>
         <Input
           placeholder="https://app.example.org"
@@ -26,7 +26,7 @@ export default function OtherSettings(props: Readonly<OtherSettingsProps>) {
           name="client_uri"
         />
       </Field>
-      <Field className="flex flex-col gap-1">
+      <Field>
         <Label>Term of Service</Label>
         <Input
           placeholder="https://app.example.org/tos.html"
@@ -34,7 +34,7 @@ export default function OtherSettings(props: Readonly<OtherSettingsProps>) {
           name="tos_uri"
         />
       </Field>
-      <Field className="flex flex-col gap-1">
+      <Field>
         <Label>Policy Statement</Label>
         <Input
           placeholder="https://app.example.org/policy.html"

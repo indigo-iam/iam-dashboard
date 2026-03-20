@@ -102,7 +102,7 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
       <div className="pr-8">
         <Stepper currentPage={currentPage} totalPages={TOTAL_PAGES} />
       </div>
-      <Form action={action}>
+      <Form action={action} className="max-w-xl grow">
         <Carousel selectedIndex={currentPage}>
           <CarouselList>
             <CarouselTab>General Settings</CarouselTab>

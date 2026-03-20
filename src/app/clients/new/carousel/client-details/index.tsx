@@ -42,25 +42,21 @@ export default function ClientDetails(props: Readonly<ClientDetailsProps>) {
   }
 
   return (
-    <CarouselPanel className="panel flex w-2xl flex-col gap-2" unmount={false}>
-      <h2>Client Details</h2>
-
-      <Field className="flex flex-col gap-1">
+    <CarouselPanel className="panel flex flex-col gap-2" unmount={false}>
+      <h2>Client details</h2>
+      <Field>
         <Label>Client Name</Label>
         <Input defaultValue={client?.client_name} disabled />
       </Field>
-
-      <Field className="flex flex-col gap-1">
+      <Field>
         <Label>Client ID</Label>
         <Input defaultValue={client?.client_id} disabled />
       </Field>
-
       {client?.client_secret && (
-        <Field className="flex flex-col gap-1">
+        <Field>
           <ClientSecret secret={client?.client_secret} />
         </Field>
       )}
-
       <div className="mt-4 mr-16 flex w-full flex-row items-end justify-end">
         <Button className="btn-secondary" onClick={changePage}>
           Continue

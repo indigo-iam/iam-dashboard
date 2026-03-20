@@ -51,7 +51,7 @@ export default function Groups(props: Readonly<GroupsProps>) {
   const { requests } = props;
   if (requests.length === 0) {
     return (
-      <TabPanel className="flex flex-col gap-4 divide-y">
+      <TabPanel className="panel flex flex-col gap-4 divide-y">
         There are no pending requests.
       </TabPanel>
     );

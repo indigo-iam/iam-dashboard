@@ -29,7 +29,7 @@ export default function AssignGroupManagerModal(
 
   const assignManager = async () => {
     if (selectedUser?.id) {
-      await assignGroupManager(group.id, selectedUser.id);
+      await assignGroupManager(group, selectedUser);
       clearAndClose();
     }
   };
@@ -47,10 +47,11 @@ export default function AssignGroupManagerModal(
             <b>{group.displayName}</b> to the following user?
           </p>
           <div className="flex flex-col items-center">
-            <p className="text-lg">
-              {selectedUser?.name?.formatted} ({selectedUser?.userName})
+            <p>
+              <span className="font-bold">{selectedUser?.name?.formatted}</span>{" "}
+              ({selectedUser?.userName})
             </p>
-            <p className="text-gray-200 dark:text-white/60">
+            <p className="text-sm font-light">
               {selectedUser?.emails?.[0].value}
             </p>
           </div>
@@ -61,7 +62,7 @@ export default function AssignGroupManagerModal(
           Cancel
         </Button>
         <Button className="btn-primary" type="submit" onClick={assignManager}>
-          Assign Group Manager
+          Confirm
         </Button>
       </ModalFooter>
     </Modal>

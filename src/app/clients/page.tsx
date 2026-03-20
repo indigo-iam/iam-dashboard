@@ -41,7 +41,6 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
   if (!session) {
     redirect("/");
   }
-
   const isAdmin = await isUserAdmin();
   const searchParams = await props.searchParams;
   const count = searchParams?.count ? parseInt(searchParams.count) : 10;
@@ -58,7 +57,9 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
       <header className="section-header flex flex-wrap gap-2">
         <div className="flex grow items-center gap-2">
           <RocketLaunchIcon className="size-5" />
-          <h2 className="text-base font-normal">Clients</h2>
+          <h2 className="text-base font-normal">
+            {isAdmin ? "Client" : "My clients"}
+          </h2>
         </div>
         <InputQuery
           title="Search client"

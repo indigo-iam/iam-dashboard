@@ -17,7 +17,7 @@ export function Option(props: Readonly<OptionProps>) {
   return (
     <MenuItem>
       <button
-        className="hover:not:dark:text-gray-500 data-danger:text-danger dark:data-danger:text-danger-light btn-popover px-2 py-1.5 text-start text-base whitespace-nowrap focus:outline-none"
+        className="hover:not:dark:text-gray-500 data-danger:text-danger dark:data-danger:text-danger-light btn-popover px-2 py-1.5 text-start text-base whitespace-nowrap focus:outline-none dark:text-gray-200"
         {...other}
       >
         {children}
@@ -39,7 +39,7 @@ export function Options(props: Readonly<OptionsProps>) {
         title="More"
         className="my-auto cursor-pointer rounded-md transition hover:bg-gray-200 focus:outline-none data-open:bg-gray-200 dark:hover:bg-gray-500 dark:data-active:bg-gray-200 dark:data-open:bg-gray-500"
       >
-        <EllipsisHorizontalIcon className="size-8 text-gray-800 dark:text-white/75" />
+        <EllipsisHorizontalIcon className="size-8 text-gray-800 dark:text-gray-400" />
       </MenuButton>
       <MenuItems
         anchor="bottom"

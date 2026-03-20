@@ -11,12 +11,12 @@ import { NewClientCarousel } from "./carousel";
 import { RocketLaunchIcon } from "@heroicons/react/24/solid";
 
 export default async function NewClient() {
-  const scopes = await fetchScopes();
-  const openIdConfiguration = await fetchOpenIdConfiguration();
   const session = await getSession();
   if (!session) {
     redirect("/signin");
   }
+  const scopes = await fetchScopes();
+  const openIdConfiguration = await fetchOpenIdConfiguration();
   const isAdmin = await isUserAdmin();
   return (
     <section className="space-y-4">

@@ -9,5 +9,5 @@
 }
 
 @utility overlay {
-  @apply rounded-xl border bg-white p-4 text-sm/6 text-gray-800 shadow-xl transition duration-200 focus:outline-none dark:bg-gray-700 dark:text-gray-100;
+  @apply rounded-xl border bg-white p-4 text-gray-800 shadow-xl transition duration-200 focus:outline-none dark:bg-gray-700 dark:text-gray-100;
 }

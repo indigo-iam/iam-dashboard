@@ -4,10 +4,12 @@
 
 "use client";
 
+import { useState } from "react";
+import { TrashIcon } from "@heroicons/react/24/outline";
+
 import { Options, Option } from "@/components/options";
 import { ScopePolicy } from "@/models/scope-policies";
 import DeletePolicyModal from "./delete-policy-modal";
-import { useState } from "react";
 
 type PolicyOptionsProps = {
   policy: ScopePolicy;
@@ -21,7 +23,10 @@ export default function PolicyOptions(props: Readonly<PolicyOptionsProps>) {
     <>
       <Options>
         <Option onClick={() => setShow("DELETE_POLICY")} data-danger>
-          Delete
+          <div className="flex items-center gap-2">
+            <TrashIcon className="size-5" />
+            <span>Delete</span>
+          </div>
         </Option>
       </Options>
       <DeletePolicyModal

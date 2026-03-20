@@ -21,13 +21,13 @@ export default function DeletePolicyModal(props: Readonly<DeletePolicyModal>) {
     <ConfirmModal
       show={show}
       onClose={onClose}
-      confirmButtonText="Delete Policy"
-      title="Delete Policy"
+      confirmButtonText="Delete"
+      title="Delete policy"
       onConfirm={handleConfirm}
       data-testid="modal"
       danger={true}
     >
-      Are you sure you want to delete policy <b>{policy.description}</b>
+      Are you sure you want to delete policy <b>{policy.description}</b>?
     </ConfirmModal>
   );
 }

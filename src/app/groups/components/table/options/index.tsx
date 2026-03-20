@@ -24,7 +24,7 @@ export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
     <>
       <Options>
         <Option onClick={() => setShow("ADD_SUBGROUP")}>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <PlusCircleIcon className="size-4" />
             <span className="inline-block">Add subgroup</span>
           </div>
@@ -34,7 +34,7 @@ export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
           data-danger
           data-testid="delete-group-opt"
         >
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <TrashIcon className="size-4" />
             <span className="inline-block">Delete group</span>
           </div>

@@ -25,8 +25,8 @@ export function GroupRequestOptions(props: Readonly<GroupRequestOptionProps>) {
     <>
       <Options>
         <Option onClick={() => setShow("REVOKE")} data-danger>
-          <div className="flex items-center gap-1">
-            <XMarkIcon className="size-4" />
+          <div className="flex items-center gap-2">
+            <XMarkIcon className="size-5" />
             <span className="inline-block">Revoke request</span>
           </div>
         </Option>

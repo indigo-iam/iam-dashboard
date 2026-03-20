@@ -27,13 +27,13 @@ export default function GroupRequestOptions(
       <Options>
         <Option onClick={() => setShow("ACCEPT_REQUEST")}>
           <div className="flex items-center gap-2">
-            <CheckCircleIcon className="size-5" />
+            <CheckCircleIcon className="size-4" />
             <span>Approve</span>
           </div>
         </Option>
         <Option onClick={() => setShow("REJECT_REQUEST")} data-danger>
           <div className="flex items-center gap-2">
-            <XCircleIcon className="size-5" />
+            <XCircleIcon className="size-4" />
             <span>Reject</span>
           </div>
         </Option>

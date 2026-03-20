@@ -4,13 +4,13 @@
 
 "use client";
 
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
+
 import { Options, Option } from "@/components/options";
 import { Scope } from "@/models/client";
 import EditScopeModal from "./edit-scope-modal";
 import DeleteScopeModal from "./delete-scope-modal";
-
-import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
 
 type ScopeOptionsProps = {
   scope: Scope;
@@ -25,13 +25,13 @@ export default function ScopeOptions(props: Readonly<ScopeOptionsProps>) {
       <Options>
         <Option onClick={() => setShow("EDIT")}>
           <div className="flex items-center gap-2">
-            <PencilSquareIcon className="size-5" />
+            <PencilSquareIcon className="size-4" />
             <span>Edit</span>
           </div>
         </Option>
         <Option onClick={() => setShow("DELETE")} data-danger>
           <div className="flex items-center gap-2">
-            <TrashIcon className="size-5" />
+            <TrashIcon className="size-4" />
             <span>Delete</span>
           </div>
         </Option>

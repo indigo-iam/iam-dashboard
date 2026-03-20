@@ -33,21 +33,21 @@ export default function ClientOptions(props: Readonly<ClientOptionsProps>) {
       <Options>
         {active ? (
           <Option onClick={openToggleStatus} data-danger={active}>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
               <PowerIcon className="size-4" />
               <span>Disable</span>
             </div>
           </Option>
         ) : (
           <Option onClick={openToggleStatus}>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
               <PlayCircleIcon className="size-4" />
               <span>Enable</span>
             </div>
           </Option>
         )}
         <Option onClick={openDelete} data-danger>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <TrashIcon className="size-4" />
             <span>Delete</span>
           </div>

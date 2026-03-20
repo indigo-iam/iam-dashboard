@@ -24,7 +24,7 @@ export default function PolicyOptions(props: Readonly<PolicyOptionsProps>) {
       <Options>
         <Option onClick={() => setShow("DELETE_POLICY")} data-danger>
           <div className="flex items-center gap-2">
-            <TrashIcon className="size-5" />
+            <TrashIcon className="size-4" />
             <span>Delete</span>
           </div>
         </Option>

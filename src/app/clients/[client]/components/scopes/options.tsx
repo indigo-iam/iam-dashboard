@@ -4,10 +4,12 @@
 
 "use client";
 
+import { useState } from "react";
+import { TrashIcon } from "@heroicons/react/24/outline";
+
 import { Options, Option } from "@/components/options";
 import { Client } from "@/models/client";
 import DeleteScopeModal from "./delete-scope-modal";
-import { useState } from "react";
 
 type ScopeOptionsProps = {
   client: Client;
@@ -22,7 +24,10 @@ export function ScopeOptions(props: Readonly<ScopeOptionsProps>) {
     <>
       <Options>
         <Option onClick={() => setShow("DELETE")} data-danger>
-          Delete
+          <div className="flex items-center gap-2">
+            <TrashIcon className="size-4" />
+            <span>Delete</span>
+          </div>
         </Option>
       </Options>
       <DeleteScopeModal

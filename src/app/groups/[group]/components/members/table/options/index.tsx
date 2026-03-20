@@ -25,7 +25,7 @@ export default function MemberOptions(props: Readonly<MemberOptionsProps>) {
     <>
       <Options>
         <Option onClick={() => setShow("REMOVE_MEMBER")} data-danger>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <ArrowRightStartOnRectangleIcon className="size-4" />
             <span>Remove member</span>
           </div>

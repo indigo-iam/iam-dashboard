@@ -24,7 +24,7 @@ export default function ManagerOptions(props: Readonly<ManagerOptionsProps>) {
     <>
       <Options>
         <Option onClick={() => setShow("REVOKE_MANAGER")} data-danger>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <NoSymbolIcon className="size-4" />
             <span>Revoke user</span>
           </div>

@@ -20,7 +20,7 @@ function ApprovedSite(props: Readonly<ApprovedSiteProps>) {
   const client_name = "We don't have the name";
   return (
     <li className="iam-list-item flex flex-row">
-      <div className="flex grow flex-col lg:flex-row">
+      <div className="flex grow flex-col gap-2 lg:flex-row">
         <Link
           className="flex grow flex-col gap-0.5 break-all"
           href={`/clients/${site.clientId}`}
@@ -33,7 +33,7 @@ function ApprovedSite(props: Readonly<ApprovedSiteProps>) {
             </p>
           </div>
         </Link>
-        <div className="flex flex-col px-2 lg:justify-center">
+        <div className="flex gap-2 lg:flex-col lg:justify-center lg:gap-0 lg:px-2">
           <p className="text-xs font-light whitespace-nowrap lg:text-right">
             Last access {accessDate}
           </p>

@@ -23,7 +23,7 @@ export default function SubgroupOptions(props: Readonly<SubgroupOptionsProps>) {
     <>
       <Options>
         <Option onClick={() => setShow("DELETE_SUBGROUP")} data-danger>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <TrashIcon className="size-4" />
           </div>
           <span>Delete</span>

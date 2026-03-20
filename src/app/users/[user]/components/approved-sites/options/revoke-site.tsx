@@ -21,13 +21,15 @@ export function RevokeSite(props: Readonly<RevokeSiteProps>) {
     <ConfirmModal
       show={show}
       onClose={onClose}
-      title="Revoke Site"
+      title="Revoke consent for site"
       confirmButtonText="Revoke"
       onConfirm={action}
       danger
     >
-      <p>Are you sure you want to revoke the following token?</p>
-      <p>{site.id}</p>
+      <p>
+        Are you sure you want to revoke the consent for the site{" "}
+        <b>{site.clientId}</b>?
+      </p>
     </ConfirmModal>
   );
 }

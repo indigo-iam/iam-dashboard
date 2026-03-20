@@ -5,7 +5,7 @@
 "use client";
 
 import { useState } from "react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { ArrowRightEndOnRectangleIcon } from "@heroicons/react/24/outline";
 
 import { Options, Option } from "@/components/options";
 import { User } from "@/models/scim";
@@ -26,7 +26,7 @@ export function OwnerOptions(props: Readonly<OwnerOptions>) {
       <Options>
         <Option onClick={() => setOpen("REMOVE")} data-danger>
           <div className="flex items-center gap-2">
-            <XMarkIcon className="size-4" />
+            <ArrowRightEndOnRectangleIcon className="size-4" />
             <span>Remove</span>
           </div>
         </Option>

@@ -4,9 +4,11 @@
 
 "use client";
 
+import { useState } from "react";
+import { XCircleIcon } from "@heroicons/react/24/outline";
+
 import { Options, Option } from "@/components/options";
 import { Site } from "@/models/sites";
-import { useState } from "react";
 import { RevokeSite } from "./revoke-site";
 
 type ActiveSiteOptionsProps = {
@@ -21,7 +23,10 @@ export function ApprovedSiteOptions(props: Readonly<ActiveSiteOptionsProps>) {
     <>
       <Options>
         <Option onClick={() => setShow("REVOKE")} data-danger>
-          Revoke
+          <div className="flex items-center gap-2">
+            <XCircleIcon className="size-5" />
+            <span>Revoke</span>
+          </div>
         </Option>
       </Options>
       <RevokeSite site={site} show={show === "REVOKE"} onClose={close} />

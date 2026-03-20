@@ -45,7 +45,7 @@ export default function UserOptions(props: Readonly<UserOptions>) {
         <Option onClick={() => setShow("DELETE_USER")} data-danger>
           <div className="flex items-center gap-1">
             <TrashIcon className="size-4" />
-            <span>Disable</span>
+            <span>Delete</span>
           </div>
         </Option>
       </Options>

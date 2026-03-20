@@ -15,6 +15,7 @@ export default function ToggleUserStatusModal(
   props: Readonly<ToggleUserModalProps>
 ) {
   const { user, show, onClose } = props;
+  const title = `${user.active ? "Disable user" : "Enable user"} '${user.displayName}'`;
   const action = async () => {
     const newStatus = !(user.active ?? false);
     await changeUserStatus(user.id, newStatus);
@@ -24,12 +25,12 @@ export default function ToggleUserStatusModal(
     <ConfirmModal
       show={show}
       onClose={onClose}
-      title={user.active ? "Disable user" : "Enable user"}
+      title={title}
       onConfirm={action}
     >
       <p>
-        Are you sure you want to <b>{user.active ? "disable" : "enable"}</b> the
-        user <b>{user.displayName}</b>?
+        Are you sure you want to {user.active ? "disable" : "enable"} the user{" "}
+        <b>{user.name?.formatted}</b> (<i>{user.emails?.[0].value}</i>)?
       </p>
     </ConfirmModal>
   );

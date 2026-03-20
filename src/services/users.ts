@@ -136,7 +136,11 @@ export async function deleteUser(user: User) {
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "User deleted" });
+    await setNotification({
+      type: "success",
+      message: "User deleted",
+      subtitle: `User ${user.displayName} has been deleted`,
+    });
     revalidatePath("/users");
   } else {
     const msg = await response.text();

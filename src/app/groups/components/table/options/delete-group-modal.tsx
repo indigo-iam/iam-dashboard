@@ -16,9 +16,11 @@ export default function DeleteGroupModal(
   props: Readonly<DeleteGroupModalProps>
 ) {
   const { group, show, onClose, onDeleted } = props;
+  const indigoGroup = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
+  const description = indigoGroup.description;
 
   const handleConfirm = async () => {
-    await deleteGroup(group.id);
+    await deleteGroup(group);
     onClose();
     onDeleted?.();
   };
@@ -27,12 +29,19 @@ export default function DeleteGroupModal(
     <ConfirmModal
       show={show}
       onClose={onClose}
-      confirmButtonText="Delete Group"
+      confirmButtonText="Delete"
       onConfirm={handleConfirm}
-      title="Delete Group"
+      title={`Delete group '${group.displayName}'`}
       danger={true}
     >
-      Are you sure you want to delete group <b>{group.displayName}</b>?
+      Are you sure you want to delete group <b>{group.displayName}</b>
+      {description && (
+        <>
+          {" "}
+          (<i>{description}</i>)
+        </>
+      )}
+      ?
     </ConfirmModal>
   );
 }

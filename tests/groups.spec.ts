@@ -50,7 +50,7 @@ test("Create and delete group", async ({ page }) => {
     const deleteOption = page.getByTestId("delete-group-opt");
     await expect(deleteOption).toBeVisible();
     await deleteOption.click();
-    await page.getByRole("button", { name: "Delete group" }).click();
+    await page.getByRole("button", { name: "Delete" }).click();
     const toast = page.getByTestId("toast");
     await expect(toast).toBeVisible();
     await expect(toast.getByText("Group deleted")).toBeVisible();

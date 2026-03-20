@@ -4,21 +4,22 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { ManagedGroup } from "@/models/groups";
-import { deleteGroup } from "@/services/groups";
+import { deleteManagedGroup } from "@/services/groups";
 
-interface DeleteManagedroupModalProps {
+type DeleteManagedGroupModalProps = {
   group: ManagedGroup;
   show: boolean;
   onClose: () => void;
   onDeleted?: () => void;
-}
+};
+
 export default function DeleteManagedGroupModal(
-  props: Readonly<DeleteManagedroupModalProps>
+  props: Readonly<DeleteManagedGroupModalProps>
 ) {
   const { group, show, onClose, onDeleted } = props;
 
   const handleConfirm = async () => {
-    await deleteGroup(group.id);
+    await deleteManagedGroup(group);
     onClose();
     onDeleted?.();
   };

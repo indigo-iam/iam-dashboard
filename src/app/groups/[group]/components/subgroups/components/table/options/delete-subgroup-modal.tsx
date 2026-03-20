@@ -4,7 +4,7 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { ScimReference } from "@/models/scim";
-import { deleteGroup } from "@/services/groups";
+import { deleteGroupByReference } from "@/services/groups";
 
 interface DeleteGroupModalProps {
   groupRef: ScimReference;
@@ -18,7 +18,7 @@ export default function DeleteSubgroupModal(
   const { groupRef, show, onClose, onDeleted } = props;
 
   const handleConfirm = async () => {
-    await deleteGroup(groupRef.value);
+    await deleteGroupByReference(groupRef);
     onClose();
     onDeleted?.();
   };
@@ -27,9 +27,9 @@ export default function DeleteSubgroupModal(
     <ConfirmModal
       show={show}
       onClose={onClose}
-      confirmButtonText="Delete Group"
+      confirmButtonText="Delete"
       onConfirm={handleConfirm}
-      title="Delete Group"
+      title={`Delete subgroup '${groupRef.display}'`}
       data-testid="modal"
       danger={true}
     >

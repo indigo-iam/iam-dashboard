@@ -4,10 +4,12 @@
 
 "use client";
 
+import { useState } from "react";
+import { TrashIcon } from "@heroicons/react/24/outline";
+
 import { Options, Option } from "@/components/options";
 import { ScimReference } from "@/models/scim";
 import DeleteSubgroupModal from "./delete-subgroup-modal";
-import { useState } from "react";
 
 type SubgroupOptionsProps = {
   groupRef: ScimReference;
@@ -21,7 +23,10 @@ export default function SubgroupOptions(props: Readonly<SubgroupOptionsProps>) {
     <>
       <Options>
         <Option onClick={() => setShow("DELETE_SUBGROUP")} data-danger>
-          Delete subgroup
+          <div className="flex items-center gap-1">
+            <TrashIcon className="size-4" />
+          </div>
+          <span>Delete</span>
         </Option>
       </Options>
       <DeleteSubgroupModal

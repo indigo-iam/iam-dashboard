@@ -145,11 +145,25 @@ export async function editGroup(groupId: string, description?: string | null) {
   }
 }
 
-export async function deleteGroup(groupId: string) {
-  const url = `${IAM_API_URL}/scim/Groups/${groupId}`;
+export async function deleteGroup(group: Group) {
+  const groupRef = makeScimReferenceFromGroup(group);
+  await deleteGroupByReference(groupRef);
+}
+
+export async function deleteManagedGroup(managedGroup: ManagedGroup) {
+  const groupRef = makeScimReferenceFromManagedGroup(managedGroup);
+  await deleteGroupByReference(groupRef);
+}
+
+export async function deleteGroupByReference(groupRef: ScimReference) {
+  const url = `${IAM_API_URL}/scim/Groups/${groupRef.value}`;
   const response = await authFetch(url, { method: "DELETE" });
   if (response.ok) {
-    await setNotification({ type: "info", message: "Group deleted" });
+    await setNotification({
+      type: "info",
+      message: "Group deleted",
+      subtitle: `Group ${groupRef.display} has been deleted`,
+    });
     revalidatePath("/groups");
   } else {
     const msg = await response.text();
@@ -194,7 +208,11 @@ export async function addSubgroupByRef(
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "Subgroup added" });
+    await setNotification({
+      type: "success",
+      message: "Subgroup added",
+      subtitle: `Group ${groupName} has been added to parent group ${parentGroupRef.display}`,
+    });
     revalidatePath("/groups");
   } else {
     const msg = await response.text();

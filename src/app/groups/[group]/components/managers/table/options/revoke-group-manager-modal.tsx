@@ -33,7 +33,7 @@ export default function RevokeGroupManagerModal(
     <ConfirmModal
       show={show}
       onClose={onClose}
-      confirmButtonText="Revoke Manager"
+      confirmButtonText="Revoke"
       title="Revoke group manager privileges"
       onConfirm={handleConfirm}
       danger

@@ -206,7 +206,7 @@ export async function addSubgroupByRef(
   }
 }
 
-export async function addUserToGroup(groupId: string, user: User) {
+export async function addUserToGroup(group: Group, user: User) {
   const userRef = makeScimReferenceFromUser(user);
   const body = {
     schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
@@ -218,33 +218,48 @@ export async function addUserToGroup(groupId: string, user: User) {
       },
     ],
   };
-  const url = `${IAM_API_URL}/scim/Groups/${groupId}`;
+  const url = `${IAM_API_URL}/scim/Groups/${group.id}`;
   const response = await authFetch(url, {
     body: JSON.stringify(body),
     method: "PATCH",
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "Success" });
-    revalidatePath(`/groups/${groupId}`);
+    await setNotification({
+      type: "success",
+      message: "Member added",
+      subtitle: `User ${user.name?.formatted} has been added to group ${group.displayName}`,
+    });
+    revalidatePath(`/groups/${group.id}`);
   } else {
     const msg = await response.text();
     await setNotification({
       type: "error",
-      message: "Cannot join group",
+      message: "Cannot add user to group",
       subtitle: `Error ${response.status}, ${msg}`,
     });
   }
 }
 
-export async function removeUserFromGroup(groupId: string, user: User) {
-  const userRef = makeScimReferenceFromUser(user);
-  await removeUserByRefFromGroup(groupId, userRef);
+export async function removeUserByRefFromGroup(
+  userRef: ScimReference,
+  group: Group
+) {
+  const groupRef = makeScimReferenceFromGroup(group);
+  await removeUserByRefFromGroupReference(userRef, groupRef);
 }
 
-export async function removeUserByRefFromGroup(
-  groupId: string,
-  userRef: ScimReference
+export async function removeUserFromGroupReference(
+  user: User,
+  groupRef: ScimReference
+) {
+  const userRef = makeScimReferenceFromUser(user);
+  await removeUserByRefFromGroupReference(userRef, groupRef);
+}
+
+export async function removeUserByRefFromGroupReference(
+  userRef: ScimReference,
+  groupRef: ScimReference
 ) {
   const body = {
     operations: [
@@ -256,22 +271,26 @@ export async function removeUserByRefFromGroup(
     ],
     schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
   };
-  const url = `${IAM_API_URL}/scim/Groups/${groupId}`;
+  const url = `${IAM_API_URL}/scim/Groups/${groupRef.value}`;
   const response = await authFetch(url, {
     body: JSON.stringify(body),
     method: "PATCH",
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
-    // This function can be called from /users/me, /users/<userId> or
-    // /group/<groupId>. For some unknown reason, cache revalidation works
-    // for any string, even random characters. Keep '/' for the moment.
-    revalidatePath("/");
+    await setNotification({
+      type: "success",
+      message: "Member removed",
+      subtitle: `User ${userRef.display} has been removed from group ${groupRef.display}`,
+    });
+    revalidatePath(`/groups/${groupRef.value}`);
   } else {
     const msg = await response.text();
-    throw Error(
-      `Remove user membership failed with status ${response.status} ${msg}`
-    );
+    await setNotification({
+      type: "error",
+      message: "Cannot remove user from group",
+      subtitle: `Error ${response.status}, ${msg}`,
+    });
   }
 }
 

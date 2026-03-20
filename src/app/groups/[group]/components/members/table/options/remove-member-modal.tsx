@@ -22,7 +22,7 @@ export default function RemoveMemberFromGroupModal(
   const indigoGroup = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
   const description = indigoGroup.description;
   const action = async () => {
-    await removeUserByRefFromGroup(group.id, userRef);
+    await removeUserByRefFromGroup(userRef, group);
   };
 
   return (

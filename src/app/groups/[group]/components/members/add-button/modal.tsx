@@ -79,7 +79,7 @@ export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
 
   const addMember = async () => {
     if (user?.id) {
-      await addUserToGroup(group.id, user);
+      await addUserToGroup(group, user);
       clearAndClose();
     }
   };

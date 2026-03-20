@@ -97,7 +97,7 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
 
   const action = async (formData: FormData) => {
     if (isAdmin && selected) {
-      await addUserToGroup(selected.id, user);
+      await addUserToGroup(selected, user);
     } else {
       const req: JoinGroupRequest = {
         notes: formData.get("group-request-notes") as string,

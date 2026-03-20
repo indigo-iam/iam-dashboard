@@ -24,7 +24,7 @@ function CurrentPage(props: Readonly<PageViewProps>) {
   const { page } = props;
   return (
     <div className="group flex grow items-center last:flex-none md:flex-col">
-      <div className="transparent flex aspect-square min-h-3 items-center justify-center rounded-full border-2 border-gray-700 text-gray-700 dark:border-white dark:bg-gray-400 dark:text-gray-200">
+      <div className="transparent flex aspect-square min-h-3 items-center justify-center rounded-full border-2 border-gray-700 text-gray-700 dark:border-white dark:bg-transparent dark:text-gray-200">
         <span className="hidden p-1.5 text-sm md:inline-block">{page + 1}</span>
       </div>
       <div className="grow border-t-2 border-gray-300 group-last:hidden md:h-12 md:w-0 md:border-l-3 dark:border-gray-500" />
@@ -36,7 +36,7 @@ function NextPage(props: Readonly<PageViewProps>) {
   const { page } = props;
   return (
     <div className="group flex grow items-center last:flex-none md:flex-col">
-      <div className="dark:gray-400 flex aspect-square min-h-3 items-center justify-center rounded-full border-2 border-gray-300 bg-gray-200 text-gray-700 dark:bg-gray-500 dark:text-gray-500 dark:md:bg-transparent">
+      <div className="dark:gray-400 flex aspect-square min-h-3 items-center justify-center rounded-full border-2 border-gray-300 bg-transparent text-gray-700 dark:border-gray-500 dark:bg-transparent dark:text-gray-500 dark:md:bg-transparent">
         <span className="hidden p-1.5 text-sm md:inline-block">{page + 1}</span>
       </div>
       <div className="grow border-t-2 border-gray-300 group-last:hidden md:h-12 md:w-0 md:border-l-3 dark:border-gray-500" />

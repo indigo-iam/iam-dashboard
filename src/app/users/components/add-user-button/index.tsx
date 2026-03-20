@@ -44,6 +44,10 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
   return (
     <Form className="space-y-4" id="add-user-form" action={handleSubmit}>
       <ModalBody>
+        <p>
+          To add a new user to this organization, enter the following
+          information:
+        </p>
         <Field className="flex flex-col gap-1">
           <Label data-required>First Name</Label>
           <Input

@@ -29,12 +29,13 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
     redirect("/signin");
   }
   const userId = (await props.params).user;
-  const isMe = userId === "me";
+  const isMe = userId === "me" || userId === session.user.sub;
 
   const user = isMe ? await fetchMe() : await fetchUser(userId);
   if (!user) {
     return <h1>User not found</h1>;
   }
+
   const searchParams = await props.searchParams;
   const isAdmin = await isUserAdmin();
   if (!isMe && !isAdmin) {
@@ -49,8 +50,8 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
       <TabGroup className="container space-y-8">
         <TabList className="flex overflow-auto">
           <Tab>GENERAL</Tab>
-          <Tab>GROUPS</Tab>
-          <Tab>CLIENTS</Tab>
+          {!isMe && <Tab>GROUPS</Tab>}
+          {!isMe && <Tab>CLIENTS</Tab>}
           <Tab>APPROVED SITES</Tab>
           <Tab>ACTIVE TOKENS</Tab>
           <Tab>LINKED ACCOUNTS</Tab>
@@ -58,12 +59,14 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
         </TabList>
         <TabPanels>
           <General user={user} isMe={isMe} />
-          <UserGroups user={user} isAdmin={isAdmin} />
-          <UserClients
-            user={user}
-            page={searchParams?.page}
-            count={searchParams?.count}
-          />
+          {!isMe && <UserGroups user={user} isAdmin={isAdmin} />}
+          {!isMe && (
+            <UserClients
+              user={user}
+              page={searchParams?.page}
+              count={searchParams?.count}
+            />
+          )}
           <ApprovedSites />
           <ActiveTokens />
           <LinkedAccounts user={user} />

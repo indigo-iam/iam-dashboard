@@ -23,18 +23,24 @@ export default function RemoveMemberFromGroupModal(
   };
   return (
     <ConfirmModal
-      title="Remove Member from Group"
+      title="Remove member from group"
       onConfirm={action}
       danger
       {...modalProps}
     >
-      <p>Are you sure you want to remove user </p>
-      <p className="flex justify-center">
-        <b>{userRef.display}</b> ({userRef.value})
-      </p>
-      <p>
-        from group <b>{group.displayName}</b>?
-      </p>
+      <div className="space-y-2">
+        <p>
+          Are you sure you want to remove user <b>{userRef.display}</b> from
+          group
+        </p>
+        <div className="flex flex-col items-center">
+          <p className="font-bold">{group.displayName}</p>
+          <p className="text-sm font-light">
+            {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description}
+          </p>{" "}
+          <p className="text-xs font-light">{group.id}</p>
+        </div>
+      </div>
     </ConfirmModal>
   );
 }

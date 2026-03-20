@@ -20,27 +20,27 @@ function ApprovedSite(props: Readonly<ApprovedSiteProps>) {
   const client_name = "We don't have the name";
   return (
     <li className="iam-list-item flex flex-row">
-      <div className="flex grow flex-col gap-2 lg:flex-row">
+      <div className="flex w-0 grow flex-col">
         <Link
-          className="flex grow flex-col gap-0.5 break-all"
+          className="flex grow flex-col gap-0.5 lg:flex-row"
           href={`/clients/${site.clientId}`}
         >
-          <p className="text-gray-950 dark:text-white">{client_name}</p>
-          <div className="flex flex-col gap-0.5 text-sm">
-            <p>{site.clientId}</p>
-            <p title={scopes} className="line-clamp-1 max-w-md font-light">
+          <div className="flex grow flex-col gap-0.5 lg:w-0">
+            <p className="text-gray-950 dark:text-white">{client_name}</p>
+            <p className="truncate text-sm">{site.clientId}</p>
+            <p className="truncate text-sm font-light" title={scopes}>
               {scopes}
             </p>
           </div>
+          <div className="flex gap-2 py-1 lg:flex-col lg:justify-center lg:gap-0 lg:px-2">
+            <p className="text-xs font-light whitespace-nowrap lg:text-right">
+              Last access {accessDate}
+            </p>
+            <p className="text-xs font-light whitespace-nowrap lg:text-right">
+              Authorized {creationDate}
+            </p>
+          </div>
         </Link>
-        <div className="flex gap-2 lg:flex-col lg:justify-center lg:gap-0 lg:px-2">
-          <p className="text-xs font-light whitespace-nowrap lg:text-right">
-            Last access {accessDate}
-          </p>
-          <p className="text-xs font-light whitespace-nowrap lg:text-right">
-            Authorized {creationDate}
-          </p>
-        </div>
       </div>
       <ApprovedSiteOptions site={site} />
     </li>

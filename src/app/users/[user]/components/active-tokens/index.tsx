@@ -23,18 +23,17 @@ function ActiveTokenView(props: Readonly<ActiveTokenViewProps>) {
   const tokenStr = `${token.value?.slice(0, 8)}...${token.value?.slice(-24)}`;
   return (
     <li className="iam-list-item flex flex-row">
-      <div className="flex grow flex-col">
+      <div className="flex w-0 grow flex-col">
         <Link
           className="flex grow flex-col gap-0.5 lg:flex-row"
           href={`/clients/${token.clientId}`}
         >
-          <div className="flex grow flex-col gap-0.5 break-all">
-            <p className="text-gray-950 dark:text-gray-200">{tokenStr}</p>
-            <p className="text-sm">{token.clientId}</p>
-            <p
-              title={scopes}
-              className="line-clamp-1 max-w-md text-sm font-light"
-            >
+          <div className="flex grow flex-col gap-0.5 lg:w-0">
+            <p className="truncate text-gray-950 dark:text-gray-200">
+              {tokenStr}
+            </p>
+            <p className="truncate text-sm">{token.clientId}</p>
+            <p className="truncate text-sm font-light" title={scopes}>
               {scopes}
             </p>
           </div>

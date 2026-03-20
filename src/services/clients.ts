@@ -45,14 +45,16 @@ export async function getClient(clientId: string, isAdmin = false) {
   return await getItem<Client>(url);
 }
 
-export async function deleteClient(clientId: string, isMe?: boolean) {
-  const url = `${IAM_API_URL}/iam/api/client-registration/${clientId}`;
+export async function deleteClient(clientId: string, isAdmin?: boolean) {
+  const url = isAdmin
+    ? `${IAM_API_URL}/iam/api/clients/${clientId}`
+    : `${IAM_API_URL}/iam/api/client-registration/${clientId}`;
   const response = await authFetch(url, {
     method: "DELETE",
   });
   if (response.ok) {
     await setNotification({ type: "success", message: "Client deleted" });
-    redirect(isMe ? "/users/me" : "/clients");
+    redirect("/clients");
   } else {
     const msg = await response.text();
     await setNotification({

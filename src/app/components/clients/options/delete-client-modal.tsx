@@ -9,16 +9,19 @@ import { deleteClient } from "@/services/clients";
 type DeleteClientModalProps = {
   client: Client;
   show: boolean;
+  isAdmin: boolean;
   onClose: () => void;
   onDeleted?: () => void;
-}
+};
+
 export default function DeleteClientModal(
   props: Readonly<DeleteClientModalProps>
 ) {
-  const { client, show, onClose, onDeleted } = props;
-  const { client_name, client_id } = client;
+  const { client, show,isAdmin, onClose, onDeleted } = props;
+  const { client_name, client_description } = client;
+
   const handleConfirm = async () => {
-    await deleteClient(client.client_id);
+    await deleteClient(client.client_id, isAdmin);
     onClose();
     onDeleted?.();
   };
@@ -27,22 +30,21 @@ export default function DeleteClientModal(
     <ConfirmModal
       show={show}
       onClose={onClose}
-      confirmButtonText="Delete Client"
+      confirmButtonText="Delete"
       onConfirm={handleConfirm}
-      title="Delete Client"
+      title={`Delete client '${client_name}'`}
       danger={true}
     >
-      Are you sure you want to delete the following client?
-      <ul className="flex flex-col">
-        <li className="inline-flex gap-1">
-          <span className="font-bold">Name:</span>
-          <span>{client_name}</span>
-        </li>
-        <li className="inline-flex gap-1">
-          <span className="font-bold">Client ID:</span>
-          <span>{client_id}</span>
-        </li>
-      </ul>
+      <p>
+        Are you sure you want to delete client <b>{client_name}</b>
+        {client_description && (
+          <>
+            {" "}
+            (<i>{client_description}</i>)
+          </>
+        )}
+        ?
+      </p>
     </ConfirmModal>
   );
 }

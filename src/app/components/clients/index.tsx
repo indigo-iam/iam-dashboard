@@ -8,18 +8,19 @@ import { Client } from "@/models/client";
 import ClientOptions from "./options";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-type RowProps = {
-  client: Client;
-};
-
 function sortScopes(scope: String) {
   const scopes = scope.split(" ");
   scopes.sort((a, b) => a.localeCompare(b));
   return scopes.join(" ");
 }
 
+type RowProps = {
+  client: Client;
+  isAdmin: boolean;
+};
+
 function Row(props: Readonly<RowProps>) {
-  const { client } = props;
+  const { client, isAdmin } = props;
   const { client_id, client_name, scope } = client;
   const scopes = scope ? sortScopes(scope) : undefined;
   const createdAt = client.created_at
@@ -49,17 +50,18 @@ function Row(props: Readonly<RowProps>) {
           </p>
         </div>
       </div>
-      <ClientOptions client={client} />
+      <ClientOptions client={client} isAdmin={isAdmin} />
     </li>
   );
 }
 
 type ClientsTableProps = {
   clients: Client[];
+  isAdmin: boolean;
 };
 
 export function ClientsTable(props: Readonly<ClientsTableProps>) {
-  const { clients } = props;
+  const { clients, isAdmin } = props;
   if (clients.length === 0) {
     return (
       <div className="flex flex-col items-center space-y-4">
@@ -71,7 +73,7 @@ export function ClientsTable(props: Readonly<ClientsTableProps>) {
   return (
     <ul className="w-full">
       {clients.map(client => (
-        <Row key={client.client_id} client={client} />
+        <Row key={client.client_id} client={client} isAdmin={isAdmin} />
       ))}
     </ul>
   );

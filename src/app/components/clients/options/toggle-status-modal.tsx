@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
-import { Field, Label } from "@/components/form";
-import { Form } from "@/components/form/form";
-import { Input } from "@/components/inputs";
 import { Client } from "@/models/client";
 import { disableClient, enableClient } from "@/services/clients";
 
@@ -19,8 +16,8 @@ export default function ToggleStatusModal(
   props: Readonly<ToggleStatusModalProps>
 ) {
   const { client, show, onClose } = props;
-  const { client_name, client_id, active } = client;
-  const title = `${active ? "Disable" : "Enable"} client ${client_name}`;
+  const { client_name, client_description, active } = client;
+  const title = `${active ? "Disable" : "Enable"} client '${client_name}'`;
 
   const handleConfirm = async () => {
     active ? await disableClient(client) : await enableClient(client);
@@ -31,23 +28,22 @@ export default function ToggleStatusModal(
     <ConfirmModal
       show={show}
       onClose={onClose}
-      confirmButtonText={`${active ? "Disable" : "Enable"} Client`}
+      confirmButtonText={active ? "Disable" : "Enable"}
       onConfirm={handleConfirm}
       title={title}
       danger={active}
     >
       <p>
-        Are you sure you want to {active ? "disable" : "enable"} the following
-        client?
+        Are you sure you want to {active ? "disable" : "enable"} the client{" "}
+        <b>{client_name}</b>
+        {client_description && (
+          <>
+            {" "}
+            (<i>{client_description}</i>)
+          </>
+        )}
+        ?
       </p>
-      <Field>
-        <Label>Client name</Label>
-        <Input defaultValue={client_name} disabled />
-      </Field>
-      <Field>
-        <Label>Client id</Label>
-        <Input defaultValue={client_id} disabled />
-      </Field>
     </ConfirmModal>
   );
 }

@@ -7,8 +7,13 @@ import { Client } from "@/models/client";
 import { DeleteButton } from "./delete-button";
 import { ToggleStatusButton } from "./toggle-status-button";
 
-export function DangerZone(props: Readonly<{ client: Client }>) {
-  const { client } = props;
+type DangerZoneProps = {
+  client: Client;
+  isAdmin: boolean;
+};
+
+export function DangerZone(props: Readonly<DangerZoneProps>) {
+  const { client, isAdmin } = props;
   return (
     <div className="flex flex-col gap-8 pt-4 lg:flex-row">
       <div className="flex w-full flex-col space-y-2 text-sm font-light lg:w-1/3">
@@ -23,7 +28,7 @@ export function DangerZone(props: Readonly<{ client: Client }>) {
       <Form className="flex w-full items-center justify-end lg:w-2/3">
         <div className="flex flex-row gap-4">
           <ToggleStatusButton client={client} />
-          <DeleteButton client={client} />
+          <DeleteButton client={client} isAdmin={isAdmin} />
         </div>
       </Form>
     </div>

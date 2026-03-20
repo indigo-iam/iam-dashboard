@@ -4,19 +4,18 @@
 
 "use client";
 
+import DeleteClientModal from "@/app/components/clients/options/delete-client-modal";
 import { Button } from "@/components/buttons";
-import ConfirmModal from "@/components/confirm-modal";
 import { Client } from "@/models/client";
-import { deleteClient } from "@/services/clients";
 import { useState } from "react";
 
 type DeleteButtonProps = {
   client: Client;
+  isAdmin: boolean;
 };
 
 export function DeleteButton(props: Readonly<DeleteButtonProps>) {
-  const { client } = props;
-  const { client_name, client_id } = client;
+  const { client, isAdmin } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
@@ -25,19 +24,12 @@ export function DeleteButton(props: Readonly<DeleteButtonProps>) {
       <Button className="btn-danger" onClick={open}>
         Delete
       </Button>
-      <ConfirmModal
+      <DeleteClientModal
+        client={client}
         show={show}
+        isAdmin={isAdmin}
         onClose={close}
-        title={`Delete client ${client_name}`}
-        confirmButtonText="Delete client"
-        onConfirm={() => deleteClient(client_id)}
-        danger
-      >
-        <span>
-          Are you sure you want to <b>delete</b> client{" "}
-          <b>{client.client_name}?</b>
-        </span>
-      </ConfirmModal>
+      />
     </>
   );
 }

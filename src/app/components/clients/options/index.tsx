@@ -18,10 +18,11 @@ import ToggleStatusModal from "./toggle-status-modal";
 
 type ClientOptionsProps = {
   client: Client;
+  isAdmin: boolean;
 };
 
 export default function ClientOptions(props: Readonly<ClientOptionsProps>) {
-  const { client } = props;
+  const { client, isAdmin } = props;
   const { active } = client;
   const [show, setShow] = useState<"TOGGLE_STATUS" | "DELETE">();
   const openToggleStatus = () => setShow("TOGGLE_STATUS");
@@ -60,6 +61,7 @@ export default function ClientOptions(props: Readonly<ClientOptionsProps>) {
       <DeleteClientModal
         client={client}
         show={show === "DELETE"}
+        isAdmin={isAdmin}
         onClose={close}
       />
     </>

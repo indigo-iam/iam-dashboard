@@ -72,7 +72,7 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
       <div className="container space-y-4">
         <div className="panel">
           <Suspense fallback="Loading...">
-            <ClientsTable clients={clients} />
+            <ClientsTable clients={clients} isAdmin={isAdmin} />
           </Suspense>
         </div>
         <Paginator numberOfPages={numberOfPages} />

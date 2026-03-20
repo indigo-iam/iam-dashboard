@@ -9,14 +9,15 @@ import { DangerZone } from "./danger-zone";
 
 type MainProps = {
   client: Client;
+  isAdmin: boolean;
 };
 
 export default function Main(props: Readonly<MainProps>) {
-  const { client } = props;
+  const { client, isAdmin } = props;
   return (
     <TabPanel className="panel divide-y" unmount={false}>
       <GeneralForm client={client} />
-      <DangerZone client={client} />
+      <DangerZone client={client} isAdmin={isAdmin} />
     </TabPanel>
   );
 }

@@ -24,14 +24,14 @@ export default function ScopeOptions(props: Readonly<ScopeOptionsProps>) {
     <>
       <Options>
         <Option onClick={() => setShow("EDIT")}>
-          <div className="flex items-center gap-1">
-            <PencilSquareIcon className="size-4" />
+          <div className="flex items-center gap-2">
+            <PencilSquareIcon className="size-5" />
             <span>Edit</span>
           </div>
         </Option>
         <Option onClick={() => setShow("DELETE")} data-danger>
-          <div className="flex items-center gap-1">
-            <TrashIcon className="size-4" />
+          <div className="flex items-center gap-2">
+            <TrashIcon className="size-5" />
             <span>Delete</span>
           </div>
         </Option>

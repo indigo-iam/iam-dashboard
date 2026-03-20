@@ -33,9 +33,14 @@ export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
   };
 
   return (
-    <Modal show={show} onClose={onClose} title="Add New Scope">
+    <Modal show={show} onClose={onClose} title="Add new system scope">
       <Form action={action} onReset={() => setScopeType(options[0])}>
         <ModalBody className="space-y-4 pb-4">
+          <p>
+            System scopes are available to all clients. <b>Default</b> scopes
+            are enabled by default to all new clients while <b>Restricted</b>{" "}
+            scopes can be only enabled by administrators.
+          </p>
           <Field>
             <Label>Scope</Label>
             <Input id="scope" name="value" placeholder="Scope name" />
@@ -59,14 +64,6 @@ export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
                 </SelectOption>
               ))}
             </Select>
-            <Description>
-              <b>Default</b>: newly-created clients get this scope by default.{" "}
-              <br />
-              <b>Restricted</b>: only usable by system administrators and are
-              unavailable to dynamically registered clients and protected
-              resources. <br />
-              <b>None</b>: none of above.
-            </Description>
           </Field>
         </ModalBody>
         <ModalFooter>

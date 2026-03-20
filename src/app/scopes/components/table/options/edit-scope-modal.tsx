@@ -26,15 +26,15 @@ export default function EditScopeModal(props: Readonly<EditScopeModalProps>) {
   };
 
   return (
-    <Modal title="Edit Scope" show={show} onClose={onClose}>
+    <Modal title="Edit scope" show={show} onClose={onClose}>
       <Form action={action}>
         <ModalBody>
           <Field>
-            <Label>Scope Name</Label>
+            <Label>Scope name</Label>
             <Input name="value" defaultValue={scope.value} />
           </Field>
           <Field>
-            <Label>Scope Description</Label>
+            <Label>Scope description</Label>
             <Input name="description" defaultValue={scope.description} />
           </Field>
         </ModalBody>

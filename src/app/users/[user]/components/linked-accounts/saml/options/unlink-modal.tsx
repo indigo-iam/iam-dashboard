@@ -28,28 +28,35 @@ export default function UnlinkAccountModal(
     <ConfirmModal
       show={show}
       onClose={onClose}
-      confirmButtonText="Remove Membership"
-      title="Remove User Membership"
+      title="Unlink SAML account"
       onConfirm={handleConfirm}
       danger
     >
-      <p>Are you sure you want to unlink the account</p>
-      <ul>
-        <li className="flex min-w-32 items-end gap-2 p-2">
-          <span className="align-text-bottom text-sm leading-none font-light">
+      <p className="text-base">
+        Are you sure you want to unlink the following account?
+      </p>
+      <div className="flex grow flex-col gap-2">
+        <div>
+          <p className="text-xs text-gray-500 dark:text-gray-300">
+            Identity Provider
+          </p>
+          <p className="break-all text-gray-950 dark:text-gray-100">
+            {samlId.idpId}
+          </p>
+        </div>
+        <div>
+          <p className="text-xs font-light text-gray-500 dark:text-gray-300">
             User ID
-          </span>
-          <span className="leading-none">{samlId.userId}</span>
-        </li>
-        <li className="flex min-w-32 items-end gap-2 p-2">
-          <span className="text-sm leading-none font-light">IdP ID</span>
-          <span className="leading-none">{samlId.idpId}</span>
-        </li>
-        <li className="flex min-w-32 items-end gap-2 p-2">
-          <span className="text-sm leading-none font-light">Attribute ID</span>
-          <span className="leading-none">{samlId.attributeId}</span>
-        </li>
-      </ul>
+          </p>
+          <p>{samlId.userId}</p>
+        </div>
+        <div>
+          <p className="text-xs font-light text-gray-500 dark:text-gray-300">
+            Attribute ID
+          </p>
+          <p>{samlId.attributeId}</p>
+        </div>
+      </div>
     </ConfirmModal>
   );
 }

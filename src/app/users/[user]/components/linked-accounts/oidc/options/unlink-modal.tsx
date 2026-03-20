@@ -28,14 +28,25 @@ export default function UnlinkAccountModal(
     <ConfirmModal
       show={show}
       onClose={onClose}
-      confirmButtonText="Remove Membership"
-      title="Remove User Membership"
+      title="Unlink OpenID Connect/OAuth2 account"
       onConfirm={handleConfirm}
       danger
     >
-      Are you sure you want to unlink the account with subject{" "}
-      <b>{oidcId.subject}</b> and issuer
-      <b>{oidcId.issuer}</b>?
+      <p>Are you sure you want to unlink the following OAuth2 account?</p>
+      <div className="flex grow flex-col gap-2">
+        <div>
+          <p className="text-xs font-light text-gray-500 dark:text-gray-300">
+            Issuer
+          </p>
+          <p>{oidcId.issuer}</p>
+        </div>
+        <div>
+          <p className="text-xs font-light text-gray-500 dark:text-gray-300">
+            Subject
+          </p>
+          <p>{oidcId.subject}</p>
+        </div>
+      </div>
     </ConfirmModal>
   );
 }

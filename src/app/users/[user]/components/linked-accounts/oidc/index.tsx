@@ -12,7 +12,7 @@ function OidcIdView(props: { oidcId: OidcId }) {
     <li className="iam-list-item flex flex-row">
       <div className="flex grow flex-col">
         <p className="text-gray-950 dark:text-gray-100">{oidcId.issuer}</p>
-        <p className="text-sm font-light">id: {oidcId.subject}</p>
+        <p className="text-sm font-light">Subject {oidcId.subject}</p>
       </div>
       <OidcOptions oidcId={oidcId} />
     </li>
@@ -36,7 +36,7 @@ export function OidcAccounts(props: Readonly<OidcAccountsProps>) {
   }
   return (
     <div className="panel space-y-2">
-      <h2>OpenID Connect</h2>
+      <h2>OpenID Connect/OAuth2</h2>
       <ul className="w-full">
         {oidcIds.map(oidcId => (
           <OidcIdView key={oidcId.subject} oidcId={oidcId} />

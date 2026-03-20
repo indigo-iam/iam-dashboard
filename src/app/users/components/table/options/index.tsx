@@ -29,22 +29,22 @@ export default function UserOptions(props: Readonly<UserOptions>) {
       <Options>
         {user.active ? (
           <Option onClick={() => setShow("TOGGLE_STATUS")} data-danger>
-            <div className="flex items-center gap-1">
-              <PowerIcon className="size-4" />
+            <div className="flex items-center gap-2">
+              <PowerIcon className="size-5" />
               <span>Disable</span>
             </div>
           </Option>
         ) : (
           <Option onClick={() => setShow("TOGGLE_STATUS")}>
-            <div className="flex items-center gap-1">
-              <PlayCircleIcon className="size-4" />
+            <div className="flex items-center gap-2">
+              <PlayCircleIcon className="size-5" />
               <span>Enable</span>
             </div>
           </Option>
         )}
         <Option onClick={() => setShow("DELETE_USER")} data-danger>
-          <div className="flex items-center gap-1">
-            <TrashIcon className="size-4" />
+          <div className="flex items-center gap-2">
+            <TrashIcon className="size-5" />
             <span>Delete</span>
           </div>
         </Option>

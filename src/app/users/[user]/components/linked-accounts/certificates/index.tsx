@@ -5,29 +5,29 @@
 import { User } from "@/models/scim";
 import { Certificate } from "@/models/indigo-user";
 import LinkCertificateButton from "./link-certificate-button";
+import CertificateOptions from "./options";
 
-const CertificateView = (props: { cert: Certificate }) => {
+type CertificateViewProps = {
+  cert: Certificate;
+};
+
+function CertificateView(props: Readonly<CertificateViewProps>) {
   const { cert } = props;
-  const lastModified = cert.lastModified
-    ? new Date(cert.lastModified).toLocaleString()
-    : "N/A";
   return (
-    <div className="iam-list-item flex-col space-y-2">
-      <div>
-        <p className="text-xs">Subject</p>
-        <p className="text-sm">{cert.subjectDn}</p>
+    <div className="iam-list-item gap-1 lg:flex-col">
+      <div className="grow">
+        <p className="text-gray-950 dark:text-gray-200">
+          {cert.display}
+          <div className="flex flex-col gap-0.5">
+            <p className="text-xs">Subject {cert.subjectDn}</p>
+            <p className="text-xs">Issuer {cert.issuerDn}</p>
+          </div>
+        </p>
       </div>
-      <div>
-        <p className="text-xs">Issuer</p>
-        <p className="text-sm">{cert.issuerDn}</p>
-      </div>
-      <div>
-        <p className="text-xs">Last modified</p>
-        <p className="text-xs">{lastModified}</p>
-      </div>
+      <CertificateOptions cert={cert} />
     </div>
   );
-};
+}
 
 type CertificateProps = {
   user: User;

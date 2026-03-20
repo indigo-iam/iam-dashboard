@@ -4,10 +4,12 @@
 
 "use client";
 
+import { useState } from "react";
+import { LinkSlashIcon } from "@heroicons/react/24/outline";
+
 import { Option, Options } from "@/components/options";
 import { SamlId } from "@/models/indigo-user";
 import UnlinkAccountModal from "./unlink-modal";
-import { useState } from "react";
 
 type SAMLOptionsProps = {
   samlId: SamlId;
@@ -21,7 +23,10 @@ export default function SAMLOptions(props: Readonly<SAMLOptionsProps>) {
     <>
       <Options>
         <Option onClick={() => setShow("UNLINK_ACCOUNT")} data-danger>
-          Unlink Account
+          <div className="flex items-center gap-2">
+            <LinkSlashIcon className="size-5" />
+            <span>Unlink account</span>
+          </div>
         </Option>
       </Options>
       <UnlinkAccountModal

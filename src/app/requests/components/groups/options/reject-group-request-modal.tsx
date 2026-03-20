@@ -27,7 +27,7 @@ export default function RejectRequestModalProps(
   };
 
   return (
-    <Modal show={show} onClose={onClose} title="Reject Group Request">
+    <Modal show={show} onClose={onClose} title="Reject group request">
       <Form action={action}>
         <ModalBody>
           <p>

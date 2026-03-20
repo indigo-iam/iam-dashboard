@@ -4,11 +4,13 @@
 
 "use client";
 
+import { useState } from "react";
+import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/outline";
+
 import { Options, Option } from "@/components/options";
 import { Registration } from "@/models/registration";
 import ApproveRegistrationRequestModal from "./approve-registration-request-modal";
 import RejectRegistrationRequestModal from "./reject-registration-request-modal";
-import { useState } from "react";
 
 type RegistrationRequestOptionsProps = {
   request: Registration;
@@ -23,9 +25,17 @@ export default function RegistrationRequestsOptions(
   return (
     <>
       <Options>
-        <Option onClick={() => setShow("APPROVE_REQUEST")}>Approve</Option>
+        <Option onClick={() => setShow("APPROVE_REQUEST")}>
+          <div className="flex items-center gap-2">
+            <CheckCircleIcon className="size-5" />
+            <span>Approve</span>
+          </div>
+        </Option>
         <Option onClick={() => setShow("REJECT_REQUEST")} data-danger>
-          Reject
+          <div className="flex items-center gap-2">
+            <XCircleIcon className="size-5" />
+            <span>Reject</span>
+          </div>
         </Option>
       </Options>
       <ApproveRegistrationRequestModal

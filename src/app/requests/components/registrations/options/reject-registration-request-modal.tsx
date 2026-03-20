@@ -2,8 +2,10 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import Link from "next/link";
+
 import { Button } from "@/components/buttons";
-import { Form, Label } from "@/components/form";
+import { Field, Form, Label } from "@/components/form";
 import { Modal, ModalBody, ModalFooter } from "@/components/modal";
 import { Textarea } from "@/components/textarea";
 import { Registration } from "@/models/registration";
@@ -36,11 +38,18 @@ export default function RejectRegistrationRequestModal(
         <ModalBody>
           <p>
             Are you sure you want to delete the registration request for the
-            user <b>{`${request.givenname} ${request.familyname}`}</b>?
+            user{" "}
+            <Link href={`/users/${request.accountId}`} className="underline">
+              <b>{`${request.givenname} ${request.familyname}`}</b> (
+              <i>{request.email}</i>)
+            </Link>
+            ?
           </p>
           <p>To proceed provide a motivation that will be sent to the user:</p>
-          <Label data-required>Motivation</Label>
-          <Textarea name="motivation" className="iam-input" required />
+          <Field>
+            <Label data-required>Motivation</Label>
+            <Textarea name="motivation" className="iam-input" required />
+          </Field>
         </ModalBody>
         <ModalFooter>
           <Button
@@ -51,8 +60,8 @@ export default function RejectRegistrationRequestModal(
           >
             Cancel
           </Button>
-          <Button className="btn-danger" title="Reject user" type="submit">
-            Reject user
+          <Button className="btn-danger" type="submit">
+            Reject request
           </Button>
         </ModalFooter>
       </Form>

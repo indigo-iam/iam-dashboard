@@ -30,8 +30,8 @@ export default function AcceptGroupRequestModal(
       show={show}
       onClose={onClose}
       onConfirm={action}
-      title="Approve Group Request"
-      confirmButtonText="Approve"
+      title="Approve group request"
+      confirmButtonText="Approve request"
     >
       <p className="p-2">
         Are you sure you want the user <b>{request.userFullName}</b> to join the

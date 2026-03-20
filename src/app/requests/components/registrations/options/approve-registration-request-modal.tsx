@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import Link from "next/link";
+
 import ConfirmModal from "@/components/confirm-modal";
 import { Textarea } from "@/components/textarea";
 import { Registration } from "@/models/registration";
@@ -26,13 +28,18 @@ export default function ApproveRegistrationRequestModal(
       show={show}
       onClose={onClose}
       onConfirm={action}
-      title="Add User"
+      title="Approve user registration"
+      confirmButtonText="Approve user"
     >
       <p>
         Are you sure you want to add the user{" "}
-        <b>{`${request.givenname} ${request.familyname}`}?</b>
+        <Link href={`/users/${request.uuid}`} className="underline">
+          <b>{`${request.givenname} ${request.familyname}`}</b> (
+          <i>{request.email}</i>)
+        </Link>
+        ?<br />
+        They provided the following motivation:
       </p>
-      <p>They provided the following motivation:</p>
       <Textarea className="iam-input" defaultValue={request.notes} disabled />
     </ConfirmModal>
   );

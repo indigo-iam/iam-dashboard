@@ -4,11 +4,13 @@
 
 "use client";
 
+import { useState } from "react";
+import { ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline";
+
 import { Option, Options } from "@/components/options";
 import RemoveMemberFromGroupModal from "./remove-member-modal";
 import { ScimReference } from "@/models/scim";
 import { Group } from "@/models/groups";
-import { useState } from "react";
 
 type MemberOptionsProps = {
   userRef: ScimReference;
@@ -23,7 +25,10 @@ export default function MemberOptions(props: Readonly<MemberOptionsProps>) {
     <>
       <Options>
         <Option onClick={() => setShow("REMOVE_MEMBER")} data-danger>
-          Remove from group
+          <div className="flex items-center gap-1">
+            <ArrowRightStartOnRectangleIcon className="size-4" />
+            <span>Remove from group</span>
+          </div>
         </Option>
       </Options>
       <RemoveMemberFromGroupModal

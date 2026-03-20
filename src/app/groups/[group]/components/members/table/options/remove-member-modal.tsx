@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import Link from "next/link";
+
 import ConfirmModal from "@/components/confirm-modal";
 import { ModalProps } from "@/components/modal";
 import { Group } from "@/models/groups";
@@ -17,10 +19,12 @@ export default function RemoveMemberFromGroupModal(
   props: Readonly<RevokeMemberFromGroupModalProps>
 ) {
   const { userRef, group, ...modalProps } = props;
-
+  const indigoGroup = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
+  const description = indigoGroup.description;
   const action = async () => {
     await removeUserByRefFromGroup(group.id, userRef);
   };
+
   return (
     <ConfirmModal
       title="Remove member from group"
@@ -30,16 +34,18 @@ export default function RemoveMemberFromGroupModal(
     >
       <div className="space-y-2">
         <p>
-          Are you sure you want to remove user <b>{userRef.display}</b> from
-          group
+          Are you sure you want to remove the user{" "}
+          <Link href={`/users/${userRef.value}`} className="underline">
+            <b>{userRef.display}</b>
+          </Link>{" "}
+          from group <b>{group.displayName}</b>{" "}
+          {description && (
+            <>
+              (<span className="italic">{description}</span>)
+            </>
+          )}
+          ?
         </p>
-        <div className="flex flex-col items-center">
-          <p className="font-bold">{group.displayName}</p>
-          <p className="text-sm font-light">
-            {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description}
-          </p>{" "}
-          <p className="text-xs font-light">{group.id}</p>
-        </div>
       </div>
     </ConfirmModal>
   );

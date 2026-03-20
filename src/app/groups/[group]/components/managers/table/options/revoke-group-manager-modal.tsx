@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import Link from "next/link";
+
 import ConfirmModal from "@/components/confirm-modal";
 import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
@@ -19,7 +21,8 @@ export default function RevokeGroupManagerModal(
   props: Readonly<RevokeGroupManagerModal>
 ) {
   const { user, group, show, onClose, onUnlinked } = props;
-
+  const indigoUser = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
+  const description = indigoUser.description;
   const handleConfirm = async () => {
     await revokeGroupManager(group.id, user.id);
     onClose();
@@ -31,12 +34,24 @@ export default function RevokeGroupManagerModal(
       show={show}
       onClose={onClose}
       confirmButtonText="Revoke Manager"
-      title="Revoke Group Manager Privileges"
+      title="Revoke group manager privileges"
       onConfirm={handleConfirm}
       danger
     >
-      Are you sure you want to revoke group manager privileges from user{" "}
-      <b>{user.name?.formatted}</b> for group <b>{group.displayName}</b>?
+      <p>
+        Are you sure you want to revoke group manager privileges from user{" "}
+        <Link href={`/users/${user.id}`} className="underline">
+          <b className="text-nowrap">{user.name?.formatted}</b> (
+          <i className="text-nowrap">{user.emails?.[0].value}</i>)
+        </Link>{" "}
+        for group <b>{group.displayName}</b>
+        {description && (
+          <>
+            {" "}(<i>{description}</i>)
+          </>
+        )}
+        ?
+      </p>
     </ConfirmModal>
   );
 }

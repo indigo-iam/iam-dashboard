@@ -4,10 +4,12 @@
 
 "use client";
 
+import { useState } from "react";
+import { UserGroupIcon } from "@heroicons/react/24/outline";
+
 import { Button } from "@/components/buttons";
 import { Group } from "@/models/groups";
 import AssignGroupManagerModal from "./modal";
-import { useState } from "react";
 
 type AssignGroupManagerButtonProps = {
   group: Group;
@@ -22,8 +24,12 @@ export default function AssignGroupManagerButton(
   const closeModal = () => setShow(false);
   return (
     <>
-      <Button className="btn-secondary" onClick={openModal}>
-        Assign manager
+      <Button
+        className="btn-secondary flex items-center gap-1"
+        onClick={openModal}
+      >
+        <UserGroupIcon className="size-4" />
+        <span>Assign manager</span>
       </Button>
       <AssignGroupManagerModal show={show} onClose={closeModal} group={group} />
     </>

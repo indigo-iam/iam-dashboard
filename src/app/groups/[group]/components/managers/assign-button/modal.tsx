@@ -5,70 +5,108 @@
 "use client";
 
 import { SearchUsers } from "@/app/components/search-users";
-import { Button } from "@/components/buttons";
-import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import ConfirmModal from "@/components/confirm-modal";
+import { type ModalProps } from "@/components/modal";
 import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
 import { assignGroupManager } from "@/services/groups";
 
 import { useState } from "react";
+import Link from "next/link";
 
-interface AssignGroupManagerModalProps extends ModalProps {
+type AssignGroupManagerModalProps = ModalProps & {
   group: Group;
+};
+
+type SearchUserViewProps = {
+  group: Group;
+  onSelect: (user: User) => void;
+};
+
+function SearchUserView(props: Readonly<SearchUserViewProps>) {
+  const { group, onSelect } = props;
+  const indigoGroup = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
+  const description = indigoGroup.description;
+  return (
+    <div className="space-y-4">
+      <p>
+        Type to search for an user to become manager of group{" "}
+        <b>{group.displayName}</b>
+        {description && (
+          <>
+            {" "}
+            (<i>{description}</i>)
+          </>
+        )}
+      </p>{" "}
+      <SearchUsers onSelect={onSelect} />
+    </div>
+  );
+}
+
+type ConfirmViewProps = {
+  group: Group;
+  user: User;
+};
+
+function ConfirmView(props: Readonly<ConfirmViewProps>) {
+  const { group, user } = props;
+  const indigoGroup = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
+  const description = indigoGroup.description;
+  return (
+    <div className="space-y-4">
+      <p>
+        Are you sure you want to make the user{" "}
+        <Link href={`/users/${user.id}`} className="underline">
+          <b>{user.name?.formatted}</b> (<i>{user.emails?.[0].value}</i>)
+        </Link>{" "}
+        manager of the group <b>{group.displayName}</b>
+        {description && (
+          <>
+            {" "}
+            (<i>{description}</i>)
+          </>
+        )}
+        ?
+      </p>
+    </div>
+  );
 }
 
 export default function AssignGroupManagerModal(
   props: Readonly<AssignGroupManagerModalProps>
 ) {
   const { group, onClose, ...modalProps } = props;
-  const [selectedUser, setSelectedUser] = useState<User>();
+  const [user, setUser] = useState<User>();
+  const clear = () => setUser(undefined);
 
   const clearAndClose = () => {
-    setTimeout(() => setSelectedUser(undefined), 500);
+    setTimeout(clear, 500);
     onClose();
   };
 
   const assignManager = async () => {
-    if (selectedUser?.id) {
-      await assignGroupManager(group, selectedUser);
+    if (user?.id) {
+      await assignGroupManager(group, user);
       clearAndClose();
     }
   };
 
   return (
-    <Modal onClose={clearAndClose} {...modalProps} title="Assign group manager">
-      <ModalBody>
-        <div className="space-y-4" hidden={!!selectedUser}>
-          <p>
-            Type to search for an user to make them manager of group{" "}
-            <b>{group.displayName}</b>
-          </p>
-          <SearchUsers onSelect={setSelectedUser} />
-        </div>
-        <div className="space-y-4" hidden={!selectedUser}>
-          <p>
-            Are you sure you want give manager privileges for group{" "}
-            <b>{group.displayName}</b> to the following user?
-          </p>
-          <div className="flex flex-col items-center">
-            <p>
-              <span className="font-bold">{selectedUser?.name?.formatted}</span>{" "}
-              ({selectedUser?.userName})
-            </p>
-            <p className="text-sm font-light">
-              {selectedUser?.emails?.[0].value}
-            </p>
-          </div>
-        </div>
-      </ModalBody>
-      <ModalFooter>
-        <Button className="btn-tertiary" type="button" onClick={clearAndClose}>
-          Cancel
-        </Button>
-        <Button className="btn-primary" type="submit" onClick={assignManager}>
-          Confirm
-        </Button>
-      </ModalFooter>
-    </Modal>
+    <ConfirmModal
+      onClose={clearAndClose}
+      {...modalProps}
+      title="Assign group manager"
+      onConfirm={assignManager}
+      onCancel={clear}
+    >
+      <>
+        {user ? (
+          <ConfirmView group={group} user={user} />
+        ) : (
+          <SearchUserView group={group} onSelect={setUser} />
+        )}
+      </>
+    </ConfirmModal>
   );
 }

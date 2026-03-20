@@ -8,6 +8,7 @@ import { Button } from "@/components/buttons";
 import { Group } from "@/models/groups";
 import AddMemberModal from "./modal";
 import { useState } from "react";
+import { UserPlusIcon } from "@heroicons/react/24/outline";
 
 type AddMemberButtonProps = {
   group: Group;
@@ -21,7 +22,8 @@ export default function AddMemberButton(props: Readonly<AddMemberButtonProps>) {
   return (
     <>
       <Button className="btn-secondary" onClick={openModal}>
-        Add Member
+        <UserPlusIcon className="size-4" />
+        <span>Add member</span>
       </Button>
       <AddMemberModal show={show} onClose={closeModal} group={group} />
     </>

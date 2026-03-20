@@ -4,66 +4,102 @@
 
 "use client";
 
-import { Button } from "@/components/buttons";
-import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import { type ModalProps } from "@/components/modal";
 import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
 import { addUserToGroup } from "@/services/groups";
 import { SearchUsers } from "@/app/components/search-users";
 import { useState } from "react";
+import ConfirmModal from "@/components/confirm-modal";
+import Link from "next/link";
 
-interface AddMemberModalProps extends ModalProps {
+type AddMemberModalProps = ModalProps & {
   group: Group;
+};
+
+type SearchUsersViewProps = {
+  group: Group;
+  onSelect: (user: User) => void;
+};
+
+function SearchUsersView(props: Readonly<SearchUsersViewProps>) {
+  const { group, onSelect } = props;
+  const indigoGroup = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
+  const groupName = group.displayName;
+  const groupDescription = indigoGroup.description;
+  return (
+    <div className="space-y-4">
+      <p>
+        Type to search for an user add to the group <b>{groupName}</b>{" "}
+        {groupDescription && (
+          <>
+            (<span className="italic">{groupDescription}</span>)
+          </>
+        )}
+      </p>
+      <SearchUsers onSelect={onSelect} />
+    </div>
+  );
+}
+
+type ConfirmViewPros = {
+  user: User;
+  group: Group;
+};
+
+function ConfirmView(props: Readonly<ConfirmViewPros>) {
+  const { user, group } = props;
+  const indigoGroup = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
+  const groupName = group.displayName;
+  const groupDescription = indigoGroup.description;
+  return (
+    <p>
+      Are you sure you want to add the user{" "}
+      <Link href={`/users/${user.id}`} className="underline">
+        <b>{user.name?.formatted}</b> (<i>{user.emails?.[0].value}</i>)
+      </Link>{" "}
+      to group to group <b>{groupName}</b> (
+      <span className="italic">{groupDescription}</span>)?
+    </p>
+  );
 }
 
 export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
   const { group, onClose, ...modalProps } = props;
-  const [selectedUser, setSelectedUser] = useState<User>();
+  const indigoGroup = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
+  const groupName = group.displayName;
+  const [user, setUser] = useState<User>();
+
+  const clear = () => setUser(undefined);
 
   const clearAndClose = () => {
     props.onClose();
-    setTimeout(() => setSelectedUser(undefined), 500);
+    setTimeout(() => clear, 500);
   };
 
   const addMember = async () => {
-    if (selectedUser?.id) {
-      await addUserToGroup(group.id, selectedUser);
+    if (user?.id) {
+      await addUserToGroup(group.id, user);
       clearAndClose();
     }
   };
 
   return (
-    <Modal onClose={clearAndClose} {...modalProps} title="Add Member to Group">
-      <ModalBody>
-        <div className="space-y-4" hidden={!!selectedUser}>
-          <p>Type to search for an user</p>
-          <SearchUsers onSelect={setSelectedUser} />
-        </div>
-        <div className="space-y-4" hidden={!selectedUser}>
-          <p>
-            Are you sure you want to add too group the following user to group{" "}
-            <b>{group.displayName}</b>?
-          </p>
-          <ul className="flex flex-col">
-            <li className="inline-flex gap-1">
-              <span className="font-bold">Name:</span>
-              <span>{selectedUser?.name?.formatted}</span>
-            </li>
-            <li className="inline-flex gap-1">
-              <span className="font-bold">Username:</span>
-              <span>{selectedUser?.userName}</span>
-            </li>
-          </ul>
-        </div>
-      </ModalBody>
-      <ModalFooter>
-        <Button className="btn-tertiary" type="button" onClick={clearAndClose}>
-          Cancel
-        </Button>
-        <Button className="btn-primary" type="submit" onClick={addMember}>
-          Add Member
-        </Button>
-      </ModalFooter>
-    </Modal>
+    <ConfirmModal
+      onClose={clearAndClose}
+      {...modalProps}
+      title={`Add member to group ${groupName}`}
+      onConfirm={addMember}
+      onCancel={clear}
+      confirmButtonDisabled={!user}
+    >
+      <>
+        {user ? (
+          <ConfirmView user={user} group={group} />
+        ) : (
+          <SearchUsersView group={group} onSelect={setUser} />
+        )}
+      </>
+    </ConfirmModal>
   );
 }

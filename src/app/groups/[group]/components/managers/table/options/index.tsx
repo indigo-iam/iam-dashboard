@@ -9,6 +9,7 @@ import { User } from "@/models/scim";
 import { Group } from "@/models/groups";
 import RevokeGroupManagerModal from "./revoke-group-manager-modal";
 import { useState } from "react";
+import { NoSymbolIcon } from "@heroicons/react/24/outline";
 
 type ManagerOptionsProps = {
   manager: User;
@@ -23,7 +24,10 @@ export default function ManagerOptions(props: Readonly<ManagerOptionsProps>) {
     <>
       <Options>
         <Option onClick={() => setShow("REVOKE_MANAGER")} data-danger>
-          Revoke
+          <div className="flex items-center gap-1">
+            <NoSymbolIcon className="size-4" />
+            <span>Revoke user</span>
+          </div>
         </Option>
       </Options>
       <RevokeGroupManagerModal

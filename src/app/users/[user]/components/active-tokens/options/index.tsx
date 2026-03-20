@@ -4,10 +4,12 @@
 
 "use client";
 
+import { useState } from "react";
+import { BackspaceIcon } from "@heroicons/react/24/outline";
+
 import { Options, Option } from "@/components/options";
 import { ActiveToken } from "@/models/sites";
 import { RevokeToken } from "./revoke-token";
-import { useState } from "react";
 
 type ActiveTokenOptionsProps = {
   token: ActiveToken;
@@ -21,7 +23,10 @@ export function ActiveTokenOptions(props: Readonly<ActiveTokenOptionsProps>) {
     <>
       <Options>
         <Option onClick={() => setShow("REVOKE")} data-danger>
-          Revoke
+          <div className="flex items-center gap-2">
+            <BackspaceIcon className="size-5" />
+            <span>Revoke</span>
+          </div>
         </Option>
       </Options>
       <RevokeToken token={token} show={show === "REVOKE"} onClose={close} />

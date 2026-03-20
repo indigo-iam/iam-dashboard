@@ -13,15 +13,20 @@ type RevokeTokenProps = {
 
 export function RevokeToken(props: Readonly<RevokeTokenProps>) {
   const { token, show, onClose } = props;
+  const tokenStr = `${token.value?.slice(0, 8)}...${token.value?.slice(-12)}`;
   return (
     <ConfirmModal
       show={show}
       onClose={onClose}
       confirmButtonText="Revoke"
       title="Revoke Access Token"
+      danger
     >
-      <p>Are you sure you want to revoke the following token?</p>
-      <p>{token.id}</p>
+      <p>
+        Are you sure you want to revoke the token{" "}
+        <span className="font-mono break-all">{tokenStr}</span> for client{" "}
+        <i>{token.clientId}</i>?
+      </p>
     </ConfirmModal>
   );
 }

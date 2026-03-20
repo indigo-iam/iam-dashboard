@@ -98,8 +98,8 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
   };
 
   return (
-    <div className="flex items-center justify-center">
-      <div className="pr-8">
+    <div className="flex flex-col gap-4 md:flex-row">
+      <div className="flex w-full flex-col items-center px-16 sm:px-32 md:w-auto md:p-0">
         <Stepper currentPage={currentPage} totalPages={TOTAL_PAGES} />
       </div>
       <Form action={action} className="max-w-xl grow">

@@ -4,46 +4,42 @@
 
 import { arrayRange } from "@/utils/numbers";
 
-function PreviousPage(props: Readonly<{ page: number }>) {
+type PageViewProps = {
+  page: number;
+};
+
+function PreviousPage(props: Readonly<PageViewProps>) {
   const { page } = props;
   return (
-    <div>
-      <div className="bg-infn flex aspect-square size-8 items-center justify-center rounded-full bg-gray-700 text-white dark:border-3 dark:border-gray-200 dark:bg-gray-200 dark:font-bold dark:text-gray-700">
-        {page + 1}
+    <div className="flex grow items-center md:flex-col">
+      <div className="bg-infn flex aspect-square min-h-3 items-center justify-center rounded-full border-2 border-gray-700 bg-gray-700 text-white dark:border-gray-200 dark:bg-gray-200 dark:font-bold dark:text-gray-700">
+        <span className="hidden p-1.5 md:inline-block">{page + 1}</span>
       </div>
-      <div className="border-infn dark:border-secondary m-auto h-12 w-0 border-l-3 border-gray-700 dark:border-gray-200" />
+      <div className="border-infn dark:border-secondary grow border-t-2 border-gray-700 md:h-12 md:w-0 md:border-l-3 dark:border-gray-200" />
     </div>
   );
 }
 
-function CurrentPage(props: Readonly<{ page: number; totalPages: number }>) {
-  const { page, totalPages } = props;
-  const isLast = page === totalPages - 1;
+function CurrentPage(props: Readonly<PageViewProps>) {
+  const { page } = props;
   return (
-    <div>
-      <span className="transparent flex aspect-square size-8 items-center justify-center rounded-full border-3 border-gray-700 text-gray-700 dark:border-white dark:text-gray-200">
-        {page + 1}
-      </span>
-      <div
-        className="m-auto h-12 w-0 border-l-3 border-gray-300 data-[last=true]:hidden dark:border-gray-500"
-        data-last={isLast}
-      />
+    <div className="group flex grow items-center last:flex-none md:flex-col">
+      <div className="transparent flex aspect-square min-h-3 items-center justify-center rounded-full border-2 border-gray-700 text-gray-700 dark:border-white dark:bg-gray-400 dark:text-gray-200">
+        <span className="hidden p-1.5 text-sm md:inline-block">{page + 1}</span>
+      </div>
+      <div className="grow border-t-2 border-gray-300 group-last:hidden md:h-12 md:w-0 md:border-l-3 dark:border-gray-500" />
     </div>
   );
 }
 
-function NextPage(props: Readonly<{ page: number; totalPages: number }>) {
-  const { page, totalPages } = props;
-  const isLast = page === totalPages - 1;
+function NextPage(props: Readonly<PageViewProps>) {
+  const { page } = props;
   return (
-    <div>
-      <div className="dark:gray-400 flex size-8 items-center justify-center rounded-full border-gray-500 bg-gray-200 text-gray-700 dark:border-3 dark:bg-transparent dark:text-gray-500">
-        {page + 1}
+    <div className="group flex grow items-center last:flex-none md:flex-col">
+      <div className="dark:gray-400 flex aspect-square min-h-3 items-center justify-center rounded-full border-2 border-gray-300 bg-gray-200 text-gray-700 dark:bg-gray-500 dark:text-gray-500 dark:md:bg-transparent">
+        <span className="hidden p-1.5 text-sm md:inline-block">{page + 1}</span>
       </div>
-      <div
-        className="dark:border-secondary/30 m-auto h-12 w-0 border-l-3 border-gray-300 data-[last=true]:hidden dark:border-gray-500"
-        data-last={isLast}
-      />
+      <div className="grow border-t-2 border-gray-300 group-last:hidden md:h-12 md:w-0 md:border-l-3 dark:border-gray-500" />
     </div>
   );
 }
@@ -65,15 +61,14 @@ function PreviousPages(props: Readonly<PreviousPagesProps>) {
 
 type NextPagesProps = {
   nextPages: number[];
-  totalPages: number;
 };
 
 function NextPages(props: Readonly<NextPagesProps>) {
-  const { nextPages, totalPages } = props;
+  const { nextPages } = props;
   return (
     <>
       {nextPages.map(i => (
-        <NextPage key={`step-${i}`} page={i} totalPages={totalPages} />
+        <NextPage key={`step-${i}`} page={i} />
       ))}
     </>
   );
@@ -90,10 +85,10 @@ export function Stepper(props: Readonly<StepperProps>) {
   const previousPages = arrayRange(0, currentPage - 1);
   const nextPages = arrayRange(currentPage + 1, lastPage);
   return (
-    <>
+    <div className="flex w-full items-center md:w-auto md:flex-col">
       <PreviousPages previousPages={previousPages} />
-      <CurrentPage page={currentPage} totalPages={totalPages} />
-      <NextPages nextPages={nextPages} totalPages={totalPages} />
-    </>
+      <CurrentPage page={currentPage} />
+      <NextPages nextPages={nextPages} />
+    </div>
   );
 }

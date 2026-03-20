@@ -63,6 +63,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
           {!isMe && (
             <UserClients
               user={user}
+              isAdmin={isAdmin}
               page={searchParams?.page}
               count={searchParams?.count}
             />

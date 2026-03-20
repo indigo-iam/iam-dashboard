@@ -11,12 +11,13 @@ import Link from "next/link";
 
 type UseClientsProps = {
   user: User;
+  isAdmin: boolean;
   count?: string;
   page?: string;
 };
 
 export async function UserClients(props: Readonly<UseClientsProps>) {
-  const { user } = props;
+  const { user, isAdmin } = props;
   const count = props.count ? parseInt(props.count) : 10;
   const page = props.page ? parseInt(props.page) : 1;
   const startIndex = 1 + count * (page - 1);
@@ -31,7 +32,7 @@ export async function UserClients(props: Readonly<UseClientsProps>) {
       <div className="panel space-y-4">
         <h2>Owned Clients</h2>
         <div className="flex flex-col gap-4">
-          <ClientsTable clients={clients} />
+          <ClientsTable clients={clients} isAdmin={isAdmin} />
           <Paginator numberOfPages={numberOfPages} />
         </div>
       </div>

@@ -33,7 +33,7 @@ function ActiveTokenView(props: Readonly<ActiveTokenViewProps>) {
               {tokenStr}
             </p>
             <p className="truncate text-sm">{token.clientId}</p>
-            <p className="truncate text-sm font-light" title={scopes}>
+            <p className="truncate text-sm font-light italic" title={scopes}>
               {scopes}
             </p>
           </div>

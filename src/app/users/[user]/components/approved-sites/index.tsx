@@ -28,7 +28,7 @@ function ApprovedSite(props: Readonly<ApprovedSiteProps>) {
           <div className="flex grow flex-col gap-0.5 lg:w-0">
             <p className="text-gray-950 dark:text-white">{client_name}</p>
             <p className="truncate text-sm">{site.clientId}</p>
-            <p className="truncate text-sm font-light" title={scopes}>
+            <p className="truncate text-sm font-light italic" title={scopes}>
               {scopes}
             </p>
           </div>

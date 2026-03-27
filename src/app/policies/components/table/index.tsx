@@ -20,7 +20,7 @@ function Row(props: Readonly<{ policy: ScopePolicy }>) {
         href={`/policies/${policy.id}`}
       >
         {policy.description}
-        <p className="truncate text-sm font-light">{scopes}</p>
+        <p className="truncate text-sm font-light italic">{scopes}</p>
       </Link>
       <PolicyOptions policy={policy} />
     </div>

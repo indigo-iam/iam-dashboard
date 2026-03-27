@@ -38,7 +38,7 @@ function Row(props: Readonly<RowProps>) {
             <p className="truncate text-sm font-light">
               {client.client_description}
             </p>
-            <p title={scopes} className="truncate text-sm font-light">
+            <p title={scopes} className="truncate text-sm font-light italic">
               {scopes}
             </p>
           </div>

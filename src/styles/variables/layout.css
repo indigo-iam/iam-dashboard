@@ -11,7 +11,7 @@
 }
 
 @utility container {
-  @apply 3xl:px-80 4xl:px-92 px-4 py-8 sm:px-8 md:px-16 lg:px-16 xl:px-32 2xl:px-64;
+  @apply p-4 lg:w-3xl;
 }
 
 @utility content {

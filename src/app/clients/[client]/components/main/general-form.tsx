@@ -39,7 +39,9 @@ export function GeneralForm(props: Readonly<{ client: Client }>) {
       <div className="w-full space-y-2 text-sm font-light lg:w-1/3">
         <div className="flex gap-2">
           <ComputerDesktopIcon className="my-auto size-5" />
-          <h5 className="font-semibold">Status</h5>
+          <h5 className="font-semibold text-gray-600 dark:text-gray-100">
+            Status
+          </h5>
           <Status active={client.active ?? false} />
         </div>
         <div className="flex flex-col gap-2">

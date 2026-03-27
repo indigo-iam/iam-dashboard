@@ -83,7 +83,9 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
         <div className="divide-y">
           <div className="flex flex-col gap-8 pb-4 lg:flex-row">
             <div className="flex w-full flex-col space-y-2 lg:w-1/3">
-              <h5 className="text-sm font-bold">Authentication</h5>
+              <h5 className="text-sm font-semibold text-gray-600 dark:text-gray-100">
+                Authentication
+              </h5>
               <p className="text-sm font-light">
                 If the client type is confidential, the client and authorization
                 server establish a client authentication method suitable for the
@@ -113,7 +115,9 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
           </div>
           <div className="flex flex-col gap-8 pt-4 lg:flex-row">
             <div className="flex w-full flex-col space-y-2 lg:w-1/3">
-              <h5 className="text-sm font-semibold">Advanced</h5>
+              <h5 className="text-sm font-semibold text-gray-600 dark:text-gray-100">
+                Advanced
+              </h5>
               <p className="text-sm font-light">
                 PKCE is an extension to the Authorization Code flow to prevent
                 CSRF and authorization code injection attacks. PKCE is

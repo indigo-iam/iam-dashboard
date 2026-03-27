@@ -37,13 +37,17 @@ export function MainGrantTypes(props: Readonly<MainGrantTypesProps>) {
     <div className="flex flex-col gap-4 pb-4 lg:flex-row lg:gap-8">
       <div className="w-full space-y-4 text-sm lg:w-1/3">
         <div className="lg:space-y-2">
-          <p className="font-semibold">Authorization code</p>
+          <p className="font-semibold text-gray-600 dark:text-gray-100">
+            Authorization code
+          </p>
           <p className="font-light">
             Exchange a code for a token. Typical for web applications.
           </p>
         </div>
         <div className="lg:space-y-2">
-          <p className="font-semibold">Client credentials</p>
+          <p className="font-semibold text-gray-600 dark:text-gray-100">
+            Client credentials
+          </p>
           <p className="font-light">
             For devices with limited access to a web browser. Simple
             credentials.

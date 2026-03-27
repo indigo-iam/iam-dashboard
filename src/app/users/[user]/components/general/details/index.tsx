@@ -42,7 +42,9 @@ export async function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
         <div className="flex flex-wrap justify-between">
           <div className="flex gap-2">
             <IdentificationIcon className="my-auto size-5" />
-            <h5 className="font-semibold">General</h5>
+            <h5 className="font-semibold text-gray-600 dark:text-gray-100">
+              Profile
+            </h5>
           </div>
           <Status active={user.active ?? false} />
         </div>

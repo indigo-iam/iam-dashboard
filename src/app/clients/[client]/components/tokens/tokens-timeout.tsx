@@ -21,7 +21,9 @@ export function TokensTimeout(props: Readonly<TokensTimeoutProps>) {
     <div className="flex flex-col gap-4 pb-4 lg:flex-row lg:gap-8">
       <div className="w-full space-y-4 text-sm lg:w-1/3">
         <div className="lg:space-y-2">
-          <p className="font-semibold">Access and ID Tokens</p>
+          <h5 className="font-semibold text-gray-600 dark:text-gray-100">
+            Access and ID Tokens
+          </h5>
           <p className="font-light">
             Total duration of Access Tokens and ID Tokens.
           </p>

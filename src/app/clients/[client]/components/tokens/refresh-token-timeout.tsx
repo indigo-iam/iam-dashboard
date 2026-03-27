@@ -21,7 +21,9 @@ export function RefreshTokenTimeout(props: Readonly<RefreshTokenTimeoutProps>) {
     <div className="flex flex-col gap-4 pb-4 lg:flex-row lg:gap-8">
       <div className="w-full space-y-4 text-sm font-light lg:w-1/3">
         <div className="lg:space-y-2">
-          <p className="font-semibold">Refresh Tokens</p>
+          <h5 className="font-semibold text-gray-600 dark:text-gray-100">
+            Refresh Tokens
+          </h5>
           <p className="font-light">
             Total duration of the Refresh Token after which a full login
             sequence is required to obtain new tokens.

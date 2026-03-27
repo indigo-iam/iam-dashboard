@@ -38,19 +38,12 @@ export function MainGrantTypes(props: Readonly<MainGrantTypesProps>) {
       <div className="w-full space-y-4 text-sm lg:w-1/3">
         <div className="lg:space-y-2">
           <p className="font-semibold text-gray-600 dark:text-gray-100">
-            Authorization code
+            Authorization grant
           </p>
           <p className="font-light">
-            Exchange a code for a token. Typical for web applications.
-          </p>
-        </div>
-        <div className="lg:space-y-2">
-          <p className="font-semibold text-gray-600 dark:text-gray-100">
-            Client credentials
-          </p>
-          <p className="font-light">
-            For devices with limited access to a web browser. Simple
-            credentials.
+            An authorization grant is a credential representing the resource
+            owner&apos;s authorization (to access its protected resources) used
+            by the client to obtain an access token.
           </p>
         </div>
       </div>

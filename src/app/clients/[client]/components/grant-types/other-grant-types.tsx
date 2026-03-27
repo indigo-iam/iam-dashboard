@@ -24,32 +24,15 @@ export function OtherGrantTypes(props: Readonly<OtherGrantTypesProps>) {
       <div className="w-full space-y-4 text-sm font-light lg:w-1/3">
         <div className="space-y-2">
           <p className="font-semibold text-gray-600 dark:text-gray-100">
-            Device code
+            Other grant types
           </p>
           <p className="font-light">
-            Allow the client to obtain a token with OAuth2 device code flow
-          </p>
-        </div>
-        <div className="space-y-2">
-          <p className="font-semibold text-gray-600 dark:text-gray-100">
-            Token Exchange
-          </p>
-          <p className="font-light">
-            Allow the client to obtain its own tokens given a separate set of
-            tokens.
-          </p>
-        </div>
-        <div className="space-y-2">
-          <p className="font-semibold text-gray-600 dark:text-gray-100">
-            Refresh Token
-          </p>
-          <p className="font-light">
-            Attach the refresh token to the client in addition to Access/ID
-            tokens
+            Enable other grant types for this client in addition to the default
+            grant type.
           </p>
         </div>
       </div>
-      <div className="flex flex-col lg:w-2/3">
+      <div className="flex flex-col gap-2 lg:w-2/3">
         <Field>
           <Label>Other grant types</Label>
         </Field>
@@ -62,6 +45,9 @@ export function OtherGrantTypes(props: Readonly<OtherGrantTypesProps>) {
           >
             Device code
           </LabeledCheckbox>
+          <Description>
+            Allow the client to obtain a token with OAuth2 device code flow
+          </Description>
         </Field>
         <Field>
           <LabeledCheckbox
@@ -72,6 +58,10 @@ export function OtherGrantTypes(props: Readonly<OtherGrantTypesProps>) {
           >
             Token Exchange
           </LabeledCheckbox>
+          <Description>
+            Allow the client to obtain its own tokens given a separate set of
+            tokens.
+          </Description>
         </Field>
         <Field>
           <LabeledCheckbox
@@ -82,13 +72,9 @@ export function OtherGrantTypes(props: Readonly<OtherGrantTypesProps>) {
           >
             Refresh Token
           </LabeledCheckbox>
-        </Field>
-        <Field>
           <Description>
-            Authorize the users to obtain an access token with supplementary
-            grants.
-            <br />
-            Refresh token is automatically enabled when
+            Attach the refresh token to the client in addition to Access/ID
+            tokens. This option is automatically enabled when
             &quot;offline_access&quot; scope is active.
           </Description>
         </Field>

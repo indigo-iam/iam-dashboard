@@ -16,6 +16,7 @@ import { GrantType } from "@/models/openid-configuration";
 import AuthorizationCode from "./authorization-code";
 import ClientCredentials from "./client-credentials";
 import DeviceCode from "./device-code";
+
 import { useState } from "react";
 
 type AuthenticationFlowSettingsProps = {
@@ -48,6 +49,21 @@ type AuthenticationFlowProps = {
   onStatusChange?: (status: boolean) => void;
 };
 
+const descriptions = new Map([
+  [
+    "authorization_code",
+    "The Authorization Code grant type is used by confidential and public clients to exchange an authorization code for an access token. It is the most common grant type for web applications.",
+  ],
+  [
+    "client_credentials",
+    "The Client Credentials grant type is the simplest grant type for client authentication.",
+  ],
+  [
+    "urn:ietf:params:oauth:grant-type:device_code",
+    "The Device Code grant type is used for devices with limited access to a web browser.",
+  ],
+]);
+
 export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
   const { client, defaultValue, onStatusChange } = props;
   const options = [
@@ -63,10 +79,12 @@ export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
     setSelectedGrantType(grantType);
   };
 
+  const description = descriptions.get(selectedGrantType.id);
+
   return (
     <div className="space-y-2">
       <Field>
-        <Label>Authentication Flow</Label>
+        <Label>Default authorization grant</Label>
         <Select
           name="grant_type"
           defaultValue={defaultOption}
@@ -78,9 +96,7 @@ export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
             </SelectOption>
           ))}
         </Select>
-        <Description>
-          The authentication flow to receive an access token.
-        </Description>
+        <Description>{description}</Description>
       </Field>
       <AuthenticationFlowSettings
         client={client}

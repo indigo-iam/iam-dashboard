@@ -48,7 +48,7 @@ export default function GrantTypes(props: Readonly<{ client: Client }>) {
 
   return (
     <TabPanel className="panel" unmount={false}>
-      <Form action={action}>
+      <Form action={action} className="space-y-4">
         <div className="space-y-4 divide-y">
           <MainGrantTypes
             client={client}

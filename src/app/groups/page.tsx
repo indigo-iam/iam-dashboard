@@ -85,7 +85,7 @@ async function UserPage() {
           </div>
         ) : null}
         <div className="panel">
-          <h3 className="py-2">Unmanaged groups</h3>
+          <h3 className="py-2">Groups</h3>
           {groups.length > 0 ? (
             <UserGroupsTable groupRefs={groups} />
           ) : (

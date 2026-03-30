@@ -65,9 +65,11 @@ export async function deleteClient(clientId: string, isAdmin?: boolean) {
   }
 }
 
-export async function editClient(client: Client) {
+export async function editClient(client: Client, isAdmin: boolean) {
   const { client_id } = client;
-  const url = `${IAM_API_URL}/iam/api/clients/${client_id}`;
+  const url = isAdmin
+    ? `${IAM_API_URL}/iam/api/clients/${client_id}`
+    : `${IAM_API_URL}/iam/api/client-registration/${client_id}`;
   const response = await authFetch(url, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },

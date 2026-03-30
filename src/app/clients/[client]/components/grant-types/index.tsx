@@ -33,8 +33,13 @@ function FormButtons(props: Readonly<FormButtonsProps>) {
   );
 }
 
-export default function GrantTypes(props: Readonly<{ client: Client }>) {
-  const { client } = props;
+type GrantTypesProps = {
+  client: Client;
+  isAdmin: boolean;
+};
+
+export default function GrantTypes(props: Readonly<GrantTypesProps>) {
+  const { client, isAdmin } = props;
   const [isAuthGrantOk, setIsAuthGrantOk] = useState(false);
 
   async function action(formData: FormData) {
@@ -43,7 +48,7 @@ export default function GrantTypes(props: Readonly<{ client: Client }>) {
     );
     const redirect_uris = formData.getAll("redirect_uris") as string[];
     const requestBody: Client = { ...client, grant_types, redirect_uris };
-    return editClient(requestBody);
+    return editClient(requestBody, isAdmin);
   }
 
   return (

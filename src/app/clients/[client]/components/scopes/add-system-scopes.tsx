@@ -13,6 +13,7 @@ import { useState } from "react";
 
 type AddScopeProps = {
   client: Client;
+  isAdmin: boolean;
   scopes: Scope[];
 };
 
@@ -22,12 +23,12 @@ interface AddScopeModalProps extends AddScopeProps {
 }
 
 function AddScopeModal(props: Readonly<AddScopeModalProps>) {
-  const { client, scopes, show, onClose } = props;
+  const { client, scopes, show, onClose, isAdmin } = props;
   const action = async (formData: FormData) => {
     const newScope = formData.getAll("scope") as string[];
     const scopes = (client.scope?.split(" ") ?? []).concat(newScope);
     const scope = scopes.join(" ");
-    await editClient({ ...client, scope });
+    await editClient({ ...client, scope }, isAdmin);
     onClose();
   };
   return (
@@ -66,7 +67,7 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
 }
 
 export function AddScopeButton(props: AddScopeProps) {
-  const { client, scopes } = props;
+  const { client, isAdmin, scopes } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
@@ -79,6 +80,7 @@ export function AddScopeButton(props: AddScopeProps) {
         show={show}
         onClose={close}
         client={client}
+        isAdmin={isAdmin}
         scopes={scopes}
       />
     </>

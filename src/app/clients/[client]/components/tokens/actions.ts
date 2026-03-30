@@ -7,7 +7,11 @@
 import { Client } from "@/models/client";
 import { editClient } from "@/services/clients";
 
-export async function updateClient(client: Client, formData: FormData) {
+export async function updateClient(
+  client: Client,
+  formData: FormData,
+  isAdmin: boolean
+) {
   const access_token_validity_seconds = formData.has(
     "access_token_validity_seconds"
   )
@@ -47,5 +51,5 @@ export async function updateClient(client: Client, formData: FormData) {
     clear_access_tokens_on_refresh,
     device_code_validity_seconds,
   };
-  await editClient(requestBody);
+  await editClient(requestBody, isAdmin);
 }

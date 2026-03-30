@@ -14,17 +14,18 @@ import { useState } from "react";
 
 type AddCustomScopeModalProps = {
   client: Client;
+  isAdmin: boolean;
   show: boolean;
   onClose: () => void;
 };
 
 export function AddCustomScopeModal(props: Readonly<AddCustomScopeModalProps>) {
-  const { client, show, onClose } = props;
+  const { client, isAdmin, show, onClose } = props;
   const action = async (formData: FormData) => {
     const newScope = formData.getAll("scope") as string[];
     const scopes = (client.scope?.split(" ") ?? []).concat(newScope);
     const scope = scopes.join(" ");
-    await editClient({ ...client, scope });
+    await editClient({ ...client, scope }, isAdmin);
     onClose();
   };
   return (
@@ -54,8 +55,13 @@ export function AddCustomScopeModal(props: Readonly<AddCustomScopeModalProps>) {
   );
 }
 
-export function AddCustomScope(props: Readonly<{ client: Client }>) {
-  const { client } = props;
+type AddCustomScopeProps = {
+  client: Client;
+  isAdmin: boolean;
+};
+
+export function AddCustomScope(props: Readonly<AddCustomScopeProps>) {
+  const { client, isAdmin } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
@@ -64,7 +70,12 @@ export function AddCustomScope(props: Readonly<{ client: Client }>) {
       <Button className="btn-secondary" onClick={open}>
         New custom scope
       </Button>
-      <AddCustomScopeModal show={show} onClose={close} client={client} />
+      <AddCustomScopeModal
+        show={show}
+        onClose={close}
+        client={client}
+        isAdmin={isAdmin}
+      />
     </>
   );
 }

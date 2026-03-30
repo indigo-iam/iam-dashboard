@@ -52,10 +52,11 @@ function PKCE(props: Readonly<PkceProps>) {
 
 interface CredentialsProps {
   client: Client;
+  isAdmin: boolean;
 }
 
 export default function Credentials(props: Readonly<CredentialsProps>) {
-  const { client } = props;
+  const { client, isAdmin } = props;
   const { token_endpoint_auth_method, client_id } = client;
 
   const defaultValue =
@@ -74,7 +75,7 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
         "code_challenge_method[id]"
       ) as CodeChallengeMethod,
     };
-    await editClient(requestBody);
+    await editClient(requestBody, isAdmin);
   }
 
   return (

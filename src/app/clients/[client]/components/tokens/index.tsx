@@ -15,13 +15,14 @@ import { updateClient } from "./actions";
 
 type TokensProps = {
   client: Client;
+  isAdmin: boolean;
 };
 
 export default function Tokens(props: Readonly<TokensProps>) {
-  const { client } = props;
+  const { client, isAdmin } = props;
   const action = async (formData: FormData) => {
     "use server";
-    await updateClient(client, formData);
+    await updateClient(client, formData, isAdmin);
   };
   return (
     <TabPanel className="panel" unmount={false}>

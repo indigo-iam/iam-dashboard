@@ -12,8 +12,14 @@ import { Textarea } from "@/components/textarea";
 import { dateToHuman } from "@/utils/dates";
 import { editClient } from "@/services/clients";
 
-export function GeneralForm(props: Readonly<{ client: Client }>) {
-  const { client } = props;
+type GeneralFormProps = {
+  client: Client;
+  isAdmin: boolean;
+};
+
+
+export function GeneralForm(props: Readonly<GeneralFormProps>) {
+  const { client, isAdmin } = props;
   const createdAt = client.created_at
     ? dateToHuman(new Date(client.created_at))
     : "N/A";
@@ -31,7 +37,7 @@ export function GeneralForm(props: Readonly<{ client: Client }>) {
       tos_uri: formData.get("tos_uri") as string,
       policy_uri: formData.get("policy_uri") as string,
     };
-    await editClient(requestBody);
+    await editClient(requestBody, isAdmin);
   }
 
   return (

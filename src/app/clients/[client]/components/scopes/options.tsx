@@ -13,11 +13,12 @@ import DeleteScopeModal from "./delete-scope-modal";
 
 type ScopeOptionsProps = {
   client: Client;
+  isAdmin: boolean;
   scope: string;
 };
 
 export function ScopeOptions(props: Readonly<ScopeOptionsProps>) {
-  const { scope, client } = props;
+  const { scope, client, isAdmin } = props;
   const [show, setShow] = useState<"DELETE">();
   const close = () => setShow(undefined);
   return (
@@ -35,6 +36,7 @@ export function ScopeOptions(props: Readonly<ScopeOptionsProps>) {
         client={client}
         show={show === "DELETE"}
         onClose={close}
+        isAdmin={isAdmin}
       />
     </>
   );

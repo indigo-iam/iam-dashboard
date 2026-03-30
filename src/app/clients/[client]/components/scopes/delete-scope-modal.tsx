@@ -9,6 +9,7 @@ import { editClient } from "@/services/clients";
 type DeleteScopeModalProps = {
   scope: string;
   client: Client;
+  isAdmin: boolean;
   show: boolean;
   onClose: () => void;
 };
@@ -16,14 +17,14 @@ type DeleteScopeModalProps = {
 export default function DeleteScopeModal(
   props: Readonly<DeleteScopeModalProps>
 ) {
-  const { scope, client, show, onClose } = props;
+  const { scope, client, isAdmin, show, onClose } = props;
   const action = async () => {
     const scopes = client.scope?.split(" ") ?? [];
     const find = scopes.findIndex(s => s === scope);
     if (find > -1) {
       scopes.splice(find, 1);
       const scope = scopes.join(" ");
-      await editClient({ ...client, scope });
+      await editClient({ ...client, scope }, isAdmin);
     }
     onClose();
   };

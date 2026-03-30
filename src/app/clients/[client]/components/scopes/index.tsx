@@ -12,10 +12,11 @@ import { AddCustomScope } from "./add-custom-scope";
 type SystemScopesProps = {
   client: Client;
   scopes: Scope[];
+  isAdmin: boolean;
 };
 
 async function SystemScopes(props: Readonly<SystemScopesProps>) {
-  const { client, scopes } = props;
+  const { client, scopes, isAdmin } = props;
   return scopes.map(s => (
     <li className="iam-list-item" key={s.id}>
       <div className="flex grow flex-col">
@@ -23,7 +24,7 @@ async function SystemScopes(props: Readonly<SystemScopesProps>) {
         <p className="text-xs">{s.description}</p>
       </div>
       <div className="flex flex-col items-center">
-        <ScopeOptions client={client} scope={s.value} />
+        <ScopeOptions client={client} scope={s.value} isAdmin={isAdmin} />
       </div>
     </li>
   ));
@@ -32,10 +33,11 @@ async function SystemScopes(props: Readonly<SystemScopesProps>) {
 type CustomScopesProps = {
   client: Client;
   scopes: string[];
+  isAdmin: boolean;
 };
 
 async function CustomScopes(props: Readonly<CustomScopesProps>) {
-  const { client, scopes } = props;
+  const { client, scopes, isAdmin } = props;
   return scopes.map(s => (
     <li className="iam-list-item" key={s}>
       <div className="flex grow flex-col">
@@ -43,7 +45,7 @@ async function CustomScopes(props: Readonly<CustomScopesProps>) {
         <p className="text-xs">(custom scope)</p>
       </div>
       <div className="flex flex-col items-center">
-        <ScopeOptions client={client} scope={s} />
+        <ScopeOptions client={client} scope={s} isAdmin={isAdmin} />
       </div>
     </li>
   ));
@@ -51,10 +53,11 @@ async function CustomScopes(props: Readonly<CustomScopesProps>) {
 
 type ScopesProps = {
   client: Client;
+  isAdmin: boolean;
 };
 
 export default async function Scopes(props: Readonly<ScopesProps>) {
-  const { client } = props;
+  const { client, isAdmin } = props;
   const systemScopes = await fetchScopes();
   const systemScopeNames = systemScopes.map(s => s.value);
   const clientScopeNames = client.scope?.split(" ") ?? [];
@@ -74,14 +77,26 @@ export default async function Scopes(props: Readonly<ScopesProps>) {
         <h3 className="grow py-2">Active scopes</h3>
         <div className="inline-block">
           <div className="flex gap-2">
-            <AddScopeButton client={client} scopes={unusedSystemScopes} />
-            <AddCustomScope client={client} />
+            <AddScopeButton
+              client={client}
+              isAdmin={isAdmin}
+              scopes={unusedSystemScopes}
+            />
+            <AddCustomScope client={client} isAdmin={isAdmin} />
           </div>
         </div>
       </div>
       <ul className="flex flex-col gap-2">
-        <SystemScopes client={client} scopes={clientSystemScopes} />
-        <CustomScopes client={client} scopes={customScopesNames} />
+        <SystemScopes
+          client={client}
+          scopes={clientSystemScopes}
+          isAdmin={isAdmin}
+        />
+        <CustomScopes
+          client={client}
+          scopes={customScopesNames}
+          isAdmin={isAdmin}
+        />
       </ul>
     </TabPanel>
   );

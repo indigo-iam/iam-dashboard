@@ -51,10 +51,9 @@ export async function Aup(props: Readonly<AupProps>) {
           <p className="whitespace-normal">
             In order to use this service the AUP must be signed by the user.
           </p>
-          <p>Here it is possible to re-sign the AUP before it expired.</p>
           <p>
-            Once the AUP is expired, the user is asked to sign the new AUP at
-            login.
+            It is possible to re-sign the AUP before it expires. Once the
+            AUP is expired, the user is asked to sign the new AUP at login.
           </p>
         </div>
       </div>

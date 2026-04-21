@@ -26,8 +26,8 @@
   "dependencies": {
     "@headlessui/react": "^2",
     "@heroicons/react": "^2",
-    "@vercel/otel": "^2.0.0",
-    "better-auth": "^1.4",
+    "@vercel/otel": "^2",
+    "better-auth": "^1.6",
     "better-sqlite3": "^12",
     "next": "^16",
     "react": "^19",

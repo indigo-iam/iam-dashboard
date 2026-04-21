@@ -5,12 +5,14 @@
 "use client";
 
 import { startTransition } from "react";
+import { useRouter } from "next/navigation";
 import { CloseButton } from "@headlessui/react";
 import { BuildingLibraryIcon, UserIcon } from "@heroicons/react/24/outline";
 
 import { setAdminMode, setUserMode } from "./actions";
 
 export function AdminModeButton() {
+  const router = useRouter();
   function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const loading = document.getElementById("loading");
@@ -19,6 +21,7 @@ export function AdminModeButton() {
       await setAdminMode();
       startTransition(() => {
         loading?.removeAttribute("data-loading");
+        router.refresh();
       });
     });
   }
@@ -39,6 +42,7 @@ export function AdminModeButton() {
 }
 
 export function UserModeButton() {
+  const router = useRouter();
   function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const loading = document.getElementById("loading");
@@ -47,6 +51,7 @@ export function UserModeButton() {
       await setUserMode();
       startTransition(() => {
         loading?.removeAttribute("data-loading");
+        router.refresh();
       });
     });
   }

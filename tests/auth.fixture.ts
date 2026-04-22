@@ -5,29 +5,32 @@
 import { test as baseTest, expect, Page } from "@playwright/test";
 export { expect } from "@playwright/test";
 
-export const test = baseTest.extend({
-  page: async ({ page }, use) => {
-    test.slow();
-    await page.goto("./");
-    await page.locator("#username").fill("admin");
-    await page.locator("#password").fill("password");
-    await page.locator("#login-submit").click();
+async function login(page: Page) {
+  await page.goto("./");
+  await page.locator("#username").fill("admin");
+  await page.locator("#password").fill("password");
+  await page.locator("#login-submit").click();
+  await checkClientAuthorization(page);
 
-    // Check if client has to be authorized
-    await checkClientAuthorization(page);
+  // Redirect to new dashboard
+  await page.waitForURL("./users/me");
+  await expect(page.getByLabel("First Name")).toHaveValue("Admin");
+  await expect(page.getByLabel("Last Name")).toHaveValue("User");
+  await expect(page.getByLabel("Email")).toHaveValue("1_admin@iam.test");
+}
 
-    // Redirect to new dashboard
-    await page.waitForURL("./users/me");
-    await expect(page.getByLabel("First Name")).toHaveValue("Admin");
-    await expect(page.getByLabel("Last Name")).toHaveValue("User");
-    await expect(page.getByLabel("Email")).toHaveValue("1_admin@iam.test");
+async function logout(page: Page) {
+  await page.getByTestId("user-menu-btn").click();
+  await page.getByTestId("signout-btn").click();
+}
 
+export const test = baseTest.extend<{ page: Page }>({
+  page: async ({ browser }, use) => {
+    const newPage = await browser.newPage();
+    await login(newPage);
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    await use(page);
-
-    // Logout
-    await page.getByTestId("user-menu-btn").click();
-    await page.getByTestId("signout-btn").click();
+    await use(newPage);
+    await logout(newPage);
   },
 });
 

@@ -15,18 +15,18 @@ function groupNameByIndex(index: number) {
 
 test("Create and delete group", async ({ page }) => {
   await test.step("add group", async () => {
+    await page.goto("./groups");
     // enable admin mode
     await page.getByTestId("user-menu-btn").click();
-    await page.getByText("Admin mode").click();
+    await page.getByRole("button", { name: "Admin mode" }).click();
     await expect(page.getByTestId("admin-mode-label")).toBeVisible();
 
-    await page.goto("./groups");
-    await page.getByTestId("add-group").click();
+    await page.getByRole("button", { name: "New group" }).click();
+    await expect(page.getByText("Create new group")).toBeVisible();
     // use hashes in order to have an exact 1 match from the search bar
     const groupName = groupNameByIndex(test.info().workerIndex);
-    const modal = page.getByTestId("modal");
-    await modal.locator("input[type=text]").fill(groupName);
-    await modal.locator("button[type=submit]").click();
+    await page.getByLabel("Group name").fill(groupName);
+    await page.getByRole("button", { name: "Add group" }).click();
     const toast = page.getByTestId("toast");
     await expect(toast).toBeVisible();
     await expect(toast.getByText("Group created")).toBeVisible();

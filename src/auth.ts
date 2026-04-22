@@ -11,7 +11,6 @@ import { headers, cookies } from "next/headers";
 import { nextCookies } from "better-auth/next-js";
 import Database from "better-sqlite3";
 
-
 const {
   IAM_API_URL,
   IAM_DASHBOARD_BASE_URL,
@@ -150,6 +149,28 @@ export const authConfig = (db: Database.Database) => {
           type: "boolean",
           defaultValue: false,
         },
+        accessToken: {
+          type: "string",
+          defaultValue: null,
+        },
+        refreshToken: {
+          type: "string",
+          defaultValue: null,
+        },
+        accessTokenExpiresAt: {
+          type: "date",
+          defaultValue: null,
+          required: false,
+        },
+        refreshTokenExpiresAt: {
+          type: "date",
+          defaultValue: null,
+          required: false,
+        },
+        scope: {
+          type: "string",
+          defaultValue: null,
+        },
       },
     },
     databaseHooks: {
@@ -163,14 +184,30 @@ export const authConfig = (db: Database.Database) => {
               await ctx.context.internalAdapter.findAccountByUserId(
                 sessionData.userId
               );
-            const { accessToken } = account;
+            const {
+              accessToken,
+              refreshToken,
+              accessTokenExpiresAt,
+              refreshTokenExpiresAt,
+              scope,
+            } = account;
             if (!accessToken) {
               throw new Error(
                 "failed to get user info: access token not found"
               );
             }
             const hasRoleAdmin = await fetchRoleAdmin(accessToken);
-            return { data: { ...sessionData, hasRoleAdmin } };
+            return {
+              data: {
+                ...sessionData,
+                hasRoleAdmin,
+                accessToken,
+                refreshToken,
+                accessTokenExpiresAt,
+                refreshTokenExpiresAt,
+                scope,
+              },
+            };
           },
         },
       },
@@ -208,12 +245,14 @@ export async function getSession(): Promise<Session | null> {
 }
 
 export async function getAccessToken() {
-  return await auth.api.getAccessToken({
-    body: {
-      providerId: "indigo-iam",
-    },
-    headers: await headers(),
-  });
+  const session = await getSession();
+  return {
+    accessToken: session?.session.accessToken,
+    refreshToken: session?.session.refreshToken,
+    accessTokenExpiresAt: session?.session.accessTokenExpiresAt,
+    refreshTokenExpiresAt: session?.session.refreshTokenExpiresAt,
+    scope: session?.session.scope,
+  };
 }
 
 /*
@@ -233,14 +272,15 @@ export async function updateAccessToken(scope: string) {
   if (account.refreshToken) {
     try {
       const tokens = await refreshAccessToken(account.refreshToken, scope);
-      await ctx.internalAdapter.updateAccount(account.id, {
+      console.log(session.session.id);
+      await ctx.internalAdapter.updateSession(session.session.token, {
         accessToken: tokens.accessToken,
         accessTokenExpiresAt: tokens.accessTokenExpiresAt,
         refreshToken: tokens.refreshToken,
         refreshTokenExpiresAt: tokens.refreshTokenExpiresAt,
         scope: tokens.scopes?.join(" "),
       });
-      console.debug("Refreshed access token.");
+      console.debug("Tokens updated successfully.");
       return tokens.accessToken;
     } catch (e: any) {
       console.error("Failed to refresh access token:", e);
@@ -251,8 +291,8 @@ export async function updateAccessToken(scope: string) {
 }
 
 export async function isUserAdmin() {
-  const { scopes } = await getAccessToken();
-  return scopes.join(" ").includes("iam:admin");
+  const { scope } = await getAccessToken();
+  return scope?.includes("iam:admin") ?? false;
 }
 
 export async function signIn() {

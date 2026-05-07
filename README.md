@@ -85,8 +85,8 @@ Create `.env` file similar to:
 IAM_API_URL=https://iam-dev.cloud.cnaf.infn.it
 IAM_DASHBOARD_BASE_URL=https://iam-dev.cloud.cnaf.infn.it
 IAM_DASHBOARD_BASE_PATH=/ui
-IAM_DASHBOARD_OIDC_CLIENT_ID="<your_client_id>"
-IAM_DASHBOARD_OIDC_CLIENT_SECRET="<your_client_secret>"
+IAM_DASHBOARD_CLIENT_ID="<your_client_id>"
+IAM_DASHBOARD_CLIENT_SECRET="<your_client_secret>"
 IAM_DASHBOARD_AUTH_SECRET="<authentication_secret>"
 IAM_DASHBOARD_OTEL_EXPORTER_OTLP_ENDPOINT="https://your.otel.example/collector"
 ```
@@ -199,8 +199,8 @@ project with like:
 IAM_API_URL=https://iam.test.example
 IAM_DASHBOARD_BASE_URL=https://iam.test.example
 IAM_DASHBOARD_BASE_PATH=/devcontainer                    # note the base path
-IAM_DASHBOARD_OIDC_CLIENT_ID=1d70f1a4-d38f-44be-811d-98e25d574431
-IAM_DASHBOARD_OIDC_CLIENT_SECRET=35971fb2-d6e7-4180-9330-6b3b842f04c4
+IAM_DASHBOARD_CLIENT_ID=1d70f1a4-d38f-44be-811d-98e25d574431
+IAM_DASHBOARD_CLIENT_SECRET=35971fb2-d6e7-4180-9330-6b3b842f04c4
 IAM_DASHBOARD_AUTH_SECRET=mHkwsMan8G6REekPvvzsMFPg594nUfkgmZRBcQV3SzQ=
 ```
 
@@ -276,8 +276,8 @@ following variables:
 IAM_API_URL=https://iam.test.example
 IAM_DASHBOARD_BASE_URL=https://iam.test.example
 IAM_DASHBOARD_BASE_PATH=/dev                    # note the base path
-IAM_DASHBOARD_OIDC_CLIENT_ID=1d70f1a4-d38f-44be-811d-98e25d574431
-IAM_DASHBOARD_OIDC_CLIENT_SECRET=35971fb2-d6e7-4180-9330-6b3b842f04c4
+IAM_DASHBOARD_CLIENT_ID=1d70f1a4-d38f-44be-811d-98e25d574431
+IAM_DASHBOARD_CLIENT_SECRET=35971fb2-d6e7-4180-9330-6b3b842f04c4
 IAM_DASHBOARD_AUTH_SECRET=mHkwsMan8G6REekPvvzsMFPg594nUfkgmZRBcQV3SzQ=
 ```
 

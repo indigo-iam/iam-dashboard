@@ -16,8 +16,8 @@ const {
   IAM_DASHBOARD_BASE_URL,
   IAM_DASHBOARD_BASE_PATH,
   IAM_DASHBOARD_AUTH_SECRET,
-  IAM_DASHBOARD_OIDC_CLIENT_ID,
-  IAM_DASHBOARD_OIDC_CLIENT_SECRET,
+  IAM_DASHBOARD_CLIENT_ID,
+  IAM_DASHBOARD_CLIENT_SECRET,
   IAM_DASHBOARD_OIDC_SCOPES,
   IAM_DASHBOARD_OIDC_ADMIN_SCOPES,
 } = settings;
@@ -33,8 +33,8 @@ export async function refreshAccessToken(refreshToken: string, scope?: string) {
   const body = new URLSearchParams();
   body.append("grant_type", "refresh_token");
   body.append("refresh_token", refreshToken);
-  body.append("client_id", IAM_DASHBOARD_OIDC_CLIENT_ID);
-  body.append("client_secret", IAM_DASHBOARD_OIDC_CLIENT_SECRET);
+  body.append("client_id", IAM_DASHBOARD_CLIENT_ID);
+  body.append("client_secret", IAM_DASHBOARD_CLIENT_SECRET);
   if (scope) {
     body.append("scope", scope);
   }
@@ -75,8 +75,8 @@ const indigoIam = () =>
       {
         providerId: "indigo-iam",
         discoveryUrl: discoveryUrl,
-        clientId: IAM_DASHBOARD_OIDC_CLIENT_ID,
-        clientSecret: IAM_DASHBOARD_OIDC_CLIENT_SECRET,
+        clientId: IAM_DASHBOARD_CLIENT_ID,
+        clientSecret: IAM_DASHBOARD_CLIENT_SECRET,
         scopes: IAM_DASHBOARD_OIDC_ADMIN_SCOPES?.split(" "),
         pkce: true,
         getToken: async ({ code, codeVerifier, redirectURI }) => {
@@ -89,8 +89,8 @@ const indigoIam = () =>
           // 1. Login with admin scopes
           const { token_endpoint } = await wellKnown();
           const body = new URLSearchParams();
-          body.append("client_id", IAM_DASHBOARD_OIDC_CLIENT_ID);
-          body.append("client_secret", IAM_DASHBOARD_OIDC_CLIENT_SECRET);
+          body.append("client_id", IAM_DASHBOARD_CLIENT_ID);
+          body.append("client_secret", IAM_DASHBOARD_CLIENT_SECRET);
           body.append("scope", IAM_DASHBOARD_OIDC_ADMIN_SCOPES);
           body.append("code", code);
           body.append("redirect_uri", redirectURI);

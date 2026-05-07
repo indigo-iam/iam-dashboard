@@ -36,7 +36,7 @@ function loadBaseUrl() {
 }
 
 function loadBasePath() {
-  return loadEnvVariable("IAM_DASHBOARD_BASE_PATH", "");
+  return loadEnvVariable("IAM_DASHBOARD_BASE_PATH", "/ui");
 }
 
 function loadAuthSecret() {

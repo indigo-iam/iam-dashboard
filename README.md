@@ -23,7 +23,7 @@ and create a new client with the configuration described below.
 ## 1.1 Redirect URIs
 
 In the client main page, add all needed redirect uris, in the form of
-`<IAM_URL>/api/oauth2/callback/indigo-iam` (without the trailing `/`).
+`<IAM_DASHBOARD_URL>/api/oauth2/callback/indigo-iam` (without the trailing `/`).
 
 To enable development of the dashboard on your local machine, the redirect uri
 must be:
@@ -85,8 +85,8 @@ Create `.env` file similar to:
 IAM_API_URL=https://iam-dev.cloud.cnaf.infn.it
 IAM_DASHBOARD_BASE_URL=https://iam-dev.cloud.cnaf.infn.it
 IAM_DASHBOARD_BASE_PATH=/ui
-IAM_DASHBOARD_OIDC_CLIENT_ID="<your_client_id>"
-IAM_DASHBOARD_OIDC_CLIENT_SECRET="<your_client_secret>"
+IAM_DASHBOARD_CLIENT_ID="<your_client_id>"
+IAM_DASHBOARD_CLIENT_SECRET="<your_client_secret>"
 IAM_DASHBOARD_AUTH_SECRET="<authentication_secret>"
 IAM_DASHBOARD_OTEL_EXPORTER_OTLP_ENDPOINT="https://your.otel.example/collector"
 ```
@@ -165,30 +165,52 @@ assets/trust
 └── star_test_example_ca.pem
 ```
 
+### 3.1.3 Generate `.env` file
+
+Since Indigo IAM v1.14.0, a client for the dashboard is automatically registered
+during boot whenever the `IAM_DASHBOARD_CLIENT_ID` and
+`IAM_DASHBOARD_CLIENT_SECRET` variables are exported. To create a `.env` file
+run the following commands:
+
+```bash
+export IAM_DASHBOARD_CLIENT_ID=$(uuid)
+export IAM_DASHBOARD_CLIENT_SECRET=$(pwgen -1 32)
+export IAM_DASHBOARD_AUTH_SECRET=$(openssl rand -base64 32)
+envsubst < .template.env > .env
+```
+
+### 3.1.4 Add `redirect_uri`s
+
+The NGINX reverse proxy shipped with this project, provides the following routes:
+
+- https://iam.test.example/ui
+- https://iam.test.example/dev
+- https://iam.test.example/devcontainer
+
+The `/ui` base path is used for end-to-end tests of the final docker image built
+for production IAM login service configure automatically the correct client.
+To enable the `/dev` and `/devcontainer` `redirect_uri`s:
+
+1. start the docker compose
+2. navigate to https://iam.test.example/ui and login with admin credentials
+3. enable the "Admin mode" and go to the Clients page.
+4. Search the `The INDIGO IAM dashboard` client
+5. Go to the Grant Types and add all the required redirect uris:
+   `https://iam.test.example/<BASE_URL>/api/auth/oauth2/callback/indigo-iam`
+   where `<BASE_URL>` can be `/dev` or `/devcontainer`.
+6. Save the client changes
+7. Edit your the `IAM_DASHBOARD_BASE_PATH` variable in your `.env` file
+   accordingly
+
+> Note: every time the IAM login service container is removed, for example with
+> `docker compose down`, the redirect uris must be reconfigured.
+
 ## 3.3 Dev Containers
 
 This project provides a ready to use development environment by using Dev
 Containers. It is has been tested with VS Code and Zed IDEs.
 
-### 3.3.1 Configuration
-
-Before opening the project with VS Code or Zed, it is suggested to manually
-start the main docker compose file the first time with:
-
-```bash
-docker compose up -d
-```
-
-and getting the automatically generated OIDC client credentials by executing:
-
-```bash
-docker logs iam-client-registrant
-
-Client ID:     1d70f1a4-d38f-44be-811d-98e25d574431
-Client Secret: 35971fb2-d6e7-4180-9330-6b3b842f04c4
-```
-
-### 3.3.2 Start the project
+### 3.3.1 Start the project
 
 Open the project with VS Code and click "Open in container".
 
@@ -199,8 +221,8 @@ project with like:
 IAM_API_URL=https://iam.test.example
 IAM_DASHBOARD_BASE_URL=https://iam.test.example
 IAM_DASHBOARD_BASE_PATH=/devcontainer                    # note the base path
-IAM_DASHBOARD_OIDC_CLIENT_ID=1d70f1a4-d38f-44be-811d-98e25d574431
-IAM_DASHBOARD_OIDC_CLIENT_SECRET=35971fb2-d6e7-4180-9330-6b3b842f04c4
+IAM_DASHBOARD_CLIENT_ID=1d70f1a4-d38f-44be-811d-98e25d574431
+IAM_DASHBOARD_CLIENT_SECRET=uet2ohchohgh9aiRoh9Pei1odahngak3
 IAM_DASHBOARD_AUTH_SECRET=mHkwsMan8G6REekPvvzsMFPg594nUfkgmZRBcQV3SzQ=
 ```
 
@@ -233,7 +255,7 @@ next dev
 The old IAM Login Service dashboard is available at https://iam.test.example
 while the new dashboard is reachable at https://iam.test.example/devcontainer.
 
-### 3.3.3 Shutdown all containers
+### 3.3.2 Shutdown all containers
 
 When closing the devcontainer, it should call `docker compose down` to
 gracefully close all services. It this does not happen, to shut down all
@@ -241,12 +263,6 @@ the services execute:
 
 ```bash
 docker compose down --remove-orphans
-```
-
-If you want also to delete all volumes, run:
-
-```bash
-docker compose down --remove-orphans --volumes
 ```
 
 ## 3.4 Local development
@@ -276,8 +292,8 @@ following variables:
 IAM_API_URL=https://iam.test.example
 IAM_DASHBOARD_BASE_URL=https://iam.test.example
 IAM_DASHBOARD_BASE_PATH=/dev                    # note the base path
-IAM_DASHBOARD_OIDC_CLIENT_ID=1d70f1a4-d38f-44be-811d-98e25d574431
-IAM_DASHBOARD_OIDC_CLIENT_SECRET=35971fb2-d6e7-4180-9330-6b3b842f04c4
+IAM_DASHBOARD_CLIENT_ID=uet2ohchohgh9aiRoh9Pei1odahngak3
+IAM_DASHBOARD_CLIENT_SECRET=35971fb2-d6e7-4180-9330-6b3b842f04c4
 IAM_DASHBOARD_AUTH_SECRET=mHkwsMan8G6REekPvvzsMFPg594nUfkgmZRBcQV3SzQ=
 ```
 

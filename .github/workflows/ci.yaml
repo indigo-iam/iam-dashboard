@@ -68,7 +68,13 @@ jobs:
             iam-dashboard:test
 
       - name: Load test environment
-        run: docker compose up -d
+        run: |
+          sudo apt-get update && sudo apt-get install -y pwgen uuid
+          export IAM_DASHBOARD_CLIENT_ID=$(uuid)
+          export IAM_DASHBOARD_CLIENT_SECRET=$(pwgen -1 32)
+          export IAM_DASHBOARD_AUTH_SECRET=$(openssl rand -base64 32)
+          envsubst < .template.env > .env
+          docker compose up -d
 
       - name: Run Playwright tests
         run: npx playwright test

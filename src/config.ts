@@ -36,7 +36,7 @@ function loadBaseUrl() {
 }
 
 function loadBasePath() {
-  return loadEnvVariable("IAM_DASHBOARD_BASE_PATH", "");
+  return loadEnvVariable("IAM_DASHBOARD_BASE_PATH", "/ui");
 }
 
 function loadAuthSecret() {
@@ -44,11 +44,11 @@ function loadAuthSecret() {
 }
 
 function loadOidcClientId() {
-  return loadEnvVariable("IAM_DASHBOARD_OIDC_CLIENT_ID");
+  return loadEnvVariable("IAM_DASHBOARD_CLIENT_ID");
 }
 
 function loadOidcClientSecret() {
-  return loadEnvVariable("IAM_DASHBOARD_OIDC_CLIENT_SECRET");
+  return loadEnvVariable("IAM_DASHBOARD_CLIENT_SECRET");
 }
 
 function loadOidcScopes() {
@@ -72,8 +72,8 @@ export const settings = {
   IAM_DASHBOARD_BASE_URL: loadBaseUrl(),
   IAM_DASHBOARD_BASE_PATH: loadBasePath(),
   IAM_DASHBOARD_AUTH_SECRET: loadAuthSecret(),
-  IAM_DASHBOARD_OIDC_CLIENT_ID: loadOidcClientId(),
-  IAM_DASHBOARD_OIDC_CLIENT_SECRET: loadOidcClientSecret(),
+  IAM_DASHBOARD_CLIENT_ID: loadOidcClientId(),
+  IAM_DASHBOARD_CLIENT_SECRET: loadOidcClientSecret(),
   IAM_DASHBOARD_OIDC_SCOPES: loadOidcScopes(),
   IAM_DASHBOARD_OIDC_ADMIN_SCOPES: loadOidcAdminScopes(),
   IAM_DASHBOARD_OTEL_EXPORTER_OTLP_ENDPOINT: loadOtelExporterOtlpEndpoint(),

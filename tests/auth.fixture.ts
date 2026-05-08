@@ -35,7 +35,7 @@ export const test = baseTest.extend<{ page: Page }>({
 });
 
 export async function checkClientAuthorization(page: Page) {
-  const title = "Approval Required for iam-dashboard";
+  const title = "Approval Required for The INDIGO IAM dashboard";
   await expect(page.getByText(title)).toBeVisible();
   await page.getByLabel("prompt me again next time").check();
   const authorizeButton = page.getByRole("button", { name: "Authorize" });

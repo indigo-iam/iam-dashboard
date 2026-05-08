@@ -25,8 +25,6 @@ services:
       IAM_DASHBOARD_CLIENT_SECRET:
     healthcheck:
       test: [CMD, "curl", "-f", "http://localhost:8080/actuator/health"]
-    volumes:
-      - ./json-keystore.jwks:/keys/json-keystore.jwks:ro
 
   dashboard:
     container_name: iam-dashboard

@@ -10,9 +10,11 @@ import { settings } from "@/config";
 const { IAM_DASHBOARD_OIDC_SCOPES, IAM_DASHBOARD_OIDC_ADMIN_SCOPES } = settings;
 
 export async function setUserMode() {
+  console.debug("Set user mode");
   await updateAccessToken(IAM_DASHBOARD_OIDC_SCOPES);
 }
 
 export async function setAdminMode() {
+  console.debug("Set admin mode");
   await updateAccessToken(IAM_DASHBOARD_OIDC_ADMIN_SCOPES);
 }

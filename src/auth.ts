@@ -259,35 +259,34 @@ export async function getAccessToken() {
   Perform a refresh token flow with defined scope and save new tokens in the
   database
 */
-export async function updateAccessToken(scope: string) {
+export async function updateAccessToken(newScope: string) {
   const session = await getSession();
   if (!session) {
-    console.error("Session not found");
+    console.error("Cannot update tokens: session not found");
+  }
+
+  const refreshToken = session?.session.refreshToken;
+  if (!refreshToken) {
+    console.error("Cannot update tokens: refresh token not found");
     return;
   }
-  const ctx = await auth.$context;
-  const [account] = await ctx.internalAdapter.findAccountByUserId(
-    session.user.id
-  );
-  if (account.refreshToken) {
-    try {
-      const tokens = await refreshAccessToken(account.refreshToken, scope);
-      console.log(session.session.id);
-      await ctx.internalAdapter.updateSession(session.session.token, {
-        accessToken: tokens.accessToken,
-        accessTokenExpiresAt: tokens.accessTokenExpiresAt,
-        refreshToken: tokens.refreshToken,
-        refreshTokenExpiresAt: tokens.refreshTokenExpiresAt,
-        scope: tokens.scopes?.join(" "),
-      });
-      console.debug("Tokens updated successfully.");
-      return tokens.accessToken;
-    } catch (e: any) {
-      console.error("Failed to refresh access token:", e);
-      return null;
-    }
+
+  try {
+    const tokens = await refreshAccessToken(refreshToken, newScope);
+    const ctx = await auth.$context;
+    await ctx.internalAdapter.updateSession(session.session.token, {
+      accessToken: tokens.accessToken,
+      accessTokenExpiresAt: tokens.accessTokenExpiresAt,
+      refreshToken: tokens.refreshToken,
+      refreshTokenExpiresAt: tokens.refreshTokenExpiresAt,
+      scope: tokens.scopes?.join(" "),
+    });
+    console.debug(`Tokens updated successfully with scope: '${newScope}'`);
+    return tokens.accessToken;
+  } catch (e: any) {
+    console.error("Failed to refresh access token:", e);
+    return null;
   }
-  return account.accessToken;
 }
 
 export async function isUserAdmin() {

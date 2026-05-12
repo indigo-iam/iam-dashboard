@@ -29,6 +29,20 @@ const TEST_USER: UserInfo = {
   email: "test@iam.test",
 };
 
+async function openUserMenu(page: Page) {
+  const userMenuButton = page.getByTitle("Open user menu");
+  // ensure that HeadlessUI hooked the button to the popover before clicking
+  await expect(userMenuButton).toHaveAttribute(
+    "aria-controls",
+    "user-popover-menu"
+  );
+  await expect(userMenuButton).toBeEnabled();
+  await userMenuButton.click();
+  const userMenu = page.getByTestId("user-menu");
+  await expect(userMenu).toBeVisible();
+  return userMenu;
+}
+
 async function login(page: Page, userInfo: UserInfo) {
   const { user, password, firstName, lastName, email } = userInfo;
   await page.goto("./");
@@ -43,10 +57,7 @@ async function login(page: Page, userInfo: UserInfo) {
 }
 
 async function logout(page: Page) {
-  await expect(page.getByTestId("user-menu-btn")).toBeVisible();
-  await page.getByTestId("user-menu-btn").click();
-  const userMenu = page.getByTestId("user-menu");
-  await expect(userMenu).toBeVisible();
+  const userMenu = await openUserMenu(page);
   const signOutButton = userMenu.getByRole("button", { name: "Sign out" });
   await expect(signOutButton).toBeVisible();
   await signOutButton.click();
@@ -81,13 +92,11 @@ async function checkClientAuthorization(page: Page) {
 }
 
 async function setMode(page: Page, mode: "Admin mode" | "User mode") {
-  await expect(page.getByTestId("user-menu-btn")).toBeVisible();
-  await page.getByTestId("user-menu-btn").click();
-  const userMenu = page.getByTestId("user-menu");
-  await expect(userMenu).toBeVisible();
+  const userMenu = await openUserMenu(page);
   await userMenu.getByRole("button", { name: mode }).click();
   await expect(page.locator("#loading")).toBeVisible();
   await expect(page.locator("#loading")).toBeHidden();
+  await expect(userMenu).toBeHidden();
 }
 
 export async function enableAdminMode(page: Page) {

@@ -6,6 +6,7 @@ import { ToggleDrawerButton } from "@/components/drawer/toggle-drawer-button";
 import Notifications from "@/components/notifications";
 import { UserPopover } from "./user-popover";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import { fetchMe } from "@/services/me";
 
 type HeaderProps = {
   hasRoleAdmin?: boolean;
@@ -15,6 +16,7 @@ type HeaderProps = {
 export async function Header(props: Readonly<HeaderProps>) {
   const { hasRoleAdmin, isAdmin } = props;
   const organization = "cnafsd";
+  const user = await fetchMe();
   return (
     <header className="t-0 dark:bg-sky-980 fixed inset-0 top-0 z-50 flex h-14 bg-sky-900 px-4 py-2 text-white md:px-8">
       <div className="flex grow flex-col truncate">
@@ -44,7 +46,11 @@ export async function Header(props: Readonly<HeaderProps>) {
             />
           </>
         )}
-        <UserPopover hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
+        <UserPopover
+          hasRoleAdmin={hasRoleAdmin}
+          isAdmin={isAdmin}
+          user={user}
+        />
       </div>
     </header>
   );

@@ -2,21 +2,23 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client";
+
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 
 import { Gravatar } from "@/components/gravatar";
-import { fetchMe } from "@/services/me";
 import { AdminModeButton, UserModeButton } from "./admin-user-buttons";
 import { SignoutButton } from "./signout-button";
+import { User } from "@/models/scim";
 
 type UserPopoverProps = {
   hasRoleAdmin?: boolean;
   isAdmin?: boolean;
+  user: User;
 };
 
-export async function UserPopover(props: Readonly<UserPopoverProps>) {
-  const { hasRoleAdmin, isAdmin } = props;
-  const user = await fetchMe();
+export function UserPopover(props: Readonly<UserPopoverProps>) {
+  const { hasRoleAdmin, isAdmin, user } = props;
   const email = user.emails?.[0].value;
 
   return (
@@ -31,7 +33,9 @@ export async function UserPopover(props: Readonly<UserPopoverProps>) {
       <PopoverPanel
         transition
         anchor="bottom end"
+        id="user-popover-menu"
         data-testid="user-menu"
+        unmount={false}
         className="items overlay flex w-56 flex-col overflow-hidden ease-in-out [--anchor-gap:--spacing(5)] data-closed:-translate-y-1 data-closed:opacity-0"
       >
         <div className="space-y-2">

@@ -4,25 +4,23 @@
 
 "use client";
 
-import { startTransition } from "react";
+import { startTransition, useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { CloseButton } from "@headlessui/react";
 import { BuildingLibraryIcon, UserIcon } from "@heroicons/react/24/outline";
 
 import { setAdminMode, setUserMode } from "./actions";
+import { useLoading } from "@/components/loading";
 
 export function AdminModeButton() {
   const router = useRouter();
+  const { startLoadingTransition } = useLoading();
+
   function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
-    const loading = document.getElementById("loading");
-    loading?.setAttribute("data-loading", "");
-    startTransition(async () => {
+    startLoadingTransition(async () => {
       await setAdminMode();
-      startTransition(() => {
-        loading?.removeAttribute("data-loading");
-        router.refresh();
-      });
+      router.refresh();
     });
   }
 
@@ -43,16 +41,13 @@ export function AdminModeButton() {
 
 export function UserModeButton() {
   const router = useRouter();
+  const { startLoadingTransition } = useLoading();
+
   function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
-    const loading = document.getElementById("loading");
-    startTransition(async () => {
-      loading?.setAttribute("data-loading", "");
+    startLoadingTransition(async () => {
       await setUserMode();
-      startTransition(() => {
-        loading?.removeAttribute("data-loading");
-        router.refresh();
-      });
+      router.refresh();
     });
   }
 

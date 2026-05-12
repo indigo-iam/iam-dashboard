@@ -9,7 +9,7 @@ import { Header } from "@/app/components/header";
 import { Sidebar } from "@/app/components/sidebar";
 import { ToasterPortal } from "@/components/toaster";
 import { getNotification } from "@/services/notifications";
-import { Loading } from "@/components/loading";
+import { LoadingProvider } from "@/components/loading";
 import "@/styles/main.css";
 
 export const metadata: Metadata = {
@@ -46,13 +46,14 @@ export default async function RootLayout(props: Readonly<RootLayoutProps>) {
       <body>
         {/*this div is required by https://github.com/tailwindlabs/headlessui/issues/2752*/}
         <div>
-          <Header hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
-          <main>
-            <Sidebar hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
-            <div className="content">{children}</div>
-          </main>
-          <ToasterPortal notification={notification} />
-          <Loading />
+          <LoadingProvider>
+            <Header hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
+            <main>
+              <Sidebar hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
+              <div className="content">{children}</div>
+            </main>
+            <ToasterPortal notification={notification} />
+          </LoadingProvider>
         </div>
       </body>
     </html>

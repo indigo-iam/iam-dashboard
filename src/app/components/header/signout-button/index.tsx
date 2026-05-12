@@ -2,18 +2,14 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { signOut } from "@/auth";
+"use client";
+
 import { CloseButton } from "@headlessui/react";
 
 import { ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline";
-import { redirect } from "next/navigation";
+import { logout } from "./actions";
 
 export function SignoutButton() {
-  async function logout() {
-    "use server";
-    await signOut();
-    redirect("/");
-  }
   return (
     <form action={logout}>
       <CloseButton

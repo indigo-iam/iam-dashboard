@@ -33,9 +33,9 @@ export async function fetchGroup(groupID: string) {
   if (response.ok) {
     return (await response.json()) as Group;
   }
-  if (status === "403") {
-    redirect("/groups");
-  }
+  console.error(
+    `failed to fetch group '${groupID}' with status '${response.status}'`
+  );
 }
 
 export async function searchGroup(filter: string) {

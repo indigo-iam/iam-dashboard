@@ -1,7 +1,7 @@
 {
   "name": "iam-dashboard",
   "private": true,
-  "version": "0.5.0-rc.1",
+  "version": "0.5.0-rc.2",
   "scripts": {
     "dev": "next dev -p 3000 --turbopack",
     "build": "next build",

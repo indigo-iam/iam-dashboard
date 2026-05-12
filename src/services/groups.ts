@@ -23,7 +23,6 @@ import {
 } from "@/utils/scim";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 const { IAM_API_URL } = settings;
 

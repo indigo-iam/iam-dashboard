@@ -5,39 +5,97 @@
 import { test as baseTest, expect, Page } from "@playwright/test";
 export { expect } from "@playwright/test";
 
-async function login(page: Page) {
+type UserInfo = {
+  user: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+};
+
+const ADMIN_USER: UserInfo = {
+  user: "admin",
+  password: "password",
+  firstName: "Admin",
+  lastName: "User",
+  email: "1_admin@iam.test",
+};
+
+const TEST_USER: UserInfo = {
+  user: "test",
+  password: "password",
+  firstName: "Test",
+  lastName: "User",
+  email: "test@iam.test",
+};
+
+async function login(page: Page, userInfo: UserInfo) {
+  const { user, password, firstName, lastName, email } = userInfo;
   await page.goto("./");
-  await page.locator("#username").fill("admin");
-  await page.locator("#password").fill("password");
+  await page.locator("#username").fill(user);
+  await page.locator("#password").fill(password);
   await page.locator("#login-submit").click();
   await checkClientAuthorization(page);
-
-  // Redirect to new dashboard
   await page.waitForURL("./users/me");
-  await expect(page.getByLabel("First Name")).toHaveValue("Admin");
-  await expect(page.getByLabel("Last Name")).toHaveValue("User");
-  await expect(page.getByLabel("Email")).toHaveValue("1_admin@iam.test");
+  await expect(page.getByLabel("First Name")).toHaveValue(firstName);
+  await expect(page.getByLabel("Last Name")).toHaveValue(lastName);
+  await expect(page.getByLabel("Email")).toHaveValue(email);
 }
 
 async function logout(page: Page) {
+  await expect(page.getByTestId("user-menu-btn")).toBeVisible();
   await page.getByTestId("user-menu-btn").click();
-  await page.getByTestId("signout-btn").click();
+  const userMenu = page.getByTestId("user-menu");
+  await expect(userMenu).toBeVisible();
+  const signOutButton = userMenu.getByRole("button", { name: "Sign out" });
+  await expect(signOutButton).toBeVisible();
+  await signOutButton.click();
+  // without dot = https://iam.test.example/login, with dot= /dev/login
+  await page.waitForURL("/login");
 }
 
-export const test = baseTest.extend<{ page: Page }>({
-  page: async ({ browser }, use) => {
-    const newPage = await browser.newPage();
-    await login(newPage);
+export const testAdmin = baseTest.extend<{ signedUpPage: Page }>({
+  signedUpPage: async ({ page }, use) => {
+    await login(page, ADMIN_USER);
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    await use(newPage);
-    await logout(newPage);
+    await use(page);
+    await logout(page);
   },
 });
 
-export async function checkClientAuthorization(page: Page) {
+export const testUser = baseTest.extend<{ signedUpPage: Page }>({
+  signedUpPage: async ({ page }, use) => {
+    await login(page, TEST_USER);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    await use(page);
+    await logout(page);
+  },
+});
+
+async function checkClientAuthorization(page: Page) {
   const title = "Approval Required for The INDIGO IAM dashboard";
   await expect(page.getByText(title)).toBeVisible();
   await page.getByLabel("prompt me again next time").check();
   const authorizeButton = page.getByRole("button", { name: "Authorize" });
   await authorizeButton.click();
+}
+
+async function setMode(page: Page, mode: "Admin mode" | "User mode") {
+  await expect(page.getByTestId("user-menu-btn")).toBeVisible();
+  await page.getByTestId("user-menu-btn").click();
+  const userMenu = page.getByTestId("user-menu");
+  await expect(userMenu).toBeVisible();
+  await userMenu.getByRole("button", { name: mode }).click();
+  await expect(page.locator("#loading")).toBeVisible();
+  await expect(page.locator("#loading")).toBeHidden();
+}
+
+export async function enableAdminMode(page: Page) {
+  await setMode(page, "Admin mode");
+  await expect(page.getByTestId("admin-mode-label")).toBeVisible();
+}
+
+export async function disableAdminMode(page: Page) {
+  await setMode(page, "User mode");
+  await expect(page.getByTestId("admin-mode-label")).toBeHidden();
 }

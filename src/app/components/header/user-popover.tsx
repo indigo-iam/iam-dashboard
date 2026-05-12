@@ -31,6 +31,7 @@ export async function UserPopover(props: Readonly<UserPopoverProps>) {
       <PopoverPanel
         transition
         anchor="bottom end"
+        data-testid="user-menu"
         className="items overlay flex w-56 flex-col overflow-hidden ease-in-out [--anchor-gap:--spacing(5)] data-closed:-translate-y-1 data-closed:opacity-0"
       >
         <div className="space-y-2">

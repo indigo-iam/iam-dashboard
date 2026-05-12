@@ -78,11 +78,15 @@ testUser("User cannot create nor delete a group", async ({ signedUpPage }) => {
   await page.goto("./groups");
 
   testUser.step("'New group' button is not visible", async () => {
+    await page.waitForURL("./groups");
     await expect(page.getByRole("button", { name: "New group" })).toBeHidden();
   });
 
   testUser.step("'Join group' button is visible", async () => {
-    await expect(page.getByRole("button", { name: "Join group" })).toBeHidden();
+    await page.waitForURL("./groups");
+    await expect(
+      page.getByRole("button", { name: "Join group" })
+    ).toBeVisible();
   });
 });
 

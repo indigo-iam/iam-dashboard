@@ -58,7 +58,7 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
         <div className="flex grow items-center gap-2">
           <RocketLaunchIcon className="size-5" />
           <h2 className="text-base font-normal">
-            {isAdmin ? "Client" : "My clients"}
+            {isAdmin ? "Clients" : "My clients"}
           </h2>
         </div>
         <InputQuery

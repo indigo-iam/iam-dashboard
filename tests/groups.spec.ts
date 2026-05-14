@@ -90,7 +90,7 @@ testUser("User cannot create nor delete a group", async ({ signedUpPage }) => {
   });
 });
 
-testUser("User cannot see others client", async ({ signedUpPage }) => {
+testUser("User cannot see others clients", async ({ signedUpPage }) => {
   const page = signedUpPage;
   await page.goto("./groups/c617d586-54e6-411d-8e38-649677980001");
   await page.waitForURL("./groups");

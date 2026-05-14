@@ -13,7 +13,7 @@ type UserInfo = {
   email: string;
 };
 
-const ADMIN_USER: UserInfo = {
+export const ADMIN_USER: UserInfo = {
   user: "admin",
   password: "password",
   firstName: "Admin",
@@ -21,7 +21,7 @@ const ADMIN_USER: UserInfo = {
   email: "1_admin@iam.test",
 };
 
-const TEST_USER: UserInfo = {
+export const TEST_USER: UserInfo = {
   user: "test",
   password: "password",
   firstName: "Test",

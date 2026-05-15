@@ -5,14 +5,16 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { setNotification } from "@/services/notifications";
+import { Notification } from "@/components/toaster";
 import { CertLinkRequest } from "@/models/certs";
 import { authFetch } from "@/utils/fetch";
 import { settings } from "@/config";
 
 const { IAM_API_URL } = settings;
 
-export async function sendCertificateLinkRequest(request: CertLinkRequest) {
+export async function sendCertificateLinkRequest(
+  request: CertLinkRequest
+): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/cert_link_requests`;
   const body = JSON.stringify(request);
   const response = await authFetch(url, {
@@ -23,14 +25,13 @@ export async function sendCertificateLinkRequest(request: CertLinkRequest) {
     },
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "Request sent" });
     revalidatePath("/users");
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot send Certificate Link Request",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return { type: "success", message: "Request sent" };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    message: "Cannot send Certificate Link Request",
+    subtitle: `Error ${response.status} ${msg}`,
+  };
 }

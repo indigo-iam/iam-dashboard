@@ -2,10 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client";
+
 import { Button } from "@/components/buttons";
 import { Form, Field, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import { toaster } from "@/components/toaster";
 import { User } from "@/models/scim";
 import { addAttribute } from "@/services/users";
 
@@ -19,16 +22,19 @@ export default function AddAttributeModal(
   const { user, ...modalProps } = props;
   const username = user.name?.formatted ?? "unknown user";
 
-  const action = async (formData: FormData) => {
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const name = formData.get("attr-name") as string;
     const value = formData.get("attr-value") as string;
-    await addAttribute(user.id, { name, value });
+    const res = await addAttribute(user.id, { name, value });
+    toaster.send(res);
     modalProps.onClose();
-  };
+  }
 
   return (
     <Modal {...modalProps} title="Add user attribute">
-      <Form action={action}>
+      <Form onSubmit={submit}>
         <ModalBody>
           <Field>
             <Label>Username</Label>

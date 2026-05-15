@@ -2,13 +2,23 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Form, Description, Field, Label } from "@/components/form";
-import { Select, SelectOption } from "@/components/form";
+"use client";
+
+import { useState } from "react";
+import { PlusIcon } from "@heroicons/react/16/solid";
+
+import { Button } from "@/components/buttons";
+import {
+  Form,
+  Description,
+  Field,
+  Label,
+  Select,
+  SelectOption,
+} from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
-import { Button } from "@/components/buttons";
-import { PlusIcon } from "@heroicons/react/16/solid";
-import { useState } from "react";
+import { toaster } from "@/components/toaster";
 import { addScope } from "@/services/scopes";
 
 interface NewScopeModalProps extends ModalProps {}
@@ -22,19 +32,28 @@ export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
   ];
   const [scopeType, setScopeType] = useState(options[0]);
 
-  const action = async (formData: FormData) => {
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const value = formData.get("value") as string;
     const description = formData.get("description") as string;
     const defaultScope = scopeType.id === "default";
     const restricted = scopeType.id === "restricted";
     const icon = "";
-    await addScope({ value, description, defaultScope, restricted, icon });
+    const res = await addScope({
+      value,
+      description,
+      defaultScope,
+      restricted,
+      icon,
+    });
+    toaster.send(res);
     onClose();
-  };
+  }
 
   return (
     <Modal show={show} onClose={onClose} title="Add new system scope">
-      <Form action={action} onReset={() => setScopeType(options[0])}>
+      <Form onSubmit={submit} onReset={() => setScopeType(options[0])}>
         <ModalBody className="space-y-4 pb-4">
           <p>
             System scopes are available to all clients. <b>Default</b> scopes

@@ -8,6 +8,7 @@ import { Button } from "@/components/buttons";
 import { Form } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter } from "@/components/modal";
+import { toaster } from "@/components/toaster";
 import { User } from "@/models/scim";
 import { changeMembershipEndTime } from "@/services/users";
 import { useState } from "react";
@@ -21,20 +22,26 @@ export function EditExpirationDate(props: Readonly<EditExpirationDateProps>) {
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
-  const action = (formData: FormData) => {
+
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const date = formData.get("end-date") as string;
-    changeMembershipEndTime(user.id, date);
+    const res = await changeMembershipEndTime(user.id, date);
+    toaster.send(res);
     close();
-  };
+  }
+
   const defaultValue =
     user["urn:indigo-dc:scim:schemas:IndigoUser"]?.endTime?.split("T")[0];
+
   return (
     <>
       <Button className="btn-secondary" onClick={open}>
         Edit expiration date
       </Button>
       <Modal show={show} onClose={close} title="Edit expiration date">
-        <Form action={action}>
+        <Form onSubmit={submit}>
           <ModalBody>
             <p className="flex flex-col">
               Change the expiration time for the user

@@ -8,6 +8,7 @@ import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import { toaster } from "@/components/toaster";
 import { User } from "@/models/scim";
 import { changePassword } from "@/services/users";
 import { useState } from "react";
@@ -18,12 +19,16 @@ interface ModalPasswordProps extends ModalProps {
 
 function ModalPassword(props: Readonly<ModalPasswordProps>) {
   const { user, ...modalProps } = props;
-  const action = async (formData: FormData) => {
-    await changePassword(user, formData);
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const res = await changePassword(user, formData);
+    toaster.send(res);
   };
+  
   return (
     <Modal {...modalProps}>
-      <Form action={action}>
+      <Form onSubmit={submit}>
         <ModalBody>
           <Field>
             <Label data-required>Current password</Label>

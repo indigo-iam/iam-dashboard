@@ -9,6 +9,7 @@ import { Field, Form, Label, Select } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Textarea } from "@/components/textarea";
+import { toaster } from "@/components/toaster";
 import { User } from "@/models/scim";
 import { sendCertificateLinkRequest } from "@/services/certs";
 import { useState } from "react";
@@ -89,16 +90,24 @@ export default function LinkCertificateModal(
     onClose();
     setTimeout(() => setFormat("pem"), 500);
   };
-  const action = async (formData: FormData) => {
+
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const label = formData.get("label") as string;
     const pemEncodedCertificate = formData.get("certificate") as string;
     const notes = formData.get("notes") as string | undefined;
-    await sendCertificateLinkRequest({ label, pemEncodedCertificate, notes });
+    const res = await sendCertificateLinkRequest({
+      label,
+      pemEncodedCertificate,
+      notes,
+    });
+    toaster.send(res);
     close();
-  };
+  }
   return (
     <Modal show={show} onClose={close} title="Request Certificate Linking">
-      <Form action={action}>
+      <Form onSubmit={submit}>
         <ModalBody>
           <Field>
             <Label>User</Label>

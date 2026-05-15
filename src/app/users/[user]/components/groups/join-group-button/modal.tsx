@@ -9,6 +9,7 @@ import { Form, Field, Label, Description } from "@/components/form";
 import { Button } from "@/components/buttons";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Textarea } from "@/components/textarea";
+import { toaster } from "@/components/toaster";
 import { JoinGroupRequest } from "@/models/group-requests";
 import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
@@ -95,7 +96,9 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
     setTimeout(() => setSelected(undefined), 500);
   };
 
-  const action = async (formData: FormData) => {
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     if (isAdmin && selected) {
       await addUserToGroup(selected, user);
     } else {
@@ -104,14 +107,15 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
         username: user.userName!,
         groupName: selected!.displayName,
       };
-      await submitGroupRequest(req);
+      const res = await submitGroupRequest(req);
+      toaster.send(res);
     }
     clearAndClose();
-  };
+  }
 
   return (
     <Modal {...modalProps} onClose={clearAndClose}>
-      <Form action={action}>
+      <Form onSubmit={submit}>
         <ModalBody>
           {selected ? (
             <div className="space-y-4">

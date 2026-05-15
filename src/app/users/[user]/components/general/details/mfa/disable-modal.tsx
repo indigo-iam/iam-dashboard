@@ -2,10 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client"
+
 import { Button } from "@/components/buttons";
 import { Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter } from "@/components/modal";
+import { toaster } from "@/components/toaster";
 import { disableMFA } from "@/services/users";
 
 type DisableMFAModalProps = {
@@ -16,14 +19,17 @@ type DisableMFAModalProps = {
 export function DisableMFAModal(props: Readonly<DisableMFAModalProps>) {
   const { show, onClose } = props;
 
-  async function action(formData: FormData) {
-    await disableMFA(formData);
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const res = await disableMFA(formData);
+    toaster.send(res);
     onClose();
   }
 
   return (
     <Modal show={show} onClose={onClose} title="Disable MFA">
-      <Form action={action}>
+      <Form onSubmit={submit}>
         <ModalBody>
           <p>
             This action disables multi-factor authentication on this account

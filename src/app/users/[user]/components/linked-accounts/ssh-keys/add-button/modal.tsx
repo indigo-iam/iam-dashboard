@@ -2,11 +2,14 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client";
+
 import { Button } from "@/components/buttons";
 import { Form, Field, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Textarea } from "@/components/textarea";
+import { toaster } from "@/components/toaster";
 import { SSHKey } from "@/models/indigo-user";
 import { User } from "@/models/scim";
 import { addSSHKey } from "@/services/users";
@@ -18,18 +21,21 @@ interface AddSSHKeyModalProps extends ModalProps {
 export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
   const { user, ...modalProps } = props;
 
-  const action = async (formData: FormData) => {
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const sshKey: SSHKey = {
       display: formData.get("ssh-label") as string,
       value: formData.get("ssh-key") as string,
     };
-    await addSSHKey(user.id, sshKey);
+    const res = await addSSHKey(user.id, sshKey);
+    toaster.send(res);
     modalProps.onClose();
-  };
+  }
 
   return (
     <Modal {...modalProps} title="Add SSH Key">
-      <Form action={action}>
+      <Form onSubmit={submit}>
         <ModalBody>
           <Field>
             <Label>Label</Label>

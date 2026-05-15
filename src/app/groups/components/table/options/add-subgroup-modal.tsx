@@ -2,10 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client";
+
 import { Button } from "@/components/buttons";
 import { Description, Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import { toaster } from "@/components/toaster";
 import { Group } from "@/models/groups";
 import { addSubgroup } from "@/services/groups";
 
@@ -18,19 +21,22 @@ export default function AddSubgroupModal(
 ) {
   const { rootGroup, onAdded, ...modalProps } = props;
 
-  const action = async (formData: FormData) => {
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const name = formData.get("name") as string;
     if (rootGroup) {
-      await addSubgroup(name, rootGroup);
+      const res = await addSubgroup(name, rootGroup);
+      toaster.send(res);
       onAdded?.();
       modalProps.onClose();
     } else {
       console.warn("group to delete is undefined");
     }
-  };
+  }
   return (
     <Modal {...modalProps} title="New subgroup">
-      <Form id="add-subgroup-form" action={action}>
+      <Form id="add-subgroup-form" onSubmit={submit}>
         <ModalBody>
           <p>
             Add a subgroup to group <b>{rootGroup.displayName}</b>:

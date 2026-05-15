@@ -8,6 +8,7 @@ import { Button } from "@/components/buttons";
 import { Description, Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import { toaster } from "@/components/toaster";
 import { Group, GroupLabel } from "@/models/groups";
 import { addGroupLabel } from "@/services/groups";
 import { Fieldset } from "@headlessui/react";
@@ -20,7 +21,10 @@ interface AddLabelModalProps extends ModalProps {
 
 function AddLabelModal(props: Readonly<AddLabelModalProps>) {
   const { group, ...modalProps } = props;
-  const action = async (formData: FormData) => {
+
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     let gl: GroupLabel = {
       name: formData.get("name") as string,
       value: (formData.get("value") as string | undefined) ?? "",
@@ -31,13 +35,16 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
     if (prefix) {
       gl = { ...gl, prefix };
     }
-    await addGroupLabel(group.id, gl);
+    const res = await addGroupLabel(group.id, gl);
+    if (res.type !== "success") {
+      toaster.send(res);
+    }
     modalProps.onClose();
-  };
+  }
 
   return (
     <Modal {...modalProps}>
-      <Form action={action}>
+      <Form onSubmit={submit}>
         <ModalBody>
           <Fieldset>
             <Field>

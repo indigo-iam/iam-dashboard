@@ -8,6 +8,7 @@ import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter } from "@/components/modal";
+import { toaster } from "@/components/toaster";
 import { addGroup } from "@/services/groups";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
@@ -16,17 +17,22 @@ type AddGroupFormProps = {
   onClose?: () => void;
   onGroupAdded?: () => void;
 };
+
 function AddGroupForm(props: Readonly<AddGroupFormProps>) {
   const { onClose, onGroupAdded } = props;
 
-  const handleSubmit = async (formData: FormData) => {
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const name = formData.get("groupName") as string;
-    await addGroup(name);
+    const res = await addGroup(name);
+    toaster.send(res);
     onClose?.();
     onGroupAdded?.();
-  };
+  }
+
   return (
-    <Form id="add-root-group-form" action={handleSubmit}>
+    <Form id="add-root-group-form" onSubmit={submit}>
       <ModalBody>
         <Field className="mb-8">
           <Label data-required>Group Name</Label>

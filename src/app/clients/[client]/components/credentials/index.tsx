@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client"
+
 import {
   ClientAuthentication,
   TOKEN_ENDPOINT_AUTH_VALUES,
@@ -16,6 +18,7 @@ import {
   SelectOption,
 } from "@/components/form";
 import { TabPanel } from "@/components/tabs";
+import { toaster } from "@/components/toaster";
 import {
   Client,
   CodeChallengeMethod,
@@ -64,8 +67,9 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
       el => el.id === token_endpoint_auth_method
     ) ?? TOKEN_ENDPOINT_AUTH_VALUES[0];
 
-  async function action(formData: FormData) {
-    "use server";
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const requestBody: Client = {
       ...client,
       token_endpoint_auth_method: formData.get(
@@ -75,12 +79,13 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
         "code_challenge_method[id]"
       ) as CodeChallengeMethod,
     };
-    await editClient(requestBody, isAdmin);
+    const res = await editClient(requestBody, isAdmin);
+    toaster.send(res);
   }
 
   return (
     <TabPanel className="panel" unmount={false}>
-      <Form action={action} className="space-y-4">
+      <Form onSubmit={submit} className="space-y-4">
         <div className="divide-y">
           <div className="flex flex-col gap-8 pb-4 lg:flex-row">
             <div className="flex w-full flex-col space-y-2 lg:w-1/3">

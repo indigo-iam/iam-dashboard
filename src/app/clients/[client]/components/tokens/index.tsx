@@ -2,11 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client";
+
 import { Button } from "@/components/buttons";
 import { Form } from "@/components/form";
 import { TabPanel } from "@/components/tabs";
+import { toaster } from "@/components/toaster";
 import { Client } from "@/models/client";
-import { editClient } from "@/services/clients";
 
 import { TokensTimeout } from "./tokens-timeout";
 import { RefreshTokenTimeout } from "./refresh-token-timeout";
@@ -20,13 +22,17 @@ type TokensProps = {
 
 export default function Tokens(props: Readonly<TokensProps>) {
   const { client, isAdmin } = props;
-  const action = async (formData: FormData) => {
-    "use server";
-    await updateClient(client, formData, isAdmin);
-  };
+
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const res = await updateClient(client, formData, isAdmin);
+    toaster.send(res);
+  }
+
   return (
     <TabPanel className="panel" unmount={false}>
-      <Form action={action}>
+      <Form onSubmit={submit}>
         <div className="space-y-4 divide-y">
           <TokensTimeout client={client} />
           <RefreshTokenTimeout client={client} />

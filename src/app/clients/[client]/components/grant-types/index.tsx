@@ -7,6 +7,7 @@
 import { Button } from "@/components/buttons";
 import { Form } from "@/components/form";
 import { TabPanel } from "@/components/tabs";
+import { toaster } from "@/components/toaster";
 import { Client } from "@/models/client";
 import { GrantType } from "@/models/openid-configuration";
 import { editClient } from "@/services/clients";
@@ -42,18 +43,21 @@ export default function GrantTypes(props: Readonly<GrantTypesProps>) {
   const { client, isAdmin } = props;
   const [isAuthGrantOk, setIsAuthGrantOk] = useState(false);
 
-  async function action(formData: FormData) {
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const grant_types = (formData.getAll("grant_type") as GrantType[]).concat(
       formData.getAll("grant_type[id]") as GrantType[]
     );
     const redirect_uris = formData.getAll("redirect_uris") as string[];
     const requestBody: Client = { ...client, grant_types, redirect_uris };
-    return editClient(requestBody, isAdmin);
+    const res = await editClient(requestBody, isAdmin);
+    toaster.send(res);
   }
 
   return (
     <TabPanel className="panel" unmount={false}>
-      <Form action={action} className="space-y-4">
+      <Form onSubmit={submit} className="space-y-4">
         <div className="space-y-4 divide-y">
           <MainGrantTypes
             client={client}

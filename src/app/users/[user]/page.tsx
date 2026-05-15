@@ -6,7 +6,7 @@ import { UserIcon } from "@heroicons/react/24/solid";
 import { getSession, isUserAdmin } from "@/auth";
 import { Tab, TabGroup, TabList, TabPanels } from "@/components/tabs";
 import { fetchMe } from "@/services/me";
-import { fetchUser } from "@/services/users";
+import { fetchUser, statusMFA } from "@/services/users";
 import { redirect } from "next/navigation";
 import {
   Attributes,
@@ -41,6 +41,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
   if (!isMe && !isAdmin) {
     redirect("/");
   }
+  const mfaEnabled = await statusMFA();
   return (
     <section>
       <header className="section-header">
@@ -58,7 +59,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
           <Tab>ATTRIBUTES</Tab>
         </TabList>
         <TabPanels>
-          <General user={user} isMe={isMe} />
+          <General user={user} isMe={isMe} mfaEnabled={mfaEnabled} />
           {!isMe && <UserGroups user={user} isAdmin={isAdmin} />}
           {!isMe && (
             <UserClients

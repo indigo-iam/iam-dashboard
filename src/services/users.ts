@@ -114,19 +114,12 @@ export async function patchUser(userId: string, formData: FormData) {
   });
 
   if (response.ok) {
-    await setNotification({ type: "success", message: "Saved changes" });
-  } else {
-    if (response.status == 409) {
-      const json = await response.json();
-      return { err: json.detail as string };
-    }
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot save user",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    revalidatePath(`/users/${isMe ? "me" : userId}`);
+    return {};
   }
+  return {
+    error: `Error ${response.status}`,
+  };
 }
 
 export async function deleteUser(user: User) {

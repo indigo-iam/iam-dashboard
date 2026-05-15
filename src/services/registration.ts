@@ -9,6 +9,7 @@ import { Registration } from "@/models/registration";
 import { setNotification } from "@/services/notifications";
 import { settings } from "@/config";
 import { revalidatePath } from "next/cache";
+import { Notification } from "@/components/toaster";
 
 const { IAM_API_URL } = settings;
 
@@ -38,7 +39,7 @@ export async function approveRegistrationRequest(requestId: string) {
 export async function rejectRegistrationRequest(
   requestId: string,
   motivation: string
-) {
+): Promise<Notification> {
   const url = `${IAM_API_URL}/registration/reject/${requestId}`;
   const body = JSON.stringify({ motivation });
   const response = await authFetch(url, {
@@ -47,17 +48,16 @@ export async function rejectRegistrationRequest(
     headers: { "content-type": "application/json" },
   });
   if (response.ok) {
-    await setNotification({
+    revalidatePath("/requests");
+    return {
       type: "success",
       message: "User request rejected",
-    });
-    revalidatePath("/requests");
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot reject user request",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    message: "Cannot reject user request",
+    subtitle: `Error ${response.status} ${msg}`,
+  };
 }

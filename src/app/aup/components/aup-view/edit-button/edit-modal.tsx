@@ -2,12 +2,15 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client";
+
 import { Form, Field, Description, Label } from "@/components/form";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Input } from "@/components/inputs";
 import { Button } from "@/components/buttons";
 import { AUP } from "@/models/aup";
 import { patchAUP } from "@/services/aup";
+import { toaster } from "@/components/toaster";
 
 interface EditModalProps extends ModalProps {
   aup: AUP;
@@ -15,19 +18,26 @@ interface EditModalProps extends ModalProps {
 
 export default function EditModal(props: Readonly<EditModalProps>) {
   const { show, onClose, aup } = props;
-  const action = async (formData: FormData) => {
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const url = formData.get("url") as string;
     const signatureValidityInDays = parseInt(
       formData.get("validity") as string
     );
     const aupRemindersInDays = formData.get("reminders") as string;
-    await patchAUP({ url, signatureValidityInDays, aupRemindersInDays });
+    const res = await patchAUP({
+      url,
+      signatureValidityInDays,
+      aupRemindersInDays,
+    });
+    toaster.send(res);
     onClose();
-  };
+  }
 
   return (
     <Modal title="Edit AUP for this organization" show={show} onClose={onClose}>
-      <Form action={action}>
+      <Form onSubmit={submit}>
         <ModalBody>
           <Field>
             <Label data-required>Accept Usage Policy URL</Label>

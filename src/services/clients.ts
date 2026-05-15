@@ -16,7 +16,9 @@ import { redirect } from "next/navigation";
 
 const { IAM_API_URL } = settings;
 
-export async function registerClient(client: ClientRequest) {
+export async function registerClient(
+  client: ClientRequest
+): Promise<{ notification: Notification; payload?: any }> {
   const response = await authFetch(
     `${IAM_API_URL}/iam/api/client-registration`,
     {
@@ -27,16 +29,19 @@ export async function registerClient(client: ClientRequest) {
   );
 
   if (response.ok) {
-    await setNotification({ type: "success", message: "Client created" });
-    return await response.json();
-  } else {
-    const msg = await response.text();
-    await setNotification({
+    return {
+      notification: { type: "success", message: "Client created" },
+      payload: await response.json(),
+    };
+  }
+  const msg = await response.text();
+  return {
+    notification: {
       type: "error",
       message: "Cannot create client",
       subtitle: `Error ${response.status} ${msg}`,
-    });
-  }
+    },
+  };
 }
 
 export async function getClient(clientId: string, isAdmin = false) {

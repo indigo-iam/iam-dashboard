@@ -161,6 +161,15 @@ export const toaster = {
         type="info"
       />
     )),
+  send: (notification: Notification) =>
+    toast.custom(t => (
+      <CustomToast
+        title={notification.message}
+        subtitle={notification.subtitle}
+        type={notification.type}
+        dismiss={() => toast.dismiss(t)}
+      />
+    )),
   success: (message: string, subtitle?: string) =>
     toast.custom(t => (
       <CustomToast

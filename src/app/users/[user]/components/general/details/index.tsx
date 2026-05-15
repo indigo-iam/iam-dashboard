@@ -28,12 +28,8 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const {error} = await patchUser(user.id, formData);
-    if (error) {
-      toaster.error("Failed to save edits", error);
-    } else {
-      toaster.success("Edits saved");
-    }
+    const response = await patchUser(user.id, formData);
+    toaster.send(response);
   }
 
   const created = user.meta?.created

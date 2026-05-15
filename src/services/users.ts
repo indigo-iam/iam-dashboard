@@ -11,6 +11,7 @@ import { SSHKey } from "@/models/indigo-user";
 import { AddSecretResponse } from "@/models/mfa";
 import { Paginated } from "@/models/pagination";
 import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
+import { Notification } from "@/components/toaster";
 import { setNotification } from "@/services/notifications";
 import { settings } from "@/config";
 import { getSession } from "@/auth";
@@ -61,7 +62,10 @@ export async function addUser(user: ScimUser) {
   }
 }
 
-export async function patchUser(userId: string, formData: FormData) {
+export async function patchUser(
+  userId: string,
+  formData: FormData
+): Promise<Notification> {
   const session = await getSession();
   const isMe = session?.user?.sub === userId;
   const op: ScimRequest = {
@@ -115,10 +119,12 @@ export async function patchUser(userId: string, formData: FormData) {
 
   if (response.ok) {
     revalidatePath(`/users/${isMe ? "me" : userId}`);
-    return {};
+    return { type: "success", message: "Edits saved" };
   }
   return {
-    error: `Error ${response.status}`,
+    type: "error",
+    message: "Cannot save edits",
+    subtitle: `Error ${response.status}`,
   };
 }
 

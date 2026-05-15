@@ -4,7 +4,7 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Toaster, toast } from "sonner";
 import {
   CheckCircleIcon,
@@ -26,14 +26,17 @@ function useUpdateToasterPosition() {
   const [position, setPosition] = useState<"top-right" | "bottom-right">(
     "bottom-right"
   );
+  const previousWidthRef = useRef(0);
 
   function resize() {
     const width = window.innerWidth;
-    if (width < breakpoints.sm) {
+    const previousWidth = previousWidthRef.current;
+    if (width < breakpoints.sm && previousWidth > breakpoints.sm) {
       setPosition("bottom-right");
-    } else {
+    } else if (width > breakpoints.sm && previousWidth < breakpoints.sm) {
       setPosition("top-right");
     }
+    previousWidthRef.current = width;
   }
 
   useEffect(() => {

@@ -2,10 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client";
+
 import { Button } from "@/components/buttons";
 import { Form, Description, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import { toaster } from "@/components/toaster";
 import { createAUP } from "@/services/aup";
 import { Field } from "@headlessui/react";
 import { useState } from "react";
@@ -15,25 +18,35 @@ interface CreateModalProps extends ModalProps {}
 export default function CreateModal(props: Readonly<CreateModalProps>) {
   const { show, onClose } = props;
   const [validity, setValidity] = useState(0);
-  const handleValidityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+  function handleValidityChange(event: React.ChangeEvent<HTMLInputElement>) {
     setValidity(Math.max(parseInt(event.currentTarget.value), 0));
-  };
-  const action = async (formData: FormData) => {
+  }
+
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const url = formData.get("url") as string;
     const signatureValidityInDays = parseInt(
       formData.get("validity") as string
     );
     const aupRemindersInDays = formData.get("reminders") as string | undefined;
-    await createAUP({ url, signatureValidityInDays, aupRemindersInDays });
+    const res = await createAUP({
+      url,
+      signatureValidityInDays,
+      aupRemindersInDays,
+    });
+    toaster.send(res);
     onClose();
-  };
+  }
+
   return (
     <Modal
       title="Create the Acceptable Usage Policy for this organization"
       show={show}
       onClose={onClose}
     >
-      <Form action={action}>
+      <Form onSubmit={submit}>
         <ModalBody>
           <Field>
             <Label data-required>Acceptable Usage Policy URL</Label>

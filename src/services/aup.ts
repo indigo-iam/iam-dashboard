@@ -5,6 +5,7 @@
 "use server";
 
 import { setNotification } from "@/services/notifications";
+import { Notification } from "@/components/toaster";
 import { AUP, AUPCreate, AUPPatch } from "@/models/aup";
 import { settings } from "@/config";
 import { authFetch } from "@/utils/fetch";
@@ -30,42 +31,45 @@ export async function fetchAUP() {
   }
 }
 
-export async function createAUP(aup: AUPCreate) {
+export async function createAUP(aup: AUPCreate): Promise<Notification> {
   const response = await authFetch(AUP_URL, {
     method: "POST",
     body: JSON.stringify(aup),
     headers: { "content-type": "application/json" },
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "AUP Created" });
     revalidatePath("/aup");
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot create AUP",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return {
+      type: "success",
+      message: "AUP created",
+      subtitle:
+        "Acceptable Usage Policy has been created for your organization",
+    };
   }
+  const msg = await response.json();
+  return {
+    type: "error",
+    message: "Cannot create AUP",
+    subtitle: msg.error,
+  };
 }
 
-export async function patchAUP(aup: AUPPatch) {
+export async function patchAUP(aup: AUPPatch): Promise<Notification> {
   const response = await authFetch(AUP_URL, {
     method: "PATCH",
     body: JSON.stringify(aup),
     headers: { "content-type": "application/json" },
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "AUP updated" });
     revalidatePath("/aup");
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot update AUP",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return { type: "success", message: "AUP updated" };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    message: "Cannot update AUP",
+    subtitle: `Error ${response.status} ${msg}`,
+  };
 }
 
 export async function deleteAUP() {

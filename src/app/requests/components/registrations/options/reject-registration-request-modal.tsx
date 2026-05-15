@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client";
+
 import Link from "next/link";
 
 import { Button } from "@/components/buttons";
@@ -10,6 +12,7 @@ import { Modal, ModalBody, ModalFooter } from "@/components/modal";
 import { Textarea } from "@/components/textarea";
 import { Registration } from "@/models/registration";
 import { rejectRegistrationRequest } from "@/services/registration";
+import { toaster } from "@/components/toaster";
 
 type RejectRegistrationRequestModalProps = {
   request: Registration;
@@ -22,11 +25,14 @@ export default function RejectRegistrationRequestModal(
 ) {
   const { request, show, onClose } = props;
 
-  const action = async (formData: FormData) => {
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const motivation = formData.get("motivation") as string;
-    await rejectRegistrationRequest(request.uuid, motivation);
+    const res = await rejectRegistrationRequest(request.uuid, motivation);
+    toaster.send(res);
     onClose();
-  };
+  }
 
   return (
     <Modal
@@ -34,7 +40,7 @@ export default function RejectRegistrationRequestModal(
       onClose={onClose}
       title="Reject user registration request"
     >
-      <Form action={action} id="reject-registration-form">
+      <Form id="reject-registration-form" onSubmit={submit}>
         <ModalBody>
           <p>
             Are you sure you want to delete the registration request for the

@@ -13,6 +13,7 @@ import {
   ModalFooter,
   type ModalProps,
 } from "@/components/modal";
+import { toaster } from "@/components/toaster";
 import { Group } from "@/models/groups";
 import { editGroup } from "@/services/groups";
 
@@ -27,15 +28,18 @@ function EditModal(props: Readonly<EditModalProps>) {
   const description =
     group["urn:indigo-dc:scim:schemas:IndigoGroup"].description ?? "";
 
-  async function action(formData: FormData) {
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const description = formData.get("description") as string | null;
-    await editGroup(group.id, description);
+    const res = await editGroup(group.id, description);
+    toaster.send(res);
     props.onClose();
   }
 
   return (
     <Modal {...modalProps}>
-      <Form action={action}>
+      <Form onSubmit={submit}>
         <ModalBody>
           <Field>
             <Label>Description</Label>

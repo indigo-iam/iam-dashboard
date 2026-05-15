@@ -5,8 +5,9 @@
 "use client";
 
 import { Button } from "@/components/buttons";
-import { Checkbox, Description, Field, Form, Label } from "@/components/form";
+import { Checkbox, Field, Form } from "@/components/form";
 import { Modal, ModalBody, ModalFooter } from "@/components/modal";
+import { toaster } from "@/components/toaster";
 import { Client, Scope } from "@/models/client";
 import { editClient } from "@/services/clients";
 import { useState } from "react";
@@ -24,16 +25,21 @@ interface AddScopeModalProps extends AddScopeProps {
 
 function AddScopeModal(props: Readonly<AddScopeModalProps>) {
   const { client, scopes, show, onClose, isAdmin } = props;
-  const action = async (formData: FormData) => {
+
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const newScope = formData.getAll("scope") as string[];
     const scopes = (client.scope?.split(" ") ?? []).concat(newScope);
     const scope = scopes.join(" ");
-    await editClient({ ...client, scope }, isAdmin);
+    const res = await editClient({ ...client, scope }, isAdmin);
+    toaster.send(res);
     onClose();
-  };
+  }
+
   return (
     <Modal show={show} onClose={onClose} title="Add system scopes">
-      <Form action={action}>
+      <Form onSubmit={submit}>
         <ModalBody className="p-0">
           <ul>
             {scopes.map(s => (

@@ -2,12 +2,15 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client";
+
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Scope } from "@/models/client";
 import { editScope } from "@/services/scopes";
 import { Button } from "@/components/buttons";
+import { toaster } from "@/components/toaster";
 
 interface EditScopeModalProps extends ModalProps {
   scope: Scope;
@@ -16,18 +19,21 @@ interface EditScopeModalProps extends ModalProps {
 export default function EditScopeModal(props: Readonly<EditScopeModalProps>) {
   const { scope, show, onClose } = props;
 
-  const action = async (formData: FormData) => {
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const description =
       (formData.get("description") as string) ?? scope.description;
     const value = (formData.get("value") as string) ?? scope.value;
     const newScope = { ...scope, description, value };
-    await editScope(newScope);
+    const res = await editScope(newScope);
+    toaster.send(res);
     onClose?.();
-  };
+  }
 
   return (
     <Modal title="Edit scope" show={show} onClose={onClose}>
-      <Form action={action}>
+      <Form onSubmit={submit}>
         <ModalBody>
           <Field>
             <Label>Scope name</Label>

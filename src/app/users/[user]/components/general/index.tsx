@@ -11,13 +11,14 @@ import { DangerZone } from "./danger-zone";
 type GeneralProps = {
   user: User;
   isMe: boolean;
+  mfaEnabled: boolean;
 };
 
 export async function General(props: Readonly<GeneralProps>) {
-  const { user, isMe } = props;
+  const { user, isMe, mfaEnabled } = props;
   return (
     <TabPanel className="panel divide-y" unmount={false}>
-      <UserDetailsForm user={user} isMe={isMe} />
+      <UserDetailsForm user={user} isMe={isMe} mfaEnabled={mfaEnabled} />
       <Aup user={user} isMe={isMe} />
       {!isMe && <DangerZone user={user} />}
     </TabPanel>

@@ -21,6 +21,7 @@ import OIDCSettings from "./oidc-settings";
 import OtherSettings from "./other-settings";
 
 import { useState } from "react";
+import { toaster } from "@/components/toaster";
 
 const TOTAL_PAGES = 4;
 
@@ -37,7 +38,9 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
   const back = () => setCurrentPage(Math.max(0, currentPage - 1));
   const next = () => setCurrentPage(Math.min(currentPage + 1, TOTAL_PAGES));
 
-  const action = (formData: FormData) => {
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const request: ClientRequest = {
       redirect_uris: formData.getAll("redirect_uris") as string[],
       client_name: formData.get("client_name") as string,
@@ -90,19 +93,22 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
 
     const save = async () => {
       const res = await registerClient(request);
-      setClient(res);
+      if (res.payload) {
+        setClient(res.payload);
+      }
+      toaster.send(res.notification);
     };
 
     save();
     next();
-  };
+  }
 
   return (
     <div className="flex flex-col gap-4 md:flex-row">
       <div className="flex w-full flex-col items-center px-16 sm:px-32 md:w-auto md:p-0">
         <Stepper currentPage={currentPage} totalPages={TOTAL_PAGES} />
       </div>
-      <Form action={action} className="max-w-xl grow">
+      <Form onSubmit={submit} className="max-w-xl grow">
         <Carousel selectedIndex={currentPage}>
           <CarouselList>
             <CarouselTab>General Settings</CarouselTab>

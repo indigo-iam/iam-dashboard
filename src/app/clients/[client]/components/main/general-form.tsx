@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client"
+
 import { ComputerDesktopIcon } from "@heroicons/react/24/outline";
 import { Client } from "@/models/client";
 import { Status } from "@/components/badges";
@@ -9,6 +11,7 @@ import { Button } from "@/components/buttons";
 import { Description, Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Textarea } from "@/components/textarea";
+import { toaster } from "@/components/toaster";
 import { dateToHuman } from "@/utils/dates";
 import { editClient } from "@/services/clients";
 
@@ -27,8 +30,9 @@ export function GeneralForm(props: Readonly<GeneralFormProps>) {
     ? dateToHuman(new Date(client.status_changed_on))
     : "N/A";
 
-  async function action(formData: FormData) {
-    "use server";
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const requestBody: Client = {
       ...client,
       client_name: formData.get("client_name") as string,
@@ -37,7 +41,8 @@ export function GeneralForm(props: Readonly<GeneralFormProps>) {
       tos_uri: formData.get("tos_uri") as string,
       policy_uri: formData.get("policy_uri") as string,
     };
-    await editClient(requestBody, isAdmin);
+    const res = await editClient(requestBody, isAdmin);
+    toaster.send(res);
   }
 
   return (
@@ -58,7 +63,7 @@ export function GeneralForm(props: Readonly<GeneralFormProps>) {
           </div>
         </div>
       </div>
-      <Form className="w-full space-y-4 lg:w-2/3" action={action}>
+      <Form className="w-full space-y-4 lg:w-2/3" onSubmit={submit}>
         <Field>
           <Label data-required>Client Name</Label>
           <Input

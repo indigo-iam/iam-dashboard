@@ -2,6 +2,9 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client";
+
+import { toaster } from "@/components/toaster";
 import { Group, GroupLabel } from "@/models/groups";
 import { deleteGroupLabel } from "@/services/groups";
 import { XCircleIcon } from "@heroicons/react/16/solid";
@@ -13,13 +16,17 @@ type LabelProps = {
 
 export default function LabelView(props: Readonly<LabelProps>) {
   const { group, label } = props;
-  const action = async () => {
-    "use server";
-    await deleteGroupLabel(group.id, label);
-  };
+
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const res = await deleteGroupLabel(group.id, label);
+    if (res.type !== "success") {
+      toaster.send(res);
+    }
+  }
   return (
     <form
-      action={action}
+      onSubmit={submit}
       className="flex items-center gap-1 rounded-full bg-sky-500 px-2 py-0.5 text-sm text-white dark:bg-sky-800/30 dark:text-sky-400/80"
     >
       <span>

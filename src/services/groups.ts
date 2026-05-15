@@ -16,6 +16,7 @@ import { settings } from "@/config";
 import { Paginated } from "@/models/pagination";
 import { ScimReference, User } from "@/models/scim";
 import { setNotification } from "@/services/notifications";
+import { Notification } from "@/components/toaster";
 import {
   makeScimReferenceFromGroup,
   makeScimReferenceFromManagedGroup,
@@ -94,7 +95,7 @@ export async function getGroupsPage(
   return await getItem<Paginated<Group>>(url);
 }
 
-export async function addGroup(groupName: string) {
+export async function addGroup(groupName: string): Promise<Notification> {
   const body = {
     displayName: groupName,
     schemas: ["urn:ietf:params:scim:schemas:core:2.0:Group"],
@@ -106,19 +107,21 @@ export async function addGroup(groupName: string) {
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "Group created" });
     revalidatePath("/groups");
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot create group",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return { type: "success", message: "Group created" };
   }
+  const error = `Error ${response.status} ${await response.text()}`;
+  return {
+    type: "error",
+    message: "Cannot create group",
+    subtitle: error,
+  };
 }
 
-export async function editGroup(groupId: string, description?: string | null) {
+export async function editGroup(
+  groupId: string,
+  description?: string | null
+): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/group/${groupId}`;
   const body = JSON.stringify({
     id: groupId,
@@ -132,15 +135,15 @@ export async function editGroup(groupId: string, description?: string | null) {
     body,
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "Group edited" });
     revalidatePath(`/groups/${groupId}`);
+    return { type: "success", message: "Group edited" };
   } else {
-    const msg = await response.text();
-    await setNotification({
+    const { error } = await response.json();
+    return {
       type: "error",
       message: "Cannot edit group",
-      subtitle: `Error ${response.status}: ${msg}`,
-    });
+      subtitle: error,
+    };
   }
 }
 
@@ -174,23 +177,26 @@ export async function deleteGroupByReference(groupRef: ScimReference) {
   }
 }
 
-export async function addSubgroup(groupName: string, parentGroup: Group) {
+export async function addSubgroup(
+  groupName: string,
+  parentGroup: Group
+): Promise<Notification> {
   const parentGroupRef = makeScimReferenceFromGroup(parentGroup);
-  await addSubgroupByRef(groupName, parentGroupRef);
+  return addSubgroupByRef(groupName, parentGroupRef);
 }
 
 export async function addSubgroupToManagedGroup(
   groupName: string,
   parentGroup: ManagedGroup
-) {
+): Promise<Notification> {
   const parentGroupRef = makeScimReferenceFromManagedGroup(parentGroup);
-  await addSubgroupByRef(groupName, parentGroupRef);
+  return addSubgroupByRef(groupName, parentGroupRef);
 }
 
 export async function addSubgroupByRef(
   groupName: string,
   parentGroupRef: ScimReference
-) {
+): Promise<Notification> {
   const body = {
     displayName: groupName,
     schemas: ["urn:ietf:params:scim:schemas:core:2.0:Group"],
@@ -207,20 +213,19 @@ export async function addSubgroupByRef(
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
-    await setNotification({
+    revalidatePath("/groups");
+    return {
       type: "success",
       message: "Subgroup added",
       subtitle: `Group ${groupName} has been added to parent group ${parentGroupRef.display}`,
-    });
-    revalidatePath("/groups");
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot add subgroup",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    message: "Cannot add subgroup",
+    subtitle: `Error ${response.status} ${msg}`,
+  };
 }
 
 export async function addUserToGroup(group: Group, user: User) {
@@ -371,7 +376,10 @@ export async function fetchManagedGroups(userId: string) {
   return response.managedGroups;
 }
 
-export async function addGroupLabel(groupId: string, label: GroupLabel) {
+export async function addGroupLabel(
+  groupId: string,
+  label: GroupLabel
+): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/group/${groupId}/labels`;
   const response = await authFetch(url, {
     method: "PUT",
@@ -382,29 +390,32 @@ export async function addGroupLabel(groupId: string, label: GroupLabel) {
   });
   if (response.ok) {
     revalidatePath(`/groups/${groupId}`);
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot add group label",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return { type: "success", message: "Group label added" };
   }
+  const { error } = await response.json();
+  return {
+    type: "error",
+    message: "Cannot add group label",
+    subtitle: error,
+  };
 }
 
-export async function deleteGroupLabel(groupId: string, label: GroupLabel) {
+export async function deleteGroupLabel(
+  groupId: string,
+  label: GroupLabel
+): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/group/${groupId}/labels?name=${label.name}`;
   const response = await authFetch(url, {
     method: "DELETE",
   });
   if (response.ok) {
     revalidatePath(`/groups/${groupId}`);
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot delete label",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return { type: "success", message: "" };
   }
+  const { error } = await response.json();
+  return {
+    type: "error",
+    message: "Cannot delete label",
+    subtitle: error,
+  };
 }

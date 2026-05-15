@@ -5,6 +5,7 @@
 "use server";
 
 import { settings } from "@/config";
+import { Notification } from "@/components/toaster";
 import { Client, ClientRequest } from "@/models/client";
 import { Paginated } from "@/models/pagination";
 import { User } from "@/models/scim";
@@ -15,7 +16,9 @@ import { redirect } from "next/navigation";
 
 const { IAM_API_URL } = settings;
 
-export async function registerClient(client: ClientRequest) {
+export async function registerClient(
+  client: ClientRequest
+): Promise<{ notification: Notification; payload?: any }> {
   const response = await authFetch(
     `${IAM_API_URL}/iam/api/client-registration`,
     {
@@ -26,16 +29,19 @@ export async function registerClient(client: ClientRequest) {
   );
 
   if (response.ok) {
-    await setNotification({ type: "success", message: "Client created" });
-    return await response.json();
-  } else {
-    const msg = await response.text();
-    await setNotification({
+    return {
+      notification: { type: "success", message: "Client created" },
+      payload: await response.json(),
+    };
+  }
+  const msg = await response.text();
+  return {
+    notification: {
       type: "error",
       message: "Cannot create client",
       subtitle: `Error ${response.status} ${msg}`,
-    });
-  }
+    },
+  };
 }
 
 export async function getClient(clientId: string, isAdmin = false) {
@@ -65,26 +71,33 @@ export async function deleteClient(clientId: string, isAdmin?: boolean) {
   }
 }
 
-export async function editClient(client: Client, isAdmin: boolean) {
+export async function editClient(
+  client: Client,
+  isAdmin: boolean
+): Promise<Notification> {
   const { client_id } = client;
   const url = isAdmin
     ? `${IAM_API_URL}/iam/api/clients/${client_id}`
-    : `${IAM_API_URL}/iam/api/client-registration/${client_id}`;
+    : `${IAM_API_URL}/iam/api/client-registration/${client_id}3`;
   const response = await authFetch(url, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(client),
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "Client saved" });
     revalidatePath(`/clients/${client_id}`);
+    return {
+      type: "success",
+      message: "Client saved",
+      subtitle: `Client '${client.client_name}'' has been modified`,
+    };
   } else {
-    const msg = await response.text();
-    await setNotification({
+    const { error } = await response.json();
+    return {
       type: "error",
       message: "Could not save client",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+      subtitle: error,
+    };
   }
 }
 

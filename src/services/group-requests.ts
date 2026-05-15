@@ -13,18 +13,21 @@ import { authFetch, getItem } from "@/utils/fetch";
 import { settings } from "@/config";
 import { revalidatePath } from "next/cache";
 import { setNotification } from "@/services/notifications";
+import { Notification } from "@/components/toaster";
 
 const { IAM_API_URL } = settings;
 
-export const fetchGroupsRequests = async (username?: string) => {
+export async function fetchGroupsRequests(username?: string) {
   let url = `${IAM_API_URL}/iam/group_requests?status=PENDING`;
   if (username) {
     url += `&username=${username}`;
   }
   return await getItem<PaginatedGroupRequests>(url);
-};
+}
 
-export const submitGroupRequest = async (req: JoinGroupRequest) => {
+export async function submitGroupRequest(
+  req: JoinGroupRequest
+): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/group_requests`;
   const response = await authFetch(url, {
     method: "POST",
@@ -34,74 +37,79 @@ export const submitGroupRequest = async (req: JoinGroupRequest) => {
     },
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "Group Request sent" });
     revalidatePath("/");
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot send Group Request",
-      subtitle: `Error ${response.status}: ${msg}`,
-    });
+    return { type: "success", message: "Group Request sent" };
   }
-};
+  const msg = await response.text();
+  return {
+    type: "error",
+    message: "Cannot send Group Request",
+    subtitle: `Error ${response.status}: ${msg}`,
+  };
+}
 
-export const approveGroupRequest = async (requestId: string) => {
+export async function approveGroupRequest(
+  requestId: string
+): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/group_requests/${requestId}/approve`;
   const response = await authFetch(url, {
     method: "POST",
   });
   if (response.ok) {
-    await setNotification({
+    revalidatePath("/requests");
+    return {
       type: "success",
       message: "Group Request approved",
-    });
-    revalidatePath("/requests");
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot approve Group Request",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    };
   }
-};
+  const msg = await response.text();
+  return {
+    type: "error",
+    message: "Cannot approve Group Request",
+    subtitle: `Error ${response.status} ${msg}`,
+  };
+}
 
-export const rejectGroupRequest = async (
+export async function rejectGroupRequest(
   requestId: string,
   motivation: string
-) => {
+): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/group_requests/${requestId}/reject?motivation=${motivation}`;
   const response = await authFetch(url, {
     method: "POST",
   });
   if (response.ok) {
-    await setNotification({ type: "info", message: "Group Request rejected" });
     revalidatePath("/requests");
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot reject Group Request",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return {
+      type: "info",
+      message: "Group Request rejected",
+      subtitle: "The user has been notified with the motivation you provided.",
+    };
   }
-};
+  const msg = await response.text();
+  return {
+    type: "error",
+    message: "Cannot reject Group Request",
+    subtitle: `Error ${response.status} ${msg}`,
+  };
+}
 
-export const abortGroupRequest = async (userId: string, req: GroupRequest) => {
+export async function abortGroupRequest(
+  userId: string,
+  req: GroupRequest
+): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/group_requests/${req.uuid}`;
   const response = await authFetch(url, {
     method: "DELETE",
   });
   if (response.ok) {
-    await setNotification({ type: "info", message: "Group Request deleted" });
     revalidatePath(`/users/${userId}`);
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot delete Group Request",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return { type: "info", message: "Group Request deleted" };
   }
-};
+  const msg = await response.text();
+  return {
+    type: "error",
+    message: "Cannot delete Group Request",
+    subtitle: `Error ${response.status} ${msg}`,
+  };
+}

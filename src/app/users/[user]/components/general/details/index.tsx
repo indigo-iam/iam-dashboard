@@ -2,32 +2,35 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { revalidatePath } from "next/cache";
+"use client";
+
+import { IdentificationIcon } from "@heroicons/react/24/outline";
+import { Status } from "@/components/badges";
 import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
+import { patchUser } from "@/services/users";
+import { toaster } from "@/components/toaster";
 import { User } from "@/models/scim";
-import { patchUser, statusMFA } from "@/services/users";
 import { dateToHuman } from "@/utils/dates";
-import { IdentificationIcon } from "@heroicons/react/24/outline";
 import { ResetPassword } from "./reset-password";
 import { MFAButton } from "./mfa";
-import { Status } from "@/components/badges";
 
 type UserDetailsFormProps = {
   user: User;
   isMe: boolean;
+  mfaEnabled: boolean;
 };
 
-export async function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
-  const { user, isMe } = props;
-  const mfaEnabled = await statusMFA();
+export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
+  const { user, isMe, mfaEnabled } = props;
 
-  const action = async (formData: FormData) => {
-    "use server";
-    await patchUser(user.id, formData);
-    revalidatePath("/users/[user]", "page");
-  };
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const response = await patchUser(user.id, formData);
+    toaster.send(response);
+  }
 
   const created = user.meta?.created
     ? dateToHuman(new Date(user.meta.created))
@@ -56,7 +59,7 @@ export async function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
           <p>Last modified {modified}.</p>
         </div>
       </div>
-      <Form className="w-full space-y-4 lg:w-2/3" action={action}>
+      <Form className="w-full space-y-4 lg:w-2/3" onSubmit={submit}>
         <div className="flex flex-wrap gap-4">
           <Field className="flex max-w-full grow flex-col">
             <Label htmlFor="given-name" data-required>

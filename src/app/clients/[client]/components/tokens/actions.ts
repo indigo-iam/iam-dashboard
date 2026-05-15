@@ -2,8 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-"use server";
-
 import { Client } from "@/models/client";
 import { editClient } from "@/services/clients";
 
@@ -51,5 +49,5 @@ export async function updateClient(
     clear_access_tokens_on_refresh,
     device_code_validity_seconds,
   };
-  await editClient(requestBody, isAdmin);
+  return await editClient(requestBody, isAdmin);
 }

@@ -11,6 +11,7 @@ import { SSHKey } from "@/models/indigo-user";
 import { AddSecretResponse } from "@/models/mfa";
 import { Paginated } from "@/models/pagination";
 import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
+import { Notification } from "@/components/toaster";
 import { setNotification } from "@/services/notifications";
 import { settings } from "@/config";
 import { getSession } from "@/auth";
@@ -40,7 +41,7 @@ export async function getUsersPage(
   return await getItem<Paginated<User>>(url);
 }
 
-export async function addUser(user: ScimUser) {
+export async function addUser(user: ScimUser): Promise<Notification> {
   let url = `${IAM_API_URL}/scim/Users`;
   const body = JSON.stringify(user);
   const response = await authFetch(url, {
@@ -49,19 +50,21 @@ export async function addUser(user: ScimUser) {
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "User created" });
     revalidatePath("/users");
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot create user",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return { type: "success", message: "User created" };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    message: "Cannot create user",
+    subtitle: `Error ${response.status} ${msg}`,
+  };
 }
 
-export async function patchUser(userId: string, formData: FormData) {
+export async function patchUser(
+  userId: string,
+  formData: FormData
+): Promise<Notification> {
   const session = await getSession();
   const isMe = session?.user?.sub === userId;
   const op: ScimRequest = {
@@ -114,19 +117,14 @@ export async function patchUser(userId: string, formData: FormData) {
   });
 
   if (response.ok) {
-    await setNotification({ type: "success", message: "Saved changes" });
-  } else {
-    if (response.status == 409) {
-      const json = await response.json();
-      return { err: json.detail as string };
-    }
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot save user",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    revalidatePath(`/users/${isMe ? "me" : userId}`);
+    return { type: "success", message: "Edits saved" };
   }
+  return {
+    type: "error",
+    message: "Cannot save edits",
+    subtitle: `Error ${response.status}`,
+  };
 }
 
 export async function deleteUser(user: User) {
@@ -156,7 +154,7 @@ async function patchUserSSHKey(
   userId: string,
   sshKey: SSHKey,
   op: "add" | "remove"
-) {
+): Promise<Notification> {
   const body = {
     schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
     operations: [
@@ -178,27 +176,32 @@ async function patchUserSSHKey(
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
-    await setNotification({
+    revalidatePath(`/users/${userId}`);
+    return {
       type: "success",
       message: op === "add" ? "Key add" : "Key updated",
-    });
-    revalidatePath(`/users/${userId}`);
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: op === "add" ? "Cannot add key" : "Cannot update key",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    message: op === "add" ? "Cannot add key" : "Cannot update key",
+    subtitle: `Error ${response.status} ${msg}`,
+  };
 }
 
-export async function addSSHKey(userId: string, sshKey: SSHKey) {
-  await patchUserSSHKey(userId, sshKey, "add");
+export async function addSSHKey(
+  userId: string,
+  sshKey: SSHKey
+): Promise<Notification> {
+  return patchUserSSHKey(userId, sshKey, "add");
 }
 
-export async function deleteSSHKey(userId: string, sshKey: SSHKey) {
-  await patchUserSSHKey(userId, sshKey, "remove");
+export async function deleteSSHKey(
+  userId: string,
+  sshKey: SSHKey
+): Promise<Notification> {
+  return patchUserSSHKey(userId, sshKey, "remove");
 }
 
 export async function fetchAttributes(userId: string) {
@@ -206,7 +209,10 @@ export async function fetchAttributes(userId: string) {
   return await getItem<Attribute[]>(url);
 }
 
-export async function addAttribute(userId: string, attr: Attribute) {
+export async function addAttribute(
+  userId: string,
+  attr: Attribute
+): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/account/${userId}/attributes`;
   const body = JSON.stringify(attr);
   const response = await authFetch(url, {
@@ -218,13 +224,14 @@ export async function addAttribute(userId: string, attr: Attribute) {
   });
   if (response.ok) {
     revalidatePath(`/users/${userId}`);
+    return { type: "success", message: "Saved" };
   } else {
     const msg = await response.text();
-    await setNotification({
+    return {
       type: "error",
       message: "Cannot add attribute",
       subtitle: `Error ${response.status} ${msg}`,
-    });
+    };
   }
 }
 
@@ -245,7 +252,10 @@ export async function deleteAttribute(userId: string, attr: Attribute) {
   }
 }
 
-export async function changeMembershipEndTime(userId: string, date: string) {
+export async function changeMembershipEndTime(
+  userId: string,
+  date: string
+): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/account/${userId}/endTime`;
   const body = JSON.stringify({ endTime: date });
   const response = await authFetch(url, {
@@ -256,19 +266,18 @@ export async function changeMembershipEndTime(userId: string, date: string) {
     },
   });
   if (response.ok) {
-    await setNotification({
+    revalidatePath(`/users/${userId}`);
+    return {
       type: "success",
       message: "Membership end time updated",
-    });
-    revalidatePath(`/users/${userId}`);
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot update membership end date",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    message: "Cannot update membership end date",
+    subtitle: `Error ${response.status} ${msg}`,
+  };
 }
 
 export async function revokeMembershipEndTime(userId: string) {
@@ -374,23 +383,25 @@ export async function signAUP(userId: string) {
   }
 }
 
-export async function changePassword(user: User, formData: FormData) {
+export async function changePassword(
+  user: User,
+  formData: FormData
+): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/password-update`;
   const response = await authFetch(url, {
     method: "POST",
     body: formData,
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "Password changed" });
     revalidatePath(`/user/${user.id}`);
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Password not saved",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return { type: "success", message: "Password changed" };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    message: "Password not saved",
+    subtitle: `Error ${response.status} ${msg}`,
+  };
 }
 
 export async function statusMFA() {
@@ -414,40 +425,38 @@ export async function addMFASecret() {
   }
 }
 
-export async function enableMFA(formData: FormData) {
+export async function enableMFA(formData: FormData): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/authenticator-app/enable`;
   const response = await authFetch(url, {
     method: "POST",
     body: formData,
   });
   if (response.ok) {
-    await setNotification({
+    return {
       type: "success",
       message: "MFA successfully enabled",
-    });
-  } else {
-    const msg = await response.text();
-    return { error: { message: msg, status: response.status } };
+    };
   }
+  const error = `Error ${response.status}: ${await response.text()}`;
+  return { type: "error", message: "Cannot enable MFA", subtitle: error };
 }
 
-export async function disableMFA(formData: FormData) {
+export async function disableMFA(formData: FormData): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/authenticator-app/disable`;
   const response = await authFetch(url, {
     method: "POST",
     body: formData,
   });
   if (response.ok) {
-    await setNotification({
+    return {
       type: "success",
       message: "MFA successfully disabled",
-    });
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot disable MFA",
-      subtitle: `${msg}`,
-    });
+    };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    message: "Cannot disable MFA",
+    subtitle: `${msg}`,
+  };
 }

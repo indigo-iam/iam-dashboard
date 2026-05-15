@@ -10,6 +10,7 @@ import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
 import { Paginated } from "@/models/pagination";
 import { setNotification } from "@/services/notifications";
+import { Notification } from "@/components/toaster";
 
 const { IAM_API_URL } = settings;
 
@@ -35,7 +36,7 @@ export async function fetchPaginatedScopes(
   };
 }
 
-export async function addScope(scope: RawScope) {
+export async function addScope(scope: RawScope): Promise<Notification> {
   const url = `${IAM_API_URL}/api/scopes`;
   const response = await authFetch(url, {
     method: "POST",
@@ -43,37 +44,35 @@ export async function addScope(scope: RawScope) {
     headers: { "content-type": "application/json" },
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "Scope added" });
     revalidatePath("/scopes");
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot add scope",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return { type: "success", message: "Scope added" };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    message: "Cannot add scope",
+    subtitle: `Error ${response.status} ${msg}`,
+  };
 }
 
-export async function deleteScope(scope: Scope) {
+export async function deleteScope(scope: Scope): Promise<Notification> {
   const url = `${IAM_API_URL}/api/scopes/${scope.id}`;
   const response = await authFetch(url, {
     method: "DELETE",
   });
   if (response.ok) {
-    setNotification({ type: "success", message: "Scope deleted" });
     revalidatePath("/scopes");
-  } else {
-    const msg = await response.text();
-    setNotification({
-      type: "error",
-      message: "Cannot delete scope",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return { type: "success", message: "Scope deleted" };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    message: "Cannot delete scope",
+    subtitle: `Error ${response.status} ${msg}`,
+  };
 }
 
-export async function editScope(scope: Scope) {
+export async function editScope(scope: Scope): Promise<Notification> {
   const url = `${IAM_API_URL}/api/scopes/${scope.id}`;
   const response = await authFetch(url, {
     method: "PUT",
@@ -81,14 +80,13 @@ export async function editScope(scope: Scope) {
     body: JSON.stringify(scope),
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "Scope saved" });
     revalidatePath("/scopes");
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot save scope",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return { type: "success", message: "Scope saved" };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    message: "Cannot save scope",
+    subtitle: `Error ${response.status} ${msg}`,
+  };
 }

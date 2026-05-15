@@ -29,16 +29,17 @@ export default function ConfirmModal(props: Readonly<ConfirmModal>) {
     ...modalProps
   } = props;
 
-  const action = async () => {
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
     onConfirm?.();
-  };
+  }
 
   const confirmText = confirmButtonText ?? "Confirm";
   const cancelText = cancelButtonText ?? "Cancel";
 
   return (
     <Modal {...modalProps}>
-      <Form action={action}>
+      <Form onSubmit={submit}>
         <ModalBody>{children}</ModalBody>
         <ModalFooter>
           <Button

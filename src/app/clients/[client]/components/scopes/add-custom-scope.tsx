@@ -8,6 +8,7 @@ import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { InputList } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter } from "@/components/modal";
+import { toaster } from "@/components/toaster";
 import { Client } from "@/models/client";
 import { editClient } from "@/services/clients";
 import { useState } from "react";
@@ -21,16 +22,20 @@ type AddCustomScopeModalProps = {
 
 export function AddCustomScopeModal(props: Readonly<AddCustomScopeModalProps>) {
   const { client, isAdmin, show, onClose } = props;
-  const action = async (formData: FormData) => {
+  
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const newScope = formData.getAll("scope") as string[];
     const scopes = (client.scope?.split(" ") ?? []).concat(newScope);
     const scope = scopes.join(" ");
-    await editClient({ ...client, scope }, isAdmin);
+    const res = await editClient({ ...client, scope }, isAdmin);
+    toaster.send(res);
     onClose();
   };
   return (
     <Modal show={show} onClose={onClose} title="New custom scope">
-      <Form action={action}>
+      <Form onSubmit={submit}>
         <ModalBody>
           <Field>
             <Label>Enter one or more scope</Label>

@@ -23,14 +23,12 @@ export function EnableMFAModal(props: Readonly<MFAModalProps>) {
   const { show, onClose } = props;
   const [mfa, setMfa] = useState<AddSecretResponse>();
 
-  async function action(formData: FormData) {
-    const response = await enableMFA(formData);
-    if (response?.error) {
-      const { message, status } = response.error;
-      toaster.error("Cannot enable MFA", `${message}, status: ${status}`);
-    } else {
-      onClose();
-    }
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const res = await enableMFA(formData);
+    toaster.send(res);
+    onClose();
   }
 
   useEffect(() => {
@@ -52,7 +50,7 @@ export function EnableMFAModal(props: Readonly<MFAModalProps>) {
 
   return (
     <Modal show={show} onClose={onClose} title="Enable authenticator">
-      <Form action={action}>
+      <Form onSubmit={submit}>
         <ModalBody>
           <div className="flex flex-col gap-4">
             <p>

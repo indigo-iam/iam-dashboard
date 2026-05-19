@@ -4,7 +4,7 @@ import {
   enableAdminMode,
   disableAdminMode,
   testUser,
-} from "./auth.fixture";
+} from "./fixture";
 
 /*
  * Administrator

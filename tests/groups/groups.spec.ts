@@ -1,4 +1,9 @@
-import { testAdmin, expect, enableAdminMode, testUser } from "./auth.fixture";
+import {
+  testAdmin,
+  expect,
+  enableAdminMode,
+  testUser,
+} from "../auth/fixture";
 import crypto from "node:crypto";
 
 function sha256(s: string) {

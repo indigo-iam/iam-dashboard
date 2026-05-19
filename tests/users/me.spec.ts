@@ -2,8 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { expect, test, TEST_USER, ADMIN_USER } from "./auth.fixture";
-import { changeTabPanel, dismissToast } from "./utils";
+import { expect, test, TEST_USER, ADMIN_USER } from "../auth/fixture";
+import { changeTabPanel, dismissToast } from "../utils";
 
 // Since multiple browsers can write user information at the same time for the
 // same user, run this tests serially to avoid race conditions.

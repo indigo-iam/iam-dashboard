@@ -31,7 +31,6 @@ export default function DeleteManagedGroupModal(
       confirmButtonText="Delete Group"
       onConfirm={handleConfirm}
       title="Delete Group"
-      data-testid="modal"
       danger
     >
       Are you sure you want to delete group <b>{group.name}</b>?

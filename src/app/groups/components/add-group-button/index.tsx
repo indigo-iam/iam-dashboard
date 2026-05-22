@@ -75,7 +75,6 @@ export default function AddGroupButton(props: Readonly<AddGroupButtonProps>) {
         show={show}
         onClose={close}
         title="Create new group"
-        data-testid="modal"
       >
         <AddGroupForm onClose={close} onGroupAdded={onGroupAdded} />
       </Modal>

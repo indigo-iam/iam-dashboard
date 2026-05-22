@@ -30,7 +30,6 @@ export default function DeleteSubgroupModal(
       confirmButtonText="Delete"
       onConfirm={handleConfirm}
       title={`Delete subgroup '${groupRef.display}'`}
-      data-testid="modal"
       danger={true}
     >
       Are you sure you want to delete subgroup <b>{groupRef.display}</b>?

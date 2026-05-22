@@ -98,6 +98,7 @@ function Icon(props: Readonly<IconProps>) {
         <CheckCircleIcon
           key="check-icon"
           className="text-success size-6 flex-none"
+          aria-label="Success"
         />
       );
     case "warning":
@@ -105,6 +106,7 @@ function Icon(props: Readonly<IconProps>) {
         <ExclamationTriangleIcon
           key="danger-icon"
           className="text-warning size-6 flex-none"
+          aria-label="Warning"
         />
       );
     case "error":
@@ -112,6 +114,7 @@ function Icon(props: Readonly<IconProps>) {
         <ExclamationCircleIcon
           key="danger-circle-icon"
           className="text-danger size-6 flex-none"
+          aria-label=""
         />
       );
   }
@@ -130,6 +133,7 @@ function CustomToast(props: Readonly<CustomToastProps>) {
     <div
       className="overlay flex w-full items-center border px-3 py-2"
       data-testid="toast"
+      data-toast-type={type}
     >
       <div className="flex grow items-center gap-2">
         <Icon type={type} />

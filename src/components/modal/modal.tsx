@@ -19,7 +19,6 @@ export interface ModalProps {
   children?: ReactNode;
   show: boolean;
   onClose: () => void;
-  "data-testid"?: string;
 }
 
 export function Modal(props: Readonly<ModalProps>) {
@@ -31,7 +30,6 @@ export function Modal(props: Readonly<ModalProps>) {
         as="div"
         className="relative z-30 focus:outline-none"
         onClose={onClose}
-        data-testid={props["data-testid"]}
       >
         <DialogBackdrop
           transition
@@ -42,6 +40,7 @@ export function Modal(props: Readonly<ModalProps>) {
             <DialogPanel
               transition
               className="overlay z-50 w-full max-w-xl space-y-4 p-8 duration-300 ease-out data-closed:transform-[scale-95] data-closed:opacity-0"
+              data-testid="modal"
             >
               <DialogTitle as="div" className="flex text-xl font-bold">
                 <h2>{title}</h2>

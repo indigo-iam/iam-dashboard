@@ -5,7 +5,7 @@
 import { test as baseTest, expect, Page } from "@playwright/test";
 export { expect } from "@playwright/test";
 
-type UserInfo = {
+export type UserInfo = {
   user: string;
   password: string;
   firstName: string;
@@ -13,7 +13,7 @@ type UserInfo = {
   email: string;
 };
 
-const ADMIN_USER: UserInfo = {
+export const ADMIN_USER: UserInfo = {
   user: "admin",
   password: "password",
   firstName: "Admin",
@@ -21,7 +21,7 @@ const ADMIN_USER: UserInfo = {
   email: "1_admin@iam.test",
 };
 
-const TEST_USER: UserInfo = {
+export const TEST_USER: UserInfo = {
   user: "test",
   password: "password",
   firstName: "Test",
@@ -65,7 +65,22 @@ async function logout(page: Page) {
   await page.waitForURL("/login");
 }
 
-export const testAdmin = baseTest.extend<{ signedUpPage: Page }>({
+export type TestOptions = {
+  signedUpPage: Page;
+  user: UserInfo;
+};
+
+export const test = baseTest.extend<TestOptions>({
+  user: [TEST_USER, {option: true}], // fallback value
+  signedUpPage: async ({ page, user }, use) => {
+    await login(page, user);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    await use(page);
+    await logout(page);
+  },
+});
+
+export const testAdmin = baseTest.extend<TestOptions>({
   signedUpPage: async ({ page }, use) => {
     await login(page, ADMIN_USER);
     // eslint-disable-next-line react-hooks/rules-of-hooks

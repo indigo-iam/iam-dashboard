@@ -6,7 +6,7 @@
 
 import { Button } from "@/components/buttons";
 import { Checkbox, Field, Form } from "@/components/form";
-import { Modal, ModalBody, ModalFooter } from "@/components/modal";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { Client, Scope } from "@/models/client";
 import { editClient } from "@/services/clients";
@@ -38,7 +38,8 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
   }
 
   return (
-    <Modal show={show} onClose={onClose} title="Add system scopes">
+    <Modal show={show} onClose={onClose}>
+      <ModalHeader onClose={onClose}>Add system scopes</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody className="p-0">
           <ul>

@@ -5,7 +5,13 @@
 "use client";
 
 import { Form, Field, Description, Label } from "@/components/form";
-import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalProps,
+} from "@/components/modal";
 import { Input } from "@/components/inputs";
 import { Button } from "@/components/buttons";
 import { AUP } from "@/models/aup";
@@ -36,7 +42,10 @@ export default function EditModal(props: Readonly<EditModalProps>) {
   }
 
   return (
-    <Modal title="Edit AUP for this organization" show={show} onClose={onClose}>
+    <Modal show={show} onClose={onClose}>
+      <ModalHeader onClose={onClose}>
+        Edit AUP for this organization
+      </ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>

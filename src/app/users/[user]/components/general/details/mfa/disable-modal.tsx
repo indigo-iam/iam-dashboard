@@ -7,7 +7,7 @@
 import { Button } from "@/components/buttons";
 import { Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { Modal,ModalBody, ModalFooter } from "@/components/modal";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { disableMFA } from "@/services/users";
 
@@ -28,7 +28,8 @@ export function DisableMFAModal(props: Readonly<DisableMFAModalProps>) {
   }
 
   return (
-    <Modal show={show} onClose={onClose} title="Disable MFA">
+    <Modal show={show} onClose={onClose}>
+      <ModalHeader onClose={onClose}>Disable MFA</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <p>

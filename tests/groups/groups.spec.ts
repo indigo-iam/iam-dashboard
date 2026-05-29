@@ -1,9 +1,4 @@
-import {
-  testAdmin,
-  expect,
-  enableAdminMode,
-  testUser,
-} from "../auth/fixture";
+import { testAdmin, expect, enableAdminMode, testUser } from "../auth/fixture";
 import crypto from "node:crypto";
 
 function sha256(s: string) {
@@ -32,7 +27,7 @@ testAdmin("Admin can create and delete a group", async ({ signedUpPage }) => {
     await expect(page.getByText("Create new group")).toBeVisible();
     // use hashes in order to have an exact 1 match from the search bar
     const groupName = groupNameByIndex(testAdmin.info().workerIndex);
-    await page.getByLabel("Group name").fill(groupName);
+    await page.getByLabel("Group name").locator("visible=true").fill(groupName);
     await page.getByRole("button", { name: "Add group" }).click();
     const toast = page.getByTestId("toast").first();
     await expect(toast.getByText("Group created")).toBeVisible();
@@ -63,7 +58,7 @@ testAdmin("Admin can create and delete a group", async ({ signedUpPage }) => {
     const deleteOption = page.getByTestId("delete-group-opt");
     await expect(deleteOption).toBeVisible();
     await deleteOption.click();
-    await page.getByRole("button", { name: "Delete" }).click();
+    await page.getByRole("button", { name: "Delete" }).click({ delay: 300 });
     const toast = page.getByTestId("toast").first();
     await expect(toast).toBeVisible();
     await expect(toast.getByText("Group deleted")).toBeVisible();

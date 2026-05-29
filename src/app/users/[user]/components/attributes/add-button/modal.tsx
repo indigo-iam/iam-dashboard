@@ -7,7 +7,13 @@
 import { Button } from "@/components/buttons";
 import { Form, Field, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalProps,
+} from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { User } from "@/models/scim";
 import { addAttribute } from "@/services/users";
@@ -33,7 +39,8 @@ export default function AddAttributeModal(
   }
 
   return (
-    <Modal {...modalProps} title="Add user attribute">
+    <Modal {...modalProps}>
+      <ModalHeader onClose={modalProps.onClose}>Add user attribute</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>

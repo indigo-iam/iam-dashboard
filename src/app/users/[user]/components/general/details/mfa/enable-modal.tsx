@@ -8,7 +8,7 @@ import Image from "next/image";
 import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { Modal, ModalBody, ModalFooter } from "@/components/modal";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { AddSecretResponse } from "@/models/mfa";
 import { addMFASecret, enableMFA } from "@/services/users";
 import { toast } from "@/components/toaster";
@@ -49,7 +49,8 @@ export function EnableMFAModal(props: Readonly<MFAModalProps>) {
   }, [show]);
 
   return (
-    <Modal show={show} onClose={onClose} title="Enable authenticator">
+    <Modal show={show} onClose={onClose}>
+      <ModalHeader onClose={onClose}>Enable authenticator</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <div className="flex flex-col gap-4">

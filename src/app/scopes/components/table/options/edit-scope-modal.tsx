@@ -6,7 +6,13 @@
 
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalProps,
+} from "@/components/modal";
 import { Scope } from "@/models/client";
 import { editScope } from "@/services/scopes";
 import { Button } from "@/components/buttons";
@@ -32,7 +38,8 @@ export default function EditScopeModal(props: Readonly<EditScopeModalProps>) {
   }
 
   return (
-    <Modal title="Edit scope" show={show} onClose={onClose}>
+    <Modal show={show} onClose={onClose}>
+      <ModalHeader onClose={onClose}>Edit scope</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>

@@ -7,7 +7,7 @@
 import { Button } from "@/components/buttons";
 import { Form } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { Modal, ModalBody, ModalFooter } from "@/components/modal";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { User } from "@/models/scim";
 import { changeMembershipEndTime } from "@/services/users";
@@ -40,7 +40,8 @@ export function EditExpirationDate(props: Readonly<EditExpirationDateProps>) {
       <Button className="btn-secondary" onClick={open}>
         Edit expiration date
       </Button>
-      <Modal show={show} onClose={close} title="Edit expiration date">
+      <Modal show={show} onClose={close}>
+        <ModalHeader onClose={close}>Edit expiration date</ModalHeader>
         <Form onSubmit={submit}>
           <ModalBody>
             <p className="flex flex-col">

@@ -7,7 +7,13 @@
 import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalProps,
+} from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { User } from "@/models/scim";
 import { changePassword } from "@/services/users";
@@ -28,6 +34,7 @@ function ModalPassword(props: Readonly<ModalPasswordProps>) {
 
   return (
     <Modal {...modalProps}>
+      <ModalHeader onClose={modalProps.onClose}>Change password</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>
@@ -55,7 +62,7 @@ function ModalPassword(props: Readonly<ModalPasswordProps>) {
         </ModalBody>
         <ModalFooter>
           <Button
-            className="tertiary"
+            className="btn-tertiary"
             type="reset"
             onClick={modalProps.onClose}
           >
@@ -84,12 +91,7 @@ export function ResetPassword(props: Readonly<ResetPasswordProps>) {
       <Button className="btn-secondary" onClick={open}>
         Reset password
       </Button>
-      <ModalPassword
-        user={user}
-        show={show}
-        onClose={close}
-        title="Change password"
-      />
+      <ModalPassword user={user} show={show} onClose={close} />
     </>
   );
 }

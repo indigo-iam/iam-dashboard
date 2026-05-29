@@ -5,7 +5,7 @@
 "use client";
 
 import { Button } from "@/components/buttons";
-import { Modal, ModalBody, ModalFooter } from "@/components/modal";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { Field, Form, Label } from "@/components/form";
 import { Textarea } from "@/components/textarea";
 import { GroupRequest } from "@/models/group-requests";
@@ -33,7 +33,8 @@ export default function RejectRequestModalProps(
   }
 
   return (
-    <Modal show={show} onClose={onClose} title="Reject group request">
+    <Modal show={show} onClose={onClose}>
+      <ModalHeader onClose={onClose}>Reject group request</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <p>

@@ -4,9 +4,15 @@
 
 import { Button } from "@/components/buttons";
 import { Form } from "@/components/form";
-import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import {
+  Modal,
+  ModalHeader,
+  ModalFooter,
+  ModalProps,
+} from "@/components/modal";
 
 interface ConfirmModal extends ModalProps {
+  title?: string;
   onConfirm?: () => void;
   onCancel?: () => void;
   children?: React.ReactNode;
@@ -38,8 +44,9 @@ export default function ConfirmModal(props: Readonly<ConfirmModal>) {
 
   return (
     <Modal {...modalProps}>
+      <ModalHeader onClose={modalProps.onClose}>{modalProps.title}</ModalHeader>
       <Form onSubmit={submit}>
-        <ModalBody>{children}</ModalBody>
+        {children}
         <ModalFooter>
           <Button
             className="btn-tertiary"

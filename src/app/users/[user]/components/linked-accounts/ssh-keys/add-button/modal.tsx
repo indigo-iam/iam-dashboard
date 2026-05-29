@@ -7,7 +7,13 @@
 import { Button } from "@/components/buttons";
 import { Form, Field, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalProps,
+} from "@/components/modal";
 import { Textarea } from "@/components/textarea";
 import { toast } from "@/components/toaster";
 import { SSHKey } from "@/models/indigo-user";
@@ -34,7 +40,8 @@ export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
   }
 
   return (
-    <Modal {...modalProps} title="Add SSH Key">
+    <Modal {...modalProps}>
+      <ModalHeader onClose={modalProps.onClose}>Add SSH Key</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>

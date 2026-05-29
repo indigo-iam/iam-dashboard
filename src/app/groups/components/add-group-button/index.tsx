@@ -7,7 +7,7 @@
 import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { Modal, ModalBody, ModalFooter } from "@/components/modal";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { addGroup } from "@/services/groups";
 import { PlusIcon } from "@heroicons/react/24/outline";
@@ -71,11 +71,8 @@ export default function AddGroupButton(props: Readonly<AddGroupButtonProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Modal
-        show={show}
-        onClose={close}
-        title="Create new group"
-      >
+      <Modal show={show} onClose={close}>
+        <ModalHeader onClose={close}>Create new group</ModalHeader>
         <AddGroupForm onClose={close} onGroupAdded={onGroupAdded} />
       </Modal>
       <Button className="btn-secondary" data-testid="add-group" onClick={open}>

@@ -7,7 +7,7 @@
 import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { InputList } from "@/components/inputs";
-import { Modal, ModalBody, ModalFooter } from "@/components/modal";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { Client } from "@/models/client";
 import { editClient } from "@/services/clients";
@@ -32,9 +32,10 @@ export function AddCustomScopeModal(props: Readonly<AddCustomScopeModalProps>) {
     const res = await editClient({ ...client, scope }, isAdmin);
     toast.toast(res);
     onClose();
-  };
+  }
   return (
-    <Modal show={show} onClose={onClose} title="New custom scope">
+    <Modal show={show} onClose={onClose}>
+      <ModalHeader onClose={onClose}>New custom scope</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>

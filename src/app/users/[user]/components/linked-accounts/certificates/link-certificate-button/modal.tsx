@@ -7,7 +7,13 @@
 import { Button } from "@/components/buttons";
 import { Field, Form, Label, Select } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalProps,
+} from "@/components/modal";
 import { Textarea } from "@/components/textarea";
 import { toast } from "@/components/toaster";
 import { User } from "@/models/scim";
@@ -106,7 +112,8 @@ export default function LinkCertificateModal(
     close();
   }
   return (
-    <Modal show={show} onClose={close} title="Request Certificate Linking">
+    <Modal show={show} onClose={close}>
+      <ModalHeader onClose={close}>Request Certificate Linking</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>

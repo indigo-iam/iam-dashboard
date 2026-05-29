@@ -7,7 +7,13 @@
 import { Button } from "@/components/buttons";
 import { Form, Description, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalProps,
+} from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { createAUP } from "@/services/aup";
 import { Field } from "@headlessui/react";
@@ -41,11 +47,10 @@ export default function CreateModal(props: Readonly<CreateModalProps>) {
   }
 
   return (
-    <Modal
-      title="Create the Acceptable Usage Policy for this organization"
-      show={show}
-      onClose={onClose}
-    >
+    <Modal show={show} onClose={onClose}>
+      <ModalHeader onClose={onClose}>
+        Create the Acceptable Usage Policy for this organization
+      </ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>

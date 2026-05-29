@@ -4,7 +4,7 @@
 
 import { SearchUsers } from "@/app/components/search-users";
 import { Button } from "@/components/buttons";
-import { Modal, ModalBody, ModalFooter } from "@/components/modal";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { Client } from "@/models/client";
 import { User } from "@/models/scim";
 import { addOwner } from "@/services/clients";
@@ -27,7 +27,8 @@ export function AddOwnerModal(props: Readonly<AddOwnerModalProps>) {
     modalProps.onClose();
   };
   return (
-    <Modal {...modalProps} title="Add client owner">
+    <Modal {...modalProps}>
+      <ModalHeader onClose={modalProps.onClose}>Add client owner</ModalHeader>
       <ModalBody>
         {user ? (
           <p className="py-2">

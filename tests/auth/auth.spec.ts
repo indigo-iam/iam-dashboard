@@ -71,7 +71,9 @@ testAdmin(
 
     await testAdmin.step("login", async () => {
       await page.goto("./");
-      await expect(page.getByLabel("Username")).toHaveValue("admin");
+      await expect(
+        page.getByLabel("Username").locator("visible=true")
+      ).toHaveValue("admin");
     });
 
     await testAdmin.step("enable admin mode", async () => {
@@ -201,7 +203,9 @@ testUser("User cannot see privileged pages", async ({ signedUpPage }) => {
 testUser("User cannot enable admin mode", async ({ signedUpPage }) => {
   await testUser.step("login", async () => {
     await signedUpPage.goto("./");
-    await expect(signedUpPage.getByLabel("Username")).toHaveValue("test");
+    await expect(
+      signedUpPage.getByLabel("Username").locator("visible=true")
+    ).toHaveValue("test");
   });
 
   await testUser.step("try enabling admin mode", async () => {

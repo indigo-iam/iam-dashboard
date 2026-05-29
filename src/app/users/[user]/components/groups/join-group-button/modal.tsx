@@ -7,7 +7,13 @@
 import { SearchGroups } from "@/app/components/search-groups";
 import { Form, Field, Label, Description } from "@/components/form";
 import { Button } from "@/components/buttons";
-import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import {
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  ModalProps,
+} from "@/components/modal";
 import { Textarea } from "@/components/textarea";
 import { toast } from "@/components/toaster";
 import { JoinGroupRequest } from "@/models/group-requests";
@@ -80,11 +86,12 @@ function MotivationField(props: Readonly<MotivationFieldProps>) {
 
 export interface JoinGroupModalProps extends ModalProps {
   user: User;
+  title: string;
   isAdmin?: boolean;
 }
 
 export const JoinGroupModal = (props: JoinGroupModalProps) => {
-  let { user, onClose, isAdmin, ...modalProps } = props;
+  let { user, title, onClose, isAdmin, ...modalProps } = props;
   const [selected, setSelected] = useState<Group>();
 
   const selectGroup = (group: Group) => {
@@ -116,6 +123,7 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
 
   return (
     <Modal {...modalProps} onClose={clearAndClose}>
+      <ModalHeader onClose={clearAndClose}>{title}</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           {selected ? (

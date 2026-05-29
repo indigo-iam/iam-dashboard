@@ -7,7 +7,13 @@
 import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalProps,
+} from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { ScimUser } from "@/models/scim";
 import { addUser } from "@/services/users";
@@ -113,10 +119,12 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
 interface AddUserModalProps extends ModalProps {
   onUserAdded?: () => void;
 }
+
 function AddUserModal(props: Readonly<AddUserModalProps>) {
   const { onUserAdded, ...modalProps } = props;
   return (
     <Modal {...modalProps}>
+      <ModalHeader onClose={modalProps.onClose}>Add new user</ModalHeader>
       <AddUserForm onClose={modalProps.onClose} onUserAdded={onUserAdded} />
     </Modal>
   );
@@ -140,12 +148,7 @@ export default function AddUser(props: Readonly<AddUserProps>) {
 
   return (
     <>
-      <AddUserModal
-        show={show}
-        onClose={close}
-        onUserAdded={onUserAdded}
-        title="New user"
-      />
+      <AddUserModal show={show} onClose={close} onUserAdded={onUserAdded} />
       <Button className="btn-secondary" onClick={open}>
         <UserPlusIcon className="size-4" />
         New user

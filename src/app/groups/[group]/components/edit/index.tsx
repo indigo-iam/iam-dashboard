@@ -9,6 +9,7 @@ import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import {
   Modal,
+  ModalHeader,
   ModalBody,
   ModalFooter,
   type ModalProps,
@@ -21,6 +22,7 @@ import { useState } from "react";
 
 interface EditModalProps extends ModalProps {
   group: Group;
+  title: string;
 }
 
 function EditModal(props: Readonly<EditModalProps>) {
@@ -39,6 +41,7 @@ function EditModal(props: Readonly<EditModalProps>) {
 
   return (
     <Modal {...modalProps}>
+      <ModalHeader onClose={modalProps.onClose}>{modalProps.title}</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>

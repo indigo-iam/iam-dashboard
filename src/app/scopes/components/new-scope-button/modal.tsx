@@ -17,7 +17,13 @@ import {
   SelectOption,
 } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalProps,
+} from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { addScope } from "@/services/scopes";
 
@@ -52,7 +58,8 @@ export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
   }
 
   return (
-    <Modal show={show} onClose={onClose} title="Add new system scope">
+    <Modal show={show} onClose={onClose}>
+      <ModalHeader onClose={onClose}>Add new system scope</ModalHeader>
       <Form onSubmit={submit} onReset={() => setScopeType(options[0])}>
         <ModalBody className="space-y-4 pb-4">
           <p>

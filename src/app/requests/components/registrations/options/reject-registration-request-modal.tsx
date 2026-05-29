@@ -8,7 +8,7 @@ import Link from "next/link";
 
 import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
-import { Modal, ModalBody, ModalFooter } from "@/components/modal";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { Textarea } from "@/components/textarea";
 import { Registration } from "@/models/registration";
 import { rejectRegistrationRequest } from "@/services/registration";
@@ -35,11 +35,10 @@ export default function RejectRegistrationRequestModal(
   }
 
   return (
-    <Modal
-      show={show}
-      onClose={onClose}
-      title="Reject user registration request"
-    >
+    <Modal show={show} onClose={onClose}>
+      <ModalHeader onClose={onClose}>
+        Reject user registration request
+      </ModalHeader>
       <Form id="reject-registration-form" onSubmit={submit}>
         <ModalBody>
           <p>

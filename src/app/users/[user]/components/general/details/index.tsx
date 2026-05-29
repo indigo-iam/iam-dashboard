@@ -59,51 +59,61 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
           <p>Last modified {modified}.</p>
         </div>
       </div>
-      <Form className="w-full space-y-4 lg:w-2/3" onSubmit={submit}>
-        <div className="flex flex-wrap gap-4">
-          <Field className="flex max-w-full grow flex-col">
-            <Label htmlFor="given-name" data-required>
-              First Name
+      <div className="w-full space-y-4 lg:w-2/3">
+        <Form className="space-y-4" onSubmit={submit}>
+          <div className="flex flex-wrap gap-4">
+            <Field className="flex max-w-full grow flex-col">
+              <Label htmlFor="given-name" data-required>
+                First Name
+              </Label>
+              <Input
+                required
+                type="text"
+                id="given-name"
+                name="given-name"
+                minLength={2}
+                defaultValue={user.name?.givenName}
+              />
+            </Field>
+            <Field className="flex max-w-full grow flex-col">
+              <Label htmlFor="family-name" data-required>
+                Last Name
+              </Label>
+              <Input
+                required
+                type="text"
+                id="family-name"
+                name="family-name"
+                minLength={2}
+                defaultValue={user.name?.familyName}
+              />
+            </Field>
+          </div>
+          <Field className="flex flex-col">
+            <Label htmlFor="username">Username</Label>
+            <Input name="username" defaultValue={user.userName} disabled />
+          </Field>
+          <Field className="flex flex-col">
+            <Label htmlFor="email" data-required>
+              Email
             </Label>
             <Input
               required
-              type="text"
-              id="given-name"
-              name="given-name"
-              minLength={2}
-              defaultValue={user.name?.givenName}
+              type="email"
+              id="email"
+              name="email"
+              defaultValue={user.emails?.[0].value}
             />
           </Field>
-          <Field className="flex max-w-full grow flex-col">
-            <Label htmlFor="family-name" data-required>
-              Last Name
-            </Label>
-            <Input
-              required
-              type="text"
-              id="family-name"
-              name="family-name"
-              minLength={2}
-              defaultValue={user.name?.familyName}
-            />
+          <Field className="flex justify-between">
+            <Button className="btn-tertiary" type="reset">
+              Cancel
+            </Button>
+            <Button className="btn-secondary" type="submit">
+              Save changes
+            </Button>
           </Field>
-        </div>
-        <Field className="flex flex-col">
-          <Label htmlFor="username">Username</Label>
-          <Input name="username" defaultValue={user.userName} disabled />
-        </Field>
-        <Field className="flex flex-col">
-          <Label htmlFor="email" data-required>
-            Email
-          </Label>
-          <Input
-            required
-            type="email"
-            id="email"
-            name="email"
-            defaultValue={user.emails?.[0].value}
-          />
-        </Field>
+        </Form>
         <Field className="col-span-full flex flex-col">
           <Label>Authentication</Label>
           <div className="flex flex-wrap gap-2">
@@ -111,15 +121,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
             <ResetPassword user={user} />
           </div>
         </Field>
-        <Field className="flex justify-between">
-          <Button className="btn-tertiary" type="reset">
-            Cancel
-          </Button>
-          <Button className="btn-secondary" type="submit">
-            Save changes
-          </Button>
-        </Field>
-      </Form>
+      </div>
     </div>
   );
 }

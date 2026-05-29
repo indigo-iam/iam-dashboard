@@ -7,7 +7,13 @@
 import { Button } from "@/components/buttons";
 import { Description, Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalProps,
+} from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { Group, GroupLabel } from "@/models/groups";
 import { addGroupLabel } from "@/services/groups";
@@ -17,6 +23,7 @@ import { useState } from "react";
 
 interface AddLabelModalProps extends ModalProps {
   group: Group;
+  title: string;
 }
 
 function AddLabelModal(props: Readonly<AddLabelModalProps>) {
@@ -44,6 +51,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
 
   return (
     <Modal {...modalProps}>
+      <ModalHeader onClose={modalProps.onClose}>{modalProps.title}</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Fieldset>

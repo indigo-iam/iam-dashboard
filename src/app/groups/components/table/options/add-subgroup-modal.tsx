@@ -7,7 +7,13 @@
 import { Button } from "@/components/buttons";
 import { Description, Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalProps,
+} from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { Group } from "@/models/groups";
 import { addSubgroup } from "@/services/groups";
@@ -35,7 +41,8 @@ export default function AddSubgroupModal(
     }
   }
   return (
-    <Modal {...modalProps} title="New subgroup">
+    <Modal {...modalProps}>
+      <ModalHeader onClose={modalProps.onClose}>New subgroup</ModalHeader>
       <Form id="add-subgroup-form" onSubmit={submit}>
         <ModalBody>
           <p>

@@ -3,12 +3,12 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Button } from "@/components/buttons";
-import { Form } from "@/components/form";
 import {
   Modal,
   ModalHeader,
   ModalFooter,
   ModalProps,
+  ModalBody,
 } from "@/components/modal";
 
 interface ConfirmModal extends ModalProps {
@@ -34,8 +34,8 @@ export default function ConfirmModal(props: Readonly<ConfirmModal>) {
     ...modalProps
   } = props;
 
-  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function submit() {
+    modalProps.onClose();
     onConfirm?.();
   }
 
@@ -45,27 +45,25 @@ export default function ConfirmModal(props: Readonly<ConfirmModal>) {
   return (
     <Modal {...modalProps}>
       <ModalHeader onClose={modalProps.onClose}>{modalProps.title}</ModalHeader>
-      <Form onSubmit={submit}>
-        {children}
-        <ModalFooter>
-          <Button
-            className="btn-tertiary"
-            type="button"
-            onClick={onCancel ?? modalProps.onClose}
-          >
-            {cancelText}
-          </Button>
-          <Button
-            className="btn-primary data-[danger=true]:btn-danger"
-            type="submit"
-            data-danger={danger}
-            onClick={modalProps.onClose}
-            disabled={confirmButtonDisabled}
-          >
-            {confirmText}
-          </Button>
-        </ModalFooter>
-      </Form>
+      <ModalBody>{children}</ModalBody>
+      <ModalFooter>
+        <Button
+          className="btn-tertiary"
+          type="button"
+          onClick={onCancel ?? modalProps.onClose}
+        >
+          {cancelText}
+        </Button>
+        <Button
+          className="btn-primary data-[danger=true]:btn-danger"
+          type="submit"
+          data-danger={danger}
+          onClick={submit}
+          disabled={confirmButtonDisabled}
+        >
+          {confirmText}
+        </Button>
+      </ModalFooter>
     </Modal>
   );
 }

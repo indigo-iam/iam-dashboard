@@ -7,7 +7,7 @@
 import { Button } from "@/components/buttons";
 import { Form } from "@/components/form";
 import { TabPanel } from "@/components/tabs";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { Client } from "@/models/client";
 import { GrantType } from "@/models/openid-configuration";
 import { editClient } from "@/services/clients";
@@ -52,7 +52,7 @@ export default function GrantTypes(props: Readonly<GrantTypesProps>) {
     const redirect_uris = formData.getAll("redirect_uris") as string[];
     const requestBody: Client = { ...client, grant_types, redirect_uris };
     const res = await editClient(requestBody, isAdmin);
-    toaster.send(res);
+    toast.toast(res);
   }
 
   return (

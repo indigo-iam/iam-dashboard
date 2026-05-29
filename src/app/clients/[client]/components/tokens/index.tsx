@@ -7,7 +7,7 @@
 import { Button } from "@/components/buttons";
 import { Form } from "@/components/form";
 import { TabPanel } from "@/components/tabs";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { Client } from "@/models/client";
 
 import { TokensTimeout } from "./tokens-timeout";
@@ -27,7 +27,7 @@ export default function Tokens(props: Readonly<TokensProps>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const res = await updateClient(client, formData, isAdmin);
-    toaster.send(res);
+    toast.toast(res);
   }
 
   return (

@@ -6,6 +6,7 @@ import Link from "next/link";
 
 import ConfirmModal from "@/components/confirm-modal";
 import { ModalProps } from "@/components/modal";
+import { toast } from "@/components/toaster";
 import { Group } from "@/models/groups";
 import { ScimReference } from "@/models/scim";
 import { removeUserByRefFromGroup } from "@/services/groups";
@@ -22,7 +23,8 @@ export default function RemoveMemberFromGroupModal(
   const indigoGroup = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
   const description = indigoGroup.description;
   const action = async () => {
-    await removeUserByRefFromGroup(userRef, group);
+    const res = await removeUserByRefFromGroup(userRef, group);
+    toast.toast(res);
   };
 
   return (

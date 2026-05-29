@@ -7,8 +7,7 @@ import type { Metadata, Viewport } from "next";
 import { getSession, isUserAdmin } from "@/auth";
 import { Header } from "@/app/components/header";
 import { Sidebar } from "@/app/components/sidebar";
-import { ToasterPortal } from "@/components/toaster";
-import { getNotification } from "@/services/notifications";
+import { Toaster } from "@/components/toaster";
 import { LoadingProvider } from "@/components/loading";
 import "@/styles/main.css";
 
@@ -40,7 +39,6 @@ export default async function RootLayout(props: Readonly<RootLayoutProps>) {
   const hasRoleAdmin = session?.session.hasRoleAdmin;
   // avoid to check user's token if they are not logged in yet
   const isAdmin = hasRoleAdmin ? await isUserAdmin() : false;
-  const notification = await getNotification();
   return (
     <html lang="en">
       <body>
@@ -52,7 +50,7 @@ export default async function RootLayout(props: Readonly<RootLayoutProps>) {
               <Sidebar hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
               <div className="content">{children}</div>
             </main>
-            <ToasterPortal notification={notification} />
+            <Toaster />
           </LoadingProvider>
         </div>
       </body>

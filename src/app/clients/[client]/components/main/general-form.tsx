@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-"use client"
+"use client";
 
 import { ComputerDesktopIcon } from "@heroicons/react/24/outline";
 import { Client } from "@/models/client";
@@ -11,7 +11,7 @@ import { Button } from "@/components/buttons";
 import { Description, Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Textarea } from "@/components/textarea";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { dateToHuman } from "@/utils/dates";
 import { editClient } from "@/services/clients";
 
@@ -19,7 +19,6 @@ type GeneralFormProps = {
   client: Client;
   isAdmin: boolean;
 };
-
 
 export function GeneralForm(props: Readonly<GeneralFormProps>) {
   const { client, isAdmin } = props;
@@ -42,7 +41,7 @@ export function GeneralForm(props: Readonly<GeneralFormProps>) {
       policy_uri: formData.get("policy_uri") as string,
     };
     const res = await editClient(requestBody, isAdmin);
-    toaster.send(res);
+    toast.toast(res);
   }
 
   return (

@@ -9,7 +9,7 @@ import { Form, Field, Label, Description } from "@/components/form";
 import { Button } from "@/components/buttons";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Textarea } from "@/components/textarea";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { JoinGroupRequest } from "@/models/group-requests";
 import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
@@ -100,7 +100,8 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     if (isAdmin && selected) {
-      await addUserToGroup(selected, user);
+      const res = await addUserToGroup(selected, user);
+      toast.toast(res);
     } else {
       const req: JoinGroupRequest = {
         notes: formData.get("group-request-notes") as string,
@@ -108,7 +109,7 @@ export const JoinGroupModal = (props: JoinGroupModalProps) => {
         groupName: selected!.displayName,
       };
       const res = await submitGroupRequest(req);
-      toaster.send(res);
+      toast.toast(res);
     }
     clearAndClose();
   }

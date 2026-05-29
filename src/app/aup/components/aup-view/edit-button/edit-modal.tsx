@@ -10,7 +10,7 @@ import { Input } from "@/components/inputs";
 import { Button } from "@/components/buttons";
 import { AUP } from "@/models/aup";
 import { patchAUP } from "@/services/aup";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 
 interface EditModalProps extends ModalProps {
   aup: AUP;
@@ -31,7 +31,7 @@ export default function EditModal(props: Readonly<EditModalProps>) {
       signatureValidityInDays,
       aupRemindersInDays,
     });
-    toaster.send(res);
+    toast.toast(res);
     onClose();
   }
 

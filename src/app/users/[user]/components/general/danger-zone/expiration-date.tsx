@@ -8,7 +8,7 @@ import { Button } from "@/components/buttons";
 import { Form } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter } from "@/components/modal";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { User } from "@/models/scim";
 import { changeMembershipEndTime } from "@/services/users";
 import { useState } from "react";
@@ -28,7 +28,7 @@ export function EditExpirationDate(props: Readonly<EditExpirationDateProps>) {
     const formData = new FormData(event.currentTarget);
     const date = formData.get("end-date") as string;
     const res = await changeMembershipEndTime(user.id, date);
-    toaster.send(res);
+    toast.toast(res);
     close();
   }
 

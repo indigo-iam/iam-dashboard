@@ -10,7 +10,7 @@ import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { patchUser } from "@/services/users";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { User } from "@/models/scim";
 import { dateToHuman } from "@/utils/dates";
 import { ResetPassword } from "./reset-password";
@@ -29,7 +29,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const response = await patchUser(user.id, formData);
-    toaster.send(response);
+    toast.toast(response);
   }
 
   const created = user.meta?.created

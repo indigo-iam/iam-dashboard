@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
+import { toast } from "@/components/toaster";
 import { Group } from "@/models/groups";
 import { deleteGroup } from "@/services/groups";
 
@@ -20,7 +21,8 @@ export default function DeleteGroupModal(
   const description = indigoGroup.description;
 
   const handleConfirm = async () => {
-    await deleteGroup(group);
+    const response = await deleteGroup(group);
+    toast.toast(response);
     onClose();
     onDeleted?.();
   };

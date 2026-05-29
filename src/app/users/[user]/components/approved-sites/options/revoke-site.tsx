@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
+import { toast } from "@/components/toaster";
 import { Site } from "@/models/sites";
 import { revokeSite } from "@/services/sites";
 
@@ -15,7 +16,8 @@ type RevokeSiteProps = {
 export function RevokeSite(props: Readonly<RevokeSiteProps>) {
   const { site, show, onClose } = props;
   const action = async () => {
-    revokeSite(site.id.toString());
+    const res = await revokeSite(site.id.toString());
+    toast.toast(res);
   };
   return (
     <ConfirmModal

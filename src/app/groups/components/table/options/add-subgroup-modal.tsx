@@ -8,7 +8,7 @@ import { Button } from "@/components/buttons";
 import { Description, Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { Group } from "@/models/groups";
 import { addSubgroup } from "@/services/groups";
 
@@ -27,7 +27,7 @@ export default function AddSubgroupModal(
     const name = formData.get("name") as string;
     if (rootGroup) {
       const res = await addSubgroup(name, rootGroup);
-      toaster.send(res);
+      toast.toast(res);
       onAdded?.();
       modalProps.onClose();
     } else {

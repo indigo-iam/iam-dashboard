@@ -15,7 +15,6 @@ import { authFetch, getItem } from "@/utils/fetch";
 import { settings } from "@/config";
 import { Paginated } from "@/models/pagination";
 import { ScimReference, User } from "@/models/scim";
-import { setNotification } from "@/services/notifications";
 import { Notification } from "@/components/toaster";
 import {
   makeScimReferenceFromGroup,
@@ -108,13 +107,13 @@ export async function addGroup(groupName: string): Promise<Notification> {
   });
   if (response.ok) {
     revalidatePath("/groups");
-    return { type: "success", message: "Group created" };
+    return { type: "success", title: "Group created" };
   }
   const error = `Error ${response.status} ${await response.text()}`;
   return {
     type: "error",
-    message: "Cannot create group",
-    subtitle: error,
+    title: "Cannot create group",
+    description: error,
   };
 }
 
@@ -136,45 +135,45 @@ export async function editGroup(
   });
   if (response.ok) {
     revalidatePath(`/groups/${groupId}`);
-    return { type: "success", message: "Group edited" };
-  } else {
-    const { error } = await response.json();
-    return {
-      type: "error",
-      message: "Cannot edit group",
-      subtitle: error,
-    };
+    return { type: "success", title: "Group edited" };
   }
+  const { error } = await response.json();
+  return {
+    type: "error",
+    title: "Cannot edit group",
+    description: error,
+  };
 }
 
 export async function deleteGroup(group: Group) {
   const groupRef = makeScimReferenceFromGroup(group);
-  await deleteGroupByReference(groupRef);
+  return await deleteGroupByReference(groupRef);
 }
 
 export async function deleteManagedGroup(managedGroup: ManagedGroup) {
   const groupRef = makeScimReferenceFromManagedGroup(managedGroup);
-  await deleteGroupByReference(groupRef);
+  return await deleteGroupByReference(groupRef);
 }
 
-export async function deleteGroupByReference(groupRef: ScimReference) {
+export async function deleteGroupByReference(
+  groupRef: ScimReference
+): Promise<Notification> {
   const url = `${IAM_API_URL}/scim/Groups/${groupRef.value}`;
   const response = await authFetch(url, { method: "DELETE" });
   if (response.ok) {
-    await setNotification({
-      type: "info",
-      message: "Group deleted",
-      subtitle: `Group ${groupRef.display} has been deleted`,
-    });
     revalidatePath("/groups");
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot delete group",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return {
+      type: "info",
+      title: "Group deleted",
+      description: `Group ${groupRef.display} has been deleted`,
+    };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot delete group",
+    description: `Error ${response.status} ${msg}`,
+  };
 }
 
 export async function addSubgroup(
@@ -216,19 +215,22 @@ export async function addSubgroupByRef(
     revalidatePath("/groups");
     return {
       type: "success",
-      message: "Subgroup added",
-      subtitle: `Group ${groupName} has been added to parent group ${parentGroupRef.display}`,
+      title: "Subgroup added",
+      description: `Group ${groupName} has been added to parent group ${parentGroupRef.display}`,
     };
   }
   const msg = await response.text();
   return {
     type: "error",
-    message: "Cannot add subgroup",
-    subtitle: `Error ${response.status} ${msg}`,
+    title: "Cannot add subgroup",
+    description: `Error ${response.status} ${msg}`,
   };
 }
 
-export async function addUserToGroup(group: Group, user: User) {
+export async function addUserToGroup(
+  group: Group,
+  user: User
+): Promise<Notification> {
   const userRef = makeScimReferenceFromUser(user);
   const body = {
     schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
@@ -247,42 +249,41 @@ export async function addUserToGroup(group: Group, user: User) {
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
-    await setNotification({
-      type: "success",
-      message: "Member added",
-      subtitle: `User ${user.name?.formatted} has been added to group ${group.displayName}`,
-    });
     revalidatePath(`/groups/${group.id}`);
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot add user to group",
-      subtitle: `Error ${response.status}, ${msg}`,
-    });
+    return {
+      type: "success",
+      title: "Member added",
+      description: `User ${user.name?.formatted} has been added to group ${group.displayName}`,
+    };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot add user to group",
+    description: `Error ${response.status}, ${msg}`,
+  };
 }
 
 export async function removeUserByRefFromGroup(
   userRef: ScimReference,
   group: Group
-) {
+): Promise<Notification> {
   const groupRef = makeScimReferenceFromGroup(group);
-  await removeUserByRefFromGroupReference(userRef, groupRef);
+  return await removeUserByRefFromGroupReference(userRef, groupRef);
 }
 
 export async function removeUserFromGroupReference(
   user: User,
   groupRef: ScimReference
-) {
+): Promise<Notification> {
   const userRef = makeScimReferenceFromUser(user);
-  await removeUserByRefFromGroupReference(userRef, groupRef);
+  return await removeUserByRefFromGroupReference(userRef, groupRef);
 }
 
 export async function removeUserByRefFromGroupReference(
   userRef: ScimReference,
   groupRef: ScimReference
-) {
+): Promise<Notification> {
   const body = {
     operations: [
       {
@@ -300,20 +301,19 @@ export async function removeUserByRefFromGroupReference(
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
-    await setNotification({
-      type: "success",
-      message: "Member removed",
-      subtitle: `User ${userRef.display} has been removed from group ${groupRef.display}`,
-    });
     revalidatePath(`/groups/${groupRef.value}`);
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot remove user from group",
-      subtitle: `Error ${response.status}, ${msg}`,
-    });
+    return {
+      type: "success",
+      title: "Member removed",
+      description: `User ${userRef.display} has been removed from group ${groupRef.display}`,
+    };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot remove user from group",
+    description: `Error ${response.status}, ${msg}`,
+  };
 }
 
 // for some reason this API is not paginated
@@ -330,44 +330,48 @@ export async function fetchGroupManagers(groupId: string) {
   }
 }
 
-export async function assignGroupManager(group: Group, user: User) {
+export async function assignGroupManager(
+  group: Group,
+  user: User
+): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/account/${user.id}/managed-groups/${group.id}`;
   const response = await authFetch(url, {
     method: "POST",
   });
   if (response.ok) {
-    await setNotification({
-      type: "success",
-      message: "Success",
-      subtitle: `User ${user.displayName} has been assigned manager of group ${group.displayName}`,
-    });
     revalidatePath(`/groups/${group.id}`);
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot assign group manager",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return {
+      type: "success",
+      title: "Success",
+      description: `User ${user.displayName} has been assigned manager of group ${group.displayName}`,
+    };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot assign group manager",
+    description: `Error ${response.status} ${msg}`,
+  };
 }
 
-export async function revokeGroupManager(groupId: string, userId: string) {
+export async function revokeGroupManager(
+  groupId: string,
+  userId: string
+): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/account/${userId}/managed-groups/${groupId}`;
   const response = await authFetch(url, {
     method: "DELETE",
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "Success" });
     revalidatePath(`/groups/${groupId}`);
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot revoke group manager",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return { type: "success", title: "Success" };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot revoke group manager",
+    description: `Error ${response.status} ${msg}`,
+  };
 }
 
 export async function fetchManagedGroups(userId: string) {
@@ -390,13 +394,13 @@ export async function addGroupLabel(
   });
   if (response.ok) {
     revalidatePath(`/groups/${groupId}`);
-    return { type: "success", message: "Group label added" };
+    return { type: "success", title: "Group label added" };
   }
   const { error } = await response.json();
   return {
     type: "error",
-    message: "Cannot add group label",
-    subtitle: error,
+    title: "Cannot add group label",
+    description: error,
   };
 }
 
@@ -410,12 +414,12 @@ export async function deleteGroupLabel(
   });
   if (response.ok) {
     revalidatePath(`/groups/${groupId}`);
-    return { type: "success", message: "" };
+    return { type: "success", title: "" };
   }
   const { error } = await response.json();
   return {
     type: "error",
-    message: "Cannot delete label",
-    subtitle: error,
+    title: "Cannot delete label",
+    description: error,
   };
 }

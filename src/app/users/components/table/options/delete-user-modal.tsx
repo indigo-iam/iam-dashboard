@@ -4,6 +4,7 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { type ModalProps } from "@/components/modal";
+import { toast } from "@/components/toaster";
 import { User } from "@/models/scim";
 import { deleteUser } from "@/services/users";
 
@@ -15,7 +16,8 @@ interface DeleteUserModalProps extends ModalProps {
 export default function DeleteUserModal(props: Readonly<DeleteUserModalProps>) {
   const { user, onUserDeleted, ...modalProps } = props;
   const action = async () => {
-    await deleteUser(user);
+    const res = await deleteUser(user);
+    toast.toast(res);
   };
   return (
     <ConfirmModal

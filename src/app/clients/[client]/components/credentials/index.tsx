@@ -18,7 +18,7 @@ import {
   SelectOption,
 } from "@/components/form";
 import { TabPanel } from "@/components/tabs";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import {
   Client,
   CodeChallengeMethod,
@@ -80,7 +80,7 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
       ) as CodeChallengeMethod,
     };
     const res = await editClient(requestBody, isAdmin);
-    toaster.send(res);
+    toast.toast(res);
   }
 
   return (

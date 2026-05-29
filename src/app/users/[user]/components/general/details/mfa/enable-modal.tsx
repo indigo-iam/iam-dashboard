@@ -11,7 +11,7 @@ import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter } from "@/components/modal";
 import { AddSecretResponse } from "@/models/mfa";
 import { addMFASecret, enableMFA } from "@/services/users";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { useEffect, useState } from "react";
 
 type MFAModalProps = {
@@ -27,7 +27,7 @@ export function EnableMFAModal(props: Readonly<MFAModalProps>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const res = await enableMFA(formData);
-    toaster.send(res);
+    toast.toast(res);
     onClose();
   }
 
@@ -41,8 +41,8 @@ export function EnableMFAModal(props: Readonly<MFAModalProps>) {
         setMfa(response.result);
       }
       if (response.error) {
-        const { message, status } = response.error;
-        toaster.error("Cannot enable MFA", `${message}, status: ${status}`);
+        const { title, status } = response.error;
+        toast.error("Cannot enable MFA", `${title}, status: ${status}`);
       }
     };
     f();

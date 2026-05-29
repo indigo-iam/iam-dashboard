@@ -8,7 +8,7 @@ import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { InputList } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter } from "@/components/modal";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { Client } from "@/models/client";
 import { editClient } from "@/services/clients";
 import { useState } from "react";
@@ -22,7 +22,7 @@ type AddCustomScopeModalProps = {
 
 export function AddCustomScopeModal(props: Readonly<AddCustomScopeModalProps>) {
   const { client, isAdmin, show, onClose } = props;
-  
+
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -30,7 +30,7 @@ export function AddCustomScopeModal(props: Readonly<AddCustomScopeModalProps>) {
     const scopes = (client.scope?.split(" ") ?? []).concat(newScope);
     const scope = scopes.join(" ");
     const res = await editClient({ ...client, scope }, isAdmin);
-    toaster.send(res);
+    toast.toast(res);
     onClose();
   };
   return (

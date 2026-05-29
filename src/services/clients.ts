@@ -9,7 +9,6 @@ import { Notification } from "@/components/toaster";
 import { Client, ClientRequest } from "@/models/client";
 import { Paginated } from "@/models/pagination";
 import { User } from "@/models/scim";
-import { setNotification } from "@/services/notifications";
 import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -30,7 +29,7 @@ export async function registerClient(
 
   if (response.ok) {
     return {
-      notification: { type: "success", message: "Client created" },
+      notification: { type: "success", title: "Client created" },
       payload: await response.json(),
     };
   }
@@ -38,8 +37,8 @@ export async function registerClient(
   return {
     notification: {
       type: "error",
-      message: "Cannot create client",
-      subtitle: `Error ${response.status} ${msg}`,
+      title: "Cannot create client",
+      description: `Error ${response.status} ${msg}`,
     },
   };
 }
@@ -51,7 +50,10 @@ export async function getClient(clientId: string, isAdmin = false) {
   return await getItem<Client>(url);
 }
 
-export async function deleteClient(clientId: string, isAdmin?: boolean) {
+export async function deleteClient(
+  clientId: string,
+  isAdmin?: boolean
+): Promise<Notification> {
   const url = isAdmin
     ? `${IAM_API_URL}/iam/api/clients/${clientId}`
     : `${IAM_API_URL}/iam/api/client-registration/${clientId}`;
@@ -59,16 +61,15 @@ export async function deleteClient(clientId: string, isAdmin?: boolean) {
     method: "DELETE",
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "Client deleted" });
     redirect("/clients");
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot delete client",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return { type: "success", title: "Client deleted" };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot delete client",
+    description: `Error ${response.status} ${msg}`,
+  };
 }
 
 export async function editClient(
@@ -88,51 +89,48 @@ export async function editClient(
     revalidatePath(`/clients/${client_id}`);
     return {
       type: "success",
-      message: "Client saved",
-      subtitle: `Client '${client.client_name}'' has been modified`,
-    };
-  } else {
-    const { error } = await response.json();
-    return {
-      type: "error",
-      message: "Could not save client",
-      subtitle: error,
+      title: "Client saved",
+      description: `Client '${client.client_name}'' has been modified`,
     };
   }
+  const { error } = await response.json();
+  return {
+    type: "error",
+    title: "Could not save client",
+    description: error,
+  };
 }
 
-export async function enableClient(client: Client) {
+export async function enableClient(client: Client): Promise<Notification> {
   const { client_id } = client;
   const url = `${IAM_API_URL}/iam/api/clients/${client_id}/enable`;
   const response = await authFetch(url, { method: "PATCH" });
   if (response.ok) {
-    await setNotification({ type: "success", message: "Client enabled" });
     revalidatePath(`/clients/${client_id}`);
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot enable client",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return { type: "success", title: "Client enabled" };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot enable client",
+    description: `Error ${response.status} ${msg}`,
+  };
 }
 
-export async function disableClient(client: Client) {
+export async function disableClient(client: Client): Promise<Notification> {
   const { client_id } = client;
   const url = `${IAM_API_URL}/iam/api/clients/${client_id}/disable`;
   const response = await authFetch(url, { method: "PATCH" });
   if (response.ok) {
-    await setNotification({ type: "success", message: "Client disabled" });
     revalidatePath(`/clients/${client_id}`);
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot disable client",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return { type: "success", title: "Client disabled" };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot disable client",
+    description: `Error ${response.status} ${msg}`,
+  };
 }
 
 export async function getClientsByAccount(
@@ -170,16 +168,15 @@ async function editOwner(
   const url = `${IAM_API_URL}/iam/api/clients/${client_id}/owners/${user.id}`;
   const response = await authFetch(url, { method });
   if (response.ok) {
-    await setNotification({ type: "success", message: "Client saved" });
     revalidatePath(`/clients/${client_id}`);
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Could not save client",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return { type: "success", title: "Client saved" };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Could not save client",
+    description: `Error ${response.status} ${msg}`,
+  };
 }
 
 export async function addOwner(client: Client, user: User) {
@@ -218,18 +215,19 @@ export async function getClientOwners(clientId: string): Promise<User[]> {
   }
 }
 
-export async function rotateClientSecret(clientId: string) {
+export async function rotateClientSecret(
+  clientId: string
+): Promise<string | undefined | Notification> {
   const url = `${IAM_API_URL}/iam/api/clients/${clientId}/secret`;
   const response = await authFetch(url, { method: "POST" });
   if (response.ok) {
     const { client_secret } = await response.json();
     return client_secret as string | undefined;
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot rotate client secret",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot rotate client secret",
+    description: `Error ${response.status} ${msg}`,
+  };
 }

@@ -13,7 +13,7 @@ import {
   ModalFooter,
   type ModalProps,
 } from "@/components/modal";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { Group } from "@/models/groups";
 import { editGroup } from "@/services/groups";
 
@@ -33,7 +33,7 @@ function EditModal(props: Readonly<EditModalProps>) {
     const formData = new FormData(event.currentTarget);
     const description = formData.get("description") as string | null;
     const res = await editGroup(group.id, description);
-    toaster.send(res);
+    toast.toast(res);
     props.onClose();
   }
 

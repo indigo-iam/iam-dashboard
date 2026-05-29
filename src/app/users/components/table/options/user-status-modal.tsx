@@ -4,6 +4,7 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { ModalProps } from "@/components/modal";
+import { toast } from "@/components/toaster";
 import { User } from "@/models/scim";
 import { changeUserStatus } from "@/services/users";
 
@@ -18,7 +19,8 @@ export default function ToggleUserStatusModal(
   const title = `${user.active ? "Disable user" : "Enable user"} '${user.displayName}'`;
   const action = async () => {
     const newStatus = !(user.active ?? false);
-    await changeUserStatus(user.id, newStatus);
+    const res = await changeUserStatus(user.id, newStatus);
+    toast.toast(res);
     onClose();
   };
   return (

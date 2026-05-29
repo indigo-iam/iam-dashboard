@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
+import { toast } from "@/components/toaster";
 import { ManagedGroup } from "@/models/groups";
 import { deleteManagedGroup } from "@/services/groups";
 
@@ -19,7 +20,8 @@ export default function DeleteManagedGroupModal(
   const { group, show, onClose, onDeleted } = props;
 
   const handleConfirm = async () => {
-    await deleteManagedGroup(group);
+    const res = await deleteManagedGroup(group);
+    toast.toast(res);
     onClose();
     onDeleted?.();
   };

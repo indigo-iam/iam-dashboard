@@ -8,7 +8,7 @@ import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { User } from "@/models/scim";
 import { changePassword } from "@/services/users";
 import { useState } from "react";
@@ -23,9 +23,9 @@ function ModalPassword(props: Readonly<ModalPasswordProps>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const res = await changePassword(user, formData);
-    toaster.send(res);
-  };
-  
+    toast.toast(res);
+  }
+
   return (
     <Modal {...modalProps}>
       <Form onSubmit={submit}>

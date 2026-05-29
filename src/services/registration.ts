@@ -4,12 +4,11 @@
 
 "use server";
 
-import { authFetch, getItem } from "@/utils/fetch";
-import { Registration } from "@/models/registration";
-import { setNotification } from "@/services/notifications";
 import { settings } from "@/config";
-import { revalidatePath } from "next/cache";
 import { Notification } from "@/components/toaster";
+import { Registration } from "@/models/registration";
+import { authFetch, getItem } from "@/utils/fetch";
+import { revalidatePath } from "next/cache";
 
 const { IAM_API_URL } = settings;
 
@@ -18,22 +17,23 @@ export async function fetchRegistrationRequests() {
   return await getItem<Registration[]>(url);
 }
 
-export async function approveRegistrationRequest(requestId: string) {
+export async function approveRegistrationRequest(
+  requestId: string
+): Promise<Notification> {
   const url = `${IAM_API_URL}/registration/approve/${requestId}`;
   const response = await authFetch(url, {
     method: "POST",
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "User approved" });
     revalidatePath("/requests");
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot approve user",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return { type: "success", title: "User approved" };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot approve user",
+    description: `Error ${response.status} ${msg}`,
+  };
 }
 
 export async function rejectRegistrationRequest(
@@ -51,13 +51,13 @@ export async function rejectRegistrationRequest(
     revalidatePath("/requests");
     return {
       type: "success",
-      message: "User request rejected",
+      title: "User request rejected",
     };
   }
   const msg = await response.text();
   return {
     type: "error",
-    message: "Cannot reject user request",
-    subtitle: `Error ${response.status} ${msg}`,
+    title: "Cannot reject user request",
+    description: `Error ${response.status} ${msg}`,
   };
 }

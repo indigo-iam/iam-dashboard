@@ -4,6 +4,7 @@
 
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
+import { toast } from "@/components/toaster";
 import { AUP } from "@/models/aup";
 import { User } from "@/models/scim";
 import { fetchAUP } from "@/services/aup";
@@ -39,9 +40,16 @@ type AupProps = {
 export async function Aup(props: Readonly<AupProps>) {
   const { user, isMe } = props;
   const aup = await fetchAUP();
+
   if (!aup) {
     return null;
   }
+
+  if ("title" in aup && "type" in aup) {
+    toast.toast(aup);
+    return null;
+  }
+
   const { expiresAt, expired } = await getExpirationDate(user, aup);
   return (
     <div className="flex flex-col gap-8 py-4 last:pb-0 lg:flex-row">
@@ -52,8 +60,8 @@ export async function Aup(props: Readonly<AupProps>) {
             In order to use this service the AUP must be signed by the user.
           </p>
           <p>
-            It is possible to re-sign the AUP before it expires. Once the
-            AUP is expired, the user is asked to sign the new AUP at login.
+            It is possible to re-sign the AUP before it expires. Once the AUP is
+            expired, the user is asked to sign the new AUP at login.
           </p>
         </div>
       </div>

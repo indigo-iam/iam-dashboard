@@ -5,6 +5,7 @@
 import Link from "next/link";
 
 import ConfirmModal from "@/components/confirm-modal";
+import { toast } from "@/components/toaster";
 import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
 import { revokeGroupManager } from "@/services/groups";
@@ -24,7 +25,8 @@ export default function RevokeGroupManagerModal(
   const indigoUser = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
   const description = indigoUser.description;
   const handleConfirm = async () => {
-    await revokeGroupManager(group.id, user.id);
+    const res = await revokeGroupManager(group.id, user.id);
+    toast.toast(res);
     onClose();
     onUnlinked?.();
   };

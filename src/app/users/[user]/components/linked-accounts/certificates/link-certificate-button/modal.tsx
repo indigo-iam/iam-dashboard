@@ -9,7 +9,7 @@ import { Field, Form, Label, Select } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Textarea } from "@/components/textarea";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { User } from "@/models/scim";
 import { sendCertificateLinkRequest } from "@/services/certs";
 import { useState } from "react";
@@ -102,7 +102,7 @@ export default function LinkCertificateModal(
       pemEncodedCertificate,
       notes,
     });
-    toaster.send(res);
+    toast.toast(res);
     close();
   }
   return (

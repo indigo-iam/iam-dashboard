@@ -4,13 +4,14 @@
 
 "use client";
 
+import { SearchUsers } from "@/app/components/search-users";
+import ConfirmModal from "@/components/confirm-modal";
 import { type ModalProps } from "@/components/modal";
+import { toast } from "@/components/toaster";
 import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
 import { addUserToGroup } from "@/services/groups";
-import { SearchUsers } from "@/app/components/search-users";
 import { useState } from "react";
-import ConfirmModal from "@/components/confirm-modal";
 import Link from "next/link";
 
 type AddMemberModalProps = ModalProps & {
@@ -66,7 +67,6 @@ function ConfirmView(props: Readonly<ConfirmViewPros>) {
 
 export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
   const { group, onClose, ...modalProps } = props;
-  const indigoGroup = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
   const groupName = group.displayName;
   const [user, setUser] = useState<User>();
 
@@ -79,7 +79,8 @@ export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
 
   const addMember = async () => {
     if (user?.id) {
-      await addUserToGroup(group, user);
+      const res = await addUserToGroup(group, user);
+      toast.toast(res);
       clearAndClose();
     }
   };

@@ -8,6 +8,7 @@ import { InputSecret } from "@/app/components/input-secret";
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
 import { Description, Field, Label } from "@/components/form";
+import { toast } from "@/components/toaster";
 import { rotateClientSecret } from "@/services/clients";
 import { useState } from "react";
 
@@ -30,14 +31,18 @@ type RotateClientSecretProps = {
 
 export function RotateClientSecret(props: Readonly<RotateClientSecretProps>) {
   const { clientId } = props;
-  const [secret, setSecret] = useState<string | undefined>();
+  const [secret, setSecret] = useState<string>();
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
 
   const action = async () => {
-    const secret = await rotateClientSecret(clientId);
-    setSecret(secret);
+    const response = await rotateClientSecret(clientId);
+    if (typeof response === "object") {
+      toast.toast(response);
+    } else {
+      setSecret(response);
+    }
   };
 
   return (

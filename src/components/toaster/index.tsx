@@ -5,7 +5,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Toaster, toast } from "sonner";
+import { Toaster as SonnerToaster, toast as sonnerToast } from "sonner";
 import {
   CheckCircleIcon,
   ExclamationCircleIcon,
@@ -13,7 +13,6 @@ import {
   InformationCircleIcon,
   XCircleIcon,
 } from "@heroicons/react/24/outline";
-import { Notification, NotificationType } from "./types";
 
 const breakpoints = {
   sm: 640,
@@ -21,6 +20,17 @@ const breakpoints = {
   lg: 1024,
   xl: 1280,
 };
+
+function CloseButton() {
+  return (
+    <button
+      title="Close"
+      className="mr-0 ml-auto w-8 cursor-pointer rounded-full p-1.25 text-gray-500 hover:bg-gray-300 dark:text-gray-200 dark:hover:bg-gray-500"
+    >
+      <XCircleIcon />
+    </button>
+  );
+}
 
 function useUpdateToasterPosition() {
   const [position, setPosition] = useState<"top-right" | "bottom-right">(
@@ -57,40 +67,31 @@ function useUpdateToasterPosition() {
   return position;
 }
 
-export default function MyToaster(
-  props: Readonly<{ notification?: Notification }>
-) {
-  const { notification } = props;
-  const position = useUpdateToasterPosition();
+type ToasterProps = React.ComponentProps<typeof SonnerToaster>;
 
-  useEffect(() => {
-    if (!notification) {
-      return;
-    }
-    toast.custom(t => (
-      <CustomToast
-        title={notification.message}
-        subtitle={notification.subtitle}
-        dismiss={() => toast.dismiss(t)}
-        type={notification.type}
-      />
-    ));
-  }, [notification]);
-  return <Toaster position={position} />;
+export function Toaster(props: Readonly<ToasterProps>) {
+  const position = useUpdateToasterPosition();
+  return <SonnerToaster {...props} position={position} />;
 }
 
-type IconProps = {
-  type: NotificationType;
-};
+export type ToastTypes =
+  | "normal"
+  | "action"
+  | "success"
+  | "info"
+  | "warning"
+  | "error"
+  | "loading"
+  | "default";
 
-function Icon(props: Readonly<IconProps>) {
-  const { type } = props;
-  switch (type) {
+function Icon(props: Readonly<{ toastType: ToastTypes }>) {
+  const { toastType } = props;
+  switch (toastType) {
     case "info":
       return (
         <InformationCircleIcon
-          key="circle-icon"
           className="size-6 text-gray-950"
+          aria-label="Info"
         />
       );
     case "success":
@@ -114,40 +115,45 @@ function Icon(props: Readonly<IconProps>) {
         <ExclamationCircleIcon
           key="danger-circle-icon"
           className="text-danger size-6 flex-none"
-          aria-label=""
+          aria-label="Error"
         />
       );
+    default:
   }
 }
 
-type CustomToastProps = {
+type ToastProps = {
+  id: string | number;
   title: string;
-  subtitle?: string;
-  dismiss: () => void;
-  type: NotificationType;
+  description?: string;
+  type: ToastTypes;
 };
 
-function CustomToast(props: Readonly<CustomToastProps>) {
-  const { title, subtitle, dismiss, type } = props;
+function Toast(props: Readonly<ToastProps>) {
+  const { title, description, type } = props;
   return (
     <div
       className="overlay flex w-full items-center border px-3 py-2"
       data-testid="toast"
-      data-toast-type={type}
+      data-toast-type={type ?? "default"}
     >
       <div className="flex grow items-center gap-2">
-        <Icon type={type} />
+        {type && <Icon toastType={type} />}
         <div>
           <p className="text-normal font-semibold">{title}</p>
-          <p className="block text-sm text-gray-500 dark:text-gray-300">
-            {subtitle}
-          </p>
+          {description && (
+            <p className="block text-sm text-gray-500 dark:text-gray-300">
+              {description}
+            </p>
+          )}
         </div>
       </div>
       <button
         title="Close"
         className="w-8 flex-none cursor-pointer rounded-full p-1.25 text-gray-500 hover:bg-gray-300 dark:text-gray-200 dark:hover:bg-gray-500"
-        onClick={dismiss}
+        onClick={() => {
+          sonnerToast.dismiss(props.id);
+        }}
       >
         <XCircleIcon />
       </button>
@@ -155,50 +161,36 @@ function CustomToast(props: Readonly<CustomToastProps>) {
   );
 }
 
-export const toaster = {
-  info: (message: string, subtitle?: string) =>
-    toast.custom(t => (
-      <CustomToast
-        title={message}
-        subtitle={subtitle}
-        dismiss={() => toast.dismiss(t)}
-        type="info"
-      />
+export type Notification = {
+  type: ToastTypes;
+  title: string;
+  description?: string;
+};
+
+export const toast = {
+  info: (title: string, description?: string) =>
+    sonnerToast.custom(id => (
+      <Toast id={id} title={title} description={description} type={"info"} />
     )),
-  send: (notification: Notification) =>
-    toast.custom(t => (
-      <CustomToast
-        title={notification.message}
-        subtitle={notification.subtitle}
+  success: (title: string, description?: string) =>
+    sonnerToast.custom(id => (
+      <Toast id={id} title={title} description={description} type={"success"} />
+    )),
+  warning: (title: string, description?: string) =>
+    sonnerToast.custom(id => (
+      <Toast id={id} title={title} description={description} type={"warning"} />
+    )),
+  error: (title: string, description?: string) =>
+    sonnerToast.custom(id => (
+      <Toast id={id} title={title} description={description} type={"error"} />
+    )),
+  toast: (notification: Notification) =>
+    sonnerToast.custom(id => (
+      <Toast
+        id={id}
+        title={notification.title}
+        description={notification.description}
         type={notification.type}
-        dismiss={() => toast.dismiss(t)}
-      />
-    )),
-  success: (message: string, subtitle?: string) =>
-    toast.custom(t => (
-      <CustomToast
-        title={message}
-        subtitle={subtitle}
-        dismiss={() => toast.dismiss(t)}
-        type="success"
-      />
-    )),
-  warning: (message: string, subtitle?: string) =>
-    toast.custom(t => (
-      <CustomToast
-        title={message}
-        subtitle={subtitle}
-        dismiss={() => toast.dismiss(t)}
-        type="warning"
-      />
-    )),
-  error: (message: string, subtitle?: string) =>
-    toast.custom(t => (
-      <CustomToast
-        title={message}
-        subtitle={subtitle}
-        dismiss={() => toast.dismiss(t)}
-        type="error"
       />
     )),
 };

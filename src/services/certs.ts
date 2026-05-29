@@ -26,12 +26,12 @@ export async function sendCertificateLinkRequest(
   });
   if (response.ok) {
     revalidatePath("/users");
-    return { type: "success", message: "Request sent" };
+    return { type: "success", title: "Request sent" };
   }
   const msg = await response.text();
   return {
     type: "error",
-    message: "Cannot send Certificate Link Request",
-    subtitle: `Error ${response.status} ${msg}`,
+    title: "Cannot send Certificate Link Request",
+    description: `Error ${response.status} ${msg}`,
   };
 }

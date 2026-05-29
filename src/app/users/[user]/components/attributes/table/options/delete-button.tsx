@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
+import { toast } from "@/components/toaster";
 import { Attribute } from "@/models/attributes";
 import { User } from "@/models/scim";
 import { deleteAttribute } from "@/services/users";
@@ -17,7 +18,8 @@ type DeleteButtonProps = {
 export default function DeleteUserModal(props: Readonly<DeleteButtonProps>) {
   const { user, attr, show, onClose } = props;
   const action = async () => {
-    await deleteAttribute(user.id, attr);
+    const res = await deleteAttribute(user.id, attr);
+    toast.toast(res);
     onClose();
   };
   return (

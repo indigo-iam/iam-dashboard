@@ -11,7 +11,7 @@
 }
 
 @utility container {
-  @apply p-4 lg:w-3xl;
+  @apply p-4 lg:w-4xl;
 }
 
 @utility content {

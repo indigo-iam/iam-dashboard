@@ -6,6 +6,7 @@
 
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
+import { toast } from "@/components/toaster";
 import { deleteAUP } from "@/services/aup";
 import { useState } from "react";
 
@@ -14,7 +15,8 @@ export default function DeleteButton() {
   const show = () => setIsShown(true);
   const hide = () => setIsShown(false);
   const handleConfirm = async () => {
-    await deleteAUP();
+    const res = await deleteAUP();
+    toast.toast(res);
     hide();
   };
   return (

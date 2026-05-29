@@ -4,7 +4,7 @@
 
 "use client";
 
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { Group, GroupLabel } from "@/models/groups";
 import { deleteGroupLabel } from "@/services/groups";
 import { XCircleIcon } from "@heroicons/react/16/solid";
@@ -21,7 +21,7 @@ export default function LabelView(props: Readonly<LabelProps>) {
     event.preventDefault();
     const res = await deleteGroupLabel(group.id, label);
     if (res.type !== "success") {
-      toaster.send(res);
+      toast.toast(res);
     }
   }
   return (

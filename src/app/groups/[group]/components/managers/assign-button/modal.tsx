@@ -7,6 +7,7 @@
 import { SearchUsers } from "@/app/components/search-users";
 import ConfirmModal from "@/components/confirm-modal";
 import { type ModalProps } from "@/components/modal";
+import { toast } from "@/components/toaster";
 import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
 import { assignGroupManager } from "@/services/groups";
@@ -87,7 +88,8 @@ export default function AssignGroupManagerModal(
 
   const assignManager = async () => {
     if (user?.id) {
-      await assignGroupManager(group, user);
+      const res = await assignGroupManager(group, user);
+      toast.toast(res);
       clearAndClose();
     }
   };

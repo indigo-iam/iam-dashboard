@@ -6,6 +6,7 @@
 
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
+import { toast } from "@/components/toaster";
 import { User } from "@/models/scim";
 import { deleteUser } from "@/services/users";
 import { useState } from "react";
@@ -20,7 +21,8 @@ export function DeleteUser(props: Readonly<DeleteUserProps>) {
   const open = () => setShow(true);
   const close = () => setShow(false);
   const action = async () => {
-    await deleteUser(user);
+    const res = await deleteUser(user);
+    toast.toast(res);
   };
   return (
     <>

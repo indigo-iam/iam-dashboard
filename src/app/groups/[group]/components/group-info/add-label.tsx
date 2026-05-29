@@ -8,7 +8,7 @@ import { Button } from "@/components/buttons";
 import { Description, Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { Group, GroupLabel } from "@/models/groups";
 import { addGroupLabel } from "@/services/groups";
 import { Fieldset } from "@headlessui/react";
@@ -37,7 +37,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
     }
     const res = await addGroupLabel(group.id, gl);
     if (res.type !== "success") {
-      toaster.send(res);
+      toast.toast(res);
     }
     modalProps.onClose();
   }

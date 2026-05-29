@@ -23,10 +23,10 @@ for (const user of [TEST_USER, ADMIN_USER]) {
       await firstName.fill(user.firstName);
       await lastName.fill(user.lastName);
       await email.fill(user.email);
-      await saveButton.click();
+      await saveButton.click({ delay: 300 });
       await page.waitForLoadState();
 
-      await dismissToast(page, "success");
+      await dismissToast(page, "Edits saved", "success");
 
       await expect(firstName).toHaveValue(user.firstName);
       await expect(lastName).toHaveValue(user.lastName);
@@ -49,9 +49,9 @@ for (const user of [TEST_USER, ADMIN_USER]) {
         await expect(firstName).toHaveValue(user.firstName);
         await firstName.clear();
         await firstName.fill("Albert");
-        await saveButton.click();
+        await saveButton.click({ delay: 300 });
         await page.waitForLoadState();
-        await dismissToast(page, "success");
+        await dismissToast(page, "Edits saved", "success");
         await expect(firstName).toHaveValue("Albert");
       });
 
@@ -59,7 +59,7 @@ for (const user of [TEST_USER, ADMIN_USER]) {
         let firstName = page.getByLabel("First Name");
         await firstName.clear();
         await firstName.fill("");
-        await saveButton.click();
+        await saveButton.click({ delay: 300 });
         await page.waitForLoadState();
         await expect(firstName).toHaveValue("");
         await page.goto("./users/me");
@@ -73,9 +73,9 @@ for (const user of [TEST_USER, ADMIN_USER]) {
         await expect(lastName).toHaveValue(user.lastName);
         await lastName.clear();
         await lastName.fill("Einstein");
-        await saveButton.click();
+        await saveButton.click({ delay: 300 });
         await page.waitForLoadState();
-        await dismissToast(page, "success");
+        await dismissToast(page, "Edits saved", "success");
         await expect(lastName).toHaveValue("Einstein");
       });
 
@@ -84,7 +84,7 @@ for (const user of [TEST_USER, ADMIN_USER]) {
         await lastName.clear();
         await lastName.fill("");
         await page.reload();
-        await saveButton.click();
+        await saveButton.click({ delay: 300 });
         await page.waitForLoadState();
         await page.goto("./users/me");
         await expect(lastName).toHaveValue("Einstein");
@@ -96,9 +96,9 @@ for (const user of [TEST_USER, ADMIN_USER]) {
         await expect(email).toHaveAttribute("required");
         await email.clear();
         await email.fill("albert.einstein@science.org");
-        await saveButton.click();
+        await saveButton.click({ delay: 300 });
         await page.waitForLoadState();
-        await dismissToast(page, "success");
+        await dismissToast(page, "Edits saved", "success");
         await expect(email).toHaveValue("albert.einstein@science.org");
       });
 
@@ -116,7 +116,7 @@ for (const user of [TEST_USER, ADMIN_USER]) {
         let email = page.getByLabel("Email");
         await email.clear();
         await email.fill("albert.einstein#science.org");
-        await saveButton.click();
+        await saveButton.click({ delay: 300 });
         await page.waitForLoadState();
         await page.goto("./users/me");
         email = page.getByLabel("Email");
@@ -134,7 +134,7 @@ for (const user of [TEST_USER, ADMIN_USER]) {
         await lastName.fill("Fermi");
         await email.fill("enrico.fermi@science.org");
         const cancel = page.getByRole("button", { name: "Cancel" });
-        await cancel.click();
+        await cancel.click({ delay: 300 });
         await expect(firstName).toHaveValue("Albert");
         await expect(lastName).toHaveValue("Einstein");
         await expect(email).toHaveValue("albert.einstein@science.org");

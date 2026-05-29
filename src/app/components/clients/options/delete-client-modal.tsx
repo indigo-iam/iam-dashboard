@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
+import { toast } from "@/components/toaster";
 import { Client } from "@/models/client";
 import { deleteClient } from "@/services/clients";
 
@@ -17,11 +18,12 @@ type DeleteClientModalProps = {
 export default function DeleteClientModal(
   props: Readonly<DeleteClientModalProps>
 ) {
-  const { client, show,isAdmin, onClose, onDeleted } = props;
+  const { client, show, isAdmin, onClose, onDeleted } = props;
   const { client_name, client_description } = client;
 
   const handleConfirm = async () => {
-    await deleteClient(client.client_id, isAdmin);
+    const res = await deleteClient(client.client_id, isAdmin);
+    toast.toast(res);
     onClose();
     onDeleted?.();
   };

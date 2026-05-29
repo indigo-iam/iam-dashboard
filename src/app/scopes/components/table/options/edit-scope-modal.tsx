@@ -10,7 +10,7 @@ import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Scope } from "@/models/client";
 import { editScope } from "@/services/scopes";
 import { Button } from "@/components/buttons";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 
 interface EditScopeModalProps extends ModalProps {
   scope: Scope;
@@ -27,7 +27,7 @@ export default function EditScopeModal(props: Readonly<EditScopeModalProps>) {
     const value = (formData.get("value") as string) ?? scope.value;
     const newScope = { ...scope, description, value };
     const res = await editScope(newScope);
-    toaster.send(res);
+    toast.toast(res);
     onClose?.();
   }
 

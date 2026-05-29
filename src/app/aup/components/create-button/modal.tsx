@@ -8,7 +8,7 @@ import { Button } from "@/components/buttons";
 import { Form, Description, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { createAUP } from "@/services/aup";
 import { Field } from "@headlessui/react";
 import { useState } from "react";
@@ -36,7 +36,7 @@ export default function CreateModal(props: Readonly<CreateModalProps>) {
       signatureValidityInDays,
       aupRemindersInDays,
     });
-    toaster.send(res);
+    toast.toast(res);
     onClose();
   }
 

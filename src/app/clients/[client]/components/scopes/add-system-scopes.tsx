@@ -7,7 +7,7 @@
 import { Button } from "@/components/buttons";
 import { Checkbox, Field, Form } from "@/components/form";
 import { Modal, ModalBody, ModalFooter } from "@/components/modal";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { Client, Scope } from "@/models/client";
 import { editClient } from "@/services/clients";
 import { useState } from "react";
@@ -33,7 +33,7 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
     const scopes = (client.scope?.split(" ") ?? []).concat(newScope);
     const scope = scopes.join(" ");
     const res = await editClient({ ...client, scope }, isAdmin);
-    toaster.send(res);
+    toast.toast(res);
     onClose();
   }
 

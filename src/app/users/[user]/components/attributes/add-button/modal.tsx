@@ -8,7 +8,7 @@ import { Button } from "@/components/buttons";
 import { Form, Field, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { User } from "@/models/scim";
 import { addAttribute } from "@/services/users";
 
@@ -28,7 +28,7 @@ export default function AddAttributeModal(
     const name = formData.get("attr-name") as string;
     const value = formData.get("attr-value") as string;
     const res = await addAttribute(user.id, { name, value });
-    toaster.send(res);
+    toast.toast(res);
     modalProps.onClose();
   }
 

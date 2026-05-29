@@ -10,7 +10,7 @@ import { Field, Form, Label } from "@/components/form";
 import { Textarea } from "@/components/textarea";
 import { GroupRequest } from "@/models/group-requests";
 import { rejectGroupRequest } from "@/services/group-requests";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 
 type RejectRequestModalProps = {
   request: GroupRequest;
@@ -28,7 +28,7 @@ export default function RejectRequestModalProps(
     const formData = new FormData(event.currentTarget);
     const motivation = formData.get("motivation") as string;
     const res = await rejectGroupRequest(request.uuid, motivation);
-    toaster.send(res);
+    toast.toast(res);
     onClose();
   }
 

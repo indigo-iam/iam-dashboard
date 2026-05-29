@@ -12,7 +12,7 @@ import { Modal, ModalBody, ModalFooter } from "@/components/modal";
 import { Textarea } from "@/components/textarea";
 import { Registration } from "@/models/registration";
 import { rejectRegistrationRequest } from "@/services/registration";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 
 type RejectRegistrationRequestModalProps = {
   request: Registration;
@@ -30,7 +30,7 @@ export default function RejectRegistrationRequestModal(
     const formData = new FormData(event.currentTarget);
     const motivation = formData.get("motivation") as string;
     const res = await rejectRegistrationRequest(request.uuid, motivation);
-    toaster.send(res);
+    toast.toast(res);
     onClose();
   }
 

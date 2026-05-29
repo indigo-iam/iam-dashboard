@@ -9,7 +9,7 @@ import { Form, Field, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
 import { Textarea } from "@/components/textarea";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { SSHKey } from "@/models/indigo-user";
 import { User } from "@/models/scim";
 import { addSSHKey } from "@/services/users";
@@ -29,7 +29,7 @@ export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
       value: formData.get("ssh-key") as string,
     };
     const res = await addSSHKey(user.id, sshKey);
-    toaster.send(res);
+    toast.toast(res);
     modalProps.onClose();
   }
 

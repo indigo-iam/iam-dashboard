@@ -6,6 +6,7 @@
 
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
+import { toast } from "@/components/toaster";
 import { User } from "@/models/scim";
 import {
   assignAdminPrivileges,
@@ -19,7 +20,8 @@ function AssignPrivileges(props: Readonly<{ user: User }>) {
   const open = () => setShow(true);
   const close = () => setShow(false);
   const action = async () => {
-    await assignAdminPrivileges(user.id);
+    const res = await assignAdminPrivileges(user.id);
+    toast.toast(res);
     close();
   };
   return (
@@ -47,7 +49,8 @@ function RevokePrivileges(props: Readonly<{ user: User }>) {
   const open = () => setShow(true);
   const close = () => setShow(false);
   const action = async () => {
-    await revokeAdminPrivileges(user.id);
+    const res = await revokeAdminPrivileges(user.id);
+    toast.toast(res);
     close();
   };
   return (

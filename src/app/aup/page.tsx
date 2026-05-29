@@ -37,6 +37,10 @@ export default async function AUP() {
       </section>
     );
   }
+
+  const aupContent =
+    "title" in aup ? `${aup.title} ${aup.description}` : <AupView aup={aup} />;
+
   return (
     <section>
       <header className="section-header">
@@ -44,9 +48,7 @@ export default async function AUP() {
         <h2 className="text-base font-normal">Acceptable Usage Policy</h2>
       </header>
       <div className="container space-y-4">
-        <div className="panel">
-          <AupView aup={aup} />
-        </div>
+        <div className="panel">{aupContent}</div>
       </div>
     </section>
   );

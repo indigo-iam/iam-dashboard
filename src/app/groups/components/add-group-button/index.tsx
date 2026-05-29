@@ -8,7 +8,7 @@ import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter } from "@/components/modal";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { addGroup } from "@/services/groups";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
@@ -26,7 +26,7 @@ function AddGroupForm(props: Readonly<AddGroupFormProps>) {
     const formData = new FormData(event.currentTarget);
     const name = formData.get("groupName") as string;
     const res = await addGroup(name);
-    toaster.send(res);
+    toast.toast(res);
     onClose?.();
     onGroupAdded?.();
   }

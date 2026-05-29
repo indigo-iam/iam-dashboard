@@ -8,7 +8,7 @@ import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { ScimUser } from "@/models/scim";
 import { addUser } from "@/services/users";
 import { toTitleCase } from "@/utils/strings";
@@ -42,7 +42,7 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
       schemas: ["urn:ietf:params:scim:schemas:core:2.0:User"],
     };
     const res = await addUser(user);
-    toaster.send(res);
+    toast.toast(res);
     onUserAdded?.();
     onClose?.();
   }
@@ -125,6 +125,7 @@ function AddUserModal(props: Readonly<AddUserModalProps>) {
 type AddUserProps = {
   onUserAdded?: () => void;
 };
+
 export default function AddUser(props: Readonly<AddUserProps>) {
   const { onUserAdded } = props;
   const [show, setShow] = useState(false);

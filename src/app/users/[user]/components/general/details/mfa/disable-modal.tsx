@@ -2,13 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-"use client"
+"use client";
 
 import { Button } from "@/components/buttons";
 import { Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { Modal, ModalBody, ModalFooter } from "@/components/modal";
-import { toaster } from "@/components/toaster";
+import { Modal,ModalBody, ModalFooter } from "@/components/modal";
+import { toast } from "@/components/toaster";
 import { disableMFA } from "@/services/users";
 
 type DisableMFAModalProps = {
@@ -23,7 +23,7 @@ export function DisableMFAModal(props: Readonly<DisableMFAModalProps>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const res = await disableMFA(formData);
-    toaster.send(res);
+    toast.toast(res);
     onClose();
   }
 

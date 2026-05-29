@@ -6,6 +6,7 @@
 
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
+import { toast } from "@/components/toaster";
 import { AUP } from "@/models/aup";
 import { User } from "@/models/scim";
 import { requestAUPSignature, signAUP } from "@/services/users";
@@ -24,11 +25,13 @@ export function RequestSignature(props: Readonly<RequestSignatureProps>) {
   const close = () => setShow(false);
 
   const handleSignAUP = async () => {
-    await signAUP(user.id);
+    const res = await signAUP(user.id);
+    toast.toast(res);
   };
 
   const handleRequestAUPSignature = async () => {
-    await requestAUPSignature(user.id);
+    const res = await requestAUPSignature(user.id);
+    toast.toast(res);
   };
 
   if (isMe) {

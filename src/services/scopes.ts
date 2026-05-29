@@ -9,7 +9,6 @@ import { RawScope, Scope } from "@/models/client";
 import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
 import { Paginated } from "@/models/pagination";
-import { setNotification } from "@/services/notifications";
 import { Notification } from "@/components/toaster";
 
 const { IAM_API_URL } = settings;
@@ -45,13 +44,13 @@ export async function addScope(scope: RawScope): Promise<Notification> {
   });
   if (response.ok) {
     revalidatePath("/scopes");
-    return { type: "success", message: "Scope added" };
+    return { type: "success", title: "Scope added" };
   }
   const msg = await response.text();
   return {
     type: "error",
-    message: "Cannot add scope",
-    subtitle: `Error ${response.status} ${msg}`,
+    title: "Cannot add scope",
+    description: `Error ${response.status} ${msg}`,
   };
 }
 
@@ -62,13 +61,13 @@ export async function deleteScope(scope: Scope): Promise<Notification> {
   });
   if (response.ok) {
     revalidatePath("/scopes");
-    return { type: "success", message: "Scope deleted" };
+    return { type: "success", title: "Scope deleted" };
   }
   const msg = await response.text();
   return {
     type: "error",
-    message: "Cannot delete scope",
-    subtitle: `Error ${response.status} ${msg}`,
+    title: "Cannot delete scope",
+    description: `Error ${response.status} ${msg}`,
   };
 }
 
@@ -81,12 +80,12 @@ export async function editScope(scope: Scope): Promise<Notification> {
   });
   if (response.ok) {
     revalidatePath("/scopes");
-    return { type: "success", message: "Scope saved" };
+    return { type: "success", title: "Scope saved" };
   }
   const msg = await response.text();
   return {
     type: "error",
-    message: "Cannot save scope",
-    subtitle: `Error ${response.status} ${msg}`,
+    title: "Cannot save scope",
+    description: `Error ${response.status} ${msg}`,
   };
 }

@@ -18,7 +18,7 @@ import {
 } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 import { addScope } from "@/services/scopes";
 
 interface NewScopeModalProps extends ModalProps {}
@@ -47,7 +47,7 @@ export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
       restricted,
       icon,
     });
-    toaster.send(res);
+    toast.toast(res);
     onClose();
   }
 

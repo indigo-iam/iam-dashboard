@@ -4,7 +4,6 @@
 
 "use server";
 
-import { setNotification } from "@/services/notifications";
 import { Notification } from "@/components/toaster";
 import { AUP, AUPCreate, AUPPatch } from "@/models/aup";
 import { settings } from "@/config";
@@ -14,21 +13,20 @@ import { revalidatePath } from "next/cache";
 const { IAM_API_URL } = settings;
 const AUP_URL = `${IAM_API_URL}/iam/aup`;
 
-export async function fetchAUP() {
+export async function fetchAUP(): Promise<AUP | null | Notification> {
   const response = await authFetch(AUP_URL);
   if (response.ok) {
     return (await response.json()) as AUP;
-  } else {
-    if (response.status === 404) {
-      return;
-    }
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot fetch AUP",
-      subtitle: `Error: ${response.status} ${msg}`,
-    });
   }
+  if (response.status === 404) {
+    return null;
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot fetch AUP",
+    description: `Error: ${response.status} ${msg}`,
+  };
 }
 
 export async function createAUP(aup: AUPCreate): Promise<Notification> {
@@ -41,16 +39,16 @@ export async function createAUP(aup: AUPCreate): Promise<Notification> {
     revalidatePath("/aup");
     return {
       type: "success",
-      message: "AUP created",
-      subtitle:
+      title: "AUP created",
+      description:
         "Acceptable Usage Policy has been created for your organization",
     };
   }
   const msg = await response.json();
   return {
     type: "error",
-    message: "Cannot create AUP",
-    subtitle: msg.error,
+    title: "Cannot create AUP",
+    description: msg.error,
   };
 }
 
@@ -62,34 +60,33 @@ export async function patchAUP(aup: AUPPatch): Promise<Notification> {
   });
   if (response.ok) {
     revalidatePath("/aup");
-    return { type: "success", message: "AUP updated" };
+    return { type: "success", title: "AUP updated" };
   }
   const msg = await response.text();
   return {
     type: "error",
-    message: "Cannot update AUP",
-    subtitle: `Error ${response.status} ${msg}`,
+    title: "Cannot update AUP",
+    description: `Error ${response.status} ${msg}`,
   };
 }
 
-export async function deleteAUP() {
+export async function deleteAUP(): Promise<Notification> {
   const response = await authFetch(AUP_URL, {
     method: "DELETE",
   });
   if (response.ok) {
-    await setNotification({ type: "success", message: "AUP deleted" });
     revalidatePath("/aup");
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot delete AUP",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return { type: "success", title: "AUP deleted" };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot delete AUP",
+    description: `Error ${response.status} ${msg}`,
+  };
 }
 
-export async function touchAUP() {
+export async function touchAUP(): Promise<Notification | undefined> {
   const url = `${AUP_URL}/touch`;
   const response = await authFetch(url, {
     method: "POST",
@@ -98,10 +95,10 @@ export async function touchAUP() {
     revalidatePath("/aup");
   } else {
     const msg = await response.text();
-    await setNotification({
+    return {
       type: "error",
-      message: "Cannot touch AUP",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+      title: "Cannot touch AUP",
+      description: `Error ${response.status} ${msg}`,
+    };
   }
 }

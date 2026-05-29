@@ -12,7 +12,6 @@ import {
 import { authFetch, getItem } from "@/utils/fetch";
 import { settings } from "@/config";
 import { revalidatePath } from "next/cache";
-import { setNotification } from "@/services/notifications";
 import { Notification } from "@/components/toaster";
 
 const { IAM_API_URL } = settings;
@@ -38,13 +37,13 @@ export async function submitGroupRequest(
   });
   if (response.ok) {
     revalidatePath("/");
-    return { type: "success", message: "Group Request sent" };
+    return { type: "success", title: "Group Request sent" };
   }
   const msg = await response.text();
   return {
     type: "error",
-    message: "Cannot send Group Request",
-    subtitle: `Error ${response.status}: ${msg}`,
+    title: "Cannot send Group Request",
+    description: `Error ${response.status}: ${msg}`,
   };
 }
 
@@ -59,14 +58,14 @@ export async function approveGroupRequest(
     revalidatePath("/requests");
     return {
       type: "success",
-      message: "Group Request approved",
+      title: "Group Request approved",
     };
   }
   const msg = await response.text();
   return {
     type: "error",
-    message: "Cannot approve Group Request",
-    subtitle: `Error ${response.status} ${msg}`,
+    title: "Cannot approve Group Request",
+    description: `Error ${response.status} ${msg}`,
   };
 }
 
@@ -82,15 +81,15 @@ export async function rejectGroupRequest(
     revalidatePath("/requests");
     return {
       type: "info",
-      message: "Group Request rejected",
-      subtitle: "The user has been notified with the motivation you provided.",
+      title: "Group Request rejected",
+      description: "The user has been notified with the motivation you provided.",
     };
   }
   const msg = await response.text();
   return {
     type: "error",
-    message: "Cannot reject Group Request",
-    subtitle: `Error ${response.status} ${msg}`,
+    title: "Cannot reject Group Request",
+    description: `Error ${response.status} ${msg}`,
   };
 }
 
@@ -104,12 +103,12 @@ export async function abortGroupRequest(
   });
   if (response.ok) {
     revalidatePath(`/users/${userId}`);
-    return { type: "info", message: "Group Request deleted" };
+    return { type: "info", title: "Group Request deleted" };
   }
   const msg = await response.text();
   return {
     type: "error",
-    message: "Cannot delete Group Request",
-    subtitle: `Error ${response.status} ${msg}`,
+    title: "Cannot delete Group Request",
+    description: `Error ${response.status} ${msg}`,
   };
 }

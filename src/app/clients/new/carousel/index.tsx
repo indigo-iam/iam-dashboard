@@ -21,7 +21,7 @@ import OIDCSettings from "./oidc-settings";
 import OtherSettings from "./other-settings";
 
 import { useState } from "react";
-import { toaster } from "@/components/toaster";
+import { toast } from "@/components/toaster";
 
 const TOTAL_PAGES = 4;
 
@@ -96,7 +96,7 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
       if (res.payload) {
         setClient(res.payload);
       }
-      toaster.send(res.notification);
+      toast.toast(res.notification);
     };
 
     save();

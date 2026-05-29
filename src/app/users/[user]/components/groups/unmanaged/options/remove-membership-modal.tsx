@@ -4,6 +4,7 @@
 
 "use client";
 
+import { toast } from "@/components/toaster";
 import { ScimReference, User } from "@/models/scim";
 import { removeUserFromGroupReference } from "@/services/groups";
 import ConfirmModal from "@/components/confirm-modal";
@@ -21,7 +22,8 @@ export default function RemoveMembershipModal(
   const { user, groupRef, show, onClose } = props;
 
   const handleConfirm = async () => {
-    await removeUserFromGroupReference(user, groupRef);
+    const res = await removeUserFromGroupReference(user, groupRef);
+    toast.toast(res);
     onClose();
   };
 

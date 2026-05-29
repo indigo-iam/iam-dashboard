@@ -5,50 +5,52 @@
 "use server";
 
 import { authFetch } from "@/utils/fetch";
-import { setNotification } from "@/services/notifications";
 import { settings } from "@/config";
 import { revalidatePath } from "next/cache";
+import { Notification } from "@/components/toaster";
 
 const { IAM_API_URL } = settings;
 
-export const assignAdminPrivileges = async (userId: string) => {
+export async function assignAdminPrivileges(
+  userId: string
+): Promise<Notification> {
   let url = `${IAM_API_URL}/iam/account/${userId}/authorities?authority=ROLE_ADMIN`;
   const response = await authFetch(url, {
     method: "POST",
   });
   if (response.ok) {
-    await setNotification({
-      type: "success",
-      message: "Admin privileges assigned",
-    });
     revalidatePath(`/users/${userId}`);
-  } else {
-    const msg = await response.text();
-    setNotification({
-      type: "error",
-      message: "Cannot assign Admin privileges to the user",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return {
+      type: "success",
+      title: "Admin privileges assigned",
+    };
   }
-};
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot assign Admin privileges to the user",
+    description: `Error ${response.status} ${msg}`,
+  };
+}
 
-export const revokeAdminPrivileges = async (userId: string) => {
+export async function revokeAdminPrivileges(
+  userId: string
+): Promise<Notification> {
   let url = `${IAM_API_URL}/iam/account/${userId}/authorities?authority=ROLE_ADMIN`;
   const response = await authFetch(url, {
     method: "DELETE",
   });
   if (response.ok) {
-    await setNotification({
-      type: "info",
-      message: "Admin privileges revoked",
-    });
     revalidatePath(`/users/${userId}`);
-  } else {
-    const msg = await response.text();
-    await setNotification({
-      type: "error",
-      message: "Cannot revoke admin privileges",
-      subtitle: `Error ${response.status} ${msg}`,
-    });
+    return {
+      type: "info",
+      title: "Admin privileges revoked",
+    };
   }
-};
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot revoke admin privileges",
+    description: `Error ${response.status} ${msg}`,
+  };
+}

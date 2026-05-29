@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
+import { toast } from "@/components/toaster";
 import { Client } from "@/models/client";
 import { disableClient, enableClient } from "@/services/clients";
 
@@ -20,7 +21,10 @@ export default function ToggleStatusModal(
   const title = `${active ? "Disable" : "Enable"} client '${client_name}'`;
 
   const handleConfirm = async () => {
-    active ? await disableClient(client) : await enableClient(client);
+    const res = active
+      ? await disableClient(client)
+      : await enableClient(client);
+    toast.toast(res);
     onClose();
   };
 

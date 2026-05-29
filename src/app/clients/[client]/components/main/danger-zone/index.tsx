@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Form } from "@/components/form";
 import { Client } from "@/models/client";
 import { DeleteButton } from "./delete-button";
 import { ToggleStatusButton } from "./toggle-status-button";
@@ -25,12 +24,12 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
           immediately revoked.
         </p>
       </div>
-      <Form className="flex w-full items-center justify-end lg:w-2/3">
+      <div className="flex w-full items-center justify-end lg:w-2/3">
         <div className="flex flex-row gap-4">
           <ToggleStatusButton client={client} />
           <DeleteButton client={client} isAdmin={isAdmin} />
         </div>
-      </Form>
+      </div>
     </div>
   );
 }

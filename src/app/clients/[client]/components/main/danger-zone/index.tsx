@@ -25,12 +25,12 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
           immediately revoked.
         </p>
       </div>
-      <Form className="flex w-full items-center justify-end lg:w-2/3">
+      <div className="flex w-full items-center justify-end lg:w-2/3">
         <div className="flex flex-row gap-4">
           <ToggleStatusButton client={client} />
           <DeleteButton client={client} isAdmin={isAdmin} />
         </div>
-      </Form>
+      </div>
     </div>
   );
 }

@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Form } from "@/components/form";
 import { Client } from "@/models/client";
 import { DeleteButton } from "./delete-button";
 import { ToggleStatusButton } from "./toggle-status-button";

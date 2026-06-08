@@ -72,7 +72,7 @@ export default async function Scopes(props: Readonly<ScopesProps>) {
   );
 
   return (
-    <TabPanel className="panel space-y-4" unmount={false}>
+    <TabPanel className="panel space-y-4">
       <div className="flex flex-wrap items-center">
         <h3 className="grow py-2">Active scopes</h3>
         <div className="inline-block">

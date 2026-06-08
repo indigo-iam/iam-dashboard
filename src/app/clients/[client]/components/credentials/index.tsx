@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-"use client"
+"use client";
 
 import {
   ClientAuthentication,
@@ -84,7 +84,7 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
   }
 
   return (
-    <TabPanel className="panel" unmount={false}>
+    <TabPanel className="panel">
       <Form onSubmit={submit} className="space-y-4">
         <div className="divide-y">
           <div className="flex flex-col gap-8 pb-4 lg:flex-row">

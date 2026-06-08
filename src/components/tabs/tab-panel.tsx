@@ -7,13 +7,12 @@ import { TabPanel as HeadlessUITabPanel } from "@headlessui/react";
 type TapPanelProps = {
   children: React.ReactNode;
   className?: string;
-  unmount?: boolean;
 };
 
-export default function TabPanel(props: Readonly<TapPanelProps>) {
-  const { children, className, unmount } = props;
+export function TabPanel(props: Readonly<TapPanelProps>) {
+  const { children, className } = props;
   return (
-    <HeadlessUITabPanel unmount={unmount} className={className}>
+    <HeadlessUITabPanel unmount={false} className={className} tabIndex={-1}>
       {children}
     </HeadlessUITabPanel>
   );

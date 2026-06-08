@@ -17,7 +17,7 @@ export default async function Owners(props: Readonly<OwnersProps>) {
   const { client_id } = client;
   const owners = await getClientOwners(client_id);
   return (
-    <TabPanel className="panel" unmount={false}>
+    <TabPanel className="panel">
       <div className="flex flex-wrap items-center">
         <h3 className="grow py-2">Owners</h3>
         <AddOwnerButton client={client} />

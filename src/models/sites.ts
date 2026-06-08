@@ -6,7 +6,9 @@ export type Site = {
   id: number;
   userId: string;
   clientId: string;
-  creationDate: Date;
+  clientName: string;
+  clientDescription?: string;
+  authorizationDate: string;
   accessDate: Date;
   timeoutDate: Date;
   allowedScopes: string[];

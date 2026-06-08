@@ -12,7 +12,7 @@ import { authFetch } from "@/utils/fetch";
 const { IAM_API_URL } = settings;
 
 export async function getApprovedSites(): Promise<Site[]> {
-  const url = `${IAM_API_URL}/api/approved`;
+  const url = `${IAM_API_URL}/iam/api/approved`;
   const response = await authFetch(url);
   return await response.json();
 }

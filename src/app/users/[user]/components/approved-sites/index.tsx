@@ -14,20 +14,29 @@ type ApprovedSiteProps = {
 
 function ApprovedSite(props: Readonly<ApprovedSiteProps>) {
   const { site } = props;
+  const { clientName, clientId, clientDescription } = site;
   const scopes = site.allowedScopes.join(" ");
   const accessDate = new Date(site.accessDate).toLocaleDateString();
-  const creationDate = new Date(site.creationDate).toLocaleDateString();
-  const client_name = "We don't have the name";
+  const authorizationDate = new Date(
+    site.authorizationDate
+  ).toLocaleDateString();
   return (
     <li className="iam-list-item flex flex-row">
       <div className="flex w-0 grow flex-col">
         <Link
           className="flex grow flex-col gap-0.5 lg:flex-row"
-          href={`/clients/${site.clientId}`}
+          href={`/clients/${clientId}`}
         >
           <div className="flex grow flex-col gap-0.5 lg:w-0">
-            <p className="text-gray-950 dark:text-white">{client_name}</p>
-            <p className="truncate text-sm">{site.clientId}</p>
+            <p className="text-gray-950 dark:text-white">
+              {clientName}
+              {clientDescription && (
+                <p className="truncate text-sm font-light italic">
+                  {clientDescription}
+                </p>
+              )}
+            </p>
+            <p className="truncate text-sm">{clientId}</p>
             <p className="truncate text-sm font-light italic" title={scopes}>
               {scopes}
             </p>
@@ -37,7 +46,7 @@ function ApprovedSite(props: Readonly<ApprovedSiteProps>) {
               Last access {accessDate}
             </p>
             <p className="text-xs font-light whitespace-nowrap lg:text-right">
-              Authorized {creationDate}
+              Authorized {authorizationDate}
             </p>
           </div>
         </Link>
@@ -52,14 +61,14 @@ export async function ApprovedSites() {
   if (approvedSites.length === 0) {
     return (
       <TabPanel className="panel" unmount={false}>
-        <h2 className="py-2">Approved Sites</h2>
+        <h2 className="py-2">Linked Apps and Websites</h2>
         <p>No approved sites found.</p>
       </TabPanel>
     );
   }
   return (
     <TabPanel className="panel" unmount={false}>
-      <h2 className="py-2">Approved Sites</h2>
+      <h2 className="py-2">Linked Apps and Websites</h2>
       <ul>
         {approvedSites.map(site => (
           <ApprovedSite site={site} key={site.id} />

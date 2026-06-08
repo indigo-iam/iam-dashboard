@@ -85,7 +85,7 @@ export async function Sidebar(props: Readonly<SidebarProps>) {
       <div className="flex h-full flex-col">
         <nav className="flex grow flex-col overflow-y-auto px-6 py-8">
           <Links hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
-          <div className="space-y-1 p-2">
+          <div className="space-y-1">
             <Link
               title="Privacy Policy"
               href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"

@@ -17,7 +17,7 @@ import { PlusIcon, RocketLaunchIcon } from "@heroicons/react/24/solid";
 function Buttons() {
   return (
     <div className="flex flex-row gap-2">
-      <Link href="/clients/new">
+      <Link href="/clients/new" tabIndex={-1}>
         <Button className="btn-secondary">
           <PlusIcon className="size-4" />
           New client

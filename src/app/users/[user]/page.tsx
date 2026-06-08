@@ -53,7 +53,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
           <Tab>GENERAL</Tab>
           {!isMe && <Tab>GROUPS</Tab>}
           {!isMe && <Tab>CLIENTS</Tab>}
-          <Tab>APPROVED SITES</Tab>
+          <Tab>APPS AND WEBSITES</Tab>
           <Tab>ACTIVE TOKENS</Tab>
           <Tab>LINKED ACCOUNTS</Tab>
           <Tab>ATTRIBUTES</Tab>

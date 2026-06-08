@@ -61,14 +61,14 @@ export async function ApprovedSites() {
   if (approvedSites.length === 0) {
     return (
       <TabPanel className="panel" unmount={false}>
-        <h2 className="py-2">Approved Sites</h2>
+        <h2 className="py-2">Linked Apps and Websites</h2>
         <p>No approved sites found.</p>
       </TabPanel>
     );
   }
   return (
     <TabPanel className="panel" unmount={false}>
-      <h2 className="py-2">Approved Sites</h2>
+      <h2 className="py-2">Linked Apps and Websites</h2>
       <ul>
         {approvedSites.map(site => (
           <ApprovedSite site={site} key={site.id} />

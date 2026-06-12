@@ -23,10 +23,15 @@ interface CreateModalProps extends ModalProps {}
 
 export default function CreateModal(props: Readonly<CreateModalProps>) {
   const { show, onClose } = props;
-  const [validity, setValidity] = useState(0);
+  const [url, setUrl] = useState<string | undefined>();
+  const [validity, setValidity] = useState<number | undefined>(0);
+
+  function handleUrlChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setUrl(event.currentTarget.value);
+  }
 
   function handleValidityChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setValidity(Math.max(parseInt(event.currentTarget.value), 0));
+    setValidity(parseInt(event.currentTarget.value));
   }
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
@@ -46,6 +51,17 @@ export default function CreateModal(props: Readonly<CreateModalProps>) {
     onClose();
   }
 
+  function reset() {
+    setUrl(undefined);
+    setValidity(0);
+  }
+
+  function cancel() {
+    reset();
+    onClose();
+  }
+  const formIsValid = url && validity !== undefined && !isNaN(validity);
+
   return (
     <Modal show={show} onClose={onClose}>
       <ModalHeader onClose={onClose}>
@@ -55,7 +71,7 @@ export default function CreateModal(props: Readonly<CreateModalProps>) {
         <ModalBody>
           <Field>
             <Label data-required>Acceptable Usage Policy URL</Label>
-            <Input type="url" name="url" required />
+            <Input type="url" name="url" required onChange={handleUrlChange} />
             <Description>
               The URL above is presented to users at registration time or
               periodically if the AUP is configured for periodic re-acceptance.
@@ -64,11 +80,11 @@ export default function CreateModal(props: Readonly<CreateModalProps>) {
           <Field>
             <Label data-required>AUP signature validity (in days)</Label>
             <Input
-              type="number"
               name="validity"
-              required
+              type="number"
+              defaultValue={0}
+              min={0}
               onChange={handleValidityChange}
-              value={validity}
             />
             <Description>
               If set to a positive value, users will be prompted periodically
@@ -76,28 +92,30 @@ export default function CreateModal(props: Readonly<CreateModalProps>) {
               zero, the AUP signature will be asked only at registration time.
             </Description>
           </Field>
-          <Field hidden={validity <= 0}>
-            <Label data-required>AUP reminders (in days)</Label>
-            <Input
-              type="text"
-              name="reminders"
-              placeholder="30,15,1"
-              required={validity <= 0}
-            />
-            <Description>
-              Indicate a sequence of three days representing how many days
-              before the AUP expiration reminder messages must be sent.
-            </Description>
-          </Field>
+          {validity !== undefined && validity > 0 && (
+            <Field>
+              <Label data-required>AUP reminders (in days)</Label>
+              <Input
+                type="text"
+                name="reminders"
+                placeholder="30,15,1"
+                required
+              />
+              <Description>
+                Indicate a sequence of three days representing how many days
+                before the AUP expiration reminder messages must be sent.
+              </Description>
+            </Field>
+          )}
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" type="reset" onClick={onClose}>
+          <Button className="btn-tertiary" type="reset" onClick={cancel}>
             Cancel
           </Button>
-          <Button className="btn-secondary" type="reset">
+          <Button className="btn-secondary" type="reset" onClick={reset}>
             Reset
           </Button>
-          <Button className="btn-primary" type="submit">
+          <Button className="btn-primary" type="submit" disabled={!formIsValid}>
             Create AUP
           </Button>
         </ModalFooter>

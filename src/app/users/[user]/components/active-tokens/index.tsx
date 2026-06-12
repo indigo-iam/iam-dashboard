@@ -4,7 +4,7 @@
 
 import Link from "next/link";
 
-import TabPanel from "@/components/tabs/tab-panel";
+import { TabPanel } from "@/components/tabs";
 import { ActiveToken } from "@/models/sites";
 import { getActiveTokens } from "@/services/sites";
 import { dateToHuman, getDate } from "@/utils/dates";
@@ -50,7 +50,7 @@ function ActiveTokenView(props: Readonly<ActiveTokenViewProps>) {
 export async function ActiveTokens() {
   const activeTokens = await getActiveTokens();
   return (
-    <TabPanel className="panel" unmount={false}>
+    <TabPanel className="panel">
       <h2 className="py-2">Active Tokens</h2>
       <ul>
         {activeTokens.map(token => (

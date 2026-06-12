@@ -16,7 +16,7 @@ type LinkedAccountsProps = {
 export async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
   const { user } = props;
   return (
-    <TabPanel className="space-y-6" unmount={false}>
+    <TabPanel className="space-y-6">
       <OidcAccounts user={user} />
       <SamlAccounts user={user} />
       <Certificates user={user} />

@@ -58,7 +58,9 @@ testAdmin("Admin can create and delete a group", async ({ signedUpPage }) => {
     const deleteOption = page.getByTestId("delete-group-opt");
     await expect(deleteOption).toBeVisible();
     await deleteOption.click();
-    await page.getByRole("button", { name: "Delete" }).click({ delay: 300 });
+    await page
+      .getByRole("button", { name: "Delete", exact: true })
+      .click({ delay: 300 });
     const toast = page.getByTestId("toast").first();
     await expect(toast).toBeVisible();
     await expect(toast.getByText("Group deleted")).toBeVisible();

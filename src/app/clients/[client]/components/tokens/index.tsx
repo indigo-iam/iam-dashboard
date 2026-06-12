@@ -31,7 +31,7 @@ export default function Tokens(props: Readonly<TokensProps>) {
   }
 
   return (
-    <TabPanel className="panel" unmount={false}>
+    <TabPanel className="panel">
       <Form onSubmit={submit}>
         <div className="space-y-4 divide-y">
           <TokensTimeout client={client} />

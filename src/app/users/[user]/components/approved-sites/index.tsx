@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import TabPanel from "@/components/tabs/tab-panel";
+import { TabPanel } from "@/components/tabs";
 import { Site } from "@/models/sites";
 import { getApprovedSites } from "@/services/sites";
 import Link from "next/link";
@@ -60,14 +60,14 @@ export async function ApprovedSites() {
   const approvedSites = await getApprovedSites();
   if (approvedSites.length === 0) {
     return (
-      <TabPanel className="panel" unmount={false}>
+      <TabPanel className="panel">
         <h2 className="py-2">Linked Apps and Websites</h2>
         <p>No approved sites found.</p>
       </TabPanel>
     );
   }
   return (
-    <TabPanel className="panel" unmount={false}>
+    <TabPanel className="panel">
       <h2 className="py-2">Linked Apps and Websites</h2>
       <ul>
         {approvedSites.map(site => (

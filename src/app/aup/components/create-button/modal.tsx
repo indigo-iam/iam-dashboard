@@ -82,6 +82,7 @@ export default function CreateModal(props: Readonly<CreateModalProps>) {
             <Input
               name="validity"
               type="number"
+              required
               defaultValue={0}
               min={0}
               onChange={handleValidityChange}

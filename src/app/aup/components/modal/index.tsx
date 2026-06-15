@@ -15,14 +15,17 @@ import {
   ModalProps,
 } from "@/components/modal";
 import { toast } from "@/components/toaster";
+import { AUP } from "@/models/aup";
 import { createAUP } from "@/services/aup";
 import { Field } from "@headlessui/react";
 import { useState } from "react";
 
-interface CreateModalProps extends ModalProps {}
+interface AupModalProps extends ModalProps {
+  aup?: AUP;
+}
 
-export default function CreateModal(props: Readonly<CreateModalProps>) {
-  const { show, onClose } = props;
+export default function AupModal(props: Readonly<AupModalProps>) {
+  const { show, onClose, aup } = props;
   const [url, setUrl] = useState<string | undefined>();
   const [validity, setValidity] = useState<number | undefined>(0);
 
@@ -65,13 +68,21 @@ export default function CreateModal(props: Readonly<CreateModalProps>) {
   return (
     <Modal show={show} onClose={onClose}>
       <ModalHeader onClose={onClose}>
-        Create the Acceptable Usage Policy for this organization
+        {aup
+          ? "Edit AUP for this organization"
+          : "Create the Acceptable Usage Policy for this organization"}
       </ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>
             <Label data-required>Acceptable Usage Policy URL</Label>
-            <Input type="url" name="url" required onChange={handleUrlChange} />
+            <Input
+              type="url"
+              name="url"
+              required
+              defaultValue={aup?.url}
+              onChange={handleUrlChange}
+            />
             <Description>
               The URL above is presented to users at registration time or
               periodically if the AUP is configured for periodic re-acceptance.
@@ -83,7 +94,7 @@ export default function CreateModal(props: Readonly<CreateModalProps>) {
               name="validity"
               type="number"
               required
-              defaultValue={0}
+              defaultValue={aup?.signatureValidityInDays ?? 0}
               min={0}
               onChange={handleValidityChange}
             />
@@ -100,6 +111,7 @@ export default function CreateModal(props: Readonly<CreateModalProps>) {
                 type="text"
                 name="reminders"
                 placeholder="30,15,1"
+                defaultValue={aup?.aupRemindersInDays}
                 required
               />
               <Description>
@@ -107,6 +119,18 @@ export default function CreateModal(props: Readonly<CreateModalProps>) {
                 before the AUP expiration reminder messages must be sent.
               </Description>
             </Field>
+          )}
+          {aup && (
+            <section>
+              <p className="text-md py-2 text-gray-500 dark:text-white/75">
+                Editing the AUP will <b>not</b> trigger an AUP signature request
+              </p>
+              <p className="text-xs text-gray-500 dark:text-white/60">
+                If you want to request a signature from users for the updated
+                AUP, use the &quot;Request AUP signature&quot; button in the AUP
+                management page.
+              </p>
+            </section>
           )}
         </ModalBody>
         <ModalFooter>
@@ -117,7 +141,7 @@ export default function CreateModal(props: Readonly<CreateModalProps>) {
             Reset
           </Button>
           <Button className="btn-primary" type="submit" disabled={!formIsValid}>
-            Create AUP
+            {aup ? "Confirm" : "Create AUP"}
           </Button>
         </ModalFooter>
       </Form>

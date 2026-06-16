@@ -3,7 +3,20 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { testAdmin, testUser, enableAdminMode, expect } from "../auth/fixture";
+import { Page } from "@playwright/test";
 import { dismissToast } from "../utils";
+
+async function openEditModal(page: Page) {
+  const dialog = page.getByRole("dialog").filter({ visible: true });
+  await expect(async () => {
+    const editBtn = page.getByRole("button", { name: "Edit AUP" });
+    await editBtn.click();
+    await expect(dialog).toBeVisible();
+    const heading = dialog.getByRole("heading");
+    await expect(heading).toHaveText("Edit AUP for this organization");
+  }).toPass();
+  return dialog;
+}
 
 testUser("User cannot see AUP page", async ({ signedUpPage }) => {
   const page = signedUpPage;
@@ -117,14 +130,7 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
       });
 
       await testAdmin.step("Edit AUP URL", async () => {
-        const editBtn = page.getByRole("button", { name: "Edit AUP" });
-        const dialog = page.getByRole("dialog").filter({ visible: true });
-        await expect(async () => {
-          await editBtn.click();
-          await expect(dialog).toBeVisible();
-          const heading = dialog.getByRole("heading");
-          await expect(heading).toHaveText("Edit AUP for this organization");
-        }).toPass();
+        const dialog = await openEditModal(page);
         await expect(async () => {
           const url = dialog.getByLabel("Acceptable Usage Policy URL");
           await expect(url).toHaveValue("http://example.org");
@@ -141,15 +147,8 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
       });
 
       await testAdmin.step("Edit AUP expiration days", async () => {
-        const editBtn = page.getByRole("button", { name: "Edit AUP" });
-        const dialog = page.getByRole("dialog").filter({ visible: true });
         await expect(async () => {
-          await editBtn.click();
-          await expect(dialog).toBeVisible();
-          const heading = dialog.getByRole("heading");
-          await expect(heading).toHaveText("Edit AUP for this organization");
-        }).toPass();
-        await expect(async () => {
+          const dialog = await openEditModal(page);
           const days = dialog.getByLabel("AUP signature validity (in days)");
           await expect(days).toHaveValue("0");
           const reminders = dialog.getByLabel("AUP reminders (in days)");

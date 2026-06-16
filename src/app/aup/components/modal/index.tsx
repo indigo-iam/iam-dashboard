@@ -16,7 +16,7 @@ import {
 } from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { AUP } from "@/models/aup";
-import { createAUP } from "@/services/aup";
+import { createAUP, patchAUP } from "@/services/aup";
 import { Field } from "@headlessui/react";
 import { useState } from "react";
 
@@ -26,8 +26,9 @@ interface AupModalProps extends ModalProps {
 
 export default function AupModal(props: Readonly<AupModalProps>) {
   const { show, onClose, aup } = props;
-  const [url, setUrl] = useState<string | undefined>();
+  const [url, setUrl] = useState<string | undefined>(aup?.url);
   const [validity, setValidity] = useState<number | undefined>(0);
+  const isEditing = !!aup;
 
   function handleUrlChange(event: React.ChangeEvent<HTMLInputElement>) {
     setUrl(event.currentTarget.value);
@@ -44,12 +45,14 @@ export default function AupModal(props: Readonly<AupModalProps>) {
     const signatureValidityInDays = parseInt(
       formData.get("validity") as string
     );
-    const aupRemindersInDays = formData.get("reminders") as string | undefined;
-    const res = await createAUP({
+    const aupRemindersInDays =
+      (formData.get("reminders") as string | undefined) ?? "";
+    const body = {
       url,
       signatureValidityInDays,
       aupRemindersInDays,
-    });
+    };
+    const res = isEditing ? await patchAUP(body) : await createAUP(body);
     toast.toast(res);
     onClose();
   }
@@ -68,7 +71,7 @@ export default function AupModal(props: Readonly<AupModalProps>) {
   return (
     <Modal show={show} onClose={onClose}>
       <ModalHeader onClose={onClose}>
-        {aup
+        {isEditing
           ? "Edit AUP for this organization"
           : "Create the Acceptable Usage Policy for this organization"}
       </ModalHeader>
@@ -120,7 +123,7 @@ export default function AupModal(props: Readonly<AupModalProps>) {
               </Description>
             </Field>
           )}
-          {aup && (
+          {isEditing && (
             <section>
               <p className="text-md py-2 text-gray-500 dark:text-white/75">
                 Editing the AUP will <b>not</b> trigger an AUP signature request

@@ -18,7 +18,7 @@ import { toast } from "@/components/toaster";
 import { AUP } from "@/models/aup";
 import { createAUP, patchAUP } from "@/services/aup";
 import { Field } from "@headlessui/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 interface AupModalProps extends ModalProps {
   aup?: AUP;
@@ -30,7 +30,19 @@ export default function AupModal(props: Readonly<AupModalProps>) {
   const [validity, setValidity] = useState<number | undefined>(
     aup?.signatureValidityInDays ?? 0
   );
+  const formRef = useRef<HTMLFormElement>(null);
   const isEditing = !!aup;
+
+  function reset() {
+    setUrl(aup?.url);
+    setValidity(aup?.signatureValidityInDays ?? 0);
+    formRef.current?.reset();
+  }
+
+  function close() {
+    reset();
+    onClose();
+  }
 
   function handleUrlChange(event: React.ChangeEvent<HTMLInputElement>) {
     setUrl(event.currentTarget.value);
@@ -56,28 +68,22 @@ export default function AupModal(props: Readonly<AupModalProps>) {
     };
     const res = isEditing ? await patchAUP(body) : await createAUP(body);
     toast.toast(res);
+    if (res.type !== "success") {
+      reset();
+    }
     onClose();
   }
 
-  function reset() {
-    setUrl(aup?.url);
-    setValidity(aup?.signatureValidityInDays ?? 0);
-  }
-
-  function cancel() {
-    reset();
-    onClose();
-  }
   const formIsValid = url && validity !== undefined && !Number.isNaN(validity);
 
   return (
-    <Modal show={show} onClose={onClose}>
-      <ModalHeader onClose={onClose}>
+    <Modal show={show} onClose={close}>
+      <ModalHeader onClose={close}>
         {isEditing
           ? "Edit AUP for this organization"
           : "Create the Acceptable Usage Policy for this organization"}
       </ModalHeader>
-      <Form onSubmit={submit}>
+      <Form onSubmit={submit} ref={formRef}>
         <ModalBody>
           <Field>
             <Label data-required>Acceptable Usage Policy URL</Label>
@@ -139,7 +145,7 @@ export default function AupModal(props: Readonly<AupModalProps>) {
           )}
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" type="reset" onClick={cancel}>
+          <Button className="btn-tertiary" type="reset" onClick={close}>
             Cancel
           </Button>
           <Button className="btn-secondary" type="reset" onClick={reset}>

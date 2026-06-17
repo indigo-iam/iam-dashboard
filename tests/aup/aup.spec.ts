@@ -79,7 +79,7 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
         ).toBeVisible();
       });
 
-      await testAdmin.step("create AUP", async () => {
+      await testAdmin.step("Create AUP", async () => {
         const createAupBtn = page.getByRole("button", { name: "Create AUP" });
         const dialog = page.getByRole("dialog").filter({
           hasText: "Create the Acceptable Usage Policy for this organization",
@@ -165,33 +165,57 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
             .getByLabel("Signature validity (in days)")
             .filter({ visible: true });
           await expect(days).toHaveValue("365");
-          const reminders = page
-            .getByLabel("AUP reminders (in days)")
-            .filter({ visible: true });
-          await expect(reminders).toHaveValue("30,15,1");
         }).toPass();
       });
 
-      await testAdmin.step(
-        "A reminder longer than expiration is not allowed",
-        async () => {
+      await testAdmin.step("Edit AUP reminder in days", async () => {
+        await expect(async () => {
+          const dialog = await openEditModal(page);
+          const days = dialog.getByLabel("AUP signature validity (in days)");
+          await expect(days).toHaveValue("365");
+          const reminders = dialog.getByLabel("AUP reminders (in days)");
+          await expect(reminders).toBeVisible();
+          await reminders.fill("30,15,1");
+          await dialog.getByRole("button", { name: "Confirm" }).click();
+          await dismissToast(page, "AUP updated", "success");
+        }).toPass();
+      });
+
+      const valuesAndErrors = [
+        [
+          "AUP reminder is too large",
+          "2048",
+          'Cannot update AUPError 400 {"error":"Invalid AUP: aupRemindersInDays must be smaller than signatureValidityInDays"}',
+        ],
+        [
+          "AUP reminder is negative",
+          "-42",
+          'Cannot update AUPError 400 {"error":"Invalid AUP: zero or negative values for reminders are not allowed"}',
+        ],
+        [
+          "AUP reminder is not a list of integers",
+          "42,foo",
+          'Cannot update AUPError 400 {"error":"Invalid AUP: non-integer value found for aupRemindersInDays"}',
+        ],
+      ];
+
+      for (const [description, value, error] of valuesAndErrors) {
+        await testAdmin.step(description, async () => {
           const dialog = await openEditModal(page);
           const reminders = dialog.getByLabel("AUP reminders (in days)");
           await expect(reminders).toHaveValue("30,15,1");
-          await reminders.fill("2048");
+          await reminders.fill(value);
           await dialog.getByRole("button", { name: "Confirm" }).click();
           await expect(async () => {
             const toast = page.getByTestId("toast");
             await expect(toast).toBeVisible();
             await expect(toast).toHaveAttribute("data-toast-type", "error");
-            await expect(toast).toHaveText(
-              'Cannot update AUPError 400 {"error":"Invalid AUP: aupRemindersInDays must be smaller than signatureValidityInDays"}'
-            );
+            await expect(toast).toHaveText(error);
             await toast.getByTitle("Close").click();
             await expect(toast).toBeHidden();
           }).toPass();
-        }
-      );
+        });
+      }
     }
   );
 });

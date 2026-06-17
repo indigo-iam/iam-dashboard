@@ -59,7 +59,7 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
   });
 
   testAdmin(
-    "Admin can create and edit a not-expiring AUP",
+    "Admin can create and edit a non-expiring AUP",
     async ({ signedUpPage }) => {
       const page = signedUpPage;
 
@@ -171,6 +171,27 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
           await expect(reminders).toHaveValue("30,15,1");
         }).toPass();
       });
+
+      await testAdmin.step(
+        "A reminder longer than expiration is not allowed",
+        async () => {
+          const dialog = await openEditModal(page);
+          const reminders = dialog.getByLabel("AUP reminders (in days)");
+          await expect(reminders).toHaveValue("30,15,1");
+          await reminders.fill("2048");
+          await dialog.getByRole("button", { name: "Confirm" }).click();
+          await expect(async () => {
+            const toast = page.getByTestId("toast");
+            await expect(toast).toBeVisible();
+            await expect(toast).toHaveAttribute("data-toast-type", "error");
+            await expect(toast).toHaveText(
+              'Cannot update AUPError 400 {"error":"Invalid AUP: aupRemindersInDays must be smaller than signatureValidityInDays"}'
+            );
+            await toast.getByTitle("Close").click();
+            await expect(toast).toBeHidden();
+          }).toPass();
+        }
+      );
     }
   );
 });

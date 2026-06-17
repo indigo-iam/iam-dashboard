@@ -27,7 +27,9 @@ interface AupModalProps extends ModalProps {
 export default function AupModal(props: Readonly<AupModalProps>) {
   const { show, onClose, aup } = props;
   const [url, setUrl] = useState<string | undefined>(aup?.url);
-  const [validity, setValidity] = useState<number | undefined>(0);
+  const [validity, setValidity] = useState<number | undefined>(
+    aup?.signatureValidityInDays ?? 0
+  );
   const isEditing = !!aup;
 
   function handleUrlChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -58,8 +60,8 @@ export default function AupModal(props: Readonly<AupModalProps>) {
   }
 
   function reset() {
-    setUrl(undefined);
-    setValidity(0);
+    setUrl(aup?.url);
+    setValidity(aup?.signatureValidityInDays ?? 0);
   }
 
   function cancel() {

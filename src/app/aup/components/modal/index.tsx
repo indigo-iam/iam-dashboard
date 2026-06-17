@@ -35,14 +35,14 @@ export default function AupModal(props: Readonly<AupModalProps>) {
   }
 
   function handleValidityChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setValidity(parseInt(event.currentTarget.value));
+    setValidity(Number.parseInt(event.currentTarget.value));
   }
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const url = formData.get("url") as string;
-    const signatureValidityInDays = parseInt(
+    const signatureValidityInDays = Number.parseInt(
       formData.get("validity") as string
     );
     const aupRemindersInDays =
@@ -66,7 +66,7 @@ export default function AupModal(props: Readonly<AupModalProps>) {
     reset();
     onClose();
   }
-  const formIsValid = url && validity !== undefined && !isNaN(validity);
+  const formIsValid = url && validity !== undefined && !Number.isNaN(validity);
 
   return (
     <Modal show={show} onClose={onClose}>

@@ -7,6 +7,8 @@ import { User } from "@/models/scim";
 import JoinGroupButton from "./join-group-button";
 import UnmanagedGroups from "./unmanaged";
 import ManagedGroups from "./managed";
+import { fetchGroupsRequests } from "@/services/group-requests";
+import { GroupRequests } from "./requests";
 
 type UserGroupsProps = {
   user: User;
@@ -15,9 +17,14 @@ type UserGroupsProps = {
 
 export async function UserGroups(props: Readonly<UserGroupsProps>) {
   const { user, isAdmin } = props;
+  const requestsPage = isAdmin
+    ? await fetchGroupsRequests(user.name?.displayName)
+    : await fetchGroupsRequests();
+  const requests = requestsPage.Resources;
   return (
     <TabPanel className="space-y-4">
       <JoinGroupButton user={user} isAdmin={isAdmin} />
+      <GroupRequests user={user} requests={requests} />
       <UnmanagedGroups user={user} isAdmin={isAdmin} />
       <ManagedGroups user={user} />
     </TabPanel>

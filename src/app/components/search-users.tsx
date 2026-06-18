@@ -4,36 +4,53 @@
 
 "use client";
 
-import { Combobox, ComboboxOption } from "@/components/combobox";
+import { Field, Label } from "@/components/form";
 import { User } from "@/models/scim";
 import { searchUser } from "@/services/users";
+import { useDeferredCallback } from "@/utils/hooks";
 import { useState } from "react";
 
-export function SearchUsers(props: Readonly<{ onSelect: (user: User) => void }>) {
-  const { onSelect } = props;
+type SearchUserProps = {
+  listId: string;
+  onSelect: (user: User) => void;
+};
+
+export function SearchUsers(props: Readonly<SearchUserProps>) {
+  const { listId, onSelect } = props;
   const [searchResult, setSearchResult] = useState<User[]>([]);
+  const { deferredCallback } = useDeferredCallback();
 
-  const handleQueryChange = async (query: string) => {
-    const result = await searchUser(query);
-    setSearchResult(result);
-  };
-
-  if (searchResult.length === 0) {
-    return (
-      <Combobox<User> onSelect={onSelect} onQueryChange={handleQueryChange}>
-        <ComboboxOption value={undefined}>No user found.</ComboboxOption>
-      </Combobox>
-    );
+  function handleQueryChange(event: React.ChangeEvent<HTMLInputElement>) {
+    deferredCallback(async () => {
+      const query = event.target.value;
+      if (query) {
+        const result = await searchUser(query);
+        setSearchResult(result);
+        if (result.length === 1 && result[0].name?.formatted === query) {
+          onSelect(result[0]);
+        }
+      } else {
+        setSearchResult([]);
+      }
+    });
   }
 
   return (
-    <Combobox<User> onSelect={onSelect} onQueryChange={handleQueryChange}>
-      {searchResult.map(user => (
-        <ComboboxOption key={user.id} value={user}>
-          <span className="font-bold">{user.name?.formatted}</span> (
-          {user.emails?.[0].value})
-        </ComboboxOption>
-      ))}
-    </Combobox>
+    <Field>
+      <Label>Search user</Label>
+      <input
+        className="iam-input"
+        list={listId}
+        onChange={handleQueryChange}
+        placeholder="Type to search for a user..."
+      />
+      <datalist id={listId}>
+        {searchResult.map(user => (
+          <option key={user.id} value={user.name?.formatted}>
+            {user.emails?.[0].value}
+          </option>
+        ))}
+      </datalist>
+    </Field>
   );
 }

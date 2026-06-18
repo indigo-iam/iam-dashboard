@@ -45,7 +45,7 @@ export function AddOwnerModal(props: Readonly<AddOwnerModalProps>) {
               Type to search for a user to be owner of client{" "}
               <span className="font-medium">{client.client_name}</span>
             </p>
-            <SearchUsers onSelect={setUser} />
+            <SearchUsers listId="search-list-owner" onSelect={setUser} />
           </div>
         )}
       </ModalBody>

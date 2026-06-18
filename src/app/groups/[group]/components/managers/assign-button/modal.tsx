@@ -40,7 +40,7 @@ function SearchUserView(props: Readonly<SearchUserViewProps>) {
           </>
         )}
       </p>{" "}
-      <SearchUsers onSelect={onSelect} />
+      <SearchUsers listId="search-list-managers" onSelect={onSelect} />
     </div>
   );
 }
@@ -101,6 +101,7 @@ export default function AssignGroupManagerModal(
       title="Assign group manager"
       onConfirm={assignManager}
       onCancel={clear}
+      confirmButtonDisabled={!user}
     >
       <>
         {user ? (

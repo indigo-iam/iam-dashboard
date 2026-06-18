@@ -38,7 +38,7 @@ function SearchUsersView(props: Readonly<SearchUsersViewProps>) {
           </>
         )}
       </p>
-      <SearchUsers onSelect={onSelect} />
+      <SearchUsers onSelect={onSelect} listId="search-member" />
     </div>
   );
 }

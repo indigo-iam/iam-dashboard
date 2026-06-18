@@ -43,7 +43,12 @@ export async function refreshAccessToken(refreshToken: string, scope?: string) {
     method: "POST",
     body,
   });
-
+  if (!res.ok) {
+    await signOut();
+    throw new Error(
+      `Refreshing access token failed with status: ${res.status}, error ${await res.text()}`
+    );
+  }
   const data = await res.json();
   const tokens: OAuth2Tokens = {
     accessToken: data.access_token,

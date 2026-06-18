@@ -14,7 +14,7 @@ import { RequestSignature } from "./request-signature";
 async function getExpirationDate(user: User, aup: AUP) {
   const aupSignatureTime =
     user["urn:indigo-dc:scim:schemas:IndigoUser"]?.aupSignatureTime;
-  if (!aupSignatureTime) {
+  if (!aupSignatureTime || aup.signatureValidityInDays === 0) {
     return {
       expiresAt: "N/A",
       expired: false,

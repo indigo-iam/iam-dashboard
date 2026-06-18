@@ -20,6 +20,7 @@ interface ConfirmModal extends ModalProps {
   confirmButtonText?: string;
   confirmButtonDisabled?: boolean;
   danger?: boolean;
+  formRef?: React.RefObject<HTMLFormElement | null>;
 }
 
 export default function ConfirmModal(props: Readonly<ConfirmModal>) {
@@ -31,6 +32,7 @@ export default function ConfirmModal(props: Readonly<ConfirmModal>) {
     confirmButtonText,
     confirmButtonDisabled,
     danger,
+    formRef,
     ...modalProps
   } = props;
 
@@ -44,26 +46,30 @@ export default function ConfirmModal(props: Readonly<ConfirmModal>) {
 
   return (
     <Modal {...modalProps}>
-      <ModalHeader onClose={modalProps.onClose}>{modalProps.title}</ModalHeader>
-      <ModalBody>{children}</ModalBody>
-      <ModalFooter>
-        <Button
-          className="btn-tertiary"
-          type="button"
-          onClick={onCancel ?? modalProps.onClose}
-        >
-          {cancelText}
-        </Button>
-        <Button
-          className="btn-primary data-[danger=true]:btn-danger"
-          type="submit"
-          data-danger={danger}
-          onClick={submit}
-          disabled={confirmButtonDisabled}
-        >
-          {confirmText}
-        </Button>
-      </ModalFooter>
+      <form ref={formRef}>
+        <ModalHeader onClose={modalProps.onClose}>
+          {modalProps.title}
+        </ModalHeader>
+        <ModalBody>{children}</ModalBody>
+        <ModalFooter>
+          <Button
+            className="btn-tertiary"
+            type="reset"
+            onClick={onCancel ?? modalProps.onClose}
+          >
+            {cancelText}
+          </Button>
+          <Button
+            className="btn-primary data-[danger=true]:btn-danger"
+            type="submit"
+            data-danger={danger}
+            onClick={submit}
+            disabled={confirmButtonDisabled}
+          >
+            {confirmText}
+          </Button>
+        </ModalFooter>
+      </form>
     </Modal>
   );
 }

@@ -33,9 +33,9 @@ export function Drawer(props: Readonly<DrawerProps>) {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", close);
+    globalThis.window.addEventListener("resize", close);
     return () => {
-      window.removeEventListener("resize", close);
+      globalThis.window.removeEventListener("resize", close);
     };
   });
 

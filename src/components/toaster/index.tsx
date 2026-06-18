@@ -39,7 +39,7 @@ function useUpdateToasterPosition() {
   const previousWidthRef = useRef(0);
 
   function resize() {
-    const width = window.innerWidth;
+    const width = globalThis.window.innerWidth;
     const previousWidth = previousWidthRef.current;
     if (width < breakpoints.sm && previousWidth > breakpoints.sm) {
       setPosition("bottom-right");
@@ -58,9 +58,9 @@ function useUpdateToasterPosition() {
     };
 
     handleResize();
-    window.addEventListener("resize", handleResize);
+    globalThis.window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener("resize", handleResize);
+      globalThis.window.removeEventListener("resize", handleResize);
       clearTimeout(timeoutId);
     };
   });

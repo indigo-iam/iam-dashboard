@@ -46,7 +46,7 @@ export default function ConfirmModal(props: Readonly<ConfirmModal>) {
 
   return (
     <Modal {...modalProps}>
-      <form ref={formRef}>
+      <form ref={formRef} onSubmit={e => e.preventDefault()}>
         <ModalHeader onClose={modalProps.onClose}>
           {modalProps.title}
         </ModalHeader>

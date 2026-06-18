@@ -24,7 +24,7 @@ export async function UserGroups(props: Readonly<UserGroupsProps>) {
   return (
     <TabPanel className="space-y-4">
       <JoinGroupButton user={user} isAdmin={isAdmin} />
-      <GroupRequests user={user} requests={requests} />
+      {requests.length > 0 && <GroupRequests user={user} requests={requests} />}
       <UnmanagedGroups user={user} isAdmin={isAdmin} />
       <ManagedGroups user={user} />
     </TabPanel>

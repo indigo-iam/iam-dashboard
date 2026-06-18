@@ -54,24 +54,7 @@ function GroupView(props: Readonly<GroupViewProps>) {
   );
 }
 
-function MotivationField() {
-  return (
-    <Field className="flex flex-col">
-      <Label data-required>Provide a motivation for your request</Label>
-      <Textarea
-        id="group-request-notes"
-        name="group-request-notes"
-        placeholder="Explain why you want to be a member of group..."
-        className="iam-input w-full"
-        required={true}
-      />
-      <Description>
-        This motivation will be show to the administrators that will manage your
-        request.
-      </Description>
-    </Field>
-  );
-}
+const MIN_MOTIVATION_LENGTH = 5;
 
 type JoinGroupModalProps = {
   user: User;
@@ -83,7 +66,8 @@ export function JoinGroupModal(props: Readonly<JoinGroupModalProps>) {
   const { user, show, onClose } = props;
   const formRef = useRef<HTMLFormElement>(null);
   const [selected, setSelected] = useState<Group>();
-  const disabled = selected === undefined;
+  const [motivation, setMotivation] = useState<string>();
+  const enabled = selected && (motivation?.length ?? 0) > MIN_MOTIVATION_LENGTH;
 
   function unselect() {
     setSelected(undefined);
@@ -104,7 +88,7 @@ export function JoinGroupModal(props: Readonly<JoinGroupModalProps>) {
       return;
     }
 
-    const formData = new FormData(formRef.current.currentTarget);
+    const formData = new FormData(formRef.current);
 
     const req: JoinGroupRequest = {
       notes: formData.get("group-request-notes") as string,
@@ -122,13 +106,27 @@ export function JoinGroupModal(props: Readonly<JoinGroupModalProps>) {
       onClose={close}
       title="Send join group request"
       onConfirm={submit}
-      confirmButtonDisabled={disabled}
+      confirmButtonDisabled={!enabled}
       onCancel={unselect}
+      formRef={formRef}
     >
       {selected ? (
         <div className="space-y-4">
           <GroupView group={selected} />
-          <MotivationField />
+          <Field className="flex flex-col">
+            <Label data-required>Provide a motivation for your request</Label>
+            <Textarea
+              id="group-request-notes"
+              name="group-request-notes"
+              placeholder="Explain why you want to be a member of group..."
+              className="iam-input w-full"
+              required={true}
+              onChange={e => setMotivation(e.currentTarget.value)}
+            />
+            <Description>
+              {`This motivation will be show to the administrators that will manage your request. It must contain at least ${MIN_MOTIVATION_LENGTH} characters.`}
+            </Description>
+          </Field>
         </div>
       ) : (
         <Field>

@@ -4,7 +4,7 @@
 
 "use client";
 
-import { SearchGroups } from "@/app/components/search-groups";
+import { SearchGroups } from "./search-groups";
 import { Form, Field, Label, Description } from "@/components/form";
 import { Button } from "@/components/buttons";
 import {

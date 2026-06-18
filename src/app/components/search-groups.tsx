@@ -4,9 +4,9 @@
 
 "use client";
 
-import { Combobox, ComboboxOption } from "@/components/combobox";
 import { Group } from "@/models/groups";
 import { searchGroup } from "@/services/groups";
+import { useDeferredCallback } from "@/utils/hooks";
 import { useState } from "react";
 
 export function SearchGroups(
@@ -14,27 +14,38 @@ export function SearchGroups(
 ) {
   const { onSelect } = props;
   const [searchResult, setSearchResult] = useState<Group[]>([]);
+  const { deferredCallback } = useDeferredCallback();
 
-  const handleQueryChange = async (query: string) => {
-    const result = await searchGroup(query);
-    setSearchResult(result);
-  };
-
-  if (searchResult.length === 0) {
-    return (
-      <Combobox<Group> onSelect={onSelect} onQueryChange={handleQueryChange}>
-        <ComboboxOption value={undefined}>No user found.</ComboboxOption>
-      </Combobox>
-    );
+  function handleQueryChange(event: React.ChangeEvent<HTMLInputElement>) {
+    deferredCallback(async () => {
+      const query = event.target.value;
+      if (query) {
+        const result = await searchGroup(query);
+        setSearchResult(result);
+        if (result.length === 1 && result[0].displayName === query) {
+          onSelect(result[0]);
+        }
+      } else {
+        setSearchResult([]);
+      }
+    });
   }
 
   return (
-    <Combobox<Group> onSelect={onSelect} onQueryChange={handleQueryChange}>
-      {searchResult.map(group => (
-        <ComboboxOption key={group.id} value={group}>
-          <span className="font-bold">{group.displayName}</span> ({group.id})
-        </ComboboxOption>
-      ))}
-    </Combobox>
+    <>
+      <input
+        className="iam-input"
+        list="search-group-list"
+        onChange={handleQueryChange}
+        placeholder="Type to search for a group..."
+      />
+      <datalist id="search-group-list">
+        {searchResult.map(group => (
+          <option key={group.id} value={group.displayName}>
+            {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description}
+          </option>
+        ))}
+      </datalist>
+    </>
   );
 }

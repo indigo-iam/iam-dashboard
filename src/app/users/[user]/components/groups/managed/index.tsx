@@ -42,7 +42,7 @@ export default async function ManagedGroups(
 
   return (
     <div className="panel space-y-4">
-      <h2>Managed Groups</h2>
+      <h2>Managed groups</h2>
       <ul className="w-full">
         {groups.map(group => (
           <Row key={group.id} group={group} />

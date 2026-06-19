@@ -6,7 +6,7 @@ import packageInfo from "../package.json";
 
 const isBuilding = process.env.NEXT_PHASE === "phase-production-build";
 
-function loadEnvVariable(key: string, defaultValue?: string) {
+function loadEnvVariable(key: string, defaultValue?: string | null) {
   if (process.env[key]) {
     return process.env[key];
   }
@@ -66,6 +66,10 @@ function loadOtelExporterOtlpEndpoint() {
   );
 }
 
+function loadOrganizationName() {
+  return loadEnvVariable("IAM_DASHBOARD_ORGANIZATION_NAME", "cnafsd");
+}
+
 export const settings = {
   IAM_API_URL: loadApiUrl(),
   IAM_DASHBOARD_APP_VERSION: loadAppVersion(),
@@ -77,4 +81,5 @@ export const settings = {
   IAM_DASHBOARD_OIDC_SCOPES: loadOidcScopes(),
   IAM_DASHBOARD_OIDC_ADMIN_SCOPES: loadOidcAdminScopes(),
   IAM_DASHBOARD_OTEL_EXPORTER_OTLP_ENDPOINT: loadOtelExporterOtlpEndpoint(),
+  IAM_DASHBOARD_ORGANIZATION: loadOrganizationName(),
 };

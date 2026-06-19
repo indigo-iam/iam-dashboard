@@ -89,6 +89,7 @@ IAM_DASHBOARD_CLIENT_ID="<your_client_id>"
 IAM_DASHBOARD_CLIENT_SECRET="<your_client_secret>"
 IAM_DASHBOARD_AUTH_SECRET="<authentication_secret>"
 IAM_DASHBOARD_OTEL_EXPORTER_OTLP_ENDPOINT="https://your.otel.example/collector"
+IAM_DASHBOARD_ORGANIZATION_NAME="INFN DataCloud"    # default "cnafsd"
 ```
 
 To start the application execute:

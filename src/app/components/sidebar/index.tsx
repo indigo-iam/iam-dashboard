@@ -18,7 +18,11 @@ import {
 import { Drawer, Link } from "@/components/drawer";
 import { settings } from "@/config";
 
-const { IAM_DASHBOARD_APP_VERSION } = settings;
+const {
+  IAM_DASHBOARD_APP_VERSION,
+  IAM_DASHBOARD_POLICY_URL,
+  IAM_DASHBOARD_SUPPORT_URL,
+} = settings;
 
 type LinksProps = {
   hasRoleAdmin?: boolean;
@@ -86,18 +90,16 @@ export async function Sidebar(props: Readonly<SidebarProps>) {
         <nav className="flex grow flex-col overflow-y-auto px-6 py-8">
           <Links hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
           <div className="space-y-1">
-            <Link
-              title="Privacy Policy"
-              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            >
-              <BuildingLibraryIcon className="size-5" />
-            </Link>
-            <Link
-              title="Support"
-              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            >
-              <ChatBubbleLeftRightIcon className="size-5" />
-            </Link>
+            {IAM_DASHBOARD_POLICY_URL && (
+              <Link title="Privacy Policy" href={IAM_DASHBOARD_POLICY_URL}>
+                <BuildingLibraryIcon className="size-5" />
+              </Link>
+            )}
+            {IAM_DASHBOARD_SUPPORT_URL && (
+              <Link title="Support" href={IAM_DASHBOARD_SUPPORT_URL}>
+                <ChatBubbleLeftRightIcon className="size-5" />
+              </Link>
+            )}
           </div>
         </nav>
         <div className="w-full bg-slate-600 p-1 text-center text-sm text-white">

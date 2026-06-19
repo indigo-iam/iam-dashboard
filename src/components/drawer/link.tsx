@@ -8,6 +8,7 @@ import { default as NextLink } from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 
 import { toggleDrawer } from "./drawer";
+import { useLoading } from "../loading";
 
 export type LinkProps = {
   title: string;
@@ -19,6 +20,7 @@ export function Link(props: Readonly<LinkProps>) {
   const { title, href, children } = props;
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { startProgressBar } = useLoading();
 
   let selected = false;
   switch (pathname) {
@@ -45,17 +47,21 @@ export function Link(props: Readonly<LinkProps>) {
       selected = pathname === href;
   }
 
+  function handleClick() {
+    toggleDrawer();
+    startProgressBar();
+  }
+
   return (
-    <button className="md:disabled w-full" onClick={toggleDrawer} tabIndex={-1}>
-      <NextLink
-        href={href}
-        className="flex items-center gap-1 rounded-lg p-2 text-base text-white/95 transition ease-in-out hover:bg-white/10 data-[selected=true]:bg-white/10"
-        data-selected={selected ? "true" : "false"}
-        title={title}
-      >
-        {children}
-        {title}
-      </NextLink>
-    </button>
+    <NextLink
+      href={href}
+      onClick={handleClick}
+      className="md:disabled flex w-full items-center gap-1 rounded-lg p-2 text-base text-white/95 transition ease-in-out hover:bg-white/10 data-[selected=true]:bg-white/10"
+      data-selected={selected ? "true" : "false"}
+      title={title}
+    >
+      {children}
+      {title}
+    </NextLink>
   );
 }

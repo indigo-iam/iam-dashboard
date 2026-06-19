@@ -223,6 +223,9 @@ export const authConfig = (db: Database.Database) => {
       updateAccountOnSignIn: true,
     },
     plugins: [indigoIam(), nextCookies()],
+    advanced: {
+      cookiePrefix: "indigo-iam",
+    },
   } satisfies BetterAuthOptions;
 };
 

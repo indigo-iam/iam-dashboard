@@ -13,6 +13,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { PlusIcon, RocketLaunchIcon } from "@heroicons/react/24/solid";
+import Loading from "./loading";
 
 function Buttons() {
   return (
@@ -29,27 +30,18 @@ function Buttons() {
 }
 
 type ClientsProps = {
-  searchParams?: Promise<{
-    count?: string;
-    page?: string;
-    query?: string;
-  }>;
+  isAdmin: boolean;
+  count: number;
+  startIndex: number;
+  query?: string;
+  accountId: string;
 };
 
-export default async function ClientsPage(props: Readonly<ClientsProps>) {
-  const session = await getSession();
-  if (!session) {
-    redirect("/");
-  }
-  const isAdmin = await isUserAdmin();
-  const searchParams = await props.searchParams;
-  const count = searchParams?.count ? parseInt(searchParams.count) : 10;
-  const page = searchParams?.page ? parseInt(searchParams.page) : 1;
-  const query = searchParams?.query;
-  const startIndex = 1 + count * (page - 1);
+export async function ClientsPage(props: Readonly<ClientsProps>) {
+  const { isAdmin, count, startIndex, query, accountId } = props;
   const clientPage = isAdmin
     ? await getClientsPage(count, startIndex, query)
-    : await getClientsByAccount(session.user?.sub, count, startIndex);
+    : await getClientsByAccount(accountId, count, startIndex);
   const numberOfPages = Math.ceil(clientPage.totalResults / count) || 1;
   const clients = clientPage.Resources;
   return (
@@ -71,12 +63,42 @@ export default async function ClientsPage(props: Readonly<ClientsProps>) {
       </header>
       <div className="container space-y-4">
         <div className="panel">
-          <Suspense fallback="Loading...">
-            <ClientsTable clients={clients} isAdmin={isAdmin} />
-          </Suspense>
+          <ClientsTable clients={clients} isAdmin={isAdmin} />
         </div>
         <Paginator numberOfPages={numberOfPages} />
       </div>
     </section>
+  );
+}
+
+type PageProps = {
+  searchParams?: Promise<{
+    count?: string;
+    page?: string;
+    query?: string;
+  }>;
+};
+
+export default async function Page(props: Readonly<PageProps>) {
+  const session = await getSession();
+  if (!session) {
+    redirect("/");
+  }
+  const isAdmin = await isUserAdmin();
+  const searchParams = await props.searchParams;
+  const count = searchParams?.count ? parseInt(searchParams.count) : 10;
+  const page = searchParams?.page ? parseInt(searchParams.page) : 1;
+  const query = searchParams?.query;
+  const startIndex = 1 + count * (page - 1);
+  return (
+    <Suspense fallback={<Loading />}>
+      <ClientsPage
+        isAdmin={isAdmin}
+        count={count}
+        startIndex={startIndex}
+        query={query}
+        accountId={session.user?.sub}
+      />
+    </Suspense>
   );
 }

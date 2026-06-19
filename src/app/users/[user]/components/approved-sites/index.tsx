@@ -5,7 +5,7 @@
 import { TabPanel } from "@/components/tabs";
 import { Site } from "@/models/sites";
 import { getApprovedSites } from "@/services/sites";
-import Link from "next/link";
+import Link from "@/components/link";
 import { ApprovedSiteOptions } from "./options";
 
 type ApprovedSiteProps = {

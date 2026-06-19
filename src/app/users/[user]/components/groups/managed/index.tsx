@@ -5,7 +5,7 @@
 import { User } from "@/models/scim";
 import { fetchManagedGroups } from "@/services/groups";
 import { ManagedGroup } from "@/models/groups";
-import Link from "next/link";
+import Link from "@/components/link";
 import GroupOptions from "./options";
 
 type RowProps = {

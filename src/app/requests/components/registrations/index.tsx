@@ -6,7 +6,7 @@ import { TabPanel } from "@/components/tabs";
 import { Registration } from "@/models/registration";
 import { dateToHuman } from "@/utils/dates";
 import RegistrationRequestsOptions from "./options";
-import Link from "next/link";
+import Link from "@/components/link";
 
 type RowProps = {
   request: Registration;

@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import Link from "next/link";
+import Link from "@/components/link";
 import { Status } from "@/components/badges";
 import { User } from "@/models/scim";
 import UserOptions from "./options";
@@ -31,7 +31,7 @@ function Row(props: Readonly<RowProps>) {
         </div>
         <div className="my-auto flex flex-col">
           <div className="flew-wrap flex items-center gap-2 lg:flex-col lg:items-end lg:gap-1">
-            <Status active={user.active ?? false} autoHide={true}/>
+            <Status active={user.active ?? false} autoHide={true} />
             <p className="py-1 text-xs font-light lg:p-0">Created {created}</p>
           </div>
         </div>

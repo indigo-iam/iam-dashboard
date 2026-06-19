@@ -2,8 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import Link from "@/components/link";
 import { ScimReference, User } from "@/models/scim";
-import NextLink from "next/link";
 import GroupOptions from "./options";
 
 type StaticViewProps = {
@@ -27,10 +27,10 @@ type LinkViewProps = {
 function LinkView(props: Readonly<LinkViewProps>) {
   const { groupRef } = props;
   return (
-    <NextLink href={`/groups/${groupRef.value}`} className="flex grow flex-col">
+    <Link href={`/groups/${groupRef.value}`} className="flex grow flex-col">
       <p className="text-gray-950 dark:text-gray-100">{groupRef.display}</p>
       <p className="text-sm font-light">{groupRef.value}</p>
-    </NextLink>
+    </Link>
   );
 }
 
@@ -72,7 +72,7 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
   }
   return (
     <div className="panel space-y-4">
-      <h2>Joined Groups</h2>
+      <h2>Joined groups</h2>
       <ul className="w-full">
         {groups.map(g => (
           <Row key={g.value} user={user} groupRef={g} isAdmin={isAdmin} />

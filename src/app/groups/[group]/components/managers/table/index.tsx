@@ -5,7 +5,7 @@
 import { User } from "@/models/scim";
 import { Group } from "@/models/groups";
 import ManagerOptions from "./options";
-import Link from "next/link";
+import Link from "@/components/link";
 
 function Row(props: Readonly<{ manager: User; group: Group }>) {
   const { manager, group } = props;

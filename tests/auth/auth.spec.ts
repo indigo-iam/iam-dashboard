@@ -19,7 +19,7 @@ testAdmin(
       await page.goto("./");
       await page.waitForURL("./users/me");
       const navbar = page.getByRole("navigation");
-      const navigationButtons = navbar.getByRole("button");
+      const navigationButtons = navbar.getByRole("link");
       expect(navigationButtons).toHaveCount(5);
     });
 
@@ -84,7 +84,7 @@ testAdmin(
       await page.goto("./");
       await page.waitForURL("./users/me");
       const navbar = page.getByRole("navigation");
-      const navigationButtons = navbar.getByRole("button");
+      const navigationButtons = navbar.getByRole("link");
       expect(navigationButtons).toHaveCount(10);
     });
 
@@ -156,7 +156,7 @@ testUser("User cannot see privileged pages", async ({ signedUpPage }) => {
     await page.goto("./");
     await page.waitForURL("./users/me");
     const navbar = page.getByRole("navigation");
-    const navigationButtons = navbar.getByRole("button");
+    const navigationButtons = navbar.getByRole("link");
     expect(navigationButtons).toHaveCount(5);
   });
 

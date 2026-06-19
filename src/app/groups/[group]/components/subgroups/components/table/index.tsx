@@ -5,7 +5,7 @@
 import { Group } from "@/models/groups";
 import { ScimReference } from "@/models/scim";
 import { fetchSubgroupsPage } from "@/services/groups";
-import Link from "next/link";
+import Link from "@/components/link";
 import SubgroupOptions from "./options";
 
 function Row(props: Readonly<{ groupRef: ScimReference }>) {

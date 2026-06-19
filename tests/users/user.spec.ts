@@ -7,8 +7,6 @@ import { login, TEST_USER } from "../auth/fixture";
 import { changeTabPanel, dismissToast } from "../utils";
 
 test("User can send a request to join a group", async ({ page }) => {
-  await page.goto("./");
-
   await test.step("Login as user", async () => {
     await login(page, TEST_USER);
     await page.goto("./users/me");

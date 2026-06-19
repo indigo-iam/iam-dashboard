@@ -233,6 +233,13 @@ Then install the dependencies with:
 npm install # or npm ci
 ```
 
+Before starting the application, instruct the Node runtime to use the
+self-signed Certificate Authority:
+
+```bash
+export NODE_EXTRA_CA_CERTS="$(pwd)/assets/trust/star_test_example_ca.pem"
+```
+
 Start the application by running:
 
 ```bash
@@ -307,6 +314,7 @@ npm install # or npm ci
 and then start the Next.js development server running:
 
 ```bash
+export NODE_EXTRA_CA_CERTS="$(pwd)/assets/trust/star_test_example_ca.pem"
 npm run dev
 ```
 

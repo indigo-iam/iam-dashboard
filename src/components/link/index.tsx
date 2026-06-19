@@ -2,20 +2,22 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client";
+
 import NextLink from "next/link";
+import { useLoading } from "../loading";
 
 type LinkProps = {
   href: string;
+  className?: string;
   children: React.ReactNode;
 };
 
 export default function Link(props: Readonly<LinkProps>) {
-  const { href, children } = props;
+  const { startProgressBar } = useLoading();
+  const { href, className, children } = props;
   return (
-    <NextLink
-      href={href}
-      className="font-medium text-gray-600 underline dark:text-gray-200"
-    >
+    <NextLink href={href} className={className} onClick={startProgressBar}>
       {children}
     </NextLink>
   );

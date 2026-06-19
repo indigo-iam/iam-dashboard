@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import Link from "next/link";
+import Link from "@/components/link";
 
 import { TabPanel } from "@/components/tabs";
 import { ActiveToken } from "@/models/sites";

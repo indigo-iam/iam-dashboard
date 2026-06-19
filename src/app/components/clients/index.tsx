@@ -2,11 +2,11 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import Link from "next/link";
+import Link from "@/components/link";
 import { Status } from "@/components/badges";
 import { Client } from "@/models/client";
-import ClientOptions from "./options";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import ClientOptions from "./options";
 
 function sortScopes(scope: String) {
   const scopes = scope.split(" ");

@@ -12,7 +12,7 @@ import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
 import { addUserToGroup } from "@/services/groups";
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/components/link";
 
 type AddMemberModalProps = ModalProps & {
   group: Group;

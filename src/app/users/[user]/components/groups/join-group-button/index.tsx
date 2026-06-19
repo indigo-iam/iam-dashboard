@@ -4,11 +4,13 @@
 
 "use client";
 
-import { Button } from "@/components/buttons";
-import { User } from "@/models/scim";
-import { JoinGroupModal } from "./modal";
 import { useState } from "react";
 import { UserPlusIcon } from "@heroicons/react/24/outline";
+
+import { Button } from "@/components/buttons";
+import { User } from "@/models/scim";
+import { AssignUserToGroupModal } from "./assign-modal";
+import { JoinGroupModal } from "./join-modal";
 
 type JoinGroupButtonProps = {
   user: User;
@@ -27,15 +29,13 @@ export default function JoinGroupButton(props: Readonly<JoinGroupButtonProps>) {
         onClick={openModal}
       >
         <UserPlusIcon className="size-4" />
-        <span>Join group</span>
+        <span>{isAdmin ? "Assign to group" : "Join group"}</span>
       </Button>
-      <JoinGroupModal
-        title="Join group"
-        user={user}
-        show={show}
-        onClose={closeModal}
-        isAdmin={isAdmin}
-      />
+      {isAdmin ? (
+        <AssignUserToGroupModal user={user} show={show} onClose={closeModal} />
+      ) : (
+        <JoinGroupModal user={user} show={show} onClose={closeModal} />
+      )}
     </>
   );
 }

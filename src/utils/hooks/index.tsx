@@ -31,7 +31,7 @@ export function useDeferredCallback() {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
-    timeoutRef.current = window.setTimeout(async () => {
+    timeoutRef.current = globalThis.window.setTimeout(async () => {
       await callback();
     }, 150);
   }

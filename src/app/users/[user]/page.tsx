@@ -51,7 +51,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
       <TabGroup className="container space-y-8">
         <TabList className="flex overflow-auto">
           <Tab>GENERAL</Tab>
-          {!isMe && <Tab>GROUPS</Tab>}
+          <Tab>GROUPS</Tab>
           {!isMe && <Tab>CLIENTS</Tab>}
           <Tab>APPS AND WEBSITES</Tab>
           <Tab>ACTIVE TOKENS</Tab>
@@ -60,7 +60,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
         </TabList>
         <TabPanels>
           <General user={user} isMe={isMe} mfaEnabled={mfaEnabled} />
-          {!isMe && <UserGroups user={user} isAdmin={isAdmin} />}
+          <UserGroups user={user} isAdmin={isAdmin} />
           {!isMe && (
             <UserClients
               user={user}

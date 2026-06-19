@@ -43,7 +43,7 @@ async function openUserMenu(page: Page) {
   return userMenu;
 }
 
-async function login(page: Page, userInfo: UserInfo) {
+export async function login(page: Page, userInfo: UserInfo) {
   const { user, password, firstName, lastName, email } = userInfo;
   await page.goto("./");
   await page.locator("#username").fill(user);
@@ -56,7 +56,7 @@ async function login(page: Page, userInfo: UserInfo) {
   await expect(page.getByLabel("Email")).toHaveValue(email);
 }
 
-async function logout(page: Page) {
+export async function logout(page: Page) {
   const userMenu = await openUserMenu(page);
   const signOutButton = userMenu.getByRole("button", { name: "Sign out" });
   await expect(signOutButton).toBeVisible();

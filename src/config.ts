@@ -19,6 +19,19 @@ function loadEnvVariable(key: string, defaultValue?: string | null) {
   throw Error(`${key} environment variable not set`);
 }
 
+function loadOptionalUrlFromEnv(key: string) {
+  const url = loadEnvVariable(key, null);
+  // if a url is provided, validate it
+  if (url !== null) {
+    try {
+      new URL(url);
+    } catch {
+      throw new Error(`${key} is not a valid URL`);
+    }
+  }
+  return url;
+}
+
 function loadApiUrl() {
   return isBuilding
     ? "https://iam.test.example"
@@ -70,6 +83,16 @@ function loadOrganizationName() {
   return loadEnvVariable("IAM_DASHBOARD_ORGANIZATION_NAME", "cnafsd");
 }
 
+function loadPolicyUrl() {
+  const key = "IAM_DASHBOARD_POLICY_URL";
+  return loadOptionalUrlFromEnv(key);
+}
+
+function loadSupportUrl() {
+  const key = "IAM_DASHBOARD_SUPPORT_URL";
+  return loadOptionalUrlFromEnv(key);
+}
+
 export const settings = {
   IAM_API_URL: loadApiUrl(),
   IAM_DASHBOARD_APP_VERSION: loadAppVersion(),
@@ -82,4 +105,6 @@ export const settings = {
   IAM_DASHBOARD_OIDC_ADMIN_SCOPES: loadOidcAdminScopes(),
   IAM_DASHBOARD_OTEL_EXPORTER_OTLP_ENDPOINT: loadOtelExporterOtlpEndpoint(),
   IAM_DASHBOARD_ORGANIZATION_NAME: loadOrganizationName(),
+  IAM_DASHBOARD_POLICY_URL: loadPolicyUrl(),
+  IAM_DASHBOARD_SUPPORT_URL: loadSupportUrl(),
 };

@@ -6,7 +6,7 @@ import packageInfo from "../package.json";
 
 const isBuilding = process.env.NEXT_PHASE === "phase-production-build";
 
-function loadEnvVariable(key: string, defaultValue?: string | null) {
+function loadEnvVariable(key: string, defaultValue?: string) {
   if (process.env[key]) {
     return process.env[key];
   }
@@ -20,9 +20,9 @@ function loadEnvVariable(key: string, defaultValue?: string | null) {
 }
 
 function loadOptionalUrlFromEnv(key: string) {
-  const url = loadEnvVariable(key, null);
+  const url = process.env[key]
   // if a url is provided, validate it
-  if (url !== null) {
+  if (url) {
     try {
       new URL(url);
     } catch {

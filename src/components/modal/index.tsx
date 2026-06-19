@@ -5,7 +5,8 @@
 "use client";
 
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 export type ModalProps = {
   show: boolean;
@@ -15,6 +16,7 @@ export type ModalProps = {
 
 export function Modal(props: Readonly<ModalProps>) {
   const { show, onClose, children } = props;
+  const [domLoaded, setDomLoaded] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const close = useCallback(() => {
@@ -67,6 +69,15 @@ export function Modal(props: Readonly<ModalProps>) {
     dialog?.removeEventListener("keydown", handleEscape);
   }, [hitTest, handleEscape]);
 
+  // hack to create the portal only client side avoiding hydration errors
+  useEffect(() => {
+    if (!domLoaded) {
+      (() => {
+        setDomLoaded(true);
+      })();
+    }
+  }, [domLoaded]);
+
   useEffect(() => {
     if (show && !dialogRef.current?.open) {
       open();
@@ -78,14 +89,18 @@ export function Modal(props: Readonly<ModalProps>) {
     };
   }, [show, open, close, clearEventListeners]);
 
-  return (
-    <dialog
-      className="overlay m-auto w-md space-y-4 p-8 opacity-0 transition-all duration-300 backdrop:bg-gray-950/30 backdrop:opacity-0 backdrop:transition-all backdrop:duration-300 data-open:opacity-100 data-open:backdrop:opacity-100 xl:w-xl data-open:starting:opacity-0 backdrop:data-open:starting:opacity-0"
-      ref={dialogRef}
-    >
-      {children}
-    </dialog>
-  );
+  if (domLoaded) {
+    return createPortal(
+      <dialog
+        className="overlay m-auto w-md space-y-4 p-8 opacity-0 transition-all duration-300 backdrop:bg-gray-950/30 backdrop:opacity-0 backdrop:transition-all backdrop:duration-300 data-open:opacity-100 data-open:backdrop:opacity-100 xl:w-xl data-open:starting:opacity-0 backdrop:data-open:starting:opacity-0"
+        ref={dialogRef}
+      >
+        {children}
+      </dialog>,
+      globalThis.document.body
+    );
+  }
+  return null;
 }
 
 type ModalHeaderProps = {

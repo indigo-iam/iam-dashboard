@@ -51,4 +51,24 @@ test("User can send a request to join a group", async ({ page }) => {
       .filter({ hasText: "Motivation: Test motivation message" });
     await expect(item).toBeVisible();
   });
+
+  await test.step("User can revoke its own pending request", async () => {
+    const item = page
+      .getByRole("listitem")
+      .filter({ hasText: "Motivation: Test motivation message" });
+    const more = item.getByRole("button", { name: "More" });
+    const revokeOption = page.getByRole("button", { name: "Revoke request" });
+    await expect(async () => {
+      await more.click();
+      await expect(revokeOption).toBeVisible();
+    }).toPass();
+    const dialog = page.getByRole("dialog").filter({ visible: true });
+    await expect(async () => {
+      await revokeOption.click();
+      await expect(dialog).toBeVisible();
+    }).toPass();
+    await dialog.getByRole("button", { name: "Revoke request" }).click();
+    const pendingRequests = page.getByText("Pending requests");
+    await expect(pendingRequests).toBeHidden();
+  });
 });

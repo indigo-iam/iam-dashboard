@@ -81,5 +81,5 @@ export const settings = {
   IAM_DASHBOARD_OIDC_SCOPES: loadOidcScopes(),
   IAM_DASHBOARD_OIDC_ADMIN_SCOPES: loadOidcAdminScopes(),
   IAM_DASHBOARD_OTEL_EXPORTER_OTLP_ENDPOINT: loadOtelExporterOtlpEndpoint(),
-  IAM_DASHBOARD_ORGANIZATION: loadOrganizationName(),
+  IAM_DASHBOARD_ORGANIZATION_NAME: loadOrganizationName(),
 };

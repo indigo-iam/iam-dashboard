@@ -16,7 +16,7 @@ type HeaderProps = {
 
 export async function Header(props: Readonly<HeaderProps>) {
   const { hasRoleAdmin, isAdmin } = props;
-  const organization = settings.IAM_DASHBOARD_ORGANIZATION;
+  const organization = settings.IAM_DASHBOARD_ORGANIZATION_NAME;
   const user = await fetchMe();
   return (
     <header className="t-0 dark:bg-sky-980 fixed inset-0 top-0 z-50 flex h-14 bg-sky-900 px-4 py-2 text-white md:px-8">

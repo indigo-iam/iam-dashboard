@@ -61,7 +61,7 @@ export async function deleteClient(
     method: "DELETE",
   });
   if (response.ok) {
-    redirect("/clients");
+    revalidatePath("/clients");
     return { type: "success", title: "Client deleted" };
   }
   const msg = await response.text();

@@ -41,7 +41,7 @@ export async function getUsersPage(
 }
 
 export async function addUser(user: ScimUser): Promise<Notification> {
-  let url = `${IAM_API_URL}/scim/Users`;
+  const url = `${IAM_API_URL}/scim/Users`;
   const body = JSON.stringify(user);
   const response = await authFetch(url, {
     body,

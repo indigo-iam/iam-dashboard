@@ -27,7 +27,7 @@ import { revalidatePath } from "next/cache";
 const { IAM_API_URL } = settings;
 
 export async function fetchGroup(groupID: string) {
-  let url = `${IAM_API_URL}/scim/Groups/${groupID}`;
+  const url = `${IAM_API_URL}/scim/Groups/${groupID}`;
   const response = await authFetch(url);
   if (response.ok) {
     return (await response.json()) as Group;

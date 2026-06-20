@@ -10,7 +10,7 @@ type PkceProps = {
   client: Client;
 };
 
-function PKCE(props: Readonly<PkceProps>) {
+function Pkce(props: Readonly<PkceProps>) {
   const { name, client } = props;
   const { code_challenge_method } = client;
   const options = [
@@ -55,7 +55,7 @@ export function Advanced(props: Readonly<AdvancedProps>) {
       <div className="w-full space-y-4 lg:w-2/3">
         <Field className="flex-wrap">
           <Label>Proof Key for Code Exchange (PKCE) challenge method</Label>
-          <PKCE name="code_challenge_method" client={client} />
+          <Pkce name="code_challenge_method" client={client} />
         </Field>
       </div>
     </div>

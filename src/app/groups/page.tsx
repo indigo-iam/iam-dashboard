@@ -35,7 +35,9 @@ async function AdminPage(props: Readonly<GroupsProps>) {
   const query = searchParams?.query;
   const startIndex = 1 + count * (page - 1);
   const groupsPage = await getGroupsPage(count, startIndex, query);
-  const numberOfPages = Math.ceil(groupsPage.totalResults / count);
+  const numberOfPages = Math.ceil(
+    groupsPage.totalResults / groupsPage.itemsPerPage
+  );
   const groups = groupsPage.Resources;
   return (
     <section>

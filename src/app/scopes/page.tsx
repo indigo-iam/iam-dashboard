@@ -33,7 +33,7 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
   const query = searchParams?.query;
   const startIndex = count * (page - 1);
   const scopes = await fetchPaginatedScopes(count, startIndex, query);
-  const numberOfPages = Math.ceil(scopes.totalResults / count);
+  const numberOfPages = Math.ceil(scopes.totalResults / scopes.itemsPerPage);
   return (
     <section>
       <header className="section-header flex flex-wrap gap-2">

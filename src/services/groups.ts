@@ -49,7 +49,7 @@ export async function fetchSubgroupsPage(
   count: number = 10,
   startIndex: number = 1
 ) {
-  let url = `${IAM_API_URL}/scim/Groups/${groupID}/subgroups?count=${count}&startIndex=${startIndex}`;
+  const url = `${IAM_API_URL}/scim/Groups/${groupID}/subgroups?count=${count}&startIndex=${startIndex}`;
   return await getItem<Paginated<ScimReference>>(url);
 }
 
@@ -58,7 +58,7 @@ export async function fetchGroupMembersPage(
   count: number = 10,
   startIndex: number = 1
 ) {
-  let url = `${IAM_API_URL}/scim/Groups/${groupID}/members?count=${count}&startIndex=${startIndex}`;
+  const url = `${IAM_API_URL}/scim/Groups/${groupID}/members?count=${count}&startIndex=${startIndex}`;
   return await getItem<Paginated<ScimReference>>(url);
 }
 

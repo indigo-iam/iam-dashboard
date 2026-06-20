@@ -47,7 +47,7 @@ function Row(props: Readonly<RowProps>) {
     ? new Date(group.meta.created).toLocaleString()
     : "N/A";
   return (
-    <li className="iam-list-item flex flex-row">
+    <li className="iam-list-item">
       <Link
         className="flex w-0 grow flex-col gap-0 break-all lg:flex-row lg:gap-2"
         href={`/groups/${group.id}`}

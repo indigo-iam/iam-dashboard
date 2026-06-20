@@ -10,7 +10,7 @@ import Link from "@/components/link";
 function Row(props: Readonly<{ manager: User; group: Group }>) {
   const { manager, group } = props;
   return (
-    <li className="iam-list-item flex flex-row">
+    <li className="iam-list-item">
       <Link className="flex w-0 grow flex-col" href={`/users/${manager.id}`}>
         <p className="truncate text-gray-950 dark:text-gray-200">
           {manager.name?.formatted}

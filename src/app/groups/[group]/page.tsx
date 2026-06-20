@@ -35,7 +35,7 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
   return (
     <section>
       <header className="section-header">
-        <div className="flex grow gap-2">
+        <div className="flex grow items-center gap-2">
           <UserGroupIcon className="size-5" />
           <h2 className="text-base font-normal">{group.displayName}</h2>
         </div>

@@ -21,7 +21,7 @@ function ApprovedSite(props: Readonly<ApprovedSiteProps>) {
     site.authorizationDate
   ).toLocaleDateString();
   return (
-    <li className="iam-list-item flex flex-row">
+    <li className="iam-list-item">
       <div className="flex w-0 grow flex-col">
         <Link
           className="flex grow flex-col gap-0.5 lg:flex-row"

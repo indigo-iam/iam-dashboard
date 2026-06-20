@@ -200,8 +200,8 @@ export async function getClientOwnersPage(
 export async function getClientOwners(clientId: string): Promise<User[]> {
   const count = 10;
   const firstPage = await getClientOwnersPage(clientId, 1, count);
-  const { totalResults } = firstPage;
-  const pages = Math.ceil(totalResults / count);
+  const { totalResults, itemsPerPage } = firstPage;
+  const pages = Math.ceil(totalResults / itemsPerPage);
 
   if (pages > 1) {
     const promises = Array.from({ length: pages - 1 }, (_, i) => {

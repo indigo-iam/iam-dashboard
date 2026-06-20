@@ -11,7 +11,7 @@ import SubgroupOptions from "./options";
 function Row(props: Readonly<{ groupRef: ScimReference }>) {
   const { groupRef } = props;
   return (
-    <li className="iam-list-item flex flex-row">
+    <li className="iam-list-item">
       <Link
         className="flex w-0 grow flex-col"
         href={`/groups/${groupRef.value}`}

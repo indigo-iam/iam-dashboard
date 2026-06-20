@@ -42,7 +42,8 @@ export async function ClientsPage(props: Readonly<ClientsProps>) {
   const clientPage = isAdmin
     ? await getClientsPage(count, startIndex, query)
     : await getClientsByAccount(accountId, count, startIndex);
-  const numberOfPages = Math.ceil(clientPage.totalResults / count) || 1;
+  const numberOfPages =
+    Math.ceil(clientPage.totalResults / clientPage.itemsPerPage) || 1;
   const clients = clientPage.Resources;
   return (
     <section>
@@ -52,6 +53,12 @@ export async function ClientsPage(props: Readonly<ClientsProps>) {
           <h2 className="text-base font-normal">
             {isAdmin ? "Clients" : "My clients"}
           </h2>
+          <div
+            title="Number of clients in this organization"
+            className="middle rounded-full bg-gray-400 px-2 py-0.5 text-xs font-semibold text-white"
+          >
+            {clientPage.totalResults}
+          </div>
         </div>
         <InputQuery
           title="Search client"

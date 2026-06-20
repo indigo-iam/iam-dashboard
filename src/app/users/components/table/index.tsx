@@ -18,7 +18,7 @@ function Row(props: Readonly<RowProps>) {
     ? new Date(user.meta.created).toDateString()
     : "N/A";
   return (
-    <li className="iam-list-item flex flex-row lg:gap-2">
+    <li className="iam-list-item lg:gap-2">
       <Link
         className="text-md flex grow flex-col break-all lg:flex-row"
         href={`/users/${user.id}`}

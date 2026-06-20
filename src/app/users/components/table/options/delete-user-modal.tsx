@@ -14,7 +14,7 @@ interface DeleteUserModalProps extends ModalProps {
 }
 
 export default function DeleteUserModal(props: Readonly<DeleteUserModalProps>) {
-  const { user, onUserDeleted, ...modalProps } = props;
+  const { user, ...modalProps } = props;
   const action = async () => {
     const res = await deleteUser(user);
     toast.toast(res);

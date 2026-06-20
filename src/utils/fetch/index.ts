@@ -8,7 +8,7 @@ import { notFound, redirect } from "next/navigation";
 export async function authFetch(info: RequestInfo | URL, init?: RequestInit) {
   const { accessToken } = await getAccessToken();
   const options: RequestInit = init ?? {};
-  let { headers } = options;
+  const { headers } = options;
   options.headers = {
     ...headers,
     authorization: `Bearer ${accessToken}`,

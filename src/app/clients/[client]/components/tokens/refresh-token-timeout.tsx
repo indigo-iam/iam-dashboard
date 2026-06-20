@@ -12,11 +12,7 @@ type RefreshTokenTimeoutProps = {
 
 export function RefreshTokenTimeout(props: Readonly<RefreshTokenTimeoutProps>) {
   const { client } = props;
-  const {
-    refresh_token_validity_seconds,
-    reuse_refresh_token,
-    clear_access_tokens_on_refresh,
-  } = client;
+  const { refresh_token_validity_seconds, reuse_refresh_token } = client;
   return (
     <div className="flex flex-col gap-4 pb-4 lg:flex-row lg:gap-8">
       <div className="w-full space-y-4 text-sm font-light lg:w-1/3">

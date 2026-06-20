@@ -26,12 +26,6 @@ export default function DeleteSSHKeyModal(
     onDeleted?.();
   };
 
-  const data = [
-    { name: "Label", value: sshKey.display },
-    { name: "Fingerprint", value: sshKey.fingerprint },
-    { name: "Value", value: sshKey.value },
-  ];
-
   return (
     <ConfirmModal
       show={show}

@@ -74,6 +74,7 @@ export function InputList(props: Readonly<InputListProps>) {
       try {
         new URL(value);
       } catch (err) {
+        console.warn(err);
         return { value: "", error: `"${value}" is not a valid URL.` };
       }
     }

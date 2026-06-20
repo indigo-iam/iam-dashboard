@@ -27,7 +27,7 @@ import {
 import { toast } from "@/components/toaster";
 import { addScope } from "@/services/scopes";
 
-interface NewScopeModalProps extends ModalProps {}
+type NewScopeModalProps = ModalProps;
 
 export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
   const { show, onClose } = props;

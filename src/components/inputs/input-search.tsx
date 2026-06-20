@@ -36,7 +36,11 @@ export function InputSearch(props: Readonly<InputSearchProps>) {
       clearTimeout(timeoutRef.current);
     }
     timeoutRef.current = globalThis.window.setTimeout(() => {
-      value ? searchCallback(value) : onClear();
+      if (value) {
+        searchCallback(value);
+      } else {
+        onClear();
+      }
     }, 150);
   };
 

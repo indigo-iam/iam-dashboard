@@ -14,7 +14,7 @@ const { IAM_API_URL } = settings;
 export async function assignAdminPrivileges(
   userId: string
 ): Promise<Notification> {
-  let url = `${IAM_API_URL}/iam/account/${userId}/authorities?authority=ROLE_ADMIN`;
+  const url = `${IAM_API_URL}/iam/account/${userId}/authorities?authority=ROLE_ADMIN`;
   const response = await authFetch(url, {
     method: "POST",
   });
@@ -36,7 +36,7 @@ export async function assignAdminPrivileges(
 export async function revokeAdminPrivileges(
   userId: string
 ): Promise<Notification> {
-  let url = `${IAM_API_URL}/iam/account/${userId}/authorities?authority=ROLE_ADMIN`;
+  const url = `${IAM_API_URL}/iam/account/${userId}/authorities?authority=ROLE_ADMIN`;
   const response = await authFetch(url, {
     method: "DELETE",
   });

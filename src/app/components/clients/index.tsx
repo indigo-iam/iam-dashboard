@@ -8,7 +8,7 @@ import { Client } from "@/models/client";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import ClientOptions from "./options";
 
-function sortScopes(scope: String) {
+function sortScopes(scope: string) {
   const scopes = scope.split(" ");
   scopes.sort((a, b) => a.localeCompare(b));
   return scopes.join(" ");

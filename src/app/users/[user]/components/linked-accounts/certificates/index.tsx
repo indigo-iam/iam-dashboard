@@ -22,7 +22,7 @@ function CertificateView(props: Readonly<CertificateViewProps>) {
           <p className="text-xs">Issuer {cert.issuerDn}</p>
         </div>
       </div>
-      <CertificateOptions cert={cert} />
+      <CertificateOptions />
     </div>
   );
 }

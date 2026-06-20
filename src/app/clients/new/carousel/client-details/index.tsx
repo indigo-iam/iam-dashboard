@@ -38,7 +38,7 @@ export default function ClientDetails(props: Readonly<ClientDetailsProps>) {
   const { client, isAdmin } = props;
 
   function changePage() {
-    isAdmin ? redirect("/clients") : redirect("/clients?me");
+    return isAdmin ? redirect("/clients") : redirect("/clients?me");
   }
 
   return (

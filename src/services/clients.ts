@@ -11,13 +11,12 @@ import { Paginated } from "@/models/pagination";
 import { User } from "@/models/scim";
 import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 const { IAM_API_URL } = settings;
 
 export async function registerClient(
   client: ClientRequest
-): Promise<{ notification: Notification; payload?: any }> {
+): Promise<{ notification: Notification; payload?: Client }> {
   const response = await authFetch(
     `${IAM_API_URL}/iam/api/client-registration`,
     {
@@ -61,7 +60,7 @@ export async function deleteClient(
     method: "DELETE",
   });
   if (response.ok) {
-    redirect("/clients");
+    revalidatePath("/clients");
     return { type: "success", title: "Client deleted" };
   }
   const msg = await response.text();

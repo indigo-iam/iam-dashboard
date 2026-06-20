@@ -5,7 +5,7 @@
 "use client";
 
 import ConfirmModal from "@/components/confirm-modal";
-import { Field, Label, Description } from "@/components/form";
+import { Field, Label } from "@/components/form";
 import { toast } from "@/components/toaster";
 import { Group } from "@/models/groups";
 import { User } from "@/models/scim";

@@ -73,7 +73,7 @@ export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
   const clear = () => setUser(undefined);
 
   const clearAndClose = () => {
-    props.onClose();
+    onClose();
     setTimeout(() => clear, 500);
   };
 
@@ -87,8 +87,8 @@ export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
 
   return (
     <ConfirmModal
-      onClose={clearAndClose}
       {...modalProps}
+      onClose={clearAndClose}
       title={`Add member to group ${groupName}`}
       onConfirm={addMember}
       onCancel={clear}

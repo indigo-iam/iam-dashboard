@@ -46,7 +46,6 @@ async function AdminPage(props: Readonly<GroupsProps>) {
           <UserGroupIcon className="size-5" />
           <h2 className="text-base font-normal">Groups</h2>
           <div
-            role="status"
             title="Number of groups in this organization"
             className="middle rounded-full bg-gray-400 px-2 py-0.5 text-xs font-semibold text-white"
           >

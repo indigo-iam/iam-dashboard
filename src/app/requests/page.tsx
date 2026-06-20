@@ -33,7 +33,6 @@ export default async function Requests() {
         <InboxArrowDownIcon className="size-5" />
         <h2 className="py-1 text-base font-normal">Requests</h2>
         <div
-          role="status"
           title="Total number of requests"
           className="middle rounded-full bg-gray-400 px-2 py-0.5 text-xs font-semibold text-white"
         >

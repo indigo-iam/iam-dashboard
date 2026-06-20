@@ -54,7 +54,6 @@ export async function ClientsPage(props: Readonly<ClientsProps>) {
             {isAdmin ? "Clients" : "My clients"}
           </h2>
           <div
-            role="status"
             title="Number of clients in this organization"
             className="middle rounded-full bg-gray-400 px-2 py-0.5 text-xs font-semibold text-white"
           >

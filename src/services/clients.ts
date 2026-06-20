@@ -11,7 +11,6 @@ import { Paginated } from "@/models/pagination";
 import { User } from "@/models/scim";
 import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 const { IAM_API_URL } = settings;
 

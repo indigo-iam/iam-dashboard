@@ -20,7 +20,7 @@ export function Row(props: Readonly<RowPros>) {
     : "N/A";
 
   return (
-    <li className="iam-list-item flex flex-row items-center">
+    <li className="iam-list-item">
       <div className="flex grow">
         <Link
           href={`/users/${userUuid}`}

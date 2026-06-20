@@ -15,7 +15,7 @@ type RowProps = {
 function Row(props: Readonly<RowProps>) {
   const { group } = props;
   return (
-    <li className="iam-list-item flex flex-row">
+    <li className="iam-list-item">
       <Link className="flex grow flex-col" href={`/groups/${group.id}`}>
         <p className="text-gray-950 dark:text-gray-100">{group.name}</p>
         <p className="text-sm font-light">{group.id}</p>

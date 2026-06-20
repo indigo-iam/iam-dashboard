@@ -9,7 +9,7 @@ import OidcOptions from "./options";
 function OidcIdView(props: { oidcId: OidcId }) {
   const { oidcId } = props;
   return (
-    <li className="iam-list-item flex flex-row">
+    <li className="iam-list-item">
       <div className="flex grow flex-col">
         <p className="text-gray-950 dark:text-gray-100">{oidcId.issuer}</p>
         <p className="text-sm font-light">Subject {oidcId.subject}</p>

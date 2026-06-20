@@ -43,7 +43,7 @@ type RowProps = {
 function Row(props: Readonly<RowProps>) {
   const { user, groupRef, isAdmin } = props;
   return (
-    <li className="iam-list-item flex flex-row">
+    <li className="iam-list-item">
       {isAdmin ? (
         <LinkView groupRef={groupRef} />
       ) : (

@@ -9,7 +9,7 @@ import SAMLOptions from "./options";
 function SamlIdView(props: { samlId: SamlId }) {
   const { samlId } = props;
   return (
-    <li className="iam-list-item flex flex-row">
+    <li className="iam-list-item">
       <div className="flex grow flex-col">
         <p className="break-all text-gray-950 dark:text-gray-100">
           {samlId.idpId}

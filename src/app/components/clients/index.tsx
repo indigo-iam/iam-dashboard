@@ -27,7 +27,7 @@ function Row(props: Readonly<RowProps>) {
     ? new Date(client.created_at).toLocaleString()
     : "N/A";
   return (
-    <li className="iam-list-item flex flex-row lg:gap-2">
+    <li className="iam-list-item lg:gap-2">
       <div className="flex w-0 grow flex-col space-y-2 lg:flex-row lg:space-y-0">
         <Link
           className="flex grow flex-col lg:w-0"

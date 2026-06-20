@@ -13,7 +13,7 @@ function SSHKeyView(props: Readonly<{ user: User; sshKey: SSHKey }>) {
     ? dateToHuman(new Date(sshKey.created))
     : "N/A";
   return (
-    <li className="iam-list-item flex flex-row overflow-hidden">
+    <li className="iam-list-item overflow-hidden">
       <div className="my-auto flex grow flex-col gap-1 truncate">
         <p className="text-lg text-gray-950 dark:text-gray-100">
           {sshKey.display}

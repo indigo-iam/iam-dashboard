@@ -4,7 +4,7 @@
 
 import React from "react";
 
-export interface FormProps extends React.HTMLProps<HTMLFormElement> {}
+export type FormProps = React.HTMLProps<HTMLFormElement>;
 
 export function Form(props: FormProps) {
   return <form {...props} />;

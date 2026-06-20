@@ -7,7 +7,7 @@ import {
   LabelProps as HeadlessLabelProps,
 } from "@headlessui/react";
 
-interface LabelProps extends HeadlessLabelProps {}
+type LabelProps = HeadlessLabelProps;
 
 export function Label(props: Readonly<LabelProps>) {
   return (

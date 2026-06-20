@@ -53,6 +53,13 @@ export async function ClientsPage(props: Readonly<ClientsProps>) {
           <h2 className="text-base font-normal">
             {isAdmin ? "Clients" : "My clients"}
           </h2>
+          <div
+            role="status"
+            title="Number of clients in this organization"
+            className="middle rounded-full bg-gray-400 px-2 py-0.5 text-xs font-semibold text-white"
+          >
+            {clientPage.totalResults}
+          </div>
         </div>
         <InputQuery
           title="Search client"

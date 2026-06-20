@@ -42,9 +42,16 @@ async function AdminPage(props: Readonly<GroupsProps>) {
   return (
     <section>
       <header className="section-header flex flex-wrap gap-2">
-        <div className="flex grow gap-2">
+        <div className="flex grow items-center gap-2">
           <UserGroupIcon className="size-5" />
           <h2 className="text-base font-normal">Groups</h2>
+          <div
+            role="status"
+            title="Number of groups in this organization"
+            className="middle rounded-full bg-gray-400 px-2 py-0.5 text-xs font-semibold text-white"
+          >
+            {groupsPage.totalResults}
+          </div>
         </div>
         <InputQuery
           title="Search group"

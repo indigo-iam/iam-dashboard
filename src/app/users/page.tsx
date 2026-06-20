@@ -40,10 +40,17 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
   const users = usersPage.Resources;
   return (
     <section>
-      <header className="section-header flex flex-wrap gap-2">
-        <div className="flex grow gap-2">
+      <header className="section-header flex flex-wrap items-center gap-2">
+        <div className="flex grow items-center gap-2">
           <UsersIcon className="size-5" />
           <h2 className="text-base font-normal">Users</h2>
+          <div
+            role="status"
+            title="Number of users in this organization"
+            className="middle rounded-full bg-gray-400 px-2 py-0.5 text-xs font-semibold text-white"
+          >
+            {usersPage.totalResults}
+          </div>
         </div>
         <InputQuery
           title="Search client"

@@ -44,7 +44,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
   const mfaEnabled = await statusMFA();
   return (
     <section>
-      <header className="section-header">
+      <header className="section-header flex items-center">
         <UserIcon className="size-5" />
         <h2 className="text-base font-normal">{user.name?.formatted}</h2>
       </header>

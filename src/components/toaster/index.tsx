@@ -21,17 +21,6 @@ const breakpoints = {
   xl: 1280,
 };
 
-function CloseButton() {
-  return (
-    <button
-      title="Close"
-      className="mr-0 ml-auto w-8 cursor-pointer rounded-full p-1.25 text-gray-500 hover:bg-gray-300 dark:text-gray-200 dark:hover:bg-gray-500"
-    >
-      <XCircleIcon />
-    </button>
-  );
-}
-
 function useUpdateToasterPosition() {
   const [position, setPosition] = useState<"top-right" | "bottom-right">(
     "bottom-right"

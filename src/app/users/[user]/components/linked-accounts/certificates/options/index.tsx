@@ -4,30 +4,18 @@
 
 "use client";
 
-import { useState } from "react";
 import { LinkSlashIcon } from "@heroicons/react/24/outline";
-
 import { Option, Options } from "@/components/options";
-import { Certificate } from "@/models/indigo-user";
 
-type CertificateOptionsProps = {
-  cert: Certificate;
-};
-
-export default function CertificateOptions(
-  props: Readonly<CertificateOptionsProps>
-) {
-  const [_, setShow] = useState<"DELETE_CERTIFICATE">();
+export default function CertificateOptions() {
   return (
-    <>
-      <Options>
-        <Option onClick={() => setShow("DELETE_CERTIFICATE")} data-danger>
-          <div className="flex items-center gap-2">
-            <LinkSlashIcon className="size-5" />
-            <span>Unlink certificate</span>
-          </div>
-        </Option>
-      </Options>
-    </>
+    <Options>
+      <Option data-danger>
+        <div className="flex items-center gap-2">
+          <LinkSlashIcon className="size-5" />
+          <span>Unlink certificate</span>
+        </div>
+      </Option>
+    </Options>
   );
 }

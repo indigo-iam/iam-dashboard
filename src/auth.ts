@@ -291,7 +291,7 @@ export async function updateAccessToken(newScope: string) {
     });
     console.debug(`Tokens updated successfully with scope: '${newScope}'`);
     return tokens.accessToken;
-  } catch (e: any) {
+  } catch (e) {
     console.error("Failed to refresh access token:", e);
     return null;
   }

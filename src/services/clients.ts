@@ -17,7 +17,7 @@ const { IAM_API_URL } = settings;
 
 export async function registerClient(
   client: ClientRequest
-): Promise<{ notification: Notification; payload?: any }> {
+): Promise<{ notification: Notification; payload?: Client }> {
   const response = await authFetch(
     `${IAM_API_URL}/iam/api/client-registration`,
     {

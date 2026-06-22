@@ -89,7 +89,7 @@ export async function editClient(
     return {
       type: "success",
       title: "Client saved",
-      description: `Client '${client.client_name}'' has been modified`,
+      description: `Client '${client.client_name}' has been modified`,
     };
   }
   const { error } = await response.json();

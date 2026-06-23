@@ -10,7 +10,7 @@ import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
 } from "@heroicons/react/24/outline";
-import Link from "next/link";
+import Link from "@/components/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const className =

@@ -16,7 +16,9 @@ import {
 } from "@heroicons/react/24/solid";
 
 import { Drawer, Link } from "@/components/drawer";
+import NextLink from "next/link";
 import { settings } from "@/config";
+import { getLoginServiceVersion } from "@/services/actuator";
 
 const {
   IAM_DASHBOARD_APP_VERSION,
@@ -84,6 +86,7 @@ type SidebarProps = {
 
 export async function Sidebar(props: Readonly<SidebarProps>) {
   const { hasRoleAdmin, isAdmin } = props;
+  const loginServiceVersion = await getLoginServiceVersion();
   return (
     <Drawer>
       <div className="flex h-full flex-col">
@@ -102,8 +105,22 @@ export async function Sidebar(props: Readonly<SidebarProps>) {
             )}
           </div>
         </nav>
-        <div className="w-full bg-slate-600 p-1 text-center text-sm text-white">
-          v{IAM_DASHBOARD_APP_VERSION}
+        <div className="flex w-full justify-center gap-1 bg-slate-600 p-1 py-2 text-center text-xs font-light text-white">
+          WebUI
+          <NextLink
+            className="text-blue-300 hover:underline"
+            href={`https://github.com/indigo-iam/iam-dashboard/releases/v${IAM_DASHBOARD_APP_VERSION}`}
+          >
+            v{IAM_DASHBOARD_APP_VERSION}
+          </NextLink>
+          <span>-</span>
+          <span>IAM</span>
+          <NextLink
+            className="text-blue-300 hover:underline"
+            href={`https://github.com/indigo-iam/iam/releases/v${loginServiceVersion}`}
+          >
+            v{loginServiceVersion}
+          </NextLink>
         </div>
       </div>
     </Drawer>

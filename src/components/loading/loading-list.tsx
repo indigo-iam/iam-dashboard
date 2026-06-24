@@ -16,7 +16,7 @@ function PlaceholderRow() {
   );
 }
 
-export default function Loading() {
+export function LoadingList() {
   return (
     <section>
       <header className="section-header flex flex-wrap gap-2">

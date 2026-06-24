@@ -5,6 +5,7 @@
 import { getSession, isUserAdmin } from "@/auth";
 import { ClientsTable } from "@/app/components/clients";
 import { InputQuery } from "@/components/inputs";
+import { LoadingList } from "@/components/loading";
 import { getClientsByAccount, getClientsPage } from "@/services/clients";
 import Paginator from "@/components/paginator";
 import { Button } from "@/components/buttons";
@@ -13,7 +14,6 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { PlusIcon, RocketLaunchIcon } from "@heroicons/react/24/solid";
-import Loading from "./loading";
 
 function Buttons() {
   return (
@@ -98,7 +98,7 @@ export default async function Page(props: Readonly<PageProps>) {
   const query = searchParams?.query;
   const startIndex = 1 + count * (page - 1);
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<LoadingList />}>
       <ClientsPage
         isAdmin={isAdmin}
         count={count}

@@ -5,6 +5,7 @@
 import packageInfo from "../package.json";
 
 const isBuilding = process.env.NEXT_PHASE === "phase-production-build";
+export const isProduction = process.env.NODE_ENV === "production";
 
 function loadEnvVariable(key: string, defaultValue?: string) {
   if (process.env[key]) {

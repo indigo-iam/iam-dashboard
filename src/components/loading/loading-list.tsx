@@ -2,9 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import Paginator from "@/components/paginator";
-import { RocketLaunchIcon } from "@heroicons/react/24/solid";
-
 function PlaceholderRow() {
   return (
     <li className="iam-list-item px-2 py-6" data-disabled={true}>
@@ -18,24 +15,12 @@ function PlaceholderRow() {
 
 export function LoadingList() {
   return (
-    <section>
-      <header className="section-header flex flex-wrap gap-2">
-        <div className="flex grow items-center gap-2">
-          <RocketLaunchIcon className="size-5" />
-          <h2 className="text-base font-normal">Clients</h2>
-        </div>
-      </header>
-      <div className="container space-y-4">
-        <div className="panel">
-          <ul>
-            <PlaceholderRow />
-            <PlaceholderRow />
-            <PlaceholderRow />
-            <PlaceholderRow />
-          </ul>
-        </div>
-        <Paginator numberOfPages={0} />
-      </div>
-    </section>
+    <div className="panel">
+      <ul>
+        <PlaceholderRow />
+        <PlaceholderRow />
+        <PlaceholderRow />
+      </ul>
+    </div>
   );
 }

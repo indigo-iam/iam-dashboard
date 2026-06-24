@@ -43,10 +43,12 @@ export async function Header(props: Readonly<HeaderProps>) {
                 <span className="hidden md:inline-block">admin mode</span>
                 <span className="inline-block md:hidden">admin</span>
               </p>
-              <Notifications
-                className="hidden data-[visible=true]:block"
-                data-visible={isAdmin && hasRoleAdmin}
-              />
+              <Suspense>
+                <Notifications
+                  className="hidden data-[visible=true]:block"
+                  data-visible={isAdmin && hasRoleAdmin}
+                />
+              </Suspense>
             </div>
           )}
           <UserPopover

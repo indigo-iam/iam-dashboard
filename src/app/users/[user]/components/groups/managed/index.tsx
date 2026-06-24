@@ -7,6 +7,7 @@ import { fetchManagedGroups } from "@/services/groups";
 import { ManagedGroup } from "@/models/groups";
 import Link from "@/components/link";
 import GroupOptions from "./options";
+import { Suspense } from "react";
 
 type RowProps = {
   group: ManagedGroup;
@@ -25,16 +26,13 @@ function Row(props: Readonly<RowProps>) {
   );
 }
 
-type ManagedGroupsProps = {
-  user: User;
-  isAdmin?: boolean;
+type ContentProps = {
+  userId: string;
 };
 
-export default async function ManagedGroups(
-  props: Readonly<ManagedGroupsProps>
-) {
-  const { user } = props;
-  const groups = await fetchManagedGroups(user.id);
+async function Content(props: Readonly<ContentProps>) {
+  const { userId } = props;
+  const groups = await fetchManagedGroups(userId);
 
   if (groups.length === 0) {
     return null;
@@ -50,4 +48,19 @@ export default async function ManagedGroups(
       </ul>
     </div>
   );
+}
+
+type ManagedGroupProps = {
+  userId: string;
+};
+
+export default async function ManagedGroups(
+  props: Readonly<ManagedGroupProps>
+) {
+  const { userId } = props;
+  return (
+    <Suspense>
+      <Content userId={userId} />
+    </Suspense>
+  )
 }

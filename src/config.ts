@@ -20,7 +20,7 @@ function loadEnvVariable(key: string, defaultValue?: string) {
 }
 
 function loadOptionalUrlFromEnv(key: string) {
-  const url = process.env[key]
+  const url = process.env[key];
   // if a url is provided, validate it
   if (url) {
     try {

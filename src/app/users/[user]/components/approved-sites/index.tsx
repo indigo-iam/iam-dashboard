@@ -28,14 +28,14 @@ function ApprovedSite(props: Readonly<ApprovedSiteProps>) {
           href={`/clients/${clientId}`}
         >
           <div className="flex grow flex-col gap-0.5 lg:w-0">
-            <p className="text-gray-950 dark:text-white">
-              {clientName}
+            <div className="text-gray-950 dark:text-white">
+              <p>{clientName}</p>
               {clientDescription && (
                 <p className="truncate text-sm font-light italic">
                   {clientDescription}
                 </p>
               )}
-            </p>
+            </div>
             <p className="truncate text-sm">{clientId}</p>
             <p className="truncate text-sm font-light italic" title={scopes}>
               {scopes}

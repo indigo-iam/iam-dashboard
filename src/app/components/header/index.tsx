@@ -9,6 +9,7 @@ import { ProgressBar } from "@/components/loading";
 import { fetchMe } from "@/services/me";
 import { settings } from "@/config";
 import { UserPopover } from "./user-popover";
+import { Suspense } from "react";
 
 type HeaderProps = {
   hasRoleAdmin?: boolean;
@@ -33,7 +34,7 @@ export async function Header(props: Readonly<HeaderProps>) {
         </div>
         <div className="flex items-center gap-2">
           {hasRoleAdmin && isAdmin && (
-            <div className="flex flex-row gap-2 items-center">
+            <div className="flex flex-row items-center gap-2">
               <p
                 className="flex items-center gap-1 rounded bg-orange-50 px-2 py-1 text-xs text-orange-400 dark:bg-orange-400 dark:text-orange-50"
                 data-testid="admin-mode-label"

@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { User } from "@/models/scim";
 import { fetchManagedGroups } from "@/services/groups";
 import { ManagedGroup } from "@/models/groups";
 import Link from "@/components/link";
@@ -62,5 +61,5 @@ export default async function ManagedGroups(
     <Suspense>
       <Content userId={userId} />
     </Suspense>
-  )
+  );
 }

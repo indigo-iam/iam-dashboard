@@ -14,7 +14,7 @@ export async function getLoginServiceVersion(): Promise<string> {
   const response = await authFetch(url);
   if (response.ok) {
     const payload = await response.json();
-    if (payload.build && payload.build.version) {
+    if (payload.build?.version) {
       return payload.build.version;
     }
     console.warn("Cannot find 'version' from '/actuator/info'");

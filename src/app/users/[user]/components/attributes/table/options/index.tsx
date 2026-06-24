@@ -6,17 +6,17 @@
 
 import { Option, Options } from "@/components/options";
 import { Attribute } from "@/models/attributes";
-import { User } from "@/models/scim";
 import DeleteUserModal from "./delete-button";
 import { useState } from "react";
 
 type OptionsProps = {
-  user: User;
+  userId: string;
+  userName: string;
   attr: Attribute;
 };
 
 export default function AttributeOptions(props: Readonly<OptionsProps>) {
-  const { user, attr } = props;
+  const { userId, userName, attr } = props;
   const [show, setShow] = useState<"DELETE_USER">();
   const close = () => setShow(undefined);
   return (
@@ -27,7 +27,8 @@ export default function AttributeOptions(props: Readonly<OptionsProps>) {
         </Option>
       </Options>
       <DeleteUserModal
-        user={user}
+        userId={userId}
+        userName={userName}
         attr={attr}
         show={show === "DELETE_USER"}
         onClose={close}

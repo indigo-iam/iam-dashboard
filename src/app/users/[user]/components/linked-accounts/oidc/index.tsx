@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { OidcId } from "@/models/indigo-user";
-import { User } from "@/models/scim";
 import OidcOptions from "./options";
 
 function OidcIdView(props: { oidcId: OidcId }) {
@@ -20,12 +19,11 @@ function OidcIdView(props: { oidcId: OidcId }) {
 }
 
 type OidcAccountsProps = {
-  user: User;
+  oidcIds: OidcId[];
 };
 
 export function OidcAccounts(props: Readonly<OidcAccountsProps>) {
-  const { user } = props;
-  const oidcIds = user["urn:indigo-dc:scim:schemas:IndigoUser"]?.oidcIds ?? [];
+  const { oidcIds } = props;
   if (oidcIds.length === 0) {
     return (
       <div className="panel space-y-2">

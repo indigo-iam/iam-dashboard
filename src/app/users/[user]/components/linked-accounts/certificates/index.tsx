@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { User } from "@/models/scim";
 import { Certificate } from "@/models/indigo-user";
 import LinkCertificateButton from "./link-certificate-button";
 import CertificateOptions from "./options";
@@ -28,24 +27,18 @@ function CertificateView(props: Readonly<CertificateViewProps>) {
 }
 
 type CertificateProps = {
-  user: User;
+  userName: string;
+  certificates: Certificate[];
 };
 
 export async function Certificates(props: Readonly<CertificateProps>) {
-  const { user } = props;
-  let certificates: Certificate[] = [];
-
-  if (user["urn:indigo-dc:scim:schemas:IndigoUser"]) {
-    certificates =
-      user["urn:indigo-dc:scim:schemas:IndigoUser"].certificates ?? [];
-  }
-
+  const { userName, certificates } = props;
   if (certificates.length === 0) {
     return (
       <div className="panel space-y-2">
         <h2>X509 Certificates</h2>
         <p>No certificates found.</p>
-        <LinkCertificateButton user={user} />
+        <LinkCertificateButton userName={userName} />
       </div>
     );
   }
@@ -56,7 +49,7 @@ export async function Certificates(props: Readonly<CertificateProps>) {
       {certificates.map(cert => (
         <CertificateView key={cert.subjectDn + cert.issuerDn} cert={cert} />
       ))}
-      <LinkCertificateButton user={user} />
+      <LinkCertificateButton userName={userName} />
     </div>
   );
 }

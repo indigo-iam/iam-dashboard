@@ -3,12 +3,17 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { SSHKey } from "@/models/indigo-user";
-import { User } from "@/models/scim";
 import { dateToHuman } from "@/utils/dates";
 import SSHKeysOptions from "./options";
 
-function SSHKeyView(props: Readonly<{ user: User; sshKey: SSHKey }>) {
-  const { user, sshKey } = props;
+type SSHKeyViewProps = {
+  userId: string;
+  userName: string;
+  sshKey: SSHKey;
+};
+
+function SSHKeyView(props: Readonly<SSHKeyViewProps>) {
+  const { userId, userName, sshKey } = props;
   const createdAt = sshKey.created
     ? dateToHuman(new Date(sshKey.created))
     : "N/A";
@@ -25,29 +30,31 @@ function SSHKeyView(props: Readonly<{ user: User; sshKey: SSHKey }>) {
       <div className="my-auto hidden px-2 text-sm font-light sm:flex">
         Created {createdAt}
       </div>
-      <SSHKeysOptions user={user} sshKey={sshKey} />
+      <SSHKeysOptions userId={userId} userName={userName} sshKey={sshKey} />
     </li>
   );
 }
 
 type TableProps = {
-  user: User;
+  userId: string;
+  userName: string;
+  sshKeys: SSHKey[];
 };
 
 export default function Table(props: Readonly<TableProps>) {
-  const { user } = props;
-  const indigoUser = user["urn:indigo-dc:scim:schemas:IndigoUser"];
-  let sshKeys: SSHKey[] = [];
-  if (indigoUser?.sshKeys) {
-    sshKeys = indigoUser.sshKeys;
-  }
+  const { userId, userName, sshKeys } = props;
   if (sshKeys.length === 0) {
     return <p>No SSH keys found.</p>;
   }
   return (
     <ul className="w-full">
       {sshKeys.map(key => (
-        <SSHKeyView key={key.fingerprint} user={user} sshKey={key} />
+        <SSHKeyView
+          key={key.fingerprint}
+          userId={userId}
+          userName={userName}
+          sshKey={key}
+        />
       ))}
     </ul>
   );

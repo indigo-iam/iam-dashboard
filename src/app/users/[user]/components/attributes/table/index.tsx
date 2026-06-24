@@ -2,17 +2,17 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { User } from "@/models/scim";
 import { fetchAttributes } from "@/services/users";
 import AttributeOptions from "./options";
 
 type TableProps = {
-  user: User;
+  userId: string;
+  userName: string;
 };
 
 export default async function AttributesTable(props: Readonly<TableProps>) {
-  const { user } = props;
-  const attributes = await fetchAttributes(user.id);
+  const { userId, userName } = props;
+  const attributes = await fetchAttributes(userId);
 
   if (!attributes || attributes.length === 0) {
     return <p>No Attributes found.</p>;
@@ -33,7 +33,7 @@ export default async function AttributesTable(props: Readonly<TableProps>) {
                 <span>{attr.value}</span>
               </div>
             </div>
-            <AttributeOptions user={user} attr={attr} />
+            <AttributeOptions userId={userId} userName={userName} attr={attr} />
           </li>
         );
       })}

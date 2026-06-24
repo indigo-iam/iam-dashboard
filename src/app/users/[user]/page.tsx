@@ -42,6 +42,12 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
     redirect("/");
   }
   const mfaEnabled = await statusMFA();
+  const indigoUser = user["urn:indigo-dc:scim:schemas:IndigoUser"];
+  const oidcIds = indigoUser?.oidcIds ?? [];
+  const samlIds = indigoUser?.samlIds ?? [];
+  const certificates = indigoUser?.certificates ?? [];
+  const sshKeys = indigoUser?.sshKeys ?? [];
+
   return (
     <section>
       <header className="section-header flex items-center">
@@ -71,8 +77,18 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
           )}
           <ApprovedSites />
           <ActiveTokens />
-          <LinkedAccounts user={user} />
-          <Attributes user={user} />
+          <LinkedAccounts
+            userId={user.id}
+            userName={user.displayName ?? "Unknown user"}
+            oidcIds={oidcIds}
+            samlIds={samlIds}
+            certificates={certificates}
+            sshKeys={sshKeys}
+          />
+          <Attributes
+            userId={user.id}
+            userName={user.name?.formatted ?? "Unknown user"}
+          />
         </TabPanels>
       </TabGroup>
     </section>

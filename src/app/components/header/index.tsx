@@ -9,7 +9,6 @@ import { ProgressBar } from "@/components/loading";
 import { fetchMe } from "@/services/me";
 import { settings } from "@/config";
 import { UserPopover } from "./user-popover";
-import { Suspense } from "react";
 
 type HeaderProps = {
   hasRoleAdmin?: boolean;
@@ -43,12 +42,7 @@ export async function Header(props: Readonly<HeaderProps>) {
                 <span className="hidden md:inline-block">admin mode</span>
                 <span className="inline-block md:hidden">admin</span>
               </p>
-              <Suspense>
-                <Notifications
-                  className="hidden data-[visible=true]:block"
-                  data-visible={isAdmin && hasRoleAdmin}
-                />
-              </Suspense>
+              <Notifications />
             </div>
           )}
           <UserPopover

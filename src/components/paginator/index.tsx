@@ -15,7 +15,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useLoading } from "../loading";
 
 const className =
-  "flex p-0.5 ml-0 bg-white text-gray-300 border  hover:bg-gray-200 dark:bg-secondary/50    first:rounded-l-lg last:rounded-r-lg data-[disabled=true]:opacity-30 data-[disabled=true]:pointer-events-none hover:text-gray-500 dark:bg-gray-700  dark:text-gray-500 dark:hover:bg-gray-600 dark:hover:text-gray-400";
+  "flex p-0.5 ml-0 bg-white text-gray-500 border  hover:bg-gray-200 dark:bg-secondary/50 first:rounded-l-lg last:rounded-r-lg data-[disabled=true]:opacity-30 data-[disabled=true]:pointer-events-none hover:text-gray-500 dark:bg-gray-700  dark:text-gray-500 dark:hover:bg-gray-600 dark:hover:text-gray-400";
 
 export interface PaginatorProps {
   numberOfPages: number;
@@ -71,7 +71,7 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
         <Link
           title="First Page"
           className={className}
-          data-disabled={currentPage === 1}
+          data-disabled={currentPage <= 1}
           href={createPageURL(1)}
         >
           <ChevronDoubleLeftIcon className="m-auto w-5" />
@@ -79,7 +79,7 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
         <Link
           title="Previous Page"
           className={className}
-          data-disabled={currentPage === 1}
+          data-disabled={currentPage <= 1}
           href={createPageURL(currentPage - 1)}
         >
           <ChevronLeftIcon className="m-auto w-5" />
@@ -87,7 +87,7 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
         <Link
           title="Next Page"
           className={className}
-          data-disabled={currentPage === numberOfPages}
+          data-disabled={currentPage >= numberOfPages}
           href={createPageURL(currentPage + 1)}
         >
           <ChevronRightIcon className="m-auto w-5" />
@@ -95,7 +95,7 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
         <Link
           title="Last Page"
           className={className}
-          data-disabled={currentPage === numberOfPages}
+          data-disabled={currentPage >= numberOfPages}
           href={createPageURL(numberOfPages)}
         >
           <ChevronDoubleRightIcon className="m-auto w-5" />

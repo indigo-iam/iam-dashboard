@@ -12,17 +12,18 @@ type LinkProps = {
   className?: string;
   title?: string;
   children: React.ReactNode;
-};
+} & { [key: `data-${string}`]: unknown };
 
 export default function Link(props: Readonly<LinkProps>) {
   const { startProgressBar } = useLoading();
-  const { href, className, title, children } = props;
+  const { href, className, title, children, ...others } = props;
   return (
     <NextLink
       href={href}
       className={className}
       title={title}
       onClick={startProgressBar}
+      {...others}
     >
       {children}
     </NextLink>

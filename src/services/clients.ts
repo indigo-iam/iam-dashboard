@@ -78,7 +78,7 @@ export async function editClient(
   const { client_id } = client;
   const url = isAdmin
     ? `${IAM_API_URL}/iam/api/clients/${client_id}`
-    : `${IAM_API_URL}/iam/api/client-registration/${client_id}3`;
+    : `${IAM_API_URL}/iam/api/client-registration/${client_id}`;
   const response = await authFetch(url, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },

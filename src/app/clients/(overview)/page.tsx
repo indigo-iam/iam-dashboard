@@ -49,8 +49,7 @@ export default async function Page(props: Readonly<PageProps>) {
   const clientPage = isAdmin
     ? await getClientsPage(count, startIndex, query)
     : await getClientsByAccount(session.user.sub, count, startIndex);
-  const numberOfPages =
-    Math.ceil(clientPage.totalResults / clientPage.itemsPerPage) || 1;
+  const numberOfPages = Math.ceil(clientPage.totalResults / count) || 1;
   const clients = clientPage.Resources;
   return (
     <section>

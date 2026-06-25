@@ -100,12 +100,11 @@ export async function editClient(
   };
 }
 
-export async function enableClient(client: Client): Promise<Notification> {
-  const { client_id } = client;
-  const url = `${IAM_API_URL}/iam/api/clients/${client_id}/enable`;
+export async function enableClient(clientId: string): Promise<Notification> {
+  const url = `${IAM_API_URL}/iam/api/clients/${clientId}/enable`;
   const response = await authFetch(url, { method: "PATCH" });
   if (response.ok) {
-    revalidatePath(`/clients/${client_id}`);
+    revalidatePath(`/clients/${clientId}`);
     return { type: "success", title: "Client enabled" };
   }
   const msg = await response.text();
@@ -116,12 +115,11 @@ export async function enableClient(client: Client): Promise<Notification> {
   };
 }
 
-export async function disableClient(client: Client): Promise<Notification> {
-  const { client_id } = client;
-  const url = `${IAM_API_URL}/iam/api/clients/${client_id}/disable`;
+export async function disableClient(clientId: string): Promise<Notification> {
+  const url = `${IAM_API_URL}/iam/api/clients/${clientId}/disable`;
   const response = await authFetch(url, { method: "PATCH" });
   if (response.ok) {
-    revalidatePath(`/clients/${client_id}`);
+    revalidatePath(`/clients/${clientId}`);
     return { type: "success", title: "Client disabled" };
   }
   const msg = await response.text();
@@ -159,15 +157,14 @@ export async function getClientsPage(
 }
 
 async function editOwner(
-  client: Client,
-  user: User,
+  clientId: string,
+  userId: string,
   method: "POST" | "DELETE"
 ) {
-  const { client_id } = client;
-  const url = `${IAM_API_URL}/iam/api/clients/${client_id}/owners/${user.id}`;
+  const url = `${IAM_API_URL}/iam/api/clients/${clientId}/owners/${userId}`;
   const response = await authFetch(url, { method });
   if (response.ok) {
-    revalidatePath(`/clients/${client_id}`);
+    revalidatePath(`/clients/${clientId}`);
     return { type: "success", title: "Client saved" };
   }
   const msg = await response.text();
@@ -178,12 +175,12 @@ async function editOwner(
   };
 }
 
-export async function addOwner(client: Client, user: User) {
-  return editOwner(client, user, "POST");
+export async function addOwner(clientId: string, userId: string) {
+  return editOwner(clientId, userId, "POST");
 }
 
-export async function removeOwner(client: Client, user: User) {
-  return editOwner(client, user, "DELETE");
+export async function removeOwner(clientId: string, userId: string) {
+  return editOwner(clientId, userId, "DELETE");
 }
 
 export async function getClientOwnersPage(

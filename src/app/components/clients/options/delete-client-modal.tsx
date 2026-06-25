@@ -4,11 +4,12 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { toast } from "@/components/toaster";
-import { Client } from "@/models/client";
 import { deleteClient } from "@/services/clients";
 
 type DeleteClientModalProps = {
-  client: Client;
+  clientId: string;
+  clientName: string;
+  clientDescription?: string;
   show: boolean;
   isAdmin: boolean;
   onClose: () => void;
@@ -18,11 +19,18 @@ type DeleteClientModalProps = {
 export default function DeleteClientModal(
   props: Readonly<DeleteClientModalProps>
 ) {
-  const { client, show, isAdmin, onClose, onDeleted } = props;
-  const { client_name, client_description } = client;
+  const {
+    clientId,
+    clientName,
+    clientDescription,
+    show,
+    isAdmin,
+    onClose,
+    onDeleted,
+  } = props;
 
   const handleConfirm = async () => {
-    const res = await deleteClient(client.client_id, isAdmin);
+    const res = await deleteClient(clientId, isAdmin);
     toast.toast(res);
     onClose();
     onDeleted?.();
@@ -34,15 +42,15 @@ export default function DeleteClientModal(
       onClose={onClose}
       confirmButtonText="Delete"
       onConfirm={handleConfirm}
-      title={`Delete client '${client_name}'`}
+      title={`Delete client '${clientName}'`}
       danger={true}
     >
       <p>
-        Are you sure you want to delete client <b>{client_name}</b>
-        {client_description && (
+        Are you sure you want to delete client <b>{clientName}</b>
+        {clientDescription && (
           <>
             {" "}
-            (<i>{client_description}</i>)
+            (<i>{clientDescription}</i>)
           </>
         )}
         ?

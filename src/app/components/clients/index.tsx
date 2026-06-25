@@ -21,8 +21,7 @@ type RowProps = {
 
 function Row(props: Readonly<RowProps>) {
   const { client, isAdmin } = props;
-  const { client_id, client_name, scope } = client;
-  const scopes = scope ? sortScopes(scope) : undefined;
+  const scopes = client.scope ? sortScopes(client.scope) : undefined;
   const createdAt = client.created_at
     ? new Date(client.created_at).toLocaleString()
     : "N/A";
@@ -31,9 +30,11 @@ function Row(props: Readonly<RowProps>) {
       <div className="flex w-0 grow flex-col space-y-2 lg:flex-row lg:space-y-0">
         <Link
           className="flex grow flex-col lg:w-0"
-          href={`/clients/${client_id}`}
+          href={`/clients/${client.client_id}`}
         >
-          <p className="text-gray-950 dark:text-gray-100">{client_name}</p>
+          <p className="text-gray-950 dark:text-gray-100">
+            {client.client_name}
+          </p>
           <div className="flex flex-col">
             <p className="truncate text-sm font-light">
               {client.client_description}
@@ -50,7 +51,12 @@ function Row(props: Readonly<RowProps>) {
           </p>
         </div>
       </div>
-      <ClientOptions client={client} isAdmin={isAdmin} />
+      <ClientOptions
+        isAdmin={isAdmin}
+        clientId={client.client_id}
+        clientName={client.client_name}
+        active={client.active}
+      />
     </li>
   );
 }

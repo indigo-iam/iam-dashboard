@@ -3,13 +3,14 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
-import { Client } from "@/models/client";
-import { User } from "@/models/scim";
 import { removeOwner } from "@/services/clients";
 
 type RemoveOwnerModalProps = {
-  owner: User;
-  client: Client;
+  clientId: string;
+  clientName: string;
+  ownerId: string;
+  ownerName: string;
+  ownerEmail: string;
   show: boolean;
   onClose: () => void;
 };
@@ -17,9 +18,17 @@ type RemoveOwnerModalProps = {
 export default function RemoveOwnerModal(
   props: Readonly<RemoveOwnerModalProps>
 ) {
-  const { owner, client, show, onClose } = props;
+  const {
+    clientId,
+    clientName,
+    ownerId,
+    ownerName,
+    ownerEmail,
+    show,
+    onClose,
+  } = props;
   const action = async () => {
-    await removeOwner(client, owner);
+    await removeOwner(clientId, ownerId);
     onClose();
   };
   return (
@@ -33,11 +42,8 @@ export default function RemoveOwnerModal(
     >
       <p>
         Are you sure you want to remove the user{" "}
-        <span className="font-medium">
-          {owner.name?.formatted ?? "'unknown name'"}
-        </span>{" "}
-        ({owner.emails?.[0].value ?? "'unknown email'"}) from the owners of the
-        client <span className="font-medium">{client.client_name}</span>?
+        <span className="font-medium">{ownerName}</span> ({ownerEmail}) from the
+        owners of the client <span className="font-medium">{clientName}</span>?
       </p>
     </ConfirmModal>
   );

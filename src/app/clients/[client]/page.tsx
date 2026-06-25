@@ -57,7 +57,12 @@ export default async function Client(props: Readonly<ClientPageProps>) {
           <Scopes client={client} isAdmin={isAdmin} />
           <GrantTypes client={client} isAdmin={isAdmin} />
           <Tokens client={client} isAdmin={isAdmin} />
-          {isAdmin ? <Owners client={client} /> : null}
+          {isAdmin ? (
+            <Owners
+              clientId={client.client_id}
+              clientName={client.client_name}
+            />
+          ) : null}
         </TabPanels>
       </TabGroup>
     </section>

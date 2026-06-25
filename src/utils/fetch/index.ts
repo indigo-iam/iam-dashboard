@@ -8,9 +8,18 @@ import { notFound, redirect } from "next/navigation";
 import { trace } from "@opentelemetry/api";
 
 export async function authFetch(info: RequestInfo | URL, init?: RequestInit) {
+  const url: string = (() => {
+    if (info instanceof URL) {
+      return info.toString();
+    } else if (info instanceof Request) {
+      return info.url.toString();
+    } else {
+      return info;
+    }
+  })();
   return await trace
     .getTracer("indigo-iam")
-    .startActiveSpan(`authFetch ${info.toString()}`, async span => {
+    .startActiveSpan(`authFetch ${url}`, async span => {
       try {
         const { accessToken } = await getAccessToken();
         const options: RequestInit = init ?? {};
@@ -19,7 +28,7 @@ export async function authFetch(info: RequestInfo | URL, init?: RequestInit) {
           ...headers,
           authorization: `Bearer ${accessToken}`,
         };
-        logger.debug(`fetching ${info.toString()}`);
+        logger.debug(`fetching ${url}`);
         return await fetch(info, options);
       } finally {
         span.end();

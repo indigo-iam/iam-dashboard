@@ -41,7 +41,7 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
   };
 
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    const count = parseInt(event.currentTarget.value);
+    const count = Number.parseInt(event.currentTarget.value);
     router.push(createPageURL(1, count));
     startProgressBar();
   }

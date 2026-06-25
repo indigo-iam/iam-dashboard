@@ -4,7 +4,7 @@
 
 "use client";
 
-import AddSubgroupModal from "@/app/groups/components/table/options/add-subgroup-modal";
+import AddSubgroupModal from "@/app/groups/(overview)/components/table/options/add-subgroup-modal";
 import { Button } from "@/components/buttons";
 import { Group } from "@/models/groups";
 import { useState } from "react";

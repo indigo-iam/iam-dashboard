@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { GroupRequestsTable } from "@/app/groups/components";
+import { GroupRequestsTable } from "@/app/groups/(overview)/components";
 import { GroupRequest } from "@/models/group-requests";
 import { User } from "@/models/scim";
 

@@ -80,7 +80,7 @@ export default async function Scopes(props: Readonly<ScopesProps>) {
             <AddScopeButton
               client={client}
               isAdmin={isAdmin}
-              scopes={unusedSystemScopes}
+              availableScopes={unusedSystemScopes}
             />
             <AddCustomScope client={client} isAdmin={isAdmin} />
           </div>

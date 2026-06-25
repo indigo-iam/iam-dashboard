@@ -15,16 +15,16 @@ import { useState } from "react";
 type AddScopeProps = {
   client: Client;
   isAdmin: boolean;
-  scopes: Scope[];
+  availableScopes: Scope[];
 };
 
-interface AddScopeModalProps extends AddScopeProps {
+type AddScopeModalProps = AddScopeProps & {
   show: boolean;
   onClose: () => void;
-}
+};
 
 function AddScopeModal(props: Readonly<AddScopeModalProps>) {
-  const { client, scopes, show, onClose, isAdmin } = props;
+  const { client, availableScopes, show, onClose, isAdmin } = props;
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -43,7 +43,7 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
       <Form onSubmit={submit}>
         <ModalBody className="p-0">
           <ul>
-            {scopes.map(s => (
+            {availableScopes.map(s => (
               <Field
                 as="li"
                 key={s.id}
@@ -74,7 +74,7 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
 }
 
 export function AddScopeButton(props: AddScopeProps) {
-  const { client, isAdmin, scopes } = props;
+  const { client, isAdmin, availableScopes } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
@@ -88,7 +88,7 @@ export function AddScopeButton(props: AddScopeProps) {
         onClose={close}
         client={client}
         isAdmin={isAdmin}
-        scopes={scopes}
+        availableScopes={availableScopes}
       />
     </>
   );

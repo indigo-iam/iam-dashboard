@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Group } from "@/models/groups";
 import { ScimReference } from "@/models/scim";
 import { fetchSubgroupsPage } from "@/services/groups";
 import Link from "@/components/link";
@@ -27,15 +26,15 @@ function Row(props: Readonly<{ groupRef: ScimReference }>) {
 }
 
 type SubgroupsTableProps = {
-  group: Group;
+  groupId: string;
 };
 
 export default async function SubgroupsTable(
   props: Readonly<SubgroupsTableProps>
 ) {
-  const { group } = props;
+  const { groupId } = props;
   // TODO: pagination
-  const firstPage = await fetchSubgroupsPage(group.id);
+  const firstPage = await fetchSubgroupsPage(groupId);
   const subgroups = firstPage.Resources;
 
   if (subgroups.length === 0) {

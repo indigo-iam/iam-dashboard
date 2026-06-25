@@ -11,12 +11,12 @@ import { useState } from "react";
 
 type SSHKeysOptionsProps = {
   userId: string;
-  userName: string;
+  userFormattedName: string;
   sshKey: SSHKey;
 };
 
 export default function SSHKeysOptions(props: Readonly<SSHKeysOptionsProps>) {
-  const { userId, userName, sshKey } = props;
+  const { userId, userFormattedName, sshKey } = props;
   const [show, setShow] = useState<"DELETE">();
   const close = () => setShow(undefined);
   return (
@@ -28,7 +28,7 @@ export default function SSHKeysOptions(props: Readonly<SSHKeysOptionsProps>) {
       </Options>
       <DeleteSSHKeyModal
         userId={userId}
-        userName={userName}
+        userFormattedName={userFormattedName}
         sshKey={sshKey}
         show={show === "DELETE"}
         onClose={close}

@@ -9,14 +9,14 @@ import { deleteAttribute } from "@/services/users";
 
 type DeleteButtonProps = {
   userId: string;
-  userName: string;
+  userFormattedName: string;
   attr: Attribute;
   show: boolean;
   onClose: () => void;
 };
 
 export default function DeleteUserModal(props: Readonly<DeleteButtonProps>) {
-  const { userId, userName, attr, show, onClose } = props;
+  const { userId, userFormattedName, attr, show, onClose } = props;
   const action = async () => {
     const res = await deleteAttribute(userId, attr);
     toast.toast(res);
@@ -32,7 +32,8 @@ export default function DeleteUserModal(props: Readonly<DeleteButtonProps>) {
       danger
     >
       <p>
-        The following attribute will be removed from <b>{userName}</b> account:
+        The following attribute will be removed from <b>{userFormattedName}</b>{" "}
+        account:
       </p>
       <ul className="flex flex-col">
         <li className="inline-flex gap-1">

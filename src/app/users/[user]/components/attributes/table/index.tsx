@@ -7,11 +7,11 @@ import AttributeOptions from "./options";
 
 type TableProps = {
   userId: string;
-  userName: string;
+  userFormattedName: string;
 };
 
 export default async function AttributesTable(props: Readonly<TableProps>) {
-  const { userId, userName } = props;
+  const { userId, userFormattedName } = props;
   const attributes = await fetchAttributes(userId);
 
   if (!attributes || attributes.length === 0) {
@@ -33,7 +33,11 @@ export default async function AttributesTable(props: Readonly<TableProps>) {
                 <span>{attr.value}</span>
               </div>
             </div>
-            <AttributeOptions userId={userId} userName={userName} attr={attr} />
+            <AttributeOptions
+              userId={userId}
+              userFormattedName={userFormattedName}
+              attr={attr}
+            />
           </li>
         );
       })}

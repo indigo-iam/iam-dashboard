@@ -9,14 +9,15 @@ import AddAttributeButton from "./add-button";
 type AttributesProps = {
   userId: string;
   userName: string;
+  userFormattedName: string;
 };
 
 export async function Attributes(props: Readonly<AttributesProps>) {
-  const { userId, userName } = props;
+  const { userId, userName, userFormattedName } = props;
   return (
     <TabPanel className="panel space-y-4">
       <h2>Attributes</h2>
-      <AttributesTable userId={userId} userName={userName} />
+      <AttributesTable userId={userId} userFormattedName={userFormattedName} />
       <AddAttributeButton userId={userId} userName={userName} />
     </TabPanel>
   );

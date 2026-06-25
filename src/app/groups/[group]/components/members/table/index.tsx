@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Group } from "@/models/groups";
 import { fetchGroupMembersPage } from "@/services/groups";
 import { ScimReference } from "@/models/scim";
 import MemberOptions from "./options";
@@ -11,11 +10,13 @@ import Link from "next/link";
 
 type RowProps = {
   userRef: ScimReference;
-  group: Group;
+  groupId: string;
+  groupName: string;
+  groupDescription?: string | null;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const { userRef, group } = props;
+  const { userRef, groupId, groupName, groupDescription } = props;
   return (
     <li className="iam-list-item">
       <Link className="flex w-0 grow flex-col" href={`/users/${userRef.value}`}>
@@ -25,19 +26,26 @@ function Row(props: Readonly<RowProps>) {
         <p className="truncate text-sm font-light">{userRef.value}</p>
       </Link>
 
-      <MemberOptions userRef={userRef} group={group} />
+      <MemberOptions
+        userRef={userRef}
+        groupId={groupId}
+        groupName={groupName}
+        groupDescription={groupDescription}
+      />
     </li>
   );
 }
 
 type MembersProps = {
-  group: Group;
+  groupId: string;
+  groupName: string;
+  groupDescription?: string | null;
   members: ScimReference[];
 };
 export default async function Members(props: Readonly<MembersProps>) {
-  const { group } = props;
+  const { groupId, groupName, groupDescription } = props;
   // TODO: pagination
-  const members = (await fetchGroupMembersPage(group.id)).Resources;
+  const members = (await fetchGroupMembersPage(groupId)).Resources;
 
   if (members.length === 0) {
     return <p>This group has no members.</p>;
@@ -46,7 +54,13 @@ export default async function Members(props: Readonly<MembersProps>) {
   return (
     <ul className="w-full">
       {members.map(member => (
-        <Row key={member.value} userRef={member} group={group} />
+        <Row
+          key={member.value}
+          userRef={member}
+          groupId={groupId}
+          groupName={groupName}
+          groupDescription={groupDescription}
+        />
       ))}
     </ul>
   );

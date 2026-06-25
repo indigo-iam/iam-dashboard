@@ -3,7 +3,8 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import Link from "@/components/link";
-import { ScimReference, User } from "@/models/scim";
+import { ScimReference } from "@/models/scim";
+import { makeScimReferenceForUser } from "@/utils/scim";
 import GroupOptions from "./options";
 
 type StaticViewProps = {
@@ -35,13 +36,13 @@ function LinkView(props: Readonly<LinkViewProps>) {
 }
 
 type RowProps = {
-  user: User;
+  userRef: ScimReference;
   groupRef: ScimReference;
   isAdmin?: boolean;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const { user, groupRef, isAdmin } = props;
+  const { userRef, groupRef, isAdmin } = props;
   return (
     <li className="iam-list-item">
       {isAdmin ? (
@@ -49,20 +50,22 @@ function Row(props: Readonly<RowProps>) {
       ) : (
         <StaticView groupRef={groupRef} />
       )}
-      <GroupOptions groupRef={groupRef} user={user} />
+      <GroupOptions groupRef={groupRef} userRef={userRef} />
     </li>
   );
 }
 
 type UserGroupsProps = {
-  user: User;
+  userId: string;
+  userFormattedName: string;
+  userGroups?: ScimReference[];
   isAdmin?: boolean;
 };
 
 export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
-  const { user, isAdmin } = props;
-  const { groups } = user;
-  if (!groups || groups.length === 0) {
+  const { userId, userFormattedName, userGroups, isAdmin } = props;
+  const userRef = makeScimReferenceForUser(userId, userFormattedName);
+  if (!userGroups || userGroups.length === 0) {
     return (
       <div className="panel space-y-4">
         <h2>Joined groups</h2>
@@ -74,8 +77,8 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
     <div className="panel space-y-4">
       <h2>Joined groups</h2>
       <ul className="w-full">
-        {groups.map(g => (
-          <Row key={g.value} user={user} groupRef={g} isAdmin={isAdmin} />
+        {userGroups.map(g => (
+          <Row key={g.value} userRef={userRef} groupRef={g} isAdmin={isAdmin} />
         ))}
       </ul>
     </div>

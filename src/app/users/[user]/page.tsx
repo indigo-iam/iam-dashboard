@@ -28,10 +28,10 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
   if (!session) {
     redirect("/signin");
   }
-  const userId = (await props.params).user;
-  const isMe = userId === "me" || userId === session.user.sub;
+  const userIdParam = (await props.params).user;
+  const isMe = userIdParam === "me" || userIdParam === session.user.sub;
 
-  const user = isMe ? await fetchMe() : await fetchUser(userId);
+  const user = isMe ? await fetchMe() : await fetchUser(userIdParam);
   if (!user) {
     return <h1>User not found</h1>;
   }
@@ -42,6 +42,12 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
     redirect("/");
   }
   const mfaEnabled = await statusMFA();
+
+  const userId = user.id;
+  const userName = user.userName ?? "unknown userName";
+  const userFormattedName = user.name?.formatted ?? "unknown user";
+  const userEmail = user.emails?.[0].value ?? "unknown email";
+  const userGroups = user.groups;
   const indigoUser = user["urn:indigo-dc:scim:schemas:IndigoUser"];
   const oidcIds = indigoUser?.oidcIds ?? [];
   const samlIds = indigoUser?.samlIds ?? [];
@@ -66,10 +72,17 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
         </TabList>
         <TabPanels>
           <General user={user} isMe={isMe} mfaEnabled={mfaEnabled} />
-          <UserGroups user={user} isAdmin={isAdmin} />
+          <UserGroups
+            userId={userId}
+            userName={userName}
+            userFormattedName={userFormattedName}
+            userEmail={userEmail}
+            userGroups={userGroups ?? []}
+            isAdmin={isAdmin}
+          />
           {!isMe && (
             <UserClients
-              user={user}
+              userId={userId}
               isAdmin={isAdmin}
               page={searchParams?.page}
               count={searchParams?.count}
@@ -78,16 +91,18 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
           <ApprovedSites />
           <ActiveTokens />
           <LinkedAccounts
-            userId={user.id}
-            userName={user.displayName ?? "Unknown user"}
+            userId={userId}
+            userName={userName}
+            userFormattedName={userFormattedName}
             oidcIds={oidcIds}
             samlIds={samlIds}
             certificates={certificates}
             sshKeys={sshKeys}
           />
           <Attributes
-            userId={user.id}
-            userName={user.name?.formatted ?? "Unknown user"}
+            userId={userId}
+            userName={userName}
+            userFormattedName={userFormattedName}
           />
         </TabPanels>
       </TabGroup>

@@ -11,12 +11,12 @@ import { useState } from "react";
 
 type OptionsProps = {
   userId: string;
-  userName: string;
+  userFormattedName: string;
   attr: Attribute;
 };
 
 export default function AttributeOptions(props: Readonly<OptionsProps>) {
-  const { userId, userName, attr } = props;
+  const { userId, userFormattedName, attr } = props;
   const [show, setShow] = useState<"DELETE_USER">();
   const close = () => setShow(undefined);
   return (
@@ -28,7 +28,7 @@ export default function AttributeOptions(props: Readonly<OptionsProps>) {
       </Options>
       <DeleteUserModal
         userId={userId}
-        userName={userName}
+        userFormattedName={userFormattedName}
         attr={attr}
         show={show === "DELETE_USER"}
         onClose={close}

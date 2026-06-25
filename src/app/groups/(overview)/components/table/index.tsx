@@ -43,6 +43,7 @@ type RowProps = {
 
 function Row(props: Readonly<RowProps>) {
   const { group } = props;
+  const indigoGroup = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
   const created = group.meta?.created
     ? new Date(group.meta.created).toLocaleString()
     : "N/A";
@@ -67,7 +68,11 @@ function Row(props: Readonly<RowProps>) {
           Created {created}
         </p>
       </Link>
-      <GroupOptions group={group} />
+      <GroupOptions
+        groupId={group.id}
+        groupName={group.displayName}
+        groupDescription={indigoGroup.description}
+      />
     </li>
   );
 }

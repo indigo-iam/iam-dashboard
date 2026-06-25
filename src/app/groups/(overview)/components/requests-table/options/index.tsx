@@ -9,16 +9,15 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 
 import { Options, Option } from "@/components/options";
 import { GroupRequest } from "@/models/group-requests";
-import { User } from "@/models/scim";
 import RevokeRequestModal from "./revoke-request-modal";
 
 export type GroupRequestOptionProps = {
-  user: User;
+  userId: string;
   request: GroupRequest;
 };
 
 export function GroupRequestOptions(props: Readonly<GroupRequestOptionProps>) {
-  const { user, request } = props;
+  const { userId, request } = props;
   const [show, setShow] = useState<"REVOKE">();
   const close = () => setShow(undefined);
   return (
@@ -32,7 +31,7 @@ export function GroupRequestOptions(props: Readonly<GroupRequestOptionProps>) {
         </Option>
       </Options>
       <RevokeRequestModal
-        user={user}
+        userId={userId}
         request={request}
         show={show === "REVOKE"}
         onClose={close}

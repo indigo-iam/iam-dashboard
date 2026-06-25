@@ -6,17 +6,17 @@
 
 import AddSubgroupModal from "@/app/groups/(overview)/components/table/options/add-subgroup-modal";
 import { Button } from "@/components/buttons";
-import { Group } from "@/models/groups";
+import { ScimReference } from "@/models/scim";
 import { useState } from "react";
 
 type AddSubgroupButtonProps = {
-  group: Group;
+  rootGroupRef: ScimReference;
 };
 
 export default function AddSubgroupButton(
   props: Readonly<AddSubgroupButtonProps>
 ) {
-  const { group } = props;
+  const { rootGroupRef } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
@@ -25,7 +25,11 @@ export default function AddSubgroupButton(
       <Button className="btn-secondary" type="button" onClick={open}>
         Add Subgroup
       </Button>
-      <AddSubgroupModal rootGroup={group} show={show} onClose={close} />
+      <AddSubgroupModal
+        rootGroupRef={rootGroupRef}
+        show={show}
+        onClose={close}
+      />
     </>
   );
 }

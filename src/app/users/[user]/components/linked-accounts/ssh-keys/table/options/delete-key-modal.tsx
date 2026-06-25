@@ -8,7 +8,7 @@ import { deleteSSHKey } from "@/services/users";
 
 type DeleteSSHKeyModalProps = {
   userId: string;
-  userName: string;
+  userFormattedName: string;
   sshKey: SSHKey;
   show: boolean;
   onClose: () => void;
@@ -18,7 +18,7 @@ type DeleteSSHKeyModalProps = {
 export default function DeleteSSHKeyModal(
   props: Readonly<DeleteSSHKeyModalProps>
 ) {
-  const { userId, userName, sshKey, show, onClose, onDeleted } = props;
+  const { userId, userFormattedName, sshKey, show, onClose, onDeleted } = props;
 
   const handleConfirm = async () => {
     await deleteSSHKey(userId, sshKey);
@@ -36,7 +36,7 @@ export default function DeleteSSHKeyModal(
       danger
     >
       <p>
-        The following SSH Key will be removed from <b>{userName}</b>
+        The following SSH Key will be removed from <b>{userFormattedName}</b>
       </p>
       <ul className="flex flex-col">
         <li className="inline-flex gap-1">

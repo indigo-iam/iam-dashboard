@@ -7,25 +7,28 @@ import Link from "@/components/link";
 import ConfirmModal from "@/components/confirm-modal";
 import { ModalProps } from "@/components/modal";
 import { toast } from "@/components/toaster";
-import { Group } from "@/models/groups";
 import { ScimReference } from "@/models/scim";
-import { removeUserByRefFromGroup } from "@/services/groups";
+import { removeUserByRefFromGroupReference } from "@/services/groups";
+import { makeScimReferenceForGroup } from "@/utils/scim";
 
 interface RevokeMemberFromGroupModalProps extends ModalProps {
   userRef: ScimReference;
-  group: Group;
+  groupName: string;
+  groupId: string;
+  groupDescription?: string | null;
 }
 
 export default function RemoveMemberFromGroupModal(
   props: Readonly<RevokeMemberFromGroupModalProps>
 ) {
-  const { userRef, group, ...modalProps } = props;
-  const indigoGroup = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
-  const description = indigoGroup.description;
-  const action = async () => {
-    const res = await removeUserByRefFromGroup(userRef, group);
+  const { userRef, groupId, groupName, groupDescription, ...modalProps } =
+    props;
+
+  async function action() {
+    const groupRef = makeScimReferenceForGroup(groupId, groupName);
+    const res = await removeUserByRefFromGroupReference(userRef, groupRef);
     toast.toast(res);
-  };
+  }
 
   return (
     <ConfirmModal
@@ -40,10 +43,10 @@ export default function RemoveMemberFromGroupModal(
           <Link href={`/users/${userRef.value}`} className="underline">
             <b>{userRef.display}</b>
           </Link>{" "}
-          from group <b>{group.displayName}</b>{" "}
-          {description && (
+          from group <b>{groupName}</b>{" "}
+          {groupDescription && (
             <>
-              (<span className="italic">{description}</span>)
+              (<span className="italic">{groupDescription}</span>)
             </>
           )}
           ?

@@ -10,7 +10,6 @@ import { Textarea } from "@/components/textarea";
 import { toast } from "@/components/toaster";
 import { JoinGroupRequest } from "@/models/group-requests";
 import { Group } from "@/models/groups";
-import { User } from "@/models/scim";
 import { submitGroupRequest } from "@/services/group-requests";
 import { SearchGroups } from "./search-groups";
 
@@ -57,13 +56,13 @@ function GroupView(props: Readonly<GroupViewProps>) {
 const MIN_MOTIVATION_LENGTH = 5;
 
 type JoinGroupModalProps = {
-  user: User;
   show: boolean;
   onClose: () => void;
+  userName: string;
 };
 
 export function JoinGroupModal(props: Readonly<JoinGroupModalProps>) {
-  const { user, show, onClose } = props;
+  const { show, onClose, userName } = props;
   const formRef = useRef<HTMLFormElement>(null);
   const [selected, setSelected] = useState<Group>();
   const [motivation, setMotivation] = useState<string>();
@@ -92,7 +91,7 @@ export function JoinGroupModal(props: Readonly<JoinGroupModalProps>) {
 
     const req: JoinGroupRequest = {
       notes: formData.get("group-request-notes") as string,
-      username: user.userName!,
+      username: userName,
       groupName: selected!.displayName,
     };
     const res = await submitGroupRequest(req);

@@ -7,39 +7,41 @@
 import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { Modal, ModalHeader, ModalBody, ModalFooter, ModalProps } from "@/components/modal";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalProps,
+} from "@/components/modal";
 import { toast } from "@/components/toaster";
-import { ManagedGroup } from "@/models/groups";
-import { addSubgroupToManagedGroup } from "@/services/groups";
+import { addSubgroup } from "@/services/groups";
 
 interface AddSubgroupModalProps extends ModalProps {
-  rootGroup: ManagedGroup;
+  rootGroupId: string;
+  rootGroupDisplayName: string;
   onAdded?: () => void;
 }
 export default function AddSubgroupModal(
   props: Readonly<AddSubgroupModalProps>
 ) {
-  const { rootGroup, onAdded, ...modalProps } = props;
+  const { rootGroupId, rootGroupDisplayName, onAdded, ...modalProps } = props;
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const name = formData.get("name") as string;
-    if (rootGroup) {
-      const res = await addSubgroupToManagedGroup(name, rootGroup);
-      toast.toast(res);
-      onAdded?.();
-      modalProps.onClose();
-    } else {
-      console.warn("group to delete is undefined");
-    }
+    const res = await addSubgroup(name, rootGroupId, rootGroupDisplayName);
+    toast.toast(res);
+    onAdded?.();
+    modalProps.onClose();
   }
 
   return (
     <Modal {...modalProps}>
       <ModalHeader
         onClose={modalProps.onClose}
-      >{`Add new subgroup to '${rootGroup.name}'`}</ModalHeader>
+      >{`Add new subgroup to '${rootGroupDisplayName}'`}</ModalHeader>
       <Form id="add-subgroup-form" onSubmit={submit}>
         <ModalBody>
           <Field>

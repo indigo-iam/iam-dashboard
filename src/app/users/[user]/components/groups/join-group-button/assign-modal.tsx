@@ -4,27 +4,28 @@
 
 "use client";
 
+import { useState } from "react";
+import Link from "next/link";
+
 import ConfirmModal from "@/components/confirm-modal";
 import { Field, Label } from "@/components/form";
 import { toast } from "@/components/toaster";
 import { Group } from "@/models/groups";
-import { User } from "@/models/scim";
 import { addUserToGroup } from "@/services/groups";
 import { SearchGroups } from "./search-groups";
 
-import { useState } from "react";
-import Link from "next/link";
-
 type AssignUserToGroupModalProps = {
-  user: User;
   show: boolean;
   onClose: () => void;
+  userId: string;
+  userFormattedName: string;
+  userEmail: string;
 };
 
 export function AssignUserToGroupModal(
   props: Readonly<AssignUserToGroupModalProps>
 ) {
-  const { user, show, onClose } = props;
+  const { userId, userFormattedName, userEmail, show, onClose } = props;
   const [selected, setSelected] = useState<Group>();
   const disabled = selected === undefined;
 
@@ -42,7 +43,7 @@ export function AssignUserToGroupModal(
       console.warn("Cannot assign unknown user to group");
       return;
     }
-    const res = await addUserToGroup(selected, user);
+    const res = await addUserToGroup(selected.id, userId, userFormattedName);
     toast.toast(res);
     close();
   }
@@ -59,8 +60,8 @@ export function AssignUserToGroupModal(
         <div className="space-y-4">
           <p>
             Are you sure you want to add the user{" "}
-            <Link href={`/users/${user.id}`} className="underline">
-              <b>{user.name?.formatted}</b> (<i>{user.emails?.[0].value}</i>)
+            <Link href={`/users/${userId}`} className="underline">
+              <b>{userFormattedName}</b> (<i>{userEmail}</i>)
             </Link>{" "}
             to the group{" "}
             <Link href={`/groups/${selected.id}`} className="underline">

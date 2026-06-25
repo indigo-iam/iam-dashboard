@@ -3,24 +3,24 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { fetchManagedGroups } from "@/services/groups";
-import { ManagedGroup } from "@/models/groups";
 import Link from "@/components/link";
 import GroupOptions from "./options";
 import { Suspense } from "react";
 
 type RowProps = {
-  group: ManagedGroup;
+  groupId: string;
+  groupName: string;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const { group } = props;
+  const { groupId, groupName } = props;
   return (
     <li className="iam-list-item">
-      <Link className="flex grow flex-col" href={`/groups/${group.id}`}>
-        <p className="text-gray-950 dark:text-gray-100">{group.name}</p>
-        <p className="text-sm font-light">{group.id}</p>
+      <Link className="flex grow flex-col" href={`/groups/${groupId}`}>
+        <p className="text-gray-950 dark:text-gray-100">{groupName}</p>
+        <p className="text-sm font-light">{groupId}</p>
       </Link>
-      <GroupOptions group={group} />
+      <GroupOptions groupId={groupId} groupName={groupName} />
     </li>
   );
 }
@@ -42,7 +42,7 @@ async function Content(props: Readonly<ContentProps>) {
       <h2>Managed groups</h2>
       <ul className="w-full">
         {groups.map(group => (
-          <Row key={group.id} group={group} />
+          <Row key={group.id} groupId={group.id} groupName={group.name} />
         ))}
       </ul>
     </div>

@@ -4,19 +4,18 @@
 
 import { GroupRequestsTable } from "@/app/groups/(overview)/components";
 import { GroupRequest } from "@/models/group-requests";
-import { User } from "@/models/scim";
 
 type GroupRequestProps = {
-  user: User;
+  userId: string;
   requests: GroupRequest[];
 };
 
 export function GroupRequests(props: Readonly<GroupRequestProps>) {
-  const { user, requests } = props;
+  const { userId, requests } = props;
   return (
     <div className="panel space-y-4">
       <h2>Pending requests</h2>
-      <GroupRequestsTable user={user} requests={requests} />
+      <GroupRequestsTable userId={userId} requests={requests} />
     </div>
   );
 }

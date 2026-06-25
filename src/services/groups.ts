@@ -8,7 +8,6 @@ import {
   Group,
   GroupLabel,
   GroupsSearchResponse,
-  ManagedGroup,
   ManagedGroupResponse,
 } from "@/models/groups";
 import { authFetch, getItem } from "@/utils/fetch";
@@ -17,9 +16,8 @@ import { Paginated } from "@/models/pagination";
 import { ScimReference, User } from "@/models/scim";
 import { Notification } from "@/components/toaster";
 import {
-  makeScimReferenceFromGroup,
-  makeScimReferenceFromManagedGroup,
-  makeScimReferenceFromUser,
+  makeScimReferenceForGroup,
+  makeScimReferenceForUser,
 } from "@/utils/scim";
 
 import { revalidatePath } from "next/cache";
@@ -145,27 +143,14 @@ export async function editGroup(
   };
 }
 
-export async function deleteGroup(group: Group) {
-  const groupRef = makeScimReferenceFromGroup(group);
-  return await deleteGroupByReference(groupRef);
-}
-
-export async function deleteManagedGroup(managedGroup: ManagedGroup) {
-  const groupRef = makeScimReferenceFromManagedGroup(managedGroup);
-  return await deleteGroupByReference(groupRef);
-}
-
-export async function deleteGroupByReference(
-  groupRef: ScimReference
-): Promise<Notification> {
-  const url = `${IAM_API_URL}/scim/Groups/${groupRef.value}`;
+export async function deleteGroup(groupId: string): Promise<Notification> {
+  const url = `${IAM_API_URL}/scim/Groups/${groupId}`;
   const response = await authFetch(url, { method: "DELETE" });
   if (response.ok) {
     revalidatePath("/groups");
     return {
-      type: "info",
+      type: "success",
       title: "Group deleted",
-      description: `Group ${groupRef.display} has been deleted`,
     };
   }
   const msg = await response.text();
@@ -178,24 +163,13 @@ export async function deleteGroupByReference(
 
 export async function addSubgroup(
   groupName: string,
-  parentGroup: Group
+  parentGroupId: string,
+  parentGroupName: string
 ): Promise<Notification> {
-  const parentGroupRef = makeScimReferenceFromGroup(parentGroup);
-  return addSubgroupByRef(groupName, parentGroupRef);
-}
-
-export async function addSubgroupToManagedGroup(
-  groupName: string,
-  parentGroup: ManagedGroup
-): Promise<Notification> {
-  const parentGroupRef = makeScimReferenceFromManagedGroup(parentGroup);
-  return addSubgroupByRef(groupName, parentGroupRef);
-}
-
-export async function addSubgroupByRef(
-  groupName: string,
-  parentGroupRef: ScimReference
-): Promise<Notification> {
+  const parentGroupRef = makeScimReferenceForGroup(
+    parentGroupId,
+    parentGroupName
+  );
   const body = {
     displayName: groupName,
     schemas: ["urn:ietf:params:scim:schemas:core:2.0:Group"],
@@ -228,10 +202,11 @@ export async function addSubgroupByRef(
 }
 
 export async function addUserToGroup(
-  group: Group,
-  user: User
+  groupId: string,
+  userId: string,
+  userName: string
 ): Promise<Notification> {
-  const userRef = makeScimReferenceFromUser(user);
+  const userRef = makeScimReferenceForUser(userId, userName);
   const body = {
     schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
     operations: [
@@ -242,18 +217,17 @@ export async function addUserToGroup(
       },
     ],
   };
-  const url = `${IAM_API_URL}/scim/Groups/${group.id}`;
+  const url = `${IAM_API_URL}/scim/Groups/${groupId}`;
   const response = await authFetch(url, {
     body: JSON.stringify(body),
     method: "PATCH",
     headers: { "content-type": "application/scim+json" },
   });
   if (response.ok) {
-    revalidatePath(`/groups/${group.id}`);
+    revalidatePath(`/groups/${groupId}`);
     return {
       type: "success",
       title: "Member added",
-      description: `User ${user.name?.formatted} has been added to group ${group.displayName}`,
     };
   }
   const msg = await response.text();
@@ -262,22 +236,6 @@ export async function addUserToGroup(
     title: "Cannot add user to group",
     description: `Error ${response.status}, ${msg}`,
   };
-}
-
-export async function removeUserByRefFromGroup(
-  userRef: ScimReference,
-  group: Group
-): Promise<Notification> {
-  const groupRef = makeScimReferenceFromGroup(group);
-  return await removeUserByRefFromGroupReference(userRef, groupRef);
-}
-
-export async function removeUserFromGroupReference(
-  user: User,
-  groupRef: ScimReference
-): Promise<Notification> {
-  const userRef = makeScimReferenceFromUser(user);
-  return await removeUserByRefFromGroupReference(userRef, groupRef);
 }
 
 export async function removeUserByRefFromGroupReference(

@@ -32,12 +32,17 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
     redirect("/groups");
   }
   const isAdmin = await isUserAdmin();
+  const indigoUser = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
+  const groupId = group.id;
+  const groupName = group.displayName;
+  const groupDescription = indigoUser.description;
+
   return (
     <section>
       <header className="section-header">
         <div className="flex grow items-center gap-2">
           <UserGroupIcon className="size-5" />
-          <h2 className="text-base font-normal">{group.displayName}</h2>
+          <h2 className="text-base font-normal">{groupName}</h2>
         </div>
         <EditGroupButton group={group} />
       </header>
@@ -50,9 +55,14 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
         </TabList>
         <TabPanels>
           <GroupInfo group={group} />
-          <Subgroups group={group} />
+          <Subgroups groupId={group.id} groupName={groupName} />
           {isAdmin && <Managers group={group} />}
-          <Members group={group} isAdmin={isAdmin} />
+          <Members
+            groupId={groupId}
+            groupName={groupName}
+            groupDescription={groupDescription}
+            isAdmin={isAdmin}
+          />
         </TabPanels>
       </TabGroup>
     </section>

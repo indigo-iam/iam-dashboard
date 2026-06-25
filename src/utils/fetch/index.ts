@@ -19,7 +19,7 @@ export async function authFetch(info: RequestInfo | URL, init?: RequestInit) {
           ...headers,
           authorization: `Bearer ${accessToken}`,
         };
-        logger.debug("fetching", info);
+        logger.debug("fetching", info.toString());
         return await fetch(info, options);
       } finally {
         span.end();

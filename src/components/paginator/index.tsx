@@ -12,6 +12,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "@/components/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useLoading } from "../loading";
 
 const className =
   "flex p-0.5 ml-0 bg-white text-gray-300 border  hover:bg-gray-200 dark:bg-secondary/50    first:rounded-l-lg last:rounded-r-lg data-[disabled=true]:opacity-30 data-[disabled=true]:pointer-events-none hover:text-gray-500 dark:bg-gray-700  dark:text-gray-500 dark:hover:bg-gray-600 dark:hover:text-gray-400";
@@ -25,6 +26,7 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { startProgressBar } = useLoading();
   const currentPage = Number(searchParams.get("page")) || 1;
   const itemsPerPage = Number(searchParams.get("count")) || 10;
 
@@ -38,9 +40,11 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
     return `${pathname}?${params.toString()}`;
   };
 
-  const onChangeItemsPerPage = (count: number) => {
+  function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
+    const count = parseInt(event.currentTarget.value);
     router.push(createPageURL(1, count));
-  };
+    startProgressBar();
+  }
 
   return (
     <div className="flex items-center justify-between px-4 pb-2 text-sm">
@@ -53,7 +57,7 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
           id="items-per-page"
           value={itemsPerPage}
           className="block rounded-lg border bg-gray-50 p-1 text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:text-white/50"
-          onChange={e => onChangeItemsPerPage(parseInt(e.currentTarget.value))}
+          onChange={handleChange}
           aria-label="Items per page"
         >
           <option value="10">10</option>

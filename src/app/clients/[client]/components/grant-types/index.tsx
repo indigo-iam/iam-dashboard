@@ -60,10 +60,11 @@ export default function GrantTypes(props: Readonly<GrantTypesProps>) {
       <Form onSubmit={submit} className="space-y-4">
         <div className="space-y-4 divide-y">
           <MainGrantTypes
-            client={client}
+            grantTypes={client.grant_types ?? []}
+            redirectUris={client.redirect_uris ?? []}
             onAuthGrantChange={setIsAuthGrantOk}
           />
-          <OtherGrantTypes client={client} />
+          <OtherGrantTypes grantTypes={client.grant_types} />
         </div>
         <FormButtons canSave={isAuthGrantOk} />
       </Form>

@@ -45,8 +45,11 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
     <TabPanel className="panel">
       <Form onSubmit={submit} className="space-y-4">
         <div className="divide-y">
-          <Authentication client={client} />
-          <Advanced client={client} />
+          <Authentication
+            clientId={client.client_id}
+            tokenEndpointAuthMethod={client.token_endpoint_auth_method}
+          />
+          <Advanced codeChallengeMethod={client.code_challenge_method} />
         </div>
         <div className="flex flex-row justify-end">
           <Button className="btn-tertiary" type="reset">

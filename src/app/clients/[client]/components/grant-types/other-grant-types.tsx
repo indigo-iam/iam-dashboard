@@ -3,10 +3,9 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Description, Field, Label, LabeledCheckbox } from "@/components/form";
-import { Client } from "@/models/client";
 
 type OtherGrantTypesProps = {
-  client: Client;
+  grantTypes: string[];
 };
 
 const deviceCodeKey = "urn:ietf:params:oauth:grant-type:device_code";
@@ -14,11 +13,10 @@ const tokenExchangeKey = "urn:ietf:params:oauth:grant-type:token-exchange";
 const refreshTokenKey = "refresh_token";
 
 export function OtherGrantTypes(props: Readonly<OtherGrantTypesProps>) {
-  const { client } = props;
-  const { grant_types } = client;
-  const deviceCode = grant_types.includes(deviceCodeKey);
-  const tokenExchange = grant_types.includes(tokenExchangeKey);
-  const refreshToken = grant_types.includes(refreshTokenKey);
+  const { grantTypes } = props;
+  const deviceCode = grantTypes.includes(deviceCodeKey);
+  const tokenExchange = grantTypes.includes(tokenExchangeKey);
+  const refreshToken = grantTypes.includes(refreshTokenKey);
   return (
     <div className="flex flex-col gap-8 lg:flex-row">
       <div className="w-full space-y-4 text-sm font-light lg:w-1/3">

@@ -8,20 +8,19 @@ import {
 } from "@/app/clients/components";
 import { Button } from "@/components/buttons";
 import { Description, Field, Label } from "@/components/form";
-import { Client } from "@/models/client";
+import { TokenEndpointAuthMethod } from "@/models/client";
 
 type AuthenticationProps = {
-  client: Client;
+  clientId: string;
+  tokenEndpointAuthMethod: TokenEndpointAuthMethod;
 };
 
 export function Authentication(props: Readonly<AuthenticationProps>) {
-  const { client } = props;
-  const { token_endpoint_auth_method, client_id } = client;
+  const { clientId, tokenEndpointAuthMethod } = props;
 
   const defaultValue =
-    TOKEN_ENDPOINT_AUTH_VALUES.find(
-      el => el.id === token_endpoint_auth_method
-    ) ?? TOKEN_ENDPOINT_AUTH_VALUES[0];
+    TOKEN_ENDPOINT_AUTH_VALUES.find(el => el.id === tokenEndpointAuthMethod) ??
+    TOKEN_ENDPOINT_AUTH_VALUES[0];
 
   return (
     <div className="flex flex-col gap-8 pb-4 lg:flex-row">
@@ -41,7 +40,7 @@ export function Authentication(props: Readonly<AuthenticationProps>) {
           <ClientAuthentication
             name="token_endpoint_auth_method"
             defaultValue={defaultValue}
-            clientId={client_id}
+            clientId={clientId}
           />
         </Field>
         <Field>

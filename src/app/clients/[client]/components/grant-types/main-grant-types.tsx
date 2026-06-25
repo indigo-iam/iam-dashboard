@@ -3,36 +3,36 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { AuthenticationFlow } from "@/app/clients/components";
-import { Client } from "@/models/client";
 
-const grantTypes = [
+const grantTypesOptions = [
   { id: "none", name: "None" },
   { id: "authorization_code", name: "Authorization Code" },
   { id: "client_credentials", name: "Client Credentials" },
   { id: "urn:ietf:params:oauth:grant-type:device_code", name: "Device Code" },
 ];
 
-function defaultGrantType(client: Client) {
-  if (client.grant_types.includes("authorization_code")) {
-    return grantTypes[1];
-  } else if (client.grant_types.includes("client_credentials")) {
-    return grantTypes[2];
+function defaultGrantType(grantTypes: string[]) {
+  if (grantTypes.includes("authorization_code")) {
+    return grantTypesOptions[1];
+  } else if (grantTypes.includes("client_credentials")) {
+    return grantTypesOptions[2];
   } else if (
-    client.grant_types.includes("urn:ietf:params:oauth:grant-type:device_code")
+    grantTypes.includes("urn:ietf:params:oauth:grant-type:device_code")
   ) {
-    return grantTypes[3];
+    return grantTypesOptions[3];
   } else {
-    return grantTypes[0];
+    return grantTypesOptions[0];
   }
 }
 
 type MainGrantTypesProps = {
-  client: Client;
+  grantTypes: string[];
+  redirectUris: string[];
   onAuthGrantChange: (newStatus: boolean) => void;
 };
 
 export function MainGrantTypes(props: Readonly<MainGrantTypesProps>) {
-  const { client, onAuthGrantChange } = props;
+  const { grantTypes, redirectUris, onAuthGrantChange } = props;
   return (
     <div className="flex flex-col gap-4 pb-4 lg:flex-row lg:gap-8">
       <div className="w-full space-y-4 text-sm lg:w-1/3">
@@ -49,8 +49,8 @@ export function MainGrantTypes(props: Readonly<MainGrantTypesProps>) {
       </div>
       <div className="lg:w-2/3">
         <AuthenticationFlow
-          client={client}
-          defaultValue={defaultGrantType(client)}
+          redirectUris={redirectUris}
+          defaultValue={defaultGrantType(grantTypes)}
           onStatusChange={onAuthGrantChange}
         />
       </div>

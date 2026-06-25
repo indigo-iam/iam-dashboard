@@ -4,25 +4,23 @@
 
 import { Description, Field, Label } from "@/components/form";
 import { InputList } from "@/components/inputs";
-import { Client } from "@/models/client";
 import { useEffect } from "react";
 
 type AuthorizationCodeProps = {
-  client?: Client;
+  redirectUris: string[];
   onStatusChange?: (status: boolean) => void;
 };
 
 export default function AuthorizationCode(
   props: Readonly<AuthorizationCodeProps>
 ) {
-  const { client, onStatusChange } = props;
-  const redirect_uris = client?.redirect_uris ?? [];
+  const { redirectUris, onStatusChange } = props;
   const handleRedirectURIChange = (items: string[]) => {
     onStatusChange?.(items.length > 0);
   };
 
   useEffect(() => {
-    if (redirect_uris.length > 0) {
+    if (redirectUris.length > 0) {
       onStatusChange?.(true);
     }
   });
@@ -31,7 +29,7 @@ export default function AuthorizationCode(
     <Field>
       <Label data-required>Redirect URIs</Label>
       <InputList
-        originalItems={redirect_uris}
+        originalItems={redirectUris}
         name="redirect_uris"
         type="url"
         placeholder="https://app.example.com/callback"

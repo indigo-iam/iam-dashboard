@@ -10,7 +10,7 @@ import { trace } from "@opentelemetry/api";
 export async function authFetch(info: RequestInfo | URL, init?: RequestInit) {
   return await trace
     .getTracer("indigo-iam")
-    .startActiveSpan(`authFetch ${info}`, async span => {
+    .startActiveSpan(`authFetch ${info.toString()}`, async span => {
       try {
         const { accessToken } = await getAccessToken();
         const options: RequestInit = init ?? {};
@@ -19,7 +19,7 @@ export async function authFetch(info: RequestInfo | URL, init?: RequestInit) {
           ...headers,
           authorization: `Bearer ${accessToken}`,
         };
-        logger.debug("fetching", info.toString());
+        logger.debug(`fetching ${info.toString()}`);
         return await fetch(info, options);
       } finally {
         span.end();

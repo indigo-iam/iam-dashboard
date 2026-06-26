@@ -384,7 +384,7 @@ export async function signAUP(userId: string): Promise<Notification> {
 }
 
 export async function changePassword(
-  user: User,
+  userId: string,
   formData: FormData
 ): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/password-update`;
@@ -393,7 +393,7 @@ export async function changePassword(
     body: formData,
   });
   if (response.ok) {
-    revalidatePath(`/user/${user.id}`);
+    revalidatePath(`/user/${userId}`);
     return { type: "success", title: "Password changed" };
   }
   const msg = await response.text();

@@ -118,7 +118,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
           <Label>Authentication</Label>
           <div className="flex flex-wrap gap-2">
             {isMe && <MFAButton enabled={mfaEnabled} />}
-            <ResetPassword user={user} />
+            <ResetPassword userId={user.id} />
           </div>
         </Field>
       </div>

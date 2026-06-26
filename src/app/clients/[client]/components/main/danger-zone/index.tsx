@@ -2,17 +2,19 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Client } from "@/models/client";
 import { DeleteButton } from "./delete-button";
 import { ToggleStatusButton } from "./toggle-status-button";
 
 type DangerZoneProps = {
-  client: Client;
+  clientId: string;
+  clientName: string;
+  clientDescription: string | null;
+  active: boolean;
   isAdmin: boolean;
 };
 
 export function DangerZone(props: Readonly<DangerZoneProps>) {
-  const { client, isAdmin } = props;
+  const { clientId, clientName, clientDescription, active, isAdmin } = props;
   return (
     <div className="flex flex-col gap-8 pt-4 lg:flex-row">
       <div className="flex w-full flex-col space-y-2 text-sm font-light lg:w-1/3">
@@ -26,8 +28,18 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
       </div>
       <div className="flex w-full items-center justify-end lg:w-2/3">
         <div className="flex flex-row gap-4">
-          <ToggleStatusButton client={client} />
-          <DeleteButton client={client} isAdmin={isAdmin} />
+          <ToggleStatusButton
+            clientId={clientId}
+            clientName={clientName}
+            clientDescription={clientDescription}
+            active={active}
+          />
+          <DeleteButton
+            clientId={clientId}
+            clientName={clientName}
+            clientDescription={clientDescription}
+            isAdmin={isAdmin}
+          />
         </div>
       </div>
     </div>

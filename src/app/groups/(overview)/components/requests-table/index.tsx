@@ -6,17 +6,16 @@ import Link from "@/components/link";
 import { ClockIcon } from "@heroicons/react/24/outline";
 
 import { GroupRequest } from "@/models/group-requests";
-import { User } from "@/models/scim";
 import { dateToHuman } from "@/utils/dates";
 import { GroupRequestOptions } from "./options";
 
 type GroupRequestViewProps = {
-  user: User;
+  userId: string;
   request: GroupRequest;
 };
 
 function GroupRequestView(props: Readonly<GroupRequestViewProps>) {
-  const { user, request } = props;
+  const { userId, request } = props;
   const { groupName, groupUuid, notes, creationTime } = request;
   const sent = creationTime ? dateToHuman(new Date(creationTime)) : "N/A";
   return (
@@ -36,24 +35,24 @@ function GroupRequestView(props: Readonly<GroupRequestViewProps>) {
           <span className="text-sm font-light">Sent {sent}</span>
         </div>
       </Link>
-      <GroupRequestOptions user={user} request={request} />
+      <GroupRequestOptions userId={userId} request={request} />
     </li>
   );
 }
 
 type GroupRequestsTableProps = {
-  user: User;
+  userId: string;
   requests: GroupRequest[];
 };
 
 export async function GroupRequestsTable(
   props: Readonly<GroupRequestsTableProps>
 ) {
-  const { user, requests } = props;
+  const { userId, requests } = props;
   return (
     <ul>
       {requests.map(req => (
-        <GroupRequestView key={req.uuid} user={user} request={req} />
+        <GroupRequestView key={req.uuid} userId={userId} request={req} />
       ))}
     </ul>
   );

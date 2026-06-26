@@ -41,7 +41,7 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
   return (
     <CarouselPanel className="panel flex flex-col gap-2" unmount={false}>
       <h2>OpenID Connect - OAuth 2</h2>
-      <AuthenticationFlow onStatusChange={setAuthFlowOk} />
+      <AuthenticationFlow redirectUris={[]} onStatusChange={setAuthFlowOk} />
       <Field>
         <Label>Client Authentication</Label>
         <Description>

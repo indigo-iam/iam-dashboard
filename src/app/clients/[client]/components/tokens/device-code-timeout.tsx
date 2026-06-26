@@ -4,20 +4,20 @@
 
 import { Field, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { Client } from "@/models/client";
 
 type DeviceCodeTimeoutProps = {
-  client: Client;
+  grantTypes: string[];
+  deviceCodeValiditySeconds?: number;
 };
 
 export function DeviceCodeTimeout(props: Readonly<DeviceCodeTimeoutProps>) {
-  const { client } = props;
+  const { grantTypes, deviceCodeValiditySeconds } = props;
   const deviceCodeKey = "urn:ietf:params:oauth:grant-type:device_code";
-  if (!client.grant_types.includes(deviceCodeKey)) {
+
+  if (grantTypes.includes(deviceCodeKey)) {
     return null;
   }
 
-  const { device_code_validity_seconds } = client;
   return (
     <div className="flex flex-col gap-4 pb-4 lg:flex-row lg:gap-8">
       <div className="w-full space-y-4 text-sm lg:w-1/3">
@@ -36,7 +36,7 @@ export function DeviceCodeTimeout(props: Readonly<DeviceCodeTimeoutProps>) {
             type="number"
             id="device-code-validity-input"
             name="device_code_validity_seconds"
-            defaultValue={device_code_validity_seconds}
+            defaultValue={deviceCodeValiditySeconds}
           />
         </Field>
       </div>

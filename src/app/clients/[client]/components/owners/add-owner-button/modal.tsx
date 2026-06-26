@@ -5,24 +5,24 @@
 import { SearchUsers } from "@/app/components/search-users";
 import { Button } from "@/components/buttons";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
-import { Client } from "@/models/client";
 import { User } from "@/models/scim";
 import { addOwner } from "@/services/clients";
 import { useState } from "react";
 
 type AddOwnerModalProps = {
-  client: Client;
+  clientId: string;
+  clientName: string;
   show: boolean;
   onClose: () => void;
 };
 
 export function AddOwnerModal(props: Readonly<AddOwnerModalProps>) {
-  const { client, ...modalProps } = props;
+  const { clientId, clientName, ...modalProps } = props;
   const [user, setUser] = useState<User>();
   const clear = () => setUser(undefined);
   const action = async () => {
     if (user) {
-      await addOwner(client, user);
+      await addOwner(clientId, user.id);
     }
     modalProps.onClose();
   };
@@ -37,13 +37,13 @@ export function AddOwnerModal(props: Readonly<AddOwnerModalProps>) {
               {user.name?.familyName ?? "unknown user"}
             </span>{" "}
             ({user.emails?.[0].value ?? "unknown email"}) owner of group{" "}
-            <span className="font-medium">{client.client_name}</span>?
+            <span className="font-medium">{clientName}</span>?
           </p>
         ) : (
           <div>
             <p className="py-2">
               Type to search for a user to be owner of client{" "}
-              <span className="font-medium">{client.client_name}</span>
+              <span className="font-medium">{clientName}</span>
             </p>
             <SearchUsers listId="search-list-owner" onSelect={setUser} />
           </div>

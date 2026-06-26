@@ -3,17 +3,37 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { getAccessToken, signOut } from "@/auth";
+import { logger } from "@/utils/logger";
 import { notFound, redirect } from "next/navigation";
+import { trace } from "@opentelemetry/api";
 
 export async function authFetch(info: RequestInfo | URL, init?: RequestInit) {
-  const { accessToken } = await getAccessToken();
-  const options: RequestInit = init ?? {};
-  const { headers } = options;
-  options.headers = {
-    ...headers,
-    authorization: `Bearer ${accessToken}`,
-  };
-  return fetch(info, options);
+  const url: string = (() => {
+    if (info instanceof URL) {
+      return info.toString();
+    } else if (info instanceof Request) {
+      return info.url.toString();
+    } else {
+      return info;
+    }
+  })();
+  return await trace
+    .getTracer("indigo-iam")
+    .startActiveSpan(`authFetch ${url}`, async span => {
+      try {
+        const { accessToken } = await getAccessToken();
+        const options: RequestInit = init ?? {};
+        const { headers } = options;
+        options.headers = {
+          ...headers,
+          authorization: `Bearer ${accessToken}`,
+        };
+        logger.debug(`fetching ${url}`);
+        return await fetch(info, options);
+      } finally {
+        span.end();
+      }
+    });
 }
 
 type GetItem = <T>(endpoint: string | URL) => Promise<T>;

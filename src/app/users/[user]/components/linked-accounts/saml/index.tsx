@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { SamlId } from "@/models/indigo-user";
-import { User } from "@/models/scim";
 import SAMLOptions from "./options";
 
 function SamlIdView(props: { samlId: SamlId }) {
@@ -23,12 +22,11 @@ function SamlIdView(props: { samlId: SamlId }) {
 }
 
 type SamlAccountsProps = {
-  user: User;
+  samlIds: SamlId[];
 };
 
 export function SamlAccounts(props: Readonly<SamlAccountsProps>) {
-  const { user } = props;
-  const samlIds = user["urn:indigo-dc:scim:schemas:IndigoUser"]?.samlIds ?? [];
+  const { samlIds } = props;
   if (samlIds.length === 0) {
     return (
       <div className="panel space-y-2">

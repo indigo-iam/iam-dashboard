@@ -2,11 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import Link from "@/components/link";
+import { LoadingList } from "@/components/loading";
 import { TabPanel } from "@/components/tabs";
 import { Site } from "@/models/sites";
 import { getApprovedSites } from "@/services/sites";
-import Link from "@/components/link";
 import { ApprovedSiteOptions } from "./options";
+import { Suspense } from "react";
 
 type ApprovedSiteProps = {
   site: Site;
@@ -28,14 +30,14 @@ function ApprovedSite(props: Readonly<ApprovedSiteProps>) {
           href={`/clients/${clientId}`}
         >
           <div className="flex grow flex-col gap-0.5 lg:w-0">
-            <p className="text-gray-950 dark:text-white">
-              {clientName}
+            <div className="text-gray-950 dark:text-white">
+              <p>{clientName}</p>
               {clientDescription && (
                 <p className="truncate text-sm font-light italic">
                   {clientDescription}
                 </p>
               )}
-            </p>
+            </div>
             <p className="truncate text-sm">{clientId}</p>
             <p className="truncate text-sm font-light italic" title={scopes}>
               {scopes}
@@ -56,24 +58,27 @@ function ApprovedSite(props: Readonly<ApprovedSiteProps>) {
   );
 }
 
-export async function ApprovedSites() {
+async function Content() {
   const approvedSites = await getApprovedSites();
   if (approvedSites.length === 0) {
-    return (
-      <TabPanel className="panel">
-        <h2 className="py-2">Linked Apps and Websites</h2>
-        <p>No approved sites found.</p>
-      </TabPanel>
-    );
+    return null;
   }
+  return (
+    <ul>
+      {approvedSites.map(site => (
+        <ApprovedSite site={site} key={site.id} />
+      ))}
+    </ul>
+  );
+}
+
+export async function ApprovedSites() {
   return (
     <TabPanel className="panel">
       <h2 className="py-2">Linked Apps and Websites</h2>
-      <ul>
-        {approvedSites.map(site => (
-          <ApprovedSite site={site} key={site.id} />
-        ))}
-      </ul>
+      <Suspense fallback={<LoadingList />}>
+        <Content />
+      </Suspense>
     </TabPanel>
   );
 }

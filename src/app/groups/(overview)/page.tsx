@@ -35,9 +35,7 @@ async function AdminPage(props: Readonly<GroupsProps>) {
   const query = searchParams?.query;
   const startIndex = 1 + count * (page - 1);
   const groupsPage = await getGroupsPage(count, startIndex, query);
-  const numberOfPages = Math.ceil(
-    groupsPage.totalResults / groupsPage.itemsPerPage
-  );
+  const numberOfPages = Math.ceil(groupsPage.totalResults / count);
   const groups = groupsPage.Resources;
   return (
     <section>
@@ -76,6 +74,10 @@ async function UserPage() {
   const requestsPage = await fetchGroupsRequests();
   const requests = requestsPage.Resources;
   const groups = me.groups ?? [];
+  const userId = me.id;
+  const userName = me.userName ?? "unknown userName";
+  const userFormattedName = me.name?.displayName ?? "unknown user";
+  const userEmail = me.emails?.[0].value ?? "unknown email";
   return (
     <section>
       <header className="section-header flex flex-wrap gap-2">
@@ -83,13 +85,18 @@ async function UserPage() {
           <UserGroupIcon className="size-5" />
           <h2 className="text-base font-normal">My groups</h2>
         </div>
-        <JoinGroupButton user={me} />
+        <JoinGroupButton
+          userId={userId}
+          userName={userName}
+          userFormattedName={userFormattedName}
+          userEmail={userEmail}
+        />
       </header>
       <div className="container space-y-4">
         {requests.length > 0 ? (
           <div className="panel">
-            <h3 className="py-2">Requests sent</h3>
-            <GroupRequestsTable user={me} requests={requests} />
+            <h3 className="py-2">Sent requests</h3>
+            <GroupRequestsTable userId={me.id} requests={requests} />
           </div>
         ) : null}
         <div className="panel">

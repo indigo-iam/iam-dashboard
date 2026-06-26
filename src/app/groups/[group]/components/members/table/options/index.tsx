@@ -10,15 +10,16 @@ import { ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline";
 import { Option, Options } from "@/components/options";
 import RemoveMemberFromGroupModal from "./remove-member-modal";
 import { ScimReference } from "@/models/scim";
-import { Group } from "@/models/groups";
 
 type MemberOptionsProps = {
   userRef: ScimReference;
-  group: Group;
+  groupName: string;
+  groupId: string;
+  groupDescription?: string | null;
 };
 
 export default function MemberOptions(props: Readonly<MemberOptionsProps>) {
-  const { userRef, group } = props;
+  const { userRef, groupName, groupId, groupDescription } = props;
   const [show, setShow] = useState<"REMOVE_MEMBER">();
   const close = () => setShow(undefined);
   return (
@@ -34,7 +35,9 @@ export default function MemberOptions(props: Readonly<MemberOptionsProps>) {
       <RemoveMemberFromGroupModal
         onClose={close}
         userRef={userRef}
-        group={group}
+        groupId={groupId}
+        groupName={groupName}
+        groupDescription={groupDescription}
         show={show === "REMOVE_MEMBER"}
       />
     </>

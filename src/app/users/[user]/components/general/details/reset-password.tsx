@@ -15,20 +15,19 @@ import {
   ModalProps,
 } from "@/components/modal";
 import { toast } from "@/components/toaster";
-import { User } from "@/models/scim";
 import { changePassword } from "@/services/users";
 import { useState } from "react";
 
 interface ModalPasswordProps extends ModalProps {
-  user: User;
+  userId: string;
 }
 
 function ModalPassword(props: Readonly<ModalPasswordProps>) {
-  const { user, ...modalProps } = props;
+  const { userId, ...modalProps } = props;
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const res = await changePassword(user, formData);
+    const res = await changePassword(userId, formData);
     toast.toast(res);
   }
 
@@ -78,11 +77,11 @@ function ModalPassword(props: Readonly<ModalPasswordProps>) {
 }
 
 type ResetPasswordProps = {
-  user: User;
+  userId: string;
 };
 
 export function ResetPassword(props: Readonly<ResetPasswordProps>) {
-  const { user } = props;
+  const { userId } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
@@ -91,7 +90,7 @@ export function ResetPassword(props: Readonly<ResetPasswordProps>) {
       <Button className="btn-secondary" onClick={open}>
         Reset password
       </Button>
-      <ModalPassword user={user} show={show} onClose={close} />
+      <ModalPassword userId={userId} show={show} onClose={close} />
     </>
   );
 }

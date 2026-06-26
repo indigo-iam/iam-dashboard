@@ -5,7 +5,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useTransition } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { LoadingContext } from "./context";
 
 // the amount of time to wait before incrementing the progress bar
@@ -25,9 +25,11 @@ export function LoadingProvider(props: Readonly<LoadingProviderProps>) {
   const [progress, setProgress] = useState(0);
   const [isProgressBarHidden, setIsProgressBarHidden] = useState(false);
   const pathname = usePathname();
+  const searchParams = useSearchParams().toString();
   const progressRef = useRef(0);
   const timerRef = useRef<ReturnType<typeof setInterval>>(null);
-  const prevPathnameRef = useRef("");
+  const path = searchParams ? `${pathname}?${searchParams}` : pathname;
+  const prevPath = useRef("");
 
   async function startLoadingTransition(callback: () => Promise<void>) {
     startTransition(async () => {
@@ -77,12 +79,12 @@ export function LoadingProvider(props: Readonly<LoadingProviderProps>) {
   }
 
   useEffect(() => {
-    if (prevPathnameRef.current === pathname) {
+    if (prevPath.current === path) {
       return;
     }
     stopProgressBar();
-    prevPathnameRef.current = pathname;
-  }, [pathname]);
+    prevPath.current = path;
+  }, [path]);
 
   return (
     <LoadingContext

@@ -10,14 +10,21 @@ import { useLoading } from "../loading";
 type LinkProps = {
   href: string;
   className?: string;
+  title?: string;
   children: React.ReactNode;
-};
+} & { [key: `data-${string}`]: unknown };
 
 export default function Link(props: Readonly<LinkProps>) {
   const { startProgressBar } = useLoading();
-  const { href, className, children } = props;
+  const { href, className, title, children, ...others } = props;
   return (
-    <NextLink href={href} className={className} onClick={startProgressBar}>
+    <NextLink
+      href={href}
+      className={className}
+      title={title}
+      onClick={startProgressBar}
+      {...others}
+    >
       {children}
     </NextLink>
   );

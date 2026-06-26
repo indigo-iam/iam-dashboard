@@ -2,18 +2,31 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { User } from "@/models/scim";
 import { SetAdminPrivileges } from "./admin-privileges";
 import { DeleteUser } from "./delete-user";
 import { EditExpirationDate } from "./expiration-date";
 import { ToggleStatusButton } from "./toggle-user-status";
 
 type DangerZoneProps = {
-  user: User;
+  userId: string;
+  userName: string;
+  userFormattedName: string;
+  userEmail: string;
+  userIsActive: boolean;
+  userEndTime?: string;
+  isAdmin: boolean;
 };
 
 export function DangerZone(props: Readonly<DangerZoneProps>) {
-  const { user } = props;
+  const {
+    userId,
+    userName,
+    userFormattedName,
+    userEmail,
+    userIsActive,
+    userEndTime,
+    isAdmin,
+  } = props;
   return (
     <div className="flex flex-col gap-8 py-4 lg:flex-row">
       <div className="flex w-full flex-col space-y-2 text-sm font-light lg:w-1/3">
@@ -29,12 +42,30 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
       </div>
       <div className="w-full space-y-4 lg:w-2/3">
         <div className="flex flex-wrap gap-4">
-          <EditExpirationDate user={user} />
-          <SetAdminPrivileges user={user} />
+          <EditExpirationDate
+            userId={userId}
+            userName={userName}
+            userFormattedName={userFormattedName}
+            userEndTime={userEndTime}
+          />
+          <SetAdminPrivileges
+            userId={userId}
+            userFormattedName={userFormattedName}
+            isAdmin={isAdmin}
+          />
         </div>
         <div className="flex items-center justify-end gap-4">
-          <ToggleStatusButton user={user} />
-          <DeleteUser user={user} />
+          <ToggleStatusButton
+            userId={userId}
+            userFormattedName={userFormattedName}
+            userEmail={userEmail}
+            userIsActive={userIsActive}
+          />
+          <DeleteUser
+            userId={userId}
+            userName={userName}
+            userFormattedName={userFormattedName}
+          />
         </div>
       </div>
     </div>

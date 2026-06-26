@@ -1,7 +1,7 @@
 .git
 .dockerignore
 Dockerfile
-.env
+.env*
 *.env
 env/
 envs/

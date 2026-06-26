@@ -4,18 +4,20 @@
 
 "use client";
 
-import { Button } from "@/components/buttons";
-import { Group } from "@/models/groups";
-import AddMemberModal from "./modal";
 import { useState } from "react";
 import { UserPlusIcon } from "@heroicons/react/24/outline";
 
+import { Button } from "@/components/buttons";
+import AddMemberModal from "./modal";
+
 type AddMemberButtonProps = {
-  group: Group;
+  groupId: string;
+  groupName: string;
+  groupDescription?: string | null;
 };
 
 export default function AddMemberButton(props: Readonly<AddMemberButtonProps>) {
-  const { group } = props;
+  const { groupId, groupName, groupDescription } = props;
   const [show, setShow] = useState(false);
   const openModal = () => setShow(true);
   const closeModal = () => setShow(false);
@@ -25,7 +27,13 @@ export default function AddMemberButton(props: Readonly<AddMemberButtonProps>) {
         <UserPlusIcon className="size-4" />
         <span>Add member</span>
       </Button>
-      <AddMemberModal show={show} onClose={closeModal} group={group} />
+      <AddMemberModal
+        show={show}
+        onClose={closeModal}
+        groupId={groupId}
+        groupName={groupName}
+        groupDescription={groupDescription}
+      />
     </>
   );
 }

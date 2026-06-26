@@ -16,7 +16,6 @@ import {
 } from "@/components/modal";
 import { Textarea } from "@/components/textarea";
 import { toast } from "@/components/toaster";
-import { User } from "@/models/scim";
 import { sendCertificateLinkRequest } from "@/services/certs";
 import { useState } from "react";
 
@@ -83,14 +82,14 @@ function IssuerField() {
 }
 
 interface LinkCertificateModalProps extends ModalProps {
-  user: User;
+  userName: string;
   issuers?: [];
 }
 
 export default function LinkCertificateModal(
   props: Readonly<LinkCertificateModalProps>
 ) {
-  const { user, issuers, show, onClose } = props;
+  const { userName, issuers, show, onClose } = props;
   const [format, setFormat] = useState<CertificateType>("pem");
   const close = () => {
     onClose();
@@ -118,7 +117,7 @@ export default function LinkCertificateModal(
         <ModalBody>
           <Field>
             <Label>User</Label>
-            <Input defaultValue={user.displayName} disabled />
+            <Input defaultValue={userName} disabled />
           </Field>
           <Field>
             <Label data-required>Label</Label>

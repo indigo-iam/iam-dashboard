@@ -4,23 +4,28 @@
 
 "use client";
 
+import { useState } from "react";
+
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
 import { toast } from "@/components/toaster";
-import { User } from "@/models/scim";
 import {
   assignAdminPrivileges,
   revokeAdminPrivileges,
 } from "@/services/authorities";
-import { useState } from "react";
 
-function AssignPrivileges(props: Readonly<{ user: User }>) {
-  const { user } = props;
+type AssignPrivilegesProps = {
+  userId: string;
+  userFormattedName: string;
+};
+
+function AssignPrivileges(props: Readonly<AssignPrivilegesProps>) {
+  const { userId, userFormattedName } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
   const action = async () => {
-    const res = await assignAdminPrivileges(user.id);
+    const res = await assignAdminPrivileges(userId);
     toast.toast(res);
     close();
   };
@@ -34,7 +39,7 @@ function AssignPrivileges(props: Readonly<{ user: User }>) {
         danger
       >
         Are you sure you want to assign admin privileges to user{" "}
-        <span className="font-bold">{user.name?.formatted}</span>?
+        <span className="font-bold">{userFormattedName}</span>?
       </ConfirmModal>
       <Button className="btn-secondary" onClick={open}>
         Assign admin privileges
@@ -43,13 +48,18 @@ function AssignPrivileges(props: Readonly<{ user: User }>) {
   );
 }
 
-function RevokePrivileges(props: Readonly<{ user: User }>) {
-  const { user } = props;
+type RevokePrivilegesProps = {
+  userId: string;
+  userFormattedName: string;
+};
+
+function RevokePrivileges(props: Readonly<RevokePrivilegesProps>) {
+  const { userId, userFormattedName } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
   const action = async () => {
-    const res = await revokeAdminPrivileges(user.id);
+    const res = await revokeAdminPrivileges(userId);
     toast.toast(res);
     close();
   };
@@ -63,8 +73,8 @@ function RevokePrivileges(props: Readonly<{ user: User }>) {
         danger
       >
         {" "}
-        Are you sure you want to revoke admin privileges to user{" "}
-        <span className="font-bold">{user.name?.formatted}</span>?
+        Are you sure you want to revoke admin privileges to user
+        <span className="font-bold"> {userFormattedName}</span>?
       </ConfirmModal>
 
       <Button className="btn-secondary" onClick={open}>
@@ -75,18 +85,16 @@ function RevokePrivileges(props: Readonly<{ user: User }>) {
 }
 
 type SetAdminPrivilegesProps = {
-  user: User;
+  userId: string;
+  userFormattedName: string;
+  isAdmin: boolean;
 };
 
 export function SetAdminPrivileges(props: Readonly<SetAdminPrivilegesProps>) {
-  const { user } = props;
-  const isAdmin = user[
-    "urn:indigo-dc:scim:schemas:IndigoUser"
-  ]?.authorities?.find(role => role === "ROLE_ADMIN");
-
+  const { userId, userFormattedName, isAdmin } = props;
   return isAdmin ? (
-    <RevokePrivileges user={user} />
+    <RevokePrivileges userId={userId} userFormattedName={userFormattedName} />
   ) : (
-    <AssignPrivileges user={user} />
+    <AssignPrivileges userId={userId} userFormattedName={userFormattedName} />
   );
 }

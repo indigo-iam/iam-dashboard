@@ -8,17 +8,19 @@ import { useState } from "react";
 import { UserPlusIcon } from "@heroicons/react/24/outline";
 
 import { Button } from "@/components/buttons";
-import { User } from "@/models/scim";
 import { AssignUserToGroupModal } from "./assign-modal";
 import { JoinGroupModal } from "./join-modal";
 
 type JoinGroupButtonProps = {
-  user: User;
+  userId: string;
+  userName: string;
+  userFormattedName: string;
+  userEmail: string;
   isAdmin?: boolean;
 };
 
 export default function JoinGroupButton(props: Readonly<JoinGroupButtonProps>) {
-  const { user, isAdmin } = props;
+  const { userId, userName, userFormattedName, userEmail, isAdmin } = props;
   const [show, setShow] = useState(false);
   const openModal = () => setShow(true);
   const closeModal = () => setShow(false);
@@ -32,9 +34,15 @@ export default function JoinGroupButton(props: Readonly<JoinGroupButtonProps>) {
         <span>{isAdmin ? "Assign to group" : "Join group"}</span>
       </Button>
       {isAdmin ? (
-        <AssignUserToGroupModal user={user} show={show} onClose={closeModal} />
+        <AssignUserToGroupModal
+          userId={userId}
+          userFormattedName={userFormattedName}
+          userEmail={userEmail}
+          show={show}
+          onClose={closeModal}
+        />
       ) : (
-        <JoinGroupModal user={user} show={show} onClose={closeModal} />
+        <JoinGroupModal userName={userName} show={show} onClose={closeModal} />
       )}
     </>
   );

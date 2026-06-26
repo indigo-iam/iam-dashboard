@@ -4,11 +4,11 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { SSHKey } from "@/models/indigo-user";
-import { User } from "@/models/scim";
 import { deleteSSHKey } from "@/services/users";
 
 type DeleteSSHKeyModalProps = {
-  user: User;
+  userId: string;
+  userFormattedName: string;
   sshKey: SSHKey;
   show: boolean;
   onClose: () => void;
@@ -18,10 +18,10 @@ type DeleteSSHKeyModalProps = {
 export default function DeleteSSHKeyModal(
   props: Readonly<DeleteSSHKeyModalProps>
 ) {
-  const { user, sshKey, show, onClose, onDeleted } = props;
+  const { userId, userFormattedName, sshKey, show, onClose, onDeleted } = props;
 
   const handleConfirm = async () => {
-    await deleteSSHKey(user.id, sshKey);
+    await deleteSSHKey(userId, sshKey);
     onClose();
     onDeleted?.();
   };
@@ -36,7 +36,7 @@ export default function DeleteSSHKeyModal(
       danger
     >
       <p>
-        The following SSH Key will be removed from <b>{user.name?.formatted}</b>
+        The following SSH Key will be removed from <b>{userFormattedName}</b>
       </p>
       <ul className="flex flex-col">
         <li className="inline-flex gap-1">

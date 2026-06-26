@@ -28,10 +28,10 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
   if (!session) {
     redirect("/signin");
   }
-  const userId = (await props.params).user;
-  const isMe = userId === "me" || userId === session.user.sub;
+  const userIdParam = (await props.params).user;
+  const isMe = userIdParam === "me" || userIdParam === session.user.sub;
 
-  const user = isMe ? await fetchMe() : await fetchUser(userId);
+  const user = isMe ? await fetchMe() : await fetchUser(userIdParam);
   if (!user) {
     return <h1>User not found</h1>;
   }
@@ -42,6 +42,23 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
     redirect("/");
   }
   const mfaEnabled = await statusMFA();
+  const userId = user.id;
+  const userName = user.userName ?? "unknown userName";
+  const userFormattedName = user.name?.formatted ?? "unknown user";
+  const userGivenName = user.name?.givenName ?? "unknown name";
+  const userFamilyName = user.name?.familyName ?? "unknown name";
+  const userEmail = user.emails?.[0].value ?? "unknown email";
+  const userIsActive = user.active ?? false;
+  const userGroups = user.groups;
+  const userCreatedAt = user.meta?.created;
+  const userLastModified = user.meta?.lastModified;
+  const indigoUser = user["urn:indigo-dc:scim:schemas:IndigoUser"];
+  const userEndTime = indigoUser?.endTime;
+  const oidcIds = indigoUser?.oidcIds ?? [];
+  const samlIds = indigoUser?.samlIds ?? [];
+  const certificates = indigoUser?.certificates ?? [];
+  const sshKeys = indigoUser?.sshKeys ?? [];
+
   return (
     <section>
       <header className="section-header flex items-center">
@@ -59,11 +76,32 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
           <Tab>ATTRIBUTES</Tab>
         </TabList>
         <TabPanels>
-          <General user={user} isMe={isMe} mfaEnabled={mfaEnabled} />
-          <UserGroups user={user} isAdmin={isAdmin} />
+          <General
+            isMe={isMe}
+            mfaEnabled={mfaEnabled}
+            userId={userId}
+            userName={userName}
+            userFormattedName={userFormattedName}
+            userGivenName={userGivenName}
+            userFamilyName={userFamilyName}
+            userEmail={userEmail}
+            userIsActive={userIsActive}
+            userCreatedAt={userCreatedAt}
+            userLastModified={userLastModified}
+            userEndTime={userEndTime}
+            isAdmin={isAdmin}
+          />
+          <UserGroups
+            userId={userId}
+            userName={userName}
+            userFormattedName={userFormattedName}
+            userEmail={userEmail}
+            userGroups={userGroups ?? []}
+            isAdmin={isAdmin}
+          />
           {!isMe && (
             <UserClients
-              user={user}
+              userId={userId}
               isAdmin={isAdmin}
               page={searchParams?.page}
               count={searchParams?.count}
@@ -71,8 +109,20 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
           )}
           <ApprovedSites />
           <ActiveTokens />
-          <LinkedAccounts user={user} />
-          <Attributes user={user} />
+          <LinkedAccounts
+            userId={userId}
+            userName={userName}
+            userFormattedName={userFormattedName}
+            oidcIds={oidcIds}
+            samlIds={samlIds}
+            certificates={certificates}
+            sshKeys={sshKeys}
+          />
+          <Attributes
+            userId={userId}
+            userName={userName}
+            userFormattedName={userFormattedName}
+          />
         </TabPanels>
       </TabGroup>
     </section>

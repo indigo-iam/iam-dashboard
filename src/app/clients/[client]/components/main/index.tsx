@@ -17,7 +17,13 @@ export default function Main(props: Readonly<MainProps>) {
   return (
     <TabPanel className="panel divide-y">
       <GeneralForm client={client} isAdmin={isAdmin} />
-      <DangerZone client={client} isAdmin={isAdmin} />
+      <DangerZone
+        clientId={client.client_id}
+        clientName={client.client_name}
+        clientDescription={client.client_description}
+        active={client.active}
+        isAdmin={isAdmin}
+      />
     </TabPanel>
   );
 }

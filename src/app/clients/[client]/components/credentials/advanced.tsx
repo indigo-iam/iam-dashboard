@@ -3,23 +3,23 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Field, Label, Select, SelectOption } from "@/components/form";
-import { Client } from "@/models/client";
+import { CodeChallengeMethod } from "@/models/client";
 
 type PkceProps = {
   name: string;
-  client: Client;
+  codeChallengeMethod: CodeChallengeMethod;
 };
 
 function Pkce(props: Readonly<PkceProps>) {
-  const { name, client } = props;
-  const { code_challenge_method } = client;
+  const { name, codeChallengeMethod } = props;
+
   const options = [
     { id: "none", name: "No code challenge" },
     { id: "plain", name: "Plain code challenge" },
     { id: "S256", name: "SHA-256 hash algorithm" },
   ];
   const defaultValue =
-    options.find(o => o.id === code_challenge_method) ?? options[0];
+    options.find(o => o.id === codeChallengeMethod) ?? options[0];
 
   return (
     <Select name={name} defaultValue={defaultValue}>
@@ -33,11 +33,11 @@ function Pkce(props: Readonly<PkceProps>) {
 }
 
 type AdvancedProps = {
-  client: Client;
+  codeChallengeMethod: CodeChallengeMethod;
 };
 
 export function Advanced(props: Readonly<AdvancedProps>) {
-  const { client } = props;
+  const { codeChallengeMethod } = props;
 
   return (
     <div className="flex flex-col gap-8 pt-4 lg:flex-row">
@@ -55,7 +55,10 @@ export function Advanced(props: Readonly<AdvancedProps>) {
       <div className="w-full space-y-4 lg:w-2/3">
         <Field className="flex-wrap">
           <Label>Proof Key for Code Exchange (PKCE) challenge method</Label>
-          <Pkce name="code_challenge_method" client={client} />
+          <Pkce
+            name="code_challenge_method"
+            codeChallengeMethod={codeChallengeMethod}
+          />
         </Field>
       </div>
     </div>

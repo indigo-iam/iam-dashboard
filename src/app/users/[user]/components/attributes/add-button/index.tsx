@@ -5,16 +5,16 @@
 "use client";
 
 import { Button } from "@/components/buttons";
-import { User } from "@/models/scim";
 import { useState } from "react";
 import AddAttributeModal from "./modal";
 
 type AddButtonProps = {
-  user: User;
+  userId: string;
+  userName: string;
 };
 
 export default function AddAttributeButton(props: Readonly<AddButtonProps>) {
-  const { user } = props;
+  const { userId, userName } = props;
   const [show, setShow] = useState(false);
   const openModal = () => setShow(true);
   const closeModal = () => setShow(false);
@@ -23,7 +23,12 @@ export default function AddAttributeButton(props: Readonly<AddButtonProps>) {
       <Button className="btn-secondary" onClick={openModal}>
         Add Attribute
       </Button>
-      <AddAttributeModal show={show} onClose={closeModal} user={user} />
+      <AddAttributeModal
+        show={show}
+        onClose={closeModal}
+        userId={userId}
+        userName={userName}
+      />
     </>
   );
 }

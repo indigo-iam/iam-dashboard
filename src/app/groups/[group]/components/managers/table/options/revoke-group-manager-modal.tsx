@@ -6,13 +6,15 @@ import Link from "@/components/link";
 
 import ConfirmModal from "@/components/confirm-modal";
 import { toast } from "@/components/toaster";
-import { Group } from "@/models/groups";
-import { User } from "@/models/scim";
 import { revokeGroupManager } from "@/services/groups";
 
 type RevokeGroupManagerModal = {
-  user: User;
-  group: Group;
+  userId: string;
+  userFormattedName: string;
+  userEmail: string;
+  groupId: string;
+  groupName: string;
+  groupDescription?: string | null;
   show: boolean;
   onClose: () => void;
   onUnlinked?: () => void;
@@ -21,11 +23,19 @@ type RevokeGroupManagerModal = {
 export default function RevokeGroupManagerModal(
   props: Readonly<RevokeGroupManagerModal>
 ) {
-  const { user, group, show, onClose, onUnlinked } = props;
-  const indigoUser = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
-  const description = indigoUser.description;
+  const {
+    userId,
+    userFormattedName,
+    userEmail,
+    groupId,
+    groupName,
+    groupDescription,
+    show,
+    onClose,
+    onUnlinked,
+  } = props;
   const handleConfirm = async () => {
-    const res = await revokeGroupManager(group.id, user.id);
+    const res = await revokeGroupManager(groupId, userId);
     toast.toast(res);
     onClose();
     onUnlinked?.();
@@ -42,14 +52,14 @@ export default function RevokeGroupManagerModal(
     >
       <p>
         Are you sure you want to revoke group manager privileges from user{" "}
-        <Link href={`/users/${user.id}`} className="underline">
-          <b className="text-nowrap">{user.name?.formatted}</b> (
-          <i className="text-nowrap">{user.emails?.[0].value}</i>)
+        <Link href={`/users/${userId}`} className="underline">
+          <b className="text-nowrap">{userFormattedName}</b> (
+          <i className="text-nowrap">{userEmail}</i>)
         </Link>{" "}
-        for group <b>{group.displayName}</b>
-        {description && (
+        for group <b>{groupName}</b>
+        {groupDescription && (
           <>
-            {" "}(<i>{description}</i>)
+            (<i> {groupDescription}</i>)
           </>
         )}
         ?

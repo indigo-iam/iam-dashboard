@@ -9,6 +9,8 @@ import { ActiveToken } from "@/models/sites";
 import { getActiveTokens } from "@/services/sites";
 import { dateToHuman, getDate } from "@/utils/dates";
 import { ActiveTokenOptions } from "./options";
+import { Suspense } from "react";
+import { LoadingList } from "@/components/loading";
 
 type ActiveTokenViewProps = {
   token: ActiveToken;
@@ -47,16 +49,24 @@ function ActiveTokenView(props: Readonly<ActiveTokenViewProps>) {
   );
 }
 
-export async function ActiveTokens() {
+async function Content() {
   const activeTokens = await getActiveTokens();
+  return (
+    <ul>
+      {activeTokens.map(token => (
+        <ActiveTokenView token={token} key={token.id} />
+      ))}
+    </ul>
+  );
+}
+
+export async function ActiveTokens() {
   return (
     <TabPanel className="panel">
       <h2 className="py-2">Active Tokens</h2>
-      <ul>
-        {activeTokens.map(token => (
-          <ActiveTokenView token={token} key={token.id} />
-        ))}
-      </ul>
+      <Suspense fallback={<LoadingList />}>
+        <Content />
+      </Suspense>
     </TabPanel>
   );
 }

@@ -141,6 +141,7 @@ testAdmin(
 
     await testAdmin.step("disable admin mode", async () => {
       await disableAdminMode(signedUpPage);
+      await page.waitForURL("./users/me");
     });
   }
 );

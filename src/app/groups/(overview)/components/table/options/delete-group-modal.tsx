@@ -4,11 +4,12 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { toast } from "@/components/toaster";
-import { Group } from "@/models/groups";
 import { deleteGroup } from "@/services/groups";
 
 interface DeleteGroupModalProps {
-  group: Group;
+  groupId: string;
+  groupName: string;
+  groupDescription?: string | null;
   show: boolean;
   onClose: () => void;
   onDeleted?: () => void;
@@ -16,16 +17,15 @@ interface DeleteGroupModalProps {
 export default function DeleteGroupModal(
   props: Readonly<DeleteGroupModalProps>
 ) {
-  const { group, show, onClose, onDeleted } = props;
-  const indigoGroup = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
-  const description = indigoGroup.description;
+  const { groupId, groupName, groupDescription, show, onClose, onDeleted } =
+    props;
 
-  const handleConfirm = async () => {
-    const response = await deleteGroup(group);
+  async function handleConfirm() {
+    const response = await deleteGroup(groupId);
     toast.toast(response);
     onClose();
     onDeleted?.();
-  };
+  }
 
   return (
     <ConfirmModal
@@ -33,14 +33,14 @@ export default function DeleteGroupModal(
       onClose={onClose}
       confirmButtonText="Delete"
       onConfirm={handleConfirm}
-      title={`Delete group '${group.displayName}'`}
+      title={`Delete group '${groupName}'`}
       danger={true}
     >
-      Are you sure you want to delete group <b>{group.displayName}</b>
-      {description && (
+      Are you sure you want to delete group <b>{groupName}</b>
+      {groupDescription && (
         <>
           {" "}
-          (<i>{description}</i>)
+          (<i>{groupDescription}</i>)
         </>
       )}
       ?

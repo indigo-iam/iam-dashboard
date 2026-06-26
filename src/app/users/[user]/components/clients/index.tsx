@@ -5,23 +5,22 @@
 import { ClientsTable } from "@/app/components/clients";
 import Paginator from "@/components/paginator";
 import { TabPanel } from "@/components/tabs";
-import { User } from "@/models/scim";
 import { getClientsByAccount } from "@/services/clients";
 import Link from "next/link";
 
 type UseClientsProps = {
-  user: User;
+  userId: string;
   isAdmin: boolean;
   count?: string;
   page?: string;
 };
 
 export async function UserClients(props: Readonly<UseClientsProps>) {
-  const { user, isAdmin } = props;
+  const { userId, isAdmin } = props;
   const count = props.count ? parseInt(props.count) : 10;
   const page = props.page ? parseInt(props.page) : 1;
   const startIndex = 1 + count * (page - 1);
-  const clientPage = await getClientsByAccount(user.id, count, startIndex);
+  const clientPage = await getClientsByAccount(userId, count, startIndex);
   const numberOfPages =
     Math.ceil(clientPage.totalResults / clientPage.itemsPerPage) || 1;
   const clients = clientPage.Resources;

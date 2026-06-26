@@ -4,31 +4,42 @@
 
 import { getSession } from "@/auth";
 import { TabPanel } from "@/components/tabs";
-import { Group } from "@/models/groups";
 import { fetchGroupManagers } from "@/services/groups";
 import ManagersTable from "./table";
 import AssignGroupManagerButton from "./assign-button";
 
 import { redirect } from "next/navigation";
+import { User } from "@/models/scim";
 
 type ManagersProps = {
-  group: Group;
+  groupId: string;
+  groupName: string;
+  groupDescription?: string | null;
 };
 
 export default async function Managers(props: Readonly<ManagersProps>) {
-  const { group } = props;
+  const { groupId, groupName, groupDescription } = props;
   const session = await getSession();
   if (!session) {
     redirect("/signin");
   }
-  const managers = (await fetchGroupManagers(group.id)) ?? [];
+  const managers = ((await fetchGroupManagers(groupId)) as User[]) ?? [];
   return (
     <TabPanel className="panel space-y-4">
       <div className="flex flex-wrap gap-2">
         <h2 className="grow">Managers</h2>
-        <AssignGroupManagerButton group={group} />
+        <AssignGroupManagerButton
+          groupId={groupId}
+          groupName={groupName}
+          groupDescription={groupDescription}
+        />
       </div>
-      <ManagersTable group={group} managers={managers} />
+      <ManagersTable
+        groupId={groupId}
+        groupName={groupName}
+        groupDescription={groupDescription}
+        managers={managers}
+      />
     </TabPanel>
   );
 }

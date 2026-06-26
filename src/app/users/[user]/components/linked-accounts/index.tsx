@@ -2,25 +2,43 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { User } from "@/models/scim";
 import { TabPanel } from "@/components/tabs";
+import { Certificate, OidcId, SamlId, SSHKey } from "@/models/indigo-user";
 import { OidcAccounts } from "./oidc";
 import { SamlAccounts } from "./saml";
 import { Certificates } from "./certificates";
 import { SSHKeys } from "./ssh-keys";
 
 type LinkedAccountsProps = {
-  user: User;
+  userId: string;
+  userName: string;
+  userFormattedName: string;
+  oidcIds: OidcId[];
+  samlIds: SamlId[];
+  certificates: Certificate[];
+  sshKeys: SSHKey[];
 };
 
 export async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
-  const { user } = props;
+  const {
+    userId,
+    userName,
+    userFormattedName,
+    oidcIds,
+    samlIds,
+    certificates,
+    sshKeys,
+  } = props;
   return (
     <TabPanel className="space-y-6">
-      <OidcAccounts user={user} />
-      <SamlAccounts user={user} />
-      <Certificates user={user} />
-      <SSHKeys user={user} />
+      <OidcAccounts oidcIds={oidcIds} />
+      <SamlAccounts samlIds={samlIds} />
+      <Certificates certificates={certificates} userName={userName} />
+      <SSHKeys
+        userId={userId}
+        userFormattedName={userFormattedName}
+        sshKeys={sshKeys}
+      />
     </TabPanel>
   );
 }

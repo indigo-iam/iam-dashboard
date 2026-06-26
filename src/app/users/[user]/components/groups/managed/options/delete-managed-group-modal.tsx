@@ -4,11 +4,11 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { toast } from "@/components/toaster";
-import { ManagedGroup } from "@/models/groups";
-import { deleteManagedGroup } from "@/services/groups";
+import { deleteGroup } from "@/services/groups";
 
 type DeleteManagedGroupModalProps = {
-  group: ManagedGroup;
+  groupId: string;
+  groupDisplayName: string;
   show: boolean;
   onClose: () => void;
   onDeleted?: () => void;
@@ -17,10 +17,10 @@ type DeleteManagedGroupModalProps = {
 export default function DeleteManagedGroupModal(
   props: Readonly<DeleteManagedGroupModalProps>
 ) {
-  const { group, show, onClose, onDeleted } = props;
+  const { groupId, groupDisplayName, show, onClose, onDeleted } = props;
 
   const handleConfirm = async () => {
-    const res = await deleteManagedGroup(group);
+    const res = await deleteGroup(groupId);
     toast.toast(res);
     onClose();
     onDeleted?.();
@@ -35,7 +35,7 @@ export default function DeleteManagedGroupModal(
       title="Delete Group"
       danger
     >
-      Are you sure you want to delete group <b>{group.name}</b>?
+      Are you sure you want to delete group <b>{groupDisplayName}</b>?
     </ConfirmModal>
   );
 }

@@ -4,13 +4,12 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { GroupRequest } from "@/models/group-requests";
-import { User } from "@/models/scim";
 import { abortGroupRequest } from "@/services/group-requests";
 import { dateToHuman } from "@/utils/dates";
 import { ClockIcon } from "@heroicons/react/24/outline";
 
 interface RevokeRequestModalProps {
-  user: User;
+  userId: string;
   request: GroupRequest;
   show: boolean;
   onClose: () => void;
@@ -19,13 +18,13 @@ interface RevokeRequestModalProps {
 export default function RevokeRequestModal(
   props: Readonly<RevokeRequestModalProps>
 ) {
-  const { user, request, show, onClose, onDeleted } = props;
+  const { userId, request, show, onClose, onDeleted } = props;
   const sent = request.creationTime
     ? dateToHuman(new Date(request.creationTime))
     : "/NA";
 
   const handleConfirm = async () => {
-    await abortGroupRequest(user.id, request);
+    await abortGroupRequest(userId, request);
     onClose();
     onDeleted?.();
   };

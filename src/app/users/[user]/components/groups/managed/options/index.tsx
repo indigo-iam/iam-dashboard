@@ -5,17 +5,18 @@
 "use client";
 
 import { Options, Option } from "@/components/options";
-import { ManagedGroup } from "@/models/groups";
 import AddSubgroupModal from "./add-subgroup-modal";
 import DeleteManagedGroupModal from "./delete-managed-group-modal";
+
 import { useState } from "react";
 
 export type GroupOptionsProps = {
-  group: ManagedGroup;
+  groupId: string;
+  groupName: string;
 };
 
 export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
-  const { group } = props;
+  const { groupId, groupName } = props;
   const [show, setShow] = useState<"ADD_SUBGROUP" | "DELETE_GROUP">();
   const close = () => setShow(undefined);
   return (
@@ -27,12 +28,14 @@ export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
         </Option>
       </Options>
       <AddSubgroupModal
-        rootGroup={group}
+        rootGroupId={groupId}
+        rootGroupDisplayName={groupName}
         show={show === "ADD_SUBGROUP"}
         onClose={close}
       />
       <DeleteManagedGroupModal
-        group={group}
+        groupId={groupId}
+        groupDisplayName={groupName}
         show={show === "DELETE_GROUP"}
         onClose={close}
       />

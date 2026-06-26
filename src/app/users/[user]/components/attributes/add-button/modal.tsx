@@ -15,25 +15,24 @@ import {
   ModalProps,
 } from "@/components/modal";
 import { toast } from "@/components/toaster";
-import { User } from "@/models/scim";
 import { addAttribute } from "@/services/users";
 
 interface AddAttributeModalProps extends ModalProps {
-  user: User;
+  userId: string;
+  userName: string;
 }
 
 export default function AddAttributeModal(
   props: Readonly<AddAttributeModalProps>
 ) {
-  const { user, ...modalProps } = props;
-  const username = user.name?.formatted ?? "unknown user";
+  const { userId, userName, ...modalProps } = props;
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const name = formData.get("attr-name") as string;
     const value = formData.get("attr-value") as string;
-    const res = await addAttribute(user.id, { name, value });
+    const res = await addAttribute(userId, { name, value });
     toast.toast(res);
     modalProps.onClose();
   }
@@ -45,7 +44,7 @@ export default function AddAttributeModal(
         <ModalBody>
           <Field>
             <Label>Username</Label>
-            <Input defaultValue={username} disabled />
+            <Input defaultValue={userName} disabled />
           </Field>
           <Field>
             <Label data-required>Name</Label>

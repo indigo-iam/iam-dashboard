@@ -8,22 +8,24 @@ import { PowerIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
 import { Options, Option } from "@/components/options";
-import { User } from "@/models/scim";
 import ToggleUserStatusModal from "./user-status-modal";
 import DeleteUserModal from "./delete-user-modal";
 
 type UserOptions = {
-  user: User;
+  userId: string;
+  userFormattedName: string;
+  userEmail: string;
+  userIsActive: boolean;
 };
 
 export default function UserOptions(props: Readonly<UserOptions>) {
-  const { user } = props;
+  const { userId, userFormattedName, userEmail, userIsActive } = props;
   const [show, setShow] = useState<"TOGGLE_STATUS" | "DELETE_USER">();
   const close = () => setShow(undefined);
   return (
     <>
       <Options>
-        {user.active ? (
+        {userIsActive ? (
           <Option onClick={() => setShow("TOGGLE_STATUS")} data-danger>
             <div className="flex items-center gap-2">
               <PowerIcon className="size-4" />
@@ -46,12 +48,17 @@ export default function UserOptions(props: Readonly<UserOptions>) {
         </Option>
       </Options>
       <ToggleUserStatusModal
-        user={user}
+        userId={userId}
+        userFormattedName={userFormattedName}
+        userEmail={userEmail}
+        userIsActive={userIsActive}
         show={show === "TOGGLE_STATUS"}
         onClose={close}
       />
       <DeleteUserModal
-        user={user}
+        userId={userId}
+        userFormattedName={userFormattedName}
+        userEmail={userEmail}
         show={show === "DELETE_USER"}
         onClose={close}
       />

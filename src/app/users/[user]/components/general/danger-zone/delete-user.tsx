@@ -7,21 +7,25 @@
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
 import { toast } from "@/components/toaster";
-import { User } from "@/models/scim";
 import { deleteUser } from "@/services/users";
 import { useState } from "react";
 
 type DeleteUserProps = {
-  user: User;
+  userId: string;
+  userName: string;
+  userFormattedName: string;
 };
 
 export function DeleteUser(props: Readonly<DeleteUserProps>) {
-  const { user } = props;
+  const { userId, userName, userFormattedName } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
   const action = async () => {
-    const res = await deleteUser(user);
+    const res = await deleteUser(userId);
+    if (res.type === "success") {
+      res.description = `User ${userFormattedName} has been deleted`;
+    }
     toast.toast(res);
   };
   return (
@@ -37,8 +41,8 @@ export function DeleteUser(props: Readonly<DeleteUserProps>) {
         title="Delete user"
       >
         Are you sure you want to delete user
-        <span className="font-bold">{user.name?.formatted}</span>
-        <span>({user.userName})</span>?
+        <span className="font-bold">{userFormattedName}</span>
+        <span>({userName})</span>?
       </ConfirmModal>
     </>
   );

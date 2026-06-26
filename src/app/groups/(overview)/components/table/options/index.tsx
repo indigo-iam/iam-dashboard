@@ -5,7 +5,6 @@
 "use client";
 
 import { Options, Option } from "@/components/options";
-import { Group } from "@/models/groups";
 import AddSubgroupModal from "./add-subgroup-modal";
 import DeleteGroupModal from "./delete-group-modal";
 
@@ -13,11 +12,13 @@ import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
 export type GroupOptionsProps = {
-  group: Group;
+  groupId: string;
+  groupName: string;
+  groupDescription?: string | null;
 };
 
 export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
-  const { group } = props;
+  const { groupId, groupName, groupDescription } = props;
   const [show, setShow] = useState<"ADD_SUBGROUP" | "DELETE_GROUP">();
   const close = () => setShow(undefined);
   return (
@@ -41,12 +42,15 @@ export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
         </Option>
       </Options>
       <AddSubgroupModal
-        rootGroup={group}
+        rootGroupId={groupId}
+        rootGroupName={groupName}
         show={show === "ADD_SUBGROUP"}
         onClose={close}
       />
       <DeleteGroupModal
-        group={group}
+        groupId={groupId}
+        groupName={groupName}
+        groupDescription={groupDescription}
         show={show === "DELETE_GROUP"}
         onClose={close}
       />

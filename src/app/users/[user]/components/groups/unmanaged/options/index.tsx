@@ -4,18 +4,19 @@
 
 "use client";
 
-import { Option, Options } from "@/components/options";
-import { ScimReference, User } from "@/models/scim";
-import RemoveMembershipModal from "./remove-membership-modal";
 import { useState } from "react";
 
+import { Option, Options } from "@/components/options";
+import { ScimReference } from "@/models/scim";
+import RemoveMembershipModal from "./remove-membership-modal";
+
 export type GroupOptionsProps = {
-  user: User;
+  userRef: ScimReference;
   groupRef: ScimReference;
 };
 
 export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
-  const { user, groupRef } = props;
+  const { userRef, groupRef } = props;
   const [show, setShow] = useState<"REMOVE_MEMBERSHIP">();
   const close = () => setShow(undefined);
   return (
@@ -26,7 +27,7 @@ export default function GroupOptions(props: Readonly<GroupOptionsProps>) {
         </Option>
       </Options>
       <RemoveMembershipModal
-        user={user}
+        userRef={userRef}
         groupRef={groupRef}
         show={show === "REMOVE_MEMBERSHIP"}
         onClose={close}

@@ -5,20 +5,20 @@
 import ConfirmModal from "@/components/confirm-modal";
 import { toast } from "@/components/toaster";
 import { Attribute } from "@/models/attributes";
-import { User } from "@/models/scim";
 import { deleteAttribute } from "@/services/users";
 
 type DeleteButtonProps = {
-  user: User;
+  userId: string;
+  userFormattedName: string;
   attr: Attribute;
   show: boolean;
   onClose: () => void;
 };
 
 export default function DeleteUserModal(props: Readonly<DeleteButtonProps>) {
-  const { user, attr, show, onClose } = props;
+  const { userId, userFormattedName, attr, show, onClose } = props;
   const action = async () => {
-    const res = await deleteAttribute(user.id, attr);
+    const res = await deleteAttribute(userId, attr);
     toast.toast(res);
     onClose();
   };
@@ -32,8 +32,8 @@ export default function DeleteUserModal(props: Readonly<DeleteButtonProps>) {
       danger
     >
       <p>
-        The following attribute will be removed from{" "}
-        <b>{user.name?.formatted}</b> account:
+        The following attribute will be removed from <b>{userFormattedName}</b>{" "}
+        account:
       </p>
       <ul className="flex flex-col">
         <li className="inline-flex gap-1">

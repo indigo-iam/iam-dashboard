@@ -6,16 +6,17 @@
 
 import DeleteClientModal from "@/app/components/clients/options/delete-client-modal";
 import { Button } from "@/components/buttons";
-import { Client } from "@/models/client";
 import { useState } from "react";
 
 type DeleteButtonProps = {
-  client: Client;
+  clientId: string;
+  clientName: string;
+  clientDescription: string | null;
   isAdmin: boolean;
 };
 
 export function DeleteButton(props: Readonly<DeleteButtonProps>) {
-  const { client, isAdmin } = props;
+  const { clientId, clientName, clientDescription, isAdmin } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
@@ -25,7 +26,9 @@ export function DeleteButton(props: Readonly<DeleteButtonProps>) {
         Delete
       </Button>
       <DeleteClientModal
-        client={client}
+        clientId={clientId}
+        clientName={clientName}
+        clientDescription={clientDescription}
         show={show}
         isAdmin={isAdmin}
         onClose={close}

@@ -34,9 +34,19 @@ export default function Tokens(props: Readonly<TokensProps>) {
     <TabPanel className="panel">
       <Form onSubmit={submit}>
         <div className="space-y-4 divide-y">
-          <TokensTimeout client={client} />
-          <RefreshTokenTimeout client={client} />
-          <DeviceCodeTimeout client={client} />
+          <TokensTimeout
+            accessTokenValiditySeconds={client.access_token_validity_seconds}
+            idTokenValiditySeconds={client.id_token_validity_seconds}
+            requireAuthTime={client.require_auth_time}
+          />
+          <RefreshTokenTimeout
+            refreshTokenValiditySeconds={client.refresh_token_validity_seconds}
+            reuseRefreshToken={client.reuse_refresh_token ?? false}
+          />
+          <DeviceCodeTimeout
+            grantTypes={client.grant_types}
+            deviceCodeValiditySeconds={client.device_code_validity_seconds}
+          />
         </div>
         <div className="flex flex-row justify-end">
           <Button className="btn-tertiary" type="reset">

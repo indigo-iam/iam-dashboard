@@ -3,23 +3,23 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { TabPanel } from "@/components/tabs";
-import { Group } from "@/models/groups";
 import SubgroupsTable from "./components/table";
 import AddSubgroupButton from "./components/add-subgroup-button";
 
 type SubgroupsProps = {
-  group: Group;
+  groupId: string;
+  groupName: string;
 };
 
 export default function Subgroups(props: Readonly<SubgroupsProps>) {
-  const { group } = props;
+  const { groupId, groupName } = props;
   return (
     <TabPanel className="panel space-y-4">
       <div className="flex flex-wrap gap-2">
         <h2 className="grow">Subgroups</h2>
-        <AddSubgroupButton group={group} />
+        <AddSubgroupButton rootGroupId={groupId} rootGroupName={groupName} />
       </div>
-      <SubgroupsTable group={group} />
+      <SubgroupsTable groupId={groupId} />
     </TabPanel>
   );
 }

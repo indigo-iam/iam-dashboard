@@ -5,6 +5,7 @@
 import packageInfo from "../package.json";
 
 const isBuilding = process.env.NEXT_PHASE === "phase-production-build";
+export const isProduction = process.env.NODE_ENV === "production";
 
 function loadEnvVariable(key: string, defaultValue?: string) {
   if (process.env[key]) {
@@ -20,7 +21,7 @@ function loadEnvVariable(key: string, defaultValue?: string) {
 }
 
 function loadOptionalUrlFromEnv(key: string) {
-  const url = process.env[key]
+  const url = process.env[key];
   // if a url is provided, validate it
   if (url) {
     try {
@@ -49,7 +50,7 @@ function loadBaseUrl() {
 }
 
 function loadBasePath() {
-  return loadEnvVariable("IAM_DASHBOARD_BASE_PATH", "/ui");
+  return loadEnvVariable("IAM_DASHBOARD_BASE_PATH", "");
 }
 
 function loadAuthSecret() {

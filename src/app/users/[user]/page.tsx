@@ -122,6 +122,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
             userId={userId}
             userName={userName}
             userFormattedName={userFormattedName}
+            isAdmin={isAdmin}
           />
         </TabPanels>
       </TabGroup>

@@ -10,15 +10,22 @@ type AttributesProps = {
   userId: string;
   userName: string;
   userFormattedName: string;
+  isAdmin: boolean;
 };
 
 export async function Attributes(props: Readonly<AttributesProps>) {
-  const { userId, userName, userFormattedName } = props;
+  const { userId, userName, userFormattedName, isAdmin } = props;
   return (
     <TabPanel className="panel space-y-4">
-      <h2>Attributes</h2>
-      <AttributesTable userId={userId} userFormattedName={userFormattedName} />
-      <AddAttributeButton userId={userId} userName={userName} />
+      <div className="flex justify-between">
+        <h2>Attributes</h2>
+        {isAdmin && <AddAttributeButton userId={userId} userName={userName} />}
+      </div>
+      <AttributesTable
+        userId={userId}
+        userFormattedName={userFormattedName}
+        isAdmin={isAdmin}
+      />
     </TabPanel>
   );
 }

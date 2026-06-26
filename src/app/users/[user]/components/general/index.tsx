@@ -3,24 +3,68 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { TabPanel } from "@/components/tabs";
-import { User } from "@/models/scim";
 import { Aup } from "./aup";
 import { UserDetailsForm } from "./details";
 import { DangerZone } from "./danger-zone";
 
 type GeneralProps = {
-  user: User;
+  userId: string;
+  userName: string;
+  userFormattedName: string;
+  userGivenName: string;
+  userFamilyName: string;
+  userEmail: string;
+  userCreatedAt?: string;
+  userLastModified?: string;
+  userEndTime?: string;
+  userIsActive: boolean;
   isMe: boolean;
   mfaEnabled: boolean;
+  isAdmin: boolean;
 };
 
 export async function General(props: Readonly<GeneralProps>) {
-  const { user, isMe, mfaEnabled } = props;
+  const {
+    userId,
+    userName,
+    userFormattedName,
+    userFamilyName,
+    userGivenName,
+    userEmail,
+    userCreatedAt,
+    userLastModified,
+    userEndTime,
+    userIsActive,
+    isMe,
+    mfaEnabled,
+    isAdmin,
+  } = props;
   return (
     <TabPanel className="panel divide-y">
-      <UserDetailsForm user={user} isMe={isMe} mfaEnabled={mfaEnabled} />
-      <Aup user={user} isMe={isMe} />
-      {!isMe && <DangerZone user={user} />}
+      <UserDetailsForm
+        isMe={isMe}
+        mfaEnabled={mfaEnabled}
+        userId={userId}
+        userName={userName}
+        userGivenName={userGivenName}
+        userFamilyName={userFamilyName}
+        userEmail={userEmail}
+        userCreatedAt={userCreatedAt}
+        userLastModified={userLastModified}
+        userIsActive={userIsActive}
+      />
+      <Aup isMe={isMe} userId={userId} userFormattedName={userFormattedName} />
+      {!isMe && (
+        <DangerZone
+          userId={userId}
+          userName={userName}
+          userFormattedName={userFormattedName}
+          userEmail={userEmail}
+          userIsActive={userIsActive}
+          userEndTime={userEndTime}
+          isAdmin={isAdmin}
+        />
+      )}
     </TabPanel>
   );
 }

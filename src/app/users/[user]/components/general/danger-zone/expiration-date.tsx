@@ -9,16 +9,18 @@ import { Form } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { toast } from "@/components/toaster";
-import { User } from "@/models/scim";
 import { changeMembershipEndTime } from "@/services/users";
 import { useState } from "react";
 
 type EditExpirationDateProps = {
-  user: User;
+  userId: string;
+  userName: string;
+  userFormattedName: string;
+  userEndTime?: string;
 };
 
 export function EditExpirationDate(props: Readonly<EditExpirationDateProps>) {
-  const { user } = props;
+  const { userId, userName, userFormattedName, userEndTime } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
@@ -27,13 +29,12 @@ export function EditExpirationDate(props: Readonly<EditExpirationDateProps>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const date = formData.get("end-date") as string;
-    const res = await changeMembershipEndTime(user.id, date);
+    const res = await changeMembershipEndTime(userId, date);
     toast.toast(res);
     close();
   }
 
-  const defaultValue =
-    user["urn:indigo-dc:scim:schemas:IndigoUser"]?.endTime?.split("T")[0];
+  const defaultValue = userEndTime?.split("T")[0];
 
   return (
     <>
@@ -47,8 +48,8 @@ export function EditExpirationDate(props: Readonly<EditExpirationDateProps>) {
             <p className="flex flex-col">
               Change the expiration time for the user
               <span className="text-center font-bold">
-                {user.name?.formatted}
-                <span className="font-normal">{` (${user.userName})`}</span>
+                {userFormattedName}
+                <span className="font-normal">{` (${userName})`}</span>
               </span>
             </p>
             <Input type="date" name="end-date" defaultValue={defaultValue} />

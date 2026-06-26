@@ -11,32 +11,47 @@ import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { patchUser } from "@/services/users";
 import { toast } from "@/components/toaster";
-import { User } from "@/models/scim";
 import { dateToHuman } from "@/utils/dates";
 import { ResetPassword } from "./reset-password";
 import { MFAButton } from "./mfa";
 
 type UserDetailsFormProps = {
-  user: User;
+  userId: string;
+  userName: string;
+  userGivenName: string;
+  userFamilyName: string;
+  userEmail: string;
+  userCreatedAt?: string;
+  userLastModified?: string;
+  userIsActive: boolean;
   isMe: boolean;
   mfaEnabled: boolean;
 };
 
 export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
-  const { user, isMe, mfaEnabled } = props;
+  const {
+    userId,
+    userName,
+    userGivenName,
+    userFamilyName,
+    userEmail,
+    userCreatedAt,
+    userLastModified,
+    userIsActive,
+    isMe,
+    mfaEnabled,
+  } = props;
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const response = await patchUser(user.id, formData);
+    const response = await patchUser(userId, formData);
     toast.toast(response);
   }
 
-  const created = user.meta?.created
-    ? dateToHuman(new Date(user.meta.created))
-    : "N/A";
-  const modified = user.meta?.lastModified
-    ? dateToHuman(new Date(user.meta.lastModified))
+  const created = userCreatedAt ? dateToHuman(new Date(userCreatedAt)) : "N/A";
+  const modified = userLastModified
+    ? dateToHuman(new Date(userLastModified))
     : "N/A";
 
   return (
@@ -49,10 +64,10 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
               Profile
             </h5>
           </div>
-          <Status active={user.active ?? false} />
+          <Status active={userIsActive} />
         </div>
         <p className="break-all" data-testid="user-id">
-          {user.id}
+          {userId}
         </p>
         <div>
           <p>Created {created}.</p>
@@ -72,7 +87,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
                 id="given-name"
                 name="given-name"
                 minLength={2}
-                defaultValue={user.name?.givenName}
+                defaultValue={userGivenName}
               />
             </Field>
             <Field className="flex max-w-full grow flex-col">
@@ -85,13 +100,13 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
                 id="family-name"
                 name="family-name"
                 minLength={2}
-                defaultValue={user.name?.familyName}
+                defaultValue={userFamilyName}
               />
             </Field>
           </div>
           <Field className="flex flex-col">
             <Label htmlFor="username">Username</Label>
-            <Input name="username" defaultValue={user.userName} disabled />
+            <Input name="username" defaultValue={userName} disabled />
           </Field>
           <Field className="flex flex-col">
             <Label htmlFor="email" data-required>
@@ -102,7 +117,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
               type="email"
               id="email"
               name="email"
-              defaultValue={user.emails?.[0].value}
+              defaultValue={userEmail}
             />
           </Field>
           <Field className="flex justify-between">
@@ -118,7 +133,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
           <Label>Authentication</Label>
           <div className="flex flex-wrap gap-2">
             {isMe && <MFAButton enabled={mfaEnabled} />}
-            <ResetPassword userId={user.id} />
+            <ResetPassword userId={userId} />
           </div>
         </Field>
       </div>

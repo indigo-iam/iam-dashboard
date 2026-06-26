@@ -42,13 +42,18 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
     redirect("/");
   }
   const mfaEnabled = await statusMFA();
-
   const userId = user.id;
   const userName = user.userName ?? "unknown userName";
   const userFormattedName = user.name?.formatted ?? "unknown user";
+  const userGivenName = user.name?.givenName ?? "unknown name";
+  const userFamilyName = user.name?.familyName ?? "unknown name";
   const userEmail = user.emails?.[0].value ?? "unknown email";
+  const userIsActive = user.active ?? false;
   const userGroups = user.groups;
+  const userCreatedAt = user.meta?.created;
+  const userLastModified = user.meta?.lastModified;
   const indigoUser = user["urn:indigo-dc:scim:schemas:IndigoUser"];
+  const userEndTime = indigoUser?.endTime;
   const oidcIds = indigoUser?.oidcIds ?? [];
   const samlIds = indigoUser?.samlIds ?? [];
   const certificates = indigoUser?.certificates ?? [];
@@ -71,7 +76,21 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
           <Tab>ATTRIBUTES</Tab>
         </TabList>
         <TabPanels>
-          <General user={user} isMe={isMe} mfaEnabled={mfaEnabled} />
+          <General
+            isMe={isMe}
+            mfaEnabled={mfaEnabled}
+            userId={userId}
+            userName={userName}
+            userFormattedName={userFormattedName}
+            userGivenName={userGivenName}
+            userFamilyName={userFamilyName}
+            userEmail={userEmail}
+            userIsActive={userIsActive}
+            userCreatedAt={userCreatedAt}
+            userLastModified={userLastModified}
+            userEndTime={userEndTime}
+            isAdmin={isAdmin}
+          />
           <UserGroups
             userId={userId}
             userName={userName}

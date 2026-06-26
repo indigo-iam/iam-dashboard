@@ -59,8 +59,7 @@ export default function RevokeGroupManagerModal(
         for group <b>{groupName}</b>
         {groupDescription && (
           <>
-            {" "}
-            (<i>{groupDescription}</i>)
+            (<i> {groupDescription}</i>)
           </>
         )}
         ?

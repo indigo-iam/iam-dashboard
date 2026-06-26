@@ -73,8 +73,8 @@ function RevokePrivileges(props: Readonly<RevokePrivilegesProps>) {
         danger
       >
         {" "}
-        Are you sure you want to revoke admin privileges to user{" "}
-        <span className="font-bold">{userFormattedName}</span>?
+        Are you sure you want to revoke admin privileges to user
+        <span className="font-bold"> {userFormattedName}</span>?
       </ConfirmModal>
 
       <Button className="btn-secondary" onClick={open}>

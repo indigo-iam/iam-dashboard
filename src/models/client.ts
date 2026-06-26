@@ -57,6 +57,7 @@ export interface ClientCredentials {
 
 export interface ClientScopes {
   scope?: string;
+  up_scoping_enabled: boolean;
 }
 
 export interface ClientGrantTypes {
@@ -92,7 +93,8 @@ export interface ClientOtherInfo {
 }
 
 export interface Client
-  extends ClientBase,
+  extends
+    ClientBase,
     ClientCredentials,
     ClientScopes,
     ClientGrantTypes,

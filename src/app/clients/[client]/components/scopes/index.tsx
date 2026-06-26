@@ -8,6 +8,7 @@ import { fetchScopes } from "@/services/scopes";
 import { ScopeOptions } from "./options";
 import { AddScopeButton } from "./add-system-scopes";
 import { AddCustomScope } from "./add-custom-scope";
+import { EnableUpScoping } from "./enable-up-scoping";
 
 type SystemScopesProps = {
   client: Client;
@@ -98,6 +99,7 @@ export default async function Scopes(props: Readonly<ScopesProps>) {
           isAdmin={isAdmin}
         />
       </ul>
+      <EnableUpScoping client={client} isAdmin={isAdmin} />
     </TabPanel>
   );
 }

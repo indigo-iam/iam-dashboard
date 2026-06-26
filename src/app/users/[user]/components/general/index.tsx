@@ -14,6 +14,7 @@ type GeneralProps = {
   userGivenName: string;
   userFamilyName: string;
   userEmail: string;
+  userAupSignatureTime: string | null;
   userCreatedAt?: string;
   userLastModified?: string;
   userEndTime?: string;
@@ -31,6 +32,7 @@ export async function General(props: Readonly<GeneralProps>) {
     userFamilyName,
     userGivenName,
     userEmail,
+    userAupSignatureTime,
     userCreatedAt,
     userLastModified,
     userEndTime,
@@ -53,7 +55,13 @@ export async function General(props: Readonly<GeneralProps>) {
         userLastModified={userLastModified}
         userIsActive={userIsActive}
       />
-      <Aup isMe={isMe} userId={userId} userFormattedName={userFormattedName} />
+      <Aup
+        isMe={isMe}
+        isAdmin={isAdmin}
+        userId={userId}
+        userFormattedName={userFormattedName}
+        userAupSignatureTime={userAupSignatureTime}
+      />
       {!isMe && (
         <DangerZone
           userId={userId}

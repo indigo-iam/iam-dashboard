@@ -373,7 +373,7 @@ export async function signAUP(userId: string): Promise<Notification> {
   });
   if (response.ok) {
     revalidatePath(`/user/${userId}`);
-    return { type: "success", title: "AUP Signed" };
+    return { type: "success", title: "AUP signed" };
   }
   const msg = await response.text();
   return {

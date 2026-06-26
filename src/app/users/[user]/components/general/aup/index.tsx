@@ -9,15 +9,22 @@ import { AUP } from "@/models/aup";
 import { fetchAUP } from "@/services/aup";
 import { dateToHuman, getDate } from "@/utils/dates";
 import { RequestSignature } from "./request-signature";
+import { SignInBehalfOfUser } from "./sign-in-behalf-user";
 
-async function getExpirationDate(aup: AUP, userAupSignatureTime?: string) {
-  if (!userAupSignatureTime || aup.signatureValidityInDays === 0) {
+async function getExpirationDate(
+  aup: AUP,
+  userAupSignatureTime: string | null
+) {
+  if (aup.signatureValidityInDays === 0) {
     return {
       expiresAt: "N/A",
       expired: false,
     };
   }
-  const aupExpirationDate = new Date(userAupSignatureTime);
+
+  const aupExpirationDate = userAupSignatureTime
+    ? new Date(userAupSignatureTime)
+    : new Date();
   aupExpirationDate.setDate(
     aupExpirationDate.getDate() + aup.signatureValidityInDays
   );
@@ -31,15 +38,22 @@ async function getExpirationDate(aup: AUP, userAupSignatureTime?: string) {
 
 type AupProps = {
   isMe: boolean;
+  isAdmin: boolean;
   userId: string;
   userFormattedName: string;
-  userAupSignatureTime?: string;
+  userAupSignatureTime: string | null;
 };
 
 export async function Aup(props: Readonly<AupProps>) {
-  const { isMe, userId, userFormattedName, userAupSignatureTime } = props;
+  const {
+    isMe, //
+    isAdmin,
+    userId,
+    userFormattedName,
+    userAupSignatureTime,
+  } = props;
   const aup = await fetchAUP();
-
+  console.log(aup, userAupSignatureTime);
   if (!aup) {
     return null;
   }
@@ -74,12 +88,20 @@ export async function Aup(props: Readonly<AupProps>) {
             <Input data-invalid={expired} disabled defaultValue={expiresAt} />
           </Field>
         </Form>
-        <RequestSignature
-          userId={userId}
-          userFormattedName={userFormattedName}
-          isMe={isMe}
-          aup={aup}
-        />
+        <div className="flex flex-wrap gap-2">
+          <RequestSignature
+            userId={userId}
+            userFormattedName={userFormattedName}
+            isMe={isMe}
+            aup={aup}
+          />
+          {isAdmin && !isMe && (
+            <SignInBehalfOfUser
+              userId={userId}
+              userFormattedName={userFormattedName}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

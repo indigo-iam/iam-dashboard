@@ -10,12 +10,12 @@ import { toast } from "@/components/toaster";
 import { Client } from "@/models/client";
 import { editClient } from "@/services/clients";
 
-type EnableUpScopingProps = {
+type AdvancedSettings = {
   client: Client;
   isAdmin: boolean;
 };
 
-export function EnableUpScoping(props: Readonly<EnableUpScopingProps>) {
+export function AdvancedSettings(props: Readonly<AdvancedSettings>) {
   const { client, isAdmin } = props;
   const upScopingEnabled = client.up_scoping_enabled;
 
@@ -29,18 +29,25 @@ export function EnableUpScoping(props: Readonly<EnableUpScopingProps>) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-2">
-      <Field>
-        <LabeledCheckbox
-          name="up-scoping-enabled"
-          defaultChecked={upScopingEnabled}
-        >
-          Enable up scoping for token exchange
-        </LabeledCheckbox>
-      </Field>
-      <Button className="btn-secondary" type="submit">
-        Save
-      </Button>
-    </form>
+    <div className="space-y-4">
+      <h5 className="text-sm font-semibold text-gray-600 dark:text-gray-100">
+        Advanced Settings
+      </h5>
+      <form onSubmit={handleSubmit}>
+        <Field>
+          <LabeledCheckbox
+            name="up-scoping-enabled"
+            defaultChecked={upScopingEnabled}
+          >
+            Enable up scoping for token exchange
+          </LabeledCheckbox>
+        </Field>
+        <div className="flex justify-end">
+          <Button className="btn-secondary" type="submit">
+            Save
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 }

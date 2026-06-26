@@ -125,8 +125,8 @@ export async function patchUser(
   };
 }
 
-export async function deleteUser(user: User): Promise<Notification> {
-  const url = `${IAM_API_URL}/scim/Users/${user.id}`;
+export async function deleteUser(userId: string): Promise<Notification> {
+  const url = `${IAM_API_URL}/scim/Users/${userId}`;
   const response = await authFetch(url, {
     method: "DELETE",
     headers: { "content-type": "application/scim+json" },
@@ -136,7 +136,6 @@ export async function deleteUser(user: User): Promise<Notification> {
     return {
       type: "success",
       title: "User deleted",
-      description: `User ${user.displayName} has been deleted`,
     };
   }
   const msg = await response.text();

@@ -14,6 +14,9 @@ type DangerZoneProps = {
 
 export function DangerZone(props: Readonly<DangerZoneProps>) {
   const { user } = props;
+  const userId = user.id;
+  const userName = user.userName ?? "unknown username";
+  const userFormattedName = user.name?.formatted ?? "unknown user";
   return (
     <div className="flex flex-col gap-8 py-4 lg:flex-row">
       <div className="flex w-full flex-col space-y-2 text-sm font-light lg:w-1/3">
@@ -34,7 +37,11 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
         </div>
         <div className="flex items-center justify-end gap-4">
           <ToggleStatusButton user={user} />
-          <DeleteUser user={user} />
+          <DeleteUser
+            userId={userId}
+            userName={userName}
+            userFormattedName={userFormattedName}
+          />
         </div>
       </div>
     </div>

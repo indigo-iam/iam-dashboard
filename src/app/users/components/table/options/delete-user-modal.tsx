@@ -5,29 +5,33 @@
 import ConfirmModal from "@/components/confirm-modal";
 import { type ModalProps } from "@/components/modal";
 import { toast } from "@/components/toaster";
-import { User } from "@/models/scim";
 import { deleteUser } from "@/services/users";
 
 interface DeleteUserModalProps extends ModalProps {
-  user: User;
+  userId: string;
+  userFormattedName: string;
+  userEmail: string;
   onUserDeleted?: () => void;
 }
 
 export default function DeleteUserModal(props: Readonly<DeleteUserModalProps>) {
-  const { user, ...modalProps } = props;
+  const { userId, userFormattedName, userEmail, ...modalProps } = props;
   const action = async () => {
-    const res = await deleteUser(user);
+    const res = await deleteUser(userId);
+    if (res.type === "success") {
+      res.description = `User ${userFormattedName} has been deleted`;
+    }
     toast.toast(res);
   };
   return (
     <ConfirmModal
       {...modalProps}
-      title={`Delete user '${user?.displayName}'`}
+      title={`Delete user '${userFormattedName}'`}
       onConfirm={action}
       danger
     >
-      Are you sure you want to delete user <b>{user?.name?.formatted}</b> (
-      <i>{user?.emails?.[0].value}</i>) from this organization?
+      Are you sure you want to delete user <b>{userFormattedName}</b> (
+      <i>{userEmail}</i>) from this organization?
     </ConfirmModal>
   );
 }

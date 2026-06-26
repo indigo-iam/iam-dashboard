@@ -2,41 +2,52 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+
 import Link from "@/components/link";
 import { Status } from "@/components/badges";
 import { User } from "@/models/scim";
 import UserOptions from "./options";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 type RowProps = {
-  user: User;
+  userId: string;
+  userFormattedName: string;
+  userEmail: string;
+  userIsActive: boolean;
+  userCreatedAt?: string;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const { user } = props;
-  const created = user.meta?.created
-    ? new Date(user.meta.created).toDateString()
+  const { userId, userFormattedName, userEmail, userIsActive, userCreatedAt } =
+    props;
+  const created = userCreatedAt
+    ? new Date(userCreatedAt).toDateString()
     : "N/A";
   return (
     <li className="iam-list-item lg:gap-2">
       <Link
         className="text-md flex grow flex-col break-all lg:flex-row"
-        href={`/users/${user.id}`}
+        href={`/users/${userId}`}
       >
         <div className="grow flex-col">
           <p className="text-gray-950 dark:text-gray-100">
-            {user.name?.formatted}
+            {userFormattedName}
           </p>
-          <p className="text-sm font-light">{user.emails?.[0].value}</p>
+          <p className="text-sm font-light">{userEmail}</p>
         </div>
         <div className="my-auto flex flex-col">
           <div className="flew-wrap flex items-center gap-2 lg:flex-col lg:items-end lg:gap-1">
-            <Status active={user.active ?? false} autoHide={true} />
+            <Status active={userIsActive} autoHide={true} />
             <p className="py-1 text-xs font-light lg:p-0">Created {created}</p>
           </div>
         </div>
       </Link>
-      <UserOptions user={user} />
+      <UserOptions
+        userId={userId}
+        userFormattedName={userFormattedName}
+        userEmail={userEmail}
+        userIsActive={userIsActive}
+      />
     </li>
   );
 }
@@ -58,7 +69,14 @@ export default function UsersTable(props: Readonly<UsersTableProps>) {
   return (
     <ul className="w-full">
       {users.map(user => (
-        <Row key={user.id} user={user} />
+        <Row
+          key={user.id}
+          userId={user.id}
+          userFormattedName={user.name?.formatted ?? "unknown user"}
+          userEmail={user.emails?.[0].value ?? "unknown email"}
+          userIsActive={user.active ?? false}
+          userCreatedAt={user.meta?.created}
+        />
       ))}
     </ul>
   );

@@ -14,7 +14,7 @@ import ToggleStatusModal from "./toggle-status-modal";
 type ClientOptionsProps = {
   clientId: string;
   clientName: string;
-  clientDescription?: string;
+  clientDescription: string | null;
   active: boolean;
   isAdmin: boolean;
 };

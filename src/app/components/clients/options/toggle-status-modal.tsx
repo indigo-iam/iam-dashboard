@@ -9,7 +9,7 @@ import { disableClient, enableClient } from "@/services/clients";
 type ToggleStatusModalProps = {
   clientId: string;
   clientName: string;
-  clientDescription?: string;
+  clientDescription: string | null;
   active: boolean;
   show: boolean;
   onClose: () => void;

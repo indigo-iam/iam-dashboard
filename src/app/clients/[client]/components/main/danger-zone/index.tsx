@@ -8,7 +8,7 @@ import { ToggleStatusButton } from "./toggle-status-button";
 type DangerZoneProps = {
   clientId: string;
   clientName: string;
-  clientDescription?: string;
+  clientDescription: string | null;
   active: boolean;
   isAdmin: boolean;
 };

@@ -11,7 +11,7 @@ import { useState } from "react";
 type DisableButtonProps = {
   clientId: string;
   clientName: string;
-  clientDescription?: string;
+  clientDescription: string | null;
   active: boolean;
 };
 

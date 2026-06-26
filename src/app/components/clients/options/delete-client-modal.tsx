@@ -9,7 +9,7 @@ import { deleteClient } from "@/services/clients";
 type DeleteClientModalProps = {
   clientId: string;
   clientName: string;
-  clientDescription?: string;
+  clientDescription: string | null;
   show: boolean;
   isAdmin: boolean;
   onClose: () => void;

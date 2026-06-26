@@ -55,6 +55,7 @@ function Row(props: Readonly<RowProps>) {
         isAdmin={isAdmin}
         clientId={client.client_id}
         clientName={client.client_name}
+        clientDescription={client.client_description}
         active={client.active}
       />
     </li>

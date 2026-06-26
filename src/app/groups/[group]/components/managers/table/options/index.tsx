@@ -5,19 +5,28 @@
 "use client";
 
 import { Options, Option } from "@/components/options";
-import { User } from "@/models/scim";
-import { Group } from "@/models/groups";
 import RevokeGroupManagerModal from "./revoke-group-manager-modal";
 import { useState } from "react";
 import { NoSymbolIcon } from "@heroicons/react/24/outline";
 
 type ManagerOptionsProps = {
-  manager: User;
-  group: Group;
+  userId: string;
+  userFormattedName: string;
+  userEmail: string;
+  groupId: string;
+  groupName: string;
+  groupDescription?: string | null;
 };
 
 export default function ManagerOptions(props: Readonly<ManagerOptionsProps>) {
-  const { manager, group } = props;
+  const {
+    userId,
+    userFormattedName,
+    userEmail,
+    groupId,
+    groupName,
+    groupDescription,
+  } = props;
   const [show, setShow] = useState<"REVOKE_MANAGER">();
   const close = () => setShow(undefined);
   return (
@@ -31,8 +40,12 @@ export default function ManagerOptions(props: Readonly<ManagerOptionsProps>) {
         </Option>
       </Options>
       <RevokeGroupManagerModal
-        user={manager}
-        group={group}
+        userId={userId}
+        userFormattedName={userFormattedName}
+        userEmail={userEmail}
+        groupId={groupId}
+        groupName={groupName}
+        groupDescription={groupDescription}
         show={show === "REVOKE_MANAGER"}
         onClose={close}
       />

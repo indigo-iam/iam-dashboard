@@ -55,8 +55,14 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
         </TabList>
         <TabPanels>
           <GroupInfo group={group} />
-          <Subgroups groupId={group.id} groupName={groupName} />
-          {isAdmin && <Managers group={group} />}
+          <Subgroups groupId={groupId} groupName={groupName} />
+          {isAdmin && (
+            <Managers
+              groupId={groupId}
+              groupName={groupName}
+              groupDescription={groupDescription}
+            />
+          )}
           <Members
             groupId={groupId}
             groupName={groupName}

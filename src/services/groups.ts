@@ -289,19 +289,18 @@ export async function fetchGroupManagers(groupId: string) {
 }
 
 export async function assignGroupManager(
-  group: Group,
+  groupId: string,
   user: User
 ): Promise<Notification> {
-  const url = `${IAM_API_URL}/iam/account/${user.id}/managed-groups/${group.id}`;
+  const url = `${IAM_API_URL}/iam/account/${user.id}/managed-groups/${groupId}`;
   const response = await authFetch(url, {
     method: "POST",
   });
   if (response.ok) {
-    revalidatePath(`/groups/${group.id}`);
+    revalidatePath(`/groups/${groupId}`);
     return {
       type: "success",
       title: "Success",
-      description: `User ${user.displayName} has been assigned manager of group ${group.displayName}`,
     };
   }
   const msg = await response.text();

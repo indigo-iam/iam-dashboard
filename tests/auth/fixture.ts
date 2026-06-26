@@ -31,15 +31,12 @@ export const TEST_USER: UserInfo = {
 
 async function openUserMenu(page: Page) {
   const userMenuButton = page.getByTitle("Open user menu");
-  // ensure that HeadlessUI hooked the button to the popover before clicking
-  await expect(userMenuButton).toHaveAttribute(
-    "aria-controls",
-    "user-popover-menu"
-  );
-  await expect(userMenuButton).toBeEnabled();
-  await userMenuButton.click();
   const userMenu = page.getByTestId("user-menu");
-  await expect(userMenu).toBeVisible();
+  await expect(async () => {
+    await expect(userMenuButton).toBeEnabled();
+    await userMenuButton.click();
+    await expect(userMenu).toBeVisible();
+  }).toPass();
   return userMenu;
 }
 
@@ -71,7 +68,7 @@ export type TestOptions = {
 };
 
 export const test = baseTest.extend<TestOptions>({
-  user: [TEST_USER, {option: true}], // fallback value
+  user: [TEST_USER, { option: true }], // fallback value
   signedUpPage: async ({ page, user }, use) => {
     await login(page, user);
     // eslint-disable-next-line react-hooks/rules-of-hooks

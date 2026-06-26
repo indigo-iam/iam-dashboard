@@ -71,7 +71,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
           <Tab>GROUPS</Tab>
           {!isMe && <Tab>CLIENTS</Tab>}
           {isMe && <Tab>APPS AND WEBSITES</Tab>}
-          {isMe && <Tab>ACTIVE TOKENS</Tab>}
+          <Tab>ACTIVE TOKENS</Tab>
           <Tab>LINKED ACCOUNTS</Tab>
           <Tab>ATTRIBUTES</Tab>
         </TabList>
@@ -107,7 +107,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
               count={searchParams?.count}
             />
           )}
-          <ApprovedSites />
+          {isMe && <ApprovedSites />}
           <ActiveTokens />
           <LinkedAccounts
             userId={userId}

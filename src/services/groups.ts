@@ -13,7 +13,7 @@ import {
 import { authFetch, getItem } from "@/utils/fetch";
 import { settings } from "@/config";
 import { Paginated } from "@/models/pagination";
-import { ScimReference, User } from "@/models/scim";
+import { ScimReference } from "@/models/scim";
 import { Notification } from "@/components/toaster";
 import {
   makeScimReferenceForGroup,
@@ -279,7 +279,7 @@ export async function fetchGroupManagers(groupId: string) {
   const url = `${IAM_API_URL}/iam/group/${groupId}/group-managers`;
   const response = await authFetch(url);
   if (response.ok) {
-    return (await response.json()) as User[];
+    return await response.json();
   } else {
     const msg = await response.text();
     console.error(
@@ -290,9 +290,9 @@ export async function fetchGroupManagers(groupId: string) {
 
 export async function assignGroupManager(
   groupId: string,
-  user: User
+  userId: string
 ): Promise<Notification> {
-  const url = `${IAM_API_URL}/iam/account/${user.id}/managed-groups/${groupId}`;
+  const url = `${IAM_API_URL}/iam/account/${userId}/managed-groups/${groupId}`;
   const response = await authFetch(url, {
     method: "POST",
   });

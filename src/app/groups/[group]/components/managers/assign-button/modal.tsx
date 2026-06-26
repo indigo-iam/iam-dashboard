@@ -41,17 +41,25 @@ function SearchUserView(props: Readonly<SearchUserViewProps>) {
 type ConfirmViewProps = {
   groupName: string;
   groupDescription?: string | null;
-  user: User;
+  userId: string;
+  userFormattedName: string;
+  userEmail: string;
 };
 
 function ConfirmView(props: Readonly<ConfirmViewProps>) {
-  const { groupName, groupDescription, user } = props;
+  const {
+    groupName, //
+    groupDescription,
+    userId,
+    userFormattedName,
+    userEmail,
+  } = props;
   return (
     <div className="space-y-4">
       <p>
         Are you sure you want to make the user{" "}
-        <Link href={`/users/${user.id}`} className="underline">
-          <b>{user.name?.formatted}</b> (<i>{user.emails?.[0].value}</i>)
+        <Link href={`/users/${userId}`} className="underline">
+          <b>{userFormattedName}</b> (<i>{userEmail}</i>)
         </Link>{" "}
         manager of the group <b>{groupName}</b>
         {groupDescription && (
@@ -85,16 +93,20 @@ export default function AssignGroupManagerModal(
     onClose();
   };
 
-  const assignManager = async () => {
-    if (user?.id) {
-      const res = await assignGroupManager(groupId, user);
-      if (res.type === "success") {
-        res.description = `User ${user.displayName} has been assigned manager of group ${groupName}`;
-      }
-      toast.toast(res);
-      clearAndClose();
+  async function assignManager() {
+    if (!user) {
+      console.warn("cannot assign manager to group: user is undefined");
+      return;
     }
-  };
+    const userId = user.id;
+    const userFormattedName = user.name?.formatted ?? "unknown user";
+    const res = await assignGroupManager(groupId, userId);
+    if (res.type === "success") {
+      res.description = `User ${userFormattedName} has been assigned manager of group ${groupName}`;
+    }
+    toast.toast(res);
+    clearAndClose();
+  }
 
   return (
     <ConfirmModal
@@ -110,7 +122,9 @@ export default function AssignGroupManagerModal(
           <ConfirmView
             groupName={groupName}
             groupDescription={groupDescription}
-            user={user}
+            userId={user.id}
+            userFormattedName={user.name?.formatted ?? "unknown user"}
+            userEmail={user.emails?.[0].value ?? "unknown email"}
           />
         ) : (
           <SearchUserView

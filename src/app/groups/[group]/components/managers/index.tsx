@@ -9,6 +9,7 @@ import ManagersTable from "./table";
 import AssignGroupManagerButton from "./assign-button";
 
 import { redirect } from "next/navigation";
+import { User } from "@/models/scim";
 
 type ManagersProps = {
   groupId: string;
@@ -22,7 +23,7 @@ export default async function Managers(props: Readonly<ManagersProps>) {
   if (!session) {
     redirect("/signin");
   }
-  const managers = (await fetchGroupManagers(groupId)) ?? [];
+  const managers = ((await fetchGroupManagers(groupId)) as User[]) ?? [];
   return (
     <TabPanel className="panel space-y-4">
       <div className="flex flex-wrap gap-2">

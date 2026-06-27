@@ -64,7 +64,7 @@ export default function GrantTypes(props: Readonly<GrantTypesProps>) {
             redirectUris={client.redirect_uris ?? []}
             onAuthGrantChange={setIsAuthGrantOk}
           />
-          <OtherGrantTypes grantTypes={client.grant_types} />
+          <OtherGrantTypes grantTypes={client.grant_types ?? []} />
         </div>
         <FormButtons canSave={isAuthGrantOk} />
       </Form>

@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { SetAdminPrivileges } from "./admin-privileges";
+import { RoleCheckbox } from "./assign-role-checkbox";
 import { DeleteUser } from "./delete-user";
 import { EditExpirationDate } from "./expiration-date";
 import { ToggleStatusButton } from "./toggle-user-status";
@@ -14,6 +14,7 @@ type DangerZoneProps = {
   userEmail: string;
   userIsActive: boolean;
   userEndTime?: string;
+  userAuthorities: string[];
   isAdmin: boolean;
 };
 
@@ -25,8 +26,9 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
     userEmail,
     userIsActive,
     userEndTime,
-    isAdmin,
+    userAuthorities,
   } = props;
+  const authorities = new Set<string>(userAuthorities);
   return (
     <div className="flex flex-col gap-8 py-4 lg:flex-row">
       <div className="flex w-full flex-col space-y-2 text-sm font-light lg:w-1/3">
@@ -42,18 +44,30 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
       </div>
       <div className="w-full space-y-4 lg:w-2/3">
         <div className="flex flex-wrap gap-4">
-          <EditExpirationDate
-            userId={userId}
-            userName={userName}
-            userFormattedName={userFormattedName}
-            userEndTime={userEndTime}
-          />
-          <SetAdminPrivileges
-            userId={userId}
-            userFormattedName={userFormattedName}
-            isAdmin={isAdmin}
-          />
+          <div className="space-y-1">
+            <h5 className="text-sm font-semibold text-gray-600 dark:text-gray-100">
+              Privileges
+            </h5>
+            <RoleCheckbox
+              userId={userId}
+              userFormattedName={userFormattedName}
+              role="ROLE_ADMIN"
+              hasRole={authorities.has("ROLE_ADMIN")}
+            />
+            <RoleCheckbox
+              userId={userId}
+              userFormattedName={userFormattedName}
+              role="ROLE_READER"
+              hasRole={authorities.has("ROLE_READER")}
+            />
+          </div>
         </div>
+        <EditExpirationDate
+          userId={userId}
+          userName={userName}
+          userFormattedName={userFormattedName}
+          userEndTime={userEndTime}
+        />
         <div className="flex items-center justify-end gap-4">
           <ToggleStatusButton
             userId={userId}

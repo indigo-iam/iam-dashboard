@@ -11,10 +11,20 @@ import { Notification } from "@/components/toaster";
 
 const { IAM_API_URL } = settings;
 
-export async function assignAdminPrivileges(
-  userId: string
+type Role = "ROLE_ADMIN" | "ROLE_READER";
+
+export async function assignRole(
+  userId: string,
+  role: Role
 ): Promise<Notification> {
-  const url = `${IAM_API_URL}/iam/account/${userId}/authorities?authority=ROLE_ADMIN`;
+  if (role !== "ROLE_ADMIN" && role !== "ROLE_READER") {
+    return {
+      type: "error",
+      title: "Cannot assign role to the user",
+      description: "Role not valid",
+    };
+  }
+  const url = `${IAM_API_URL}/iam/account/${userId}/authorities?authority=${role}`;
   const response = await authFetch(url, {
     method: "POST",
   });
@@ -22,21 +32,29 @@ export async function assignAdminPrivileges(
     revalidatePath(`/users/${userId}`);
     return {
       type: "success",
-      title: "Admin privileges assigned",
+      title: "Role assigned",
     };
   }
   const msg = await response.text();
   return {
     type: "error",
-    title: "Cannot assign Admin privileges to the user",
+    title: "Cannot assign role privileges to the user",
     description: `Error ${response.status} ${msg}`,
   };
 }
 
-export async function revokeAdminPrivileges(
-  userId: string
+export async function revokeRole(
+  userId: string,
+  role: Role
 ): Promise<Notification> {
-  const url = `${IAM_API_URL}/iam/account/${userId}/authorities?authority=ROLE_ADMIN`;
+  if (role !== "ROLE_ADMIN" && role !== "ROLE_READER") {
+    return {
+      type: "error",
+      title: "Cannot assign role to the user",
+      description: "Role not valid",
+    };
+  }
+  const url = `${IAM_API_URL}/iam/account/${userId}/authorities?authority=${role}`;
   const response = await authFetch(url, {
     method: "DELETE",
   });
@@ -44,13 +62,13 @@ export async function revokeAdminPrivileges(
     revalidatePath(`/users/${userId}`);
     return {
       type: "info",
-      title: "Admin privileges revoked",
+      title: "Role revoked",
     };
   }
   const msg = await response.text();
   return {
     type: "error",
-    title: "Cannot revoke admin privileges",
+    title: "Cannot revoke role",
     description: `Error ${response.status} ${msg}`,
   };
 }

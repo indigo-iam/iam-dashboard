@@ -4,7 +4,7 @@
 
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { CloseButton } from "@headlessui/react";
 import { BuildingLibraryIcon, UserIcon } from "@heroicons/react/24/outline";
 
@@ -40,11 +40,15 @@ export function AdminModeButton() {
 
 export function UserModeButton() {
   const router = useRouter();
+  const pathname = usePathname();
   const { startLoadingTransition } = useLoading();
 
   function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     startLoadingTransition(async () => {
+      if (pathname.startsWith("/clients/")) {
+        router.push("/clients");
+      }
       await setUserMode();
       router.refresh();
     });

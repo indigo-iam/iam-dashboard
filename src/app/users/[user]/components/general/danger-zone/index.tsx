@@ -5,6 +5,7 @@
 import { RoleCheckbox } from "./assign-role-checkbox";
 import { DeleteUser } from "./delete-user";
 import { EditExpirationDate } from "./expiration-date";
+import { ServiceAccountCheckbox } from "./service-account-checkbox";
 import { ToggleStatusButton } from "./toggle-user-status";
 
 type DangerZoneProps = {
@@ -13,6 +14,7 @@ type DangerZoneProps = {
   userFormattedName: string;
   userEmail: string;
   userIsActive: boolean;
+  userIsServiceAccount: boolean;
   userEndTime?: string;
   userAuthorities: string[];
   isAdmin: boolean;
@@ -25,6 +27,7 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
     userFormattedName,
     userEmail,
     userIsActive,
+    userIsServiceAccount,
     userEndTime,
     userAuthorities,
   } = props;
@@ -43,24 +46,32 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
         </div>
       </div>
       <div className="w-full space-y-4 lg:w-2/3">
-        <div className="flex flex-wrap gap-4">
-          <div className="space-y-1">
-            <h5 className="text-sm font-semibold text-gray-600 dark:text-gray-100">
-              Privileges
-            </h5>
-            <RoleCheckbox
-              userId={userId}
-              userFormattedName={userFormattedName}
-              role="ROLE_ADMIN"
-              hasRole={authorities.has("ROLE_ADMIN")}
-            />
-            <RoleCheckbox
-              userId={userId}
-              userFormattedName={userFormattedName}
-              role="ROLE_READER"
-              hasRole={authorities.has("ROLE_READER")}
-            />
-          </div>
+        <div className="space-y-1">
+          <h5 className="text-sm font-semibold text-gray-600 dark:text-gray-100">
+            Privileges
+          </h5>
+          <RoleCheckbox
+            userId={userId}
+            userFormattedName={userFormattedName}
+            role="ROLE_ADMIN"
+            hasRole={authorities.has("ROLE_ADMIN")}
+          />
+          <RoleCheckbox
+            userId={userId}
+            userFormattedName={userFormattedName}
+            role="ROLE_READER"
+            hasRole={authorities.has("ROLE_READER")}
+          />
+        </div>
+        <div className="space-y-1">
+          <h5 className="text-sm font-semibold text-gray-600 dark:text-gray-100">
+            Other settings
+          </h5>
+          <ServiceAccountCheckbox
+            userId={userId}
+            userFormattedName={userFormattedName}
+            enabled={userIsServiceAccount}
+          />
         </div>
         <EditExpirationDate
           userId={userId}

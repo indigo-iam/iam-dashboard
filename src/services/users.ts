@@ -460,3 +460,43 @@ export async function disableMFA(formData: FormData): Promise<Notification> {
     description: `${msg}`,
   };
 }
+
+export async function setServiceAccount(
+  userId: string,
+  active: boolean
+): Promise<Notification> {
+  const url = `${IAM_API_URL}/scim/Users/${userId}`;
+  const body = {
+    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
+    Operations: [
+      {
+        op: "replace",
+        value: {
+          "urn:indigo-dc:scim:schemas:IndigoUser": {
+            serviceAccount: active,
+          },
+        },
+      },
+    ],
+  };
+  const response = await authFetch(url, {
+    method: "PATCH",
+    headers: {
+      "content-type": "application/scim+json",
+    },
+    body: JSON.stringify(body),
+  });
+  if (response.ok) {
+    revalidatePath(`/users/${userId}`);
+    return {
+      type: "success",
+      title: `Service account ${active ? "enabled" : "disabled"}`,
+    };
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: `Cannot ${active ? "enable" : "disable"} service account`,
+    description: `${response.status} ${msg}`,
+  };
+}

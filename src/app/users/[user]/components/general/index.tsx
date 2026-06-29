@@ -19,6 +19,7 @@ type GeneralProps = {
   userLastModified?: string;
   userEndTime?: string;
   userIsActive: boolean;
+  userIsServiceAccount: boolean;
   isMe: boolean;
   mfaEnabled: boolean;
   userAuthorities: string[];
@@ -38,6 +39,7 @@ export async function General(props: Readonly<GeneralProps>) {
     userLastModified,
     userEndTime,
     userIsActive,
+    userIsServiceAccount,
     isMe,
     mfaEnabled,
     userAuthorities,
@@ -73,6 +75,7 @@ export async function General(props: Readonly<GeneralProps>) {
           userIsActive={userIsActive}
           userEndTime={userEndTime}
           userAuthorities={userAuthorities}
+          userIsServiceAccount={userIsServiceAccount}
           isAdmin={isAdmin}
         />
       )}

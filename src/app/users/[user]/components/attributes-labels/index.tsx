@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { TabPanel } from "@/components/tabs";
-import AttributesTable from "./table";
-import AddAttributeButton from "./add-button";
+import { AttributesCard } from "./attributes";
+import { LabelsPanel } from "./labels";
 
 type AttributesProps = {
   userId: string;
@@ -13,19 +13,17 @@ type AttributesProps = {
   isAdmin: boolean;
 };
 
-export async function Attributes(props: Readonly<AttributesProps>) {
+export async function AttributesAndLabels(props: Readonly<AttributesProps>) {
   const { userId, userName, userFormattedName, isAdmin } = props;
   return (
-    <TabPanel className="panel space-y-4">
-      <div className="flex justify-between">
-        <h2>Attributes</h2>
-        {isAdmin && <AddAttributeButton userId={userId} userName={userName} />}
-      </div>
-      <AttributesTable
+    <TabPanel className="space-y-4">
+      <AttributesCard
         userId={userId}
+        userName={userName}
         userFormattedName={userFormattedName}
         isAdmin={isAdmin}
       />
+      <LabelsPanel isAdmin={isAdmin} userId={userId} />
     </TabPanel>
   );
 }

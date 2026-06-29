@@ -9,7 +9,7 @@ import { fetchMe } from "@/services/me";
 import { fetchUser, statusMFA } from "@/services/users";
 import { redirect } from "next/navigation";
 import {
-  Attributes,
+  AttributesAndLabels,
   General,
   LinkedAccounts,
   UserClients,
@@ -77,7 +77,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
           {isMe && <Tab>APPS AND WEBSITES</Tab>}
           {isMe && <Tab>ACTIVE TOKENS</Tab>}
           <Tab>LINKED ACCOUNTS</Tab>
-          <Tab>ATTRIBUTES</Tab>
+          <Tab>ATTRIBUTES AND LABELS</Tab>
         </TabList>
         <TabPanels>
           <General
@@ -126,7 +126,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
             certificates={certificates}
             sshKeys={sshKeys}
           />
-          <Attributes
+          <AttributesAndLabels
             userId={userId}
             userName={userName}
             userFormattedName={userFormattedName}

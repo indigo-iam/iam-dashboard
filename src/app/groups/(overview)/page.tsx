@@ -17,7 +17,7 @@ import {
   UserManagedGroupsTable,
 } from "./components";
 import { fetchMe } from "@/services/me";
-import JoinGroupButton from "@/app/users/[user]/components/groups/join-group-button";
+import JoinGroupButton from "@/app/users/[user]/components/groups/unmanaged/join-group-button";
 import { fetchGroupsRequests } from "@/services/group-requests";
 
 type GroupsProps = {
@@ -93,12 +93,6 @@ async function UserPage() {
         />
       </header>
       <div className="container space-y-4">
-        {requests.length > 0 ? (
-          <div className="panel">
-            <h3 className="py-2">Sent requests</h3>
-            <GroupRequestsTable userId={me.id} requests={requests} />
-          </div>
-        ) : null}
         <div className="panel">
           <h3 className="py-2">Groups</h3>
           {groups.length > 0 ? (
@@ -111,6 +105,12 @@ async function UserPage() {
           <div className="panel">
             <h3 className="py-2">Managed groups</h3>
             <UserManagedGroupsTable groups={managedGroups} />
+          </div>
+        )}
+        {requests.length > 0 && (
+          <div className="panel">
+            <h3 className="py-2">Pending requests</h3>
+            <GroupRequestsTable userId={me.id} requests={requests} />
           </div>
         )}
       </div>

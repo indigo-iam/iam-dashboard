@@ -11,46 +11,42 @@ import { Notification } from "@/components/toaster";
 
 const { IAM_API_URL } = settings;
 
-export async function assignAdminPrivileges(
-  userId: string
+type Role = "ROLE_ADMIN" | "ROLE_READER";
+
+async function editRole(
+  userId: string,
+  role: Role,
+  op: "assign" | "revoke"
 ): Promise<Notification> {
-  const url = `${IAM_API_URL}/iam/account/${userId}/authorities?authority=ROLE_ADMIN`;
+  if (role !== "ROLE_ADMIN" && role !== "ROLE_READER") {
+    return {
+      type: "error",
+      title: `cannot ${op} role to the user`,
+      description: "Role not valid",
+    };
+  }
+  const url = `${IAM_API_URL}/iam/account/${userId}/authorities?authority=${role}`;
   const response = await authFetch(url, {
-    method: "POST",
+    method: op === "assign" ? "POST" : "DELETE",
   });
   if (response.ok) {
     revalidatePath(`/users/${userId}`);
     return {
       type: "success",
-      title: "Admin privileges assigned",
+      title: op === "assign" ? "Role assigned" : "Role revoked",
     };
   }
   const msg = await response.text();
   return {
     type: "error",
-    title: "Cannot assign Admin privileges to the user",
+    title: `Cannot ${op} role privileges to the user`,
     description: `Error ${response.status} ${msg}`,
   };
 }
 
-export async function revokeAdminPrivileges(
-  userId: string
-): Promise<Notification> {
-  const url = `${IAM_API_URL}/iam/account/${userId}/authorities?authority=ROLE_ADMIN`;
-  const response = await authFetch(url, {
-    method: "DELETE",
-  });
-  if (response.ok) {
-    revalidatePath(`/users/${userId}`);
-    return {
-      type: "info",
-      title: "Admin privileges revoked",
-    };
-  }
-  const msg = await response.text();
-  return {
-    type: "error",
-    title: "Cannot revoke admin privileges",
-    description: `Error ${response.status} ${msg}`,
-  };
+export async function assignRole(userId: string, role: Role) {
+  return editRole(userId, role, "assign");
+}
+export async function revokeRole(userId: string, role: Role) {
+  return editRole(userId, role, "revoke");
 }

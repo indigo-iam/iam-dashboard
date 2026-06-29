@@ -41,4 +41,5 @@ export type IndigoUser = {
   certificates?: Certificate[];
   authorities?: string[];
   sshKeys?: SSHKey[];
+  serviceAccount?: boolean;
 };

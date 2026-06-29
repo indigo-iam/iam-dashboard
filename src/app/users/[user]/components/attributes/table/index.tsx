@@ -8,10 +8,11 @@ import AttributeOptions from "./options";
 type TableProps = {
   userId: string;
   userFormattedName: string;
+  isAdmin: boolean;
 };
 
 export default async function AttributesTable(props: Readonly<TableProps>) {
-  const { userId, userFormattedName } = props;
+  const { userId, userFormattedName, isAdmin } = props;
   const attributes = await fetchAttributes(userId);
 
   if (!attributes || attributes.length === 0) {
@@ -33,11 +34,13 @@ export default async function AttributesTable(props: Readonly<TableProps>) {
                 <span>{attr.value}</span>
               </div>
             </div>
-            <AttributeOptions
-              userId={userId}
-              userFormattedName={userFormattedName}
-              attr={attr}
-            />
+            {isAdmin && (
+              <AttributeOptions
+                userId={userId}
+                userFormattedName={userFormattedName}
+                attr={attr}
+              />
+            )}
           </li>
         );
       })}

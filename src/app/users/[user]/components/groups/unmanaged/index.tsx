@@ -6,6 +6,7 @@ import Link from "@/components/link";
 import { ScimReference } from "@/models/scim";
 import { makeScimReferenceForUser } from "@/utils/scim";
 import GroupOptions from "./options";
+import JoinGroupButton from "./join-group-button";
 
 type StaticViewProps = {
   groupRef: ScimReference;
@@ -57,25 +58,52 @@ function Row(props: Readonly<RowProps>) {
 
 type UserGroupsProps = {
   userId: string;
+  userName: string;
   userFormattedName: string;
+  userEmail: string;
   userGroups?: ScimReference[];
   isAdmin?: boolean;
 };
 
 export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
-  const { userId, userFormattedName, userGroups, isAdmin } = props;
+  const {
+    userId,
+    userName,
+    userFormattedName,
+    userEmail,
+    userGroups,
+    isAdmin,
+  } = props;
   const userRef = makeScimReferenceForUser(userId, userFormattedName);
   if (!userGroups || userGroups.length === 0) {
     return (
       <div className="panel space-y-4">
-        <h2>Joined groups</h2>
+        <div className="flex justify-between">
+          <h2>Joined groups</h2>
+          <JoinGroupButton
+            userId={userId}
+            userName={userName}
+            userFormattedName={userFormattedName}
+            userEmail={userEmail}
+            isAdmin={isAdmin}
+          />
+        </div>
         <p>No group found.</p>
       </div>
     );
   }
   return (
     <div className="panel space-y-4">
-      <h2>Joined groups</h2>
+      <div className="flex justify-between">
+        <h2>Joined groups</h2>
+        <JoinGroupButton
+          userId={userId}
+          userName={userName}
+          userFormattedName={userFormattedName}
+          userEmail={userEmail}
+          isAdmin={isAdmin}
+        />
+      </div>
       <ul className="w-full">
         {userGroups.map(g => (
           <Row key={g.value} userRef={userRef} groupRef={g} isAdmin={isAdmin} />

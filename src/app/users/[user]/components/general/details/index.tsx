@@ -20,6 +20,7 @@ type UserDetailsFormProps = {
   userName: string;
   userGivenName: string;
   userFamilyName: string;
+  userFormattedName: string;
   userEmail: string;
   userCreatedAt?: string;
   userLastModified?: string;
@@ -34,6 +35,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
     userName,
     userGivenName,
     userFamilyName,
+    userFormattedName,
     userEmail,
     userCreatedAt,
     userLastModified,
@@ -133,7 +135,12 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
           <Label>Authentication</Label>
           <div className="flex flex-wrap gap-2">
             {isMe && <MFAButton enabled={mfaEnabled} />}
-            <ResetPassword userId={userId} />
+            <ResetPassword
+              isMe={isMe}
+              userId={userId}
+              userFormattedName={userFormattedName}
+              userEmail={userEmail}
+            />
           </div>
         </Field>
       </div>

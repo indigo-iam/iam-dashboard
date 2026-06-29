@@ -44,7 +44,7 @@ export default function Tokens(props: Readonly<TokensProps>) {
             reuseRefreshToken={client.reuse_refresh_token ?? false}
           />
           <DeviceCodeTimeout
-            grantTypes={client.grant_types}
+            grantTypes={client.grant_types ?? []}
             deviceCodeValiditySeconds={client.device_code_validity_seconds}
           />
         </div>

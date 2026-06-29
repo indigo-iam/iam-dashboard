@@ -5,7 +5,6 @@
 import { TabPanel } from "@/components/tabs";
 import { ScimReference } from "@/models/scim";
 import { fetchGroupsRequests } from "@/services/group-requests";
-import JoinGroupButton from "./join-group-button";
 import UnmanagedGroups from "./unmanaged";
 import ManagedGroups from "./managed";
 import { GroupRequests } from "./requests";
@@ -34,23 +33,18 @@ export async function UserGroups(props: Readonly<UserGroupsProps>) {
   const requests = requestsPage.Resources;
   return (
     <TabPanel className="space-y-4">
-      <JoinGroupButton
+      <UnmanagedGroups
         userId={userId}
         userName={userName}
         userFormattedName={userFormattedName}
         userEmail={userEmail}
-        isAdmin={isAdmin}
-      />
-      {requests.length > 0 && (
-        <GroupRequests userId={userId} requests={requests} />
-      )}
-      <UnmanagedGroups
-        userId={userId}
-        userFormattedName={userFormattedName}
         userGroups={userGroups}
         isAdmin={isAdmin}
       />
       <ManagedGroups userId={userId} />
+      {requests.length > 0 && (
+        <GroupRequests userId={userId} requests={requests} />
+      )}
     </TabPanel>
   );
 }

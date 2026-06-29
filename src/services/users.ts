@@ -14,6 +14,7 @@ import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
 import { Notification } from "@/components/toaster";
 import { settings } from "@/config";
 import { getSession } from "@/auth";
+import { URLSearchParams } from "url";
 
 const { IAM_API_URL } = settings;
 
@@ -373,7 +374,7 @@ export async function signAUP(userId: string): Promise<Notification> {
   });
   if (response.ok) {
     revalidatePath(`/user/${userId}`);
-    return { type: "success", title: "AUP Signed" };
+    return { type: "success", title: "AUP signed" };
   }
   const msg = await response.text();
   return {
@@ -400,6 +401,27 @@ export async function changePassword(
   return {
     type: "error",
     title: "Password not saved",
+    description: `Error ${response.status} ${msg}`,
+  };
+}
+
+export async function resetUserPassword(
+  userEmail: string
+): Promise<Notification> {
+  const url = `${IAM_API_URL}/iam/password-reset/token`;
+  const response = await authFetch(url, {
+    method: "POST",
+    body: new URLSearchParams({
+      email: userEmail,
+    }),
+  });
+  if (response.ok) {
+    return { type: "success", title: "Reset password email sent" };
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Failed to send reset password email",
     description: `Error ${response.status} ${msg}`,
   };
 }
@@ -458,5 +480,45 @@ export async function disableMFA(formData: FormData): Promise<Notification> {
     type: "error",
     title: "Cannot disable MFA",
     description: `${msg}`,
+  };
+}
+
+export async function setServiceAccount(
+  userId: string,
+  active: boolean
+): Promise<Notification> {
+  const url = `${IAM_API_URL}/scim/Users/${userId}`;
+  const body = {
+    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
+    Operations: [
+      {
+        op: "replace",
+        value: {
+          "urn:indigo-dc:scim:schemas:IndigoUser": {
+            serviceAccount: active,
+          },
+        },
+      },
+    ],
+  };
+  const response = await authFetch(url, {
+    method: "PATCH",
+    headers: {
+      "content-type": "application/scim+json",
+    },
+    body: JSON.stringify(body),
+  });
+  if (response.ok) {
+    revalidatePath(`/users/${userId}`);
+    return {
+      type: "success",
+      title: `Service account ${active ? "enabled" : "disabled"}`,
+    };
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: `Cannot ${active ? "enable" : "disable"} service account`,
+    description: `${response.status} ${msg}`,
   };
 }

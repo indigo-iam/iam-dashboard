@@ -53,7 +53,10 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
   const userCreatedAt = user.meta?.created;
   const userLastModified = user.meta?.lastModified;
   const indigoUser = user["urn:indigo-dc:scim:schemas:IndigoUser"];
+  const userAupSignatureTime = indigoUser?.aupSignatureTime ?? null;
   const userEndTime = indigoUser?.endTime;
+  const userIsServiceAccount = indigoUser?.serviceAccount ?? false;
+  const userAuthorities = indigoUser?.authorities ?? [];
   const oidcIds = indigoUser?.oidcIds ?? [];
   const samlIds = indigoUser?.samlIds ?? [];
   const certificates = indigoUser?.certificates ?? [];
@@ -84,11 +87,14 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
             userFormattedName={userFormattedName}
             userGivenName={userGivenName}
             userFamilyName={userFamilyName}
+            userAupSignatureTime={userAupSignatureTime}
             userEmail={userEmail}
             userIsActive={userIsActive}
             userCreatedAt={userCreatedAt}
             userLastModified={userLastModified}
             userEndTime={userEndTime}
+            userIsServiceAccount={userIsServiceAccount}
+            userAuthorities={userAuthorities}
             isAdmin={isAdmin}
           />
           <UserGroups
@@ -107,8 +113,8 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
               count={searchParams?.count}
             />
           )}
-          <ApprovedSites />
-          <ActiveTokens />
+          {isMe && <ApprovedSites />}
+          {isMe && <ActiveTokens />}
           <LinkedAccounts
             userId={userId}
             userName={userName}
@@ -122,6 +128,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
             userId={userId}
             userName={userName}
             userFormattedName={userFormattedName}
+            isAdmin={isAdmin}
           />
         </TabPanels>
       </TabGroup>

@@ -14,12 +14,15 @@ type GeneralProps = {
   userGivenName: string;
   userFamilyName: string;
   userEmail: string;
+  userAupSignatureTime: string | null;
   userCreatedAt?: string;
   userLastModified?: string;
   userEndTime?: string;
   userIsActive: boolean;
+  userIsServiceAccount: boolean;
   isMe: boolean;
   mfaEnabled: boolean;
+  userAuthorities: string[];
   isAdmin: boolean;
 };
 
@@ -31,12 +34,15 @@ export async function General(props: Readonly<GeneralProps>) {
     userFamilyName,
     userGivenName,
     userEmail,
+    userAupSignatureTime,
     userCreatedAt,
     userLastModified,
     userEndTime,
     userIsActive,
+    userIsServiceAccount,
     isMe,
     mfaEnabled,
+    userAuthorities,
     isAdmin,
   } = props;
   return (
@@ -48,12 +54,19 @@ export async function General(props: Readonly<GeneralProps>) {
         userName={userName}
         userGivenName={userGivenName}
         userFamilyName={userFamilyName}
+        userFormattedName={userFormattedName}
         userEmail={userEmail}
         userCreatedAt={userCreatedAt}
         userLastModified={userLastModified}
         userIsActive={userIsActive}
       />
-      <Aup isMe={isMe} userId={userId} userFormattedName={userFormattedName} />
+      <Aup
+        isMe={isMe}
+        isAdmin={isAdmin}
+        userId={userId}
+        userFormattedName={userFormattedName}
+        userAupSignatureTime={userAupSignatureTime}
+      />
       {!isMe && (
         <DangerZone
           userId={userId}
@@ -62,6 +75,8 @@ export async function General(props: Readonly<GeneralProps>) {
           userEmail={userEmail}
           userIsActive={userIsActive}
           userEndTime={userEndTime}
+          userAuthorities={userAuthorities}
+          userIsServiceAccount={userIsServiceAccount}
           isAdmin={isAdmin}
         />
       )}

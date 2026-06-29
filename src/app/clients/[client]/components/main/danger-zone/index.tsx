@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { DeleteButton } from "./delete-button";
+import { RevokeTokensButton } from "./revoke-tokens-button";
 import { ToggleStatusButton } from "./toggle-status-button";
 
 type DangerZoneProps = {
@@ -26,20 +27,27 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
           immediately revoked.
         </p>
       </div>
-      <div className="flex w-full items-center justify-end lg:w-2/3">
-        <div className="flex flex-row gap-4">
-          <ToggleStatusButton
-            clientId={clientId}
-            clientName={clientName}
-            clientDescription={clientDescription}
-            active={active}
-          />
-          <DeleteButton
-            clientId={clientId}
-            clientName={clientName}
-            clientDescription={clientDescription}
-            isAdmin={isAdmin}
-          />
+      <div className="flex w-full lg:w-2/3">
+        {isAdmin && (
+          <div>
+            <RevokeTokensButton clientId={clientId} clientName={clientName} />
+          </div>
+        )}
+        <div className="flex w-full items-center justify-end">
+          <div className="flex flex-row gap-4">
+            <ToggleStatusButton
+              clientId={clientId}
+              clientName={clientName}
+              clientDescription={clientDescription}
+              active={active}
+            />
+            <DeleteButton
+              clientId={clientId}
+              clientName={clientName}
+              clientDescription={clientDescription}
+              isAdmin={isAdmin}
+            />
+          </div>
         </div>
       </div>
     </div>

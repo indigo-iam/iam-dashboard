@@ -227,3 +227,23 @@ export async function rotateClientSecret(
     description: `Error ${response.status} ${msg}`,
   };
 }
+
+export async function revokeTokens(
+  clientId: string,
+  action: "revoke-refresh-tokens" | "revoke-access-tokens"
+): Promise<Notification> {
+  const url = `${IAM_API_URL}/iam/api/clients/${clientId}/${action}`;
+  const response = await authFetch(url, { method: "PATCH" });
+  if (response.ok) {
+    return {
+      type: "success",
+      title: "Tokens revoked",
+    };
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot revoke tokens",
+    description: `Error ${response.status} ${msg}`,
+  };
+}

@@ -74,7 +74,7 @@ export default function AddAttributeModal(
             Reset
           </Button>
           <Button className="btn-primary" type="submit">
-            Add Attribute
+            Add attribute
           </Button>
         </ModalFooter>
       </Form>

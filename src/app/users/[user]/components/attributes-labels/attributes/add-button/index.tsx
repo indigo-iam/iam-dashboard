@@ -20,7 +20,7 @@ export default function AddAttributeButton(props: Readonly<AddButtonProps>) {
   return (
     <>
       <Button className="btn-secondary" onClick={openModal}>
-        Add Attribute
+        Add attribute
       </Button>
       <AddAttributeModal show={show} onClose={closeModal} userId={userId} />
     </>

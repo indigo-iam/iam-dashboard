@@ -43,11 +43,11 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>
-            <Label>Prefix</Label>
+            <Label data-required>Prefix</Label>
             <Input name="prefix" required />
           </Field>
           <Field>
-            <Label>Name</Label>
+            <Label data-required>Name</Label>
             <Input name="name" required />
           </Field>
         </ModalBody>

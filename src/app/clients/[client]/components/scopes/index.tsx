@@ -8,6 +8,7 @@ import { fetchScopes } from "@/services/scopes";
 import { ScopeOptions } from "./options";
 import { AddScopeButton } from "./add-system-scopes";
 import { AddCustomScope } from "./add-custom-scope";
+import { AdvancedSettings } from "./advanced-settings";
 
 type SystemScopesProps = {
   client: Client;
@@ -86,18 +87,21 @@ export default async function Scopes(props: Readonly<ScopesProps>) {
           </div>
         </div>
       </div>
-      <ul className="flex flex-col gap-2">
-        <SystemScopes
-          client={client}
-          scopes={clientSystemScopes}
-          isAdmin={isAdmin}
-        />
-        <CustomScopes
-          client={client}
-          scopes={customScopesNames}
-          isAdmin={isAdmin}
-        />
-      </ul>
+      <div className="space-y-8 divide-y">
+        <ul className="flex flex-col gap-2">
+          <SystemScopes
+            client={client}
+            scopes={clientSystemScopes}
+            isAdmin={isAdmin}
+          />
+          <CustomScopes
+            client={client}
+            scopes={customScopesNames}
+            isAdmin={isAdmin}
+          />
+        </ul>
+        <AdvancedSettings client={client} isAdmin={isAdmin} />
+      </div>
     </TabPanel>
   );
 }

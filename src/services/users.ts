@@ -14,6 +14,7 @@ import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
 import { Notification } from "@/components/toaster";
 import { settings } from "@/config";
 import { getSession } from "@/auth";
+import { URLSearchParams } from "url";
 
 const { IAM_API_URL } = settings;
 
@@ -400,6 +401,27 @@ export async function changePassword(
   return {
     type: "error",
     title: "Password not saved",
+    description: `Error ${response.status} ${msg}`,
+  };
+}
+
+export async function resetUserPassword(
+  userEmail: string
+): Promise<Notification> {
+  const url = `${IAM_API_URL}/iam/password-reset/token`;
+  const response = await authFetch(url, {
+    method: "POST",
+    body: new URLSearchParams({
+      email: userEmail,
+    }),
+  });
+  if (response.ok) {
+    return { type: "success", title: "Reset password email sent" };
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Failed to send reset password email",
     description: `Error ${response.status} ${msg}`,
   };
 }

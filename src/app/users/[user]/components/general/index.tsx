@@ -54,6 +54,7 @@ export async function General(props: Readonly<GeneralProps>) {
         userName={userName}
         userGivenName={userGivenName}
         userFamilyName={userFamilyName}
+        userFormattedName={userFormattedName}
         userEmail={userEmail}
         userCreatedAt={userCreatedAt}
         userLastModified={userLastModified}

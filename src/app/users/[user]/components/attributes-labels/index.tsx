@@ -8,15 +8,14 @@ import { LabelsPanel } from "./labels";
 
 type AttributesProps = {
   userId: string;
-  userName: string;
   isAdmin: boolean;
 };
 
 export async function AttributesAndLabels(props: Readonly<AttributesProps>) {
-  const { userId, userName, isAdmin } = props;
+  const { userId, isAdmin } = props;
   return (
     <TabPanel className="space-y-4">
-      <AttributesPanel userId={userId} userName={userName} isAdmin={isAdmin} />
+      <AttributesPanel userId={userId} isAdmin={isAdmin} />
       <LabelsPanel isAdmin={isAdmin} userId={userId} />
     </TabPanel>
   );

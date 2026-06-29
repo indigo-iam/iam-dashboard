@@ -126,11 +126,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
             certificates={certificates}
             sshKeys={sshKeys}
           />
-          <AttributesAndLabels
-            userId={userId}
-            userName={userName}
-            isAdmin={isAdmin}
-          />
+          <AttributesAndLabels userId={userId} isAdmin={isAdmin} />
         </TabPanels>
       </TabGroup>
     </section>

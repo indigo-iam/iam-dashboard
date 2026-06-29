@@ -19,13 +19,12 @@ import { addAttribute } from "@/services/users";
 
 interface AddAttributeModalProps extends ModalProps {
   userId: string;
-  userName: string;
 }
 
 export default function AddAttributeModal(
   props: Readonly<AddAttributeModalProps>
 ) {
-  const { userId, userName, ...modalProps } = props;
+  const { userId, ...modalProps } = props;
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -42,10 +41,6 @@ export default function AddAttributeModal(
       <ModalHeader onClose={modalProps.onClose}>Add user attribute</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
-          <Field>
-            <Label>Username</Label>
-            <Input defaultValue={userName} disabled />
-          </Field>
           <Field>
             <Label data-required>Name</Label>
             <Input

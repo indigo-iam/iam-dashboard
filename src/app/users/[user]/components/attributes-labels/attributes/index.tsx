@@ -31,17 +31,16 @@ async function AttributesContent(props: Readonly<AttributesContentProps>) {
 
 type AttributesPanelProps = {
   userId: string;
-  userName: string;
   isAdmin: boolean;
 };
 
 export function AttributesPanel(props: Readonly<AttributesPanelProps>) {
-  const { userId, userName, isAdmin } = props;
+  const { userId, isAdmin } = props;
   return (
     <div className="panel space-y-2">
       <div className="flex justify-between">
         <h2>Attributes</h2>
-        {isAdmin && <AddAttributeButton userId={userId} userName={userName} />}
+        {isAdmin && <AddAttributeButton userId={userId} />}
       </div>
       <AttributesContent userId={userId} />
     </div>

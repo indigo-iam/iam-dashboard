@@ -12,6 +12,7 @@ import { GroupRequests } from "./requests";
 type UserGroupsProps = {
   userId: string;
   userName: string;
+  userDisplay: string;
   userFormattedName: string;
   userEmail: string;
   userGroups: ScimReference[];
@@ -22,6 +23,7 @@ export async function UserGroups(props: Readonly<UserGroupsProps>) {
   const {
     userId,
     userName,
+    userDisplay,
     userFormattedName,
     userEmail,
     userGroups,
@@ -36,6 +38,7 @@ export async function UserGroups(props: Readonly<UserGroupsProps>) {
       <UnmanagedGroups
         userId={userId}
         userName={userName}
+        userDisplay={userDisplay}
         userFormattedName={userFormattedName}
         userEmail={userEmail}
         userGroups={userGroups}

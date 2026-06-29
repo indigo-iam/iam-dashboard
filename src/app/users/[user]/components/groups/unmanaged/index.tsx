@@ -4,54 +4,59 @@
 
 import Link from "@/components/link";
 import { ScimReference } from "@/models/scim";
-import { makeScimReferenceForUser } from "@/utils/scim";
 import GroupOptions from "./options";
 import JoinGroupButton from "./join-group-button";
 
 type StaticViewProps = {
-  groupRef: ScimReference;
+  groupId: string;
+  groupDisplay: string;
 };
 
 function StaticView(props: Readonly<StaticViewProps>) {
-  const { groupRef } = props;
+  const { groupId, groupDisplay } = props;
   return (
     <div className="flex grow flex-col">
-      <p className="text-gray-950 dark:text-gray-100">{groupRef.display}</p>
-      <p className="text-sm font-light">{groupRef.value}</p>
+      <p className="text-gray-950 dark:text-gray-100">{groupDisplay}</p>
+      <p className="text-sm font-light">{groupId}</p>
     </div>
   );
 }
 
-type LinkViewProps = {
-  groupRef: ScimReference;
-};
+type LinkViewProps = StaticViewProps;
 
 function LinkView(props: Readonly<LinkViewProps>) {
-  const { groupRef } = props;
+  const { groupId, groupDisplay } = props;
   return (
-    <Link href={`/groups/${groupRef.value}`} className="flex grow flex-col">
-      <p className="text-gray-950 dark:text-gray-100">{groupRef.display}</p>
-      <p className="text-sm font-light">{groupRef.value}</p>
+    <Link href={`/groups/${groupId}`} className="flex grow flex-col">
+      <p className="text-gray-950 dark:text-gray-100">{groupDisplay}</p>
+      <p className="text-sm font-light">{groupId}</p>
     </Link>
   );
 }
 
 type RowProps = {
-  userRef: ScimReference;
-  groupRef: ScimReference;
+  userId: string;
+  userDisplay: string;
+  groupId: string;
+  groupDisplay: string;
   isAdmin?: boolean;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const { userRef, groupRef, isAdmin } = props;
+  const { userId, userDisplay, groupId, groupDisplay, isAdmin } = props;
   return (
     <li className="iam-list-item">
       {isAdmin ? (
-        <LinkView groupRef={groupRef} />
+        <LinkView groupId={groupId} groupDisplay={groupDisplay} />
       ) : (
-        <StaticView groupRef={groupRef} />
+        <StaticView groupId={groupId} groupDisplay={groupDisplay} />
       )}
-      <GroupOptions groupRef={groupRef} userRef={userRef} />
+      <GroupOptions
+        userId={userId}
+        userDisplay={userDisplay}
+        groupId={groupId}
+        groupDisplay={groupDisplay}
+      />
     </li>
   );
 }
@@ -59,6 +64,7 @@ function Row(props: Readonly<RowProps>) {
 type UserGroupsProps = {
   userId: string;
   userName: string;
+  userDisplay: string;
   userFormattedName: string;
   userEmail: string;
   userGroups?: ScimReference[];
@@ -69,12 +75,12 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
   const {
     userId,
     userName,
+    userDisplay,
     userFormattedName,
     userEmail,
     userGroups,
     isAdmin,
   } = props;
-  const userRef = makeScimReferenceForUser(userId, userFormattedName);
   if (!userGroups || userGroups.length === 0) {
     return (
       <div className="panel space-y-4">
@@ -106,7 +112,14 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
       </div>
       <ul className="w-full">
         {userGroups.map(g => (
-          <Row key={g.value} userRef={userRef} groupRef={g} isAdmin={isAdmin} />
+          <Row
+            key={g.value}
+            userId={userId}
+            userDisplay={userDisplay}
+            groupId={g.value}
+            groupDisplay={g.display}
+            isAdmin={isAdmin}
+          />
         ))}
       </ul>
     </div>

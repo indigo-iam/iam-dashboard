@@ -44,6 +44,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
   const mfaEnabled = await statusMFA();
   const userId = user.id;
   const userName = user.userName ?? "unknown userName";
+  const userDisplay = user.displayName ?? "unknown user displayName";
   const userFormattedName = user.name?.formatted ?? "unknown user";
   const userGivenName = user.name?.givenName ?? "unknown name";
   const userFamilyName = user.name?.familyName ?? "unknown name";
@@ -100,6 +101,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
           <UserGroups
             userId={userId}
             userName={userName}
+            userDisplay={userDisplay}
             userFormattedName={userFormattedName}
             userEmail={userEmail}
             userGroups={userGroups ?? []}

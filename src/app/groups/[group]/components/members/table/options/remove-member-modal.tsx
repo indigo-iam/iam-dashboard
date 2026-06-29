@@ -7,26 +7,35 @@ import Link from "@/components/link";
 import ConfirmModal from "@/components/confirm-modal";
 import { ModalProps } from "@/components/modal";
 import { toast } from "@/components/toaster";
-import { ScimReference } from "@/models/scim";
-import { removeUserByRefFromGroupReference } from "@/services/groups";
-import { makeScimReferenceForGroup } from "@/utils/scim";
+import { removeUserFromGroup } from "@/services/groups";
 
 interface RevokeMemberFromGroupModalProps extends ModalProps {
-  userRef: ScimReference;
-  groupName: string;
+  userId: string;
+  userDisplay: string;
   groupId: string;
+  groupDisplay: string;
   groupDescription?: string | null;
 }
 
 export default function RemoveMemberFromGroupModal(
   props: Readonly<RevokeMemberFromGroupModalProps>
 ) {
-  const { userRef, groupId, groupName, groupDescription, ...modalProps } =
-    props;
+  const {
+    userId,
+    userDisplay,
+    groupId,
+    groupDisplay,
+    groupDescription,
+    ...modalProps
+  } = props;
 
   async function action() {
-    const groupRef = makeScimReferenceForGroup(groupId, groupName);
-    const res = await removeUserByRefFromGroupReference(userRef, groupRef);
+    const res = await removeUserFromGroup(
+      userId,
+      userDisplay,
+      groupId,
+      groupDisplay
+    );
     toast.toast(res);
   }
 
@@ -40,10 +49,10 @@ export default function RemoveMemberFromGroupModal(
       <div className="space-y-2">
         <p>
           Are you sure you want to remove the user{" "}
-          <Link href={`/users/${userRef.value}`} className="underline">
-            <b>{userRef.display}</b>
+          <Link href={`/users/${userId}`} className="underline">
+            <b>{userDisplay}</b>
           </Link>{" "}
-          from group <b>{groupName}</b>{" "}
+          from group <b>{groupDisplay}</b>{" "}
           {groupDescription && (
             <>
               (<span className="italic">{groupDescription}</span>)

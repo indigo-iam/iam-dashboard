@@ -17,7 +17,7 @@ import {
   UserManagedGroupsTable,
 } from "./components";
 import { fetchMe } from "@/services/me";
-import JoinGroupButton from "@/app/users/[user]/components/groups/join-group-button";
+import JoinGroupButton from "@/app/users/[user]/components/groups/unmanaged/join-group-button";
 import { fetchGroupsRequests } from "@/services/group-requests";
 
 type GroupsProps = {

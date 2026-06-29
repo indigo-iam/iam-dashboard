@@ -53,7 +53,6 @@ export async function Aup(props: Readonly<AupProps>) {
     userAupSignatureTime,
   } = props;
   const aup = await fetchAUP();
-  console.log(aup, userAupSignatureTime);
   if (!aup) {
     return null;
   }

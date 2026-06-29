@@ -247,3 +247,21 @@ export async function revokeTokens(
     description: `Error ${response.status} ${msg}`,
   };
 }
+
+export async function resetClient(clientId: string): Promise<Notification> {
+  const url = `${IAM_API_URL}/iam/api/clients/${clientId}/reset-client`;
+  const response = await authFetch(url, { method: "PATCH" });
+  if (response.ok) {
+    revalidatePath(`/clients/${clientId}`);
+    return {
+      type: "success",
+      title: "Client has been reset",
+    };
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Failed to reset client",
+    description: `Error ${response.status} ${msg}`,
+  };
+}

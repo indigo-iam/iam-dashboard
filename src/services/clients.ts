@@ -227,3 +227,41 @@ export async function rotateClientSecret(
     description: `Error ${response.status} ${msg}`,
   };
 }
+
+export async function revokeTokens(
+  clientId: string,
+  action: "revoke-refresh-tokens" | "revoke-access-tokens"
+): Promise<Notification> {
+  const url = `${IAM_API_URL}/iam/api/clients/${clientId}/${action}`;
+  const response = await authFetch(url, { method: "PATCH" });
+  if (response.ok) {
+    return {
+      type: "success",
+      title: "Tokens revoked",
+    };
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot revoke tokens",
+    description: `Error ${response.status} ${msg}`,
+  };
+}
+
+export async function resetClient(clientId: string): Promise<Notification> {
+  const url = `${IAM_API_URL}/iam/api/clients/${clientId}/reset-client`;
+  const response = await authFetch(url, { method: "PATCH" });
+  if (response.ok) {
+    revalidatePath(`/clients/${clientId}`);
+    return {
+      type: "success",
+      title: "Client has been reset",
+    };
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Failed to reset client",
+    description: `Error ${response.status} ${msg}`,
+  };
+}

@@ -9,27 +9,30 @@ import MemberOptions from "./options";
 import Link from "next/link";
 
 type RowProps = {
-  userRef: ScimReference;
+  userId: string;
+  userDisplay: string;
   groupId: string;
-  groupName: string;
+  groupDisplay: string;
   groupDescription?: string | null;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const { userRef, groupId, groupName, groupDescription } = props;
+  const { userId, userDisplay, groupId, groupDisplay, groupDescription } =
+    props;
   return (
     <li className="iam-list-item">
-      <Link className="flex w-0 grow flex-col" href={`/users/${userRef.value}`}>
+      <Link className="flex w-0 grow flex-col" href={`/users/${userId}`}>
         <p className="truncate text-gray-950 dark:text-gray-200">
-          {userRef.display}
+          {userDisplay}
         </p>
-        <p className="truncate text-sm font-light">{userRef.value}</p>
+        <p className="truncate text-sm font-light">{userId}</p>
       </Link>
 
       <MemberOptions
-        userRef={userRef}
+        userId={userId}
+        userDisplay={userDisplay}
         groupId={groupId}
-        groupName={groupName}
+        groupDisplay={groupDisplay}
         groupDescription={groupDescription}
       />
     </li>
@@ -38,12 +41,12 @@ function Row(props: Readonly<RowProps>) {
 
 type MembersProps = {
   groupId: string;
-  groupName: string;
+  groupDisplay: string;
   groupDescription?: string | null;
   members: ScimReference[];
 };
 export default async function Members(props: Readonly<MembersProps>) {
-  const { groupId, groupName, groupDescription } = props;
+  const { groupId, groupDisplay, groupDescription } = props;
   // TODO: pagination
   const members = (await fetchGroupMembersPage(groupId)).Resources;
 
@@ -56,9 +59,10 @@ export default async function Members(props: Readonly<MembersProps>) {
       {members.map(member => (
         <Row
           key={member.value}
-          userRef={member}
+          userId={member.value}
+          userDisplay={member.display}
           groupId={groupId}
-          groupName={groupName}
+          groupDisplay={groupDisplay}
           groupDescription={groupDescription}
         />
       ))}

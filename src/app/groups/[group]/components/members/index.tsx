@@ -34,7 +34,7 @@ export default async function Members(props: Readonly<MembersProps>) {
       )}
       <MembersTable
         groupId={groupId}
-        groupName={groupName}
+        groupDisplay={groupName}
         groupDescription={groupDescription}
         members={members}
       />

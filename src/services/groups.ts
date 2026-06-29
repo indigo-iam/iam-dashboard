@@ -238,10 +238,14 @@ export async function addUserToGroup(
   };
 }
 
-export async function removeUserByRefFromGroupReference(
-  userRef: ScimReference,
-  groupRef: ScimReference
+export async function removeUserFromGroup(
+  userId: string,
+  userName: string,
+  groupId: string,
+  groupName: string
 ): Promise<Notification> {
+  const userRef = makeScimReferenceForUser(userId, userName);
+  const groupRef = makeScimReferenceForGroup(groupId, groupName);
   const body = {
     operations: [
       {

@@ -3,26 +3,20 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { TabPanel } from "@/components/tabs";
-import { AttributesCard } from "./attributes";
+import { AttributesPanel } from "./attributes";
 import { LabelsPanel } from "./labels";
 
 type AttributesProps = {
   userId: string;
   userName: string;
-  userFormattedName: string;
   isAdmin: boolean;
 };
 
 export async function AttributesAndLabels(props: Readonly<AttributesProps>) {
-  const { userId, userName, userFormattedName, isAdmin } = props;
+  const { userId, userName, isAdmin } = props;
   return (
     <TabPanel className="space-y-4">
-      <AttributesCard
-        userId={userId}
-        userName={userName}
-        userFormattedName={userFormattedName}
-        isAdmin={isAdmin}
-      />
+      <AttributesPanel userId={userId} userName={userName} isAdmin={isAdmin} />
       <LabelsPanel isAdmin={isAdmin} userId={userId} />
     </TabPanel>
   );

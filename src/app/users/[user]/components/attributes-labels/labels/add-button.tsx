@@ -105,7 +105,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
                 className="data-[invalid='true']:text-danger"
                 data-invalid={!prefixValidator.hasAtLeastTwoCharactersBeforeDot}
               >
-                Must have between 2 and 63 letters, digits or{" "}
+                Must have between 2 and 63 letters, numbers or{" "}
                 <span className="font-code">-</span> before{" "}
                 <span className="font-code">.</span>
               </li>
@@ -119,14 +119,14 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
                 className="data-[invalid='true']:text-danger"
                 data-invalid={!prefixValidator.betweenTwoAndSixCharsAfterDot}
               >
-                Must have between 2 and 6 letters and digits following{" "}
+                Must have between 2 and 6 letters and numbers following{" "}
                 <span className="font-code">.</span>
               </li>
               <li
                 className="data-[invalid='true']:text-danger"
                 data-invalid={!prefixValidator.endsWithLetterOrDigit}
               >
-                Must end with a letter or digit
+                Must end with a letter or number
               </li>
             </ul>
           </Field>
@@ -143,7 +143,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
                 className="data-[invalid='true']:text-danger"
                 data-invalid={!nameValidator.startWithLetterOrDigit}
               >
-                Must start with a letter or digit
+                Must start with a letter or number
               </li>
               <li
                 className="data-[invalid='true']:text-danger"

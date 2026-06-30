@@ -13,11 +13,12 @@ type Label = {
 };
 
 type LabelsContentProps = {
+  isAdmin: boolean;
   userId: string;
 };
 
 async function LabelsContent(props: Readonly<LabelsContentProps>) {
-  const { userId } = props;
+  const { isAdmin, userId } = props;
   const labels = (await fetchUserLabels(userId)) as Label[];
 
   if (labels.length === 0) {
@@ -28,6 +29,7 @@ async function LabelsContent(props: Readonly<LabelsContentProps>) {
     <div className="flex w-full gap-2">
       {labels.map(label => (
         <LabelView
+          isAdmin={isAdmin}
           key={`${label.prefix}-${label.name}`}
           name={label.name}
           prefix={label.prefix}
@@ -52,7 +54,7 @@ export function LabelsPanel(props: Readonly<LabelsPanelProps>) {
         <h2>Labels</h2>
         {isAdmin && <AddLabelButton userId={userId} />}
       </div>
-      {<LabelsContent userId={userId} />}
+      {<LabelsContent isAdmin={isAdmin} userId={userId} />}
     </div>
   );
 }

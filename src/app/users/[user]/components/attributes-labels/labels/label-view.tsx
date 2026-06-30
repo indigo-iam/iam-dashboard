@@ -9,6 +9,7 @@ import { deleteUserLabel } from "@/services/users";
 import { toast } from "@/components/toaster";
 
 type LabelViewProps = {
+  isAdmin: boolean;
   userId: string;
   prefix: string;
   name: string;
@@ -16,7 +17,7 @@ type LabelViewProps = {
 };
 
 export function LabelView(props: Readonly<LabelViewProps>) {
-  const { userId, prefix, name, value } = props;
+  const { isAdmin, userId, prefix, name, value } = props;
   async function deleteLabel() {
     const res = await deleteUserLabel(userId, prefix, name);
     if (res) {
@@ -28,7 +29,7 @@ export function LabelView(props: Readonly<LabelViewProps>) {
       key={prefix}
       name={prefix}
       value={value ? `${name}:${value}` : name}
-      onClick={deleteLabel}
+      onClick={isAdmin ? deleteLabel : undefined}
     />
   );
 }

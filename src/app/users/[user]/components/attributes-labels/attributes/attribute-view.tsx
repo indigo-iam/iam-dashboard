@@ -14,12 +14,13 @@ import { Attribute } from "@/models/attributes";
 import { deleteAttribute } from "@/services/users";
 
 type AttributeViewProps = {
+  isAdmin: boolean;
   userId: string;
   attr: Attribute;
 };
 
 export function AttributeView(props: Readonly<AttributeViewProps>) {
-  const { userId, attr } = props;
+  const { isAdmin, userId, attr } = props;
   async function deleteLabel() {
     const res = await deleteAttribute(userId, attr);
     if (res) {
@@ -31,7 +32,7 @@ export function AttributeView(props: Readonly<AttributeViewProps>) {
       key={`${attr.name}-${attr.value}`}
       name={attr.name}
       value={attr.value}
-      onClick={deleteLabel}
+      onClick={isAdmin ? deleteLabel : undefined}
     />
   );
 }

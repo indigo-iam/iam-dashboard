@@ -7,11 +7,12 @@ import AddAttributeButton from "./add-button";
 import { AttributeView } from "./attribute-view";
 
 type AttributesContentProps = {
+  isAdmin: boolean;
   userId: string;
 };
 
 async function AttributesContent(props: Readonly<AttributesContentProps>) {
-  const { userId } = props;
+  const { isAdmin, userId } = props;
   const attributes = await fetchAttributes(userId);
   if (attributes.length === 0) {
     return <p>No attribute found.</p>;
@@ -20,6 +21,7 @@ async function AttributesContent(props: Readonly<AttributesContentProps>) {
     <div className="flex w-full gap-2">
       {attributes.map(attr => (
         <AttributeView
+          isAdmin={isAdmin}
           key={`${attr.name}-${attr.value}`}
           userId={userId}
           attr={attr}
@@ -42,7 +44,7 @@ export function AttributesPanel(props: Readonly<AttributesPanelProps>) {
         <h2>Attributes</h2>
         {isAdmin && <AddAttributeButton userId={userId} />}
       </div>
-      <AttributesContent userId={userId} />
+      <AttributesContent isAdmin={isAdmin} userId={userId} />
     </div>
   );
 }

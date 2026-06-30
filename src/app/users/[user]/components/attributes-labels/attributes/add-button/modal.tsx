@@ -22,7 +22,7 @@ import { addAttribute } from "@/services/users";
 function validateField(s: string) {
   return {
     startsWithLetterOrDigit: /^[A-Za-z0-9]+/.test(s),
-    hasValidCharacters: /[A-Za-z0-9\-_.]+$/.test(s),
+    hasValidCharacters: /^[A-Za-z0-9\-_.]+$/.test(s),
     hasCorrectNumberOfChars: s.length >= 2 && s.length < 64,
     isValid: /^[A-Za-z0-9][A-Za-z0-9\-_.]{0,62}$/.test(s),
   };

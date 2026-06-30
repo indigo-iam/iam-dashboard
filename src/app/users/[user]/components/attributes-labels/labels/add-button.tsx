@@ -157,11 +157,18 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" type="reset" onClick={resetStates}>
+          <Button
+            className="btn-tertiary"
+            type="button"
+            onClick={closeAndReset}
+          >
+            Cancel
+          </Button>
+          <Button className="btn-secondary" type="reset" onClick={resetStates}>
             Reset
           </Button>
           <Button
-            className="btn-secondary"
+            className="btn-primary"
             type="submit"
             disabled={!prefixValidator.isValid || !nameValidator.isValid}
           >

@@ -535,12 +535,14 @@ export async function fetchUserLabels(userId: string) {
 export async function addUserLabel(
   userId: string,
   prefix: string,
-  name: string
+  name: string,
+  value: string | null
 ): Promise<Notification | void> {
   const url = `${IAM_API_URL}/iam/account/${userId}/labels`;
   const body = {
     prefix,
     name,
+    value,
   };
   const response = await authFetch(url, {
     method: "PUT",

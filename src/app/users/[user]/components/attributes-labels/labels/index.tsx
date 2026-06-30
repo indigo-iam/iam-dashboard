@@ -9,6 +9,7 @@ import { LabelView } from "./label-view";
 type Label = {
   prefix: string;
   name: string;
+  value: string | null;
 };
 
 type LabelsContentProps = {
@@ -30,6 +31,7 @@ async function LabelsContent(props: Readonly<LabelsContentProps>) {
           key={`${label.prefix}-${label.name}`}
           name={label.name}
           prefix={label.prefix}
+          value={label.value}
           userId={userId}
         />
       ))}

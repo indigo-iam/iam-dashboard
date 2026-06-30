@@ -76,7 +76,7 @@ function ValidateNameView(props: Readonly<ValidateNameViewProps>) {
   const startWithLetterOrDigit = /^[A-Za-z0-9]/.test(name);
   const containsOnlyValidCharacters = /^[a-zA-Z0-9-_.]*$/.test(name);
   return (
-    <ul className="list-disc px-6 pt-2 text-xs" hidden={!name}>
+    <ul className="list-disc px-6 pt-2 text-xs">
       <li
         className="data-[invalid='true']:text-danger"
         data-invalid={!startWithLetterOrDigit}
@@ -103,6 +103,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
   const formRef = useRef<HTMLFormElement>(null);
   const [prefix, setPrefix] = useState("");
   const [name, setName] = useState("");
+  const [value, setValue] = useState<string | null>(null);
 
   const prefixIsValid =
     /^[A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9].[A-Za-z]{2,6}$/.test(prefix);
@@ -113,7 +114,8 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
     const formData = new FormData(event.currentTarget);
     const prefix = (formData.get("prefix") as string | null) ?? "";
     const name = (formData.get("name") as string | null) ?? "";
-    const res = await addUserLabel(userId, prefix, name);
+    const value = formData.get("value") as string | null;
+    const res = await addUserLabel(userId, prefix, name, value);
     if (res) {
       toast.toast(res);
     }
@@ -161,6 +163,15 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
               onChange={e => setName(e.currentTarget.value)}
             />
             {name && <ValidateNameView name={name} />}
+          </Field>
+          <Field>
+            <Label>Value</Label>
+            <Input
+              name="value"
+              placeholder="123456"
+              onChange={e => setValue(e.currentTarget.value)}
+            />
+            {value && <ValidateNameView name={value} />}
           </Field>
         </ModalBody>
         <ModalFooter>

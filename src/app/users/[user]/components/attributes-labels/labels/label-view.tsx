@@ -12,10 +12,11 @@ type LabelViewProps = {
   userId: string;
   prefix: string;
   name: string;
+  value: string | null;
 };
 
 export function LabelView(props: Readonly<LabelViewProps>) {
-  const { userId, prefix, name } = props;
+  const { userId, prefix, name, value } = props;
   async function deleteLabel() {
     const res = await deleteUserLabel(userId, prefix, name);
     if (res) {
@@ -26,7 +27,7 @@ export function LabelView(props: Readonly<LabelViewProps>) {
     <BaseLabelView
       key={prefix}
       name={prefix}
-      value={name}
+      value={value ? `${name}:${value}` : name}
       onClick={deleteLabel}
     />
   );

@@ -522,3 +522,66 @@ export async function setServiceAccount(
     description: `${response.status} ${msg}`,
   };
 }
+
+export async function fetchUserLabels(userId: string) {
+  const url = `${IAM_API_URL}/iam/account/${userId}/labels`;
+  const response = await authFetch(url);
+  if (response.ok) {
+    return await response.json();
+  }
+  throw new Error(`Failed to fetch user labels with status ${response.status}`);
+}
+
+export async function addUserLabel(
+  userId: string,
+  prefix: string,
+  name: string,
+  value: string | null
+): Promise<Notification | void> {
+  const url = `${IAM_API_URL}/iam/account/${userId}/labels`;
+  const body = {
+    prefix,
+    name,
+    value,
+  };
+  const response = await authFetch(url, {
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  if (response.ok) {
+    revalidatePath(`/users/${userId}`);
+    return;
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: `Cannot add user label`,
+    description: `Error ${response.status} ${msg}`,
+  };
+}
+
+export async function deleteUserLabel(
+  userId: string,
+  prefix: string,
+  name: string
+): Promise<Notification | void> {
+  const url = `${IAM_API_URL}/iam/account/${userId}/labels`;
+  const body = new URLSearchParams({ prefix, name });
+  const response = await authFetch(url, {
+    method: "DELETE",
+    body,
+  });
+  if (response.ok) {
+    revalidatePath(`/users/${userId}`);
+    return;
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: `Cannot delete user label`,
+    description: `Error ${response.status} ${msg}`,
+  };
+}

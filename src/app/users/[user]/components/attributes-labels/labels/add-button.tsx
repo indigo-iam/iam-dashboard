@@ -24,9 +24,9 @@ function validatePrefix(s: string) {
     startsWithLettersOrDigits: /^[A-Za-z0-9]/.test(s),
     hasAtLeastTwoCharactersBeforeDot:
       /^[A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9].*/.test(s),
-    hasDot: /.*\..*/.test(s),
-    betweenTwoAndSixCharsAfterDot: /.*\.[A-Za-z0-9-]{2,6}$/.test(s),
-    endsWithLetterOrDigit: /.*[A-Za-z0-9]$/.test(s),
+    hasDot: /\./.test(s),
+    betweenTwoAndSixCharsAfterDot: /\.[A-Za-z0-9]{2,6}$/.test(s),
+    endsWithLetterOrDigit: /[A-Za-z0-9]$/.test(s),
     isValid: /^[A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9].[A-Za-z]{2,6}$/.test(s),
   };
 }
@@ -119,8 +119,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
                 className="data-[invalid='true']:text-danger"
                 data-invalid={!prefixValidator.betweenTwoAndSixCharsAfterDot}
               >
-                Must have between 2 and 6 letters and digits, or{" "}
-                <span className="font-code">-</span> following{" "}
+                Must have between 2 and 6 letters and digits following{" "}
                 <span className="font-code">.</span>
               </li>
               <li

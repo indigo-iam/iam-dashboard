@@ -23,5 +23,5 @@
 }
 
 @utility font-code {
-  @apply rounded bg-gray-100 px-1 py-0.5 font-mono;
+  @apply rounded bg-gray-100 px-1 py-0.5 font-mono dark:bg-gray-500;
 }

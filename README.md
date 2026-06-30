@@ -5,14 +5,25 @@
 
 INDIGO IAM Dashboard is the web application of INDIGO IAM developed by INFN.
 
-# 1. Introduction
+## Introduction
 
 The dashboard is implemented in [TypeScript](https://www.typescriptlang.org),
 using [React](https://react.dev) and [Next.js](https://nextjs.org).
 OpenID Connect/OAuth2 authorization flow is handled by
 [Better Auth](https://www.better-auth.com).
 
-# 2. IAM Client Configuration
+## IAM Configuration
+
+In order to support the dashboard, IAM login service must be initialized with
+the following environment variables enabled:
+
+```shell
+IAM_DASHBOARD_ENABLED: true
+IAM_ACCESS_TOKEN_INCLUDE_SCOPE: true
+IAM_SCIM_INCLUDE_AUTHORITIES: true
+```
+
+### Client Configuration
 
 The dashboard acts as a INDIGO IAM Login Service OpenID Connect/OAuth2 client
 and thus, a registered client is required to receive an access token.
@@ -20,7 +31,7 @@ and thus, a registered client is required to receive an access token.
 To register a new client, go to the chosen INDIGO IAM instance, login as admin
 and create a new client with the configuration described below.
 
-## 1.1 Redirect URIs
+#### Redirect URIs
 
 In the client main page, add all needed redirect uris, in the form of
 `<IAM_DASHBOARD_URL>/api/oauth2/callback/indigo-iam` (without the trailing `/`).
@@ -41,7 +52,7 @@ https://iam-dev.cloud.cnaf.infn.it/ui/auth/oauth2/callback/indigo-iam
 where https://iam-dev.cloud.cnaf.infn.it/ui is the URL where the dashboard is
 located (see following sections for changing the `basePath` parameter).
 
-## 1.2 Scopes
+#### Scopes
 
 In the _Scopes_ tab, assure that the following scopes are enabled:
 
@@ -53,18 +64,18 @@ In the _Scopes_ tab, assure that the following scopes are enabled:
 - `iam:admin.read`
 - `iam:admin.write`
 
-## 1.3 Grant Types
+#### Grant Types
 
 In the _Grant Types_ tab, enable `authorization_code`.
 Finally, in the **Crypto** section, enable PKCE with SHA-256 has algorithm.
 
-# 2. Deployment
+## Deployment
 
 A Docker image is automatically built using GitHub Action and available on
 [Docker Hub](https://hub.docker.com/r/cnafsoftwaredevel/iam-dashboard/tags) for
 `basePath` equal to `/ui` (see section below).
 
-## 2.1 IAM_DASHBOARD_AUTH_SECRET
+### IAM_DASHBOARD_AUTH_SECRET
 
 `IAM_DASHBOARD_AUTH_SECRET` is a variable to securely protect session cookies
 for authentication. You could generate a secret key by running:
@@ -77,7 +88,7 @@ openssl rand -base64 32
 > and thus the Access Token. Do not share the secret especially the once
 > generated for production deployment.
 
-## 2.2 IAM Dashboard Configuration
+### IAM Dashboard Configuration
 
 Create `.env` file similar to:
 
@@ -100,7 +111,7 @@ To start the application execute:
 docker run -p <some-port>:80 --env-file=prod.env cnafsoftwaredevel/iam-dashboard:latest
 ```
 
-## 2.3 Base Path
+### Base Path
 
 To deploy a Next.js application under a different path of a domain you can use
 the `basePath`
@@ -119,12 +130,12 @@ run:
 docker build . -t iam-dashboard --build-arg IAM_DASHBOARD_BASE_PATH=/ui
 ```
 
-# 3. Development
+## Development
 
 Development can be done locally or using Dev Containers that provide an already
 prepared environment.
 
-## 3.1 Preparation
+### Preparation
 
 Independently from you preferred development method, local or via Dev Containers,
 it is required to register a valid domain in your `/etc/hosts` file or
@@ -133,7 +144,7 @@ Public Certificate for TLS termination.
 The next sections describe how to setup the domain name and register custom
 certificates.
 
-### 3.1.1 Hosts file
+#### Hosts file
 
 In order to use TLS, a domain name must be registered in your local DNS entry.
 For Linux and Mac, add `iam.test.example` to the localhost entry in your
@@ -148,7 +159,7 @@ It should look like the following:
 ...
 ```
 
-### 3.1.2 TLS Termination
+#### TLS Termination
 
 Before launching the deployment, add `iam.test.example` es explained in
 [Hosts file](#hosts-file) section.
@@ -168,7 +179,7 @@ assets/trust
 └── star_test_example_ca.pem
 ```
 
-### 3.1.3 Generate `.env` file
+#### Generate `.env` file
 
 Since Indigo IAM v1.14.0, a client for the dashboard is automatically registered
 during boot whenever the `IAM_DASHBOARD_CLIENT_ID` and
@@ -182,7 +193,7 @@ export IAM_DASHBOARD_AUTH_SECRET=$(openssl rand -base64 32)
 envsubst < .template.env > .env
 ```
 
-### 3.1.4 Add `redirect_uri`s
+#### Add `redirect_uri`s
 
 The NGINX reverse proxy shipped with this project, provides the following routes:
 
@@ -208,12 +219,12 @@ To enable the `/dev` and `/devcontainer` `redirect_uri`s:
 > Note: every time the IAM login service container is removed, for example with
 > `docker compose down`, the redirect uris must be reconfigured.
 
-## 3.3 Dev Containers
+### Dev Containers
 
 This project provides a ready to use development environment by using Dev
 Containers. It is has been tested with VS Code and Zed IDEs.
 
-### 3.3.1 Start the project
+#### Start the project
 
 Open the project with VS Code and click "Open in container".
 
@@ -265,7 +276,7 @@ next dev
 The old IAM Login Service dashboard is available at https://iam.test.example
 while the new dashboard is reachable at https://iam.test.example/devcontainer.
 
-### 3.3.2 Shutdown all containers
+#### Shutdown all containers
 
 When closing the devcontainer, it should call `docker compose down` to
 gracefully close all services. It this does not happen, to shut down all
@@ -275,13 +286,13 @@ the services execute:
 docker compose down --remove-orphans
 ```
 
-## 3.4 Local development
+### Local development
 
 To launch the development environment, an installation of
 [Node.js](https://nodejs.org/en) is the only mandatory requirement.
 This project currently relies upon Node 24 LTS.
 
-### 3.4.1 Configuration
+#### Configuration
 
 This project provides a [`docker-compose.yaml`](docker-compose.yaml) file
 to start an instance of INDIGO IAM Login Service, MySQL and NGINX. This
@@ -337,7 +348,7 @@ next dev
 The old IAM Login Service dashboard is available at https://iam.test.example
 while the new dashboard is reachable at https://iam.test.example/dev.
 
-## 3.5 End-to-end tests with Reverse Proxy (E2E)
+### End-to-end tests with Reverse Proxy (E2E)
 
 End-to-end (E2E) tests are written using [Playwright](https://playwright.dev)
 testing framework.
@@ -348,7 +359,7 @@ builds an image called `iam-dashboard:test`, located at https://iam.test.example
 By default, Playwright will run tests against the `https://iam.test.example/ui`
 endpoint, to the the final image that will be built during the CI/CD pipeline.
 
-### 3.5.1 Install Playwright browsers
+#### Install Playwright browsers
 
 To run the tests, Playwright browser must be installed first, or on your local
 machine or inside the Dev Container.
@@ -359,7 +370,7 @@ To install the browsers, run:
 npx playwright install --with-deps
 ```
 
-### 3.5.1 Run the tests against built image
+#### Run the tests against built image
 
 The CI/CD pipeline performs end-to-end tests each time a new commit is pushed
 to the remote origin. To perform the system tests, IAM Dashboard must be
@@ -399,7 +410,7 @@ docker compose down [-v]
 docker compose up -d --build
 ```
 
-### 3.5.2 Run tests in local development mode
+#### Run tests in local development mode
 
 It is possible to run tests on the local development mode started by
 `npm run dev`.
@@ -427,7 +438,7 @@ export NODE_EXTRA_CA_CERTS="$(pwd)/assets/trust/star_test_example_ca.pem"
 IAM_DASHBOARD_BASE_PATH=/dev npx playwright test [--ui]
 ```
 
-### 3.5.3 Run tests inside Dev Container
+#### Run tests inside Dev Container
 
 To run tests inside the devcontainer, first install Playwright browsers:
 

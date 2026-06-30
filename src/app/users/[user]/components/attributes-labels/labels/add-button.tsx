@@ -19,24 +19,79 @@ import {
 import { toast } from "@/components/toaster";
 import { addUserLabel } from "@/services/users";
 
-function validatePrefix(s: string) {
-  return {
-    startsWithLettersOrDigits: /^[A-Za-z0-9]/.test(s),
-    hasAtLeastTwoCharactersBeforeDot:
-      /^[A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9].*/.test(s),
-    hasDot: /\./.test(s),
-    betweenTwoAndSixCharsAfterDot: /\.[A-Za-z0-9]{2,6}$/.test(s),
-    endsWithLetterOrDigit: /[A-Za-z0-9]$/.test(s),
-    isValid: /^[A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9].[A-Za-z]{2,6}$/.test(s),
-  };
+type ValidatePrefixViewProps = {
+  prefix: string;
+};
+
+function ValidatePrefixView(props: Readonly<ValidatePrefixViewProps>) {
+  const { prefix } = props;
+  const startsWithLettersOrDigits = /^[A-Za-z0-9]/.test(prefix);
+  const hasAtLeastTwoCharactersBeforeDot =
+    /^[A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9].*/.test(prefix);
+  const hasDot = /\./.test(prefix);
+  const betweenTwoAndSixCharsAfterDot = /\.[A-Za-z0-9]{2,6}$/.test(prefix);
+  const endsWithLetterOrDigit = /[A-Za-z0-9]$/.test(prefix);
+  return (
+    <ul className="list-disc px-4 pt-2 text-xs">
+      <li
+        className="data-[invalid='true']:text-danger"
+        data-invalid={!startsWithLettersOrDigits}
+      >
+        Must start with a letter or digit
+      </li>
+      <li
+        className="data-[invalid='true']:text-danger"
+        data-invalid={!hasAtLeastTwoCharactersBeforeDot}
+      >
+        Must have between 2 and 63 letters, numbers or{" "}
+        <span className="font-code">-</span> before{" "}
+        <span className="font-code">.</span>
+      </li>
+      <li className="data-[invalid='true']:text-danger" data-invalid={!hasDot}>
+        Must have a <span className="font-code">.</span>
+      </li>
+      <li
+        className="data-[invalid='true']:text-danger"
+        data-invalid={!betweenTwoAndSixCharsAfterDot}
+      >
+        Must have between 2 and 6 letters and numbers following{" "}
+        <span className="font-code">.</span>
+      </li>
+      <li
+        className="data-[invalid='true']:text-danger"
+        data-invalid={!endsWithLetterOrDigit}
+      >
+        Must end with a letter or number
+      </li>
+    </ul>
+  );
 }
 
-function validateName(s: string) {
-  return {
-    startWithLetterOrDigit: /^[A-Za-z0-9]/.test(s),
-    containsOnlyValidCharacters: /^[a-zA-Z0-9-_.]*$/.test(s),
-    isValid: /^[a-zA-Z][a-zA-Z0-9-_.]*/.test(s),
-  };
+type ValidateNameViewProps = {
+  name: string;
+};
+
+function ValidateNameView(props: Readonly<ValidateNameViewProps>) {
+  const { name } = props;
+  const startWithLetterOrDigit = /^[A-Za-z0-9]/.test(name);
+  const containsOnlyValidCharacters = /^[a-zA-Z0-9-_.]*$/.test(name);
+  return (
+    <ul className="list-disc px-6 pt-2 text-xs" hidden={!name}>
+      <li
+        className="data-[invalid='true']:text-danger"
+        data-invalid={!startWithLetterOrDigit}
+      >
+        Must start with a letter or number
+      </li>
+      <li
+        className="data-[invalid='true']:text-danger"
+        data-invalid={!containsOnlyValidCharacters}
+      >
+        Must contain only letters, digits, <span className="font-code">_</span>{" "}
+        or <span className="font-code">-</span>
+      </li>
+    </ul>
+  );
 }
 
 type AddLabelModalProps = ModalProps & {
@@ -48,6 +103,10 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
   const formRef = useRef<HTMLFormElement>(null);
   const [prefix, setPrefix] = useState("");
   const [name, setName] = useState("");
+
+  const prefixIsValid =
+    /^[A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9].[A-Za-z]{2,6}$/.test(prefix);
+  const nameIsValid = /^[a-zA-Z][a-zA-Z0-9-_.]*/.test(name);
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -78,9 +137,6 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
     }, 300);
   }
 
-  const prefixValidator = validatePrefix(prefix);
-  const nameValidator = validateName(name);
-
   return (
     <Modal show={show} onClose={closeAndReset}>
       <ModalHeader onClose={closeAndReset}>Add user label</ModalHeader>
@@ -94,41 +150,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
               onChange={e => setPrefix(e.currentTarget.value)}
               required
             />
-            <ul className="list-disc px-4 pt-2 text-xs" hidden={!prefix}>
-              <li
-                className="data-[invalid='true']:text-danger"
-                data-invalid={!prefixValidator.startsWithLettersOrDigits}
-              >
-                Must start with a letter or digit
-              </li>
-              <li
-                className="data-[invalid='true']:text-danger"
-                data-invalid={!prefixValidator.hasAtLeastTwoCharactersBeforeDot}
-              >
-                Must have between 2 and 63 letters, numbers or{" "}
-                <span className="font-code">-</span> before{" "}
-                <span className="font-code">.</span>
-              </li>
-              <li
-                className="data-[invalid='true']:text-danger"
-                data-invalid={!prefixValidator.hasDot}
-              >
-                Must have a <span className="font-code">.</span>
-              </li>
-              <li
-                className="data-[invalid='true']:text-danger"
-                data-invalid={!prefixValidator.betweenTwoAndSixCharsAfterDot}
-              >
-                Must have between 2 and 6 letters and numbers following{" "}
-                <span className="font-code">.</span>
-              </li>
-              <li
-                className="data-[invalid='true']:text-danger"
-                data-invalid={!prefixValidator.endsWithLetterOrDigit}
-              >
-                Must end with a letter or number
-              </li>
-            </ul>
+            {prefix && <ValidatePrefixView prefix={prefix} />}
           </Field>
           <Field>
             <Label data-required>Name</Label>
@@ -138,22 +160,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
               required
               onChange={e => setName(e.currentTarget.value)}
             />
-            <ul className="list-disc px-6 pt-2 text-xs" hidden={!name}>
-              <li
-                className="data-[invalid='true']:text-danger"
-                data-invalid={!nameValidator.startWithLetterOrDigit}
-              >
-                Must start with a letter or number
-              </li>
-              <li
-                className="data-[invalid='true']:text-danger"
-                data-invalid={!nameValidator.containsOnlyValidCharacters}
-              >
-                Must contain only letters, digits,{" "}
-                <span className="font-code">_</span> or{" "}
-                <span className="font-code">-</span>
-              </li>
-            </ul>
+            {name && <ValidateNameView name={name} />}
           </Field>
         </ModalBody>
         <ModalFooter>
@@ -170,7 +177,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
           <Button
             className="btn-primary"
             type="submit"
-            disabled={!prefixValidator.isValid || !nameValidator.isValid}
+            disabled={!prefixIsValid || !nameIsValid}
           >
             Add label
           </Button>

@@ -42,7 +42,7 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
           <p className="whitespace-normal">
             A disabled user cannot login and tokens are immediately revoked.
           </p>
-          <p>Delete the user to completely remove them from he organization.</p>
+          <p>Delete the user to completely remove them from the organization.</p>
         </div>
       </div>
       <div className="w-full space-y-4 lg:w-2/3">

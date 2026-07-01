@@ -7,7 +7,7 @@
 import { createContext, useContext } from "react";
 
 type ProgressBarContextProps = {
-  startLoadingTransition: (callback: () => Promise<void>) => void;
+  startTransition: (callback: () => Promise<void>) => void;
   startProgressBar: () => Promise<void>;
   stopProgressBar: () => void;
   isProgressBarHidden: boolean;

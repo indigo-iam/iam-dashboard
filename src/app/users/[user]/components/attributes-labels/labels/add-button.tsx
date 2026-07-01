@@ -18,6 +18,7 @@ import {
 } from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { addUserLabel } from "@/services/users";
+import { useProgressBar } from "@/components/progress-bar";
 
 type ValidatePrefixViewProps = {
   prefix: string;
@@ -101,6 +102,7 @@ type AddLabelModalProps = ModalProps & {
 function AddLabelModal(props: Readonly<AddLabelModalProps>) {
   const { userId, show, onClose } = props;
   const formRef = useRef<HTMLFormElement>(null);
+  const { startTransition } = useProgressBar();
   const [prefix, setPrefix] = useState("");
   const [name, setName] = useState("");
   const [value, setValue] = useState<string | null>(null);
@@ -115,10 +117,12 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
     const prefix = (formData.get("prefix") as string | null) ?? "";
     const name = (formData.get("name") as string | null) ?? "";
     const value = formData.get("value") as string | null;
-    const res = await addUserLabel(userId, prefix, name, value);
-    if (res) {
-      toast.toast(res);
-    }
+    startTransition(async () => {
+      const res = await addUserLabel(userId, prefix, name, value);
+      if (res) {
+        toast.toast(res);
+      }
+    });
     onClose();
   }
 

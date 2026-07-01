@@ -22,7 +22,6 @@ type ProgressBarProviderProps = {
 
 export function ProgressBarProvider(props: Readonly<ProgressBarProviderProps>) {
   const { children } = props;
-  const [isPending, startTransition] = useTransition();
   const [progress, setProgress] = useState(0);
   const [isProgressBarHidden, setIsProgressBarHidden] = useState(false);
   const pathname = usePathname();
@@ -32,10 +31,10 @@ export function ProgressBarProvider(props: Readonly<ProgressBarProviderProps>) {
   const path = searchParams ? `${pathname}?${searchParams}` : pathname;
   const prevPath = useRef("");
 
-  async function startLoadingTransition(callback: () => Promise<void>) {
-    startTransition(async () => {
-      await callback();
-    });
+  async function startTransition(callback: () => Promise<void>) {
+    startProgressBar();
+    await callback();
+    stopProgressBar();
   }
 
   function trickle() {
@@ -86,18 +85,16 @@ export function ProgressBarProvider(props: Readonly<ProgressBarProviderProps>) {
     stopProgressBar();
     prevPath.current = path;
   }, [path]);
-
   return (
     <ProgressBarContext
       value={{
-        startLoadingTransition,
+        startTransition,
         startProgressBar,
         stopProgressBar,
         isProgressBarHidden,
         progress,
       }}
     >
-      {isPending && <ProgressBar />}
       {children}
     </ProgressBarContext>
   );

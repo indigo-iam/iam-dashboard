@@ -8,7 +8,7 @@ import { default as NextLink } from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 
 import { toggleDrawer } from "./drawer";
-import { useLoading } from "../loading";
+import { useProgressBar } from "../progress-bar";
 
 export type LinkProps = {
   title: string;
@@ -20,7 +20,7 @@ export function Link(props: Readonly<LinkProps>) {
   const { title, href, children } = props;
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { startProgressBar } = useLoading();
+  const { startProgressBar } = useProgressBar();
 
   let selected = false;
   switch (pathname) {

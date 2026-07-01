@@ -4,5 +4,4 @@
 
 export { useLoading } from "./context";
 export { LoadingProvider } from "./provider";
-export { ProgressBar } from "./progress-bar";
 export { LoadingList } from "./loading-list";

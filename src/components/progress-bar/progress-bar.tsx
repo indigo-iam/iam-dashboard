@@ -4,10 +4,10 @@
 
 "use client";
 
-import { useLoading } from "./context";
+import { useProgressBar } from "./context";
 
 export function ProgressBar() {
-  const { progress, isProgressBarHidden } = useLoading();
+  const { progress, isProgressBarHidden } = useProgressBar();
   const progressPercentage = `${Math.round(progress * 100)}%`;
   return (
     <div

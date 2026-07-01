@@ -4,6 +4,7 @@
 
 "use client";
 
+import { useProgressBar } from "@/components/progress-bar";
 import { toast } from "@/components/toaster";
 import { Group, GroupLabel } from "@/models/groups";
 import { deleteGroupLabel } from "@/services/groups";
@@ -16,13 +17,16 @@ type LabelProps = {
 
 export default function LabelView(props: Readonly<LabelProps>) {
   const { group, label } = props;
+  const { startTransition } = useProgressBar();
 
-  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+  function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
-    const res = await deleteGroupLabel(group.id, label);
-    if (res.type !== "success") {
-      toast.toast(res);
-    }
+    startTransition(async () => {
+      const res = await deleteGroupLabel(group.id, label);
+      if (res.type !== "success") {
+        toast.toast(res);
+      }
+    });
   }
   return (
     <form

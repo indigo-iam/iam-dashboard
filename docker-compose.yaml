@@ -14,7 +14,7 @@ services:
       IAM_PORT: 8080
       IAM_HOST: iam.test.example
       IAM_BASE_URL: https://iam.test.example
-      IAM_ISSUER: https://iam.test.example
+      IAM_ISSUER: https://iam.test.example/
       IAM_REGISTRATION_OIDC_ISSUER: https://iam.test.example
       IAM_REGISTRATION_AUTHENTICATION_TYPE: oidc
       IAM_ACCESS_TOKEN_INCLUDE_SCOPE: true

@@ -7,7 +7,7 @@
 import { revalidatePath } from "next/cache";
 import { authFetch, getItem } from "@/utils/fetch";
 import { Attribute } from "@/models/attributes";
-import { SSHKey } from "@/models/indigo-user";
+import { OidcId, SamlId, SSHKey } from "@/models/indigo-user";
 import { AddSecretResponse } from "@/models/mfa";
 import { Paginated } from "@/models/pagination";
 import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
@@ -157,11 +157,35 @@ export async function deleteUser(userId: string): Promise<Notification> {
 
 async function unlinkExternalAccount(
   userId: string,
-  searchParams: string,
+  accountId: OidcId | SamlId,
   accountType: "OIDC" | "SAML"
 ): Promise<Notification | void> {
-  const url = `${IAM_API_URL}/iam/account-linking/${accountType}?${searchParams}`;
-  const response = await authFetch(url, { method: "DELETE" });
+  const url = `${IAM_API_URL}/scim/Users/${userId}`;
+  const indigoUser = (() => {
+    if (accountType === "OIDC") {
+      return { oidcIds: [accountId] };
+    }
+    if (accountType === "SAML") {
+      return { samlIds: [accountId] };
+    }
+    throw new Error(`accountType ${accountType} not is not valid`);
+  })();
+  const body = {
+    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
+    operations: [
+      {
+        op: "remove",
+        value: {
+          "urn:indigo-dc:scim:schemas:IndigoUser": indigoUser,
+        },
+      },
+    ],
+  };
+  const response = await authFetch(url, {
+    method: "PATCH",
+    body: JSON.stringify(body),
+    headers: { "content-type": "application/scim+json" },
+  });
   if (response.ok) {
     revalidatePath(`/users/${userId}`);
     return;
@@ -169,27 +193,17 @@ async function unlinkExternalAccount(
   const msg = await response.text();
   return {
     type: "error",
-    title: `Error ${response.status} ${msg}`,
+    title: `Cannot unlink ${accountType} account`,
+    description: `Error ${response.status} ${msg}`,
   };
 }
 
-export async function unlinkExternalOidcAccount(
-  userId: string,
-  iss: string,
-  sub: string
-) {
-  const searchParams = `iss=${iss}&sub=${sub}`;
-  return await unlinkExternalAccount(userId, searchParams, "OIDC");
+export async function unlinkOidcAccount(userId: string, oidcId: OidcId) {
+  return await unlinkExternalAccount(userId, oidcId, "OIDC");
 }
 
-export async function unlinkExternalSamlAccount(
-  userId: string,
-  attr: string,
-  iss: string,
-  sub: string
-) {
-  const searchParams = `attr=${attr}&iss=${iss}&sub=${sub}`;
-  return await unlinkExternalAccount(userId, searchParams, "SAML");
+export async function unlinkSamlAccount(userId: string, samlId: SamlId) {
+  return await unlinkExternalAccount(userId, samlId, "SAML");
 }
 
 async function patchUserSSHKey(

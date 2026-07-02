@@ -9,7 +9,7 @@ import { Warning } from "@/components/notices";
 import { useProgressBar } from "@/components/progress-bar";
 import { toast } from "@/components/toaster";
 import { OidcId } from "@/models/indigo-user";
-import { unlinkExternalOidcAccount } from "@/services/users";
+import { unlinkOidcAccount } from "@/services/users";
 
 type UnlinkAccountModalProps = {
   userId: string;
@@ -26,11 +26,7 @@ export default function UnlinkAccountModal(
 
   function handleConfirm() {
     startTransition(async () => {
-      const res = await unlinkExternalOidcAccount(
-        userId,
-        oidcId.issuer,
-        oidcId.subject
-      );
+      const res = await unlinkOidcAccount(userId, oidcId);
       if (res) {
         toast.toast(res);
       }

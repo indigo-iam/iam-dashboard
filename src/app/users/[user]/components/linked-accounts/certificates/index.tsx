@@ -46,7 +46,11 @@ export async function Certificates(props: Readonly<CertificateProps>) {
     <div className="panel space-y-2">
       <div className="flex justify-between">
         <h2>X509 Certificates</h2>
-        {isAdmin && <LinkCertificateButton userName={userName} />}
+        <LinkCertificateButton
+          userId={userId}
+          userName={userName}
+          isAdmin={isAdmin}
+        />
       </div>
       {certificates.length === 0 ? (
         <p>There are not linked certificates.</p>

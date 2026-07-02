@@ -4,7 +4,10 @@
 
 "use client";
 
+import { useRef, useState } from "react";
+
 import { Button } from "@/components/buttons";
+import ConfirmModal from "@/components/confirm-modal";
 import { Field, Form, Label, Select } from "@/components/form";
 import { Input } from "@/components/inputs";
 import {
@@ -16,8 +19,8 @@ import {
 } from "@/components/modal";
 import { Textarea } from "@/components/textarea";
 import { toast } from "@/components/toaster";
-import { sendCertificateLinkRequest } from "@/services/certs";
-import { useState } from "react";
+import { linkCertificate, sendCertificateLinkRequest } from "@/services/certs";
+import { useProgressBar } from "@/components/progress-bar";
 
 type CertificateType = "pem" | "issuer";
 
@@ -81,13 +84,13 @@ function IssuerField() {
   );
 }
 
-interface LinkCertificateModalProps extends ModalProps {
+type RequestCertificateLinkingModalProps = ModalProps & {
   userName: string;
   issuers?: [];
-}
+};
 
-export default function LinkCertificateModal(
-  props: Readonly<LinkCertificateModalProps>
+function RequestCertificateLinkingModal(
+  props: Readonly<RequestCertificateLinkingModalProps>
 ) {
   const { userName, issuers, show, onClose } = props;
   const [format, setFormat] = useState<CertificateType>("pem");
@@ -151,5 +154,89 @@ export default function LinkCertificateModal(
         </ModalFooter>
       </Form>
     </Modal>
+  );
+}
+
+type LinkCertificateModalProps = ModalProps & {
+  userId: string;
+  userName: string;
+};
+
+function LinkCertificateModal(props: Readonly<LinkCertificateModalProps>) {
+  const { show, onClose, userId, userName } = props;
+  const formRef = useRef<HTMLFormElement>(null);
+  const { startTransition } = useProgressBar();
+
+  function submit() {
+    if (!formRef.current) {
+      console.warn("formRef is null");
+      return;
+    }
+    const formData = new FormData(formRef.current);
+    const label = formData.get("label") as string;
+    const cert = formData.get("certificate") as string;
+    startTransition(async () => {
+      const res = await linkCertificate(userId, label, cert);
+      if (res) {
+        toast.toast(res);
+      }
+    });
+  }
+
+  return (
+    <ConfirmModal
+      title="Link certificate to user?"
+      show={show}
+      onClose={onClose}
+      formRef={formRef}
+      onConfirm={submit}
+    >
+      <Field>
+        <Label>Username</Label>
+        <Input value={userName} disabled />
+      </Field>
+      <Field>
+        <Label>Label</Label>
+        <Input name="label" placeholder="example" />
+      </Field>
+      <Field>
+        <Label>Label</Label>
+        <textarea
+          name="certificate"
+          placeholder="PEM encoded certificate..."
+          className="iam-input"
+          rows={8}
+        />
+      </Field>
+    </ConfirmModal>
+  );
+}
+
+type CertificateModalProps = ModalProps & {
+  isAdmin: boolean;
+  userId: string;
+  userName: string;
+};
+
+export default function CertificateModal(
+  props: Readonly<CertificateModalProps>
+) {
+  const { show, onClose, isAdmin, userId, userName } = props;
+  if (isAdmin) {
+    return (
+      <LinkCertificateModal
+        show={show}
+        onClose={onClose}
+        userId={userId}
+        userName={userName}
+      />
+    );
+  }
+  return (
+    <RequestCertificateLinkingModal
+      show={show}
+      onClose={onClose}
+      userName={userName}
+    />
   );
 }

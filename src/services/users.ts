@@ -18,6 +18,10 @@ import { URLSearchParams } from "url";
 
 const { IAM_API_URL } = settings;
 
+/*
+  Fetch users
+*/
+
 export async function fetchUser(uuid: string) {
   return await getItem<User>(`${IAM_API_URL}/scim/Users/${uuid}`);
 }
@@ -147,6 +151,28 @@ export async function deleteUser(userId: string): Promise<Notification> {
   };
 }
 
+/*
+  Linked accounts
+*/
+
+export async function unlinkExternalOAuthAccount(
+  userId: string,
+  iss: string,
+  sub: string
+): Promise<Notification | void> {
+  const url = `${IAM_API_URL}/iam/account-linking/OIDC?iss=${iss}&sub=${sub}`;
+  const response = await authFetch(url, { method: "DELETE" });
+  if (response.ok) {
+    revalidatePath(`/users/${userId}`);
+    return;
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: `Error ${response.status} ${msg}`,
+  };
+}
+
 async function patchUserSSHKey(
   userId: string,
   sshKey: SSHKey,
@@ -200,6 +226,10 @@ export async function deleteSSHKey(
 ): Promise<Notification> {
   return patchUserSSHKey(userId, sshKey, "remove");
 }
+
+/*
+  Attributes and labels
+*/
 
 export async function fetchAttributes(userId: string) {
   const url = `${IAM_API_URL}/iam/account/${userId}/attributes`;

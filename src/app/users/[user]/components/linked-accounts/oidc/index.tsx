@@ -24,21 +24,17 @@ type OidcAccountsProps = {
 
 export function OidcAccounts(props: Readonly<OidcAccountsProps>) {
   const { oidcIds } = props;
-  if (oidcIds.length === 0) {
-    return (
-      <div className="panel space-y-2">
-        <h2 className="text-gray-950 dark:text-gray-100">OpenID Connect</h2>
-        <p>No OpenID connect linked accounts found.</p>
-      </div>
-    );
-  }
   return (
     <div className="panel space-y-2">
       <h2>OpenID Connect/OAuth2</h2>
       <ul className="w-full">
-        {oidcIds.map(oidcId => (
-          <OidcIdView key={oidcId.subject} oidcId={oidcId} />
-        ))}
+        {oidcIds.length === 0 ? (
+          <p className="pt-4">There are no linked accounts.</p>
+        ) : (
+          oidcIds.map(oidcId => (
+            <OidcIdView key={oidcId.subject} oidcId={oidcId} />
+          ))
+        )}
       </ul>
     </div>
   );

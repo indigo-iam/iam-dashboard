@@ -5,9 +5,14 @@
 "use client";
 
 import ConfirmModal from "@/components/confirm-modal";
+import { Warning } from "@/components/notices";
+import { useProgressBar } from "@/components/progress-bar";
+import { toast } from "@/components/toaster";
 import { OidcId } from "@/models/indigo-user";
+import { unlinkExternalOAuthAccount } from "@/services/users";
 
 type UnlinkAccountModalProps = {
+  userId: string;
   oidcId: OidcId;
   show: boolean;
   onClose: () => void;
@@ -16,36 +21,57 @@ type UnlinkAccountModalProps = {
 export default function UnlinkAccountModal(
   props: Readonly<UnlinkAccountModalProps>
 ) {
-  const { oidcId, show, onClose } = props;
+  const { userId, oidcId, show, onClose } = props;
+  const { startTransition } = useProgressBar();
 
-  const handleConfirm = async () => {
-    // TODO: implement action
-    console.log("Unlink account!");
+  function handleConfirm() {
+    startTransition(async () => {
+      const res = await unlinkExternalOAuthAccount(
+        userId,
+        oidcId.issuer,
+        oidcId.subject
+      );
+      if (res) {
+        toast.toast(res);
+      }
+    });
     onClose();
-  };
+  }
 
   return (
     <ConfirmModal
       show={show}
       onClose={onClose}
-      title="Unlink OpenID Connect/OAuth2 account"
+      title="Unlink OIDC/OAuth2 account?"
       onConfirm={handleConfirm}
       danger
     >
-      <p>Are you sure you want to unlink the following OAuth2 account?</p>
-      <div className="flex grow flex-col gap-2">
-        <div>
-          <p className="text-xs font-light text-gray-500 dark:text-gray-300">
-            Issuer
-          </p>
-          <p>{oidcId.issuer}</p>
+      <div className="space-y-4">
+        <p className="text-center">
+          Are you sure you want to unlink the following account?
+        </p>
+        <div className="flex grow flex-col items-center gap-2">
+          <div>
+            <p>
+              <span className="text-xs font-light text-gray-500 dark:text-gray-300">
+                Issuer
+              </span>{" "}
+              <span>{oidcId.issuer}</span>
+            </p>
+            <p>
+              <span className="text-xs font-light text-gray-500 dark:text-gray-300">
+                Subject
+              </span>{" "}
+              <span>{oidcId.subject}</span>
+            </p>
+          </div>
         </div>
-        <div>
-          <p className="text-xs font-light text-gray-500 dark:text-gray-300">
-            Subject
+        <Warning>
+          <p>
+            Login with the above linked account will NOT be possible if you
+            proceed.
           </p>
-          <p>{oidcId.subject}</p>
-        </div>
+        </Warning>
       </div>
     </ConfirmModal>
   );

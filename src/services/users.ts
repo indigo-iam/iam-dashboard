@@ -7,7 +7,7 @@
 import { revalidatePath } from "next/cache";
 import { authFetch, getItem } from "@/utils/fetch";
 import { Attribute } from "@/models/attributes";
-import { OidcId, SamlId, SSHKey } from "@/models/indigo-user";
+import { Certificate, OidcId, SamlId, SSHKey } from "@/models/indigo-user";
 import { AddSecretResponse } from "@/models/mfa";
 import { Paginated } from "@/models/pagination";
 import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
@@ -157,8 +157,8 @@ export async function deleteUser(userId: string): Promise<Notification> {
 
 async function unlinkExternalAccount(
   userId: string,
-  accountId: OidcId | SamlId,
-  accountType: "OIDC" | "SAML"
+  accountId: OidcId | SamlId | Certificate,
+  accountType: "OIDC" | "SAML" | "X509"
 ): Promise<Notification | void> {
   const url = `${IAM_API_URL}/scim/Users/${userId}`;
   const indigoUser = (() => {
@@ -167,6 +167,9 @@ async function unlinkExternalAccount(
     }
     if (accountType === "SAML") {
       return { samlIds: [accountId] };
+    }
+    if (accountType === "X509") {
+      return { certificates: [accountId] };
     }
     throw new Error(`accountType ${accountType} not is not valid`);
   })();
@@ -204,6 +207,13 @@ export async function unlinkOidcAccount(userId: string, oidcId: OidcId) {
 
 export async function unlinkSamlAccount(userId: string, samlId: SamlId) {
   return await unlinkExternalAccount(userId, samlId, "SAML");
+}
+
+export async function unlinkCertificate(
+  userId: string,
+  certificate: Certificate
+) {
+  return await unlinkExternalAccount(userId, certificate, "X509");
 }
 
 async function patchUserSSHKey(

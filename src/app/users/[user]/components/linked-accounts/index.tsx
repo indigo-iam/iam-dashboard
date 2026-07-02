@@ -24,7 +24,11 @@ export async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
     <TabPanel className="space-y-6">
       <OidcAccounts userId={userId} oidcIds={oidcIds} />
       <SamlAccounts userId={userId} samlIds={samlIds} />
-      <Certificates certificates={certificates} userName={userName} />
+      <Certificates
+        userId={userId}
+        userName={userName}
+        certificates={certificates}
+      />
       <SSHKeys userId={userId} sshKeys={sshKeys} />
     </TabPanel>
   );

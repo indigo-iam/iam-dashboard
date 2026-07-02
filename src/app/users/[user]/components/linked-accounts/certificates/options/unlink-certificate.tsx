@@ -14,22 +14,15 @@ import { unlinkCertificate } from "@/services/users";
 
 type UnlinkCertificateModalProps = ModalProps & {
   userId: string;
+  userFormattedName: string;
   certificate: Certificate;
 };
 
 export function UnlinkCertificateModal(
   props: Readonly<UnlinkCertificateModalProps>
 ) {
-  const { show, onClose, userId, certificate } = props;
+  const { show, onClose, userId, userFormattedName, certificate } = props;
   const { startTransition } = useProgressBar();
-
-  const createdAt = (() => {
-    if (!certificate.created) {
-      return "N/A";
-    }
-    const d = new Date(certificate.created);
-    return d.toLocaleString();
-  })();
 
   function handleConfirm() {
     startTransition(async () => {
@@ -54,32 +47,27 @@ export function UnlinkCertificateModal(
         <div>
           <p>
             <span className="inline-block min-w-18 text-end text-xs font-light text-gray-500 dark:text-gray-300">
-              Name
+              label
             </span>{" "}
             {certificate.display}
           </p>
           <p>
             <span className="inline-block min-w-18 text-end text-xs font-light text-gray-500 dark:text-gray-300">
-              Subject DN
+              subject DN
             </span>{" "}
             {certificate.subjectDn}
           </p>
           <p>
             <span className="inline-block min-w-18 text-end text-xs font-light text-gray-500 dark:text-gray-300">
-              Issuer DN
+              issuer DN
             </span>{" "}
             {certificate.issuerDn}
-          </p>
-          <p>
-            <span className="inline-block min-w-18 text-end text-xs font-light text-gray-500 dark:text-gray-300">
-              Created
-            </span>{" "}
-            {createdAt}
           </p>
         </div>
       </div>
       <Warning>
-        Login with the above certificate will NOT be allowed if you proceed.
+        Login with the above certificate will NOT be possibile for user{" "}
+        <b>{userFormattedName}</b> if you proceed.
       </Warning>
     </ConfirmModal>
   );

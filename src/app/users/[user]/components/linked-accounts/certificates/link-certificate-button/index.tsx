@@ -22,7 +22,7 @@ export default function LinkCertificateButton(
   return (
     <>
       <Button onClick={open} className="btn-secondary">
-        Request certificate linking
+        Link certificate
       </Button>
       <LinkCertificateModal show={show} onClose={close} userName={userName} />
     </>

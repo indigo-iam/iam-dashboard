@@ -8,11 +8,12 @@ import CertificateOptions from "./options";
 
 type CertificateViewProps = {
   userId: string;
+  userFormattedName: string;
   cert: Certificate;
 };
 
 function CertificateView(props: Readonly<CertificateViewProps>) {
-  const { userId, cert } = props;
+  const { userId, userFormattedName, cert } = props;
   return (
     <div className="iam-list-item items-center">
       <div className="grow space-y-2">
@@ -22,7 +23,11 @@ function CertificateView(props: Readonly<CertificateViewProps>) {
           <p className="text-xs">Issuer {cert.issuerDn}</p>
         </div>
       </div>
-      <CertificateOptions userId={userId} certificate={cert} />
+      <CertificateOptions
+        userId={userId}
+        userFormattedName={userFormattedName}
+        certificate={cert}
+      />
     </div>
   );
 }
@@ -30,16 +35,18 @@ function CertificateView(props: Readonly<CertificateViewProps>) {
 type CertificateProps = {
   userId: string;
   userName: string;
+  userFormattedName: string;
   certificates: Certificate[];
+  isAdmin: boolean;
 };
 
 export async function Certificates(props: Readonly<CertificateProps>) {
-  const { userId, userName, certificates } = props;
+  const { userId, userName, userFormattedName, certificates, isAdmin } = props;
   return (
     <div className="panel space-y-2">
       <div className="flex justify-between">
         <h2>X509 Certificates</h2>
-        <LinkCertificateButton userName={userName} />
+        {isAdmin && <LinkCertificateButton userName={userName} />}
       </div>
       {certificates.length === 0 ? (
         <p>There are not linked certificates.</p>
@@ -48,6 +55,7 @@ export async function Certificates(props: Readonly<CertificateProps>) {
           <CertificateView
             key={cert.subjectDn + cert.issuerDn}
             userId={userId}
+            userFormattedName={userFormattedName}
             cert={cert}
           />
         ))

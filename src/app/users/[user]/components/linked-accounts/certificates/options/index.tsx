@@ -13,13 +13,14 @@ import { Certificate } from "@/models/indigo-user";
 
 type CertificateOptionsProps = {
   userId: string;
+  userFormattedName: string;
   certificate: Certificate;
 };
 
 export default function CertificateOptions(
   props: Readonly<CertificateOptionsProps>
 ) {
-  const { userId, certificate } = props;
+  const { userId, userFormattedName, certificate } = props;
   const [show, setShow] = useState<"UNLINK_CERTIFICATE">();
   const close = () => setShow(undefined);
   return (
@@ -34,6 +35,7 @@ export default function CertificateOptions(
         show={show === "UNLINK_CERTIFICATE"}
         onClose={close}
         userId={userId}
+        userFormattedName={userFormattedName}
         certificate={certificate}
       />
     </Options>

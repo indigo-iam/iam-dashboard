@@ -120,10 +120,12 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
           <LinkedAccounts
             userId={userId}
             userName={userName}
+            userFormattedName={userFormattedName}
             oidcIds={oidcIds}
             samlIds={samlIds}
             certificates={certificates}
             sshKeys={sshKeys}
+            isAdmin={isAdmin}
           />
           <AttributesAndLabels userId={userId} isAdmin={isAdmin} />
         </TabPanels>

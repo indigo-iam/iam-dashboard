@@ -5,9 +5,14 @@
 "use client";
 
 import ConfirmModal from "@/components/confirm-modal";
+import { Warning } from "@/components/notices";
+import { useProgressBar } from "@/components/progress-bar";
+import { toast } from "@/components/toaster";
 import { SamlId } from "@/models/indigo-user";
+import { unlinkExternalSamlAccount } from "@/services/users";
 
 type UnlinkAccountModalProps = {
+  userId: string;
   samlId: SamlId;
   show: boolean;
   onClose: () => void;
@@ -16,46 +21,64 @@ type UnlinkAccountModalProps = {
 export default function UnlinkAccountModal(
   props: Readonly<UnlinkAccountModalProps>
 ) {
-  const { samlId, show, onClose } = props;
+  const { userId, samlId, show, onClose } = props;
+  const { startTransition } = useProgressBar();
 
-  const handleConfirm = async () => {
-    // TODO: implement action
-    console.log("Unlink account!");
+  function handleConfirm() {
+    startTransition(async () => {
+      const res = await unlinkExternalSamlAccount(
+        userId,
+        samlId.attributeId,
+        samlId.idpId,
+        samlId.userId
+      );
+      if (res) {
+        toast.toast(res);
+      }
+    });
     onClose();
-  };
+  }
 
   return (
     <ConfirmModal
       show={show}
       onClose={onClose}
-      title="Unlink SAML account"
+      title="Unlink SAML account?"
       onConfirm={handleConfirm}
       danger
     >
-      <p className="text-base">
-        Are you sure you want to unlink the following account?
-      </p>
-      <div className="flex grow flex-col gap-2">
-        <div>
-          <p className="text-xs text-gray-500 dark:text-gray-300">
-            Identity Provider
-          </p>
-          <p className="break-all text-gray-950 dark:text-gray-100">
-            {samlId.idpId}
-          </p>
+      <div className="space-y-6">
+        <p className="text-center">
+          Are you sure you want to unlink the following account?
+        </p>
+        <div className="flex flex-col items-center gap-2">
+          <div>
+            <p>
+              <span className="inline-block min-w-24 text-end text-xs font-light text-gray-500 dark:text-gray-300">
+                Identity Provider
+              </span>{" "}
+              {samlId.idpId}
+            </p>
+            <p>
+              <span className="inline-block min-w-24 text-end text-xs font-light text-gray-500 dark:text-gray-300">
+                User ID
+              </span>{" "}
+              {samlId.userId}
+            </p>
+            <p>
+              <span className="inline-block min-w-24 text-end text-xs font-light text-gray-500 dark:text-gray-300">
+                Attribute ID
+              </span>{" "}
+              {samlId.attributeId}
+            </p>
+          </div>
         </div>
-        <div>
-          <p className="text-xs font-light text-gray-500 dark:text-gray-300">
-            User ID
+        <Warning>
+          <p>
+            Login with the above linked account will NOT be possible if you
+            proceed.
           </p>
-          <p>{samlId.userId}</p>
-        </div>
-        <div>
-          <p className="text-xs font-light text-gray-500 dark:text-gray-300">
-            Attribute ID
-          </p>
-          <p>{samlId.attributeId}</p>
-        </div>
+        </Warning>
       </div>
     </ConfirmModal>
   );

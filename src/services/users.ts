@@ -155,12 +155,12 @@ export async function deleteUser(userId: string): Promise<Notification> {
   Linked accounts
 */
 
-export async function unlinkExternalOAuthAccount(
+async function unlinkExternalAccount(
   userId: string,
-  iss: string,
-  sub: string
+  searchParams: string,
+  accountType: "OIDC" | "SAML"
 ): Promise<Notification | void> {
-  const url = `${IAM_API_URL}/iam/account-linking/OIDC?iss=${iss}&sub=${sub}`;
+  const url = `${IAM_API_URL}/iam/account-linking/${accountType}?${searchParams}`;
   const response = await authFetch(url, { method: "DELETE" });
   if (response.ok) {
     revalidatePath(`/users/${userId}`);
@@ -171,6 +171,25 @@ export async function unlinkExternalOAuthAccount(
     type: "error",
     title: `Error ${response.status} ${msg}`,
   };
+}
+
+export async function unlinkExternalOidcAccount(
+  userId: string,
+  iss: string,
+  sub: string
+) {
+  const searchParams = `iss=${iss}&sub=${sub}`;
+  return await unlinkExternalAccount(userId, searchParams, "OIDC");
+}
+
+export async function unlinkExternalSamlAccount(
+  userId: string,
+  attr: string,
+  iss: string,
+  sub: string
+) {
+  const searchParams = `attr=${attr}&iss=${iss}&sub=${sub}`;
+  return await unlinkExternalAccount(userId, searchParams, "SAML");
 }
 
 async function patchUserSSHKey(

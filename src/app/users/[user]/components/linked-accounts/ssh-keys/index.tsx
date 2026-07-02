@@ -15,9 +15,11 @@ export async function SSHKeys(props: Readonly<SSHKeysProps>) {
   const { userId, sshKeys } = props;
   return (
     <div className="panel space-y-2">
-      <h2>SSH Keys</h2>
+      <div className="flex justify-between">
+        <h2>SSH Keys</h2>
+        <AddSSHKeyButton userId={userId} />
+      </div>
       <Table userId={userId} sshKeys={sshKeys} />
-      <AddSSHKeyButton userId={userId} />
     </div>
   );
 }

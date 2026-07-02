@@ -120,7 +120,6 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
           <LinkedAccounts
             userId={userId}
             userName={userName}
-            userFormattedName={userFormattedName}
             oidcIds={oidcIds}
             samlIds={samlIds}
             certificates={certificates}

@@ -12,7 +12,6 @@ import { SSHKeys } from "./ssh-keys";
 type LinkedAccountsProps = {
   userId: string;
   userName: string;
-  userFormattedName: string;
   oidcIds: OidcId[];
   samlIds: SamlId[];
   certificates: Certificate[];
@@ -20,25 +19,13 @@ type LinkedAccountsProps = {
 };
 
 export async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
-  const {
-    userId,
-    userName,
-    userFormattedName,
-    oidcIds,
-    samlIds,
-    certificates,
-    sshKeys,
-  } = props;
+  const { userId, userName, oidcIds, samlIds, certificates, sshKeys } = props;
   return (
     <TabPanel className="space-y-6">
       <OidcAccounts userId={userId} oidcIds={oidcIds} />
       <SamlAccounts userId={userId} samlIds={samlIds} />
       <Certificates certificates={certificates} userName={userName} />
-      <SSHKeys
-        userId={userId}
-        userFormattedName={userFormattedName}
-        sshKeys={sshKeys}
-      />
+      <SSHKeys userId={userId} sshKeys={sshKeys} />
     </TabPanel>
   );
 }

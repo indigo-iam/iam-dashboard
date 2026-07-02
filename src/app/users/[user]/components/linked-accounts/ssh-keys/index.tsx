@@ -8,20 +8,15 @@ import Table from "./table";
 
 type SSHKeysProps = {
   userId: string;
-  userFormattedName: string;
   sshKeys: SSHKey[];
 };
 
 export async function SSHKeys(props: Readonly<SSHKeysProps>) {
-  const { userId, userFormattedName, sshKeys } = props;
+  const { userId, sshKeys } = props;
   return (
     <div className="panel space-y-2">
       <h2>SSH Keys</h2>
-      <Table
-        userId={userId}
-        userFormattedName={userFormattedName}
-        sshKeys={sshKeys}
-      />
+      <Table userId={userId} sshKeys={sshKeys} />
       <AddSSHKeyButton userId={userId} />
     </div>
   );

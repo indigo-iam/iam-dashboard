@@ -5,7 +5,7 @@
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { ToggleDrawerButton } from "@/components/drawer/toggle-drawer-button";
 import Notifications from "@/components/notifications";
-import { ProgressBar } from "@/components/loading";
+import { ProgressBar } from "@/components/progress-bar";
 import { fetchMe } from "@/services/me";
 import { settings } from "@/config";
 import { UserPopover } from "./user-popover";

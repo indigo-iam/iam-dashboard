@@ -14,6 +14,7 @@ import {
   ModalFooter,
   ModalProps,
 } from "@/components/modal";
+import { useProgressBar } from "@/components/progress-bar";
 import { toast } from "@/components/toaster";
 import { Group, GroupLabel } from "@/models/groups";
 import { addGroupLabel } from "@/services/groups";
@@ -28,6 +29,7 @@ interface AddLabelModalProps extends ModalProps {
 
 function AddLabelModal(props: Readonly<AddLabelModalProps>) {
   const { group, ...modalProps } = props;
+  const { startTransition } = useProgressBar();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -42,10 +44,14 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
     if (prefix) {
       gl = { ...gl, prefix };
     }
-    const res = await addGroupLabel(group.id, gl);
-    if (res.type !== "success") {
-      toast.toast(res);
-    }
+
+    startTransition(async () => {
+      console.log("label!")
+      const res = await addGroupLabel(group.id, gl);
+      if (res.type !== "success") {
+        toast.toast(res);
+      }
+    });
     modalProps.onClose();
   }
 

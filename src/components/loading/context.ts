@@ -8,10 +8,6 @@ import { createContext, useContext } from "react";
 
 type LoadingContextProps = {
   startLoadingTransition: (callback: () => Promise<void>) => void;
-  startProgressBar: () => Promise<void>;
-  stopProgressBar: () => void;
-  isProgressBarHidden: boolean;
-  progress: number;
 };
 
 export const LoadingContext = createContext<LoadingContextProps | null>(null);

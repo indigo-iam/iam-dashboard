@@ -5,7 +5,7 @@
 "use client";
 
 import NextLink from "next/link";
-import { useLoading } from "../loading";
+import { useProgressBar } from "../progress-bar";
 
 type LinkProps = {
   href: string;
@@ -15,7 +15,7 @@ type LinkProps = {
 } & { [key: `data-${string}`]: unknown };
 
 export default function Link(props: Readonly<LinkProps>) {
-  const { startProgressBar } = useLoading();
+  const { startProgressBar } = useProgressBar();
   const { href, className, title, children, ...others } = props;
   return (
     <NextLink

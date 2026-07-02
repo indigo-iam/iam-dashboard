@@ -9,6 +9,7 @@ import { Header } from "@/app/components/header";
 import { Sidebar } from "@/app/components/sidebar";
 import { Toaster } from "@/components/toaster";
 import { LoadingProvider } from "@/components/loading";
+import { ProgressBarProvider } from "@/components/progress-bar";
 import "@/styles/main.css";
 
 export const metadata: Metadata = {
@@ -45,12 +46,14 @@ export default async function RootLayout(props: Readonly<RootLayoutProps>) {
         {/*this div is required by https://github.com/tailwindlabs/headlessui/issues/2752*/}
         <div>
           <LoadingProvider>
-            <Header hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
-            <main>
-              <Sidebar hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
-              <div className="content">{children}</div>
-            </main>
-            <Toaster />
+            <ProgressBarProvider>
+              <Header hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
+              <main>
+                <Sidebar hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
+                <div className="content">{children}</div>
+              </main>
+              <Toaster />
+            </ProgressBarProvider>
           </LoadingProvider>
         </div>
       </body>

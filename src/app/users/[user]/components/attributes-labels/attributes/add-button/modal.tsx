@@ -16,6 +16,7 @@ import {
   ModalFooter,
   ModalProps,
 } from "@/components/modal";
+import { useProgressBar } from "@/components/progress-bar";
 import { toast } from "@/components/toaster";
 import { addAttribute } from "@/services/users";
 
@@ -76,6 +77,7 @@ export default function AddAttributeModal(
   props: Readonly<AddAttributeModalProps>
 ) {
   const { userId, show, onClose } = props;
+  const { startTransition } = useProgressBar();
   const [name, setName] = useState("");
   const [value, setValue] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
@@ -97,13 +99,15 @@ export default function AddAttributeModal(
     }, 300);
   }
 
-  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+  function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const name = formData.get("attr-name") as string;
     const value = formData.get("attr-value") as string;
-    const res = await addAttribute(userId, { name, value });
-    toast.toast(res);
+    startTransition(async () => {
+      const res = await addAttribute(userId, { name, value });
+      toast.toast(res);
+    });
     closeAndReset();
   }
 

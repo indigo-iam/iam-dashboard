@@ -12,7 +12,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "@/components/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useLoading } from "../loading";
+import { useProgressBar } from "../progress-bar";
 
 const className =
   "flex p-0.5 ml-0 bg-white text-gray-500 border  hover:bg-gray-200 dark:bg-secondary/50 first:rounded-l-lg last:rounded-r-lg data-[disabled=true]:opacity-30 data-[disabled=true]:pointer-events-none hover:text-gray-500 dark:bg-gray-700  dark:text-gray-500 dark:hover:bg-gray-600 dark:hover:text-gray-400";
@@ -26,7 +26,7 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { startProgressBar } = useLoading();
+  const { startProgressBar } = useProgressBar();
   const currentPage = Number(searchParams.get("page")) || 1;
   const itemsPerPage = Number(searchParams.get("count")) || 10;
 

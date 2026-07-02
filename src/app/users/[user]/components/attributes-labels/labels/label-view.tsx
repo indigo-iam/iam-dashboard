@@ -7,6 +7,7 @@
 import BaseLabelView from "@/components/badges/label-view";
 import { deleteUserLabel } from "@/services/users";
 import { toast } from "@/components/toaster";
+import { useProgressBar } from "@/components/progress-bar";
 
 type LabelViewProps = {
   isAdmin: boolean;
@@ -18,11 +19,14 @@ type LabelViewProps = {
 
 export function LabelView(props: Readonly<LabelViewProps>) {
   const { isAdmin, userId, prefix, name, value } = props;
+  const { startTransition } = useProgressBar();
   async function deleteLabel() {
-    const res = await deleteUserLabel(userId, prefix, name);
-    if (res) {
-      toast.toast(res);
-    }
+    startTransition(async () => {
+      const res = await deleteUserLabel(userId, prefix, name);
+      if (res) {
+        toast.toast(res);
+      }
+    });
   }
   return (
     <BaseLabelView

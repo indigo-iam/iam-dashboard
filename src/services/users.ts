@@ -15,6 +15,7 @@ import { Notification } from "@/components/toaster";
 import { settings } from "@/config";
 import { getSession } from "@/auth";
 import { URLSearchParams } from "url";
+import { patchIndigoUser } from "./indigo-user";
 
 const { IAM_API_URL } = settings;
 
@@ -173,21 +174,12 @@ async function unlinkExternalAccount(
     }
     throw new Error(`accountType ${accountType} not is not valid`);
   })();
-  const body = {
-    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
-    operations: [
-      {
-        op: "remove",
-        value: {
-          "urn:indigo-dc:scim:schemas:IndigoUser": indigoUser,
-        },
-      },
-    ],
-  };
-  const response = await authFetch(url, {
-    method: "PATCH",
-    body: JSON.stringify(body),
-    headers: { "content-type": "application/scim+json" },
+
+  const response = await patchIndigoUser(url, {
+    op: "remove",
+    value: {
+      "urn:indigo-dc:scim:schemas:IndigoUser": indigoUser,
+    },
   });
   if (response.ok) {
     revalidatePath(`/users/${userId}`);
@@ -221,25 +213,14 @@ async function patchUserSSHKey(
   sshKey: SSHKey,
   op: "add" | "remove"
 ): Promise<Notification> {
-  const body = {
-    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
-    operations: [
-      {
-        op: op,
-        value: {
-          "urn:indigo-dc:scim:schemas:IndigoUser": {
-            sshKeys: [sshKey],
-          },
-        },
-      },
-    ],
-  };
-
   const url = `${IAM_API_URL}/scim/Users/${userId}`;
-  const response = await authFetch(url, {
-    body: JSON.stringify(body),
-    method: "PATCH",
-    headers: { "content-type": "application/scim+json" },
+  const response = await patchIndigoUser(url, {
+    op: op,
+    value: {
+      "urn:indigo-dc:scim:schemas:IndigoUser": {
+        sshKeys: [sshKey],
+      },
+    },
   });
   if (response.ok) {
     revalidatePath(`/users/${userId}`);
@@ -383,22 +364,11 @@ export async function changeUserStatus(
   newStatus: boolean
 ): Promise<Notification> {
   const url = `${IAM_API_URL}/scim/Users/${userId}`;
-  const patchRequest: ScimRequest = {
-    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
-    operations: [
-      {
-        op: "replace",
-        value: {
-          active: newStatus,
-        },
-      },
-    ],
-  };
-  const body = JSON.stringify(patchRequest);
-  const response = await authFetch(url, {
-    method: "PATCH",
-    body,
-    headers: { "content-type": "application/scim+json" },
+  const response = await patchIndigoUser(url, {
+    op: "replace",
+    value: {
+      active: newStatus,
+    },
   });
   if (response.ok) {
     revalidatePath(`/users`);
@@ -561,25 +531,13 @@ export async function setServiceAccount(
   active: boolean
 ): Promise<Notification> {
   const url = `${IAM_API_URL}/scim/Users/${userId}`;
-  const body = {
-    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
-    Operations: [
-      {
-        op: "replace",
-        value: {
-          "urn:indigo-dc:scim:schemas:IndigoUser": {
-            serviceAccount: active,
-          },
-        },
+  const response = await patchIndigoUser(url, {
+    op: "replace",
+    value: {
+      "urn:indigo-dc:scim:schemas:IndigoUser": {
+        serviceAccount: active,
       },
-    ],
-  };
-  const response = await authFetch(url, {
-    method: "PATCH",
-    headers: {
-      "content-type": "application/scim+json",
     },
-    body: JSON.stringify(body),
   });
   if (response.ok) {
     revalidatePath(`/users/${userId}`);

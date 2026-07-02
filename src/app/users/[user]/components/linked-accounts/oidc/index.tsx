@@ -5,25 +5,31 @@
 import { OidcId } from "@/models/indigo-user";
 import OidcOptions from "./options";
 
-function OidcIdView(props: { oidcId: OidcId }) {
-  const { oidcId } = props;
+type OidcIdViewProps = {
+  userId: string;
+  oidcId: OidcId;
+};
+
+function OidcIdView(props: Readonly<OidcIdViewProps>) {
+  const { userId, oidcId } = props;
   return (
     <li className="iam-list-item">
       <div className="flex grow flex-col">
         <p className="text-gray-950 dark:text-gray-100">{oidcId.issuer}</p>
         <p className="text-sm font-light">Subject {oidcId.subject}</p>
       </div>
-      <OidcOptions oidcId={oidcId} />
+      <OidcOptions userId={userId} oidcId={oidcId} />
     </li>
   );
 }
 
 type OidcAccountsProps = {
+  userId: string;
   oidcIds: OidcId[];
 };
 
 export function OidcAccounts(props: Readonly<OidcAccountsProps>) {
-  const { oidcIds } = props;
+  const { userId, oidcIds } = props;
   return (
     <div className="panel space-y-2">
       <h2>OpenID Connect/OAuth2</h2>
@@ -32,7 +38,7 @@ export function OidcAccounts(props: Readonly<OidcAccountsProps>) {
           <p className="pt-4">There are no linked accounts.</p>
         ) : (
           oidcIds.map(oidcId => (
-            <OidcIdView key={oidcId.subject} oidcId={oidcId} />
+            <OidcIdView key={oidcId.subject} userId={userId} oidcId={oidcId} />
           ))
         )}
       </ul>

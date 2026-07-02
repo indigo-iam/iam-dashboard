@@ -31,8 +31,8 @@ export async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
   } = props;
   return (
     <TabPanel className="space-y-6">
-      <OidcAccounts oidcIds={oidcIds} />
-      <SamlAccounts samlIds={samlIds} />
+      <OidcAccounts userId={userId} oidcIds={oidcIds} />
+      <SamlAccounts userId={userId} samlIds={samlIds} />
       <Certificates certificates={certificates} userName={userName} />
       <SSHKeys
         userId={userId}

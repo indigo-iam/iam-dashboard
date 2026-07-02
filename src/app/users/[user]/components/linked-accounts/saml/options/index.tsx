@@ -12,11 +12,12 @@ import { SamlId } from "@/models/indigo-user";
 import UnlinkAccountModal from "./unlink-modal";
 
 type SAMLOptionsProps = {
+  userId: string;
   samlId: SamlId;
 };
 
 export default function SAMLOptions(props: Readonly<SAMLOptionsProps>) {
-  const { samlId } = props;
+  const { userId, samlId } = props;
   const [show, setShow] = useState<"UNLINK_ACCOUNT">();
   const close = () => setShow(undefined);
   return (
@@ -30,6 +31,7 @@ export default function SAMLOptions(props: Readonly<SAMLOptionsProps>) {
         </Option>
       </Options>
       <UnlinkAccountModal
+        userId={userId}
         samlId={samlId}
         show={show === "UNLINK_ACCOUNT"}
         onClose={close}

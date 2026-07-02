@@ -5,8 +5,13 @@
 import { SamlId } from "@/models/indigo-user";
 import SAMLOptions from "./options";
 
-function SamlIdView(props: { samlId: SamlId }) {
-  const { samlId } = props;
+type SamlIdViewProps = {
+  userId: string;
+  samlId: SamlId;
+};
+
+function SamlIdView(props: Readonly<SamlIdViewProps>) {
+  const { userId, samlId } = props;
   return (
     <li className="iam-list-item">
       <div className="flex grow flex-col">
@@ -16,31 +21,32 @@ function SamlIdView(props: { samlId: SamlId }) {
         <p className="text-sm font-light">{samlId.userId}</p>
         <p className="text-sm font-light">{samlId.attributeId}</p>
       </div>
-      <SAMLOptions samlId={samlId} />
+      <SAMLOptions userId={userId} samlId={samlId} />
     </li>
   );
 }
 
 type SamlAccountsProps = {
+  userId: string;
   samlIds: SamlId[];
 };
 
 export function SamlAccounts(props: Readonly<SamlAccountsProps>) {
-  const { samlIds } = props;
-  if (samlIds.length === 0) {
-    return (
-      <div className="panel space-y-2">
-        <h2>SAML</h2>
-        <p>No linked SAML accounts found.</p>
-      </div>
-    );
-  }
+  const { userId, samlIds } = props;
   return (
     <div className="panel space-y-2">
       <h2>SAML</h2>
-      {samlIds.map(samlId => (
-        <SamlIdView key={samlId.attributeId} samlId={samlId} />
-      ))}
+      {samlIds.length === 0 ? (
+        <p className="pt-4">There are no linked accounts.</p>
+      ) : (
+        samlIds.map(samlId => (
+          <SamlIdView
+            key={samlId.attributeId}
+            userId={userId}
+            samlId={samlId}
+          />
+        ))
+      )}
     </div>
   );
 }

@@ -46,23 +46,23 @@ export default function UnlinkAccountModal(
       onConfirm={handleConfirm}
       danger
     >
-      <div className="space-y-4">
+      <div className="space-y-6">
         <p className="text-center">
           Are you sure you want to unlink the following account?
         </p>
         <div className="flex grow flex-col items-center gap-2">
           <div>
             <p>
-              <span className="text-xs font-light text-gray-500 dark:text-gray-300">
+              <span className="inline-block min-w-12 text-end text-xs font-light text-gray-500 dark:text-gray-300">
                 Issuer
               </span>{" "}
-              <span>{oidcId.issuer}</span>
+              {oidcId.issuer}
             </p>
             <p>
-              <span className="text-xs font-light text-gray-500 dark:text-gray-300">
+              <span className="inline-block min-w-12 text-end text-xs font-light text-gray-500 dark:text-gray-300">
                 Subject
               </span>{" "}
-              <span>{oidcId.subject}</span>
+              {oidcId.subject}
             </p>
           </div>
         </div>

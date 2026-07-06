@@ -10,6 +10,7 @@ import { Certificates } from "./certificates";
 import { SSHKeys } from "./ssh-keys";
 
 type LinkedAccountsProps = {
+  isMe: boolean;
   userId: string;
   userName: string;
   userFormattedName: string;
@@ -22,6 +23,7 @@ type LinkedAccountsProps = {
 
 export async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
   const {
+    isMe,
     userId,
     userName,
     userFormattedName,
@@ -36,6 +38,7 @@ export async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
       <OidcAccounts userId={userId} oidcIds={oidcIds} />
       <SamlAccounts userId={userId} samlIds={samlIds} />
       <Certificates
+        isMe={isMe}
         userId={userId}
         userName={userName}
         userFormattedName={userFormattedName}

@@ -118,6 +118,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
           {isMe && <ApprovedSites />}
           {isMe && <ActiveTokens />}
           <LinkedAccounts
+            isMe={isMe}
             userId={userId}
             userName={userName}
             userFormattedName={userFormattedName}

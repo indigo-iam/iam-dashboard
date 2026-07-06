@@ -22,6 +22,7 @@ export type Certificate = {
   created?: string;
   lastModified?: string;
   hasProxyCertificate: boolean;
+  proxyExpirationTime?: string;
 };
 
 export type SSHKey = {

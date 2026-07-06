@@ -8,12 +8,11 @@ import SSHKeysOptions from "./options";
 
 type SSHKeyViewProps = {
   userId: string;
-  userFormattedName: string;
   sshKey: SSHKey;
 };
 
 function SSHKeyView(props: Readonly<SSHKeyViewProps>) {
-  const { userId, userFormattedName, sshKey } = props;
+  const { userId, sshKey } = props;
   const createdAt = sshKey.created
     ? dateToHuman(new Date(sshKey.created))
     : "N/A";
@@ -30,36 +29,27 @@ function SSHKeyView(props: Readonly<SSHKeyViewProps>) {
       <div className="my-auto hidden px-2 text-sm font-light sm:flex">
         Created {createdAt}
       </div>
-      <SSHKeysOptions
-        userId={userId}
-        userFormattedName={userFormattedName}
-        sshKey={sshKey}
-      />
+      <SSHKeysOptions userId={userId} sshKey={sshKey} />
     </li>
   );
 }
 
 type TableProps = {
   userId: string;
-  userFormattedName: string;
   sshKeys: SSHKey[];
 };
 
 export default function Table(props: Readonly<TableProps>) {
-  const { userId, userFormattedName, sshKeys } = props;
-  if (sshKeys.length === 0) {
-    return <p>No SSH keys found.</p>;
-  }
+  const { userId, sshKeys } = props;
   return (
     <ul className="w-full">
-      {sshKeys.map(key => (
-        <SSHKeyView
-          key={key.fingerprint}
-          userId={userId}
-          userFormattedName={userFormattedName}
-          sshKey={key}
-        />
-      ))}
+      {sshKeys.length === 0 ? (
+        <p>There are no SSH keys.</p>
+      ) : (
+        sshKeys.map(key => (
+          <SSHKeyView key={key.fingerprint} userId={userId} sshKey={key} />
+        ))
+      )}
     </ul>
   );
 }

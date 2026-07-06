@@ -17,6 +17,7 @@ type LinkedAccountsProps = {
   samlIds: SamlId[];
   certificates: Certificate[];
   sshKeys: SSHKey[];
+  isAdmin: boolean;
 };
 
 export async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
@@ -28,17 +29,20 @@ export async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
     samlIds,
     certificates,
     sshKeys,
+    isAdmin,
   } = props;
   return (
     <TabPanel className="space-y-6">
-      <OidcAccounts oidcIds={oidcIds} />
-      <SamlAccounts samlIds={samlIds} />
-      <Certificates certificates={certificates} userName={userName} />
-      <SSHKeys
+      <OidcAccounts userId={userId} oidcIds={oidcIds} />
+      <SamlAccounts userId={userId} samlIds={samlIds} />
+      <Certificates
         userId={userId}
+        userName={userName}
         userFormattedName={userFormattedName}
-        sshKeys={sshKeys}
+        certificates={certificates}
+        isAdmin={isAdmin}
       />
+      <SSHKeys userId={userId} sshKeys={sshKeys} />
     </TabPanel>
   );
 }

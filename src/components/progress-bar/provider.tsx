@@ -4,10 +4,9 @@
 
 "use client";
 
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { ProgressBarContext } from "./context";
-import { ProgressBar } from "./progress-bar";
 
 // the amount of time to wait before incrementing the progress bar
 const TRICKLE_DURATION = 200;

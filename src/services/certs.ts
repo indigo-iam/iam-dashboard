@@ -54,7 +54,8 @@ export async function addProxyCert(
     return;
   }
   if (response.headers.get("content-type") === "application/json") {
-    return { type: "error", title: await response.json() };
+    const { error } = await response.json();
+    return { type: "error", title: error ?? "unknown error" };
   } else {
     return { type: "error", title: await response.text() };
   }

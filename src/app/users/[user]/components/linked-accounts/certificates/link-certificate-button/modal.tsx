@@ -214,8 +214,8 @@ function LinkCertificateModal(props: Readonly<LinkCertificateModalProps>) {
         <Input name="label" placeholder="example" required />
       </Field>
       <Field>
-        <Label data-required>Label</Label>
-        <textarea
+        <Label data-required>Certificate</Label>
+        <Textarea
           name="certificate"
           placeholder="PEM encoded certificate..."
           className="iam-input"

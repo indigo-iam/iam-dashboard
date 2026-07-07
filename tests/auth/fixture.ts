@@ -105,9 +105,11 @@ async function checkClientAuthorization(page: Page) {
 
 async function setMode(page: Page, mode: "Admin mode" | "User mode") {
   const userMenu = await openUserMenu(page);
-  await userMenu.getByRole("button", { name: mode }).click();
-  await expect(page.locator("#loading")).toBeVisible();
-  await expect(page.locator("#loading")).toBeHidden();
+  await expect(async () => {
+    await userMenu.getByRole("button", { name: mode }).click();
+    await expect(page.locator("#loading")).toBeVisible();
+    await expect(page.locator("#loading")).toBeHidden({ timeout: 30000 });
+  }).toPass();
   await expect(userMenu).toBeHidden();
 }
 

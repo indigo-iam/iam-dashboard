@@ -32,10 +32,16 @@ function LinkProxyModal(props: Readonly<LinkProxyModalProps>) {
   const { show, onClose, userId, userName, disabled } = props;
   const [error, setError] = useState<string | null>(null);
   const { startTransition } = useProgressBar();
+
+  function close() {
+    setError(null);
+    onClose();
+  }
+
   if (disabled) {
     return (
-      <Modal show={show} onClose={onClose}>
-        <ModalHeader onClose={onClose}>Link proxy certificate</ModalHeader>
+      <Modal show={show} onClose={close}>
+        <ModalHeader onClose={close}>Link proxy certificate</ModalHeader>
         <ModalBody>
           <div className="flex w-full flex-row justify-center">
             <InformationCircleIcon className="size-12" />
@@ -47,11 +53,11 @@ function LinkProxyModal(props: Readonly<LinkProxyModalProps>) {
           </p>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" onClick={onClose}>
+          <Button className="btn-tertiary" onClick={close}>
             Cancel
           </Button>
-          <Button className="btn-secondary" disabled={disabled}>
-            Link proxy certificate
+          <Button className="btn-primary" disabled={disabled}>
+            Confirm
           </Button>
         </ModalFooter>
       </Modal>
@@ -76,8 +82,8 @@ function LinkProxyModal(props: Readonly<LinkProxyModalProps>) {
   }
 
   return (
-    <Modal show={show} onClose={onClose}>
-      <ModalHeader onClose={onClose}>Link proxy certificate</ModalHeader>
+    <Modal show={show} onClose={close}>
+      <ModalHeader onClose={close}>Link proxy certificate</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>
@@ -97,11 +103,11 @@ function LinkProxyModal(props: Readonly<LinkProxyModalProps>) {
           {error && <p className="text-danger">{error}</p>}
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" onClick={onClose}>
+          <Button className="btn-tertiary" onClick={close}>
             Cancel
           </Button>
-          <Button className="btn-secondary" type="submit">
-            Link proxy certificate
+          <Button className="btn-primary" type="submit">
+            Confirm
           </Button>
         </ModalFooter>
       </Form>

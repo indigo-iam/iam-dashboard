@@ -61,7 +61,7 @@ export async function Certificates(props: Readonly<CertificateProps>) {
     props;
   return (
     <div className="panel space-y-2">
-      <div className="flex justify-between">
+      <div className="flex flex-wrap justify-between">
         <h2>X.509 certificates</h2>
         <div className="flex gap-2">
           {isAdmin && (

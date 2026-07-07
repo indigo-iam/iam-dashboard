@@ -77,7 +77,7 @@ jobs:
           docker compose up -d
 
       - name: Run Playwright tests
-        run: npx playwright test
+        run: npx playwright test --reporter=list
 
       - name: Cleanup test environment
         run: docker compose down --remove-orphans --volumes

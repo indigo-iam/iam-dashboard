@@ -28,6 +28,7 @@ export async function dismissToast(
   await expect(toast).toHaveCount(1);
   await expect(toast).toHaveAttribute("data-toast-type", type);
   const closeButton = toast.getByTitle("Close");
+  await expect(closeButton).toBeEnabled();
   await closeButton.click();
   await expect(toast).toBeHidden();
 }

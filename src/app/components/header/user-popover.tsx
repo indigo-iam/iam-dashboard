@@ -10,6 +10,7 @@ import { Gravatar } from "@/components/gravatar";
 import { AdminModeButton, UserModeButton } from "./admin-user-buttons";
 import { SignoutButton } from "./signout-button";
 import { User } from "@/models/scim";
+import { useDisabled } from "@/utils/hooks";
 
 type UserPopoverProps = {
   hasRoleAdmin?: boolean;
@@ -19,6 +20,7 @@ type UserPopoverProps = {
 
 export function UserPopover(props: Readonly<UserPopoverProps>) {
   const { hasRoleAdmin, isAdmin, user } = props;
+  const disabled = useDisabled();
   const email = user.emails?.[0].value;
 
   return (
@@ -27,6 +29,7 @@ export function UserPopover(props: Readonly<UserPopoverProps>) {
         className="hover:cursor-pointer"
         title="Open user menu"
         data-testid="user-menu-btn"
+        disabled={disabled}
       >
         <Gravatar email={email} />
       </PopoverButton>

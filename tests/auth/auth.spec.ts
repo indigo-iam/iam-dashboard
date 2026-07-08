@@ -72,7 +72,7 @@ testAdmin(
     await testAdmin.step("login", async () => {
       await page.goto("./");
       await expect(
-        page.getByLabel("Username").locator("visible=true")
+        page.getByLabel("Username").filter({ visible: true })
       ).toHaveValue("admin");
     });
 
@@ -205,13 +205,14 @@ testUser("User cannot enable admin mode", async ({ signedUpPage }) => {
   await testUser.step("login", async () => {
     await signedUpPage.goto("./");
     await expect(
-      signedUpPage.getByLabel("Username").locator("visible=true")
+      signedUpPage.getByLabel("Username").filter({ visible: true })
     ).toHaveValue("test");
   });
 
   await testUser.step("try enabling admin mode", async () => {
     const userMenuBtn = signedUpPage.getByTestId("user-menu-btn");
     await expect(userMenuBtn).toBeVisible();
+    await expect(userMenuBtn).toBeEnabled();
     await userMenuBtn.click();
     const userMenu = signedUpPage.getByTestId("user-menu");
     await expect(userMenu).toBeVisible();

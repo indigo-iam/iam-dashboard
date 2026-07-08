@@ -57,16 +57,14 @@ test("User can send a request to join a group", async ({ page }) => {
       .getByRole("listitem")
       .filter({ hasText: "Motivation: Test motivation message" });
     const more = item.getByRole("button", { name: "More" });
+    await expect(more).toBeEnabled();
+    await more.click();
     const revokeOption = page.getByRole("button", { name: "Revoke request" });
-    await expect(async () => {
-      await more.click();
-      await expect(revokeOption).toBeVisible();
-    }).toPass();
+    await expect(revokeOption).toBeVisible();
+    await expect(revokeOption).toBeEnabled();
+    await revokeOption.click();
     const dialog = page.getByRole("dialog").filter({ visible: true });
-    await expect(async () => {
-      await revokeOption.click();
-      await expect(dialog).toBeVisible();
-    }).toPass();
+    await expect(dialog).toBeVisible();
     await dialog.getByRole("button", { name: "Revoke request" }).click();
     const pendingRequests = page.getByText("Pending requests");
     await expect(pendingRequests).toBeHidden();

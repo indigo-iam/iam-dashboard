@@ -6,15 +6,14 @@ import { ToastTypes } from "@/components/toaster";
 import { expect, Locator, Page } from "@playwright/test";
 
 export async function changeTabPanel(button: Locator) {
-  await expect(async () => {
-    await expect(button).toBeVisible();
-    await expect(button).toHaveAttribute(
-      "aria-controls",
-      /headlessui-tabs-panel-.*/
-    );
-    await button.click();
-    await expect(button).toHaveAttribute("data-selected", "");
-  }).toPass();
+  await expect(button).toBeVisible();
+  await expect(button).toBeEnabled();
+  await expect(button).toHaveAttribute(
+    "aria-controls",
+    /headlessui-tabs-panel-.*/
+  );
+  await button.click();
+  await expect(button).toHaveAttribute("data-selected", "");
 }
 
 export async function dismissToast(

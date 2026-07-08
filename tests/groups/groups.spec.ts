@@ -1,5 +1,6 @@
 import { testAdmin, expect, enableAdminMode, testUser } from "../auth/fixture";
 import crypto from "node:crypto";
+import { dismissToast } from "../utils";
 
 function sha256(s: string) {
   const hash = crypto.createHash("sha256");
@@ -23,7 +24,10 @@ testAdmin("Admin can create and delete a group", async ({ signedUpPage }) => {
     await enableAdminMode(page);
     const heading = page.getByRole("heading", { name: "Groups" });
     await expect(heading).toBeVisible();
-    await page.getByRole("button", { name: "New group" }).click();
+    const newGroupBtn = page.getByRole("button", { name: "New group" });
+    await expect(newGroupBtn).toBeVisible();
+    await expect(newGroupBtn).toBeEnabled();
+    await newGroupBtn.click();
     await expect(page.getByText("Create new group")).toBeVisible();
     // use hashes in order to have an exact 1 match from the search bar
     const groupName = groupNameByIndex(testAdmin.info().workerIndex);
@@ -36,6 +40,7 @@ testAdmin("Admin can create and delete a group", async ({ signedUpPage }) => {
     await page.goto("./groups");
     await page
       .getByTestId("search-group")
+      .filter({ visible: true })
       .pressSequentially(groupName, { delay: 30 });
     const options = page.getByTitle("More");
     await expect(options).toHaveCount(1);
@@ -50,6 +55,7 @@ testAdmin("Admin can create and delete a group", async ({ signedUpPage }) => {
     const groupName = groupNameByIndex(testAdmin.info().workerIndex);
     await page
       .getByTestId("search-group")
+      .filter({ visible: true })
       .pressSequentially(groupName, { delay: 30 });
     const options = page.getByTitle("More");
     await expect(options).toHaveCount(1);
@@ -57,18 +63,17 @@ testAdmin("Admin can create and delete a group", async ({ signedUpPage }) => {
     await options.click();
     const deleteOption = page.getByTestId("delete-group-opt");
     await expect(deleteOption).toBeVisible();
+    await expect(deleteOption).toBeEnabled();
     await deleteOption.click();
     await page
       .getByRole("button", { name: "Delete", exact: true })
       .click({ delay: 300 });
-    const toast = page.getByTestId("toast").first();
-    await expect(toast).toBeVisible();
-    await expect(toast.getByText("Group deleted")).toBeVisible();
-    await toast.getByTitle("Close").click();
+    await dismissToast(page, "Group delete", "success");
     // check group has been deleted
     await page.getByTitle("Clear search").click();
     await page
       .getByTestId("search-group")
+      .filter({ visible: true })
       .pressSequentially(groupName, { delay: 30 });
     await expect(page.getByTitle("More")).toHaveCount(0);
     expect(page.getByText("No group found.").isVisible());

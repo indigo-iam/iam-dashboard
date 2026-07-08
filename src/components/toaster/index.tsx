@@ -13,6 +13,7 @@ import {
   InformationCircleIcon,
   XCircleIcon,
 } from "@heroicons/react/24/outline";
+import { useDisabled } from "@/utils/hooks";
 
 const breakpoints = {
   sm: 640,
@@ -120,6 +121,7 @@ type ToastProps = {
 
 function Toast(props: Readonly<ToastProps>) {
   const { title, description, type } = props;
+  const disabled = useDisabled();
   return (
     <div
       className="overlay flex w-full items-center border px-3 py-2"
@@ -139,6 +141,7 @@ function Toast(props: Readonly<ToastProps>) {
       </div>
       <button
         title="Close"
+        disabled={disabled}
         className="w-8 flex-none cursor-pointer rounded-full p-1.25 text-gray-500 hover:bg-gray-300 dark:text-gray-200 dark:hover:bg-gray-500"
         onClick={() => {
           sonnerToast.dismiss(props.id);

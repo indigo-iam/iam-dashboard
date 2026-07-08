@@ -40,3 +40,16 @@ export function useDeferredCallback() {
     deferredCallback,
   };
 }
+
+export function useDisabled() {
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    const f = async () => {
+      setDisabled(false);
+    };
+    f();
+  }, []);
+
+  return disabled;
+}

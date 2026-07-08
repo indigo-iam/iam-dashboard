@@ -17,15 +17,14 @@ import fs from "fs";
 
 async function openLinkCertificateDialog(page: Page) {
   const dialog = page.getByRole("dialog").filter({ visible: true });
-  await expect(async () => {
-    const linkCertificateButton = page.getByRole("button", {
-      name: "Link certificate",
-    });
-    await linkCertificateButton.click();
-    const heading = dialog.getByRole("heading");
-    await expect(heading).toHaveText("Link certificate");
-    await expect(heading).toBeVisible();
-  }).toPass();
+  const linkCertificateButton = page.getByRole("button", {
+    name: "Link certificate",
+  });
+  await expect(linkCertificateButton).toBeEnabled();
+  await linkCertificateButton.click();
+  const heading = dialog.getByRole("heading");
+  await expect(heading).toHaveText("Link certificate");
+  await expect(heading).toBeVisible();
   return dialog;
 }
 
@@ -34,12 +33,11 @@ async function openLinkProxyDialog(page: Page) {
   const linkProxyButton = page.getByRole("button", {
     name: "Link proxy certificate",
   });
-  await expect(async () => {
-    await linkProxyButton.click();
-    const heading = dialog.getByRole("heading");
-    await expect(heading).toHaveText("Link proxy certificate");
-    await expect(heading).toBeVisible();
-  }).toPass();
+  await expect(linkProxyButton).toBeEnabled();
+  await linkProxyButton.click();
+  const heading = dialog.getByRole("heading");
+  await expect(heading).toHaveText("Link proxy certificate");
+  await expect(heading).toBeVisible();
   return dialog;
 }
 
@@ -62,6 +60,7 @@ async function linkProxyCertificate(page: Page) {
   await expect(textarea).toHaveAttribute("required");
   await textarea.fill(pem);
   const confirm = dialog.getByRole("button", { name: "Confirm" });
+  await expect(confirm).toBeEnabled();
   await confirm.click();
   return dialog;
 }
@@ -72,16 +71,16 @@ async function unlinkCertificate(page: Page) {
   const options = certs.getByRole("button", { name: "More" });
   await options.click();
 
+  const unlinkBtn = page.getByRole("button", {
+    name: "Unlink certificate",
+  });
+  await expect(unlinkBtn).toBeEnabled();
+  await unlinkBtn.click();
   const dialog = page.getByRole("dialog").filter({ visible: true });
-  await expect(async () => {
-    const unlinkBtn = page.getByRole("button", {
-      name: "Unlink certificate",
-    });
-    await unlinkBtn.click();
-    const heading = dialog.getByRole("heading").first();
-    await expect(heading).toHaveText("Unlink X.509 certificate?");
-  }).toPass();
+  const heading = dialog.getByRole("heading").first();
+  await expect(heading).toHaveText("Unlink X.509 certificate?");
   const confirm = dialog.getByRole("button", { name: "Confirm" });
+  await expect(confirm).toBeEnabled();
   await confirm.click();
   return dialog;
 }
@@ -97,7 +96,6 @@ test("admin can link certificate and proxy on them self", async ({ page }) => {
   await changeTabPanel(linkedAccountsBtn);
 
   const x509 = page.locator(".panel").filter({ hasText: "X.509 certificates" });
-
   await expect(x509).toBeVisible();
 
   const linkProxyButton = page.getByRole("button", {
@@ -261,6 +259,7 @@ test.describe("admin assigns certificate to user and user self-assign proxy", ()
       await expect(textarea).toBeVisible();
       await textarea.fill("foobazbar");
       const confirmButton = dialog.getByRole("button", { name: "Confirm" });
+      await expect(confirmButton).toBeEnabled();
       await confirmButton.click();
       await expect(dialog).toBeVisible();
       const error = dialog.getByRole("paragraph");
@@ -268,6 +267,7 @@ test.describe("admin assigns certificate to user and user self-assign proxy", ()
         "Error reading proxy certificate from string: Private key was not found in the PEM keystore (0 certificate(s) was (were) found)."
       );
       const cancelButton = dialog.getByRole("button", { name: "Cancel" });
+      await expect(cancelButton).toBeEnabled();
       await cancelButton.click();
       await expect(dialog).toBeHidden();
     });

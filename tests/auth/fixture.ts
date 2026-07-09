@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { test as baseTest, expect, Page } from "@playwright/test";
-export { expect } from "@playwright/test";
+export { expect, test } from "@playwright/test";
 
 export type UserInfo = {
   user: string;
@@ -65,16 +65,6 @@ export type TestOptions = {
   signedUpPage: Page;
   user: UserInfo;
 };
-
-export const test = baseTest.extend<TestOptions>({
-  user: [TEST_USER, { option: true }], // fallback value
-  signedUpPage: async ({ page, user }, use) => {
-    await login(page, user);
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    await use(page);
-    await logout(page);
-  },
-});
 
 export const testAdmin = baseTest.extend<TestOptions>({
   signedUpPage: async ({ page }, use) => {

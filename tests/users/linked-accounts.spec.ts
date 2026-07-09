@@ -49,6 +49,7 @@ async function linkCertificate(page: Page) {
   const textarea = dialog.getByLabel("Certificate");
   await textarea.fill(pem);
   const confirm = dialog.getByRole("button", { name: "Confirm" });
+  await expect(confirm).toBeEnabled();
   await confirm.click();
   return dialog;
 }
@@ -89,7 +90,7 @@ test.afterEach(async ({ page }) => {
   await logout(page);
 });
 
-test("admin can link certificate and proxy on them self", async ({ page }) => {
+test("admin can link certificate and proxy on themselves", async ({ page }) => {
   await login(page, ADMIN_USER);
   const linkedAccountsBtn = page.getByText("LINKED ACCOUNTS");
   await linkedAccountsBtn.scrollIntoViewIfNeeded();
@@ -105,8 +106,6 @@ test("admin can link certificate and proxy on them self", async ({ page }) => {
     name: "Link certificate",
   });
 
-  await test.step("there are no linked certificates", async () => {});
-
   await test.step("'Link proxy certificate' button is visible", async () => {
     await expect(linkProxyButton).toBeVisible();
   });
@@ -115,16 +114,18 @@ test("admin can link certificate and proxy on them self", async ({ page }) => {
     await expect(linkCertificateButton).toBeHidden();
   });
 
-  await test.step("enabled admin mode", async () => {
+  await test.step("enable admin mode", async () => {
     await enableAdminMode(page);
   });
 
   await test.step("'Link proxy certificate' button is visible", async () => {
     await expect(linkProxyButton).toBeVisible();
+    await expect(linkProxyButton).toBeEnabled();
   });
 
   await test.step("'Link certificate' button is visible visible", async () => {
     await expect(linkCertificateButton).toBeVisible();
+    await expect(linkCertificateButton).toBeEnabled();
   });
 
   await test.step("add valid certificate", async () => {
@@ -147,7 +148,7 @@ test("admin can link certificate and proxy on them self", async ({ page }) => {
     );
     const cert = x509.locator(".iam-list-item").last();
     await expect(cert).toHaveText(
-      /.*Has proxy certificate. Proxy expires in \d days./
+      /^test-certSubject CN=test,O=IGI,C=ITIssuer CN=Test CA,O=INFN,C=ITHas proxy certificate. Proxy expires in \d days{0,1}.$/
     );
   });
 
@@ -196,26 +197,27 @@ test.describe("admin assigns certificate to user and user self-assign proxy", ()
 
     await test.step("enable admin mode", async () => {
       await enableAdminMode(page);
-      await page.waitForURL("./users/me");
     });
 
     await test.step("navigate to Test User page", async () => {
       await page.goto("./users");
+      const newUserBtn = page.getByRole("button", { name: "New user" });
+      await expect(newUserBtn).toBeEnabled(); // wait for page fully loaded
       const searchbar = page.getByPlaceholder("Type to search a user");
       await searchbar.pressSequentially("test user");
       const testUser = page.getByRole("link").filter({ hasText: "Test User" });
       const users = page.locator(".iam-list-item").filter({ visible: true });
       await expect(users).toHaveCount(1);
-      await expect(async () => {
-        await testUser.click();
-        await page.waitForLoadState();
-        const heading = page
-          .getByRole("heading")
-          .filter({ hasText: "Test User" });
-        await expect(heading).toBeVisible();
-        const email = page.getByLabel("Email");
-        await expect(email).toHaveValue("test@iam.test");
-      }).toPass();
+      await expect(users).toBeEnabled();
+      await testUser.click();
+      const heading = page
+        .getByRole("heading")
+        .filter({ hasText: "Test User" });
+      await expect(heading).toBeVisible();
+      const saveBtn = page.getByRole("button", { name: "Save changes" });
+      await expect(saveBtn).toBeEnabled();
+      const email = page.getByLabel("Email");
+      await expect(email).toHaveValue("test@iam.test");
     });
 
     await test.step("select linked account tab", async () => {

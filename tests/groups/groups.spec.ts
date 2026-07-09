@@ -38,6 +38,8 @@ testAdmin("Admin can create and delete a group", async ({ signedUpPage }) => {
     await toast.getByTitle("Close").click();
     // check group has been created
     await page.goto("./groups");
+    await expect(newGroupBtn).toBeVisible();
+    await expect(newGroupBtn).toBeEnabled(); // page is loaded
     await page
       .getByTestId("search-group")
       .filter({ visible: true })
@@ -53,6 +55,9 @@ testAdmin("Admin can create and delete a group", async ({ signedUpPage }) => {
     await expect(heading).toBeVisible();
     // expect to find only one group
     const groupName = groupNameByIndex(testAdmin.info().workerIndex);
+    const newGroupBtn = page.getByRole("button", { name: "New group" });
+    await expect(newGroupBtn).toBeVisible();
+    await expect(newGroupBtn).toBeEnabled(); // page is loaded
     await page
       .getByTestId("search-group")
       .filter({ visible: true })
@@ -70,7 +75,9 @@ testAdmin("Admin can create and delete a group", async ({ signedUpPage }) => {
       .click({ delay: 300 });
     await dismissToast(page, "Group delete", "success");
     // check group has been deleted
-    await page.getByTitle("Clear search").click();
+    const clearBtn = page.getByTitle("Clear search");
+    await expect(clearBtn).toBeEnabled();
+    await clearBtn.click();
     await page
       .getByTestId("search-group")
       .filter({ visible: true })

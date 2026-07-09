@@ -7,14 +7,13 @@ import { Page } from "@playwright/test";
 import { dismissToast } from "../utils";
 
 async function openEditModal(page: Page) {
+  const editBtn = page.getByRole("button", { name: "Edit AUP" });
+  await expect(editBtn).toBeEnabled();
+  await editBtn.click();
   const dialog = page.getByRole("dialog").filter({ visible: true });
-  await expect(async () => {
-    const editBtn = page.getByRole("button", { name: "Edit AUP" });
-    await editBtn.click();
-    await expect(dialog).toBeVisible();
-    const heading = dialog.getByRole("heading");
-    await expect(heading).toHaveText("Edit AUP for this organization");
-  }).toPass();
+  await expect(dialog).toBeVisible();
+  const heading = dialog.getByRole("heading");
+  await expect(heading).toHaveText("Edit AUP for this organization");
   return dialog;
 }
 
@@ -25,7 +24,7 @@ testUser("User cannot see AUP page", async ({ signedUpPage }) => {
 });
 
 testAdmin(
-  "Admin cannot see AUP page in non-admin mode",
+  "Admin cannot see AUP page in user mode",
   async ({ signedUpPage }) => {
     const page = signedUpPage;
     await page.goto("./aup");
@@ -36,21 +35,19 @@ testAdmin(
 testAdmin.describe("Admin can create/edit/delete the AUP", () => {
   testAdmin.afterEach("Delete AUP", async ({ signedUpPage }) => {
     const page = signedUpPage;
-
+    await page.goto("./aup");
     const deleteBtn = page.getByRole("button", { name: "Delete AUP" });
+    await expect(deleteBtn).toBeVisible();
+    await expect(deleteBtn).toBeEnabled();
+    await deleteBtn.click();
     const dialog = page.getByRole("dialog").filter({ visible: true });
-
-    await expect(async () => {
-      await expect(deleteBtn).toBeVisible();
-      await deleteBtn.click();
-      const heading = dialog.getByRole("heading");
-      await expect(heading).toHaveText(
-        "Delete the Acceptable Usage Policy for this organization?"
-      );
-    }).toPass();
-
+    const heading = dialog.getByRole("heading");
+    await expect(heading).toHaveText(
+      "Delete the Acceptable Usage Policy for this organization?"
+    );
     const confirmBtn = dialog.getByRole("button", { name: "Delete" });
     await expect(confirmBtn).toBeVisible();
+    await expect(confirmBtn).toBeEnabled();
     await confirmBtn.click();
     await dismissToast(page, "AUP deleted", "success");
     await expect(
@@ -63,7 +60,7 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
     async ({ signedUpPage }) => {
       const page = signedUpPage;
 
-      await testAdmin.step("enabled admin mode", async () => {
+      await testAdmin.step("enable admin mode", async () => {
         await enableAdminMode(page);
       });
 
@@ -81,14 +78,12 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
 
       await testAdmin.step("Create AUP", async () => {
         const createAupBtn = page.getByRole("button", { name: "Create AUP" });
+        await expect(createAupBtn).toBeEnabled();
+        await createAupBtn.click();
         const dialog = page.getByRole("dialog").filter({
           hasText: "Create the Acceptable Usage Policy for this organization",
         });
-        await expect(async () => {
-          await createAupBtn.click();
-          await expect(dialog).toBeVisible();
-        }).toPass();
-
+        await expect(dialog).toBeVisible();
         await expect(
           dialog.getByRole("button", { name: "Create AUP" })
         ).toBeDisabled();
@@ -97,7 +92,7 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
         await expect(url).toHaveAttribute("required");
 
         await expect(url).toHaveAttribute("type", "url");
-        await url.pressSequentially("http://example.org");
+        await url.fill("http://example.org");
 
         const validity = dialog.getByLabel("AUP signature validity (in days)");
         await expect(validity).toHaveAttribute("required");
@@ -107,7 +102,9 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
 
         const reminder = dialog.getByLabel("AUP reminders (in days)");
         await expect(reminder).toBeHidden();
-        await dialog.getByRole("button", { name: "Create AUP" }).click();
+        const createBtn = dialog.getByRole("button", { name: "Create AUP" });
+        await expect(createBtn).toBeEnabled();
+        await createBtn.click();
         await dismissToast(page, "AUP Created", "success");
       });
 
@@ -131,54 +128,51 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
 
       await testAdmin.step("Edit AUP URL", async () => {
         const dialog = await openEditModal(page);
-        await expect(async () => {
-          const url = dialog.getByLabel("Acceptable Usage Policy URL");
-          await expect(url).toHaveValue("http://example.org");
-          await url.clear();
-          await url.pressSequentially("http://aup.example.org");
-          const confirmBtn = dialog.getByRole("button", { name: "Confirm" });
-          await confirmBtn.click();
-          await dismissToast(page, "AUP updated", "success");
-        }).toPass();
-        const url = page
+        const url = dialog.getByLabel("Acceptable Usage Policy URL");
+        await expect(url).toHaveValue("http://example.org");
+        await url.fill("http://aup.example.org");
+        const confirmBtn = dialog.getByRole("button", { name: "Confirm" });
+        await expect(confirmBtn).toBeEnabled();
+        await confirmBtn.click();
+        await dismissToast(page, "AUP updated", "success");
+        const url2 = page
           .getByLabel("Acceptable Usage Policy URL")
           .filter({ visible: true });
-        await expect(url).toHaveValue("http://aup.example.org");
+        await expect(url2).toHaveValue("http://aup.example.org");
       });
 
       await testAdmin.step("Edit AUP expiration days", async () => {
-        await expect(async () => {
-          const dialog = await openEditModal(page);
-          const days = dialog.getByLabel("AUP signature validity (in days)");
-          await expect(days).toHaveValue("0");
-          const reminders = dialog.getByLabel("AUP reminders (in days)");
-          await expect(reminders).toBeHidden();
-          await days.clear();
-          await days.fill("365");
-          await expect(reminders).toBeVisible();
-          await reminders.fill("30,15,1");
-          await dialog.getByRole("button", { name: "Confirm" }).click();
-          await dismissToast(page, "AUP updated", "success");
-        }).toPass();
-        await expect(async () => {
-          const days = page
-            .getByLabel("Signature validity (in days)")
-            .filter({ visible: true });
-          await expect(days).toHaveValue("365");
-        }).toPass();
+        const dialog = await openEditModal(page);
+        const days = dialog
+          .getByLabel("AUP signature validity (in days)")
+          .filter({ visible: true });
+        await expect(days).toHaveValue("0");
+        const reminders = dialog.getByLabel("AUP reminders (in days)");
+        await expect(reminders).toBeHidden();
+        await days.fill("365");
+        await expect(reminders).toBeVisible();
+        await reminders.fill("30,15,1");
+        const confirmBtn = dialog.getByRole("button", { name: "Confirm" });
+        await expect(confirmBtn).toBeEnabled();
+        await confirmBtn.click();
+        await dismissToast(page, "AUP updated", "success");
+        const validity = page
+          .getByLabel("Signature Validity (in days")
+          .filter({ visible: true });
+        await expect(validity).toHaveValue("365");
       });
 
       await testAdmin.step("Edit AUP reminder in days", async () => {
-        await expect(async () => {
-          const dialog = await openEditModal(page);
-          const days = dialog.getByLabel("AUP signature validity (in days)");
-          await expect(days).toHaveValue("365");
-          const reminders = dialog.getByLabel("AUP reminders (in days)");
-          await expect(reminders).toBeVisible();
-          await reminders.fill("30,15,1");
-          await dialog.getByRole("button", { name: "Confirm" }).click();
-          await dismissToast(page, "AUP updated", "success");
-        }).toPass();
+        const dialog = await openEditModal(page);
+        const days = dialog.getByLabel("AUP signature validity (in days)");
+        await expect(days).toHaveValue("365");
+        const reminders = dialog.getByLabel("AUP reminders (in days)");
+        await expect(reminders).toBeVisible();
+        await reminders.fill("30,15,1");
+        const confirmBtn = dialog.getByRole("button", { name: "Confirm" });
+        await expect(confirmBtn).toBeEnabled();
+        await confirmBtn.click();
+        await dismissToast(page, "AUP updated", "success");
       });
 
       const valuesAndErrors = [
@@ -205,15 +199,10 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
           const reminders = dialog.getByLabel("AUP reminders (in days)");
           await expect(reminders).toHaveValue("30,15,1");
           await reminders.fill(value);
-          await dialog.getByRole("button", { name: "Confirm" }).click();
-          await expect(async () => {
-            const toast = page.getByTestId("toast");
-            await expect(toast).toBeVisible();
-            await expect(toast).toHaveAttribute("data-toast-type", "error");
-            await expect(toast).toHaveText(error);
-            await toast.getByTitle("Close").click();
-            await expect(toast).toBeHidden();
-          }).toPass();
+          const confirmBtn = dialog.getByRole("button", { name: "Confirm" });
+          await expect(confirmBtn).toBeEnabled();
+          await confirmBtn.click();
+          await dismissToast(page, error, "error");
         });
       }
     }

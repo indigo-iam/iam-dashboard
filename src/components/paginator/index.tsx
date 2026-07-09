@@ -10,25 +10,36 @@ import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
 } from "@heroicons/react/24/outline";
-import Link from "@/components/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useProgressBar } from "../progress-bar";
+import { Button } from "../buttons";
 
 const className =
-  "flex p-0.5 ml-0 bg-white text-gray-500 border  hover:bg-gray-200 dark:bg-secondary/50 first:rounded-l-lg last:rounded-r-lg data-[disabled=true]:opacity-30 data-[disabled=true]:pointer-events-none hover:text-gray-500 dark:bg-gray-700  dark:text-gray-500 dark:hover:bg-gray-600 dark:hover:text-gray-400";
+  "flex p-0.5 ml-0 bg-white text-gray-500 border  hover:bg-gray-200 dark:bg-secondary/50 first:rounded-l-lg last:rounded-r-lg hover:cursor-pointer  hover:text-gray-500 dark:bg-gray-700  dark:text-gray-500 dark:hover:bg-gray-600 dark:hover:text-gray-400 disabled:opacity-30 disabled:pointer-events-none";
 
 export interface PaginatorProps {
   numberOfPages: number;
+  overrides?: {
+    onFirst?: () => void;
+    onPrevious?: () => void;
+    onNext?: () => void;
+    onLast?: () => void;
+    onCountChange?: (count: number) => void;
+    currentPage?: number;
+    count?: number;
+  };
 }
 
 export default function Paginator(props: Readonly<PaginatorProps>) {
-  const { numberOfPages } = props;
+  const { numberOfPages, overrides } = props;
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
   const { startProgressBar } = useProgressBar();
-  const currentPage = Number(searchParams.get("page")) || 1;
-  const itemsPerPage = Number(searchParams.get("count")) || 10;
+  const currentPage =
+    (overrides?.currentPage ?? Number(searchParams.get("page"))) || 1;
+  const itemsPerPage =
+    (overrides?.count ?? Number(searchParams.get("count"))) || 10;
 
   const createPageURL = (
     pageNumber: number | string,
@@ -42,8 +53,48 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
 
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const count = Number.parseInt(event.currentTarget.value);
+    if (overrides?.onCountChange) {
+      overrides.onCountChange(count);
+      return;
+    }
     router.push(createPageURL(1, count));
     startProgressBar();
+  }
+
+  function goFirst() {
+    if (overrides?.onFirst) {
+      overrides?.onFirst();
+      return;
+    }
+    startProgressBar();
+    router.push(createPageURL(1));
+  }
+
+  function goPrevious() {
+    if (overrides?.onPrevious) {
+      overrides.onPrevious();
+      return;
+    }
+    startProgressBar();
+    router.push(createPageURL(currentPage - 1));
+  }
+
+  function goNext() {
+    if (overrides?.onNext) {
+      overrides.onNext();
+      return;
+    }
+    startProgressBar();
+    router.push(createPageURL(currentPage + 1));
+  }
+
+  function goLast() {
+    if (overrides?.onLast) {
+      overrides.onLast();
+      return;
+    }
+    startProgressBar();
+    router.push(createPageURL(numberOfPages));
   }
 
   return (
@@ -68,38 +119,38 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
         </select>
       </div>
       <div className="flex">
-        <Link
+        <Button
           title="First Page"
           className={className}
-          data-disabled={currentPage <= 1}
-          href={createPageURL(1)}
+          disabled={currentPage <= 1}
+          onClick={goFirst}
         >
           <ChevronDoubleLeftIcon className="m-auto w-5" />
-        </Link>
-        <Link
+        </Button>
+        <Button
           title="Previous Page"
           className={className}
-          data-disabled={currentPage <= 1}
-          href={createPageURL(currentPage - 1)}
+          disabled={currentPage <= 1}
+          onClick={goPrevious}
         >
           <ChevronLeftIcon className="m-auto w-5" />
-        </Link>
-        <Link
+        </Button>
+        <Button
           title="Next Page"
           className={className}
-          data-disabled={currentPage >= numberOfPages}
-          href={createPageURL(currentPage + 1)}
+          disabled={currentPage >= numberOfPages}
+          onClick={goNext}
         >
           <ChevronRightIcon className="m-auto w-5" />
-        </Link>
-        <Link
+        </Button>
+        <Button
           title="Last Page"
           className={className}
-          data-disabled={currentPage >= numberOfPages}
-          href={createPageURL(numberOfPages)}
+          disabled={currentPage >= numberOfPages}
+          onClick={goLast}
         >
           <ChevronDoubleRightIcon className="m-auto w-5" />
-        </Link>
+        </Button>
       </div>
     </div>
   );

@@ -19,16 +19,27 @@ const className =
 
 export interface PaginatorProps {
   numberOfPages: number;
+  overrides?: {
+    onFirst?: () => void;
+    onPrevious?: () => void;
+    onNext?: () => void;
+    onLast?: () => void;
+    onCountChange?: (count: number) => void;
+    currentPage?: number;
+    count?: number;
+  };
 }
 
 export default function Paginator(props: Readonly<PaginatorProps>) {
-  const { numberOfPages } = props;
+  const { numberOfPages, overrides } = props;
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
   const { startProgressBar } = useProgressBar();
-  const currentPage = Number(searchParams.get("page")) || 1;
-  const itemsPerPage = Number(searchParams.get("count")) || 10;
+  const currentPage =
+    (overrides?.currentPage ?? Number(searchParams.get("page"))) || 1;
+  const itemsPerPage =
+    (overrides?.count ?? Number(searchParams.get("count"))) || 10;
 
   const createPageURL = (
     pageNumber: number | string,
@@ -42,26 +53,46 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
 
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const count = Number.parseInt(event.currentTarget.value);
+    if (overrides?.onCountChange) {
+      overrides.onCountChange(count);
+      return;
+    }
     router.push(createPageURL(1, count));
     startProgressBar();
   }
 
   function goFirst() {
+    if (overrides?.onFirst) {
+      overrides?.onFirst();
+      return;
+    }
     startProgressBar();
     router.push(createPageURL(1));
   }
 
   function goPrevious() {
+    if (overrides?.onPrevious) {
+      overrides.onPrevious();
+      return;
+    }
     startProgressBar();
     router.push(createPageURL(currentPage - 1));
   }
 
   function goNext() {
+    if (overrides?.onNext) {
+      overrides.onNext();
+      return;
+    }
     startProgressBar();
     router.push(createPageURL(currentPage + 1));
   }
 
   function goLast() {
+    if (overrides?.onLast) {
+      overrides.onLast();
+      return;
+    }
     startProgressBar();
     router.push(createPageURL(numberOfPages));
   }

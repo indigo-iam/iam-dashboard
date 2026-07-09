@@ -41,6 +41,7 @@ export async function addProxyCert(
   userId: string,
   cert: string
 ): Promise<Notification | void> {
+  // admins cannot add proxy for others
   const url = `${IAM_API_URL}/iam/account/me/proxycert`;
   const body = { certificate_chain: cert };
   const response = await authFetch(url, {
@@ -52,19 +53,19 @@ export async function addProxyCert(
     revalidatePath(`/users/${userId}`);
     return;
   }
-  const msg = await response.text();
-  return {
-    type: "error",
-    title: "Cannot add proxy certificate",
-    description: `Error ${response.status} ${msg}`,
-  };
+  if (response.headers.get("content-type") === "application/json") {
+    const { error } = await response.json();
+    return { type: "error", title: error ?? "unknown error" };
+  } else {
+    return { type: "error", title: await response.text() };
+  }
 }
 
 export async function linkCertificate(
   userId: string,
   label: string,
   pemEncodedCertificate: string
-): Promise<Notification | void> {
+): Promise<Notification> {
   const url = `${IAM_API_URL}/scim/Users/${userId}`;
   const response = await patchIndigoUser(url, {
     op: "add",
@@ -81,12 +82,38 @@ export async function linkCertificate(
   });
   if (response.ok) {
     revalidatePath(`/users/${userId}`);
-    return;
+    return {
+      type: "success",
+      title: "Certificated linked to account",
+    };
   }
-  const msg = await response.text();
+  const error = await response.json();
   return {
     type: "error",
     title: "Cannot link certificate to user",
-    description: `Error ${response.status} ${msg}`,
+    description: error.detail,
+  };
+}
+
+export async function deleteAccountLink(
+  certificateIssuer: string,
+  certificateSubject: string
+): Promise<Notification | void> {
+  const searchParams = new URLSearchParams({
+    certificateIssuer,
+    certificateSubject,
+  });
+  searchParams.toString();
+  const url = `${IAM_API_URL}/iam/account-linking/X509?${searchParams.toString()}`;
+  const response = await authFetch(url, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    revalidatePath("/users/me");
+    return;
+  }
+  return {
+    type: "error",
+    title: await response.text(),
   };
 }

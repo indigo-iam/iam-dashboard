@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { test as baseTest, expect, Page } from "@playwright/test";
-export { expect } from "@playwright/test";
+export { expect, test } from "@playwright/test";
 
 export type UserInfo = {
   user: string;
@@ -55,6 +55,7 @@ export async function logout(page: Page) {
   const userMenu = await openUserMenu(page);
   const signOutButton = userMenu.getByRole("button", { name: "Sign out" });
   await expect(signOutButton).toBeVisible();
+  await expect(signOutButton).toBeEnabled();
   await signOutButton.click();
   // without dot = https://iam.test.example/login, with dot= /dev/login
   await page.waitForURL("/login");
@@ -64,16 +65,6 @@ export type TestOptions = {
   signedUpPage: Page;
   user: UserInfo;
 };
-
-export const test = baseTest.extend<TestOptions>({
-  user: [TEST_USER, { option: true }], // fallback value
-  signedUpPage: async ({ page, user }, use) => {
-    await login(page, user);
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    await use(page);
-    await logout(page);
-  },
-});
 
 export const testAdmin = baseTest.extend<TestOptions>({
   signedUpPage: async ({ page }, use) => {
@@ -103,7 +94,9 @@ async function checkClientAuthorization(page: Page) {
 
 async function setMode(page: Page, mode: "Admin mode" | "User mode") {
   const userMenu = await openUserMenu(page);
-  await userMenu.getByRole("button", { name: mode }).click();
+  const modeButton = userMenu.getByRole("button", { name: mode });
+  await expect(modeButton).toBeEnabled();
+  await modeButton.click();
   await expect(page.locator("#loading")).toBeVisible();
   await expect(page.locator("#loading")).toBeHidden();
   await expect(userMenu).toBeHidden();

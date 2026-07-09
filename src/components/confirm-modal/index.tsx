@@ -19,6 +19,7 @@ interface ConfirmModal extends ModalProps {
   cancelButtonText?: string;
   confirmButtonText?: string;
   confirmButtonDisabled?: boolean;
+  autoclose?: boolean;
   danger?: boolean;
   formRef?: React.RefObject<HTMLFormElement | null>;
 }
@@ -31,13 +32,16 @@ export default function ConfirmModal(props: Readonly<ConfirmModal>) {
     cancelButtonText,
     confirmButtonText,
     confirmButtonDisabled,
+    autoclose,
     danger,
     formRef,
     ...modalProps
   } = props;
 
   async function submit() {
-    modalProps.onClose();
+    if (autoclose !== false) {
+      modalProps.onClose();
+    }
     onConfirm?.();
   }
 

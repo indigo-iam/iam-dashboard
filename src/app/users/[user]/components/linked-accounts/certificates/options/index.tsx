@@ -12,6 +12,7 @@ import { UnlinkCertificateModal } from "./unlink-certificate";
 import { Certificate } from "@/models/indigo-user";
 
 type CertificateOptionsProps = {
+  isAdmin: boolean;
   userId: string;
   userFormattedName: string;
   certificate: Certificate;
@@ -20,7 +21,7 @@ type CertificateOptionsProps = {
 export default function CertificateOptions(
   props: Readonly<CertificateOptionsProps>
 ) {
-  const { userId, userFormattedName, certificate } = props;
+  const { isAdmin, userId, userFormattedName, certificate } = props;
   const [show, setShow] = useState<"UNLINK_CERTIFICATE">();
   const close = () => setShow(undefined);
   return (
@@ -34,6 +35,7 @@ export default function CertificateOptions(
       <UnlinkCertificateModal
         show={show === "UNLINK_CERTIFICATE"}
         onClose={close}
+        isAdmin={isAdmin}
         userId={userId}
         userFormattedName={userFormattedName}
         certificate={certificate}

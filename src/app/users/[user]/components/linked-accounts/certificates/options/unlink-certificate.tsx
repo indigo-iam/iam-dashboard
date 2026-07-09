@@ -10,9 +10,11 @@ import { Warning } from "@/components/notices";
 import { useProgressBar } from "@/components/progress-bar";
 import { toast } from "@/components/toaster";
 import { Certificate } from "@/models/indigo-user";
+import { deleteAccountLink } from "@/services/certs";
 import { unlinkCertificate } from "@/services/users";
 
 type UnlinkCertificateModalProps = ModalProps & {
+  isAdmin: boolean;
   userId: string;
   userFormattedName: string;
   certificate: Certificate;
@@ -21,12 +23,15 @@ type UnlinkCertificateModalProps = ModalProps & {
 export function UnlinkCertificateModal(
   props: Readonly<UnlinkCertificateModalProps>
 ) {
-  const { show, onClose, userId, userFormattedName, certificate } = props;
+  const { show, onClose, isAdmin, userId, userFormattedName, certificate } =
+    props;
   const { startTransition } = useProgressBar();
 
   function handleConfirm() {
     startTransition(async () => {
-      const res = await unlinkCertificate(userId, certificate);
+      const res = isAdmin
+        ? await unlinkCertificate(userId, certificate)
+        : await deleteAccountLink(certificate.issuerDn, certificate.subjectDn);
       if (res) {
         toast.toast(res);
       }
@@ -38,7 +43,7 @@ export function UnlinkCertificateModal(
       show={show}
       onClose={onClose}
       onConfirm={handleConfirm}
-      title="Unlink X509 certificate?"
+      title="Unlink X.509 certificate?"
     >
       <p className="text-center">
         Are you sure to unlink the following certificate?

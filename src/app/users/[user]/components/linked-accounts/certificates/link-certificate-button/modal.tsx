@@ -164,8 +164,14 @@ type LinkCertificateModalProps = ModalProps & {
 
 function LinkCertificateModal(props: Readonly<LinkCertificateModalProps>) {
   const { show, onClose, userId, userName } = props;
+  const [error, setError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const { startTransition } = useProgressBar();
+
+  function close() {
+    onClose();
+    setError(null);
+  }
 
   function submit() {
     if (!formRef.current) {
@@ -175,39 +181,49 @@ function LinkCertificateModal(props: Readonly<LinkCertificateModalProps>) {
     const formData = new FormData(formRef.current);
     const label = formData.get("label") as string;
     const cert = formData.get("certificate") as string;
+    if (!label || !cert) {
+      return;
+    }
     startTransition(async () => {
       const res = await linkCertificate(userId, label, cert);
-      if (res) {
-        toast.toast(res);
+      toast.toast(res);
+      if (res.type === "error") {
+        setError(res.description ?? "unknown error");
+      } else {
+        formRef.current?.reset();
+        close();
       }
     });
   }
 
   return (
     <ConfirmModal
-      title="Link certificate to user?"
+      title="Link certificate"
       show={show}
-      onClose={onClose}
+      onClose={close}
       formRef={formRef}
       onConfirm={submit}
+      autoclose={false}
     >
       <Field>
         <Label>Username</Label>
         <Input value={userName} disabled />
       </Field>
       <Field>
-        <Label>Label</Label>
-        <Input name="label" placeholder="example" />
+        <Label data-required>Label</Label>
+        <Input name="label" placeholder="example" required />
       </Field>
       <Field>
-        <Label>Label</Label>
-        <textarea
+        <Label data-required>Certificate</Label>
+        <Textarea
           name="certificate"
           placeholder="PEM encoded certificate..."
           className="iam-input"
+          required
           rows={8}
         />
       </Field>
+      {error && <p className="text-danger">{error}</p>}
     </ConfirmModal>
   );
 }

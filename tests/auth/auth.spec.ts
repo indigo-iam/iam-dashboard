@@ -20,7 +20,7 @@ testAdmin(
       await page.waitForURL("./users/me");
       const navbar = page.getByRole("navigation");
       const navigationButtons = navbar.getByRole("link");
-      expect(navigationButtons).toHaveCount(5);
+      await expect(navigationButtons).toHaveCount(5);
     });
 
     await testAdmin.step("'/users' redirects to '/users/me'", async () => {
@@ -85,7 +85,7 @@ testAdmin(
       await page.waitForURL("./users/me");
       const navbar = page.getByRole("navigation");
       const navigationButtons = navbar.getByRole("link");
-      expect(navigationButtons).toHaveCount(10);
+      await expect(navigationButtons).toHaveCount(10);
     });
 
     await testAdmin.step("'/users' page is visible", async () => {
@@ -158,7 +158,7 @@ testUser("User cannot see privileged pages", async ({ signedUpPage }) => {
     await page.waitForURL("./users/me");
     const navbar = page.getByRole("navigation");
     const navigationButtons = navbar.getByRole("link");
-    expect(navigationButtons).toHaveCount(5);
+    await expect(navigationButtons).toHaveCount(5);
   });
 
   await testUser.step("'/users' redirects to '/users/me'", async () => {

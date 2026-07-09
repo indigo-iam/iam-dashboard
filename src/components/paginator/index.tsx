@@ -10,12 +10,12 @@ import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
 } from "@heroicons/react/24/outline";
-import Link from "@/components/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useProgressBar } from "../progress-bar";
+import { Button } from "../buttons";
 
 const className =
-  "flex p-0.5 ml-0 bg-white text-gray-500 border  hover:bg-gray-200 dark:bg-secondary/50 first:rounded-l-lg last:rounded-r-lg data-[disabled=true]:opacity-30 data-[disabled=true]:pointer-events-none hover:text-gray-500 dark:bg-gray-700  dark:text-gray-500 dark:hover:bg-gray-600 dark:hover:text-gray-400";
+  "flex p-0.5 ml-0 bg-white text-gray-500 border  hover:bg-gray-200 dark:bg-secondary/50 first:rounded-l-lg last:rounded-r-lg hover:cursor-pointer  hover:text-gray-500 dark:bg-gray-700  dark:text-gray-500 dark:hover:bg-gray-600 dark:hover:text-gray-400 disabled:opacity-30 disabled:pointer-events-none";
 
 export interface PaginatorProps {
   numberOfPages: number;
@@ -46,6 +46,26 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
     startProgressBar();
   }
 
+  function goFirst() {
+    startProgressBar();
+    router.push(createPageURL(1));
+  }
+
+  function goPrevious() {
+    startProgressBar();
+    router.push(createPageURL(currentPage - 1));
+  }
+
+  function goNext() {
+    startProgressBar();
+    router.push(createPageURL(currentPage + 1));
+  }
+
+  function goLast() {
+    startProgressBar();
+    router.push(createPageURL(numberOfPages));
+  }
+
   return (
     <div className="flex items-center justify-between px-4 pb-2 text-sm">
       <div className="flex items-center space-x-2">
@@ -68,38 +88,38 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
         </select>
       </div>
       <div className="flex">
-        <Link
+        <Button
           title="First Page"
           className={className}
-          data-disabled={currentPage <= 1}
-          href={createPageURL(1)}
+          disabled={currentPage <= 1}
+          onClick={goFirst}
         >
           <ChevronDoubleLeftIcon className="m-auto w-5" />
-        </Link>
-        <Link
+        </Button>
+        <Button
           title="Previous Page"
           className={className}
-          data-disabled={currentPage <= 1}
-          href={createPageURL(currentPage - 1)}
+          disabled={currentPage <= 1}
+          onClick={goPrevious}
         >
           <ChevronLeftIcon className="m-auto w-5" />
-        </Link>
-        <Link
+        </Button>
+        <Button
           title="Next Page"
           className={className}
-          data-disabled={currentPage >= numberOfPages}
-          href={createPageURL(currentPage + 1)}
+          disabled={currentPage >= numberOfPages}
+          onClick={goNext}
         >
           <ChevronRightIcon className="m-auto w-5" />
-        </Link>
-        <Link
+        </Button>
+        <Button
           title="Last Page"
           className={className}
-          data-disabled={currentPage >= numberOfPages}
-          href={createPageURL(numberOfPages)}
+          disabled={currentPage >= numberOfPages}
+          onClick={goLast}
         >
           <ChevronDoubleRightIcon className="m-auto w-5" />
-        </Link>
+        </Button>
       </div>
     </div>
   );

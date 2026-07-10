@@ -22,7 +22,9 @@ export function UserPopover(props: Readonly<UserPopoverProps>) {
   const { hasRoleAdmin, isAdmin, user } = props;
   const disabled = useDisabled();
   const email = user.emails?.[0].value;
-
+  const extraProps = {
+    autoComplete: "off", // https://github.com/vercel/next.js/issues/35558
+  };
   return (
     <Popover className="relative size-8">
       <PopoverButton
@@ -30,6 +32,7 @@ export function UserPopover(props: Readonly<UserPopoverProps>) {
         title="Open user menu"
         data-testid="user-menu-btn"
         disabled={disabled}
+        {...extraProps}
       >
         <Gravatar email={email} />
       </PopoverButton>

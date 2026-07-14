@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Field, Label, Select, SelectOption } from "@/components/form";
+import { Info } from "@/components/info";
 import { CodeChallengeMethod } from "@/models/client";
 
 type PkceProps = {
@@ -45,16 +46,18 @@ export function Advanced(props: Readonly<AdvancedProps>) {
         <h5 className="text-sm font-semibold text-gray-600 dark:text-gray-100">
           Advanced
         </h5>
-        <p className="text-sm font-light">
-          PKCE is an extension to the Authorization Code flow to prevent CSRF
-          and authorization code injection attacks. PKCE is recommended even if
-          a client is using a client secret or other form of client
-          authentication like private_key_jwt.
-        </p>
       </div>
       <div className="w-full space-y-4 lg:w-2/3">
-        <Field className="flex-wrap">
-          <Label>Proof Key for Code Exchange (PKCE) challenge method</Label>
+        <Field>
+          <div className="flex flex-wrap items-center gap-2">
+            <Label>Proof Key for Code Exchange (PKCE) challenge method</Label>
+            <Info className="pb-1.5">
+              PKCE is an extension to the Authorization Code flow to prevent
+              CSRF and authorization code injection attacks. PKCE is recommended
+              even if a client is using a client secret or other form of client
+              authentication like private_key_jwt.
+            </Info>
+          </div>
           <Pkce
             name="code_challenge_method"
             codeChallengeMethod={codeChallengeMethod}

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { LabeledCheckbox, Description, Field, Label } from "@/components/form";
+import { Info } from "@/components/info";
 import { Input } from "@/components/inputs";
 
 type RefreshTokenTimeoutProps = {
@@ -41,7 +42,7 @@ export function RefreshTokenTimeout(props: Readonly<RefreshTokenTimeoutProps>) {
           </Description>
         </Field>
         <div>
-          <Field>
+          <Field className="flex items-center gap-2">
             <LabeledCheckbox
               name="reuse_refresh_token"
               key={`reuse_refresh_token${reuseRefreshToken}`}
@@ -49,9 +50,9 @@ export function RefreshTokenTimeout(props: Readonly<RefreshTokenTimeoutProps>) {
             >
               Reuse Refresh Token
             </LabeledCheckbox>
-            <Description>
+            <Info anchor="left">
               Don&apos;t invalidate the Refresh Token after usage.
-            </Description>
+            </Info>
           </Field>
         </div>
       </div>

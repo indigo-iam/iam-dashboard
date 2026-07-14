@@ -2,7 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Description, Field, Label, LabeledCheckbox } from "@/components/form";
+import { Field, Label, LabeledCheckbox } from "@/components/form";
+import { Info } from "@/components/info";
 
 type OtherGrantTypesProps = {
   grantTypes: string[];
@@ -34,7 +35,7 @@ export function OtherGrantTypes(props: Readonly<OtherGrantTypesProps>) {
         <Field>
           <Label>Other grant types</Label>
         </Field>
-        <Field>
+        <Field className="flex items-center gap-2">
           <LabeledCheckbox
             name="grant_type"
             value={deviceCodeKey}
@@ -43,11 +44,11 @@ export function OtherGrantTypes(props: Readonly<OtherGrantTypesProps>) {
           >
             Device code
           </LabeledCheckbox>
-          <Description>
+          <Info anchor="left">
             Allow the client to obtain a token with OAuth2 device code flow
-          </Description>
+          </Info>
         </Field>
-        <Field>
+        <Field className="flex items-center gap-2">
           <LabeledCheckbox
             name="grant_type"
             value={tokenExchangeKey}
@@ -56,12 +57,12 @@ export function OtherGrantTypes(props: Readonly<OtherGrantTypesProps>) {
           >
             Token Exchange
           </LabeledCheckbox>
-          <Description>
+          <Info anchor="left">
             Allow the client to obtain its own tokens given a separate set of
             tokens.
-          </Description>
+          </Info>
         </Field>
-        <Field>
+        <Field className="flex items-center gap-2">
           <LabeledCheckbox
             name="grant_type"
             value={refreshTokenKey}
@@ -70,11 +71,11 @@ export function OtherGrantTypes(props: Readonly<OtherGrantTypesProps>) {
           >
             Refresh Token
           </LabeledCheckbox>
-          <Description>
+          <Info anchor="left">
             Attach the refresh token to the client in addition to Access/ID
             tokens. This option is automatically enabled when
             &quot;offline_access&quot; scope is active.
-          </Description>
+          </Info>
         </Field>
       </div>
     </div>

@@ -17,6 +17,7 @@ import ClientCredentials from "./client-credentials";
 import DeviceCode from "./device-code";
 
 import { useState } from "react";
+import { Info } from "@/components/info";
 
 type AuthenticationFlowSettingsProps = {
   grantType: GrantType;
@@ -86,7 +87,12 @@ export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
   return (
     <div className="space-y-2">
       <Field>
-        <Label>Default authorization grant</Label>
+        <div className="flex items-center gap-2">
+          <Label>Default authorization grant</Label>
+          <Info anchor="left" className="pb-1.5">
+            Select the default authorization grant for this client.
+          </Info>
+        </div>
         <Select
           name="grant_type"
           defaultValue={defaultOption}

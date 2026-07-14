@@ -4,19 +4,37 @@
 
 "use client";
 
+import { useId } from "react";
+
 import { useDisabled } from "@/utils/hooks";
 import { Button as HeadlessButton, ButtonProps } from "@headlessui/react";
 
 export function Button(props: Readonly<ButtonProps>) {
-  const disabled = useDisabled() || props.disabled;
+  const { disabled, name, children, ...others } = props;
+  const tooltipId = useId();
+  const isDisabled = useDisabled() || disabled;
   const extraProps = {
     autoComplete: "off", // https://github.com/vercel/next.js/issues/35558
   };
+  if (name) {
+    return (
+      <HeadlessButton
+        {...others}
+        {...extraProps}
+        disabled={isDisabled}
+        aria-describedby={tooltipId}
+      >
+        <>{children}</>
+        <div role="tooltip" id={tooltipId} className="tooltip">
+          {name}
+        </div>
+      </HeadlessButton>
+    );
+  }
+
   return (
-    <HeadlessButton
-      {...props}
-      {...extraProps}
-      disabled={disabled}
-    />
+    <HeadlessButton {...others} {...extraProps} disabled={isDisabled}>
+      {children}
+    </HeadlessButton>
   );
 }

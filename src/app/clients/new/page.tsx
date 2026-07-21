@@ -8,7 +8,7 @@ import { fetchScopes } from "@/services/scopes";
 import { redirect } from "next/navigation";
 import { NewClientCarousel } from "./carousel";
 
-import { RocketLaunchIcon } from "@heroicons/react/24/solid";
+import { CubeIcon } from "@heroicons/react/24/solid";
 
 export default async function NewClient() {
   const session = await getSession();
@@ -21,7 +21,7 @@ export default async function NewClient() {
   return (
     <section className="space-y-4">
       <header className="section-header">
-        <RocketLaunchIcon className="size-5" />
+        <CubeIcon className="size-5" />
         <h2 className="text-base font-normal">New client</h2>
       </header>
       <div className="container">

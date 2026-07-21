@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { InputQuery } from "@/components/inputs";
-import { PlusIcon, RocketLaunchIcon } from "@heroicons/react/24/solid";
+import { PlusIcon, CubeIcon } from "@heroicons/react/24/solid";
 import Paginator from "@/components/paginator";
 import { Button } from "@/components/buttons";
 import { LoadingList } from "@/components/loading";
@@ -29,7 +29,7 @@ export default async function Loading() {
     <section>
       <header className="section-header flex flex-wrap gap-2">
         <div className="flex grow items-center gap-2">
-          <RocketLaunchIcon className="size-5" />
+          <CubeIcon className="size-5" />
           <h2 className="text-base font-normal">
             {isAdmin ? "Clients" : "My clients"}
           </h2>

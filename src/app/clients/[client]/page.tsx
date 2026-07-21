@@ -14,7 +14,7 @@ import {
   Owners,
 } from "./components";
 
-import { RocketLaunchIcon } from "@heroicons/react/24/solid";
+import { CubeIcon } from "@heroicons/react/24/solid";
 import { redirect } from "next/navigation";
 
 type ClientPageProps = {
@@ -39,7 +39,7 @@ export default async function Client(props: Readonly<ClientPageProps>) {
   return (
     <section>
       <header className="section-header">
-        <RocketLaunchIcon className="size-5" />
+        <CubeIcon className="size-5" />
         <h2 className="text-base font-normal">{client.client_name}</h2>
       </header>
       <TabGroup className="container space-y-8">

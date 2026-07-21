@@ -13,6 +13,7 @@ type GeneralProps = {
   userFormattedName: string;
   userGivenName: string;
   userFamilyName: string;
+  userMiddleName: string | null;
   userEmail: string;
   userAupSignatureTime: string | null;
   userCreatedAt?: string;
@@ -31,8 +32,9 @@ export async function General(props: Readonly<GeneralProps>) {
     userId,
     userName,
     userFormattedName,
-    userFamilyName,
     userGivenName,
+    userFamilyName,
+    userMiddleName,
     userEmail,
     userAupSignatureTime,
     userCreatedAt,
@@ -54,6 +56,7 @@ export async function General(props: Readonly<GeneralProps>) {
         userName={userName}
         userGivenName={userGivenName}
         userFamilyName={userFamilyName}
+        userMiddleName={userMiddleName}
         userFormattedName={userFormattedName}
         userEmail={userEmail}
         userCreatedAt={userCreatedAt}

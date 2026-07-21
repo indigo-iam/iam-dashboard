@@ -48,6 +48,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
   const userFormattedName = user.name?.formatted ?? "unknown user";
   const userGivenName = user.name?.givenName ?? "unknown name";
   const userFamilyName = user.name?.familyName ?? "unknown name";
+  const userMiddleName = user.name?.middleName ?? null;
   const userEmail = user.emails?.[0].value ?? "unknown email";
   const userIsActive = user.active ?? false;
   const userGroups = user.groups;
@@ -88,6 +89,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
             userFormattedName={userFormattedName}
             userGivenName={userGivenName}
             userFamilyName={userFamilyName}
+            userMiddleName={userMiddleName}
             userAupSignatureTime={userAupSignatureTime}
             userEmail={userEmail}
             userIsActive={userIsActive}

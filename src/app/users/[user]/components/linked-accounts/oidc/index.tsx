@@ -4,6 +4,7 @@
 
 import { OidcId } from "@/models/indigo-user";
 import OidcOptions from "./options";
+import { LinkAccountButton } from "./link-account";
 
 type OidcIdViewProps = {
   userId: string;
@@ -16,7 +17,7 @@ function OidcIdView(props: Readonly<OidcIdViewProps>) {
     <li className="iam-list-item">
       <div className="flex grow flex-col">
         <p className="text-gray-950 dark:text-gray-100">{oidcId.issuer}</p>
-        <p className="text-sm font-light">Subject {oidcId.subject}</p>
+        <p className="text-sm font-light">{oidcId.subject}</p>
       </div>
       <OidcOptions userId={userId} oidcId={oidcId} />
     </li>
@@ -25,14 +26,24 @@ function OidcIdView(props: Readonly<OidcIdViewProps>) {
 
 type OidcAccountsProps = {
   userId: string;
+  userFormattedName: string;
   oidcIds: OidcId[];
+  isAdmin: boolean;
 };
 
 export function OidcAccounts(props: Readonly<OidcAccountsProps>) {
-  const { userId, oidcIds } = props;
+  const { userId, userFormattedName, oidcIds, isAdmin } = props;
   return (
     <div className="panel space-y-2">
-      <h2>OpenID Connect/OAuth2</h2>
+      <div className="flex gap-2">
+        <h2 className="grow">OpenID Connect/OAuth2</h2>
+        {isAdmin && (
+          <LinkAccountButton
+            userId={userId}
+            userFormattedName={userFormattedName}
+          />
+        )}
+      </div>
       <ul className="w-full">
         {oidcIds.length === 0 ? (
           <p className="pt-4">There are no linked accounts.</p>

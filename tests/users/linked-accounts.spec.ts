@@ -86,15 +86,129 @@ async function unlinkCertificate(page: Page) {
   return dialog;
 }
 
+async function selectLinkedAccountTab(page: Page) {
+  const linkedAccountsBtn = page.getByText("LINKED ACCOUNTS");
+  await linkedAccountsBtn.scrollIntoViewIfNeeded();
+  await changeTabPanel(linkedAccountsBtn);
+}
+
+async function navigateToTestUserPage(page: Page) {
+  await page.goto("./users");
+  const newUserBtn = page.getByRole("button", { name: "New user" });
+  await expect(newUserBtn).toBeEnabled(); // wait for page fully loaded
+  const searchbar = page.getByPlaceholder("Type to search a user");
+  await searchbar.pressSequentially("test user");
+  const testUser = page.getByRole("link").filter({ hasText: "Test User" });
+  const users = page.locator(".iam-list-item").filter({ visible: true });
+  await expect(users).toHaveCount(1);
+  await expect(users).toBeEnabled();
+  await testUser.click();
+  const heading = page.getByRole("heading").filter({ hasText: "Test User" });
+  await expect(heading).toBeVisible();
+}
+
 test.afterEach(async ({ page }) => {
   await logout(page);
 });
 
+test("user cannot link oidc account", async ({ page }) => {
+  await test.step("login", async () => {
+    await login(page, TEST_USER);
+    await selectLinkedAccountTab(page);
+  });
+
+  const oidc = page
+    .locator(".panel")
+    .filter({ hasText: "OpenID Connect/OAuth2" });
+  await expect(oidc).toBeVisible();
+
+  await test.step("link account button is hidden", async () => {
+    const button = oidc.getByRole("button", { name: "Link account" });
+    await expect(button).toBeHidden();
+  });
+});
+
+test.describe("admin can link oidc account and user can unlink", async () => {
+  test("admin can link oidc account", async ({ page }) => {
+    await test.step("login and set admin mode", async () => {
+      await login(page, ADMIN_USER);
+      await enableAdminMode(page);
+      await selectLinkedAccountTab(page);
+    });
+
+    const oidc = page
+      .locator(".panel")
+      .filter({ hasText: "OpenID Connect/OAuth2" });
+    await expect(oidc).toBeVisible();
+
+    await test.step("navigate to test user page", async () => {
+      await navigateToTestUserPage(page);
+      await selectLinkedAccountTab(page);
+    });
+
+    const dialog = page.getByRole("dialog").filter({ visible: true });
+
+    await test.step("link oidc account", async () => {
+      const button = oidc.getByRole("button", { name: "Link account" });
+      await expect(button).toBeEnabled();
+      await button.click();
+      await expect(dialog).toBeVisible();
+
+      const issuer = dialog.getByLabel("Issuer");
+      await issuer.fill("https://example.org");
+      const subject = dialog.getByLabel("Subject");
+      await subject.fill("test_example");
+
+      const linkButton = dialog.getByRole("button", { name: "Link account" });
+      await linkButton.click();
+      await dismissToast(page, "Account linked", "success");
+    });
+  });
+
+  test("user can unlink oidc account", async ({ page }) => {
+    await test.step("login", async () => {
+      await login(page, TEST_USER);
+      await selectLinkedAccountTab(page);
+    });
+
+    const oidc = page
+      .locator(".panel")
+      .filter({ hasText: "OpenID Connect/OAuth2" });
+    await expect(oidc).toBeVisible();
+
+    await test.step("unlink account", async () => {
+      await expect(oidc.locator(".iam-list-item")).toHaveCount(3);
+      const account = oidc.locator(".iam-list-item").last();
+      await expect(account.getByRole("paragraph").first()).toHaveText(
+        "https://example.org"
+      );
+      await expect(account.getByRole("paragraph").last()).toHaveText(
+        "test_example"
+      );
+      const more = account.getByRole("button", { name: "More" });
+      await expect(more).toBeEnabled();
+      await more.click();
+      const unlinkAccountOption = page.getByRole("button", {
+        name: "Unlink account",
+      });
+      await expect(unlinkAccountOption).toBeEnabled();
+      await unlinkAccountOption.click();
+      const dialog = page.getByRole("dialog").filter({ visible: true });
+      await expect(dialog).toBeVisible();
+      const heading = dialog.getByRole("heading").first();
+      await expect(heading).toHaveText("Unlink OIDC/OAuth2 account?");
+      const confirm = dialog.getByRole("button", { name: "Confirm" });
+      await expect(confirm).toBeEnabled();
+      await confirm.click();
+      await expect(dialog).toBeHidden();
+      await expect(oidc.locator(".iam-list-item")).toHaveCount(2);
+    });
+  });
+});
+
 test("admin can link certificate and proxy on themselves", async ({ page }) => {
   await login(page, ADMIN_USER);
-  const linkedAccountsBtn = page.getByText("LINKED ACCOUNTS");
-  await linkedAccountsBtn.scrollIntoViewIfNeeded();
-  await changeTabPanel(linkedAccountsBtn);
+  await selectLinkedAccountTab(page);
 
   const x509 = page.locator(".panel").filter({ hasText: "X.509 certificates" });
   await expect(x509).toBeVisible();
@@ -205,20 +319,7 @@ test.describe("admin assigns certificate to user and user self-assign proxy", ()
     });
 
     await test.step("navigate to Test User page", async () => {
-      await page.goto("./users");
-      const newUserBtn = page.getByRole("button", { name: "New user" });
-      await expect(newUserBtn).toBeEnabled(); // wait for page fully loaded
-      const searchbar = page.getByPlaceholder("Type to search a user");
-      await searchbar.pressSequentially("test user");
-      const testUser = page.getByRole("link").filter({ hasText: "Test User" });
-      const users = page.locator(".iam-list-item").filter({ visible: true });
-      await expect(users).toHaveCount(1);
-      await expect(users).toBeEnabled();
-      await testUser.click();
-      const heading = page
-        .getByRole("heading")
-        .filter({ hasText: "Test User" });
-      await expect(heading).toBeVisible();
+      await navigateToTestUserPage(page);
       const saveBtn = page.getByRole("button", { name: "Save changes" });
       await expect(saveBtn).toBeEnabled();
       const email = page.getByLabel("Email");

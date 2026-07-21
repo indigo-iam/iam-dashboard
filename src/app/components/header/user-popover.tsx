@@ -4,6 +4,7 @@
 
 "use client";
 
+import { useId } from "react";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 
 import { Gravatar } from "@/components/gravatar";
@@ -22,19 +23,27 @@ export function UserPopover(props: Readonly<UserPopoverProps>) {
   const { hasRoleAdmin, isAdmin, user } = props;
   const disabled = useDisabled();
   const email = user.emails?.[0].value;
+  const tooltipId = useId();
   const extraProps = {
     autoComplete: "off", // https://github.com/vercel/next.js/issues/35558
   };
   return (
     <Popover className="relative size-8">
       <PopoverButton
-        className="hover:cursor-pointer"
-        title="Open user menu"
+        className="group static hover:cursor-pointer"
+        aria-labelledby={tooltipId}
         data-testid="user-menu-btn"
         disabled={disabled}
         {...extraProps}
       >
         <Gravatar email={email} />
+        <div
+          role="tooltip"
+          className="tooltip top-10 -left-1/2 whitespace-nowrap"
+          id={tooltipId}
+        >
+          Open user menu
+        </div>
       </PopoverButton>
       <PopoverPanel
         transition

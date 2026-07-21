@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { Info } from "@/components/info";
 import { RoleCheckbox } from "./assign-role-checkbox";
 import { DeleteUser } from "./delete-user";
 import { EditExpirationDate } from "./expiration-date";
@@ -42,7 +43,9 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
           <p className="whitespace-normal">
             A disabled user cannot login and tokens are immediately revoked.
           </p>
-          <p>Delete the user to completely remove them from the organization.</p>
+          <p>
+            Delete the user to completely remove them from the organization.
+          </p>
         </div>
       </div>
       <div className="w-full space-y-4 lg:w-2/3">
@@ -50,28 +53,48 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
           <h5 className="text-sm font-semibold text-gray-600 dark:text-gray-100">
             Privileges
           </h5>
-          <RoleCheckbox
-            userId={userId}
-            userFormattedName={userFormattedName}
-            role="ROLE_ADMIN"
-            hasRole={authorities.has("ROLE_ADMIN")}
-          />
-          <RoleCheckbox
-            userId={userId}
-            userFormattedName={userFormattedName}
-            role="ROLE_READER"
-            hasRole={authorities.has("ROLE_READER")}
-          />
+          <div className="flex items-center gap-1">
+            <RoleCheckbox
+              userId={userId}
+              userFormattedName={userFormattedName}
+              role="ROLE_ADMIN"
+              hasRole={authorities.has("ROLE_ADMIN")}
+            />
+            <Info anchor="left">
+              A user with <b>admin</b> role can create, delete and modify user,
+              groups and client. Admins can also assign restricted scopes to
+              clients.
+            </Info>
+          </div>
+          <div className="flex items-center gap-1">
+            <RoleCheckbox
+              userId={userId}
+              userFormattedName={userFormattedName}
+              role="ROLE_READER"
+              hasRole={authorities.has("ROLE_READER")}
+            />
+            <Info anchor="left">
+              Grants <b>read-only</b> access to authorized resources, allowing
+              users to view information without modifying it.
+            </Info>
+          </div>
         </div>
         <div className="space-y-1">
           <h5 className="text-sm font-semibold text-gray-600 dark:text-gray-100">
             Other settings
           </h5>
-          <ServiceAccountCheckbox
-            userId={userId}
-            userFormattedName={userFormattedName}
-            enabled={userIsServiceAccount}
-          />
+          <div className="flex items-center gap-1">
+            <ServiceAccountCheckbox
+              userId={userId}
+              userFormattedName={userFormattedName}
+              enabled={userIsServiceAccount}
+            />
+            <Info anchor="left">
+              A service account is a <b>non-human</b> identity used by
+              applications to securely access protected resources through IAM
+              managed credentials and permissions.
+            </Info>
+          </div>
         </div>
         <EditExpirationDate
           userId={userId}

@@ -11,3 +11,7 @@
 @utility overlay {
   @apply rounded-xl border bg-white p-4 text-gray-800 shadow-xl transition duration-200 focus:outline-none dark:bg-gray-700 dark:text-gray-100;
 }
+
+@utility tooltip {
+  @apply pointer-events-none absolute left-1/2 max-w-64 -translate-x-1/2 rounded-md border border-gray-700 bg-gray-900 p-2 text-xs text-white transition-opacity duration-300 ease-in-out not-group-hover:scale-100 not-group-hover:opacity-0 group-hover:block group-hover:scale-100 group-hover:opacity-100;
+}

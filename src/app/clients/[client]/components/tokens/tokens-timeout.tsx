@@ -2,7 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Description, Field, Label, LabeledCheckbox } from "@/components/form";
+import { Field, Label, LabeledCheckbox } from "@/components/form";
+import { Info } from "@/components/info";
 import { Input } from "@/components/inputs";
 
 type TokensTimeoutProps = {
@@ -48,7 +49,7 @@ export function TokensTimeout(props: Readonly<TokensTimeoutProps>) {
             defaultValue={idTokenValiditySeconds}
           />
         </Field>
-        <Field>
+        <Field className="flex items-center gap-2">
           <LabeledCheckbox
             name="require_auth_time"
             key={`require_auth_time${requireAuthTime}`}
@@ -56,10 +57,10 @@ export function TokensTimeout(props: Readonly<TokensTimeoutProps>) {
           >
             Always require authentication time in ID tokens
           </LabeledCheckbox>
-          <Description>
+          <Info anchor="left">
             Add the <span className="text-mono font-medium">auth_time</span>{" "}
             claim to the ID token.
-          </Description>
+          </Info>
         </Field>
       </div>
     </div>

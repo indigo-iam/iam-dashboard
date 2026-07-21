@@ -44,7 +44,7 @@ testAdmin("Admin can create and delete a group", async ({ signedUpPage }) => {
       .getByTestId("search-group")
       .filter({ visible: true })
       .pressSequentially(groupName, { delay: 30 });
-    const options = page.getByTitle("More");
+    const options = page.getByLabel("More");
     await expect(options).toHaveCount(1);
   });
 
@@ -62,7 +62,7 @@ testAdmin("Admin can create and delete a group", async ({ signedUpPage }) => {
       .getByTestId("search-group")
       .filter({ visible: true })
       .pressSequentially(groupName, { delay: 30 });
-    const options = page.getByTitle("More");
+    const options = page.getByLabel("More");
     await expect(options).toHaveCount(1);
     // click delete option and confirm
     await options.click();
@@ -82,7 +82,7 @@ testAdmin("Admin can create and delete a group", async ({ signedUpPage }) => {
       .getByTestId("search-group")
       .filter({ visible: true })
       .pressSequentially(groupName, { delay: 30 });
-    await expect(page.getByTitle("More")).toHaveCount(0);
+    await expect(page.getByLabel("More")).toHaveCount(0);
     expect(page.getByText("No group found.").isVisible());
   });
 });

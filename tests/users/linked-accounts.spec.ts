@@ -132,10 +132,12 @@ test("admin can link certificate and proxy on themselves", async ({ page }) => {
     const dialog = await linkCertificate(page);
     await expect(dialog).toBeHidden();
     await dismissToast(page, "Certificated linked to account", "success");
-    const cert = x509.locator(".iam-list-item").last();
-    await expect(cert).toHaveText(
-      "test-certSubject CN=test,O=IGI,C=ITIssuer CN=Test CA,O=INFN,C=IT"
-    );
+    const cert = x509.locator(".iam-list-item").last().getByRole("paragraph");
+    await expect(cert).toHaveText([
+      "test-cert",
+      "Subject CN=test,O=IGI,C=IT",
+      "Issuer CN=Test CA,O=INFN,C=IT",
+    ]);
   });
 
   await test.step("link valid proxy certificate", async () => {
@@ -146,10 +148,13 @@ test("admin can link certificate and proxy on themselves", async ({ page }) => {
       "Proxy certificate successfully linked",
       "success"
     );
-    const cert = x509.locator(".iam-list-item").last();
-    await expect(cert).toHaveText(
-      /^test-certSubject CN=test,O=IGI,C=ITIssuer CN=Test CA,O=INFN,C=ITHas proxy certificate. Proxy expires in \d days{0,1}.$/
-    );
+    const cert = x509.locator(".iam-list-item").last().getByRole("paragraph");
+    await expect(cert).toHaveText([
+      "test-cert",
+      "Subject CN=test,O=IGI,C=IT",
+      "Issuer CN=Test CA,O=INFN,C=IT",
+      /Has proxy certificate. Proxy expires in \d days{0,1}.$/,
+    ]);
   });
 
   await test.step("unlink their own certificate", async () => {

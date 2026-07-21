@@ -11,7 +11,7 @@ import { Button } from "@/components/buttons";
 
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { PlusIcon, RocketLaunchIcon } from "@heroicons/react/24/solid";
+import { PlusIcon, CubeIcon } from "@heroicons/react/24/solid";
 
 function Buttons() {
   return (
@@ -55,7 +55,7 @@ export default async function Page(props: Readonly<PageProps>) {
     <section>
       <header className="section-header flex flex-wrap gap-2">
         <div className="flex grow items-center gap-2">
-          <RocketLaunchIcon className="size-5" />
+          <CubeIcon className="size-5" />
           <h2 className="text-base font-normal">
             {isAdmin ? "Clients" : "My clients"}
           </h2>

@@ -9,7 +9,7 @@ import {
   DocumentTextIcon,
   HomeIcon,
   InboxArrowDownIcon,
-  RocketLaunchIcon,
+  CubeIcon,
   ScaleIcon,
   UserGroupIcon,
   UserIcon,
@@ -46,7 +46,7 @@ function Links(props: Readonly<LinksProps>) {
           <UserGroupIcon className="size-5" />
         </Link>
         <Link title="Clients" href="/clients">
-          <RocketLaunchIcon className="size-5" />
+          <CubeIcon className="size-5" />
         </Link>
         <Link title="Requests" href="/requests">
           <InboxArrowDownIcon className="size-5" />
@@ -72,7 +72,7 @@ function Links(props: Readonly<LinksProps>) {
           <UserGroupIcon className="size-5" />
         </Link>
         <Link title={`${isAdmin ? "Client" : "My clients"}`} href="/clients">
-          <RocketLaunchIcon className="size-5" />
+          <CubeIcon className="size-5" />
         </Link>
       </div>
     );

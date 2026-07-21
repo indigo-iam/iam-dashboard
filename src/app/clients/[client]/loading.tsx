@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { redirect } from "next/navigation";
-import { RocketLaunchIcon } from "@heroicons/react/24/solid";
+import { CubeIcon } from "@heroicons/react/24/solid";
 
 import { getSession, isUserAdmin } from "@/auth";
 import { TabGroup, TabList, TabPanels, Tab, TabPanel } from "@/components/tabs";
@@ -19,7 +19,7 @@ export default async function Client() {
   return (
     <section>
       <header className="section-header">
-        <RocketLaunchIcon className="size-5" />
+        <CubeIcon className="size-5" />
         <h2 className="text-base font-normal">Loading...</h2>
       </header>
       <TabGroup className="container space-y-8">

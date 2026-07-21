@@ -159,6 +159,38 @@ export async function deleteUser(userId: string): Promise<Notification> {
   Linked accounts
 */
 
+export async function linkOidcAccount(
+  userId: string,
+  oidcId: OidcId
+): Promise<Notification> {
+  const response = await patchUser(
+    [
+      {
+        op: "add",
+        value: {
+          "urn:indigo-dc:scim:schemas:IndigoUser": {
+            oidcIds: [oidcId],
+          },
+        },
+      },
+    ],
+    userId
+  );
+  if (response.ok) {
+    revalidatePath(`/users/${userId}`);
+    return {
+      type: "success",
+      title: "Account linked",
+    };
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot link account",
+    description: `${response.status} ${msg}`,
+  };
+}
+
 async function unlinkExternalAccount(
   userId: string,
   accountId: OidcId | SamlId | Certificate,

@@ -3,16 +3,16 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { User } from "@/models/scim";
-import { Client } from "@/models/client";
 import { OwnerOptions } from "./options";
 
 type OwnersTableProps = {
+  clientId: string;
+  clientName: string;
   owners: User[];
-  client: Client;
 };
 
 export function OwnersTable(props: Readonly<OwnersTableProps>) {
-  const { owners, client } = props;
+  const { clientId, clientName, owners } = props;
   return (
     <ul>
       {owners.map(owner => {
@@ -26,7 +26,13 @@ export function OwnersTable(props: Readonly<OwnersTableProps>) {
                 {owner.emails?.[0].value ?? "Unknown email address"}
               </p>
             </div>
-            <OwnerOptions owner={owner} client={client} />
+            <OwnerOptions
+              ownerId={owner.id}
+              ownerName={owner.name?.formatted ?? "unknown user"}
+              ownerEmail={owner.emails?.[0].value ?? "unknown email"}
+              clientId={clientId}
+              clientName={clientName}
+            />
           </li>
         );
       })}

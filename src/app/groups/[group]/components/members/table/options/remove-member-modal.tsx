@@ -2,30 +2,42 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import Link from "next/link";
+import Link from "@/components/link";
 
 import ConfirmModal from "@/components/confirm-modal";
 import { ModalProps } from "@/components/modal";
 import { toast } from "@/components/toaster";
-import { Group } from "@/models/groups";
-import { ScimReference } from "@/models/scim";
-import { removeUserByRefFromGroup } from "@/services/groups";
+import { removeUserFromGroup } from "@/services/groups";
 
 interface RevokeMemberFromGroupModalProps extends ModalProps {
-  userRef: ScimReference;
-  group: Group;
+  userId: string;
+  userDisplay: string;
+  groupId: string;
+  groupDisplay: string;
+  groupDescription?: string | null;
 }
 
 export default function RemoveMemberFromGroupModal(
   props: Readonly<RevokeMemberFromGroupModalProps>
 ) {
-  const { userRef, group, ...modalProps } = props;
-  const indigoGroup = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
-  const description = indigoGroup.description;
-  const action = async () => {
-    const res = await removeUserByRefFromGroup(userRef, group);
+  const {
+    userId,
+    userDisplay,
+    groupId,
+    groupDisplay,
+    groupDescription,
+    ...modalProps
+  } = props;
+
+  async function action() {
+    const res = await removeUserFromGroup(
+      userId,
+      userDisplay,
+      groupId,
+      groupDisplay
+    );
     toast.toast(res);
-  };
+  }
 
   return (
     <ConfirmModal
@@ -37,13 +49,13 @@ export default function RemoveMemberFromGroupModal(
       <div className="space-y-2">
         <p>
           Are you sure you want to remove the user{" "}
-          <Link href={`/users/${userRef.value}`} className="underline">
-            <b>{userRef.display}</b>
+          <Link href={`/users/${userId}`} className="underline">
+            <b>{userDisplay}</b>
           </Link>{" "}
-          from group <b>{group.displayName}</b>{" "}
-          {description && (
+          from group <b>{groupDisplay}</b>{" "}
+          {groupDescription && (
             <>
-              (<span className="italic">{description}</span>)
+              (<span className="italic">{groupDescription}</span>)
             </>
           )}
           ?

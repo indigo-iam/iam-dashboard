@@ -5,6 +5,7 @@
 "use client";
 
 import { Select, SelectOption } from "@/components/form";
+import { toast } from "@/components/toaster";
 import { Scope } from "@/models/client";
 import { editScope } from "@/services/scopes";
 
@@ -24,7 +25,7 @@ export default function ScopeTypeSelect(props: { scope: Scope }) {
     defaultOption = options[2];
   }
 
-  const handleChange = (value: { id: string; name: string }) => {
+  async function handleChange(value: { id: string; name: string }) {
     const newScope = { ...scope };
     switch (value.id) {
       case "default": {
@@ -42,8 +43,9 @@ export default function ScopeTypeSelect(props: { scope: Scope }) {
         newScope.restricted = false;
       }
     }
-    editScope(newScope);
-  };
+    const res = await editScope(newScope);
+    toast.toast(res);
+  }
 
   return (
     <Select

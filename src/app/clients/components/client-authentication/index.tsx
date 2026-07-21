@@ -10,7 +10,6 @@ import ClientSecretJwt from "./client-secret-jwt";
 import PrivateKeyJwt from "./private-key-jwt";
 import { RotateClientSecret } from "./rotate-client-secret";
 import { TOKEN_ENDPOINT_AUTH_VALUES } from "./utils";
-import { Description } from "@/components/form";
 
 type ClientAuthenticationSettingsProps = {
   authMethod: string;
@@ -90,9 +89,6 @@ export function ClientAuthentication(
             </SelectOption>
           ))}
         </Select>
-        <Description>
-          How the client authenticate to the Token Endpoint.
-        </Description>
       </div>
       {authMethod && (
         <ClientAuthenticationSettings

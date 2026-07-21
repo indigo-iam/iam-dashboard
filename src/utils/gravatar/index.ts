@@ -5,10 +5,6 @@
 import { createHash } from "node:crypto";
 import { cache } from "react";
 
-function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 // https://docs.gravatar.com/sdk/images/
 export const getGravatarURL = cache((email: string) => {
   const hash = createHash("sha256");

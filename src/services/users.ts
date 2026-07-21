@@ -7,15 +7,19 @@
 import { revalidatePath } from "next/cache";
 import { authFetch, getItem } from "@/utils/fetch";
 import { Attribute } from "@/models/attributes";
-import { SSHKey } from "@/models/indigo-user";
+import { Certificate, OidcId, SamlId, SSHKey } from "@/models/indigo-user";
 import { AddSecretResponse } from "@/models/mfa";
 import { Paginated } from "@/models/pagination";
 import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
 import { Notification } from "@/components/toaster";
 import { settings } from "@/config";
-import { getSession } from "@/auth";
+import { URLSearchParams } from "url";
 
 const { IAM_API_URL } = settings;
+
+/*
+  Fetch users
+*/
 
 export async function fetchUser(uuid: string) {
   return await getItem<User>(`${IAM_API_URL}/scim/Users/${uuid}`);
@@ -41,7 +45,7 @@ export async function getUsersPage(
 }
 
 export async function addUser(user: ScimUser): Promise<Notification> {
-  let url = `${IAM_API_URL}/scim/Users`;
+  const url = `${IAM_API_URL}/scim/Users`;
   const body = JSON.stringify(user);
   const response = await authFetch(url, {
     body,
@@ -60,20 +64,15 @@ export async function addUser(user: ScimUser): Promise<Notification> {
   };
 }
 
-export async function patchUser(
-  userId: string,
-  formData: FormData
-): Promise<Notification> {
-  const session = await getSession();
-  const isMe = session?.user?.sub === userId;
-  const op: ScimRequest = {
-    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
-    operations: [],
-  };
-
-  const givenName = formData.get("given-name") as string | undefined;
-  const familyName = formData.get("family-name") as string | undefined;
-  const middleName = formData.get("middle-name") as string | undefined;
+export async function editUser(userData: {
+  userId: string | null;
+  givenName: string | null;
+  familyName: string | null;
+  middleName: string | null;
+  email: string | null;
+}): Promise<Notification> {
+  const { userId, givenName, familyName, middleName, email } = userData;
+  const operations: ScimOp[] = [];
 
   if (givenName || familyName) {
     const userOp: ScimOp = {
@@ -87,10 +86,9 @@ export async function patchUser(
         },
       },
     };
-    op.operations.push(userOp);
+    operations.push(userOp);
   }
 
-  const email = formData.get("email") as string | undefined;
   if (email) {
     const mailOp: ScimOp = {
       op: "replace",
@@ -104,18 +102,13 @@ export async function patchUser(
         ],
       },
     };
-    op.operations.push(mailOp);
+    operations.push(mailOp);
   }
-  const url = isMe
-    ? `${IAM_API_URL}/scim/Me`
-    : `${IAM_API_URL}/scim/Users/${userId}`;
-  const response = await authFetch(url, {
-    body: JSON.stringify(op),
-    method: "PATCH",
-    headers: { "content-type": "application/scim+json" },
-  });
+  console.log(JSON.stringify(operations));
+  const response = await patchUser(operations, userId);
+
   if (response.ok) {
-    revalidatePath(`/users/${isMe ? "me" : userId}`);
+    revalidatePath(userId ? `/users/${userId}` : "/users/me");
     return { type: "success", title: "Edits saved" };
   }
   return {
@@ -125,8 +118,24 @@ export async function patchUser(
   };
 }
 
-export async function deleteUser(user: User): Promise<Notification> {
-  const url = `${IAM_API_URL}/scim/Users/${user.id}`;
+export async function patchUser(operations: ScimOp[], userId: string | null) {
+  const request: ScimRequest = {
+    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
+    operations,
+  };
+  const url = userId
+    ? `${IAM_API_URL}/scim/Users/${userId}`
+    : `${IAM_API_URL}/scim/Me`;
+  console.log(JSON.stringify(request));
+  return await authFetch(url, {
+    body: JSON.stringify(request),
+    method: "PATCH",
+    headers: { "content-type": "application/scim+json" },
+  });
+}
+
+export async function deleteUser(userId: string): Promise<Notification> {
+  const url = `${IAM_API_URL}/scim/Users/${userId}`;
   const response = await authFetch(url, {
     method: "DELETE",
     headers: { "content-type": "application/scim+json" },
@@ -136,7 +145,6 @@ export async function deleteUser(user: User): Promise<Notification> {
     return {
       type: "success",
       title: "User deleted",
-      description: `User ${user.displayName} has been deleted`,
     };
   }
   const msg = await response.text();
@@ -147,14 +155,105 @@ export async function deleteUser(user: User): Promise<Notification> {
   };
 }
 
+/*
+  Linked accounts
+*/
+
+export async function linkOidcAccount(
+  userId: string,
+  oidcId: OidcId
+): Promise<Notification> {
+  const response = await patchUser(
+    [
+      {
+        op: "add",
+        value: {
+          "urn:indigo-dc:scim:schemas:IndigoUser": {
+            oidcIds: [oidcId],
+          },
+        },
+      },
+    ],
+    userId
+  );
+  if (response.ok) {
+    revalidatePath(`/users/${userId}`);
+    return {
+      type: "success",
+      title: "Account linked",
+    };
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot link account",
+    description: `${response.status} ${msg}`,
+  };
+}
+
+async function unlinkExternalAccount(
+  userId: string,
+  accountId: OidcId | SamlId | Certificate,
+  accountType: "OIDC" | "SAML" | "X509"
+): Promise<Notification | void> {
+  const indigoUser = (() => {
+    if (accountType === "OIDC") {
+      return { oidcIds: [accountId] };
+    }
+    if (accountType === "SAML") {
+      return { samlIds: [accountId] };
+    }
+    if (accountType === "X509") {
+      return { certificates: [accountId] };
+    }
+    throw new Error(`accountType ${accountType} not is not valid`);
+  })();
+
+  const response = await patchUser(
+    [
+      {
+        op: "remove",
+        value: {
+          "urn:indigo-dc:scim:schemas:IndigoUser": indigoUser,
+        },
+      },
+    ],
+    userId
+  );
+  if (response.ok) {
+    revalidatePath(`/users/${userId}`);
+    return;
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: `Cannot unlink ${accountType} account`,
+    description: `Error ${response.status} ${msg}`,
+  };
+}
+
+export async function unlinkOidcAccount(userId: string, oidcId: OidcId) {
+  return await unlinkExternalAccount(userId, oidcId, "OIDC");
+}
+
+export async function unlinkSamlAccount(userId: string, samlId: SamlId) {
+  return await unlinkExternalAccount(userId, samlId, "SAML");
+}
+
+export async function unlinkCertificate(
+  userId: string,
+  certificate: Certificate
+) {
+  return await unlinkExternalAccount(userId, certificate, "X509");
+}
+
 async function patchUserSSHKey(
   userId: string,
   sshKey: SSHKey,
   op: "add" | "remove"
 ): Promise<Notification> {
-  const body = {
-    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
-    operations: [
+  const response = await patchUser(
+    [
       {
         op: op,
         value: {
@@ -164,14 +263,8 @@ async function patchUserSSHKey(
         },
       },
     ],
-  };
-
-  const url = `${IAM_API_URL}/scim/Users/${userId}`;
-  const response = await authFetch(url, {
-    body: JSON.stringify(body),
-    method: "PATCH",
-    headers: { "content-type": "application/scim+json" },
-  });
+    userId
+  );
   if (response.ok) {
     revalidatePath(`/users/${userId}`);
     return {
@@ -200,6 +293,10 @@ export async function deleteSSHKey(
 ): Promise<Notification> {
   return patchUserSSHKey(userId, sshKey, "remove");
 }
+
+/*
+  Attributes and labels
+*/
 
 export async function fetchAttributes(userId: string) {
   const url = `${IAM_API_URL}/iam/account/${userId}/attributes`;
@@ -309,10 +406,8 @@ export async function changeUserStatus(
   userId: string,
   newStatus: boolean
 ): Promise<Notification> {
-  const url = `${IAM_API_URL}/scim/Users/${userId}`;
-  const patchRequest: ScimRequest = {
-    schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
-    operations: [
+  const response = await patchUser(
+    [
       {
         op: "replace",
         value: {
@@ -320,13 +415,8 @@ export async function changeUserStatus(
         },
       },
     ],
-  };
-  const body = JSON.stringify(patchRequest);
-  const response = await authFetch(url, {
-    method: "PATCH",
-    body,
-    headers: { "content-type": "application/scim+json" },
-  });
+    userId
+  );
   if (response.ok) {
     revalidatePath(`/users`);
     return {
@@ -374,7 +464,7 @@ export async function signAUP(userId: string): Promise<Notification> {
   });
   if (response.ok) {
     revalidatePath(`/user/${userId}`);
-    return { type: "success", title: "AUP Signed" };
+    return { type: "success", title: "AUP signed" };
   }
   const msg = await response.text();
   return {
@@ -385,7 +475,7 @@ export async function signAUP(userId: string): Promise<Notification> {
 }
 
 export async function changePassword(
-  user: User,
+  userId: string,
   formData: FormData
 ): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/password-update`;
@@ -394,13 +484,34 @@ export async function changePassword(
     body: formData,
   });
   if (response.ok) {
-    revalidatePath(`/user/${user.id}`);
+    revalidatePath(`/user/${userId}`);
     return { type: "success", title: "Password changed" };
   }
   const msg = await response.text();
   return {
     type: "error",
     title: "Password not saved",
+    description: `Error ${response.status} ${msg}`,
+  };
+}
+
+export async function resetUserPassword(
+  userEmail: string
+): Promise<Notification> {
+  const url = `${IAM_API_URL}/iam/password-reset/token`;
+  const response = await authFetch(url, {
+    method: "POST",
+    body: new URLSearchParams({
+      email: userEmail,
+    }),
+  });
+  if (response.ok) {
+    return { type: "success", title: "Reset password email sent" };
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Failed to send reset password email",
     description: `Error ${response.status} ${msg}`,
   };
 }
@@ -459,5 +570,103 @@ export async function disableMFA(formData: FormData): Promise<Notification> {
     type: "error",
     title: "Cannot disable MFA",
     description: `${msg}`,
+  };
+}
+
+export async function setServiceAccount(
+  userId: string,
+  active: boolean
+): Promise<Notification> {
+  const response = await patchUser(
+    [
+      {
+        op: "replace",
+        value: {
+          "urn:indigo-dc:scim:schemas:IndigoUser": {
+            serviceAccount: active,
+          },
+        },
+      },
+    ],
+    userId
+  );
+  if (response.ok) {
+    revalidatePath(`/users/${userId}`);
+    return {
+      type: "success",
+      title: `Service account ${active ? "enabled" : "disabled"}`,
+    };
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: `Cannot ${active ? "enable" : "disable"} service account`,
+    description: `${response.status} ${msg}`,
+  };
+}
+
+export async function fetchUserLabels(userId: string) {
+  const url = `${IAM_API_URL}/iam/account/${userId}/labels`;
+  const response = await authFetch(url);
+  if (response.ok) {
+    return await response.json();
+  }
+  throw new Error(`Failed to fetch user labels with status ${response.status}`);
+}
+
+export async function addUserLabel(
+  userId: string,
+  prefix: string,
+  name: string,
+  value: string | null
+): Promise<Notification | void> {
+  const url = `${IAM_API_URL}/iam/account/${userId}/labels`;
+  const body = {
+    prefix,
+    name,
+    value,
+  };
+  const response = await authFetch(url, {
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  if (response.ok) {
+    revalidatePath(`/users/${userId}`);
+    return;
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: `Cannot add user label`,
+    description: `Error ${response.status} ${msg}`,
+  };
+}
+
+export async function deleteUserLabel(
+  userId: string,
+  prefix: string,
+  name: string
+): Promise<Notification | void> {
+  const url = `${IAM_API_URL}/iam/account/${userId}/labels`;
+  const body = new URLSearchParams({ prefix, name });
+  const response = await authFetch(url, {
+    method: "DELETE",
+    body,
+  });
+  if (response.ok) {
+    revalidatePath(`/users/${userId}`);
+    return {
+      type: "success",
+      title: "User label deleted",
+    };
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: `Cannot delete user label`,
+    description: `Error ${response.status} ${msg}`,
   };
 }

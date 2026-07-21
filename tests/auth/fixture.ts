@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { test as baseTest, expect, Page } from "@playwright/test";
-export { expect } from "@playwright/test";
+export { expect, test } from "@playwright/test";
 
 export type UserInfo = {
   user: string;
@@ -30,20 +30,15 @@ export const TEST_USER: UserInfo = {
 };
 
 async function openUserMenu(page: Page) {
-  const userMenuButton = page.getByTitle("Open user menu");
-  // ensure that HeadlessUI hooked the button to the popover before clicking
-  await expect(userMenuButton).toHaveAttribute(
-    "aria-controls",
-    "user-popover-menu"
-  );
+  const userMenuButton = page.getByLabel("Open user menu");
+  const userMenu = page.getByTestId("user-menu");
   await expect(userMenuButton).toBeEnabled();
   await userMenuButton.click();
-  const userMenu = page.getByTestId("user-menu");
   await expect(userMenu).toBeVisible();
   return userMenu;
 }
 
-async function login(page: Page, userInfo: UserInfo) {
+export async function login(page: Page, userInfo: UserInfo) {
   const { user, password, firstName, lastName, email } = userInfo;
   await page.goto("./");
   await page.locator("#username").fill(user);
@@ -56,10 +51,11 @@ async function login(page: Page, userInfo: UserInfo) {
   await expect(page.getByLabel("Email")).toHaveValue(email);
 }
 
-async function logout(page: Page) {
+export async function logout(page: Page) {
   const userMenu = await openUserMenu(page);
   const signOutButton = userMenu.getByRole("button", { name: "Sign out" });
   await expect(signOutButton).toBeVisible();
+  await expect(signOutButton).toBeEnabled();
   await signOutButton.click();
   // without dot = https://iam.test.example/login, with dot= /dev/login
   await page.waitForURL("/login");
@@ -69,16 +65,6 @@ export type TestOptions = {
   signedUpPage: Page;
   user: UserInfo;
 };
-
-export const test = baseTest.extend<TestOptions>({
-  user: [TEST_USER, {option: true}], // fallback value
-  signedUpPage: async ({ page, user }, use) => {
-    await login(page, user);
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    await use(page);
-    await logout(page);
-  },
-});
 
 export const testAdmin = baseTest.extend<TestOptions>({
   signedUpPage: async ({ page }, use) => {
@@ -108,7 +94,9 @@ async function checkClientAuthorization(page: Page) {
 
 async function setMode(page: Page, mode: "Admin mode" | "User mode") {
   const userMenu = await openUserMenu(page);
-  await userMenu.getByRole("button", { name: mode }).click();
+  const modeButton = userMenu.getByRole("button", { name: mode });
+  await expect(modeButton).toBeEnabled();
+  await modeButton.click();
   await expect(page.locator("#loading")).toBeVisible();
   await expect(page.locator("#loading")).toBeHidden();
   await expect(userMenu).toBeHidden();

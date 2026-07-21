@@ -11,28 +11,31 @@ import {
   SelectOption,
   Description,
 } from "@/components/form";
-import { Client } from "@/models/client";
 import { GrantType } from "@/models/openid-configuration";
 import AuthorizationCode from "./authorization-code";
 import ClientCredentials from "./client-credentials";
 import DeviceCode from "./device-code";
 
 import { useState } from "react";
+import { Info } from "@/components/info";
 
 type AuthenticationFlowSettingsProps = {
-  client?: Client;
   grantType: GrantType;
+  redirectUris: string[];
   onStatusChange?: (status: boolean) => void;
 };
 
 const AuthenticationFlowSettings = (
   props: Readonly<AuthenticationFlowSettingsProps>
 ) => {
-  const { client, grantType, onStatusChange } = props;
+  const { redirectUris, grantType, onStatusChange } = props;
   switch (grantType) {
     case "authorization_code":
       return (
-        <AuthorizationCode client={client} onStatusChange={onStatusChange} />
+        <AuthorizationCode
+          redirectUris={redirectUris}
+          onStatusChange={onStatusChange}
+        />
       );
     case "client_credentials":
       return <ClientCredentials onStatusChange={onStatusChange} />;
@@ -44,7 +47,7 @@ const AuthenticationFlowSettings = (
 };
 
 type AuthenticationFlowProps = {
-  client?: Client;
+  redirectUris: string[];
   defaultValue?: SelectOption;
   onStatusChange?: (status: boolean) => void;
 };
@@ -65,7 +68,7 @@ const descriptions = new Map([
 ]);
 
 export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
-  const { client, defaultValue, onStatusChange } = props;
+  const { redirectUris, defaultValue, onStatusChange } = props;
   const options = [
     { id: "authorization_code", name: "Authorization Code" },
     { id: "client_credentials", name: "Client Credentials" },
@@ -84,7 +87,12 @@ export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
   return (
     <div className="space-y-2">
       <Field>
-        <Label>Default authorization grant</Label>
+        <div className="flex items-center gap-2">
+          <Label>Default authorization grant</Label>
+          <Info anchor="left" className="pb-1.5">
+            Select the default authorization grant for this client.
+          </Info>
+        </div>
         <Select
           name="grant_type"
           defaultValue={defaultOption}
@@ -99,7 +107,7 @@ export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
         <Description>{description}</Description>
       </Field>
       <AuthenticationFlowSettings
-        client={client}
+        redirectUris={redirectUris}
         onStatusChange={onStatusChange}
         grantType={selectedGrantType.id as GrantType}
       />

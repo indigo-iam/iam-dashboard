@@ -14,13 +14,13 @@ type RowPros = {
 
 export function Row(props: Readonly<RowPros>) {
   const { request } = props;
-  const { userFullName, username, userUuid, groupName, groupUuid } = request;
+  const { userFullName, username, userUuid, groupName } = request;
   const creationTime = request.creationTime
     ? dateToHuman(new Date(request.creationTime))
     : "N/A";
 
   return (
-    <li className="iam-list-item flex flex-row items-center">
+    <li className="iam-list-item">
       <div className="flex grow">
         <Link
           href={`/users/${userUuid}`}

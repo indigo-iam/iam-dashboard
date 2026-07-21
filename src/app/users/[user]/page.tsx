@@ -9,7 +9,7 @@ import { fetchMe } from "@/services/me";
 import { fetchUser, statusMFA } from "@/services/users";
 import { redirect } from "next/navigation";
 import {
-  Attributes,
+  AttributesAndLabels,
   General,
   LinkedAccounts,
   UserClients,
@@ -28,10 +28,10 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
   if (!session) {
     redirect("/signin");
   }
-  const userId = (await props.params).user;
-  const isMe = userId === "me" || userId === session.user.sub;
+  const userIdParam = (await props.params).user;
+  const isMe = userIdParam === "me" || userIdParam === session.user.sub;
 
-  const user = isMe ? await fetchMe() : await fetchUser(userId);
+  const user = isMe ? await fetchMe() : await fetchUser(userIdParam);
   if (!user) {
     return <h1>User not found</h1>;
   }
@@ -42,37 +42,99 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
     redirect("/");
   }
   const mfaEnabled = await statusMFA();
+  const userId = user.id;
+  const userName = user.userName ?? "unknown userName";
+  const userDisplay = user.displayName ?? "unknown user displayName";
+  const userFormattedName = user.name?.formatted ?? "unknown user";
+  const userGivenName = user.name?.givenName ?? "unknown name";
+  const userFamilyName = user.name?.familyName ?? "unknown name";
+  const userMiddleName = user.name?.middleName ?? null;
+  const userEmail = user.emails?.[0].value ?? "unknown email";
+  const userIsActive = user.active ?? false;
+  const userGroups = user.groups;
+  const userCreatedAt = user.meta?.created;
+  const userLastModified = user.meta?.lastModified;
+  const indigoUser = user["urn:indigo-dc:scim:schemas:IndigoUser"];
+  const userAupSignatureTime = indigoUser?.aupSignatureTime ?? null;
+  const userEndTime = indigoUser?.endTime;
+  const userIsServiceAccount = indigoUser?.serviceAccount ?? false;
+  const userAuthorities = indigoUser?.authorities ?? [];
+  const oidcIds = indigoUser?.oidcIds ?? [];
+  const samlIds = indigoUser?.samlIds ?? [];
+  const certificates = indigoUser?.certificates ?? [];
+  const sshKeys = indigoUser?.sshKeys ?? [];
+
   return (
     <section>
-      <header className="section-header">
+      <header className="section-header flex items-center">
         <UserIcon className="size-5" />
         <h2 className="text-base font-normal">{user.name?.formatted}</h2>
       </header>
       <TabGroup className="container space-y-8">
         <TabList className="flex overflow-auto">
           <Tab>GENERAL</Tab>
-          {!isMe && <Tab>GROUPS</Tab>}
+          <Tab>GROUPS</Tab>
           {!isMe && <Tab>CLIENTS</Tab>}
-          <Tab>APPS AND WEBSITES</Tab>
-          <Tab>ACTIVE TOKENS</Tab>
+          {isMe && <Tab>APPS AND WEBSITES</Tab>}
+          {isMe && <Tab>ACTIVE TOKENS</Tab>}
           <Tab>LINKED ACCOUNTS</Tab>
-          <Tab>ATTRIBUTES</Tab>
+          <Tab>ATTRIBUTES AND LABELS</Tab>
         </TabList>
         <TabPanels>
-          <General user={user} isMe={isMe} mfaEnabled={mfaEnabled} />
-          {!isMe && <UserGroups user={user} isAdmin={isAdmin} />}
+          <General
+            isMe={isMe}
+            mfaEnabled={mfaEnabled}
+            userId={userId}
+            userName={userName}
+            userFormattedName={userFormattedName}
+            userGivenName={userGivenName}
+            userFamilyName={userFamilyName}
+            userMiddleName={userMiddleName}
+            userAupSignatureTime={userAupSignatureTime}
+            userEmail={userEmail}
+            userIsActive={userIsActive}
+            userCreatedAt={userCreatedAt}
+            userLastModified={userLastModified}
+            userEndTime={userEndTime}
+            userIsServiceAccount={userIsServiceAccount}
+            userAuthorities={userAuthorities}
+            isAdmin={isAdmin}
+          />
+          <UserGroups
+            userId={userId}
+            userName={userName}
+            userDisplay={userDisplay}
+            userFormattedName={userFormattedName}
+            userEmail={userEmail}
+            userGroups={userGroups ?? []}
+            isAdmin={isAdmin}
+          />
           {!isMe && (
             <UserClients
-              user={user}
+              userId={userId}
               isAdmin={isAdmin}
               page={searchParams?.page}
               count={searchParams?.count}
             />
           )}
-          <ApprovedSites />
-          <ActiveTokens />
-          <LinkedAccounts user={user} />
-          <Attributes user={user} />
+          {isMe && <ApprovedSites />}
+          {isMe && <ActiveTokens />}
+          <LinkedAccounts
+            isMe={isMe}
+            userId={userId}
+            userName={userName}
+            userFormattedName={userFormattedName}
+            oidcIds={oidcIds}
+            samlIds={samlIds}
+            certificates={certificates}
+            sshKeys={sshKeys}
+            isAdmin={isAdmin}
+          />
+          <AttributesAndLabels
+            userId={userId}
+            userFormattedName={userFormattedName}
+            isAdmin={isAdmin}
+          />
         </TabPanels>
       </TabGroup>
     </section>

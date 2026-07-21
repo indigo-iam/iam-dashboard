@@ -7,7 +7,8 @@
 import { InputSecret } from "@/app/components/input-secret";
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
-import { Description, Field, Label } from "@/components/form";
+import { Field, Label } from "@/components/form";
+import { Info } from "@/components/info";
 import { toast } from "@/components/toaster";
 import { rotateClientSecret } from "@/services/clients";
 import { useState } from "react";
@@ -47,13 +48,15 @@ export function RotateClientSecret(props: Readonly<RotateClientSecretProps>) {
 
   return (
     <Field>
-      <Label>Generate a new secret for this client</Label>
+      <div className="flex items-center gap-2">
+        <Label>Generate a new secret for this client</Label>
+        <Info anchor="left" className="pb-1.5">
+          Clients secrets provides authentication for this client.
+        </Info>
+      </div>
       <Button className="btn-secondary" onClick={open}>
         Rotate Secret
       </Button>
-      <Description>
-        Clients secrets provides authentication for this client.
-      </Description>
       <ConfirmModal
         show={show}
         onClose={close}

@@ -5,6 +5,7 @@
 import packageInfo from "../package.json";
 
 const isBuilding = process.env.NEXT_PHASE === "phase-production-build";
+export const isProduction = process.env.NODE_ENV === "production";
 
 function loadEnvVariable(key: string, defaultValue?: string) {
   if (process.env[key]) {
@@ -17,6 +18,19 @@ function loadEnvVariable(key: string, defaultValue?: string) {
     return "";
   }
   throw Error(`${key} environment variable not set`);
+}
+
+function loadOptionalUrlFromEnv(key: string) {
+  const url = process.env[key];
+  // if a url is provided, validate it
+  if (url) {
+    try {
+      new URL(url);
+    } catch {
+      throw new Error(`${key} is not a valid URL`);
+    }
+  }
+  return url;
 }
 
 function loadApiUrl() {
@@ -36,7 +50,7 @@ function loadBaseUrl() {
 }
 
 function loadBasePath() {
-  return loadEnvVariable("IAM_DASHBOARD_BASE_PATH", "/ui");
+  return loadEnvVariable("IAM_DASHBOARD_BASE_PATH", "");
 }
 
 function loadAuthSecret() {
@@ -66,6 +80,20 @@ function loadOtelExporterOtlpEndpoint() {
   );
 }
 
+function loadOrganizationName() {
+  return loadEnvVariable("IAM_DASHBOARD_ORGANIZATION_NAME", "cnafsd");
+}
+
+function loadPolicyUrl() {
+  const key = "IAM_DASHBOARD_POLICY_URL";
+  return loadOptionalUrlFromEnv(key);
+}
+
+function loadSupportUrl() {
+  const key = "IAM_DASHBOARD_SUPPORT_URL";
+  return loadOptionalUrlFromEnv(key);
+}
+
 export const settings = {
   IAM_API_URL: loadApiUrl(),
   IAM_DASHBOARD_APP_VERSION: loadAppVersion(),
@@ -77,4 +105,7 @@ export const settings = {
   IAM_DASHBOARD_OIDC_SCOPES: loadOidcScopes(),
   IAM_DASHBOARD_OIDC_ADMIN_SCOPES: loadOidcAdminScopes(),
   IAM_DASHBOARD_OTEL_EXPORTER_OTLP_ENDPOINT: loadOtelExporterOtlpEndpoint(),
+  IAM_DASHBOARD_ORGANIZATION_NAME: loadOrganizationName(),
+  IAM_DASHBOARD_POLICY_URL: loadPolicyUrl(),
+  IAM_DASHBOARD_SUPPORT_URL: loadSupportUrl(),
 };

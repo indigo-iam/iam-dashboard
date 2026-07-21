@@ -8,18 +8,19 @@ import { useState } from "react";
 import { PowerIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 import { Options, Option } from "@/components/options";
-import { Client } from "@/models/client";
 import DeleteClientModal from "./delete-client-modal";
 import ToggleStatusModal from "./toggle-status-modal";
 
 type ClientOptionsProps = {
-  client: Client;
+  clientId: string;
+  clientName: string;
+  clientDescription: string | null;
+  active: boolean;
   isAdmin: boolean;
 };
 
 export default function ClientOptions(props: Readonly<ClientOptionsProps>) {
-  const { client, isAdmin } = props;
-  const { active } = client;
+  const { clientId, clientName, clientDescription, active, isAdmin } = props;
   const [show, setShow] = useState<"TOGGLE_STATUS" | "DELETE">();
   const openToggleStatus = () => setShow("TOGGLE_STATUS");
   const openDelete = () => setShow("DELETE");
@@ -50,12 +51,17 @@ export default function ClientOptions(props: Readonly<ClientOptionsProps>) {
         </Option>
       </Options>
       <ToggleStatusModal
-        client={client}
+        clientId={clientId}
+        clientName={clientName}
+        clientDescription={clientDescription}
+        active={active}
         show={show === "TOGGLE_STATUS"}
         onClose={close}
       />
       <DeleteClientModal
-        client={client}
+        clientId={clientId}
+        clientName={clientName}
+        clientDescription={clientDescription}
         show={show === "DELETE"}
         isAdmin={isAdmin}
         onClose={close}

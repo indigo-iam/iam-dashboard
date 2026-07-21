@@ -12,11 +12,12 @@ import { OidcId } from "@/models/indigo-user";
 import UnlinkAccountModal from "./unlink-modal";
 
 type OidcOptionsProps = {
+  userId: string;
   oidcId: OidcId;
 };
 
 export default function OidcOptions(props: Readonly<OidcOptionsProps>) {
-  const { oidcId } = props;
+  const { userId, oidcId } = props;
   const [show, setShow] = useState<"UNLINK_ACCOUNT">();
   const close = () => setShow(undefined);
   return (
@@ -30,6 +31,7 @@ export default function OidcOptions(props: Readonly<OidcOptionsProps>) {
         </Option>
       </Options>
       <UnlinkAccountModal
+        userId={userId}
         oidcId={oidcId}
         show={show === "UNLINK_ACCOUNT"}
         onClose={close}

@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export function useSessionStorage() {
   const [storage, setStorage] = useState<Storage>();
@@ -22,4 +22,34 @@ export function useSessionStorage() {
   }
 
   return { getItem, setItem };
+}
+
+export function useDeferredCallback() {
+  const timeoutRef = useRef<number>(null);
+
+  function deferredCallback(callback: () => Promise<void>) {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = globalThis.window.setTimeout(async () => {
+      await callback();
+    }, 150);
+  }
+
+  return {
+    deferredCallback,
+  };
+}
+
+export function useDisabled() {
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    const f = async () => {
+      setDisabled(false);
+    };
+    f();
+  }, []);
+
+  return disabled;
 }

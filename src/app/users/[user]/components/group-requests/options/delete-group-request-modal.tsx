@@ -25,10 +25,6 @@ export default function DeleteGroupRequestModal(
     onClose();
     onDeleted?.();
   };
-  const data = [
-    { name: "Group Name", value: groupRequest.groupName },
-    { name: "Group ID", value: groupRequest.groupUuid },
-  ];
   return (
     <ConfirmModal
       show={show}

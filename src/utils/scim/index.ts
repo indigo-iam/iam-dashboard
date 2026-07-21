@@ -2,34 +2,25 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Group, ManagedGroup } from "@/models/groups";
-import { ScimReference, User } from "@/models/scim";
+import { ScimReference } from "@/models/scim";
 import { settings } from "@/config";
 
 const { IAM_API_URL } = settings;
 
-export function makeScimReferenceFromUser(user: User): ScimReference {
+export function makeScimReferenceForUser(userId: string, userName: string) {
   return {
-    $ref: `${IAM_API_URL}/scim/Users/${user.id}`,
-    display: user.userName!,
-    value: user.id,
+    $ref: `${IAM_API_URL}/scim/Users/${userId}`,
+    display: userName,
+    value: userId,
   };
 }
-
-export function makeScimReferenceFromGroup(group: Group): ScimReference {
-  return {
-    $ref: `${IAM_API_URL}/scim/Groups/${group.id}`,
-    display: group.displayName,
-    value: group.id,
-  };
-}
-
-export function makeScimReferenceFromManagedGroup(
-  group: ManagedGroup
+export function makeScimReferenceForGroup(
+  groupId: string,
+  groupName: string
 ): ScimReference {
   return {
-    $ref: `${IAM_API_URL}/scim/Groups/${group.id}`,
-    display: group.name,
-    value: group.id,
+    $ref: `${IAM_API_URL}/scim/Groups/${groupId}`,
+    display: groupName,
+    value: groupId,
   };
 }

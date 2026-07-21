@@ -5,29 +5,41 @@
 "use client";
 
 import { useState } from "react";
-import { LinkSlashIcon } from "@heroicons/react/24/outline";
 
+import { LinkSlashIcon } from "@heroicons/react/24/outline";
 import { Option, Options } from "@/components/options";
+import { UnlinkCertificateModal } from "./unlink-certificate";
 import { Certificate } from "@/models/indigo-user";
 
 type CertificateOptionsProps = {
-  cert: Certificate;
+  isAdmin: boolean;
+  userId: string;
+  userFormattedName: string;
+  certificate: Certificate;
 };
 
 export default function CertificateOptions(
   props: Readonly<CertificateOptionsProps>
 ) {
-  const [_, setShow] = useState<"DELETE_CERTIFICATE">();
+  const { isAdmin, userId, userFormattedName, certificate } = props;
+  const [show, setShow] = useState<"UNLINK_CERTIFICATE">();
+  const close = () => setShow(undefined);
   return (
-    <>
-      <Options>
-        <Option onClick={() => setShow("DELETE_CERTIFICATE")} data-danger>
-          <div className="flex items-center gap-2">
-            <LinkSlashIcon className="size-5" />
-            <span>Unlink certificate</span>
-          </div>
-        </Option>
-      </Options>
-    </>
+    <Options>
+      <Option data-danger onClick={() => setShow("UNLINK_CERTIFICATE")}>
+        <div className="flex items-center gap-2">
+          <LinkSlashIcon className="size-5" />
+          <span>Unlink certificate</span>
+        </div>
+      </Option>
+      <UnlinkCertificateModal
+        show={show === "UNLINK_CERTIFICATE"}
+        onClose={close}
+        isAdmin={isAdmin}
+        userId={userId}
+        userFormattedName={userFormattedName}
+        certificate={certificate}
+      />
+    </Options>
   );
 }

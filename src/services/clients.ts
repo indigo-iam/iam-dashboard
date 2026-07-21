@@ -11,13 +11,12 @@ import { Paginated } from "@/models/pagination";
 import { User } from "@/models/scim";
 import { authFetch, getItem } from "@/utils/fetch";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 const { IAM_API_URL } = settings;
 
 export async function registerClient(
   client: ClientRequest
-): Promise<{ notification: Notification; payload?: any }> {
+): Promise<{ notification: Notification; payload?: Client }> {
   const response = await authFetch(
     `${IAM_API_URL}/iam/api/client-registration`,
     {
@@ -61,7 +60,7 @@ export async function deleteClient(
     method: "DELETE",
   });
   if (response.ok) {
-    redirect("/clients");
+    revalidatePath("/clients");
     return { type: "success", title: "Client deleted" };
   }
   const msg = await response.text();
@@ -79,7 +78,7 @@ export async function editClient(
   const { client_id } = client;
   const url = isAdmin
     ? `${IAM_API_URL}/iam/api/clients/${client_id}`
-    : `${IAM_API_URL}/iam/api/client-registration/${client_id}3`;
+    : `${IAM_API_URL}/iam/api/client-registration/${client_id}`;
   const response = await authFetch(url, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -90,7 +89,7 @@ export async function editClient(
     return {
       type: "success",
       title: "Client saved",
-      description: `Client '${client.client_name}'' has been modified`,
+      description: `Client '${client.client_name}' has been modified`,
     };
   }
   const { error } = await response.json();
@@ -101,12 +100,11 @@ export async function editClient(
   };
 }
 
-export async function enableClient(client: Client): Promise<Notification> {
-  const { client_id } = client;
-  const url = `${IAM_API_URL}/iam/api/clients/${client_id}/enable`;
+export async function enableClient(clientId: string): Promise<Notification> {
+  const url = `${IAM_API_URL}/iam/api/clients/${clientId}/enable`;
   const response = await authFetch(url, { method: "PATCH" });
   if (response.ok) {
-    revalidatePath(`/clients/${client_id}`);
+    revalidatePath(`/clients/${clientId}`);
     return { type: "success", title: "Client enabled" };
   }
   const msg = await response.text();
@@ -117,12 +115,11 @@ export async function enableClient(client: Client): Promise<Notification> {
   };
 }
 
-export async function disableClient(client: Client): Promise<Notification> {
-  const { client_id } = client;
-  const url = `${IAM_API_URL}/iam/api/clients/${client_id}/disable`;
+export async function disableClient(clientId: string): Promise<Notification> {
+  const url = `${IAM_API_URL}/iam/api/clients/${clientId}/disable`;
   const response = await authFetch(url, { method: "PATCH" });
   if (response.ok) {
-    revalidatePath(`/clients/${client_id}`);
+    revalidatePath(`/clients/${clientId}`);
     return { type: "success", title: "Client disabled" };
   }
   const msg = await response.text();
@@ -160,15 +157,14 @@ export async function getClientsPage(
 }
 
 async function editOwner(
-  client: Client,
-  user: User,
+  clientId: string,
+  userId: string,
   method: "POST" | "DELETE"
 ) {
-  const { client_id } = client;
-  const url = `${IAM_API_URL}/iam/api/clients/${client_id}/owners/${user.id}`;
+  const url = `${IAM_API_URL}/iam/api/clients/${clientId}/owners/${userId}`;
   const response = await authFetch(url, { method });
   if (response.ok) {
-    revalidatePath(`/clients/${client_id}`);
+    revalidatePath(`/clients/${clientId}`);
     return { type: "success", title: "Client saved" };
   }
   const msg = await response.text();
@@ -179,12 +175,12 @@ async function editOwner(
   };
 }
 
-export async function addOwner(client: Client, user: User) {
-  return editOwner(client, user, "POST");
+export async function addOwner(clientId: string, userId: string) {
+  return editOwner(clientId, userId, "POST");
 }
 
-export async function removeOwner(client: Client, user: User) {
-  return editOwner(client, user, "DELETE");
+export async function removeOwner(clientId: string, userId: string) {
+  return editOwner(clientId, userId, "DELETE");
 }
 
 export async function getClientOwnersPage(
@@ -200,8 +196,8 @@ export async function getClientOwnersPage(
 export async function getClientOwners(clientId: string): Promise<User[]> {
   const count = 10;
   const firstPage = await getClientOwnersPage(clientId, 1, count);
-  const { totalResults } = firstPage;
-  const pages = Math.ceil(totalResults / count);
+  const { totalResults, itemsPerPage } = firstPage;
+  const pages = Math.ceil(totalResults / itemsPerPage);
 
   if (pages > 1) {
     const promises = Array.from({ length: pages - 1 }, (_, i) => {
@@ -228,6 +224,44 @@ export async function rotateClientSecret(
   return {
     type: "error",
     title: "Cannot rotate client secret",
+    description: `Error ${response.status} ${msg}`,
+  };
+}
+
+export async function revokeTokens(
+  clientId: string,
+  action: "revoke-refresh-tokens" | "revoke-access-tokens"
+): Promise<Notification> {
+  const url = `${IAM_API_URL}/iam/api/clients/${clientId}/${action}`;
+  const response = await authFetch(url, { method: "PATCH" });
+  if (response.ok) {
+    return {
+      type: "success",
+      title: "Tokens revoked",
+    };
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot revoke tokens",
+    description: `Error ${response.status} ${msg}`,
+  };
+}
+
+export async function resetClient(clientId: string): Promise<Notification> {
+  const url = `${IAM_API_URL}/iam/api/clients/${clientId}/reset-client`;
+  const response = await authFetch(url, { method: "PATCH" });
+  if (response.ok) {
+    revalidatePath(`/clients/${clientId}`);
+    return {
+      type: "success",
+      title: "Client has been reset",
+    };
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Failed to reset client",
     description: `Error ${response.status} ${msg}`,
   };
 }

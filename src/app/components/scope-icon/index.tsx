@@ -33,6 +33,6 @@ export default function ScopeIcon(props: Readonly<ScopeIconProps>) {
     case "time":
       return <ClockIcon className={className} />;
     default:
-      null;
+      return null;
   }
 }

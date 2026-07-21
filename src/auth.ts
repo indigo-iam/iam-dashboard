@@ -43,7 +43,12 @@ export async function refreshAccessToken(refreshToken: string, scope?: string) {
     method: "POST",
     body,
   });
-
+  if (!res.ok) {
+    await signOut();
+    throw new Error(
+      `Refreshing access token failed with status: ${res.status}, error ${await res.text()}`
+    );
+  }
   const data = await res.json();
   const tokens: OAuth2Tokens = {
     accessToken: data.access_token,
@@ -104,6 +109,7 @@ const indigoIam = () =>
             body,
           });
           const data = await response.json();
+
           const tokens = {
             accessToken: data.access_token,
             refreshToken: data.refresh_token,
@@ -139,6 +145,7 @@ export const authConfig = (db: Database.Database) => {
         sub: {
           type: "string",
           input: false,
+          returned: true,
         },
       },
     },
@@ -174,6 +181,26 @@ export const authConfig = (db: Database.Database) => {
       },
     },
     databaseHooks: {
+      user: {
+        create: {
+          before: async userData => {
+            return { data: { ...userData, sub: "sub" } };
+          },
+          after: async (userData, ctx) => {
+            if (!ctx?.context) {
+              return;
+            }
+            const userId = userData.id;
+            const [account] =
+              await ctx.context.internalAdapter.findAccountByUserId(userId);
+            const data = {
+              ...userData,
+              sub: account.accountId,
+            };
+            await ctx.context.internalAdapter.updateUser(userId, data);
+          },
+        },
+      },
       session: {
         create: {
           before: async (sessionData, ctx) => {
@@ -218,6 +245,9 @@ export const authConfig = (db: Database.Database) => {
       updateAccountOnSignIn: true,
     },
     plugins: [indigoIam(), nextCookies()],
+    advanced: {
+      cookiePrefix: "indigo-iam",
+    },
   } satisfies BetterAuthOptions;
 };
 
@@ -283,7 +313,7 @@ export async function updateAccessToken(newScope: string) {
     });
     console.debug(`Tokens updated successfully with scope: '${newScope}'`);
     return tokens.accessToken;
-  } catch (e: any) {
+  } catch (e) {
     console.error("Failed to refresh access token:", e);
     return null;
   }

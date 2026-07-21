@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import Link from "next/link";
+import Link from "@/components/link";
 import { ScopePolicy } from "@/models/scope-policies";
 import PolicyOptions from "./options";
 
@@ -14,7 +14,7 @@ function Row(props: Readonly<{ policy: ScopePolicy }>) {
   const { policy } = props;
   const scopes = policy.scopes ? policy.scopes.join(" ") : "";
   return (
-    <div className="iam-list-item flex flex-row items-center">
+    <div className="iam-list-item">
       <Link
         className="flex grow flex-col text-gray-950 dark:text-gray-200"
         href={`/policies/${policy.id}`}

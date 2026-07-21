@@ -2,80 +2,124 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { ScimReference, User } from "@/models/scim";
-import NextLink from "next/link";
+import Link from "@/components/link";
+import { ScimReference } from "@/models/scim";
 import GroupOptions from "./options";
+import JoinGroupButton from "./join-group-button";
 
 type StaticViewProps = {
-  groupRef: ScimReference;
+  groupId: string;
+  groupDisplay: string;
 };
 
 function StaticView(props: Readonly<StaticViewProps>) {
-  const { groupRef } = props;
+  const { groupId, groupDisplay } = props;
   return (
     <div className="flex grow flex-col">
-      <p className="text-gray-950 dark:text-gray-100">{groupRef.display}</p>
-      <p className="text-sm font-light">{groupRef.value}</p>
+      <p className="text-gray-950 dark:text-gray-100">{groupDisplay}</p>
+      <p className="text-sm font-light">{groupId}</p>
     </div>
   );
 }
 
-type LinkViewProps = {
-  groupRef: ScimReference;
-};
+type LinkViewProps = StaticViewProps;
 
 function LinkView(props: Readonly<LinkViewProps>) {
-  const { groupRef } = props;
+  const { groupId, groupDisplay } = props;
   return (
-    <NextLink href={`/groups/${groupRef.value}`} className="flex grow flex-col">
-      <p className="text-gray-950 dark:text-gray-100">{groupRef.display}</p>
-      <p className="text-sm font-light">{groupRef.value}</p>
-    </NextLink>
+    <Link href={`/groups/${groupId}`} className="flex grow flex-col">
+      <p className="text-gray-950 dark:text-gray-100">{groupDisplay}</p>
+      <p className="text-sm font-light">{groupId}</p>
+    </Link>
   );
 }
 
 type RowProps = {
-  user: User;
-  groupRef: ScimReference;
+  userId: string;
+  userDisplay: string;
+  groupId: string;
+  groupDisplay: string;
   isAdmin?: boolean;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const { user, groupRef, isAdmin } = props;
+  const { userId, userDisplay, groupId, groupDisplay, isAdmin } = props;
   return (
-    <li className="iam-list-item flex flex-row">
+    <li className="iam-list-item">
       {isAdmin ? (
-        <LinkView groupRef={groupRef} />
+        <LinkView groupId={groupId} groupDisplay={groupDisplay} />
       ) : (
-        <StaticView groupRef={groupRef} />
+        <StaticView groupId={groupId} groupDisplay={groupDisplay} />
       )}
-      <GroupOptions groupRef={groupRef} user={user} />
+      <GroupOptions
+        userId={userId}
+        userDisplay={userDisplay}
+        groupId={groupId}
+        groupDisplay={groupDisplay}
+      />
     </li>
   );
 }
 
 type UserGroupsProps = {
-  user: User;
+  userId: string;
+  userName: string;
+  userDisplay: string;
+  userFormattedName: string;
+  userEmail: string;
+  userGroups?: ScimReference[];
   isAdmin?: boolean;
 };
 
 export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
-  const { user, isAdmin } = props;
-  const { groups } = user;
-  if (!groups || groups.length === 0) {
+  const {
+    userId,
+    userName,
+    userDisplay,
+    userFormattedName,
+    userEmail,
+    userGroups,
+    isAdmin,
+  } = props;
+  if (!userGroups || userGroups.length === 0) {
     return (
       <div className="panel space-y-4">
-        <h2>Joined Groups</h2>
-        <p>No groups found.</p>
+        <div className="flex justify-between">
+          <h2>Joined groups</h2>
+          <JoinGroupButton
+            userId={userId}
+            userName={userName}
+            userFormattedName={userFormattedName}
+            userEmail={userEmail}
+            isAdmin={isAdmin}
+          />
+        </div>
+        <p>No group found.</p>
       </div>
     );
   }
   return (
     <div className="panel space-y-4">
-      <h2>Joined Groups</h2>
+      <div className="flex justify-between">
+        <h2>Joined groups</h2>
+        <JoinGroupButton
+          userId={userId}
+          userName={userName}
+          userFormattedName={userFormattedName}
+          userEmail={userEmail}
+          isAdmin={isAdmin}
+        />
+      </div>
       <ul className="w-full">
-        {groups.map(g => (
-          <Row key={g.value} user={user} groupRef={g} isAdmin={isAdmin} />
+        {userGroups.map(g => (
+          <Row
+            key={g.value}
+            userId={userId}
+            userDisplay={userDisplay}
+            groupId={g.value}
+            groupDisplay={g.display}
+            isAdmin={isAdmin}
+          />
         ))}
       </ul>
     </div>

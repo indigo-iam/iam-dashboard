@@ -17,15 +17,15 @@ import {
 import { Textarea } from "@/components/textarea";
 import { toast } from "@/components/toaster";
 import { SSHKey } from "@/models/indigo-user";
-import { User } from "@/models/scim";
+
 import { addSSHKey } from "@/services/users";
 
 interface AddSSHKeyModalProps extends ModalProps {
-  user: User;
+  userId: string;
 }
 
 export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
-  const { user, ...modalProps } = props;
+  const { userId, ...modalProps } = props;
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -34,7 +34,7 @@ export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
       display: formData.get("ssh-label") as string,
       value: formData.get("ssh-key") as string,
     };
-    const res = await addSSHKey(user.id, sshKey);
+    const res = await addSSHKey(userId, sshKey);
     toast.toast(res);
     modalProps.onClose();
   }

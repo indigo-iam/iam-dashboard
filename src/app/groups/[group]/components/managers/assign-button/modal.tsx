@@ -8,64 +8,64 @@ import { SearchUsers } from "@/app/components/search-users";
 import ConfirmModal from "@/components/confirm-modal";
 import { type ModalProps } from "@/components/modal";
 import { toast } from "@/components/toaster";
-import { Group } from "@/models/groups";
 import { User } from "@/models/scim";
 import { assignGroupManager } from "@/services/groups";
 
 import { useState } from "react";
 import Link from "next/link";
 
-type AssignGroupManagerModalProps = ModalProps & {
-  group: Group;
-};
-
 type SearchUserViewProps = {
-  group: Group;
+  groupName: string;
+  groupDescription?: string | null;
   onSelect: (user: User) => void;
 };
 
 function SearchUserView(props: Readonly<SearchUserViewProps>) {
-  const { group, onSelect } = props;
-  const indigoGroup = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
-  const description = indigoGroup.description;
+  const { groupName, groupDescription, onSelect } = props;
   return (
     <div className="space-y-4">
       <p>
-        Type to search for an user to become manager of group{" "}
-        <b>{group.displayName}</b>
-        {description && (
+        Type to search for an user to become manager of group <b>{groupName}</b>
+        {groupDescription && (
           <>
             {" "}
-            (<i>{description}</i>)
+            (<i>{groupDescription}</i>)
           </>
         )}
       </p>{" "}
-      <SearchUsers onSelect={onSelect} />
+      <SearchUsers listId="search-list-managers" onSelect={onSelect} />
     </div>
   );
 }
 
 type ConfirmViewProps = {
-  group: Group;
-  user: User;
+  groupName: string;
+  groupDescription?: string | null;
+  userId: string;
+  userFormattedName: string;
+  userEmail: string;
 };
 
 function ConfirmView(props: Readonly<ConfirmViewProps>) {
-  const { group, user } = props;
-  const indigoGroup = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
-  const description = indigoGroup.description;
+  const {
+    groupName, //
+    groupDescription,
+    userId,
+    userFormattedName,
+    userEmail,
+  } = props;
   return (
     <div className="space-y-4">
       <p>
         Are you sure you want to make the user{" "}
-        <Link href={`/users/${user.id}`} className="underline">
-          <b>{user.name?.formatted}</b> (<i>{user.emails?.[0].value}</i>)
+        <Link href={`/users/${userId}`} className="underline">
+          <b>{userFormattedName}</b> (<i>{userEmail}</i>)
         </Link>{" "}
-        manager of the group <b>{group.displayName}</b>
-        {description && (
+        manager of the group <b>{groupName}</b>
+        {groupDescription && (
           <>
             {" "}
-            (<i>{description}</i>)
+            (<i>{groupDescription}</i>)
           </>
         )}
         ?
@@ -74,10 +74,17 @@ function ConfirmView(props: Readonly<ConfirmViewProps>) {
   );
 }
 
+type AssignGroupManagerModalProps = ModalProps & {
+  groupId: string;
+  groupName: string;
+  groupDescription?: string | null;
+};
+
 export default function AssignGroupManagerModal(
   props: Readonly<AssignGroupManagerModalProps>
 ) {
-  const { group, onClose, ...modalProps } = props;
+  const { groupId, groupName, groupDescription, onClose, ...modalProps } =
+    props;
   const [user, setUser] = useState<User>();
   const clear = () => setUser(undefined);
 
@@ -86,13 +93,20 @@ export default function AssignGroupManagerModal(
     onClose();
   };
 
-  const assignManager = async () => {
-    if (user?.id) {
-      const res = await assignGroupManager(group, user);
-      toast.toast(res);
-      clearAndClose();
+  async function assignManager() {
+    if (!user) {
+      console.warn("cannot assign manager to group: user is undefined");
+      return;
     }
-  };
+    const userId = user.id;
+    const userFormattedName = user.name?.formatted ?? "unknown user";
+    const res = await assignGroupManager(groupId, userId);
+    if (res.type === "success") {
+      res.description = `User ${userFormattedName} has been assigned manager of group ${groupName}`;
+    }
+    toast.toast(res);
+    clearAndClose();
+  }
 
   return (
     <ConfirmModal
@@ -101,12 +115,23 @@ export default function AssignGroupManagerModal(
       title="Assign group manager"
       onConfirm={assignManager}
       onCancel={clear}
+      confirmButtonDisabled={!user}
     >
       <>
         {user ? (
-          <ConfirmView group={group} user={user} />
+          <ConfirmView
+            groupName={groupName}
+            groupDescription={groupDescription}
+            userId={user.id}
+            userFormattedName={user.name?.formatted ?? "unknown user"}
+            userEmail={user.emails?.[0].value ?? "unknown email"}
+          />
         ) : (
-          <SearchUserView group={group} onSelect={setUser} />
+          <SearchUserView
+            groupName={groupName}
+            groupDescription={groupDescription}
+            onSelect={setUser}
+          />
         )}
       </>
     </ConfirmModal>

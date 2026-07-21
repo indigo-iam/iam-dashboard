@@ -6,7 +6,7 @@ import { TabPanel } from "@/components/tabs";
 import { Registration } from "@/models/registration";
 import { dateToHuman } from "@/utils/dates";
 import RegistrationRequestsOptions from "./options";
-import Link from "next/link";
+import Link from "@/components/link";
 
 type RowProps = {
   request: Registration;
@@ -18,7 +18,7 @@ function Row(props: Readonly<RowProps>) {
     ? dateToHuman(new Date(request.creationTime))
     : "N/A";
   return (
-    <li className="iam-list-item flex flex-row items-center">
+    <li className="iam-list-item">
       <div className="flex grow flex-col space-y-2 lg:flex-row">
         <Link className="grow space-y-2" href={`/users/${request.accountId}`}>
           <p className="text-gray-950 dark:text-gray-100">

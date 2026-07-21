@@ -2,13 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import Link from "next/link";
+import Link from "@/components/link";
 import { Status } from "@/components/badges";
 import { Client } from "@/models/client";
-import ClientOptions from "./options";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import ClientOptions from "./options";
 
-function sortScopes(scope: String) {
+function sortScopes(scope: string) {
   const scopes = scope.split(" ");
   scopes.sort((a, b) => a.localeCompare(b));
   return scopes.join(" ");
@@ -21,19 +21,20 @@ type RowProps = {
 
 function Row(props: Readonly<RowProps>) {
   const { client, isAdmin } = props;
-  const { client_id, client_name, scope } = client;
-  const scopes = scope ? sortScopes(scope) : undefined;
+  const scopes = client.scope ? sortScopes(client.scope) : undefined;
   const createdAt = client.created_at
     ? new Date(client.created_at).toLocaleString()
     : "N/A";
   return (
-    <li className="iam-list-item flex flex-row lg:gap-2">
+    <li className="iam-list-item lg:gap-2">
       <div className="flex w-0 grow flex-col space-y-2 lg:flex-row lg:space-y-0">
         <Link
           className="flex grow flex-col lg:w-0"
-          href={`/clients/${client_id}`}
+          href={`/clients/${client.client_id}`}
         >
-          <p className="text-gray-950 dark:text-gray-100">{client_name}</p>
+          <p className="text-gray-950 dark:text-gray-100">
+            {client.client_name}
+          </p>
           <div className="flex flex-col">
             <p className="truncate text-sm font-light">
               {client.client_description}
@@ -50,7 +51,13 @@ function Row(props: Readonly<RowProps>) {
           </p>
         </div>
       </div>
-      <ClientOptions client={client} isAdmin={isAdmin} />
+      <ClientOptions
+        isAdmin={isAdmin}
+        clientId={client.client_id}
+        clientName={client.client_name}
+        clientDescription={client.client_description}
+        active={client.active}
+      />
     </li>
   );
 }

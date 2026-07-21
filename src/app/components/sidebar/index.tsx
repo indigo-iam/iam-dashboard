@@ -9,16 +9,22 @@ import {
   DocumentTextIcon,
   HomeIcon,
   InboxArrowDownIcon,
-  RocketLaunchIcon,
+  CubeIcon,
   ScaleIcon,
   UserGroupIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
 
 import { Drawer, Link } from "@/components/drawer";
+import NextLink from "next/link";
 import { settings } from "@/config";
+import { getLoginServiceVersion } from "@/services/actuator";
 
-const { IAM_DASHBOARD_APP_VERSION } = settings;
+const {
+  IAM_DASHBOARD_APP_VERSION,
+  IAM_DASHBOARD_POLICY_URL,
+  IAM_DASHBOARD_SUPPORT_URL,
+} = settings;
 
 type LinksProps = {
   hasRoleAdmin?: boolean;
@@ -40,7 +46,7 @@ function Links(props: Readonly<LinksProps>) {
           <UserGroupIcon className="size-5" />
         </Link>
         <Link title="Clients" href="/clients">
-          <RocketLaunchIcon className="size-5" />
+          <CubeIcon className="size-5" />
         </Link>
         <Link title="Requests" href="/requests">
           <InboxArrowDownIcon className="size-5" />
@@ -66,7 +72,7 @@ function Links(props: Readonly<LinksProps>) {
           <UserGroupIcon className="size-5" />
         </Link>
         <Link title={`${isAdmin ? "Client" : "My clients"}`} href="/clients">
-          <RocketLaunchIcon className="size-5" />
+          <CubeIcon className="size-5" />
         </Link>
       </div>
     );
@@ -80,28 +86,41 @@ type SidebarProps = {
 
 export async function Sidebar(props: Readonly<SidebarProps>) {
   const { hasRoleAdmin, isAdmin } = props;
+  const loginServiceVersion = await getLoginServiceVersion();
   return (
     <Drawer>
       <div className="flex h-full flex-col">
         <nav className="flex grow flex-col overflow-y-auto px-6 py-8">
           <Links hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
           <div className="space-y-1">
-            <Link
-              title="Privacy Policy"
-              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            >
-              <BuildingLibraryIcon className="size-5" />
-            </Link>
-            <Link
-              title="Support"
-              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            >
-              <ChatBubbleLeftRightIcon className="size-5" />
-            </Link>
+            {IAM_DASHBOARD_POLICY_URL && (
+              <Link title="Privacy Policy" href={IAM_DASHBOARD_POLICY_URL}>
+                <BuildingLibraryIcon className="size-5" />
+              </Link>
+            )}
+            {IAM_DASHBOARD_SUPPORT_URL && (
+              <Link title="Support" href={IAM_DASHBOARD_SUPPORT_URL}>
+                <ChatBubbleLeftRightIcon className="size-5" />
+              </Link>
+            )}
           </div>
         </nav>
-        <div className="w-full bg-slate-600 p-1 text-center text-sm text-white">
-          v{IAM_DASHBOARD_APP_VERSION}
+        <div className="flex w-full justify-center gap-1 bg-slate-600 p-1 py-2 text-center text-xs font-light text-white">
+          WebUI
+          <NextLink
+            className="text-blue-300 hover:underline"
+            href={`https://github.com/indigo-iam/iam-dashboard/releases/v${IAM_DASHBOARD_APP_VERSION}`}
+          >
+            v{IAM_DASHBOARD_APP_VERSION}
+          </NextLink>
+          <span>-</span>
+          <span>IAM</span>
+          <NextLink
+            className="text-blue-300 hover:underline"
+            href={`https://github.com/indigo-iam/iam/releases/v${loginServiceVersion}`}
+          >
+            v{loginServiceVersion}
+          </NextLink>
         </div>
       </div>
     </Drawer>

@@ -6,17 +6,17 @@
 
 import { Button } from "@/components/buttons";
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { Client } from "@/models/client";
 import { AddOwnerModal } from "./modal";
 
 import { useState } from "react";
 
 type AddOwnerButtonProps = {
-  client: Client;
+  clientId: string;
+  clientName: string;
 };
 
 export function AddOwnerButton(props: Readonly<AddOwnerButtonProps>) {
-  const { client } = props;
+  const { clientId, clientName } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
@@ -28,7 +28,12 @@ export function AddOwnerButton(props: Readonly<AddOwnerButtonProps>) {
           <span>Add owner</span>
         </div>
       </Button>
-      <AddOwnerModal client={client} show={show} onClose={close} />
+      <AddOwnerModal
+        clientId={clientId}
+        clientName={clientName}
+        show={show}
+        onClose={close}
+      />
     </>
   );
 }

@@ -5,7 +5,7 @@
 services:
   login_service:
     container_name: iam-login-service
-    image: indigoiam/iam-login-service:latest
+    image: indigoiam/iam-login-service:develop
     restart: unless-stopped
     env_file: .env
     environment:

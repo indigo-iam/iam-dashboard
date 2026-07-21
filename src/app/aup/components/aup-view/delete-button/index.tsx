@@ -26,6 +26,8 @@ export default function DeleteButton() {
         onClose={hide}
         onConfirm={handleConfirm}
         title="Delete the Acceptable Usage Policy for this organization?"
+        danger={true}
+        confirmButtonText="Delete"
       >
         If you proceed, the acceptance of the AUP will not be requested for new
         users at registration time.

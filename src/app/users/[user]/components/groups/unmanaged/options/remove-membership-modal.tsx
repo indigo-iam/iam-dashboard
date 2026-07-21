@@ -5,13 +5,14 @@
 "use client";
 
 import { toast } from "@/components/toaster";
-import { ScimReference, User } from "@/models/scim";
-import { removeUserFromGroupReference } from "@/services/groups";
+import { removeUserFromGroup } from "@/services/groups";
 import ConfirmModal from "@/components/confirm-modal";
 
 export type RemoveMembershipModalProps = {
-  user: User;
-  groupRef: ScimReference;
+  userId: string;
+  userDisplay: string;
+  groupId: string;
+  groupDisplay: string;
   show: boolean;
   onClose: () => void;
 };
@@ -19,13 +20,18 @@ export type RemoveMembershipModalProps = {
 export default function RemoveMembershipModal(
   props: Readonly<RemoveMembershipModalProps>
 ) {
-  const { user, groupRef, show, onClose } = props;
+  const { userId, userDisplay, groupId, groupDisplay, show, onClose } = props;
 
-  const handleConfirm = async () => {
-    const res = await removeUserFromGroupReference(user, groupRef);
+  async function handleConfirm() {
+    const res = await removeUserFromGroup(
+      userId,
+      userDisplay,
+      groupId,
+      groupDisplay
+    );
     toast.toast(res);
     onClose();
-  };
+  }
 
   return (
     <ConfirmModal
@@ -36,7 +42,7 @@ export default function RemoveMembershipModal(
       onConfirm={handleConfirm}
       danger
     >
-      Are you sure you want to leave the group <b>{groupRef.display}</b>?
+      Are you sure you want to leave the group <b>{groupDisplay}</b>?
     </ConfirmModal>
   );
 }

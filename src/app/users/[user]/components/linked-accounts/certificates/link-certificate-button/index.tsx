@@ -5,27 +5,34 @@
 "use client";
 
 import { Button } from "@/components/buttons";
-import { User } from "@/models/scim";
 import { useState } from "react";
 import LinkCertificateModal from "./modal";
 
 type LinkButtonProps = {
-  user: User;
+  userId: string;
+  userName: string;
+  isAdmin: boolean;
 };
 
 export default function LinkCertificateButton(
   props: Readonly<LinkButtonProps>
 ) {
-  const { user } = props;
+  const { userId, userName, isAdmin } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
   return (
     <>
       <Button onClick={open} className="btn-secondary">
-        Request certificate linking
+        Link certificate
       </Button>
-      <LinkCertificateModal show={show} onClose={close} user={user} />
+      <LinkCertificateModal
+        show={show}
+        onClose={close}
+        userId={userId}
+        userName={userName}
+        isAdmin={isAdmin}
+      />
     </>
   );
 }

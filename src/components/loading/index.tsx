@@ -4,3 +4,4 @@
 
 export { useLoading } from "./context";
 export { LoadingProvider } from "./provider";
+export { LoadingList } from "./loading-list";

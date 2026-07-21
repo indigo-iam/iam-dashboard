@@ -3,13 +3,17 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { SamlId } from "@/models/indigo-user";
-import { User } from "@/models/scim";
 import SAMLOptions from "./options";
 
-function SamlIdView(props: { samlId: SamlId }) {
-  const { samlId } = props;
+type SamlIdViewProps = {
+  userId: string;
+  samlId: SamlId;
+};
+
+function SamlIdView(props: Readonly<SamlIdViewProps>) {
+  const { userId, samlId } = props;
   return (
-    <li className="iam-list-item flex flex-row">
+    <li className="iam-list-item">
       <div className="flex grow flex-col">
         <p className="break-all text-gray-950 dark:text-gray-100">
           {samlId.idpId}
@@ -17,32 +21,32 @@ function SamlIdView(props: { samlId: SamlId }) {
         <p className="text-sm font-light">{samlId.userId}</p>
         <p className="text-sm font-light">{samlId.attributeId}</p>
       </div>
-      <SAMLOptions samlId={samlId} />
+      <SAMLOptions userId={userId} samlId={samlId} />
     </li>
   );
 }
 
 type SamlAccountsProps = {
-  user: User;
+  userId: string;
+  samlIds: SamlId[];
 };
 
 export function SamlAccounts(props: Readonly<SamlAccountsProps>) {
-  const { user } = props;
-  const samlIds = user["urn:indigo-dc:scim:schemas:IndigoUser"]?.samlIds ?? [];
-  if (samlIds.length === 0) {
-    return (
-      <div className="panel space-y-2">
-        <h2>SAML</h2>
-        <p>No linked SAML accounts found.</p>
-      </div>
-    );
-  }
+  const { userId, samlIds } = props;
   return (
     <div className="panel space-y-2">
       <h2>SAML</h2>
-      {samlIds.map(samlId => (
-        <SamlIdView key={samlId.attributeId} samlId={samlId} />
-      ))}
+      {samlIds.length === 0 ? (
+        <p className="pt-4">There are no linked accounts.</p>
+      ) : (
+        samlIds.map(samlId => (
+          <SamlIdView
+            key={samlId.attributeId}
+            userId={userId}
+            samlId={samlId}
+          />
+        ))
+      )}
     </div>
   );
 }

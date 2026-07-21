@@ -8,4 +8,4 @@ export { UserClients } from "./clients";
 export { ApprovedSites } from "./approved-sites";
 export { ActiveTokens } from "./active-tokens";
 export { LinkedAccounts } from "./linked-accounts";
-export { Attributes } from "./attributes";
+export { AttributesAndLabels } from "./attributes-labels";

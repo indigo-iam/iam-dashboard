@@ -2,25 +2,55 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { User } from "@/models/scim";
 import { TabPanel } from "@/components/tabs";
+import { Certificate, OidcId, SamlId, SSHKey } from "@/models/indigo-user";
 import { OidcAccounts } from "./oidc";
 import { SamlAccounts } from "./saml";
 import { Certificates } from "./certificates";
 import { SSHKeys } from "./ssh-keys";
 
 type LinkedAccountsProps = {
-  user: User;
+  isMe: boolean;
+  userId: string;
+  userName: string;
+  userFormattedName: string;
+  oidcIds: OidcId[];
+  samlIds: SamlId[];
+  certificates: Certificate[];
+  sshKeys: SSHKey[];
+  isAdmin: boolean;
 };
 
 export async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
-  const { user } = props;
+  const {
+    isMe,
+    userId,
+    userName,
+    userFormattedName,
+    oidcIds,
+    samlIds,
+    certificates,
+    sshKeys,
+    isAdmin,
+  } = props;
   return (
     <TabPanel className="space-y-6">
-      <OidcAccounts user={user} />
-      <SamlAccounts user={user} />
-      <Certificates user={user} />
-      <SSHKeys user={user} />
+      <OidcAccounts
+        userId={userId}
+        oidcIds={oidcIds}
+        userFormattedName={userFormattedName}
+        isAdmin={isAdmin}
+      />
+      <SamlAccounts userId={userId} samlIds={samlIds} />
+      <Certificates
+        isMe={isMe}
+        userId={userId}
+        userName={userName}
+        userFormattedName={userFormattedName}
+        certificates={certificates}
+        isAdmin={isAdmin}
+      />
+      <SSHKeys userId={userId} sshKeys={sshKeys} />
     </TabPanel>
   );
 }

@@ -13,7 +13,7 @@ import { revalidatePath } from "next/cache";
 const { IAM_API_URL } = settings;
 
 export async function fetchRegistrationRequests() {
-  let url = `${IAM_API_URL}/registration/list/pending`;
+  const url = `${IAM_API_URL}/registration/list/pending`;
   return await getItem<Registration[]>(url);
 }
 

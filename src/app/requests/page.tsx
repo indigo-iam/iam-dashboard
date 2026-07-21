@@ -23,11 +23,21 @@ export default async function Requests() {
   const groupRequests = await fetchGroupsRequests();
   const registrationRequests = await fetchRegistrationRequests();
   const certLinkRequests = [];
+  const totalRequests =
+    groupRequests.totalResults +
+    registrationRequests.length +
+    CertificateLinkRequests.length;
   return (
     <section>
-      <header className="section-header">
+      <header className="section-header items-center">
         <InboxArrowDownIcon className="size-5" />
-        <h2 className="text-base font-normal">Requests</h2>
+        <h2 className="py-1 text-base font-normal">Requests</h2>
+        <div
+          title="Total number of requests"
+          className="middle rounded-full bg-gray-400 px-2 py-0.5 text-xs font-semibold text-white"
+        >
+          {totalRequests}
+        </div>
       </header>
       <TabGroup className="container space-y-4">
         <TabList className="flex overflow-auto text-xl">

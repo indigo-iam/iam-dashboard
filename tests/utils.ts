@@ -7,6 +7,7 @@ import { expect, Locator, Page } from "@playwright/test";
 
 export async function changeTabPanel(button: Locator) {
   await expect(button).toBeVisible();
+  await expect(button).toBeEnabled();
   await expect(button).toHaveAttribute(
     "aria-controls",
     /headlessui-tabs-panel-.*/
@@ -26,6 +27,7 @@ export async function dismissToast(
   await expect(toast).toHaveCount(1);
   await expect(toast).toHaveAttribute("data-toast-type", type);
   const closeButton = toast.getByTitle("Close");
+  await expect(closeButton).toBeEnabled();
   await closeButton.click();
   await expect(toast).toBeHidden();
 }

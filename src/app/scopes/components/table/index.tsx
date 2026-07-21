@@ -25,10 +25,7 @@ export default function ScopesTable(props: Readonly<ScopesTableProps>) {
   return (
     <ul>
       {scopes.map(scope => (
-        <li
-          className="iam-list-item flex-row items-center gap-2"
-          key={scope.id}
-        >
+        <li className="iam-list-item gap-2" key={scope.id}>
           <div className="flex grow flex-col gap-2 lg:flex-row lg:items-center lg:gap-0">
             <div className="flex grow flex-col lg:w-0">
               <div className="flex-inline flex items-center gap-2 text-gray-950 dark:text-gray-100">

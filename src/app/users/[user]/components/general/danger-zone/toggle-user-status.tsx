@@ -8,49 +8,50 @@
 
 "use client";
 
-import { Button } from "@/components/buttons";
-import ConfirmModal from "@/components/confirm-modal";
-import { User } from "@/models/scim";
-import { changeUserStatus } from "@/services/users";
-
 import { useState } from "react";
 
+import { Button } from "@/components/buttons";
+import ConfirmModal from "@/components/confirm-modal";
+import { changeUserStatus } from "@/services/users";
+
 type DisableButtonProps = {
-  user: User;
+  userId: string;
+  userFormattedName: string;
+  userEmail: string;
+  userIsActive: boolean;
 };
 
 export function ToggleStatusButton(props: Readonly<DisableButtonProps>) {
-  const { user } = props;
-  const { active } = user;
+  const { userId, userFormattedName, userEmail, userIsActive } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
-  const title = `${active ? "Disable" : "Enable"} user ${user.name?.formatted}`;
-  const confirmButtonText = active ? "Disable" : "Enabled";
+  const title = `${userIsActive ? "Disable" : "Enable"} user ${userFormattedName}`;
+  const confirmButtonText = userIsActive ? "Disable" : "Enabled";
 
   const handleConfirm = async () => {
-    return changeUserStatus(user.id, !active);
+    return changeUserStatus(userId, !userIsActive);
   };
 
   return (
     <>
       <Button
-        className={active ? "btn-danger-tertiary" : "btn-tertiary"}
+        className={userIsActive ? "btn-danger-tertiary" : "btn-tertiary"}
         onClick={open}
       >
-        {active ? "Disable" : "Enable"}
+        {userIsActive ? "Disable" : "Enable"}
       </Button>
       <ConfirmModal
         show={show}
         onClose={close}
-        danger={active}
+        danger={userIsActive}
         title={title}
         confirmButtonText={confirmButtonText}
         onConfirm={handleConfirm}
       >
         <span>
-          {`Are you sure you want to ${active ? "disable" : "enable"} user`}{" "}
-          <b>{user.name?.formatted}?</b> ({user.emails?.[0].value})
+          {`Are you sure you want to ${userIsActive ? "disable" : "enable"} user`}{" "}
+          <b>{userFormattedName}?</b> ({userEmail})
         </span>
       </ConfirmModal>
     </>

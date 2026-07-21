@@ -2,21 +2,22 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Description, Field, Label, LabeledCheckbox } from "@/components/form";
+import { Field, Label, LabeledCheckbox } from "@/components/form";
+import { Info } from "@/components/info";
 import { Input } from "@/components/inputs";
-import { Client } from "@/models/client";
 
 type TokensTimeoutProps = {
-  client: Client;
+  accessTokenValiditySeconds?: number;
+  idTokenValiditySeconds?: number;
+  requireAuthTime: boolean;
 };
 
 export function TokensTimeout(props: Readonly<TokensTimeoutProps>) {
-  const { client } = props;
   const {
-    access_token_validity_seconds,
-    id_token_validity_seconds,
-    require_auth_time,
-  } = client;
+    accessTokenValiditySeconds,
+    idTokenValiditySeconds,
+    requireAuthTime,
+  } = props;
   return (
     <div className="flex flex-col gap-4 pb-4 lg:flex-row lg:gap-8">
       <div className="w-full space-y-4 text-sm lg:w-1/3">
@@ -36,7 +37,7 @@ export function TokensTimeout(props: Readonly<TokensTimeoutProps>) {
             name="access_token_validity_seconds"
             id="access-token-validity-input"
             type="number"
-            defaultValue={access_token_validity_seconds}
+            defaultValue={accessTokenValiditySeconds}
           />
         </Field>
         <Field>
@@ -45,21 +46,21 @@ export function TokensTimeout(props: Readonly<TokensTimeoutProps>) {
             name="id_token_validity_seconds"
             id="id-token-validity-input"
             type="number"
-            defaultValue={id_token_validity_seconds}
+            defaultValue={idTokenValiditySeconds}
           />
         </Field>
-        <Field>
+        <Field className="flex items-center gap-2">
           <LabeledCheckbox
             name="require_auth_time"
-            key={`require_auth_time${require_auth_time}`}
-            defaultChecked={require_auth_time}
+            key={`require_auth_time${requireAuthTime}`}
+            defaultChecked={requireAuthTime}
           >
             Always require authentication time in ID tokens
           </LabeledCheckbox>
-          <Description>
+          <Info anchor="left">
             Add the <span className="text-mono font-medium">auth_time</span>{" "}
             claim to the ID token.
-          </Description>
+          </Info>
         </Field>
       </div>
     </div>

@@ -2,21 +2,24 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { User } from "@/models/scim";
+import { SSHKey } from "@/models/indigo-user";
 import AddSSHKeyButton from "./add-button";
 import Table from "./table";
 
 type SSHKeysProps = {
-  user: User;
+  userId: string;
+  sshKeys: SSHKey[];
 };
 
 export async function SSHKeys(props: Readonly<SSHKeysProps>) {
-  const { user } = props;
+  const { userId, sshKeys } = props;
   return (
     <div className="panel space-y-2">
-      <h2>SSH Keys</h2>
-      <Table user={user} />
-      <AddSSHKeyButton user={user} />
+      <div className="flex justify-between">
+        <h2>SSH Keys</h2>
+        <AddSSHKeyButton userId={userId} />
+      </div>
+      <Table userId={userId} sshKeys={sshKeys} />
     </div>
   );
 }

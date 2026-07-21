@@ -4,19 +4,18 @@
 
 "use client";
 
-import { User } from "@/models/scim";
 import { SSHKey } from "@/models/indigo-user";
 import { Options, Option } from "@/components/options";
 import DeleteSSHKeyModal from "./delete-key-modal";
 import { useState } from "react";
 
 type SSHKeysOptionsProps = {
-  user: User;
+  userId: string;
   sshKey: SSHKey;
 };
 
 export default function SSHKeysOptions(props: Readonly<SSHKeysOptionsProps>) {
-  const { user, sshKey } = props;
+  const { userId, sshKey } = props;
   const [show, setShow] = useState<"DELETE">();
   const close = () => setShow(undefined);
   return (
@@ -27,7 +26,7 @@ export default function SSHKeysOptions(props: Readonly<SSHKeysOptionsProps>) {
         </Option>
       </Options>
       <DeleteSSHKeyModal
-        user={user}
+        userId={userId}
         sshKey={sshKey}
         show={show === "DELETE"}
         onClose={close}

@@ -6,16 +6,17 @@
 
 import ToggleStatusModal from "@/app/components/clients/options/toggle-status-modal";
 import { Button } from "@/components/buttons";
-import { Client } from "@/models/client";
 import { useState } from "react";
 
 type DisableButtonProps = {
-  client: Client;
+  clientId: string;
+  clientName: string;
+  clientDescription: string | null;
+  active: boolean;
 };
 
 export function ToggleStatusButton(props: Readonly<DisableButtonProps>) {
-  const { client } = props;
-  const { active } = client;
+  const { clientId, clientName, clientDescription, active } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
@@ -27,7 +28,14 @@ export function ToggleStatusButton(props: Readonly<DisableButtonProps>) {
       >
         {active ? "Disable" : "Enable"}
       </Button>
-      <ToggleStatusModal client={client} show={show} onClose={close} />
+      <ToggleStatusModal
+        clientId={clientId}
+        clientName={clientName}
+        clientDescription={clientDescription}
+        active={active}
+        show={show}
+        onClose={close}
+      />
     </>
   );
 }

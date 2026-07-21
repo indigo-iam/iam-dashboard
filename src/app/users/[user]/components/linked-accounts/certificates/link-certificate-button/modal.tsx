@@ -4,7 +4,10 @@
 
 "use client";
 
+import { useRef, useState } from "react";
+
 import { Button } from "@/components/buttons";
+import ConfirmModal from "@/components/confirm-modal";
 import { Field, Form, Label, Select } from "@/components/form";
 import { Input } from "@/components/inputs";
 import {
@@ -16,9 +19,8 @@ import {
 } from "@/components/modal";
 import { Textarea } from "@/components/textarea";
 import { toast } from "@/components/toaster";
-import { User } from "@/models/scim";
-import { sendCertificateLinkRequest } from "@/services/certs";
-import { useState } from "react";
+import { linkCertificate, sendCertificateLinkRequest } from "@/services/certs";
+import { useProgressBar } from "@/components/progress-bar";
 
 type CertificateType = "pem" | "issuer";
 
@@ -82,15 +84,15 @@ function IssuerField() {
   );
 }
 
-interface LinkCertificateModalProps extends ModalProps {
-  user: User;
+type RequestCertificateLinkingModalProps = ModalProps & {
+  userName: string;
   issuers?: [];
-}
+};
 
-export default function LinkCertificateModal(
-  props: Readonly<LinkCertificateModalProps>
+function RequestCertificateLinkingModal(
+  props: Readonly<RequestCertificateLinkingModalProps>
 ) {
-  const { user, issuers, show, onClose } = props;
+  const { userName, issuers, show, onClose } = props;
   const [format, setFormat] = useState<CertificateType>("pem");
   const close = () => {
     onClose();
@@ -118,7 +120,7 @@ export default function LinkCertificateModal(
         <ModalBody>
           <Field>
             <Label>User</Label>
-            <Input defaultValue={user.displayName} disabled />
+            <Input defaultValue={userName} disabled />
           </Field>
           <Field>
             <Label data-required>Label</Label>
@@ -152,5 +154,105 @@ export default function LinkCertificateModal(
         </ModalFooter>
       </Form>
     </Modal>
+  );
+}
+
+type LinkCertificateModalProps = ModalProps & {
+  userId: string;
+  userName: string;
+};
+
+function LinkCertificateModal(props: Readonly<LinkCertificateModalProps>) {
+  const { show, onClose, userId, userName } = props;
+  const [error, setError] = useState<string | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const { startTransition } = useProgressBar();
+
+  function close() {
+    onClose();
+    setError(null);
+  }
+
+  function submit() {
+    if (!formRef.current) {
+      console.warn("formRef is null");
+      return;
+    }
+    const formData = new FormData(formRef.current);
+    const label = formData.get("label") as string;
+    const cert = formData.get("certificate") as string;
+    if (!label || !cert) {
+      return;
+    }
+    startTransition(async () => {
+      const res = await linkCertificate(userId, label, cert);
+      toast.toast(res);
+      if (res.type === "error") {
+        setError(res.description ?? "unknown error");
+      } else {
+        formRef.current?.reset();
+        close();
+      }
+    });
+  }
+
+  return (
+    <ConfirmModal
+      title="Link certificate"
+      show={show}
+      onClose={close}
+      formRef={formRef}
+      onConfirm={submit}
+      autoclose={false}
+    >
+      <Field>
+        <Label>Username</Label>
+        <Input value={userName} disabled />
+      </Field>
+      <Field>
+        <Label data-required>Label</Label>
+        <Input name="label" placeholder="example" required />
+      </Field>
+      <Field>
+        <Label data-required>Certificate</Label>
+        <Textarea
+          name="certificate"
+          placeholder="PEM encoded certificate..."
+          className="iam-input"
+          required
+          rows={8}
+        />
+      </Field>
+      {error && <p className="text-danger">{error}</p>}
+    </ConfirmModal>
+  );
+}
+
+type CertificateModalProps = ModalProps & {
+  isAdmin: boolean;
+  userId: string;
+  userName: string;
+};
+
+export default function CertificateModal(
+  props: Readonly<CertificateModalProps>
+) {
+  const { show, onClose, isAdmin, userId, userName } = props;
+  if (isAdmin) {
+    return (
+      <LinkCertificateModal
+        show={show}
+        onClose={onClose}
+        userId={userId}
+        userName={userName}
+      />
+    );
+  }
+  return (
+    <RequestCertificateLinkingModal
+      show={show}
+      onClose={onClose}
+      userName={userName}
+    />
   );
 }

@@ -4,7 +4,7 @@
 
 import { TabList, TabListProps } from "@headlessui/react";
 
-interface CarouselListProps extends TabListProps {}
+type CarouselListProps = TabListProps;
 
 export default function CarouselList(props: CarouselListProps) {
   return <TabList {...props} hidden />;

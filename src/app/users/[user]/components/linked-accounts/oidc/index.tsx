@@ -3,44 +3,55 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { OidcId } from "@/models/indigo-user";
-import { User } from "@/models/scim";
 import OidcOptions from "./options";
+import { LinkAccountButton } from "./link-account";
 
-function OidcIdView(props: { oidcId: OidcId }) {
-  const { oidcId } = props;
+type OidcIdViewProps = {
+  userId: string;
+  oidcId: OidcId;
+};
+
+function OidcIdView(props: Readonly<OidcIdViewProps>) {
+  const { userId, oidcId } = props;
   return (
-    <li className="iam-list-item flex flex-row">
+    <li className="iam-list-item">
       <div className="flex grow flex-col">
         <p className="text-gray-950 dark:text-gray-100">{oidcId.issuer}</p>
-        <p className="text-sm font-light">Subject {oidcId.subject}</p>
+        <p className="text-sm font-light">{oidcId.subject}</p>
       </div>
-      <OidcOptions oidcId={oidcId} />
+      <OidcOptions userId={userId} oidcId={oidcId} />
     </li>
   );
 }
 
 type OidcAccountsProps = {
-  user: User;
+  userId: string;
+  userFormattedName: string;
+  oidcIds: OidcId[];
+  isAdmin: boolean;
 };
 
 export function OidcAccounts(props: Readonly<OidcAccountsProps>) {
-  const { user } = props;
-  const oidcIds = user["urn:indigo-dc:scim:schemas:IndigoUser"]?.oidcIds ?? [];
-  if (oidcIds.length === 0) {
-    return (
-      <div className="panel space-y-2">
-        <h2 className="text-gray-950 dark:text-gray-100">OpenID Connect</h2>
-        <p>No OpenID connect linked accounts found.</p>
-      </div>
-    );
-  }
+  const { userId, userFormattedName, oidcIds, isAdmin } = props;
   return (
     <div className="panel space-y-2">
-      <h2>OpenID Connect/OAuth2</h2>
+      <div className="flex gap-2">
+        <h2 className="grow">OpenID Connect/OAuth2</h2>
+        {isAdmin && (
+          <LinkAccountButton
+            userId={userId}
+            userFormattedName={userFormattedName}
+          />
+        )}
+      </div>
       <ul className="w-full">
-        {oidcIds.map(oidcId => (
-          <OidcIdView key={oidcId.subject} oidcId={oidcId} />
-        ))}
+        {oidcIds.length === 0 ? (
+          <p className="pt-4">There are no linked accounts.</p>
+        ) : (
+          oidcIds.map(oidcId => (
+            <OidcIdView key={oidcId.subject} userId={userId} oidcId={oidcId} />
+          ))
+        )}
       </ul>
     </div>
   );

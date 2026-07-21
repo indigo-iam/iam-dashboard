@@ -4,11 +4,13 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { toast } from "@/components/toaster";
-import { Client } from "@/models/client";
 import { disableClient, enableClient } from "@/services/clients";
 
 type ToggleStatusModalProps = {
-  client: Client;
+  clientId: string;
+  clientName: string;
+  clientDescription: string | null;
+  active: boolean;
   show: boolean;
   onClose: () => void;
 };
@@ -16,14 +18,14 @@ type ToggleStatusModalProps = {
 export default function ToggleStatusModal(
   props: Readonly<ToggleStatusModalProps>
 ) {
-  const { client, show, onClose } = props;
-  const { client_name, client_description, active } = client;
-  const title = `${active ? "Disable" : "Enable"} client '${client_name}'`;
+  const { clientId, clientName, clientDescription, active, show, onClose } =
+    props;
+  const title = `${active ? "Disable" : "Enable"} client '${clientName}'`;
 
   const handleConfirm = async () => {
     const res = active
-      ? await disableClient(client)
-      : await enableClient(client);
+      ? await disableClient(clientId)
+      : await enableClient(clientId);
     toast.toast(res);
     onClose();
   };
@@ -39,11 +41,11 @@ export default function ToggleStatusModal(
     >
       <p>
         Are you sure you want to {active ? "disable" : "enable"} the client{" "}
-        <b>{client_name}</b>
-        {client_description && (
+        <b>{clientName}</b>
+        {clientDescription && (
           <>
             {" "}
-            (<i>{client_description}</i>)
+            (<i>{clientDescription}</i>)
           </>
         )}
         ?

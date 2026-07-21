@@ -4,11 +4,11 @@
 
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/buttons";
 import { PencilIcon } from "@heroicons/react/16/solid";
-import { useState } from "react";
-import EditModal from "./edit-modal";
 import { AUP } from "@/models/aup";
+import AupModal from "../../modal";
 
 type EditButtonProps = {
   aup: AUP;
@@ -21,7 +21,7 @@ export default function EditButton(props: Readonly<EditButtonProps>) {
   const hide = () => setIsShown(false);
   return (
     <>
-      <EditModal show={isShown} onClose={hide} aup={aup} />
+      <AupModal show={isShown} onClose={hide} aup={aup} />
       <Button className="btn-secondary" onClick={show}>
         <PencilIcon className="size-4" />
         Edit AUP

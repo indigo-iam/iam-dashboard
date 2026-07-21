@@ -22,6 +22,7 @@ export type Certificate = {
   created?: string;
   lastModified?: string;
   hasProxyCertificate: boolean;
+  proxyExpirationTime?: string;
 };
 
 export type SSHKey = {
@@ -41,4 +42,5 @@ export type IndigoUser = {
   certificates?: Certificate[];
   authorities?: string[];
   sshKeys?: SSHKey[];
+  serviceAccount?: boolean;
 };

@@ -33,13 +33,19 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
   const query = searchParams?.query;
   const startIndex = count * (page - 1);
   const scopes = await fetchPaginatedScopes(count, startIndex, query);
-  const numberOfPages = Math.ceil(scopes.totalResults / count);
+  const numberOfPages = Math.ceil(scopes.totalResults / scopes.itemsPerPage);
   return (
     <section>
       <header className="section-header flex flex-wrap gap-2">
-        <div className="flex grow gap-2">
+        <div className="flex grow items-center gap-2">
           <ClipboardDocumentCheckIcon className="size-5" />
           <h2 className="text-base font-normal">Scopes</h2>
+          <div
+            title="Number of scopes in this organization"
+            className="middle rounded-full bg-gray-400 px-2 py-0.5 text-xs font-semibold text-white"
+          >
+            {scopes.totalResults}
+          </div>
         </div>
         <InputQuery
           title="Search scope"

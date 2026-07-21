@@ -13,6 +13,7 @@ import {
   InformationCircleIcon,
   XCircleIcon,
 } from "@heroicons/react/24/outline";
+import { useDisabled } from "@/utils/hooks";
 
 const breakpoints = {
   sm: 640,
@@ -21,17 +22,6 @@ const breakpoints = {
   xl: 1280,
 };
 
-function CloseButton() {
-  return (
-    <button
-      title="Close"
-      className="mr-0 ml-auto w-8 cursor-pointer rounded-full p-1.25 text-gray-500 hover:bg-gray-300 dark:text-gray-200 dark:hover:bg-gray-500"
-    >
-      <XCircleIcon />
-    </button>
-  );
-}
-
 function useUpdateToasterPosition() {
   const [position, setPosition] = useState<"top-right" | "bottom-right">(
     "bottom-right"
@@ -39,7 +29,7 @@ function useUpdateToasterPosition() {
   const previousWidthRef = useRef(0);
 
   function resize() {
-    const width = window.innerWidth;
+    const width = globalThis.window.innerWidth;
     const previousWidth = previousWidthRef.current;
     if (width < breakpoints.sm && previousWidth > breakpoints.sm) {
       setPosition("bottom-right");
@@ -58,9 +48,9 @@ function useUpdateToasterPosition() {
     };
 
     handleResize();
-    window.addEventListener("resize", handleResize);
+    globalThis.window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener("resize", handleResize);
+      globalThis.window.removeEventListener("resize", handleResize);
       clearTimeout(timeoutId);
     };
   });
@@ -131,6 +121,7 @@ type ToastProps = {
 
 function Toast(props: Readonly<ToastProps>) {
   const { title, description, type } = props;
+  const disabled = useDisabled();
   return (
     <div
       className="overlay flex w-full items-center border px-3 py-2"
@@ -150,6 +141,7 @@ function Toast(props: Readonly<ToastProps>) {
       </div>
       <button
         title="Close"
+        disabled={disabled}
         className="w-8 flex-none cursor-pointer rounded-full p-1.25 text-gray-500 hover:bg-gray-300 dark:text-gray-200 dark:hover:bg-gray-500"
         onClick={() => {
           sonnerToast.dismiss(props.id);

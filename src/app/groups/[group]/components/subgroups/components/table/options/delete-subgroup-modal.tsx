@@ -5,7 +5,7 @@
 import ConfirmModal from "@/components/confirm-modal";
 import { toast } from "@/components/toaster";
 import { ScimReference } from "@/models/scim";
-import { deleteGroupByReference } from "@/services/groups";
+import { deleteGroup } from "@/services/groups";
 
 interface DeleteGroupModalProps {
   groupRef: ScimReference;
@@ -19,7 +19,7 @@ export default function DeleteSubgroupModal(
   const { groupRef, show, onClose, onDeleted } = props;
 
   const handleConfirm = async () => {
-    const res = await deleteGroupByReference(groupRef);
+    const res = await deleteGroup(groupRef.value);
     toast.toast(res);
     onClose();
     onDeleted?.();

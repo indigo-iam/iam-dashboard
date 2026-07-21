@@ -19,7 +19,9 @@ interface ConfirmModal extends ModalProps {
   cancelButtonText?: string;
   confirmButtonText?: string;
   confirmButtonDisabled?: boolean;
+  autoclose?: boolean;
   danger?: boolean;
+  formRef?: React.RefObject<HTMLFormElement | null>;
 }
 
 export default function ConfirmModal(props: Readonly<ConfirmModal>) {
@@ -30,12 +32,16 @@ export default function ConfirmModal(props: Readonly<ConfirmModal>) {
     cancelButtonText,
     confirmButtonText,
     confirmButtonDisabled,
+    autoclose,
     danger,
+    formRef,
     ...modalProps
   } = props;
 
   async function submit() {
-    modalProps.onClose();
+    if (autoclose !== false) {
+      modalProps.onClose();
+    }
     onConfirm?.();
   }
 
@@ -44,26 +50,30 @@ export default function ConfirmModal(props: Readonly<ConfirmModal>) {
 
   return (
     <Modal {...modalProps}>
-      <ModalHeader onClose={modalProps.onClose}>{modalProps.title}</ModalHeader>
-      <ModalBody>{children}</ModalBody>
-      <ModalFooter>
-        <Button
-          className="btn-tertiary"
-          type="button"
-          onClick={onCancel ?? modalProps.onClose}
-        >
-          {cancelText}
-        </Button>
-        <Button
-          className="btn-primary data-[danger=true]:btn-danger"
-          type="submit"
-          data-danger={danger}
-          onClick={submit}
-          disabled={confirmButtonDisabled}
-        >
-          {confirmText}
-        </Button>
-      </ModalFooter>
+      <form ref={formRef} onSubmit={e => e.preventDefault()}>
+        <ModalHeader onClose={modalProps.onClose}>
+          {modalProps.title}
+        </ModalHeader>
+        <ModalBody>{children}</ModalBody>
+        <ModalFooter>
+          <Button
+            className="btn-tertiary"
+            type="reset"
+            onClick={onCancel ?? modalProps.onClose}
+          >
+            {cancelText}
+          </Button>
+          <Button
+            className="btn-primary data-[danger=true]:btn-danger"
+            type="submit"
+            data-danger={danger}
+            onClick={submit}
+            disabled={confirmButtonDisabled}
+          >
+            {confirmText}
+          </Button>
+        </ModalFooter>
+      </form>
     </Modal>
   );
 }

@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Group } from "@/models/groups";
 import { fetchGroupMembersPage } from "@/services/groups";
 import { ScimReference } from "@/models/scim";
 import MemberOptions from "./options";
@@ -10,34 +9,46 @@ import MemberOptions from "./options";
 import Link from "next/link";
 
 type RowProps = {
-  userRef: ScimReference;
-  group: Group;
+  userId: string;
+  userDisplay: string;
+  groupId: string;
+  groupDisplay: string;
+  groupDescription?: string | null;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const { userRef, group } = props;
+  const { userId, userDisplay, groupId, groupDisplay, groupDescription } =
+    props;
   return (
-    <li className="iam-list-item flex flex-row">
-      <Link className="flex w-0 grow flex-col" href={`/users/${userRef.value}`}>
+    <li className="iam-list-item">
+      <Link className="flex w-0 grow flex-col" href={`/users/${userId}`}>
         <p className="truncate text-gray-950 dark:text-gray-200">
-          {userRef.display}
+          {userDisplay}
         </p>
-        <p className="truncate text-sm font-light">{userRef.value}</p>
+        <p className="truncate text-sm font-light">{userId}</p>
       </Link>
 
-      <MemberOptions userRef={userRef} group={group} />
+      <MemberOptions
+        userId={userId}
+        userDisplay={userDisplay}
+        groupId={groupId}
+        groupDisplay={groupDisplay}
+        groupDescription={groupDescription}
+      />
     </li>
   );
 }
 
 type MembersProps = {
-  group: Group;
+  groupId: string;
+  groupDisplay: string;
+  groupDescription?: string | null;
   members: ScimReference[];
 };
 export default async function Members(props: Readonly<MembersProps>) {
-  const { group } = props;
+  const { groupId, groupDisplay, groupDescription } = props;
   // TODO: pagination
-  const members = (await fetchGroupMembersPage(group.id)).Resources;
+  const members = (await fetchGroupMembersPage(groupId)).Resources;
 
   if (members.length === 0) {
     return <p>This group has no members.</p>;
@@ -46,7 +57,14 @@ export default async function Members(props: Readonly<MembersProps>) {
   return (
     <ul className="w-full">
       {members.map(member => (
-        <Row key={member.value} userRef={member} group={group} />
+        <Row
+          key={member.value}
+          userId={member.value}
+          userDisplay={member.display}
+          groupId={groupId}
+          groupDisplay={groupDisplay}
+          groupDescription={groupDescription}
+        />
       ))}
     </ul>
   );

@@ -3,20 +3,16 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { LabeledCheckbox, Description, Field, Label } from "@/components/form";
+import { Info } from "@/components/info";
 import { Input } from "@/components/inputs";
-import { Client } from "@/models/client";
 
 type RefreshTokenTimeoutProps = {
-  client: Client;
+  refreshTokenValiditySeconds?: number;
+  reuseRefreshToken: boolean;
 };
 
 export function RefreshTokenTimeout(props: Readonly<RefreshTokenTimeoutProps>) {
-  const { client } = props;
-  const {
-    refresh_token_validity_seconds,
-    reuse_refresh_token,
-    clear_access_tokens_on_refresh,
-  } = client;
+  const { refreshTokenValiditySeconds, reuseRefreshToken } = props;
   return (
     <div className="flex flex-col gap-4 pb-4 lg:flex-row lg:gap-8">
       <div className="w-full space-y-4 text-sm font-light lg:w-1/3">
@@ -36,7 +32,7 @@ export function RefreshTokenTimeout(props: Readonly<RefreshTokenTimeoutProps>) {
           <Input
             id="refresh-token-validity-input"
             name="refresh_token_validity_seconds"
-            defaultValue={refresh_token_validity_seconds}
+            defaultValue={refreshTokenValiditySeconds}
           />
           <Description>
             Expiration date of newly issued Refresh Token will not exceed the
@@ -46,17 +42,17 @@ export function RefreshTokenTimeout(props: Readonly<RefreshTokenTimeoutProps>) {
           </Description>
         </Field>
         <div>
-          <Field>
+          <Field className="flex items-center gap-2">
             <LabeledCheckbox
               name="reuse_refresh_token"
-              key={`reuse_refresh_token${reuse_refresh_token}`}
-              defaultChecked={reuse_refresh_token}
+              key={`reuse_refresh_token${reuseRefreshToken}`}
+              defaultChecked={reuseRefreshToken}
             >
               Reuse Refresh Token
             </LabeledCheckbox>
-            <Description>
+            <Info anchor="left">
               Don&apos;t invalidate the Refresh Token after usage.
-            </Description>
+            </Info>
           </Field>
         </div>
       </div>

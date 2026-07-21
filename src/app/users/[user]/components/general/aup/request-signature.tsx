@@ -8,29 +8,29 @@ import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
 import { toast } from "@/components/toaster";
 import { AUP } from "@/models/aup";
-import { User } from "@/models/scim";
 import { requestAUPSignature, signAUP } from "@/services/users";
 import { useState } from "react";
 
 type RequestSignatureProps = {
-  user: User;
+  userId: string;
+  userFormattedName: string;
   isMe?: boolean;
   aup?: AUP;
 };
 
 export function RequestSignature(props: Readonly<RequestSignatureProps>) {
-  const { user, isMe, aup } = props;
+  const { userId, userFormattedName, isMe, aup } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
 
   const handleSignAUP = async () => {
-    const res = await signAUP(user.id);
+    const res = await signAUP(userId);
     toast.toast(res);
   };
 
   const handleRequestAUPSignature = async () => {
-    const res = await requestAUPSignature(user.id);
+    const res = await requestAUPSignature(userId);
     toast.toast(res);
   };
 
@@ -68,9 +68,8 @@ export function RequestSignature(props: Readonly<RequestSignatureProps>) {
         onClose={close}
         title="Request AUP signature"
       >
-        Are you sure you want to ask the user{" "}
-        <span className="font-bold">{user.name?.formatted}</span> to sign the
-        AUP?
+        Are you sure you want to ask the user <b>{userFormattedName}</b> to sign
+        the AUP?
       </ConfirmModal>
       <Button className="btn-secondary max-w-fit" onClick={open}>
         Request AUP Signature

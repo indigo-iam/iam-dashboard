@@ -6,19 +6,19 @@
 
 import { useState } from "react";
 import { ArrowRightEndOnRectangleIcon } from "@heroicons/react/24/outline";
-
 import { Options, Option } from "@/components/options";
-import { User } from "@/models/scim";
-import { Client } from "@/models/client";
 import RemoveOwnerModal from "./remove-owner-modal";
 
 type OwnerOptions = {
-  owner: User;
-  client: Client;
+  clientId: string;
+  clientName: string;
+  ownerId: string;
+  ownerName: string;
+  ownerEmail: string;
 };
 
 export function OwnerOptions(props: Readonly<OwnerOptions>) {
-  const { owner, client } = props;
+  const { clientId, clientName, ownerId, ownerName, ownerEmail } = props;
   const [open, setOpen] = useState<"REMOVE">();
   const close = () => setOpen(undefined);
   return (
@@ -32,8 +32,11 @@ export function OwnerOptions(props: Readonly<OwnerOptions>) {
         </Option>
       </Options>
       <RemoveOwnerModal
-        owner={owner}
-        client={client}
+        clientId={clientId}
+        clientName={clientName}
+        ownerId={ownerId}
+        ownerName={ownerName}
+        ownerEmail={ownerEmail}
         show={open === "REMOVE"}
         onClose={close}
       />

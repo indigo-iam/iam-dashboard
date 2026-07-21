@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { useId } from "react";
+
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { EllipsisHorizontalIcon } from "@heroicons/react/24/solid";
 
@@ -29,15 +31,19 @@ type OptionsProps = {
 };
 
 export function Options(props: Readonly<OptionsProps>) {
+  const tooltipId = useId();
   const { children } = props;
   return (
     <Popover>
       <PopoverButton
         data-testid="option"
-        title="More"
-        className="my-auto cursor-pointer rounded-md transition hover:bg-gray-200 data-open:bg-gray-200 dark:hover:bg-gray-500 dark:data-active:bg-gray-200 dark:data-open:bg-gray-500"
+        className="group relative my-auto cursor-pointer rounded-md transition hover:bg-gray-200 data-open:bg-gray-200 dark:hover:bg-gray-500 dark:data-active:bg-gray-200 dark:data-open:bg-gray-500"
+        aria-labelledby={tooltipId}
       >
         <EllipsisHorizontalIcon className="size-8 text-gray-800 dark:text-gray-400" />
+        <div id={tooltipId} role="tooltip" className="tooltip delay-300">
+          More
+        </div>
       </PopoverButton>
       <PopoverPanel
         anchor="bottom"

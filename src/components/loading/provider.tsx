@@ -15,14 +15,18 @@ export function LoadingProvider(props: Readonly<LoadingProviderProps>) {
   const { children } = props;
   const [isPending, startTransition] = useTransition();
 
-  async function startLoadingTransition(callback: () => Promise<void>) {
+  function startLoadingTransition(callback: () => Promise<void>) {
     startTransition(async () => {
       await callback();
     });
   }
 
   return (
-    <LoadingContext value={{ startLoadingTransition }}>
+    <LoadingContext
+      value={{
+        startLoadingTransition,
+      }}
+    >
       {isPending && <Loading />}
       {children}
     </LoadingContext>

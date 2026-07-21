@@ -2,39 +2,36 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { User } from "@/models/scim";
 import { fetchManagedGroups } from "@/services/groups";
-import { ManagedGroup } from "@/models/groups";
-import Link from "next/link";
+import Link from "@/components/link";
 import GroupOptions from "./options";
+import { Suspense } from "react";
 
 type RowProps = {
-  group: ManagedGroup;
+  groupId: string;
+  groupName: string;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const { group } = props;
+  const { groupId, groupName } = props;
   return (
-    <li className="iam-list-item flex flex-row">
-      <Link className="flex grow flex-col" href={`/groups/${group.id}`}>
-        <p className="text-gray-950 dark:text-gray-100">{group.name}</p>
-        <p className="text-sm font-light">{group.id}</p>
+    <li className="iam-list-item">
+      <Link className="flex grow flex-col" href={`/groups/${groupId}`}>
+        <p className="text-gray-950 dark:text-gray-100">{groupName}</p>
+        <p className="text-sm font-light">{groupId}</p>
       </Link>
-      <GroupOptions group={group} />
+      <GroupOptions groupId={groupId} groupName={groupName} />
     </li>
   );
 }
 
-type ManagedGroupsProps = {
-  user: User;
-  isAdmin?: boolean;
+type ContentProps = {
+  userId: string;
 };
 
-export default async function ManagedGroups(
-  props: Readonly<ManagedGroupsProps>
-) {
-  const { user } = props;
-  const groups = await fetchManagedGroups(user.id);
+async function Content(props: Readonly<ContentProps>) {
+  const { userId } = props;
+  const groups = await fetchManagedGroups(userId);
 
   if (groups.length === 0) {
     return null;
@@ -42,12 +39,27 @@ export default async function ManagedGroups(
 
   return (
     <div className="panel space-y-4">
-      <h2>Managed Groups</h2>
+      <h2>Managed groups</h2>
       <ul className="w-full">
         {groups.map(group => (
-          <Row key={group.id} group={group} />
+          <Row key={group.id} groupId={group.id} groupName={group.name} />
         ))}
       </ul>
     </div>
+  );
+}
+
+type ManagedGroupProps = {
+  userId: string;
+};
+
+export default async function ManagedGroups(
+  props: Readonly<ManagedGroupProps>
+) {
+  const { userId } = props;
+  return (
+    <Suspense>
+      <Content userId={userId} />
+    </Suspense>
   );
 }

@@ -5,6 +5,7 @@
 "use client";
 
 import { Button } from "@/components/buttons";
+import ConfirmModal from "@/components/confirm-modal";
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import {
@@ -15,20 +16,19 @@ import {
   ModalProps,
 } from "@/components/modal";
 import { toast } from "@/components/toaster";
-import { User } from "@/models/scim";
-import { changePassword } from "@/services/users";
+import { changePassword, resetUserPassword } from "@/services/users";
 import { useState } from "react";
 
 interface ModalPasswordProps extends ModalProps {
-  user: User;
+  userId: string;
 }
 
 function ModalPassword(props: Readonly<ModalPasswordProps>) {
-  const { user, ...modalProps } = props;
+  const { userId, ...modalProps } = props;
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const res = await changePassword(user, formData);
+    const res = await changePassword(userId, formData);
     toast.toast(res);
   }
 
@@ -77,21 +77,69 @@ function ModalPassword(props: Readonly<ModalPasswordProps>) {
   );
 }
 
+type ResetPasswordForUserModalProps = {
+  userFormattedName: string;
+  userEmail: string;
+  show: boolean;
+  onClose: () => void;
+};
+
+function ResetPasswordForUserModal(
+  props: Readonly<ResetPasswordForUserModalProps>
+) {
+  const { userFormattedName, userEmail, show, onClose } = props;
+
+  async function resetPassword() {
+    const res = await resetUserPassword(userEmail);
+    toast.toast(res);
+  }
+
+  return (
+    <ConfirmModal
+      show={show}
+      onClose={onClose}
+      title="Reset user password"
+      confirmButtonText="Reset password"
+      onConfirm={resetPassword}
+      danger
+    >
+      <p>
+        {"Are you sure you want to send the reset password email to user "}
+        <b>{userFormattedName}</b>
+        {" at "}
+        <i>{userEmail}</i>?
+      </p>
+    </ConfirmModal>
+  );
+}
+
 type ResetPasswordProps = {
-  user: User;
+  userId: string;
+  userFormattedName: string;
+  userEmail: string;
+  isMe: boolean;
 };
 
 export function ResetPassword(props: Readonly<ResetPasswordProps>) {
-  const { user } = props;
+  const { userId, isMe, userFormattedName, userEmail } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
   return (
     <>
       <Button className="btn-secondary" onClick={open}>
-        Reset password
+        {isMe ? "Change password" : "Reset password"}
       </Button>
-      <ModalPassword user={user} show={show} onClose={close} />
+      {isMe ? (
+        <ModalPassword userId={userId} show={show} onClose={close} />
+      ) : (
+        <ResetPasswordForUserModal
+          userFormattedName={userFormattedName}
+          userEmail={userEmail}
+          show={show}
+          onClose={close}
+        />
+      )}
     </>
   );
 }

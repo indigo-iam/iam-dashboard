@@ -19,8 +19,8 @@ testAdmin(
       await page.goto("./");
       await page.waitForURL("./users/me");
       const navbar = page.getByRole("navigation");
-      const navigationButtons = navbar.getByRole("button");
-      expect(navigationButtons).toHaveCount(5);
+      const navigationButtons = navbar.getByRole("link");
+      await expect(navigationButtons).toHaveCount(5);
     });
 
     await testAdmin.step("'/users' redirects to '/users/me'", async () => {
@@ -72,7 +72,7 @@ testAdmin(
     await testAdmin.step("login", async () => {
       await page.goto("./");
       await expect(
-        page.getByLabel("Username").locator("visible=true")
+        page.getByLabel("Username").filter({ visible: true })
       ).toHaveValue("admin");
     });
 
@@ -84,8 +84,8 @@ testAdmin(
       await page.goto("./");
       await page.waitForURL("./users/me");
       const navbar = page.getByRole("navigation");
-      const navigationButtons = navbar.getByRole("button");
-      expect(navigationButtons).toHaveCount(10);
+      const navigationButtons = navbar.getByRole("link");
+      await expect(navigationButtons).toHaveCount(10);
     });
 
     await testAdmin.step("'/users' page is visible", async () => {
@@ -141,6 +141,7 @@ testAdmin(
 
     await testAdmin.step("disable admin mode", async () => {
       await disableAdminMode(signedUpPage);
+      await page.waitForURL("./users/me");
     });
   }
 );
@@ -156,8 +157,8 @@ testUser("User cannot see privileged pages", async ({ signedUpPage }) => {
     await page.goto("./");
     await page.waitForURL("./users/me");
     const navbar = page.getByRole("navigation");
-    const navigationButtons = navbar.getByRole("button");
-    expect(navigationButtons).toHaveCount(5);
+    const navigationButtons = navbar.getByRole("link");
+    await expect(navigationButtons).toHaveCount(5);
   });
 
   await testUser.step("'/users' redirects to '/users/me'", async () => {
@@ -204,13 +205,14 @@ testUser("User cannot enable admin mode", async ({ signedUpPage }) => {
   await testUser.step("login", async () => {
     await signedUpPage.goto("./");
     await expect(
-      signedUpPage.getByLabel("Username").locator("visible=true")
+      signedUpPage.getByLabel("Username").filter({ visible: true })
     ).toHaveValue("test");
   });
 
   await testUser.step("try enabling admin mode", async () => {
     const userMenuBtn = signedUpPage.getByTestId("user-menu-btn");
     await expect(userMenuBtn).toBeVisible();
+    await expect(userMenuBtn).toBeEnabled();
     await userMenuBtn.click();
     const userMenu = signedUpPage.getByTestId("user-menu");
     await expect(userMenu).toBeVisible();

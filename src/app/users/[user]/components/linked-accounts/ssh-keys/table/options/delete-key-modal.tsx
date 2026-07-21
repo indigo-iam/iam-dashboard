@@ -3,12 +3,13 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
+import { Field, Label } from "@/components/form";
+import { Input } from "@/components/inputs";
 import { SSHKey } from "@/models/indigo-user";
-import { User } from "@/models/scim";
 import { deleteSSHKey } from "@/services/users";
 
 type DeleteSSHKeyModalProps = {
-  user: User;
+  userId: string;
   sshKey: SSHKey;
   show: boolean;
   onClose: () => void;
@@ -18,19 +19,13 @@ type DeleteSSHKeyModalProps = {
 export default function DeleteSSHKeyModal(
   props: Readonly<DeleteSSHKeyModalProps>
 ) {
-  const { user, sshKey, show, onClose, onDeleted } = props;
+  const { userId, sshKey, show, onClose, onDeleted } = props;
 
   const handleConfirm = async () => {
-    await deleteSSHKey(user.id, sshKey);
+    await deleteSSHKey(userId, sshKey);
     onClose();
     onDeleted?.();
   };
-
-  const data = [
-    { name: "Label", value: sshKey.display },
-    { name: "Fingerprint", value: sshKey.fingerprint },
-    { name: "Value", value: sshKey.value },
-  ];
 
   return (
     <ConfirmModal
@@ -41,23 +36,21 @@ export default function DeleteSSHKeyModal(
       onConfirm={handleConfirm}
       danger
     >
-      <p>
-        The following SSH Key will be removed from <b>{user.name?.formatted}</b>
+      <p className="py-2 text-center">
+        Are you sure you want to delete the following SSH key?
       </p>
-      <ul className="flex flex-col">
-        <li className="inline-flex gap-1">
-          <span className="font-bold">Label:</span>
-          <span>{sshKey.display}</span>
-        </li>
-        <li className="inline-flex gap-1">
-          <span className="font-bold">Fingerprint:</span>
-          <span>{sshKey.fingerprint}</span>
-        </li>
-        <li className="inline-flex gap-1">
-          <span className="font-bold">Value:</span>
-          <span>{sshKey.value}</span>
-        </li>
-      </ul>
+      <Field>
+        <Label>Label</Label>
+        <Input value={sshKey.display} disabled />
+      </Field>
+      <Field>
+        <Label>Fingerprint</Label>
+        <Input value={sshKey.fingerprint} disabled />
+      </Field>
+      <Field>
+        <Label>Public key</Label>
+        <p className="font-code text-sm break-all">{sshKey.value}</p>
+      </Field>
     </ConfirmModal>
   );
 }

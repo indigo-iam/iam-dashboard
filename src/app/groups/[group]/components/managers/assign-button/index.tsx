@@ -8,17 +8,18 @@ import { useState } from "react";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
 
 import { Button } from "@/components/buttons";
-import { Group } from "@/models/groups";
 import AssignGroupManagerModal from "./modal";
 
 type AssignGroupManagerButtonProps = {
-  group: Group;
+  groupId: string;
+  groupName: string;
+  groupDescription?: string | null;
 };
 
 export default function AssignGroupManagerButton(
   props: Readonly<AssignGroupManagerButtonProps>
 ) {
-  const { group } = props;
+  const { groupId, groupName, groupDescription } = props;
   const [show, setShow] = useState(false);
   const openModal = () => setShow(true);
   const closeModal = () => setShow(false);
@@ -31,7 +32,13 @@ export default function AssignGroupManagerButton(
         <UserGroupIcon className="size-4" />
         <span>Assign manager</span>
       </Button>
-      <AssignGroupManagerModal show={show} onClose={closeModal} group={group} />
+      <AssignGroupManagerModal
+        show={show}
+        onClose={closeModal}
+        groupId={groupId}
+        groupName={groupName}
+        groupDescription={groupDescription}
+      />
     </>
   );
 }

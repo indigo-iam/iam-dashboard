@@ -5,7 +5,7 @@
 import { Info } from "@/components/info";
 import { RoleCheckbox } from "./assign-role-checkbox";
 import { DeleteUser } from "./delete-user";
-import { EditExpirationDate } from "./expiration-date";
+import { EditEndTime } from "./edit-end-time";
 import { ServiceAccountCheckbox } from "./service-account-checkbox";
 import { ToggleStatusButton } from "./toggle-user-status";
 
@@ -96,7 +96,7 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
             </Info>
           </div>
         </div>
-        <EditExpirationDate
+        <EditEndTime
           userId={userId}
           userName={userName}
           userFormattedName={userFormattedName}

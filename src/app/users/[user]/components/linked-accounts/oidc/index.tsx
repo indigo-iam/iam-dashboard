@@ -17,7 +17,7 @@ function OidcIdView(props: Readonly<OidcIdViewProps>) {
     <li className="iam-list-item">
       <div className="flex grow flex-col">
         <p className="text-gray-950 dark:text-gray-100">{oidcId.issuer}</p>
-        <p className="text-sm font-light">Subject {oidcId.subject}</p>
+        <p className="text-sm font-light">{oidcId.subject}</p>
       </div>
       <OidcOptions userId={userId} oidcId={oidcId} />
     </li>

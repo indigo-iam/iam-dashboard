@@ -109,6 +109,7 @@ const indigoIam = () =>
             body,
           });
           const data = await response.json();
+
           const tokens = {
             accessToken: data.access_token,
             refreshToken: data.refresh_token,
@@ -144,6 +145,7 @@ export const authConfig = (db: Database.Database) => {
         sub: {
           type: "string",
           input: false,
+          returned: true,
         },
       },
     },
@@ -179,6 +181,26 @@ export const authConfig = (db: Database.Database) => {
       },
     },
     databaseHooks: {
+      user: {
+        create: {
+          before: async userData => {
+            return { data: { ...userData, sub: "sub" } };
+          },
+          after: async (userData, ctx) => {
+            if (!ctx?.context) {
+              return;
+            }
+            const userId = userData.id;
+            const [account] =
+              await ctx.context.internalAdapter.findAccountByUserId(userId);
+            const data = {
+              ...userData,
+              sub: account.accountId,
+            };
+            await ctx.context.internalAdapter.updateUser(userId, data);
+          },
+        },
+      },
       session: {
         create: {
           before: async (sessionData, ctx) => {

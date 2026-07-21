@@ -92,7 +92,7 @@ export function Modal(props: Readonly<ModalProps>) {
   if (domLoaded) {
     return createPortal(
       <dialog
-        className="overlay m-auto w-md space-y-4 p-8 opacity-0 transition-all duration-300 backdrop:bg-gray-950/30 backdrop:opacity-0 backdrop:transition-all backdrop:duration-300 data-open:opacity-100 data-open:backdrop:opacity-100 xl:w-xl data-open:starting:opacity-0 backdrop:data-open:starting:opacity-0"
+        className="overlay m-auto w-md space-y-4 p-8 opacity-0 transition-all duration-300 backdrop:bg-gray-950/30 backdrop:opacity-0 backdrop:transition-all backdrop:duration-300 data-open:opacity-100 data-open:backdrop:opacity-100 xl:w-xl data-open:starting:opacity-0 data-open:backdrop:starting:opacity-0"
         ref={dialogRef}
       >
         {children}

@@ -607,7 +607,10 @@ export async function deleteUserLabel(
   });
   if (response.ok) {
     revalidatePath(`/users/${userId}`);
-    return;
+    return {
+      type: "success",
+      title: "User label deleted",
+    };
   }
   const msg = await response.text();
   return {

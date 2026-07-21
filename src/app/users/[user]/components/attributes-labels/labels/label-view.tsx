@@ -2,38 +2,41 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-"use client";
-
-import BaseLabelView from "@/components/badges/label-view";
-import { deleteUserLabel } from "@/services/users";
-import { toast } from "@/components/toaster";
-import { useProgressBar } from "@/components/progress-bar";
+import { LabelOptions } from "./options";
 
 type LabelViewProps = {
-  isAdmin: boolean;
   userId: string;
+  userFormattedName: string;
   prefix: string;
   name: string;
   value: string | null;
+  isAdmin: boolean;
 };
 
 export function LabelView(props: Readonly<LabelViewProps>) {
-  const { isAdmin, userId, prefix, name, value } = props;
-  const { startTransition } = useProgressBar();
-  async function deleteLabel() {
-    startTransition(async () => {
-      const res = await deleteUserLabel(userId, prefix, name);
-      if (res) {
-        toast.toast(res);
-      }
-    });
-  }
+  const { userId, userFormattedName, prefix, name, value, isAdmin } = props;
   return (
-    <BaseLabelView
-      key={prefix}
-      name={prefix}
-      value={value ? `${name}:${value}` : name}
-      onClick={isAdmin ? deleteLabel : undefined}
-    />
+    <li className="iam-list-item">
+      <div className="flex w-full flex-row">
+        <div className="flex grow flex-col">
+          <span className="grow text-xs">{prefix}</span>
+          <span className="flex grow font-medium text-gray-950 dark:text-gray-400">
+            {name}
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-sm">{value}</span>
+          {isAdmin && (
+            <LabelOptions
+              userId={userId}
+              userFormattedName={userFormattedName}
+              name={name}
+              prefix={prefix}
+              value={value}
+            />
+          )}
+        </div>
+      </div>
+    </li>
   );
 }

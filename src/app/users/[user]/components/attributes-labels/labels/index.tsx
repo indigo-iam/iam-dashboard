@@ -13,12 +13,13 @@ type Label = {
 };
 
 type LabelsContentProps = {
+  userFormattedName: string;
   isAdmin: boolean;
   userId: string;
 };
 
 async function LabelsContent(props: Readonly<LabelsContentProps>) {
-  const { isAdmin, userId } = props;
+  const { userFormattedName, isAdmin, userId } = props;
   const labels = (await fetchUserLabels(userId)) as Label[];
 
   if (labels.length === 0) {
@@ -26,35 +27,43 @@ async function LabelsContent(props: Readonly<LabelsContentProps>) {
   }
 
   return (
-    <div className="flex w-full gap-2">
+    <ul>
       {labels.map(label => (
         <LabelView
           isAdmin={isAdmin}
           key={`${label.prefix}-${label.name}`}
+          userFormattedName={userFormattedName}
           name={label.name}
           prefix={label.prefix}
           value={label.value}
           userId={userId}
         />
       ))}
-    </div>
+    </ul>
   );
 }
 
 type LabelsPanelProps = {
   isAdmin: boolean;
   userId: string;
+  userFormattedName: string;
 };
 
 export function LabelsPanel(props: Readonly<LabelsPanelProps>) {
-  const { isAdmin, userId } = props;
+  const { isAdmin, userId, userFormattedName } = props;
   return (
     <div className="panel space-y-2">
       <div className="flex justify-between">
         <h2>Labels</h2>
         {isAdmin && <AddLabelButton userId={userId} />}
       </div>
-      {<LabelsContent isAdmin={isAdmin} userId={userId} />}
+      {
+        <LabelsContent
+          userFormattedName={userFormattedName}
+          isAdmin={isAdmin}
+          userId={userId}
+        />
+      }
     </div>
   );
 }

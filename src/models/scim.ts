@@ -57,7 +57,7 @@ export type ScimReference = {
 
 export interface ScimOp {
   op: "add" | "remove" | "replace" | "move" | "copy" | "test";
-  value: ScimUser | Email[];
+  value: unknown;
 }
 
 // https://www.rfc-editor.org/rfc/rfc7644#section-3.5.2

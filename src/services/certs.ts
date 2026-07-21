@@ -9,7 +9,7 @@ import { Notification } from "@/components/toaster";
 import { CertLinkRequest } from "@/models/certs";
 import { authFetch } from "@/utils/fetch";
 import { settings } from "@/config";
-import { patchIndigoUser } from "./indigo-user";
+import { patchUser } from "./users";
 
 const { IAM_API_URL } = settings;
 
@@ -66,20 +66,24 @@ export async function linkCertificate(
   label: string,
   pemEncodedCertificate: string
 ): Promise<Notification> {
-  const url = `${IAM_API_URL}/scim/Users/${userId}`;
-  const response = await patchIndigoUser(url, {
-    op: "add",
-    value: {
-      "urn:indigo-dc:scim:schemas:IndigoUser": {
-        certificates: [
-          {
-            label,
-            pemEncodedCertificate,
+  const response = await patchUser(
+    [
+      {
+        op: "add",
+        value: {
+          "urn:indigo-dc:scim:schemas:IndigoUser": {
+            certificates: [
+              {
+                label,
+                pemEncodedCertificate,
+              },
+            ],
           },
-        ],
+        },
       },
-    },
-  });
+    ],
+    userId
+  );
   if (response.ok) {
     revalidatePath(`/users/${userId}`);
     return {

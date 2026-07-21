@@ -9,7 +9,7 @@ import { Status } from "@/components/badges";
 import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { patchUser } from "@/services/users";
+import { editUser } from "@/services/users";
 import { toast } from "@/components/toaster";
 import { dateToHuman } from "@/utils/dates";
 import { ResetPassword } from "./reset-password";
@@ -20,6 +20,7 @@ type UserDetailsFormProps = {
   userName: string;
   userGivenName: string;
   userFamilyName: string;
+  userMiddleName: string | null;
   userFormattedName: string;
   userEmail: string;
   userCreatedAt?: string;
@@ -35,6 +36,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
     userName,
     userGivenName,
     userFamilyName,
+    userMiddleName,
     userFormattedName,
     userEmail,
     userCreatedAt,
@@ -47,8 +49,18 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const response = await patchUser(userId, formData);
-    toast.toast(response);
+    const givenName = formData.get("given-name") as string | null;
+    const familyName = formData.get("family-name") as string | null;
+    const middleName = formData.get("middle-name") as string | null;
+    const email = formData.get("email") as string | null;
+    const res = await editUser({
+      givenName,
+      familyName,
+      middleName,
+      email,
+      userId: isMe ? null : userId,
+    });
+    toast.toast(res);
   }
 
   const created = userCreatedAt ? dateToHuman(new Date(userCreatedAt)) : "N/A";
@@ -105,10 +117,22 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
                 defaultValue={userFamilyName}
               />
             </Field>
+            <Field className="flex max-w-full grow flex-col">
+              <Label htmlFor="middle-name">Middle Name</Label>
+              <Input
+                type="text"
+                id="middle-name"
+                name="middle-name"
+                minLength={2}
+                defaultValue={userMiddleName ?? undefined}
+              />
+            </Field>
           </div>
           <Field className="flex flex-col">
-            <Label htmlFor="username">Username</Label>
-            <Input name="username" defaultValue={userName} disabled />
+            <Label htmlFor="username" data-required>
+              Username
+            </Label>
+            <Input name="username" defaultValue={userName} required disabled />
           </Field>
           <Field className="flex flex-col">
             <Label htmlFor="email" data-required>

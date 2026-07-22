@@ -31,3 +31,18 @@ export async function dismissToast(
   await closeButton.click();
   await expect(toast).toBeHidden();
 }
+
+export async function navigateToTestUserPage(page: Page) {
+  await page.goto("./users");
+  const newUserBtn = page.getByRole("button", { name: "New user" });
+  await expect(newUserBtn).toBeEnabled(); // wait for page fully loaded
+  const searchbar = page.getByPlaceholder("Type to search a user");
+  await searchbar.pressSequentially("test user");
+  const testUser = page.getByRole("link").filter({ hasText: "Test User" });
+  const users = page.locator(".iam-list-item").filter({ visible: true });
+  await expect(users).toHaveCount(1);
+  await expect(users).toBeEnabled();
+  await testUser.click();
+  const heading = page.getByRole("heading").filter({ hasText: "Test User" });
+  await expect(heading).toBeVisible();
+}

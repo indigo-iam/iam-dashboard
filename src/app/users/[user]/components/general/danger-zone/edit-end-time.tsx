@@ -24,6 +24,7 @@ import {
   changeMembershipEndtime,
   revokeMembershipEndtime,
 } from "@/services/users";
+import { useDisabled } from "@/utils/hooks";
 
 type EditEndtimeModalProps = ModalProps & {
   userId: string;
@@ -34,7 +35,9 @@ type EditEndtimeModalProps = ModalProps & {
 function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
   const { show, onClose, userId, userFormattedName, userEndtime } = props;
   const [endtime, setEndtime] = useState(userEndtime?.split("T")[0] ?? "");
+  const disabled = useDisabled();
   const tooltipId = useId();
+  const inputId = useId();
   const minDate = (() => {
     const d = new Date();
     return d.toISOString().split("T")[0];
@@ -71,14 +74,17 @@ function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
             is automatically disabled, remove the endtime.
           </p>
           <Field>
-            <Label aria-required>Endtime</Label>
+            <Label htmlFor={inputId}>Endtime</Label>
             <div className="iam-input flex items-center justify-between">
               <input
+                id={inputId}
+                className="grow bg-neutral-100 dark:bg-transparent" // hack for safari
                 name="endtime"
                 type="date"
                 value={endtime}
                 min={minDate}
                 onChange={changeEndtime}
+                disabled={disabled}
               />
               <Button
                 className="group relative cursor-pointer hover:text-gray-500"

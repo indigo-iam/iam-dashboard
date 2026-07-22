@@ -365,13 +365,13 @@ export async function changeMembershipEndtime(
     revalidatePath(`/users/${userId}`);
     return {
       type: "success",
-      title: "Membership end time updated",
+      title: "Membership endtime updated",
     };
   }
   const msg = await response.text();
   return {
     type: "error",
-    title: "Cannot update membership end date",
+    title: "Cannot update membership endtime",
     description: `Error ${response.status} ${msg}`,
   };
 }

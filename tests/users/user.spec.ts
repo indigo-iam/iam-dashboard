@@ -124,9 +124,8 @@ testAdmin("admin can edit user's endtime", async ({ signedUpPage }) => {
     await expect(save).toBeEnabled();
     await save.click();
     await expect(dialog).toBeHidden();
-    await expect(page.getByLabel("Endtime date")).toHaveValue("2999-12-12");
     await dismissToast(page, "Membership endtime updated", "success");
-    await expect(dialog).toBeHidden();
+    await expect(page.getByLabel("Endtime date")).toHaveValue("2999-12-12");
   });
 
   await testAdmin.step("can revoke endtime", async () => {
@@ -136,8 +135,8 @@ testAdmin("admin can edit user's endtime", async ({ signedUpPage }) => {
     await clear.click();
     const save = dialog.getByRole("button", { name: "Save" });
     await save.click();
-    await dismissToast(page, "Membership endtime revoked", "success");
     await expect(dialog).toBeHidden();
+    await dismissToast(page, "Endtime revoked", "success");
     await expect(endtime).toHaveValue("");
   });
 });

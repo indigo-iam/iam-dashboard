@@ -2,15 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import {
-  Field,
-  Label,
-  Description,
-  Select,
-  SelectOption,
-} from "@/components/form";
+"use client";
+
+import { useState } from "react";
+import { Field, Label, Description, Select, SelectOption } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { ScopePolicy } from "@/models/scope-policies";
+import { AccountGroupSelector, AccountGroupSelection } from "./account-group-selector";
 
 type ScopePoliciesProps = {
   policy?: ScopePolicy;
@@ -35,12 +33,6 @@ const matchingPolicyOptions = [
   { id: "path", name: "PATH" },
 ];
 
-const entityOptions = [
-  { id: "null", name: "NULL" },
-  { id: "user", name: "USER" },
-  { id: "group", name: "GROUP" },
-];
-
 export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
   const policy = props.policy ?? defaultValues;
   const rule = { id: policy.rule, name: policy.rule };
@@ -49,16 +41,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
     name: policy.matchingPolicy,
   };
 
-  let entitySelector = { id: "null", name: "NULL" };
-  if (policy.account && !policy.group) {
-    entitySelector = { id: "user", name: "USER" };
-  } else if (!policy.account && policy.group) {
-    entitySelector = { id: "group", name: "GROUP" };
-  } else if (policy.account !== null && policy.group !== null) {
-    throw new Error(
-      "Policy group and account cannot both have value at the same time."
-    );
-  }
+  const [accountGroupSelection, setAccountGroupSelection] = useState<AccountGroupSelection>({ users: [], groups: [] });
 
   return (
     <div className="panel space-y-4">
@@ -87,7 +70,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           </Select>
         </Field>
 
-        <Field className="grow">
+        <Field>
           <Label>Matching Policy</Label>
           <Description>Select the right matching policy</Description>
           <Select name="rule" defaultValue={matchingPolicySelector}>
@@ -103,15 +86,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
       <Field>
         <Label>Account/Group</Label>
         <Description>Select account or group</Description>
-        <div className="flex gap-2">
-          <Select name="rule" defaultValue={entitySelector}>
-            {entityOptions.map(ep => (
-              <SelectOption key={ep.id} value={ep}>
-                {ep.name}
-              </SelectOption>
-            ))}
-          </Select>
-        </div>
+        <AccountGroupSelector policy={props.policy} onChange={setAccountGroupSelection} />
       </Field>
     </div>
   );

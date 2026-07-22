@@ -5,7 +5,7 @@
 import { Info } from "@/components/info";
 import { RoleCheckbox } from "./assign-role-checkbox";
 import { DeleteUser } from "./delete-user";
-import { EditEndTime } from "./edit-end-time";
+import { EditEndtime } from "./edit-end-time";
 import { ServiceAccountCheckbox } from "./service-account-checkbox";
 import { ToggleStatusButton } from "./toggle-user-status";
 
@@ -16,7 +16,7 @@ type DangerZoneProps = {
   userEmail: string;
   userIsActive: boolean;
   userIsServiceAccount: boolean;
-  userEndTime?: string;
+  userEndtime?: string;
   userAuthorities: string[];
   isAdmin: boolean;
 };
@@ -29,7 +29,7 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
     userEmail,
     userIsActive,
     userIsServiceAccount,
-    userEndTime,
+    userEndtime,
     userAuthorities,
   } = props;
   const authorities = new Set<string>(userAuthorities);
@@ -49,6 +49,11 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
         </div>
       </div>
       <div className="w-full space-y-4 lg:w-2/3">
+        <EditEndtime
+          userId={userId}
+          userFormattedName={userFormattedName}
+          userEndtime={userEndtime}
+        />
         <div className="space-y-1">
           <h5 className="text-sm font-semibold text-gray-600 dark:text-gray-100">
             Privileges
@@ -96,12 +101,6 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
             </Info>
           </div>
         </div>
-        <EditEndTime
-          userId={userId}
-          userName={userName}
-          userFormattedName={userFormattedName}
-          userEndTime={userEndTime}
-        />
         <div className="flex items-center justify-end gap-4">
           <ToggleStatusButton
             userId={userId}

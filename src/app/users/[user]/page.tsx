@@ -56,7 +56,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
   const userLastModified = user.meta?.lastModified;
   const indigoUser = user["urn:indigo-dc:scim:schemas:IndigoUser"];
   const userAupSignatureTime = indigoUser?.aupSignatureTime ?? null;
-  const userEndTime = indigoUser?.endTime;
+  const userEndtime = indigoUser?.endTime;
   const userIsServiceAccount = indigoUser?.serviceAccount ?? false;
   const userAuthorities = indigoUser?.authorities ?? [];
   const oidcIds = indigoUser?.oidcIds ?? [];
@@ -95,7 +95,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
             userIsActive={userIsActive}
             userCreatedAt={userCreatedAt}
             userLastModified={userLastModified}
-            userEndTime={userEndTime}
+            userEndtime={userEndtime}
             userIsServiceAccount={userIsServiceAccount}
             userAuthorities={userAuthorities}
             isAdmin={isAdmin}

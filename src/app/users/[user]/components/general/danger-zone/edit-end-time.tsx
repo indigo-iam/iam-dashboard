@@ -4,36 +4,155 @@
 
 "use client";
 
-import { Field, Label } from "@/components/form";
+import { useId, useState } from "react";
+import { XCircleIcon } from "@heroicons/react/24/solid";
+
+import { Button } from "@/components/buttons";
+import { Field, Form, Label } from "@/components/form";
 import { Info } from "@/components/info";
 import { Input } from "@/components/inputs";
+import {
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  ModalProps,
+} from "@/components/modal";
+import { Warning } from "@/components/notices";
 import { toast } from "@/components/toaster";
-import { changeMembershipEndTime } from "@/services/users";
+import {
+  changeMembershipEndtime,
+  revokeMembershipEndtime,
+} from "@/services/users";
 
-type EditEndTimeProps = {
+type EditEndtimeModalProps = ModalProps & {
   userId: string;
-  userName: string;
   userFormattedName: string;
-  userEndTime?: string;
+  userEndtime?: string;
 };
 
-export function EditEndTime(props: Readonly<EditEndTimeProps>) {
-  const { userId, userEndTime } = props;
-  async function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const date = event.target.value;
-    const res = await changeMembershipEndTime(userId, date);
+function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
+  const { show, onClose, userId, userFormattedName, userEndtime } = props;
+  const [endtime, setEndtime] = useState(userEndtime?.split("T")[0] ?? "");
+  const tooltipId = useId();
+  const minDate = (() => {
+    const d = new Date();
+    return d.toISOString().split("T")[0];
+  })();
+
+  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const endtime = formData.get("endtime") as string | null;
+    const res = endtime
+      ? await changeMembershipEndtime(userId, endtime)
+      : await revokeMembershipEndtime(userId);
     toast.toast(res);
+    if (res.type === "success") {
+      onClose();
+    }
+  }
+
+  function changeEndtime(event: React.ChangeEvent<HTMLInputElement>) {
+    setEndtime(event.currentTarget.value);
+  }
+
+  function clearEndtime() {
+    setEndtime("");
   }
 
   return (
-    <Field>
-      <div className="flex items-center gap-1">
-        <Label>Endtime date</Label>
-        <Info className="pb-1.5" anchor="left">
-          After this date user will be automatically disabled.
-        </Info>
-      </div>
-      <Input defaultValue={userEndTime} type="date" onChange={handleChange} />
-    </Field>
+    <Modal show={show} onClose={onClose}>
+      <ModalHeader onClose={onClose}>Edit user endtime</ModalHeader>
+      <Form onSubmit={submit}>
+        <ModalBody>
+          <p>
+            Edit endtime for user <b>{userFormattedName}</b>. To avoid the user
+            is automatically disabled, remove the endtime.
+          </p>
+          <Field>
+            <Label aria-required>Endtime</Label>
+            <div className="iam-input flex items-center justify-between">
+              <input
+                name="endtime"
+                type="date"
+                value={endtime}
+                min={minDate}
+                onChange={changeEndtime}
+              />
+              <Button
+                className="group relative cursor-pointer hover:text-gray-500"
+                type="button"
+                onClick={clearEndtime}
+                aria-labelledby={tooltipId}
+              >
+                <XCircleIcon className="size-4" />
+                <div
+                  role="tooltip"
+                  className="tooltip whitespace-nowrap"
+                  id={tooltipId}
+                >
+                  Clear
+                </div>
+              </Button>
+            </div>
+          </Field>
+          <Warning>
+            After this date, the user will be automatically disabled and they
+            will not be able to access.
+          </Warning>
+        </ModalBody>
+        <ModalFooter>
+          <Button className="btn-tertiary" type="reset" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button className="btn-primary" type="submit">
+            Save
+          </Button>
+        </ModalFooter>
+      </Form>
+    </Modal>
+  );
+}
+
+type EditEndtimeProps = {
+  userId: string;
+  userFormattedName: string;
+  userEndtime?: string;
+};
+
+export function EditEndtime(props: Readonly<EditEndtimeProps>) {
+  const { userId, userFormattedName, userEndtime } = props;
+  const [show, setShow] = useState(false);
+  const open = () => setShow(true);
+  const close = () => setShow(false);
+  return (
+    <>
+      <Field>
+        <div className="flex items-center gap-1">
+          <Label>Endtime date</Label>
+          <Info className="pb-1" anchor="left">
+            After this date user will be automatically disabled.
+          </Info>
+        </div>
+        <div className="flex justify-between gap-4">
+          <Input
+            defaultValue={userEndtime?.split("T")[0]}
+            type="date"
+            readOnly
+          />
+          <Button className="btn-secondary" onClick={open}>
+            Edit
+          </Button>
+        </div>
+      </Field>
+      <EditEndtimeModal
+        show={show}
+        onClose={close}
+        userId={userId}
+        userFormattedName={userFormattedName}
+        userEndtime={userEndtime}
+      />
+    </>
   );
 }

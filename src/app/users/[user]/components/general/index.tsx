@@ -18,7 +18,7 @@ type GeneralProps = {
   userAupSignatureTime: string | null;
   userCreatedAt?: string;
   userLastModified?: string;
-  userEndTime?: string;
+  userEndtime?: string;
   userIsActive: boolean;
   userIsServiceAccount: boolean;
   isMe: boolean;
@@ -39,7 +39,7 @@ export async function General(props: Readonly<GeneralProps>) {
     userAupSignatureTime,
     userCreatedAt,
     userLastModified,
-    userEndTime,
+    userEndtime,
     userIsActive,
     userIsServiceAccount,
     isMe,
@@ -77,7 +77,7 @@ export async function General(props: Readonly<GeneralProps>) {
           userFormattedName={userFormattedName}
           userEmail={userEmail}
           userIsActive={userIsActive}
-          userEndTime={userEndTime}
+          userEndtime={userEndtime}
           userAuthorities={userAuthorities}
           userIsServiceAccount={userIsServiceAccount}
           isAdmin={isAdmin}

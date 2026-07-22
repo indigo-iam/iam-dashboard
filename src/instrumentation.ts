@@ -37,6 +37,9 @@ declare global {
 }
 
 function setupOtel() {
+  if (!IAM_DASHBOARD_OTEL_EXPORTER_OTLP_ENDPOINT) {
+    return;
+  }
   registerOTel({
     serviceName: "iam-dashboard",
     traceExporter: new OTLPHttpJsonTraceExporter({
@@ -49,6 +52,9 @@ function setupOtel() {
       "host.name": new URL(IAM_DASHBOARD_BASE_URL).hostname,
     },
   });
+  console.log(
+    `Telemetry enabled, data will be sent to ${IAM_DASHBOARD_OTEL_EXPORTER_OTLP_ENDPOINT}`
+  );
 }
 
 async function setupAuthDb() {

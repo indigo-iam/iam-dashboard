@@ -4,14 +4,14 @@
 
 "use client";
 
-import { useId } from "react";
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
+import { useEffect, useId, useRef } from "react";
 
 import { Gravatar } from "@/components/gravatar";
-import { AdminModeButton, UserModeButton } from "./admin-user-buttons";
-import { SignoutButton } from "./signout-button";
+import { Button } from "@/components/buttons";
 import { User } from "@/models/scim";
 import { useDisabled } from "@/utils/hooks";
+import { AdminModeButton, UserModeButton } from "./admin-user-buttons";
+import { SignoutButton } from "./signout-button";
 
 type UserPopoverProps = {
   hasRoleAdmin?: boolean;
@@ -21,20 +21,41 @@ type UserPopoverProps = {
 
 export function UserPopover(props: Readonly<UserPopoverProps>) {
   const { hasRoleAdmin, isAdmin, user } = props;
+  const ref = useRef<HTMLDivElement>(null);
+
   const disabled = useDisabled();
   const email = user.emails?.[0].value;
   const tooltipId = useId();
-  const extraProps = {
-    autoComplete: "off", // https://github.com/vercel/next.js/issues/35558
-  };
+
+  function handleInternalClick(event: MouseEvent) {
+    event.preventDefault();
+    const target = event.target as HTMLElement;
+    if (target.tagName === "BUTTON") {
+      target?.click();
+      ref.current?.hidePopover();
+    }
+  }
+
+  useEffect(() => {
+    const popover = ref.current;
+    if (!popover) {
+      return;
+    }
+    popover.addEventListener("mousedown", handleInternalClick);
+    return () => {
+      popover.removeEventListener("mousedown", handleInternalClick);
+    };
+  }, []);
+
   return (
-    <Popover className="relative size-8">
-      <PopoverButton
-        className="group static hover:cursor-pointer"
+    <div className="relative flex items-center">
+      <Button
+        className="group static size-8 cursor-pointer"
         aria-labelledby={tooltipId}
         data-testid="user-menu-btn"
         disabled={disabled}
-        {...extraProps}
+        type="button"
+        popoverTarget="user-popover-menu"
       >
         <Gravatar email={email} />
         <div
@@ -44,14 +65,14 @@ export function UserPopover(props: Readonly<UserPopoverProps>) {
         >
           Open user menu
         </div>
-      </PopoverButton>
-      <PopoverPanel
-        transition
-        anchor="bottom end"
+      </Button>
+      <div
         id="user-popover-menu"
         data-testid="user-menu"
-        unmount={false}
-        className="items overlay flex w-56 flex-col overflow-hidden ease-in-out [--anchor-gap:--spacing(5)] data-closed:-translate-y-1 data-closed:opacity-0"
+        aria-label="User menu"
+        className="overlay fixed mt-12 mr-4 ml-auto w-56 flex-col opacity-0 transition-all transition-discrete ease-in-out [&:popover-open]:opacity-100 [&:popover-open]:starting:opacity-0"
+        popover="auto"
+        ref={ref}
       >
         <div className="space-y-2">
           <div className="flex items-center gap-2 pb-2">
@@ -69,7 +90,7 @@ export function UserPopover(props: Readonly<UserPopoverProps>) {
             <SignoutButton />
           </div>
         </div>
-      </PopoverPanel>
-    </Popover>
+      </div>
+    </div>
   );
 }

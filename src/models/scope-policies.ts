@@ -2,7 +2,11 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-export type AccountSelector = "none";
+export type AccountSelector = {
+  uuid: string;
+  username?: string;
+  location?: string;
+};
 
 export type GroupSelector = {
   uuid: string;

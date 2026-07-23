@@ -11,10 +11,10 @@ import { SearchUsers } from "@/app/components/search-users";
 import { SearchGroups } from "@/app/users/[user]/components/groups/unmanaged/join-group-button/search-groups";
 import { User } from "@/models/scim";
 import { Group } from "@/models/groups";
-import { GroupSelector, ScopePolicy } from "@/models/scope-policies";
+import { AccountSelector, GroupSelector, ScopePolicy } from "@/models/scope-policies";
 
 export type AccountGroupSelection = {
-  users: User[];
+  users: AccountSelector[];
   groups: GroupSelector[];
 };
 
@@ -44,7 +44,9 @@ export function AccountGroupSelector(props: Readonly<AccountGroupSelectorProps>)
   }
 
   const [entityType, setEntityType] = useState(entitySelector.id);
-  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<AccountSelector[]>(
+    policy?.account ? [policy.account] : []
+  );
   const [selectedGroups, setSelectedGroups] = useState<GroupSelector[]>(
     policy?.group ? [policy.group] : []
   );
@@ -54,8 +56,9 @@ export function AccountGroupSelector(props: Readonly<AccountGroupSelectorProps>)
   }, [selectedUsers, selectedGroups, onChange]);
 
   function addUser(user: User) {
+    const selector: AccountSelector = { uuid: user.id, username: user.userName };
     setSelectedUsers(users =>
-      users.some(u => u.id === user.id) ? users : [...users, user]
+      users.some(u => u.uuid === selector.uuid) ? users : [...users, selector]
     );
   }
 
@@ -66,8 +69,8 @@ export function AccountGroupSelector(props: Readonly<AccountGroupSelectorProps>)
     );
   }
 
-  function removeUser(id: string) {
-    setSelectedUsers(users => users.filter(u => u.id !== id));
+  function removeUser(uuid: string) {
+    setSelectedUsers(users => users.filter(u => u.uuid !== uuid));
   }
 
   function removeGroup(uuid: string) {
@@ -95,16 +98,16 @@ export function AccountGroupSelector(props: Readonly<AccountGroupSelectorProps>)
           <SearchUsers listId="account-group-users" onSelect={addUser} />
           <ul className="mt-2">
             {selectedUsers.map(user => (
-              <li key={user.id} className="mt-1 flex flex-row items-center gap-2">
+              <li key={user.uuid} className="mt-1 flex flex-row items-center gap-2">
                 <button
                   title="Remove user"
                   type="button"
-                  onClick={() => removeUser(user.id)}
+                  onClick={() => removeUser(user.uuid)}
                   className="bg-secondary-100 hover:bg-danger hover:text-white dark:text-white/80 w-5 rounded dark:bg-transparent"
                 >
                   <XMarkIcon />
                 </button>
-                <label>{user.name?.formatted ?? user.userName}</label>
+                <label>{user.username}</label>
               </li>
             ))}
           </ul>

@@ -96,15 +96,15 @@ export function AccountGroupSelector(props: Readonly<AccountGroupSelectorProps>)
           <ul className="mt-2">
             {selectedUsers.map(user => (
               <li key={user.id} className="mt-1 flex flex-row items-center gap-2">
-              <button
-                title="Remove user"
-                type="button"
-                onClick={() => removeUser(user.id)}
-                className="bg-secondary-100 hover:bg-danger hover:text-white dark:text-white/80 w-5 rounded dark:bg-transparent"
-              >
-                <XMarkIcon />
-              </button>
-              <label>{user.name?.formatted ?? user.userName}</label>
+                <button
+                  title="Remove user"
+                  type="button"
+                  onClick={() => removeUser(user.id)}
+                  className="bg-secondary-100 hover:bg-danger hover:text-white dark:text-white/80 w-5 rounded dark:bg-transparent"
+                >
+                  <XMarkIcon />
+                </button>
+                <label>{user.name?.formatted ?? user.userName}</label>
               </li>
             ))}
           </ul>

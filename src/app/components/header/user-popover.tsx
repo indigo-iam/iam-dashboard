@@ -67,7 +67,6 @@ export function UserPopover(props: Readonly<UserPopoverProps>) {
         </div>
       </Button>
       <div
-        role="popover"
         id="user-popover-menu"
         data-testid="user-menu"
         aria-label="User menu"

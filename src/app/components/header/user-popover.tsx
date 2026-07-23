@@ -70,6 +70,7 @@ export function UserPopover(props: Readonly<UserPopoverProps>) {
         role="popover"
         id="user-popover-menu"
         data-testid="user-menu"
+        aria-label="User menu"
         className="overlay fixed mt-12 mr-4 ml-auto w-56 flex-col opacity-0 transition-all transition-discrete ease-in-out [&:popover-open]:opacity-100 [&:popover-open]:starting:opacity-0"
         popover="auto"
         ref={ref}

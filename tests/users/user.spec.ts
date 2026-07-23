@@ -85,7 +85,7 @@ async function openEditEndtimeModal(page: Page) {
 
 testAdmin("admin can edit user's endtime", async ({ signedUpPage }) => {
   const page = signedUpPage;
-  const endtime = page.getByLabel("Endtime date");
+  await page.waitForURL("./users/me");
 
   await testAdmin.step("enable admin mode", async () => {
     await enableAdminMode(page);
@@ -96,6 +96,7 @@ testAdmin("admin can edit user's endtime", async ({ signedUpPage }) => {
   });
 
   await testAdmin.step("endtime is initially not set", async () => {
+    const endtime = page.getByLabel("Endtime date");
     await expect(endtime).toHaveAttribute("type", "date");
     await expect(endtime).toHaveValue("");
   });
@@ -137,6 +138,7 @@ testAdmin("admin can edit user's endtime", async ({ signedUpPage }) => {
     await save.click();
     await expect(dialog).toBeHidden();
     await dismissToast(page, "Endtime revoked", "success");
+    const endtime = page.getByLabel("Endtime date");
     await expect(endtime).toHaveValue("");
   });
 });

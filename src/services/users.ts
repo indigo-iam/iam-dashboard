@@ -348,7 +348,7 @@ export async function deleteAttribute(
   };
 }
 
-export async function changeMembershipEndTime(
+export async function changeMembershipEndtime(
   userId: string,
   date: string
 ): Promise<Notification> {
@@ -365,19 +365,21 @@ export async function changeMembershipEndTime(
     revalidatePath(`/users/${userId}`);
     return {
       type: "success",
-      title: "Membership end time updated",
+      title: "Membership endtime updated",
     };
   }
   const msg = await response.text();
   return {
     type: "error",
-    title: "Cannot update membership end date",
+    title: "Cannot update membership endtime",
     description: `Error ${response.status} ${msg}`,
   };
 }
 
 // todo: this is not used?
-export async function revokeMembershipEndTime(userId: string) {
+export async function revokeMembershipEndtime(
+  userId: string
+): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/account/${userId}/endTime`;
   const body = JSON.stringify({});
   const response = await authFetch(url, {
@@ -391,13 +393,13 @@ export async function revokeMembershipEndTime(userId: string) {
     revalidatePath(`/users/${userId}`);
     return {
       type: "success",
-      title: "Membership end time revoked",
+      title: "Membership endtime revoked",
     };
   }
   const msg = await response.text();
   return {
     type: "error",
-    title: "Cannot revoke membership end time",
+    title: "Cannot revoke membership endtime",
     description: `Error ${response.status} ${msg}`,
   };
 }

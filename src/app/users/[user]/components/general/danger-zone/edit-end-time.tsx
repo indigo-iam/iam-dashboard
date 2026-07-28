@@ -4,7 +4,7 @@
 
 "use client";
 
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 
 import { Button } from "@/components/buttons";
@@ -20,8 +20,9 @@ import {
 } from "@/components/modal";
 import { Warning } from "@/components/notices";
 import { toast } from "@/components/toaster";
-import { changeMembershipEndTime } from "@/services/users";
+import { changeMembershipEndtime } from "@/services/users";
 import { useDisabled } from "@/utils/hooks";
+import { Tooltip, useTooltip } from "@/components/tooltip";
 
 type EditEndtimeModalProps = ModalProps & {
   userId: string;
@@ -32,8 +33,9 @@ type EditEndtimeModalProps = ModalProps & {
 function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
   const { show, onClose, userId, userFormattedName, userEndtime } = props;
   const [endtime, setEndtime] = useState(userEndtime?.split("T")[0] ?? "");
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const { tooltipId, tooltipRef } = useTooltip(buttonRef);
   const disabled = useDisabled();
-  const tooltipId = useId();
   const inputId = useId();
   const minDate = (() => {
     const d = new Date();
@@ -44,7 +46,7 @@ function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const endtime = formData.get("endtime") as string | null;
-    const res = await changeMembershipEndTime(userId, endtime);
+    const res = await changeMembershipEndtime(userId, endtime);
     toast.toast(res);
     if (res.type === "success") {
       onClose();
@@ -86,15 +88,12 @@ function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
                 type="button"
                 onClick={clearEndtime}
                 aria-labelledby={tooltipId}
+                ref={buttonRef}
               >
                 <XCircleIcon className="size-4" />
-                <div
-                  role="tooltip"
-                  className="tooltip whitespace-nowrap"
-                  id={tooltipId}
-                >
+                <Tooltip tooltipId={tooltipId} tooltipRef={tooltipRef}>
                   Clear
-                </div>
+                </Tooltip>
               </Button>
             </div>
           </Field>
@@ -127,21 +126,26 @@ export function EditEndtime(props: Readonly<EditEndtimeProps>) {
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
-  const defaultEndTime = userEndtime?.split("T")[0] ?? "";
   return (
-    <Field>
-      <div className="flex items-center gap-1">
-        <Label>Endtime date</Label>
-        <div className="pb-0.5">
-          <Info>After this date user will be automatically disabled.</Info>
+    <>
+      <Field>
+        <div className="flex items-center gap-1">
+          <Label>Endtime date</Label>
+          <div className="pb-0.5">
+            <Info>After this date user will be automatically disabled.</Info>
+          </div>
         </div>
-      </div>
-      <div className="flex justify-between gap-4">
-        <Input value={defaultEndTime} type="date" readOnly />
-        <Button className="btn-secondary" onClick={open} type="button">
-          Edit
-        </Button>
-      </div>
+        <div className="flex justify-between gap-4">
+          <Input
+            defaultValue={userEndtime?.split("T")[0]}
+            type="date"
+            readOnly
+          />
+          <Button className="btn-secondary" onClick={open}>
+            Edit
+          </Button>
+        </div>
+      </Field>
       <EditEndtimeModal
         show={show}
         onClose={close}
@@ -149,6 +153,6 @@ export function EditEndtime(props: Readonly<EditEndtimeProps>) {
         userFormattedName={userFormattedName}
         userEndtime={userEndtime}
       />
-    </Field>
+    </>
   );
 }

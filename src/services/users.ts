@@ -349,7 +349,7 @@ export async function deleteAttribute(
   };
 }
 
-export async function changeMembershipEndTime(
+export async function changeMembershipEndtime(
   userId: string,
   date: string | null
 ): Promise<Notification> {
@@ -366,13 +366,13 @@ export async function changeMembershipEndTime(
     refresh();
     return {
       type: "success",
-      title: "Membership end time updated",
+      title: `Membership endtime ${date ? "updated" : "revoked"}`,
     };
   }
   const msg = await response.text();
   return {
     type: "error",
-    title: "Cannot update membership end date",
+    title: "Cannot update membership endtime",
     description: `Error ${response.status} ${msg}`,
   };
 }

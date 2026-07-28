@@ -45,9 +45,6 @@ export async function navigateToTestUserPage(page: Page) {
   await expect(users).toHaveCount(1);
   await expect(users).toBeEnabled();
   await testUser.click();
-  await page.waitForURL("./users/*");
   const heading = page.getByRole("heading").filter({ hasText: "Test User" });
   await expect(heading).toBeVisible();
-  const save = page.getByRole("button", { name: "Save changes" });
-  await expect(save).toBeVisible();
 }

@@ -14,6 +14,7 @@ import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
 import { Notification } from "@/components/toaster";
 import { settings } from "@/config";
 import { URLSearchParams } from "url";
+import { refresh } from "next/cache";
 
 const { IAM_API_URL } = settings;
 
@@ -350,10 +351,10 @@ export async function deleteAttribute(
 
 export async function changeMembershipEndtime(
   userId: string,
-  date: string
+  date: string | null
 ): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/account/${userId}/endTime`;
-  const body = JSON.stringify({ endTime: date });
+  const body = date ? JSON.stringify({ endTime: date }) : "{}";
   const response = await authFetch(url, {
     method: "PUT",
     body,
@@ -362,7 +363,7 @@ export async function changeMembershipEndtime(
     },
   });
   if (response.ok) {
-    revalidatePath(`/users/${userId}`);
+    refresh();
     return {
       type: "success",
       title: "Membership endtime updated",

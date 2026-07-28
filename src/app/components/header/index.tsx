@@ -22,14 +22,12 @@ export async function Header(props: Readonly<HeaderProps>) {
   return (
     <header className="dark:bg-sky-980 fixed inset-0 top-0 z-10 h-14 bg-sky-900">
       <ProgressBar />
-      <div className="flex h-full px-4 py-2 text-white md:px-8">
-        <div className="flex grow flex-col truncate">
-          <div className="flex grow gap-2">
-            <ToggleDrawerButton />
-            <h2 className="my-auto truncate text-xl font-light text-white">
-              IAM for <b className="text-white">{organization}</b>
-            </h2>
-          </div>
+      <div className="flex justify-between px-4 py-2 text-white md:px-8">
+        <div className="flex min-w-0 items-center gap-2">
+          <ToggleDrawerButton />
+          <h2 className="truncate text-xl font-light text-white">
+            IAM for <b>{organization}</b>
+          </h2>
         </div>
         <div className="flex items-center gap-2">
           {hasRoleAdmin && isAdmin && (

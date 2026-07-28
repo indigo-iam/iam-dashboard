@@ -12,7 +12,7 @@ export function ProgressBar() {
   return (
     <div
       id="progress-bar"
-      className="fixed inset-0 top-0 z-20 h-1.5 w-full bg-transparent opacity-0 data-[show='true']:opacity-100"
+      className="z-20 h-1.5 w-full bg-transparent opacity-0 data-[show='true']:opacity-100"
       data-show={!isProgressBarHidden}
     >
       <div

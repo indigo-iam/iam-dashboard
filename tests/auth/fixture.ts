@@ -31,9 +31,10 @@ export const TEST_USER: UserInfo = {
 
 async function openUserMenu(page: Page) {
   const userMenuButton = page.getByLabel("Open user menu");
-  const userMenu = page.getByTestId("user-menu");
+  await expect(userMenuButton).toBeVisible();
   await expect(userMenuButton).toBeEnabled();
   await userMenuButton.click();
+  const userMenu = page.getByLabel("User menu", { exact: true });
   await expect(userMenu).toBeVisible();
   return userMenu;
 }

@@ -65,7 +65,7 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
               role="ROLE_ADMIN"
               hasRole={authorities.has("ROLE_ADMIN")}
             />
-            <Info anchor="left">
+            <Info>
               A user with <b>admin</b> role can create, delete and modify user,
               groups and client. Admins can also assign restricted scopes to
               clients.
@@ -78,7 +78,7 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
               role="ROLE_READER"
               hasRole={authorities.has("ROLE_READER")}
             />
-            <Info anchor="left">
+            <Info>
               Grants <b>read-only</b> access to authorized resources, allowing
               users to view information without modifying it.
             </Info>
@@ -94,7 +94,7 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
               userFormattedName={userFormattedName}
               enabled={userIsServiceAccount}
             />
-            <Info anchor="left">
+            <Info>
               A service account is a <b>non-human</b> identity used by
               applications to securely access protected resources through IAM
               managed credentials and permissions.

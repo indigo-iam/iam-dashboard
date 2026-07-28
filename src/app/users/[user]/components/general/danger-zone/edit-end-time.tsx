@@ -4,7 +4,7 @@
 
 "use client";
 
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 
 import { Button } from "@/components/buttons";
@@ -25,6 +25,7 @@ import {
   revokeMembershipEndtime,
 } from "@/services/users";
 import { useDisabled } from "@/utils/hooks";
+import { Tooltip, useTooltip } from "@/components/tooltip";
 
 type EditEndtimeModalProps = ModalProps & {
   userId: string;
@@ -35,8 +36,9 @@ type EditEndtimeModalProps = ModalProps & {
 function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
   const { show, onClose, userId, userFormattedName, userEndtime } = props;
   const [endtime, setEndtime] = useState(userEndtime?.split("T")[0] ?? "");
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const { tooltipId, tooltipRef } = useTooltip(buttonRef);
   const disabled = useDisabled();
-  const tooltipId = useId();
   const inputId = useId();
   const minDate = (() => {
     const d = new Date();
@@ -91,15 +93,12 @@ function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
                 type="button"
                 onClick={clearEndtime}
                 aria-labelledby={tooltipId}
+                ref={buttonRef}
               >
                 <XCircleIcon className="size-4" />
-                <div
-                  role="tooltip"
-                  className="tooltip whitespace-nowrap"
-                  id={tooltipId}
-                >
+                <Tooltip tooltipId={tooltipId} tooltipRef={tooltipRef}>
                   Clear
-                </div>
+                </Tooltip>
               </Button>
             </div>
           </Field>

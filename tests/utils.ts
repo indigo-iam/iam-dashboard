@@ -21,13 +21,15 @@ export async function dismissToast(
   title: string,
   type: ToastTypes
 ) {
-  await expect(page.getByText(title)).toBeVisible({ timeout: 30000 });
   const toast = page.getByTestId("toast");
   await expect(toast).toBeVisible();
   await expect(toast).toHaveCount(1);
   await expect(toast).toHaveAttribute("data-toast-type", type);
+  await expect(toast.getByRole("paragraph").first()).toHaveText(title);
   const closeButton = toast.getByTitle("Close");
+  await expect(closeButton).toBeVisible();
   await expect(closeButton).toBeEnabled();
+  await expect(closeButton).toBeInViewport();
   await closeButton.click();
   await expect(toast).toBeHidden();
 }

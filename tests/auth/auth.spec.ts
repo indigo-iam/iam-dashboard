@@ -11,7 +11,7 @@ import {
  */
 
 testAdmin(
-  "Admin cannot see privileged pages in user mode",
+  "admin cannot see privileged pages in user mode",
   async ({ signedUpPage }) => {
     const page = signedUpPage;
 
@@ -65,7 +65,7 @@ testAdmin(
 );
 
 testAdmin(
-  "Admin can see privileged pages in admin mode",
+  "admin can see privileged pages in admin mode",
   async ({ signedUpPage }) => {
     const page = signedUpPage;
 
@@ -150,7 +150,7 @@ testAdmin(
  * Regular user
  */
 
-testUser("User cannot see privileged pages", async ({ signedUpPage }) => {
+testUser("user cannot see privileged pages", async ({ signedUpPage }) => {
   const page = signedUpPage;
 
   await testUser.step("navbar has exactly five buttons", async () => {
@@ -201,7 +201,7 @@ testUser("User cannot see privileged pages", async ({ signedUpPage }) => {
   });
 });
 
-testUser("User cannot enable admin mode", async ({ signedUpPage }) => {
+testUser("user cannot enable admin mode", async ({ signedUpPage }) => {
   await testUser.step("login", async () => {
     await signedUpPage.goto("./");
     await expect(

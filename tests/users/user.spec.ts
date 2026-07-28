@@ -22,7 +22,7 @@ testUser(
       await expect(heading).toBeHidden();
     });
 
-    await testUser.step("User sends a request", async () => {
+    await testUser.step("user sends a request", async () => {
       await expect(
         page.getByRole("heading", { name: "Joined groups" })
       ).toBeVisible();
@@ -45,14 +45,14 @@ testUser(
       await dismissToast(page, "Group Request sent", "success");
     });
 
-    await testUser.step("User must see its own pending request", async () => {
+    await testUser.step("user must see its own pending request", async () => {
       const item = page
         .getByRole("listitem")
         .filter({ hasText: "Motivation: Test motivation message" });
       await expect(item).toBeVisible();
     });
 
-    await testUser.step("User can revoke its own pending request", async () => {
+    await testUser.step("user can revoke its own pending request", async () => {
       const item = page
         .getByRole("listitem")
         .filter({ hasText: "Motivation: Test motivation message" });

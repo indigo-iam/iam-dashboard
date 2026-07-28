@@ -366,7 +366,7 @@ export async function changeMembershipEndtime(
     refresh();
     return {
       type: "success",
-      title: "Membership endtime updated",
+      title: `Membership endtime ${date ? "updated" : "revoked"}`,
     };
   }
   const msg = await response.text();

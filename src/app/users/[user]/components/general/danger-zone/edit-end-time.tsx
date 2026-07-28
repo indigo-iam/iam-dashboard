@@ -20,10 +20,7 @@ import {
 } from "@/components/modal";
 import { Warning } from "@/components/notices";
 import { toast } from "@/components/toaster";
-import {
-  changeMembershipEndtime,
-  revokeMembershipEndtime,
-} from "@/services/users";
+import { changeMembershipEndtime } from "@/services/users";
 import { useDisabled } from "@/utils/hooks";
 import { Tooltip, useTooltip } from "@/components/tooltip";
 
@@ -49,9 +46,7 @@ function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const endtime = formData.get("endtime") as string | null;
-    const res = endtime
-      ? await changeMembershipEndtime(userId, endtime)
-      : await revokeMembershipEndtime(userId);
+    const res = await changeMembershipEndtime(userId, endtime);
     toast.toast(res);
     if (res.type === "success") {
       onClose();
@@ -136,9 +131,9 @@ export function EditEndtime(props: Readonly<EditEndtimeProps>) {
       <Field>
         <div className="flex items-center gap-1">
           <Label>Endtime date</Label>
-          <Info className="pb-1" anchor="left">
-            After this date user will be automatically disabled.
-          </Info>
+          <div className="pb-0.5">
+            <Info>After this date user will be automatically disabled.</Info>
+          </div>
         </div>
         <div className="flex justify-between gap-4">
           <Input

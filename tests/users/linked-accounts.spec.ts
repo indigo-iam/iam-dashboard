@@ -92,7 +92,6 @@ async function selectLinkedAccountTab(page: Page) {
   await changeTabPanel(linkedAccountsBtn);
 }
 
-
 test.afterEach(async ({ page }) => {
   await logout(page);
 });
@@ -263,7 +262,7 @@ test("admin can link certificate and proxy on themselves", async ({ page }) => {
   });
 });
 
-test.describe("admin assigns certificate to user and user self-assign proxy", () => {
+test.describe("admin assigns certificate to user and user self-assigns proxy", () => {
   test("user cannot add proxy without a valid certificate", async ({
     page,
   }) => {

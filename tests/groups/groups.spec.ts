@@ -14,7 +14,7 @@ function groupNameByIndex(index: number) {
   return `${groupPrefix}-${hash}`;
 }
 
-testAdmin("Admin can create and delete a group", async ({ signedUpPage }) => {
+testAdmin("admin can create and delete a group", async ({ signedUpPage }) => {
   await testAdmin.step("create group", async () => {
     const page = signedUpPage;
     await page.goto("./groups");
@@ -87,7 +87,7 @@ testAdmin("Admin can create and delete a group", async ({ signedUpPage }) => {
   });
 });
 
-testUser("User cannot create nor delete a group", async ({ signedUpPage }) => {
+testUser("user cannot create nor delete a group", async ({ signedUpPage }) => {
   const page = signedUpPage;
   await page.goto("./groups");
 
@@ -104,7 +104,7 @@ testUser("User cannot create nor delete a group", async ({ signedUpPage }) => {
   });
 });
 
-testUser("User cannot see others clients", async ({ signedUpPage }) => {
+testUser("user cannot see others clients", async ({ signedUpPage }) => {
   const page = signedUpPage;
   await page.goto("./groups/c617d586-54e6-411d-8e38-649677980001");
   await page.waitForURL("./groups");

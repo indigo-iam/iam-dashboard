@@ -4,7 +4,7 @@
 
 "use client";
 
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import { Gravatar } from "@/components/gravatar";
 import { Button } from "@/components/buttons";
@@ -12,6 +12,7 @@ import { User } from "@/models/scim";
 import { useDisabled } from "@/utils/hooks";
 import { AdminModeButton, UserModeButton } from "./admin-user-buttons";
 import { SignoutButton } from "./signout-button";
+import { Tooltip, useTooltip } from "@/components/tooltip";
 
 type UserPopoverProps = {
   hasRoleAdmin?: boolean;
@@ -21,23 +22,23 @@ type UserPopoverProps = {
 
 export function UserPopover(props: Readonly<UserPopoverProps>) {
   const { hasRoleAdmin, isAdmin, user } = props;
-  const ref = useRef<HTMLDivElement>(null);
-
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
+  const { tooltipId, tooltipRef } = useTooltip(buttonRef);
   const disabled = useDisabled();
   const email = user.emails?.[0].value;
-  const tooltipId = useId();
 
   function handleInternalClick(event: MouseEvent) {
     event.preventDefault();
     const target = event.target as HTMLElement;
     if (target.tagName === "BUTTON") {
       target?.click();
-      ref.current?.hidePopover();
+      popoverRef.current?.hidePopover();
     }
   }
 
   useEffect(() => {
-    const popover = ref.current;
+    const popover = popoverRef.current;
     if (!popover) {
       return;
     }
@@ -56,15 +57,12 @@ export function UserPopover(props: Readonly<UserPopoverProps>) {
         disabled={disabled}
         type="button"
         popoverTarget="user-popover-menu"
+        ref={buttonRef}
       >
         <Gravatar email={email} />
-        <div
-          role="tooltip"
-          className="tooltip top-10 -left-1/2 whitespace-nowrap"
-          id={tooltipId}
-        >
-          Open user menu
-        </div>
+        <Tooltip tooltipId={tooltipId} tooltipRef={tooltipRef}>
+          <p className="whitespace-nowrap">Open user menu</p>
+        </Tooltip>
       </Button>
       <div
         id="user-popover-menu"
@@ -72,7 +70,7 @@ export function UserPopover(props: Readonly<UserPopoverProps>) {
         aria-label="User menu"
         className="overlay fixed mt-12 mr-4 ml-auto w-56 flex-col opacity-0 transition-all transition-discrete ease-in-out [&:popover-open]:opacity-100 [&:popover-open]:starting:opacity-0"
         popover="auto"
-        ref={ref}
+        ref={popoverRef}
       >
         <div className="space-y-2">
           <div className="flex items-center gap-2 pb-2">

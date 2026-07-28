@@ -49,14 +49,16 @@ export function Advanced(props: Readonly<AdvancedProps>) {
       </div>
       <div className="w-full space-y-4 lg:w-2/3">
         <Field>
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-1">
             <Label>Proof Key for Code Exchange (PKCE) challenge method</Label>
-            <Info className="pb-1.5">
-              PKCE is an extension to the Authorization Code flow to prevent
-              CSRF and authorization code injection attacks. PKCE is recommended
-              even if a client is using a client secret or other form of client
-              authentication like private_key_jwt.
-            </Info>
+            <div>
+              <Info>
+                PKCE is an extension to the Authorization Code flow to prevent
+                CSRF and authorization code injection attacks. PKCE is
+                recommended even if a client is using a client secret or other
+                form of client authentication like private_key_jwt.
+              </Info>
+            </div>
           </div>
           <Pkce
             name="code_challenge_method"

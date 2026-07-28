@@ -142,6 +142,7 @@ function Toast(props: Readonly<ToastProps>) {
       <button
         title="Close"
         disabled={disabled}
+        type="button"
         className="w-8 flex-none cursor-pointer rounded-full p-1.25 text-gray-500 hover:bg-gray-300 dark:text-gray-200 dark:hover:bg-gray-500"
         onClick={() => {
           sonnerToast.dismiss(props.id);

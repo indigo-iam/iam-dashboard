@@ -4,10 +4,17 @@
 
 "use client";
 
-import { useId } from "react";
+import { RefObject, useId } from "react";
 
 import { useDisabled } from "@/utils/hooks";
-import { Button as HeadlessButton, ButtonProps } from "@headlessui/react";
+import {
+  Button as HeadlessButton,
+  ButtonProps as HeadlessButtonProps,
+} from "@headlessui/react";
+
+type ButtonProps = HeadlessButtonProps & {
+  ref?: RefObject<HTMLButtonElement | null>;
+};
 
 export function Button(props: Readonly<ButtonProps>) {
   const { disabled, name, children, ...others } = props;

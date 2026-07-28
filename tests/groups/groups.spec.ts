@@ -73,7 +73,7 @@ testAdmin("Admin can create and delete a group", async ({ signedUpPage }) => {
     await page
       .getByRole("button", { name: "Delete", exact: true })
       .click({ delay: 300 });
-    await dismissToast(page, "Group delete", "success");
+    await dismissToast(page, "Group deleted", "success");
     // check group has been deleted
     const clearBtn = page.getByTitle("Clear search");
     await expect(clearBtn).toBeEnabled();

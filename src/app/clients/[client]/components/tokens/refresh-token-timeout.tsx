@@ -42,7 +42,7 @@ export function RefreshTokenTimeout(props: Readonly<RefreshTokenTimeoutProps>) {
           </Description>
         </Field>
         <div>
-          <Field className="flex items-center gap-2">
+          <Field className="flex items-center gap-1">
             <LabeledCheckbox
               name="reuse_refresh_token"
               key={`reuse_refresh_token${reuseRefreshToken}`}
@@ -50,9 +50,7 @@ export function RefreshTokenTimeout(props: Readonly<RefreshTokenTimeoutProps>) {
             >
               Reuse Refresh Token
             </LabeledCheckbox>
-            <Info anchor="left">
-              Don&apos;t invalidate the Refresh Token after usage.
-            </Info>
+            <Info>Don&apos;t invalidate the Refresh Token after usage.</Info>
           </Field>
         </div>
       </div>

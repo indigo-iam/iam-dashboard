@@ -377,34 +377,6 @@ export async function changeMembershipEndtime(
   };
 }
 
-// todo: this is not used?
-export async function revokeMembershipEndtime(
-  userId: string
-): Promise<Notification> {
-  const url = `${IAM_API_URL}/iam/account/${userId}/endTime`;
-  const body = JSON.stringify({});
-  const response = await authFetch(url, {
-    method: "PUT",
-    body,
-    headers: {
-      "content-type": "application/json;charset=utf-8",
-    },
-  });
-  if (response.ok) {
-    revalidatePath(`/users/${userId}`);
-    return {
-      type: "success",
-      title: "Membership endtime revoked",
-    };
-  }
-  const msg = await response.text();
-  return {
-    type: "error",
-    title: "Cannot revoke membership endtime",
-    description: `Error ${response.status} ${msg}`,
-  };
-}
-
 export async function changeUserStatus(
   userId: string,
   newStatus: boolean

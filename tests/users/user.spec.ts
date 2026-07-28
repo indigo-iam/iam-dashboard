@@ -137,7 +137,7 @@ testAdmin("admin can edit user's endtime", async ({ signedUpPage }) => {
     const save = dialog.getByRole("button", { name: "Save" });
     await save.click();
     await expect(dialog).toBeHidden();
-    await dismissToast(page, "Endtime revoked", "success");
+    await dismissToast(page, "Membership endtime revoked", "success");
     const endtime = page.getByLabel("Endtime date");
     await expect(endtime).toHaveValue("");
   });

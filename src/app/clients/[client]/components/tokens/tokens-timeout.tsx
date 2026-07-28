@@ -49,7 +49,7 @@ export function TokensTimeout(props: Readonly<TokensTimeoutProps>) {
             defaultValue={idTokenValiditySeconds}
           />
         </Field>
-        <Field className="flex items-center gap-2">
+        <Field className="flex items-center gap-1">
           <LabeledCheckbox
             name="require_auth_time"
             key={`require_auth_time${requireAuthTime}`}
@@ -57,7 +57,7 @@ export function TokensTimeout(props: Readonly<TokensTimeoutProps>) {
           >
             Always require authentication time in ID tokens
           </LabeledCheckbox>
-          <Info anchor="left">
+          <Info>
             Add the <span className="text-mono font-medium">auth_time</span>{" "}
             claim to the ID token.
           </Info>

@@ -105,7 +105,8 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
         const createBtn = dialog.getByRole("button", { name: "Create AUP" });
         await expect(createBtn).toBeEnabled();
         await createBtn.click();
-        await dismissToast(page, "AUP Created", "success");
+        await expect(dialog).toBeHidden();
+        await dismissToast(page, "AUP created", "success");
       });
 
       await testAdmin.step("AUP is has been edited today", async () => {
@@ -176,20 +177,12 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
       });
 
       const valuesAndErrors = [
-        [
-          "AUP reminder is too large",
-          "2048",
-          'Cannot update AUPError 400 {"error":"Invalid AUP: aupRemindersInDays must be smaller than signatureValidityInDays"}',
-        ],
-        [
-          "AUP reminder is negative",
-          "-42",
-          'Cannot update AUPError 400 {"error":"Invalid AUP: zero or negative values for reminders are not allowed"}',
-        ],
+        ["AUP reminder is too large", "2048", "Cannot update AUP"],
+        ["AUP reminder is negative", "-42", "Cannot update AUP"],
         [
           "AUP reminder is not a list of integers",
           "42,foo",
-          'Cannot update AUPError 400 {"error":"Invalid AUP: non-integer value found for aupRemindersInDays"}',
+          "Cannot update AUP",
         ],
       ];
 

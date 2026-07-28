@@ -14,6 +14,7 @@ import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
 import { Notification } from "@/components/toaster";
 import { settings } from "@/config";
 import { URLSearchParams } from "url";
+import { refresh } from "next/cache";
 
 const { IAM_API_URL } = settings;
 
@@ -350,10 +351,10 @@ export async function deleteAttribute(
 
 export async function changeMembershipEndTime(
   userId: string,
-  date: string
+  date: string | null
 ): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/account/${userId}/endTime`;
-  const body = JSON.stringify({ endTime: date });
+  const body = date ? JSON.stringify({ endTime: date }) : "{}";
   const response = await authFetch(url, {
     method: "PUT",
     body,
@@ -362,7 +363,7 @@ export async function changeMembershipEndTime(
     },
   });
   if (response.ok) {
-    revalidatePath(`/users/${userId}`);
+    refresh();
     return {
       type: "success",
       title: "Membership end time updated",
@@ -372,32 +373,6 @@ export async function changeMembershipEndTime(
   return {
     type: "error",
     title: "Cannot update membership end date",
-    description: `Error ${response.status} ${msg}`,
-  };
-}
-
-// todo: this is not used?
-export async function revokeMembershipEndTime(userId: string) {
-  const url = `${IAM_API_URL}/iam/account/${userId}/endTime`;
-  const body = JSON.stringify({});
-  const response = await authFetch(url, {
-    method: "PUT",
-    body,
-    headers: {
-      "content-type": "application/json;charset=utf-8",
-    },
-  });
-  if (response.ok) {
-    revalidatePath(`/users/${userId}`);
-    return {
-      type: "success",
-      title: "Membership end time revoked",
-    };
-  }
-  const msg = await response.text();
-  return {
-    type: "error",
-    title: "Cannot revoke membership end time",
     description: `Error ${response.status} ${msg}`,
   };
 }

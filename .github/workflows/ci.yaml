@@ -41,7 +41,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y voms-clients
-          npm ci
+          npm ci --ignore-scripts
 
       - name: Make self-signed CA and *.test.example certificate
         run: scripts/trust/setup_trust.sh assets/trust
@@ -50,7 +50,7 @@ jobs:
         run: npm run lint
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+        run: npx --ignore-scripts playwright install --with-deps
 
       - name: Docker Metadata
         id: meta

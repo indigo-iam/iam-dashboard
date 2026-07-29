@@ -33,7 +33,7 @@ export default async function Client(props: Readonly<ClientPageProps>) {
 
   const client = await getClient(clientId, hasRoleAdmin && isAdmin);
   if (client.error) {
-    throw Error(client.error);
+    throw new Error(client.error);
   }
 
   return (

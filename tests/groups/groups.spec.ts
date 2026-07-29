@@ -83,7 +83,7 @@ testAdmin("admin can create and delete a group", async ({ signedUpPage }) => {
       .filter({ visible: true })
       .pressSequentially(groupName, { delay: 30 });
     await expect(page.getByLabel("More")).toHaveCount(0);
-    expect(page.getByText("No group found.").isVisible());
+    await expect(page.getByText("No group found.")).toBeVisible();
   });
 });
 

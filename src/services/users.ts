@@ -4,7 +4,7 @@
 
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, refresh } from "next/cache";
 import { authFetch, getItem } from "@/utils/fetch";
 import { Attribute } from "@/models/attributes";
 import { Certificate, OidcId, SamlId, SSHKey } from "@/models/indigo-user";
@@ -13,8 +13,6 @@ import { Paginated } from "@/models/pagination";
 import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
 import { Notification } from "@/components/toaster";
 import { settings } from "@/config";
-import { URLSearchParams } from "url";
-import { refresh } from "next/cache";
 
 const { IAM_API_URL } = settings;
 

@@ -41,7 +41,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y voms-clients
-          npm ci
+          npm ci --ignore-scripts
 
       - name: Make self-signed CA and *.test.example certificate
         run: scripts/trust/setup_trust.sh assets/trust

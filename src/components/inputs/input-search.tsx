@@ -56,6 +56,7 @@ export function InputSearch(props: Readonly<InputSearchProps>) {
         {...others}
       />
       <button
+        type="button"
         className="text-gray-300 hover:cursor-pointer hover:text-gray-950 dark:text-gray-400 dark:hover:text-gray-500"
         onClick={clearSearch}
         title="Clear search"

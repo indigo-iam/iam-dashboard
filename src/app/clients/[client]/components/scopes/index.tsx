@@ -60,10 +60,10 @@ type ScopesProps = {
 export default async function Scopes(props: Readonly<ScopesProps>) {
   const { client, isAdmin } = props;
   const systemScopes = await fetchScopes();
-  const systemScopeNames = systemScopes.map(s => s.value);
+  const systemScopeNames = new Set(systemScopes.map(s => s.value));
   const clientScopeNames = client.scope?.split(" ") ?? [];
   const customScopesNames = clientScopeNames.filter(
-    s => !systemScopeNames.includes(s)
+    s => !systemScopeNames.has(s)
   );
   const clientSystemScopes = systemScopes.filter(s =>
     clientScopeNames.includes(s.value)

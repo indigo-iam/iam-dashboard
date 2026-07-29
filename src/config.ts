@@ -17,7 +17,7 @@ function loadEnvVariable(key: string, defaultValue?: string) {
   if (isBuilding) {
     return "";
   }
-  throw Error(`${key} environment variable not set`);
+  throw new Error(`${key} environment variable not set`);
 }
 
 function loadOptionalUrlFromEnv(key: string) {

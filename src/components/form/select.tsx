@@ -4,15 +4,10 @@
 
 "use client";
 
-import {
-  Listbox,
-  ListboxButton,
-  ListboxOption,
-  ListboxOptions,
-} from "./listbox";
 import { useState } from "react";
 
-export { ListboxOption as SelectOption };
+import { Listbox, ListboxButton, ListboxOptions } from "./listbox";
+export { ListboxOption as SelectOption } from "./listbox";
 
 export type SelectOption = {
   id: string;

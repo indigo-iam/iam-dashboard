@@ -52,7 +52,7 @@ export const getItem: GetItem = async (endpoint: string | URL) => {
       console.warn(error);
       redirect("/signin");
     } else {
-      throw Error(
+      throw new Error(
         `getItem from ${endpoint} failed with status ${status}: ${error}`
       );
     }

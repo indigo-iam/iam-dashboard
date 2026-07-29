@@ -113,7 +113,12 @@ export function ModalHeader(props: Readonly<ModalHeaderProps>) {
   return (
     <div className="flex">
       <h2 className="grow">{children}</h2>
-      <button onClick={onClose} className="cursor-pointer" title="Close">
+      <button
+        type="button"
+        onClick={onClose}
+        className="cursor-pointer"
+        title="Close"
+      >
         <XMarkIcon className="size-6 rounded-full bg-gray-100 p-1 transition duration-200 hover:bg-gray-200 dark:bg-gray-400 dark:hover:bg-gray-300 dark:hover:text-gray-500" />
       </button>
     </div>

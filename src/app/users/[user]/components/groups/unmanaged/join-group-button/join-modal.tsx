@@ -13,9 +13,11 @@ import { Group } from "@/models/groups";
 import { submitGroupRequest } from "@/services/group-requests";
 import { SearchGroups } from "./search-groups";
 
-import { UserGroupIcon } from "@heroicons/react/24/solid";
-import { ListBulletIcon } from "@heroicons/react/24/solid";
-import { ClockIcon } from "@heroicons/react/24/solid";
+import {
+  ClockIcon,
+  ListBulletIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/solid";
 
 import { useRef, useState } from "react";
 

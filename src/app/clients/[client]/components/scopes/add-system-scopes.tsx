@@ -73,7 +73,7 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
   );
 }
 
-export function AddScopeButton(props: AddScopeProps) {
+export function AddScopeButton(props: Readonly<AddScopeProps>) {
   const { client, isAdmin, availableScopes } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);

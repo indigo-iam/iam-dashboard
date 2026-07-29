@@ -28,8 +28,8 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
     redirect("/");
   }
   const searchParams = await props.searchParams;
-  const count = searchParams?.count ? parseInt(searchParams.count) : 10;
-  const page = searchParams?.page ? parseInt(searchParams.page) : 1;
+  const count = searchParams?.count ? Number.parseInt(searchParams.count) : 10;
+  const page = searchParams?.page ? Number.parseInt(searchParams.page) : 1;
   const query = searchParams?.query;
   const startIndex = count * (page - 1);
   const scopes = await fetchPaginatedScopes(count, startIndex, query);

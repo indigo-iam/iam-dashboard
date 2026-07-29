@@ -30,8 +30,8 @@ type GroupsProps = {
 
 async function AdminPage(props: Readonly<GroupsProps>) {
   const searchParams = await props.searchParams;
-  const count = searchParams?.count ? parseInt(searchParams.count) : 10;
-  const page = searchParams?.page ? parseInt(searchParams.page) : 1;
+  const count = searchParams?.count ? Number.parseInt(searchParams.count) : 10;
+  const page = searchParams?.page ? Number.parseInt(searchParams.page) : 1;
   const query = searchParams?.query;
   const startIndex = 1 + count * (page - 1);
   const groupsPage = await getGroupsPage(count, startIndex, query);

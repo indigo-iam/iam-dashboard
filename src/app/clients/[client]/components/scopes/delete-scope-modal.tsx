@@ -20,7 +20,7 @@ export default function DeleteScopeModal(
   const { scope, client, isAdmin, show, onClose } = props;
   const action = async () => {
     const scopes = client.scope?.split(" ") ?? [];
-    const find = scopes.findIndex(s => s === scope);
+    const find = scopes.indexOf(scope);
     if (find > -1) {
       scopes.splice(find, 1);
       const scope = scopes.join(" ");

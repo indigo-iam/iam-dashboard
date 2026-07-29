@@ -5,12 +5,12 @@
 import { ListboxOption as HeadlessListboxOption } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/16/solid";
 
-export interface ListboxOptionProps {
+export type ListboxOptionProps = {
   children: React.ReactNode;
   value: { id: string; name: string };
-}
+};
 
-export default function ListboxOption(props: ListboxOptionProps) {
+export default function ListboxOption(props: Readonly<ListboxOptionProps>) {
   const { children, value } = props;
   return (
     <HeadlessListboxOption

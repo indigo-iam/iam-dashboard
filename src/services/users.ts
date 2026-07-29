@@ -13,7 +13,6 @@ import { Paginated } from "@/models/pagination";
 import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
 import { Notification } from "@/components/toaster";
 import { settings } from "@/config";
-import { URLSearchParams } from "url";
 
 const { IAM_API_URL } = settings;
 

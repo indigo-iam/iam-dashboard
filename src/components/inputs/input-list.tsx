@@ -33,7 +33,7 @@ export function InputList(props: Readonly<InputListProps>) {
       setErrorMessage(error);
       return;
     }
-    if (!items.find(i => i === value)) {
+    if (!items.some(i => i === value)) {
       const newItems = [...items, value];
       onChange?.(newItems);
       setItems(newItems);

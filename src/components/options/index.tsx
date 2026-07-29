@@ -19,6 +19,7 @@ export function Option(props: Readonly<OptionProps>) {
   const { children, ...other } = props;
   return (
     <button
+      type="button"
       className="hover:not:dark:text-gray-500 data-danger:text-danger dark:data-danger:text-danger-light btn-popover px-2 py-1.5 text-start text-base whitespace-nowrap dark:text-gray-200"
       {...other}
     >

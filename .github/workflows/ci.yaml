@@ -50,7 +50,7 @@ jobs:
         run: npm run lint
 
       - name: Install Playwright browsers
-        run: npx --ignore-scripts playwright install --with-deps
+        run: npx playwright install --with-deps
 
       - name: Docker Metadata
         id: meta

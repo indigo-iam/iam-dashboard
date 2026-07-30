@@ -33,11 +33,12 @@ export default function ApproveRegistrationRequestModal(
       title="Approve user registration"
       confirmButtonText="Approve user"
     >
+      {/* prettier-ignore */}
       <p>
         Are you sure you want to add the user{" "}
         <Link href={`/users/${request.uuid}`} className="underline">
-          <b>{`${request.givenname} ${request.familyname}`}</b> (
-          <i>{request.email}</i>)
+          <b>{`${request.givenname} ${request.familyname}`}</b>{" "}
+          (<i>{request.email}</i>)
         </Link>
         ?<br />
         They provided the following motivation:

@@ -24,14 +24,15 @@ export default function DeleteUserModal(props: Readonly<DeleteUserModalProps>) {
     toast.toast(res);
   };
   return (
+    // prettier-ignore
     <ConfirmModal
       {...modalProps}
       title={`Delete user '${userFormattedName}'`}
       onConfirm={action}
       danger
     >
-      Are you sure you want to delete user <b>{userFormattedName}</b> (
-      <i>{userEmail}</i>) from this organization?
+      Are you sure you want to delete user <b>{userFormattedName}</b>{" "}
+      (<i>{userEmail}</i>) from this organization?
     </ConfirmModal>
   );
 }

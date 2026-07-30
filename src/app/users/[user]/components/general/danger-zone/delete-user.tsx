@@ -40,8 +40,8 @@ export function DeleteUser(props: Readonly<DeleteUserProps>) {
         danger
         title="Delete user"
       >
-        Are you sure you want to delete user
-        <span className="font-bold">{userFormattedName}</span>
+        Are you sure you want to delete user{" "}
+        <span className="font-bold">{userFormattedName}</span>{" "}
         <span>({userName})</span>?
       </ConfirmModal>
     </>

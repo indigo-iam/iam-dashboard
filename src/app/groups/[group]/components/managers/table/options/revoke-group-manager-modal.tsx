@@ -52,9 +52,10 @@ export default function RevokeGroupManagerModal(
     >
       <p>
         Are you sure you want to revoke group manager privileges from user{" "}
+        {/* prettier-ignore */}
         <Link href={`/users/${userId}`} className="underline">
-          <b className="text-nowrap">{userFormattedName}</b> (
-          <i className="text-nowrap">{userEmail}</i>)
+          <b className="text-nowrap">{userFormattedName}</b>{" "}
+          (<i className="text-nowrap">{userEmail}</i>)
         </Link>{" "}
         for group <b>{groupName}</b>
         {groupDescription && (

@@ -48,13 +48,14 @@ type ConfirmViewPros = {
 function ConfirmView(props: Readonly<ConfirmViewPros>) {
   const { userId, userName, userEmail, groupName, groupDescription } = props;
   return (
+    // prettier-ignore
     <p>
       Are you sure you want to add the user{" "}
       <Link href={`/users/${userId}`} className="underline">
-        <b>{userName}</b> (<i>{userEmail}</i>)
+        <b>{userName}</b>{" "}(<i>{userEmail}</i>)
       </Link>{" "}
-      to group to group <b>{groupName}</b> (
-      <span className="italic">{groupDescription}</span>)?
+      to group to group <b>{groupName}</b>{" "}
+      (<span className="italic">{groupDescription}</span>)?
     </p>
   );
 }

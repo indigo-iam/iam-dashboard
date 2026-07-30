@@ -4,12 +4,11 @@
 
 "use client";
 
-import { useState } from "react";
-
 import { User } from "@/models/scim";
 import ManagerOptions from "./options";
 import Link from "@/components/link";
 import Paginator from "@/components/paginator";
+import { usePaginator } from "@/components/paginator/hook";
 
 type RowProps = {
   userId: string;
@@ -58,19 +57,9 @@ type ManagerTableProps = {
 
 export default function ManagersTable(props: Readonly<ManagerTableProps>) {
   const { groupId, groupName, groupDescription, managers } = props;
-  const [count, setCount] = useState(10);
-  const [page, setPage] = useState(1);
-  const numberOfPages = Math.ceil(managers.length / count);
-  const goFirst = () => setPage(1);
-  const goPrevious = () => setPage(Math.max(0, page - 1));
-  const goNext = () => setPage(Math.min(page + 1, numberOfPages));
-  const goLast = () => setPage(numberOfPages);
-  const changeCount = (n: number) => {
-    setCount(n);
-    setPage(1);
-  };
-  const start = (page - 1) * count;
-  const end = start + count;
+  const { count, numberOfPages, start, end, ...paginator } = usePaginator(
+    managers.length
+  );
   const managerSlice = managers.slice(start, end);
   return (
     <div className="space-y-2">
@@ -90,13 +79,8 @@ export default function ManagersTable(props: Readonly<ManagerTableProps>) {
       <Paginator
         numberOfPages={numberOfPages}
         overrides={{
-          onFirst: goFirst,
-          onPrevious: goPrevious,
-          onNext: goNext,
-          onLast: goLast,
-          onCountChange: changeCount,
-          currentPage: page,
           count,
+          ...paginator,
         }}
       />
     </div>

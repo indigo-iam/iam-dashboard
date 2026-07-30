@@ -6,7 +6,8 @@
     "dev": "next dev -p 3000 --turbopack",
     "build": "next build",
     "start": "PORT=3000 HOSTNAME=127.0.0.1 node .next/standalone/server.js",
-    "test": "jest",
+    "playwright:install": "playwright install --with-deps",
+    "playwright:test": "playwright test --reporter=list",
     "lint": "npx eslint ."
   },
   "dependencies": {
@@ -22,7 +23,7 @@
     "sonner": "^2"
   },
   "devDependencies": {
-    "@playwright/test": "^1.53.0",
+    "@playwright/test": "^1.62.0",
     "@tailwindcss/postcss": "^4.3",
     "@types/better-sqlite3": "^7.6",
     "@types/node": "^24",

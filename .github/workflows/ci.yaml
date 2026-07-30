@@ -51,7 +51,7 @@ jobs:
         run: npm run lint
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+        run: npm run playwright:install
 
       - name: Docker Metadata
         id: meta
@@ -81,10 +81,10 @@ jobs:
           docker compose up -d
 
       - name: Run Playwright tests
-        run: npx playwright test --reporter=list
+        run: npm run playwright:test
 
       - name: Cleanup test environment
-        run: docker compose down --remove-orphans --volumes
+        run: docker compose down
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}

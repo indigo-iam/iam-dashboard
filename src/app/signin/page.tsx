@@ -3,8 +3,9 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { redirect } from "next/navigation";
-import { getSession, signIn } from "@/auth";
+import { getSession } from "@/auth";
 import { SignInButton } from "./components/signin-button";
+import { login } from "./actions";
 
 export default async function SignInPage() {
   const session = await getSession();
@@ -12,15 +13,9 @@ export default async function SignInPage() {
     redirect("/");
   }
 
-  async function action() {
-    "use server";
-    const url = await signIn();
-    redirect(url);
-  }
-
   return (
     <div className="bg-secondary dark:bg-infn flex h-screen items-center justify-center">
-      <form action={action}>
+      <form action={login}>
         Redirecting to login page...
         <SignInButton />
       </form>

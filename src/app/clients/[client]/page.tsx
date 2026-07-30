@@ -48,21 +48,21 @@ export default async function Client(props: Readonly<ClientPageProps>) {
           <Tab>CREDENTIALS</Tab>
           <Tab>SCOPES</Tab>
           <Tab>GRANT TYPES</Tab>
-          <Tab>TOKENS</Tab>
-          {isAdmin ? <Tab>OWNERS</Tab> : null}
+          {isAdmin && <Tab>TOKENS</Tab>}
+          {isAdmin && <Tab>OWNERS</Tab>}
         </TabList>
         <TabPanels>
           <Main client={client} isAdmin={isAdmin} />
           <Credentials client={client} isAdmin={isAdmin} />
           <Scopes client={client} isAdmin={isAdmin} />
           <GrantTypes client={client} isAdmin={isAdmin} />
-          <Tokens client={client} isAdmin={isAdmin} />
-          {isAdmin ? (
+          {isAdmin && <Tokens client={client} isAdmin={isAdmin} />}
+          {isAdmin && (
             <Owners
               clientId={client.client_id}
               clientName={client.client_name}
             />
-          ) : null}
+          )}
         </TabPanels>
       </TabGroup>
     </section>

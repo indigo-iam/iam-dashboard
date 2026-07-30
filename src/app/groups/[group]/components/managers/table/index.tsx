@@ -2,9 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client";
+
 import { User } from "@/models/scim";
 import ManagerOptions from "./options";
 import Link from "@/components/link";
+import Paginator from "@/components/paginator";
+import { usePaginator } from "@/components/paginator/hook";
 
 type RowProps = {
   userId: string;
@@ -53,22 +57,32 @@ type ManagerTableProps = {
 
 export default function ManagersTable(props: Readonly<ManagerTableProps>) {
   const { groupId, groupName, groupDescription, managers } = props;
-  if (managers.length === 0) {
-    return <p>This group has no managers.</p>;
-  }
+  const { count, numberOfPages, start, end, ...paginator } = usePaginator(
+    managers.length
+  );
+  const managerSlice = managers.slice(start, end);
   return (
-    <ul className="w-full">
-      {managers.map(manager => (
-        <Row
-          key={manager.id}
-          userId={manager.id}
-          userFormattedName={manager.name?.formatted ?? "unknown user"}
-          userEmail={manager.emails?.[0].value ?? "unknown email"}
-          groupId={groupId}
-          groupName={groupName}
-          groupDescription={groupDescription}
-        />
-      ))}
-    </ul>
+    <div className="space-y-2">
+      <ul className="w-full">
+        {managerSlice.map(manager => (
+          <Row
+            key={manager.id}
+            userId={manager.id}
+            userFormattedName={manager.name?.formatted ?? "unknown user"}
+            userEmail={manager.emails?.[0].value ?? "unknown email"}
+            groupId={groupId}
+            groupName={groupName}
+            groupDescription={groupDescription}
+          />
+        ))}
+      </ul>
+      <Paginator
+        numberOfPages={numberOfPages}
+        overrides={{
+          count,
+          ...paginator,
+        }}
+      />
+    </div>
   );
 }

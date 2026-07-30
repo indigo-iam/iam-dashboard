@@ -46,7 +46,6 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
     }
 
     startTransition(async () => {
-      console.log("label!")
       const res = await addGroupLabel(group.id, gl);
       if (res.type !== "success") {
         toast.toast(res);

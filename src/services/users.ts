@@ -103,7 +103,6 @@ export async function editUser(userData: {
     };
     operations.push(mailOp);
   }
-  console.log(JSON.stringify(operations));
   const response = await patchUser(operations, userId);
 
   if (response.ok) {
@@ -125,7 +124,6 @@ export async function patchUser(operations: ScimOp[], userId: string | null) {
   const url = userId
     ? `${IAM_API_URL}/scim/Users/${userId}`
     : `${IAM_API_URL}/scim/Me`;
-  console.log(JSON.stringify(request));
   return await authFetch(url, {
     body: JSON.stringify(request),
     method: "PATCH",

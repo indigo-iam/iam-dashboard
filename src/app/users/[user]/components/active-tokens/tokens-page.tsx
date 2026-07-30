@@ -4,13 +4,12 @@
 
 "use client";
 
-import { useState } from "react";
-
 import Link from "@/components/link";
 import Paginator from "@/components/paginator";
 import { ActiveToken } from "@/models/sites";
 import { dateToHuman, getDate } from "@/utils/dates";
 import { ActiveTokenOptions } from "./options";
+import { usePaginator } from "@/components/paginator/hook";
 
 type ActiveTokenViewProps = {
   token: ActiveToken;
@@ -55,24 +54,22 @@ type TokensPageProps = {
 
 export function TokensPage(props: Readonly<TokensPageProps>) {
   const { tokens } = props;
-  const [count, setCount] = useState(10);
-  const [page, setPage] = useState(1);
-  const numberOfPages = Math.ceil(tokens.length / count);
-  const goFirst = () => setPage(1);
-  const goPrevious = () => setPage(Math.max(0, page - 1));
-  const goNext = () => setPage(Math.min(page + 1, numberOfPages));
-  const goLast = () => setPage(numberOfPages);
-  const changeCount = (n: number) => {
-    setCount(n);
-    setPage(1);
-  };
-  const start = (page - 1) * count;
-  const end = start + count;
+  const { start, end, numberOfPages, count, ...paginator } = usePaginator(
+    tokens.length
+  );
   const activeTokens = tokens.slice(start, end);
   return (
     <div className="space-y-4">
       <div className="panel">
-        <h2 className="py-2">Active Tokens</h2>
+        <div className="flex items-center gap-2">
+          <h2 className="py-2">Active Tokens</h2>
+          <div
+            title="Number of active tokens"
+            className="middle my-auto rounded-full bg-gray-400 px-2 py-0.5 text-xs font-semibold text-white"
+          >
+            {tokens.length}
+          </div>
+        </div>
         <ul>
           {activeTokens.map(token => (
             <ActiveTokenView token={token} key={token.id} />
@@ -82,12 +79,7 @@ export function TokensPage(props: Readonly<TokensPageProps>) {
       <Paginator
         numberOfPages={numberOfPages}
         overrides={{
-          onFirst: goFirst,
-          onPrevious: goPrevious,
-          onNext: goNext,
-          onLast: goLast,
-          onCountChange: changeCount,
-          currentPage: page,
+          ...paginator,
           count,
         }}
       />

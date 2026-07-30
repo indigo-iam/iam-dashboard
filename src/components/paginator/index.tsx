@@ -10,7 +10,12 @@ import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
 } from "@heroicons/react/24/outline";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  ReadonlyURLSearchParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { useProgressBar } from "../progress-bar";
 import { Button } from "../buttons";
 
@@ -19,6 +24,7 @@ const className =
 
 export interface PaginatorProps {
   numberOfPages: number;
+  suffix?: string;
   overrides?: {
     onFirst?: () => void;
     onPrevious?: () => void;
@@ -30,26 +36,36 @@ export interface PaginatorProps {
   };
 }
 
+function getSearchParam(key: string, searchParams: ReadonlyURLSearchParams) {
+  const v = searchParams.get(key);
+  if (v) {
+    return Number.parseInt(v);
+  }
+}
+
 export default function Paginator(props: Readonly<PaginatorProps>) {
-  const { numberOfPages, overrides } = props;
+  const { numberOfPages, suffix, overrides } = props;
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
   const { startProgressBar } = useProgressBar();
-  const currentPage =
-    (overrides?.currentPage ?? Number(searchParams.get("page"))) || 1;
-  const itemsPerPage =
-    (overrides?.count ?? Number(searchParams.get("count"))) || 10;
+  const pageKey = `page${suffix ?? ""}`;
+  const countKey = `count${suffix ?? ""}`;
 
-  const createPageURL = (
+  const currentPage =
+    overrides?.currentPage ?? getSearchParam(pageKey, searchParams) ?? 1;
+  const itemsPerPage =
+    overrides?.count ?? getSearchParam(countKey, searchParams) ?? 10;
+
+  function createPageURL(
     pageNumber: number | string,
     count: number = itemsPerPage
-  ) => {
+  ) {
     const params = new URLSearchParams(searchParams);
-    params.set("page", pageNumber.toString());
-    params.set("count", count.toString());
+    params.set(pageKey, pageNumber.toString());
+    params.set(countKey, count.toString());
     return `${pathname}?${params.toString()}`;
-  };
+  }
 
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const count = Number.parseInt(event.currentTarget.value);
@@ -115,7 +131,6 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
           <option value="20">20</option>
           <option value="50">50</option>
           <option value="100">100</option>
-          <option value="200">200</option>
         </select>
       </div>
       <div className="flex">

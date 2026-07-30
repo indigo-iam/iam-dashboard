@@ -18,7 +18,22 @@ import { UserGroupIcon } from "@heroicons/react/24/solid";
 
 type GroupPageProps = {
   params: Promise<{ group: string }>;
+  searchParams?: Promise<{
+    countMembers?: string;
+    pageMembers?: string;
+    countManagers?: string;
+    pageManagers?: string;
+    countSubgroups?: string;
+    pageSubgroups?: string;
+  }>;
 };
+
+function parseSearchParams(count?: string, page?: string) {
+  return [
+    count ? Number.parseInt(count) : 10,
+    page ? Number.parseInt(page) : 1,
+  ];
+}
 
 export default async function GroupPage(props: Readonly<GroupPageProps>) {
   const session = await getSession();
@@ -36,7 +51,15 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
   const groupId = group.id;
   const groupName = group.displayName;
   const groupDescription = indigoUser.description;
-
+  const searchParams = await props.searchParams;
+  const [countSubgroups, pageSubgroups] = parseSearchParams(
+    searchParams?.countSubgroups,
+    searchParams?.pageSubgroups
+  );
+  const [countMembers, pageMembers] = parseSearchParams(
+    searchParams?.countMembers,
+    searchParams?.pageMembers
+  );
   return (
     <section>
       <header className="section-header">
@@ -55,7 +78,12 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
         </TabList>
         <TabPanels>
           <GroupInfo group={group} />
-          <Subgroups groupId={groupId} groupName={groupName} />
+          <Subgroups
+            groupId={groupId}
+            groupName={groupName}
+            count={countSubgroups}
+            page={pageSubgroups}
+          />
           {isAdmin && (
             <Managers
               groupId={groupId}
@@ -68,6 +96,8 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
             groupName={groupName}
             groupDescription={groupDescription}
             isAdmin={isAdmin}
+            count={countMembers}
+            page={pageMembers}
           />
         </TabPanels>
       </TabGroup>

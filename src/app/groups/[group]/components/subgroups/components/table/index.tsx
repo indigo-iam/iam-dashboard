@@ -27,20 +27,17 @@ function Row(props: Readonly<{ groupRef: ScimReference }>) {
 
 type SubgroupsTableProps = {
   groupId: string;
+  count: number;
+  page: number;
 };
 
 export default async function SubgroupsTable(
   props: Readonly<SubgroupsTableProps>
 ) {
-  const { groupId } = props;
-  // TODO: pagination
-  const firstPage = await fetchSubgroupsPage(groupId);
+  const { groupId, count, page } = props;
+  const startIndex = 1 + count * (page - 1);
+  const firstPage = await fetchSubgroupsPage(groupId, count, startIndex);
   const subgroups = firstPage.Resources;
-
-  if (subgroups.length === 0) {
-    return <p>This group has no subgroups.</p>;
-  }
-
   return (
     <ul className="w-full">
       {subgroups.map(groupRef => (

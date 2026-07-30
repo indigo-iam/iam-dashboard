@@ -2,9 +2,14 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client";
+
+import { useState } from "react";
+
 import { User } from "@/models/scim";
 import ManagerOptions from "./options";
 import Link from "@/components/link";
+import Paginator from "@/components/paginator";
 
 type RowProps = {
   userId: string;
@@ -53,22 +58,47 @@ type ManagerTableProps = {
 
 export default function ManagersTable(props: Readonly<ManagerTableProps>) {
   const { groupId, groupName, groupDescription, managers } = props;
-  if (managers.length === 0) {
-    return <p>This group has no managers.</p>;
-  }
+  const [count, setCount] = useState(10);
+  const [page, setPage] = useState(1);
+  const numberOfPages = Math.ceil(managers.length / count);
+  const goFirst = () => setPage(1);
+  const goPrevious = () => setPage(Math.max(0, page - 1));
+  const goNext = () => setPage(Math.min(page + 1, numberOfPages));
+  const goLast = () => setPage(numberOfPages);
+  const changeCount = (n: number) => {
+    setCount(n);
+    setPage(1);
+  };
+  const start = (page - 1) * count;
+  const end = start + count;
+  const managerSlice = managers.slice(start, end);
   return (
-    <ul className="w-full">
-      {managers.map(manager => (
-        <Row
-          key={manager.id}
-          userId={manager.id}
-          userFormattedName={manager.name?.formatted ?? "unknown user"}
-          userEmail={manager.emails?.[0].value ?? "unknown email"}
-          groupId={groupId}
-          groupName={groupName}
-          groupDescription={groupDescription}
-        />
-      ))}
-    </ul>
+    <div className="space-y-2">
+      <ul className="w-full">
+        {managerSlice.map(manager => (
+          <Row
+            key={manager.id}
+            userId={manager.id}
+            userFormattedName={manager.name?.formatted ?? "unknown user"}
+            userEmail={manager.emails?.[0].value ?? "unknown email"}
+            groupId={groupId}
+            groupName={groupName}
+            groupDescription={groupDescription}
+          />
+        ))}
+      </ul>
+      <Paginator
+        numberOfPages={numberOfPages}
+        overrides={{
+          onFirst: goFirst,
+          onPrevious: goPrevious,
+          onNext: goNext,
+          onLast: goLast,
+          onCountChange: changeCount,
+          currentPage: page,
+          count,
+        }}
+      />
+    </div>
   );
 }

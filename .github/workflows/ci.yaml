@@ -23,13 +23,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@96fe6ef7f33517b61c61be40b68a1882f3264fb8  # v4.2.0
 
       - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c  # v4.2.0
 
       - name: Docker Login
-        uses: docker/login-action@v3
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f  # v4.6.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
@@ -42,6 +42,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y voms-clients
           npm ci --ignore-scripts
+          npm rebuild better-sqlite3 sharp
 
       - name: Make self-signed CA and *.test.example certificate
         run: scripts/trust/setup_trust.sh assets/trust
@@ -50,11 +51,11 @@ jobs:
         run: npm run lint
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+        run: npm run playwright:install
 
       - name: Docker Metadata
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302  # v6.2.0
         with:
           images: cnafsoftwaredevel/iam-dashboard
           tags: |
@@ -63,7 +64,7 @@ jobs:
             type=ref,event=tag
 
       - name: Build and export to Docker
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a  # v7.3.0
         with:
           load: true
           build-args: IAM_DASHBOARD_BASE_PATH=/ui
@@ -80,10 +81,10 @@ jobs:
           docker compose up -d
 
       - name: Run Playwright tests
-        run: npx playwright test --reporter=list
+        run: npm run playwright:test
 
       - name: Cleanup test environment
-        run: docker compose down --remove-orphans --volumes
+        run: docker compose down
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
@@ -94,7 +95,7 @@ jobs:
           retention-days: 90
 
       - name: Build and push /ui to Docker Hub
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a  # v7.3.0
         with:
           build-args: IAM_DASHBOARD_BASE_PATH=/ui
           push: ${{ github.event_name != 'pull_request' }}

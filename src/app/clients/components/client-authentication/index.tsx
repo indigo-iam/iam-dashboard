@@ -23,10 +23,6 @@ function ClientAuthenticationSettings(
   const { authMethod, onStatusChange, clientId } = props;
   switch (authMethod) {
     case "client_secret_basic":
-      if (clientId) {
-        return <RotateClientSecret clientId={clientId} />;
-      }
-      return null;
     case "client_secret_post":
       if (clientId) {
         return <RotateClientSecret clientId={clientId} />;

@@ -13,7 +13,8 @@ WORKDIR /app
 # Install dependencies based on the preferred package manager
 COPY package.json package-lock.json ./
 RUN apk add --no-cache libc6-compat && \
-  npm ci
+  npm ci --ignore-scripts && \
+  npm rebuild better-sqlite3 sharp
 
 # Rebuild the source code only when needed
 FROM base AS builder

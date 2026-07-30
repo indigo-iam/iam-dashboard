@@ -37,10 +37,11 @@ export default function RejectRequestModalProps(
       <ModalHeader onClose={onClose}>Reject group request</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
+          {/* prettier-ignore */}
           <p>
             Are you sure you want to delete the request to join the group{" "}
-            <b>{request.groupName}</b> by the user <b>{request.userFullName}</b>
-            ?
+            <b>{request.groupName}</b> by the user{" "}
+            <b>{request.userFullName}</b>?
           </p>
           <div>
             <p className="text-sm">

@@ -41,12 +41,13 @@ export default function RejectRegistrationRequestModal(
       </ModalHeader>
       <Form id="reject-registration-form" onSubmit={submit}>
         <ModalBody>
+          {/* prettier-ignore */}
           <p>
             Are you sure you want to delete the registration request for the
             user{" "}
             <Link href={`/users/${request.accountId}`} className="underline">
-              <b>{`${request.givenname} ${request.familyname}`}</b> (
-              <i>{request.email}</i>)
+              <b>{`${request.givenname} ${request.familyname}`}</b>{" "}
+              (<i>{request.email}</i>)
             </Link>
             ?
           </p>

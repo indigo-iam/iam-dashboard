@@ -104,11 +104,11 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
   }
 
   return (
-    <div className="flex flex-col gap-4 md:flex-row">
-      <div className="flex w-full flex-col items-center px-16 sm:px-32 md:w-auto md:p-0">
+    <div className="mx-auto flex max-w-xl flex-col gap-4 md:flex-row">
+      <div className="flex w-full max-w-xl flex-col items-center px-4 sm:px-32 md:w-auto md:p-0">
         <Stepper currentPage={currentPage} totalPages={TOTAL_PAGES} />
       </div>
-      <Form onSubmit={submit} className="max-w-xl grow">
+      <Form onSubmit={submit} className="grow">
         <Carousel selectedIndex={currentPage}>
           <CarouselList>
             <CarouselTab>General Settings</CarouselTab>

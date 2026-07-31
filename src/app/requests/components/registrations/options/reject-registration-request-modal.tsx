@@ -13,6 +13,7 @@ import { Textarea } from "@/components/textarea";
 import { Registration } from "@/models/registration";
 import { rejectRegistrationRequest } from "@/services/registration";
 import { toast } from "@/components/toaster";
+import { Notice } from "@/components/notices";
 
 type RejectRegistrationRequestModalProps = {
   request: Registration;
@@ -37,20 +38,22 @@ export default function RejectRegistrationRequestModal(
   return (
     <Modal show={show} onClose={onClose}>
       <ModalHeader onClose={onClose}>
-        Reject user registration request
+        Reject user registration request?
       </ModalHeader>
       <Form id="reject-registration-form" onSubmit={submit}>
         <ModalBody>
-          {/* prettier-ignore */}
-          <p>
-            Are you sure you want to delete the registration request for the
-            user{" "}
-            <Link href={`/users/${request.accountId}`} className="underline">
-              <b>{`${request.givenname} ${request.familyname}`}</b>{" "}
-              (<i>{request.email}</i>)
-            </Link>
-            ?
-          </p>
+          <div className="space-y-4">
+            <p>
+              Are you sure you want to delete the registration request for the
+              following user?
+            </p>
+            <Notice>
+              <Link href={`/users/${request.accountId}`} className="iam-link">
+                {`${request.givenname} ${request.familyname}`}
+              </Link>
+              <p className="text-sm">{request.email}</p>
+            </Notice>
+          </div>
           <p>To proceed provide a motivation that will be sent to the user:</p>
           <Field>
             <Label data-required>Motivation</Label>

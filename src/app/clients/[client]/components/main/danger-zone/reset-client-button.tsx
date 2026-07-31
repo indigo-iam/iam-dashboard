@@ -11,15 +11,16 @@ import { ModalProps } from "@/components/modal";
 import ConfirmModal from "@/components/confirm-modal";
 import { resetClient } from "@/services/clients";
 import { toast } from "@/components/toaster";
-import { Warning } from "@/components/notices";
+import { Notice, Warning } from "@/components/notices";
 
 type ConfirmModalProps = ModalProps & {
   clientId: string;
   clientName: string;
+  clientDescription: string | null;
 };
 
 function Modal(props: Readonly<ConfirmModalProps>) {
-  const { show, onClose, clientId, clientName } = props;
+  const { show, onClose, clientId, clientName, clientDescription } = props;
 
   async function action() {
     const res = await resetClient(clientId);
@@ -35,9 +36,13 @@ function Modal(props: Readonly<ConfirmModalProps>) {
       confirmButtonText="Reset client"
       danger
     >
-      <p className="text-center">
-        Are you sure you want to reset the client <b>{clientName}</b>?
-      </p>
+      <p>Are you sure you want to reset the following client?</p>
+      <Notice>
+        <p>
+          <b>{clientName}</b>
+        </p>
+        {clientDescription && <p className="text-sm">{clientDescription}</p>}
+      </Notice>
       <Warning>
         <p>Resetting the client will:</p>
         <ul className="list-disc px-4">
@@ -57,10 +62,11 @@ function Modal(props: Readonly<ConfirmModalProps>) {
 type ResetClientButtonProps = {
   clientId: string;
   clientName: string;
+  clientDescription: string | null;
 };
 
 export function ResetClientButton(props: Readonly<ResetClientButtonProps>) {
-  const { clientId, clientName } = props;
+  const { clientId, clientName, clientDescription } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
@@ -74,6 +80,7 @@ export function ResetClientButton(props: Readonly<ResetClientButtonProps>) {
         onClose={close}
         clientId={clientId}
         clientName={clientName}
+        clientDescription={clientDescription}
       />
     </>
   );

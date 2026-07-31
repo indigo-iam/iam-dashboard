@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
+import { Notice } from "@/components/notices";
 import { removeOwner } from "@/services/clients";
 
 type RemoveOwnerModalProps = {
@@ -35,16 +36,23 @@ export default function RemoveOwnerModal(
     <ConfirmModal
       show={show}
       onClose={onClose}
-      title="Remove owner"
+      title={`Remove owner from client '${clientName}'?`}
       confirmButtonText="Remove"
       onConfirm={action}
       danger
     >
-      <p>
-        Are you sure you want to remove the user{" "}
-        <span className="font-medium">{ownerName}</span> ({ownerEmail}) from the
-        owners of the client <span className="font-medium">{clientName}</span>?
-      </p>
+      <div className="space-y-4">
+        <p>Are you sure you want to remove the user</p>
+        <Notice>
+          <p>
+            <b>{ownerName}</b>
+          </p>
+          <p className="text-sm">{ownerEmail}</p>
+        </Notice>
+        <p>
+          from the owners of the client <b>{clientName}</b>?
+        </p>
+      </div>
     </ConfirmModal>
   );
 }

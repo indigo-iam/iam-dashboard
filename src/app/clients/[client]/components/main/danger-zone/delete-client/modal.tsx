@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
-import { Warning } from "@/components/notices";
+import { Notice, Warning } from "@/components/notices";
 import { toast } from "@/components/toaster";
 import { deleteClient } from "@/services/clients";
 
@@ -49,12 +49,12 @@ export default function DeleteClientModal(
       <p className="text-center">
         Are you sure you want to delete the following client?
       </p>
-      <div className="rounded border-s-4 bg-gray-100 p-4 dark:border-gray-200 dark:bg-gray-500">
+      <Notice>
         <p>
           <b>{clientName}</b>
         </p>
         {clientDescription && <p className="text-sm">{clientDescription}</p>}
-      </div>
+      </Notice>
       <Warning>
         Completely delete the client from this organization and revoke all its
         token. <b>This action can not be undone</b>.

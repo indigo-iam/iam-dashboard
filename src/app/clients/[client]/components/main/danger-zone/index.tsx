@@ -28,8 +28,16 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
         <div className="w-full">
           {isAdmin && (
             <div className="flex gap-2">
-              <RevokeTokensButton clientId={clientId} clientName={clientName} />
-              <ResetClientButton clientId={clientId} clientName={clientName} />
+              <RevokeTokensButton
+                clientId={clientId}
+                clientName={clientName}
+                clientDescription={clientDescription}
+              />
+              <ResetClientButton
+                clientId={clientId}
+                clientName={clientName}
+                clientDescription={clientDescription}
+              />
             </div>
           )}
           <div className="flex flex-row justify-end gap-4">

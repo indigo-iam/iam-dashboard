@@ -5,6 +5,8 @@
 "use client";
 
 import ConfirmModal from "@/components/confirm-modal";
+import Link from "@/components/link";
+import { Notice } from "@/components/notices";
 import { Textarea } from "@/components/textarea";
 import { GroupRequest } from "@/models/group-requests";
 import { approveGroupRequest } from "@/services/group-requests";
@@ -24,19 +26,25 @@ export default function AcceptGroupRequestModal(
     await approveGroupRequest(request.uuid);
     onClose();
   };
-
   return (
     <ConfirmModal
       show={show}
       onClose={onClose}
       onConfirm={action}
-      title="Approve group request"
+      title="Approve group request?"
       confirmButtonText="Approve request"
     >
-      <p className="p-2">
-        Are you sure you want the user <b>{request.userFullName}</b> to join the
-        group <b>{request.groupName}</b>?
-      </p>
+      <div className="space-y-4">
+        <p>
+          Are you sure you want the following user to join the group{" "}
+          <b>{request.groupName}</b>?
+        </p>
+        <Notice>
+          <Link className="iam-link" href={`/users/${request.userUuid}`}>
+            {request.userFullName}
+          </Link>
+        </Notice>
+      </div>
       <p>They provided the following motivation:</p>
       <Textarea className="iam-input" defaultValue={request.notes} disabled />
     </ConfirmModal>

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
-import { Warning } from "@/components/notices";
+import { Notice, Warning } from "@/components/notices";
 import { toast } from "@/components/toaster";
 import { disableClient, enableClient } from "@/services/clients";
 
@@ -44,12 +44,12 @@ export default function ToggleStatusModal(
         Are you sure you want to {active ? "disable" : "enable"} the following
         client?
       </p>
-      <div className="rounded border-s-4 bg-gray-100 p-4 dark:border-gray-200 dark:bg-gray-500">
+      <Notice>
         <p>
           <b>{clientName}</b>
         </p>
         {clientDescription && <p className="text-sm">{clientDescription}</p>}
-      </div>
+      </Notice>
       {/* prettier-ignore */}
       <Warning>
         By disabling this client it will not release new tokens.

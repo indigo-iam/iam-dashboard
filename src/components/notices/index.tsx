@@ -11,6 +11,15 @@ type NoticeProps = {
   children?: React.ReactNode;
 };
 
+export function Notice(props: Readonly<NoticeProps>) {
+  const { children } = props;
+  return (
+    <div className="rounded border-s-4 bg-gray-100 p-4 dark:border-gray-200 dark:bg-gray-500">
+      {children}
+    </div>
+  );
+}
+
 export function Note(props: Readonly<NoticeProps>) {
   const { children } = props;
   return (

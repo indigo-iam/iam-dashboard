@@ -11,6 +11,7 @@ import { Textarea } from "@/components/textarea";
 import { GroupRequest } from "@/models/group-requests";
 import { rejectGroupRequest } from "@/services/group-requests";
 import { toast } from "@/components/toaster";
+import { Notice } from "@/components/notices";
 
 type RejectRequestModalProps = {
   request: GroupRequest;
@@ -37,12 +38,11 @@ export default function RejectRequestModalProps(
       <ModalHeader onClose={onClose}>Reject group request</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
-          {/* prettier-ignore */}
           <p>
             Are you sure you want to delete the request to join the group{" "}
-            <b>{request.groupName}</b> by the user{" "}
-            <b>{request.userFullName}</b>?
+            <b>{request.groupName}</b> by the following user?
           </p>
+          <Notice>{request.userFullName}</Notice>
           <div>
             <p className="text-sm">
               Optionally, write a motivation that will sent to the user.

@@ -16,18 +16,10 @@ type RowProps = {
   userEmail: string;
   groupId: string;
   groupName: string;
-  groupDescription?: string | null;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const {
-    userId,
-    userFormattedName,
-    userEmail,
-    groupId,
-    groupName,
-    groupDescription,
-  } = props;
+  const { userId, userFormattedName, userEmail, groupId, groupName } = props;
   return (
     <li className="iam-list-item">
       <div className="flex w-0 grow flex-col">
@@ -42,7 +34,6 @@ function Row(props: Readonly<RowProps>) {
         userEmail={userEmail}
         groupId={groupId}
         groupName={groupName}
-        groupDescription={groupDescription}
       />
     </li>
   );
@@ -51,12 +42,11 @@ function Row(props: Readonly<RowProps>) {
 type ManagerTableProps = {
   groupId: string;
   groupName: string;
-  groupDescription?: string | null;
   managers: User[];
 };
 
 export default function ManagersTable(props: Readonly<ManagerTableProps>) {
-  const { groupId, groupName, groupDescription, managers } = props;
+  const { groupId, groupName, managers } = props;
   const { count, numberOfPages, start, end, ...paginator } = usePaginator(
     managers.length
   );
@@ -72,7 +62,6 @@ export default function ManagersTable(props: Readonly<ManagerTableProps>) {
             userEmail={manager.emails?.[0].value ?? "unknown email"}
             groupId={groupId}
             groupName={groupName}
-            groupDescription={groupDescription}
           />
         ))}
       </ul>

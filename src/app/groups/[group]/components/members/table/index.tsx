@@ -12,12 +12,10 @@ type RowProps = {
   userDisplay: string;
   groupId: string;
   groupDisplay: string;
-  groupDescription?: string | null;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const { userId, userDisplay, groupId, groupDisplay, groupDescription } =
-    props;
+  const { userId, userDisplay, groupId, groupDisplay } = props;
   return (
     <li className="iam-list-item">
       <div className="flex w-0 grow flex-col">
@@ -31,7 +29,6 @@ function Row(props: Readonly<RowProps>) {
         userDisplay={userDisplay}
         groupId={groupId}
         groupDisplay={groupDisplay}
-        groupDescription={groupDescription}
       />
     </li>
   );
@@ -40,12 +37,11 @@ function Row(props: Readonly<RowProps>) {
 type MembersProps = {
   groupId: string;
   groupDisplay: string;
-  groupDescription?: string | null;
   count: number;
   page: number;
 };
 export default async function Members(props: Readonly<MembersProps>) {
-  const { groupId, groupDisplay, groupDescription, count, page } = props;
+  const { groupId, groupDisplay, count, page } = props;
   const startIndex = 1 + count * (page - 1);
   const membersPage = await fetchGroupMembersPage(groupId, count, startIndex);
   const members = membersPage.Resources;
@@ -58,7 +54,6 @@ export default async function Members(props: Readonly<MembersProps>) {
           userDisplay={member.display}
           groupId={groupId}
           groupDisplay={groupDisplay}
-          groupDescription={groupDescription}
         />
       ))}
     </ul>

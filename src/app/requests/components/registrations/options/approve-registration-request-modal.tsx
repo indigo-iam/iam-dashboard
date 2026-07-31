@@ -9,6 +9,7 @@ import { Textarea } from "@/components/textarea";
 import { toast } from "@/components/toaster";
 import { Registration } from "@/models/registration";
 import { approveRegistrationRequest } from "@/services/registration";
+import { Notice } from "@/components/notices";
 
 type ApproveRegistrationRequestModalProps = {
   request: Registration;
@@ -30,19 +31,19 @@ export default function ApproveRegistrationRequestModal(
       show={show}
       onClose={onClose}
       onConfirm={action}
-      title="Approve user registration"
+      title="Approve user registration?"
       confirmButtonText="Approve user"
     >
-      {/* prettier-ignore */}
-      <p>
-        Are you sure you want to add the user{" "}
-        <Link href={`/users/${request.uuid}`} className="underline">
-          <b>{`${request.givenname} ${request.familyname}`}</b>{" "}
-          (<i>{request.email}</i>)
-        </Link>
-        ?<br />
-        They provided the following motivation:
-      </p>
+      <div className="space-y-4">
+        <p>Are you sure you want to add the user to this organization?</p>
+        <Notice>
+          <Link href={`/users/${request.uuid}`} className="iam-link">
+            {`${request.givenname} ${request.familyname}`}
+          </Link>
+          <p className="text-sm">{request.email}</p>
+        </Notice>
+        <p> They provided the following motivation:</p>
+      </div>
       <Textarea className="iam-input" defaultValue={request.notes} disabled />
     </ConfirmModal>
   );

@@ -15,12 +15,10 @@ type MemberOptionsProps = {
   userDisplay: string;
   groupId: string;
   groupDisplay: string;
-  groupDescription?: string | null;
 };
 
 export default function MemberOptions(props: Readonly<MemberOptionsProps>) {
-  const { userId, userDisplay, groupDisplay, groupId, groupDescription } =
-    props;
+  const { userId, userDisplay, groupDisplay, groupId } = props;
   const [show, setShow] = useState<"REMOVE_MEMBER">();
   const close = () => setShow(undefined);
   return (
@@ -39,7 +37,6 @@ export default function MemberOptions(props: Readonly<MemberOptionsProps>) {
         userDisplay={userDisplay}
         groupId={groupId}
         groupDisplay={groupDisplay}
-        groupDescription={groupDescription}
         show={show === "REMOVE_MEMBER"}
       />
     </>

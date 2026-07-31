@@ -22,21 +22,25 @@ export function Row(props: Readonly<RowPros>) {
   return (
     <li className="iam-list-item">
       <div className="flex grow">
-        <Link
-          href={`/users/${userUuid}`}
-          className="flex grow flex-col lg:flex-row"
-        >
+        <div className="flex grow flex-col lg:flex-row">
           <div className="flex grow flex-col">
             <p className="text-gray-950 dark:text-gray-100">
-              User <b>{userFullName}</b> (<i>{username}</i>) asked to join group{" "}
-              <b>{groupName}</b>.
+              User{" "}
+              <Link className="iam-link" href={`/users/${userUuid}`}>
+                {userFullName}
+              </Link>{" "}
+              (<i>{username}</i>) asked to join group{" "}
+              <Link className="iam-link" href={`/groups/${request.groupUuid}`}>
+                {groupName}
+              </Link>
+              .
             </p>
             <p className="text-sm">Motivation: {request.notes}</p>
           </div>
           <p className="flex items-center text-xs whitespace-nowrap lg:px-2 lg:text-right">
             Sent {creationTime}
           </p>
-        </Link>
+        </div>
       </div>
       <GroupRequestOptions request={request} />
     </li>

@@ -28,13 +28,10 @@ function Row(props: Readonly<RowProps>) {
   return (
     <li className="iam-list-item lg:gap-2">
       <div className="flex w-0 grow flex-col space-y-2 lg:flex-row lg:space-y-0">
-        <Link
-          className="flex grow flex-col lg:w-0"
-          href={`/clients/${client.client_id}`}
-        >
-          <p className="text-gray-950 dark:text-gray-100">
+        <div className="flex grow flex-col lg:w-0">
+          <Link className="iam-link" href={`/clients/${client.client_id}`}>
             {client.client_name}
-          </p>
+          </Link>
           <div className="flex flex-col">
             <p className="truncate text-sm font-light">
               {client.client_description}
@@ -43,7 +40,7 @@ function Row(props: Readonly<RowProps>) {
               {scopes}
             </p>
           </div>
-        </Link>
+        </div>
         <div className="flex flex-row items-center gap-1.5 lg:flex-col lg:items-end lg:justify-center">
           <Status active={client.active} autoHide={true} />
           <p className="text-xs font-light whitespace-nowrap sm:text-right">

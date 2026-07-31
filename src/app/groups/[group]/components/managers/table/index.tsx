@@ -30,12 +30,12 @@ function Row(props: Readonly<RowProps>) {
   } = props;
   return (
     <li className="iam-list-item">
-      <Link className="flex w-0 grow flex-col" href={`/users/${userId}`}>
-        <p className="truncate text-gray-950 dark:text-gray-200">
+      <div className="flex w-0 grow flex-col">
+        <Link className="iam-link" href={`/users/${userId}`}>
           {userFormattedName}
-        </p>
+        </Link>
         <p className="truncate text-sm font-light">{userEmail}</p>
-      </Link>
+      </div>
       <ManagerOptions
         userId={userId}
         userFormattedName={userFormattedName}

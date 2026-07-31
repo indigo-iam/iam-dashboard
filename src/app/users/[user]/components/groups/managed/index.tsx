@@ -16,10 +16,12 @@ function Row(props: Readonly<RowProps>) {
   const { groupId, groupName } = props;
   return (
     <li className="iam-list-item">
-      <Link className="flex grow flex-col" href={`/groups/${groupId}`}>
-        <p className="text-gray-950 dark:text-gray-100">{groupName}</p>
+      <div className="flex grow flex-col">
+        <Link className="iam-link" href={`/groups/${groupId}`}>
+          {groupName}
+        </Link>
         <p className="text-sm font-light">{groupId}</p>
-      </Link>
+      </div>
       <GroupOptions groupId={groupId} groupName={groupName} />
     </li>
   );

@@ -20,14 +20,17 @@ function Row(props: Readonly<RowProps>) {
   return (
     <li className="iam-list-item">
       <div className="flex grow flex-col space-y-2 lg:flex-row">
-        <Link className="grow space-y-2" href={`/users/${request.accountId}`}>
-          {/* prettier-ignore */}
+        <div className="grow space-y-2">
           <p className="text-gray-950 dark:text-gray-100">
-            User <b>{`${request.givenname} ${request.familyname}`}</b>{" "}
-            (<i>{request.username}</i>) applied for an account.
+            User{" "}
+            <Link className="iam-link" href={`/users/${request.accountId}`}>
+              {`${request.givenname} ${request.familyname}`} (
+              <i>{request.username}</i>)
+            </Link>{" "}
+            applied for an account.
           </p>
           <p className="text-sm">Motivation: {request.notes}</p>
-        </Link>
+        </div>
         <p className="flex items-center text-xs whitespace-nowrap lg:px-2 lg:text-right">
           Sent {creationTime}
         </p>

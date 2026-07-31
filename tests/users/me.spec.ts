@@ -127,9 +127,9 @@ for (const user of [TEST_USER, ADMIN_USER]) {
         await firstName.fill("Enrico");
         await lastName.fill("Fermi");
         await email.fill("enrico.fermi@science.org");
-        const cancel = page.getByRole("button", { name: "Cancel" });
-        await expect(cancel).toBeEnabled();
-        await cancel.click();
+        const reset = page.getByRole("button", { name: "Reset" });
+        await expect(reset).toBeEnabled();
+        await reset.click();
         await expect(firstName).toHaveValue("Albert");
         await expect(lastName).toHaveValue("Einstein");
         await expect(email).toHaveValue("albert.einstein@science.org");

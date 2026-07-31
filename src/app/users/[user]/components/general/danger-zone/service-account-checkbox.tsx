@@ -31,7 +31,7 @@ function ServiceAccountModal(props: Readonly<ServiceAccountModalProps>) {
       show={show}
       onClose={onClose}
       onConfirm={toggleServiceAccount}
-      title={`${enabled ? "Disable" : "Enable"} service account`}
+      title={`${enabled ? "Disable" : "Enable"} service account?`}
       confirmButtonText={`${enabled ? "Disable" : "Enable"} service account`}
       danger
     >

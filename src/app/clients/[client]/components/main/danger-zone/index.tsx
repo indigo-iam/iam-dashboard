@@ -23,10 +23,6 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
         <h5 className="text-danger dark:text-danger-light font-semibold">
           Danger Zone
         </h5>
-        <p>
-          A disabled client cannot issue new tokens and the old ones are
-          immediately revoked.
-        </p>
       </div>
       <div className="flex w-full lg:w-2/3">
         <div className="w-full">

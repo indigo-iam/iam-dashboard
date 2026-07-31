@@ -52,9 +52,7 @@ export default function ToggleStatusModal(
       </div>
       {/* prettier-ignore */}
       <Warning>
-        By disabling this client it will not release new tokens and the already
-        released access tokens and refresh tokens are{" "}
-        <b>immediately revoked</b>.
+        By disabling this client it will not release new tokens.
       </Warning>
     </ConfirmModal>
   );

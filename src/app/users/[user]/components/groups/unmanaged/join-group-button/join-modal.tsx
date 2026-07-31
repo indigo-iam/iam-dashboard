@@ -110,7 +110,7 @@ export function JoinGroupModal(props: Readonly<JoinGroupModalProps>) {
       title="Send join group request"
       onConfirm={submit}
       confirmButtonDisabled={!enabled}
-      onCancel={unselect}
+      onCancel={close}
       formRef={formRef}
     >
       {selected ? (

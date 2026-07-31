@@ -11,7 +11,6 @@ import { ToggleStatusButton } from "./toggle-user-status";
 
 type DangerZoneProps = {
   userId: string;
-  userName: string;
   userFormattedName: string;
   userEmail: string;
   userIsActive: boolean;
@@ -24,7 +23,6 @@ type DangerZoneProps = {
 export function DangerZone(props: Readonly<DangerZoneProps>) {
   const {
     userId,
-    userName,
     userFormattedName,
     userEmail,
     userIsActive,
@@ -110,7 +108,7 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
           />
           <DeleteUser
             userId={userId}
-            userName={userName}
+            userEmail={userEmail}
             userFormattedName={userFormattedName}
           />
         </div>

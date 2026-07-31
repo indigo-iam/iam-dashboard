@@ -41,6 +41,8 @@ export default function ToggleUserStatusModal(
       onClose={onClose}
       title={title}
       onConfirm={action}
+      confirmButtonText={`${userIsActive ? "Disable" : "Enable"}`}
+      danger={userIsActive}
     >
       <p className="text-center">
         Are you sure you want to {userIsActive ? "disable" : "enable"} the

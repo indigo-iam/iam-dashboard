@@ -46,8 +46,8 @@ function LinkAccountModal(props: Readonly<LinkAccountModalProps>) {
         <ModalHeader onClose={onClose}>Link OpenID Connect account</ModalHeader>
         <ModalBody className="space-y-4 py-8">
           <p>
-            Connected external OpenID Connect/OAuth2 provider to user{" "}
-            <b>{userFormattedName}</b>
+            Connect external OpenID Connect/OAuth2 provider to user{" "}
+            <b>{userFormattedName}</b>.
           </p>
           <Field>
             <Label data-required>Issuer</Label>
@@ -63,7 +63,7 @@ function LinkAccountModal(props: Readonly<LinkAccountModalProps>) {
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" type="reset">
+          <Button className="btn-tertiary" type="reset" onClick={onClose}>
             Cancel
           </Button>
           <Button className="btn-primary" type="submit">

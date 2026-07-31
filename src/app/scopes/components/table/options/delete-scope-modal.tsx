@@ -24,7 +24,7 @@ export default function DeleteScopeModal(
     <ConfirmModal
       show={show}
       onClose={onClose}
-      title="Delete scope"
+      title="Delete scope?"
       onConfirm={action}
       danger
     >

@@ -73,7 +73,6 @@ export async function General(props: Readonly<GeneralProps>) {
       {!isMe && (
         <DangerZone
           userId={userId}
-          userName={userName}
           userFormattedName={userFormattedName}
           userEmail={userEmail}
           userIsActive={userIsActive}

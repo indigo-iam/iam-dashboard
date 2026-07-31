@@ -15,18 +15,10 @@ type ManagerOptionsProps = {
   userEmail: string;
   groupId: string;
   groupName: string;
-  groupDescription?: string | null;
 };
 
 export default function ManagerOptions(props: Readonly<ManagerOptionsProps>) {
-  const {
-    userId,
-    userFormattedName,
-    userEmail,
-    groupId,
-    groupName,
-    groupDescription,
-  } = props;
+  const { userId, userFormattedName, userEmail, groupId, groupName } = props;
   const [show, setShow] = useState<"REVOKE_MANAGER">();
   const close = () => setShow(undefined);
   return (
@@ -45,7 +37,6 @@ export default function ManagerOptions(props: Readonly<ManagerOptionsProps>) {
         userEmail={userEmail}
         groupId={groupId}
         groupName={groupName}
-        groupDescription={groupDescription}
         show={show === "REVOKE_MANAGER"}
         onClose={close}
       />

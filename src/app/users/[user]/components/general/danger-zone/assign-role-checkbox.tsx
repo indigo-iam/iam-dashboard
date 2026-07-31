@@ -43,7 +43,7 @@ function AssignRole(props: Readonly<AssignRoleProps>) {
       show={show}
       onConfirm={action}
       onClose={onClose}
-      title={`Assign ${roleName(role)} privileges`}
+      title={`Assign role ${roleName(role)}?`}
       danger
     >
       {`Are you sure you want to assign role `}
@@ -74,7 +74,7 @@ function RevokeRole(props: Readonly<RevokeRoleProps>) {
       show={show}
       onClose={onClose}
       onConfirm={action}
-      title={`Revoke '${roleName(role)}' role`}
+      title={`Revoke role ${roleName(role)}?`}
       danger
     >
       {`Are you sure you want to revoke role `}

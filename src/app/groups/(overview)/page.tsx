@@ -110,7 +110,11 @@ async function UserPage() {
         {requests.length > 0 && (
           <div className="panel">
             <h3 className="py-2">Pending requests</h3>
-            <GroupRequestsTable userId={me.id} requests={requests} />
+            <GroupRequestsTable
+              userId={me.id}
+              requests={requests}
+              isAdmin={false}
+            />
           </div>
         )}
       </div>

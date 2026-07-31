@@ -55,7 +55,7 @@ function GroupView(props: Readonly<GroupViewProps>) {
   );
 }
 
-const MIN_MOTIVATION_LENGTH = 5;
+const MIN_MOTIVATION_LENGTH = 6;
 
 type JoinGroupModalProps = {
   show: boolean;
@@ -68,10 +68,12 @@ export function JoinGroupModal(props: Readonly<JoinGroupModalProps>) {
   const formRef = useRef<HTMLFormElement>(null);
   const [selected, setSelected] = useState<Group>();
   const [motivation, setMotivation] = useState<string>();
-  const enabled = selected && (motivation?.length ?? 0) > MIN_MOTIVATION_LENGTH;
+  const enabled =
+    selected && (motivation?.length ?? 0) >= MIN_MOTIVATION_LENGTH;
 
   function unselect() {
     setSelected(undefined);
+    setMotivation("");
   }
 
   function close() {
@@ -108,7 +110,7 @@ export function JoinGroupModal(props: Readonly<JoinGroupModalProps>) {
       title="Send join group request"
       onConfirm={submit}
       confirmButtonDisabled={!enabled}
-      onCancel={unselect}
+      onCancel={close}
       formRef={formRef}
     >
       {selected ? (

@@ -12,26 +12,23 @@ type RowProps = {
   userDisplay: string;
   groupId: string;
   groupDisplay: string;
-  groupDescription?: string | null;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const { userId, userDisplay, groupId, groupDisplay, groupDescription } =
-    props;
+  const { userId, userDisplay, groupId, groupDisplay } = props;
   return (
     <li className="iam-list-item">
-      <Link className="flex w-0 grow flex-col" href={`/users/${userId}`}>
-        <p className="truncate text-gray-950 dark:text-gray-200">
+      <div className="flex w-0 grow flex-col">
+        <Link className="iam-link" href={`/users/${userId}`}>
           {userDisplay}
-        </p>
+        </Link>
         <p className="truncate text-sm font-light">{userId}</p>
-      </Link>
+      </div>
       <MemberOptions
         userId={userId}
         userDisplay={userDisplay}
         groupId={groupId}
         groupDisplay={groupDisplay}
-        groupDescription={groupDescription}
       />
     </li>
   );
@@ -40,12 +37,11 @@ function Row(props: Readonly<RowProps>) {
 type MembersProps = {
   groupId: string;
   groupDisplay: string;
-  groupDescription?: string | null;
   count: number;
   page: number;
 };
 export default async function Members(props: Readonly<MembersProps>) {
-  const { groupId, groupDisplay, groupDescription, count, page } = props;
+  const { groupId, groupDisplay, count, page } = props;
   const startIndex = 1 + count * (page - 1);
   const membersPage = await fetchGroupMembersPage(groupId, count, startIndex);
   const members = membersPage.Resources;
@@ -58,7 +54,6 @@ export default async function Members(props: Readonly<MembersProps>) {
           userDisplay={member.display}
           groupId={groupId}
           groupDisplay={groupDisplay}
-          groupDescription={groupDescription}
         />
       ))}
     </ul>

@@ -11,15 +11,12 @@ function Row(props: Readonly<{ groupRef: ScimReference }>) {
   const { groupRef } = props;
   return (
     <li className="iam-list-item">
-      <Link
-        className="flex w-0 grow flex-col"
-        href={`/groups/${groupRef.value}`}
-      >
-        <p className="truncate text-gray-950 dark:text-gray-200">
+      <div className="flex w-0 grow flex-col">
+        <Link className="iam-link" href={`/groups/${groupRef.value}`}>
           {groupRef.display}
-        </p>
+        </Link>
         <p className="truncate text-sm font-light">{groupRef.value}</p>
-      </Link>
+      </div>
       <SubgroupOptions groupRef={groupRef} />
     </li>
   );

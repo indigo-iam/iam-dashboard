@@ -49,14 +49,11 @@ function Row(props: Readonly<RowProps>) {
     : "N/A";
   return (
     <li className="iam-list-item">
-      <Link
-        className="flex w-0 grow flex-col gap-0 break-all lg:flex-row lg:gap-2"
-        href={`/groups/${group.id}`}
-      >
+      <div className="flex w-0 grow flex-col gap-0 break-all lg:flex-row lg:gap-2">
         <div className="flex flex-col lg:justify-center">
-          <p className="text-gray-950 dark:text-gray-100">
+          <Link className="iam-link" href={`/groups/${group.id}`}>
             {group.displayName}
-          </p>
+          </Link>
           <p className="truncate text-sm font-light">
             {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description}
           </p>
@@ -67,7 +64,7 @@ function Row(props: Readonly<RowProps>) {
         <p className="my-auto flex flex-col py-1 pr-2 text-xs font-light">
           Created {created}
         </p>
-      </Link>
+      </div>
       <GroupOptions
         groupId={group.id}
         groupName={group.displayName}

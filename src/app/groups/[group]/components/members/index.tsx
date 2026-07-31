@@ -48,7 +48,6 @@ export default async function Members(props: Readonly<MembersProps>) {
           <MembersTable
             groupId={groupId}
             groupDisplay={groupName}
-            groupDescription={groupDescription}
             count={count}
             page={page}
           />

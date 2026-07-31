@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import Link from "@/components/link";
 import { User } from "@/models/scim";
 import { OwnerOptions } from "./options";
 
@@ -19,9 +20,9 @@ export function OwnersTable(props: Readonly<OwnersTableProps>) {
         return (
           <li key={owner.id} className="iam-list-item">
             <div className="flex grow flex-col">
-              <p className="text-gray-950 dark:text-gray-200">
+              <Link className="iam-link" href={`/users/${owner.id}`}>
                 {owner.name?.formatted ?? "Unknown name"}
-              </p>
+              </Link>
               <p className="text-sm font-light">
                 {owner.emails?.[0].value ?? "Unknown email address"}
               </p>

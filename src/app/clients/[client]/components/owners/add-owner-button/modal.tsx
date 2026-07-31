@@ -5,6 +5,7 @@
 import { SearchUsers } from "@/app/components/search-users";
 import { Button } from "@/components/buttons";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
+import { Notice } from "@/components/notices";
 import { User } from "@/models/scim";
 import { addOwner } from "@/services/clients";
 import { useState } from "react";
@@ -31,19 +32,23 @@ export function AddOwnerModal(props: Readonly<AddOwnerModalProps>) {
       <ModalHeader onClose={modalProps.onClose}>Add client owner</ModalHeader>
       <ModalBody>
         {user ? (
-          <p className="py-2">
-            Do you want to make the user{" "}
-            <span className="font-medium">
-              {user.name?.familyName ?? "unknown user"}
-            </span>{" "}
-            ({user.emails?.[0].value ?? "unknown email"}) owner of group{" "}
-            <span className="font-medium">{clientName}</span>?
-          </p>
+          <div className="space-y-4">
+            <p>
+              Do you want to make the following user owner of the client{" "}
+              <b>{clientName}</b>?
+            </p>
+            <Notice>
+              <p>
+                <b>{user.name?.formatted}</b>
+              </p>
+              <p className="text-sm">{user.emails?.[0].value}</p>
+            </Notice>
+          </div>
         ) : (
           <div>
             <p className="py-2">
               Type to search for a user to be owner of client{" "}
-              <span className="font-medium">{clientName}</span>
+              <b>{clientName}</b>
             </p>
             <SearchUsers listId="search-list-owner" onSelect={setUser} />
           </div>

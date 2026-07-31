@@ -13,11 +13,12 @@ import RevokeRequestModal from "./revoke-request-modal";
 
 export type GroupRequestOptionProps = {
   userId: string;
+  userFormattedName: string;
   request: GroupRequest;
 };
 
 export function GroupRequestOptions(props: Readonly<GroupRequestOptionProps>) {
-  const { userId, request } = props;
+  const { userId, userFormattedName, request } = props;
   const [show, setShow] = useState<"REVOKE">();
   const close = () => setShow(undefined);
   return (
@@ -32,6 +33,7 @@ export function GroupRequestOptions(props: Readonly<GroupRequestOptionProps>) {
       </Options>
       <RevokeRequestModal
         userId={userId}
+        userFormattedName={userFormattedName}
         request={request}
         show={show === "REVOKE"}
         onClose={close}

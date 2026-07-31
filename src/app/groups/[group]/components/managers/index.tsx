@@ -38,7 +38,6 @@ export default async function Managers(props: Readonly<ManagersProps>) {
         <ManagersTable
           groupId={groupId}
           groupName={groupName}
-          groupDescription={groupDescription}
           managers={managers}
         />
       ) : (

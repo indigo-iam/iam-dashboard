@@ -8,14 +8,19 @@ import { GroupRequest } from "@/models/group-requests";
 type GroupRequestProps = {
   userId: string;
   requests: GroupRequest[];
+  isAdmin: boolean;
 };
 
 export function GroupRequests(props: Readonly<GroupRequestProps>) {
-  const { userId, requests } = props;
+  const { userId, requests, isAdmin } = props;
   return (
     <div className="panel space-y-4">
       <h2>Pending requests</h2>
-      <GroupRequestsTable userId={userId} requests={requests} />
+      <GroupRequestsTable
+        userId={userId}
+        requests={requests}
+        isAdmin={isAdmin}
+      />
     </div>
   );
 }

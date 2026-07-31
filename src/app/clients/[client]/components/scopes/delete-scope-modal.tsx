@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
+import { Notice } from "@/components/notices";
 import { Client } from "@/models/client";
 import { editClient } from "@/services/clients";
 
@@ -32,16 +33,25 @@ export default function DeleteScopeModal(
     <ConfirmModal
       show={show}
       onClose={onClose}
-      title="Delete scope"
+      title={`Delete scope '${scope}'?`}
       confirmButtonText="Delete"
       onConfirm={action}
       danger
     >
-      <p>
-        Are you sure you want to delete the scope{" "}
-        <span className="font-bold">{scope}</span> from client{" "}
-        <span className="italic">{client.client_name}</span>?
-      </p>
+      <div className="space-y-4">
+        <p>
+          Are you sure you want to delete the scope{" "}
+          <span className="font-bold">{scope}</span> from the following client?
+        </p>
+        <Notice>
+          <p>
+            <b>{client.client_name}</b>
+          </p>
+          {client.client_description && (
+            <p className="text-sm">{client.client_description}</p>
+          )}
+        </Notice>
+      </div>
     </ConfirmModal>
   );
 }

@@ -4,6 +4,7 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { ActiveToken } from "@/models/sites";
+import Link from "next/link";
 
 type RevokeTokenProps = {
   token: ActiveToken;
@@ -13,19 +14,23 @@ type RevokeTokenProps = {
 
 export function RevokeToken(props: Readonly<RevokeTokenProps>) {
   const { token, show, onClose } = props;
-  const tokenStr = `${token.value?.slice(0, 8)}...${token.value?.slice(-12)}`;
   return (
     <ConfirmModal
       show={show}
       onClose={onClose}
       confirmButtonText="Revoke"
-      title="Revoke Access Token"
+      title="Revoke access token?"
       danger
     >
-      <p>
-        Are you sure you want to revoke the token{" "}
-        <span className="font-mono break-all">{tokenStr}</span> for client{" "}
-        <i>{token.clientId}</i>?
+      <p className="text-center">
+        Are you sure you want to revoke the access token for the client{" "}
+        <Link
+          className="font-semibold text-sky-600 hover:underline"
+          href={`/clients/${token.clientId}`}
+        >
+          {token.clientId}
+        </Link>{" "}
+        ?
       </p>
     </ConfirmModal>
   );

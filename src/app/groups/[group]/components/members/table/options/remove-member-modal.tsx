@@ -2,32 +2,23 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import Link from "@/components/link";
-
 import ConfirmModal from "@/components/confirm-modal";
 import { ModalProps } from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { removeUserFromGroup } from "@/services/groups";
+import { Notice } from "@/components/notices";
 
 interface RevokeMemberFromGroupModalProps extends ModalProps {
   userId: string;
   userDisplay: string;
   groupId: string;
   groupDisplay: string;
-  groupDescription?: string | null;
 }
 
 export default function RemoveMemberFromGroupModal(
   props: Readonly<RevokeMemberFromGroupModalProps>
 ) {
-  const {
-    userId,
-    userDisplay,
-    groupId,
-    groupDisplay,
-    groupDescription,
-    ...modalProps
-  } = props;
+  const { userId, userDisplay, groupId, groupDisplay, ...modalProps } = props;
 
   async function action() {
     const res = await removeUserFromGroup(
@@ -46,20 +37,16 @@ export default function RemoveMemberFromGroupModal(
       danger
       {...modalProps}
     >
-      <div className="space-y-2">
+      <div className="space-y-4">
         <p>
-          Are you sure you want to remove the user{" "}
-          <Link href={`/users/${userId}`} className="underline">
-            <b>{userDisplay}</b>
-          </Link>{" "}
-          from group <b>{groupDisplay}</b>{" "}
-          {groupDescription && (
-            <>
-              (<span className="italic">{groupDescription}</span>)
-            </>
-          )}
-          ?
+          Are you sure you want to remove the user from group{" "}
+          <b>{groupDisplay}</b>?
         </p>
+        <Notice>
+          <p>
+            <b>{userDisplay}</b>
+          </p>
+        </Notice>
       </div>
     </ConfirmModal>
   );

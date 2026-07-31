@@ -1,0 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2026 Istituto Nazionale di Fisica Nucleare
+ *
+ * SPDX-License-Identifier: EUPL-1.2
+ */
+
+@utility iam-link {
+  @apply max-w-fit font-semibold text-gray-950 hover:text-blue-600 dark:text-gray-100;
+}

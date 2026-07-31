@@ -12,20 +12,24 @@ import { GroupRequestOptions } from "./options";
 type GroupRequestViewProps = {
   userId: string;
   request: GroupRequest;
+  isAdmin: boolean;
 };
 
 function GroupRequestView(props: Readonly<GroupRequestViewProps>) {
-  const { userId, request } = props;
+  const { userId, request, isAdmin } = props;
   const { groupName, groupUuid, notes, creationTime } = request;
   const sent = creationTime ? dateToHuman(new Date(creationTime)) : "N/A";
   return (
     <li key={groupName} className="iam-list-item lg:gap-2">
-      <Link
-        className="flex grow flex-col lg:flex-row"
-        href={`/groups/${groupUuid}`}
-      >
+      <div className="flex grow flex-col lg:flex-row">
         <div className="flex grow flex-col">
-          <p className="text-gray-950 dark:text-white">{groupName}</p>
+          {isAdmin ? (
+            <Link className="iam-link" href={`/groups/${groupUuid}`}>
+              {groupName}
+            </Link>
+          ) : (
+            <p className="text-gray-950 dark:text-gray-100">{groupName}</p>
+          )}
           <p className="text-sm font-light">
             <span>Motivation</span>: <span className="italic">{notes}</span>
           </p>
@@ -34,8 +38,12 @@ function GroupRequestView(props: Readonly<GroupRequestViewProps>) {
           <ClockIcon className="size-4" />
           <span className="text-sm font-light">Sent {sent}</span>
         </div>
-      </Link>
-      <GroupRequestOptions userId={userId} request={request} />
+      </div>
+      <GroupRequestOptions
+        userId={userId}
+        userFormattedName={request.userFullName ?? "unknown user"}
+        request={request}
+      />
     </li>
   );
 }
@@ -43,16 +51,22 @@ function GroupRequestView(props: Readonly<GroupRequestViewProps>) {
 type GroupRequestsTableProps = {
   userId: string;
   requests: GroupRequest[];
+  isAdmin: boolean;
 };
 
 export async function GroupRequestsTable(
   props: Readonly<GroupRequestsTableProps>
 ) {
-  const { userId, requests } = props;
+  const { userId, requests, isAdmin } = props;
   return (
     <ul>
       {requests.map(req => (
-        <GroupRequestView key={req.uuid} userId={userId} request={req} />
+        <GroupRequestView
+          key={req.uuid}
+          userId={userId}
+          request={req}
+          isAdmin={isAdmin}
+        />
       ))}
     </ul>
   );

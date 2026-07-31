@@ -2,10 +2,10 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { DeleteButton } from "./delete-button";
+import { DeleteButton } from "./delete-client";
 import { ResetClientButton } from "./reset-client-button";
 import { RevokeTokensButton } from "./revoke-tokens-button";
-import { ToggleStatusButton } from "./toggle-status-button";
+import { ToggleStatusButton } from "./toggle-client-status";
 
 type DangerZoneProps = {
   clientId: string;
@@ -23,17 +23,21 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
         <h5 className="text-danger dark:text-danger-light font-semibold">
           Danger Zone
         </h5>
-        <p>
-          A disabled client cannot issue new tokens and the old ones are
-          immediately revoked.
-        </p>
       </div>
       <div className="flex w-full lg:w-2/3">
         <div className="w-full">
           {isAdmin && (
             <div className="flex gap-2">
-              <RevokeTokensButton clientId={clientId} clientName={clientName} />
-              <ResetClientButton clientId={clientId} clientName={clientName} />
+              <RevokeTokensButton
+                clientId={clientId}
+                clientName={clientName}
+                clientDescription={clientDescription}
+              />
+              <ResetClientButton
+                clientId={clientId}
+                clientName={clientName}
+                clientDescription={clientDescription}
+              />
             </div>
           )}
           <div className="flex flex-row justify-end gap-4">

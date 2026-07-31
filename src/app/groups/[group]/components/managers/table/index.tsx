@@ -16,33 +16,24 @@ type RowProps = {
   userEmail: string;
   groupId: string;
   groupName: string;
-  groupDescription?: string | null;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const {
-    userId,
-    userFormattedName,
-    userEmail,
-    groupId,
-    groupName,
-    groupDescription,
-  } = props;
+  const { userId, userFormattedName, userEmail, groupId, groupName } = props;
   return (
     <li className="iam-list-item">
-      <Link className="flex w-0 grow flex-col" href={`/users/${userId}`}>
-        <p className="truncate text-gray-950 dark:text-gray-200">
+      <div className="flex w-0 grow flex-col">
+        <Link className="iam-link" href={`/users/${userId}`}>
           {userFormattedName}
-        </p>
+        </Link>
         <p className="truncate text-sm font-light">{userEmail}</p>
-      </Link>
+      </div>
       <ManagerOptions
         userId={userId}
         userFormattedName={userFormattedName}
         userEmail={userEmail}
         groupId={groupId}
         groupName={groupName}
-        groupDescription={groupDescription}
       />
     </li>
   );
@@ -51,12 +42,11 @@ function Row(props: Readonly<RowProps>) {
 type ManagerTableProps = {
   groupId: string;
   groupName: string;
-  groupDescription?: string | null;
   managers: User[];
 };
 
 export default function ManagersTable(props: Readonly<ManagerTableProps>) {
-  const { groupId, groupName, groupDescription, managers } = props;
+  const { groupId, groupName, managers } = props;
   const { count, numberOfPages, start, end, ...paginator } = usePaginator(
     managers.length
   );
@@ -72,7 +62,6 @@ export default function ManagersTable(props: Readonly<ManagerTableProps>) {
             userEmail={manager.emails?.[0].value ?? "unknown email"}
             groupId={groupId}
             groupName={groupName}
-            groupDescription={groupDescription}
           />
         ))}
       </ul>

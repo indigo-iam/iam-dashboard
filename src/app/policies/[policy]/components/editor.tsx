@@ -31,7 +31,6 @@ export default function Editor(props: Readonly<EditorProps>) {
   };
 
   const handleSubmit = () => {
-    // TODO: implement submit
     setEditing(false);
   };
 

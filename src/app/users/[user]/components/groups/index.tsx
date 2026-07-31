@@ -29,9 +29,7 @@ export async function UserGroups(props: Readonly<UserGroupsProps>) {
     userGroups,
     isAdmin,
   } = props;
-  const requestsPage = isAdmin
-    ? await fetchGroupsRequests(userName)
-    : await fetchGroupsRequests();
+  const requestsPage = await fetchGroupsRequests(userName);
   const requests = requestsPage.Resources;
   return (
     <TabPanel className="space-y-4">

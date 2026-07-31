@@ -11,6 +11,7 @@ import { ModalProps } from "@/components/modal";
 import ConfirmModal from "@/components/confirm-modal";
 import { resetClient } from "@/services/clients";
 import { toast } from "@/components/toaster";
+import { Warning } from "@/components/notices";
 
 type ConfirmModalProps = ModalProps & {
   clientId: string;
@@ -29,19 +30,26 @@ function Modal(props: Readonly<ConfirmModalProps>) {
     <ConfirmModal
       show={show}
       onClose={onClose}
-      title={`Revoke tokens for client '${clientName}'?`}
+      title={`Reset client '${clientName}'?`}
       onConfirm={action}
+      confirmButtonText="Reset client"
       danger
     >
-      <p>
-        {"Are you sure you want to reset the client "}
-        <b>{clientName}</b>?
+      <p className="text-center">
+        Are you sure you want to reset the client <b>{clientName}</b>?
       </p>
-      <p>Resetting the client will:</p>
-      <ul className="list-disc px-4">
-        <li>Revokes all the tokens created by the client</li>
-        <li>Rotates the client secret</li>
-      </ul>
+      <Warning>
+        <p>Resetting the client will:</p>
+        <ul className="list-disc px-4">
+          <li>
+            <b>revoke</b> all the tokens created by the client;
+          </li>
+          <li>
+            <b>rotate</b> the client secret. You still need to rotate for a new
+            secret otherwise it will not be shown.
+          </li>
+        </ul>
+      </Warning>
     </ConfirmModal>
   );
 }

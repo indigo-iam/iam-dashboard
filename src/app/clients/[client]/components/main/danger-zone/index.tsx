@@ -2,10 +2,10 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { DeleteButton } from "./delete-button";
+import { DeleteButton } from "./delete-client";
 import { ResetClientButton } from "./reset-client-button";
 import { RevokeTokensButton } from "./revoke-tokens-button";
-import { ToggleStatusButton } from "./toggle-status-button";
+import { ToggleStatusButton } from "./toggle-client-status";
 
 type DangerZoneProps = {
   clientId: string;

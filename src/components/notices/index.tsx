@@ -14,7 +14,7 @@ type NoticeProps = {
 export function Note(props: Readonly<NoticeProps>) {
   const { children } = props;
   return (
-    <div className="space-y-2 border-l-4 border-l-sky-500 bg-sky-50 px-4 py-2">
+    <div className="space-y-2 rounded border-l-4 border-l-sky-500 bg-sky-50 px-4 py-2">
       <h5 className="flex items-center gap-1 text-sm font-bold text-sky-900">
         <InformationCircleIcon className="size-4" />
         Note
@@ -27,7 +27,7 @@ export function Note(props: Readonly<NoticeProps>) {
 export function Warning(props: Readonly<NoticeProps>) {
   const { children } = props;
   return (
-    <div className="border-l-4 border-l-orange-500 bg-orange-50 px-4 py-2">
+    <div className="rounded border-l-4 border-l-orange-500 bg-orange-50 px-4 py-2">
       <h5 className="flex items-center gap-1 font-bold text-orange-900">
         <ExclamationTriangleIcon className="size-4" />
         Warning

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
+import { Warning } from "@/components/notices";
 import { toast } from "@/components/toaster";
 import { disableClient, enableClient } from "@/services/clients";
 
@@ -20,15 +21,15 @@ export default function ToggleStatusModal(
 ) {
   const { clientId, clientName, clientDescription, active, show, onClose } =
     props;
-  const title = `${active ? "Disable" : "Enable"} client '${clientName}'`;
+  const title = `${active ? "Disable" : "Enable"} client?`;
 
-  const handleConfirm = async () => {
+  async function handleConfirm() {
     const res = active
       ? await disableClient(clientId)
       : await enableClient(clientId);
     toast.toast(res);
     onClose();
-  };
+  }
 
   return (
     <ConfirmModal
@@ -39,17 +40,21 @@ export default function ToggleStatusModal(
       title={title}
       danger={active}
     >
-      <p>
-        Are you sure you want to {active ? "disable" : "enable"} the client{" "}
-        <b>{clientName}</b>
-        {clientDescription && (
-          <>
-            {" "}
-            (<i>{clientDescription}</i>)
-          </>
-        )}
-        ?
+      <p className="text-center">
+        Are you sure you want to {active ? "disable" : "enable"} the following
+        client?
       </p>
+      <div className="rounded border-s-4 bg-gray-100 p-4 dark:border-gray-200 dark:bg-gray-500">
+        <p>
+          <b>{clientName}</b>
+        </p>
+        {clientDescription && <p className="text-sm">{clientDescription}</p>}
+      </div>
+      <Warning>
+        By disabling this client it will not release new tokens and the already
+        released access tokens and refresh tokens are <b>immediately revoked</b>
+        .
+      </Warning>
     </ConfirmModal>
   );
 }

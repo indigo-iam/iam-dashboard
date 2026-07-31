@@ -12,7 +12,6 @@ interface DeleteUserModalProps extends ModalProps {
   userId: string;
   userFormattedName: string;
   userEmail: string;
-  onUserDeleted?: () => void;
 }
 
 export default function DeleteUserModal(props: Readonly<DeleteUserModalProps>) {
@@ -40,12 +39,12 @@ export default function DeleteUserModal(props: Readonly<DeleteUserModalProps>) {
         <div>
           <p>
             <b>{userFormattedName}</b>{" "}
-            <span className="text-sm text-gray-500">({userEmail})</span>
+            <span className="text-sm text-gray-500 dark:text-gray-200">({userEmail})</span>
           </p>
         </div>
       </div>
       <Warning>
-        The user will be completely removed from this organization and they will be not able any more to access to resources. <b><br/>This operation can not be undone</b>.
+        The user will be completely removed from this organization and they will be not able any more to access to resources. <b><br/>This action can not be undone</b>.
       </Warning>
     </ConfirmModal>
   );

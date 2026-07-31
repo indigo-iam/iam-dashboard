@@ -52,7 +52,9 @@ export default function ToggleUserStatusModal(
         <div>
           <p>
             <b>{userFormattedName}</b>{" "}
-            <span className="text-sm text-gray-500">({userEmail})</span>
+            <span className="text-sm text-gray-500 dark:text-gray-200">
+              ({userEmail})
+            </span>
           </p>
         </div>
       </div>

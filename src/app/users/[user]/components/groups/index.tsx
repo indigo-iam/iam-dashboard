@@ -44,7 +44,7 @@ export async function UserGroups(props: Readonly<UserGroupsProps>) {
       />
       <ManagedGroups userId={userId} />
       {requests.length > 0 && (
-        <GroupRequests userId={userId} requests={requests} />
+        <GroupRequests userId={userId} requests={requests} isAdmin={isAdmin} />
       )}
     </TabPanel>
   );

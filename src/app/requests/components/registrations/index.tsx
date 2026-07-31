@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { TabPanel } from "@/components/tabs";
 import { Registration } from "@/models/registration";
 import { dateToHuman } from "@/utils/dates";
 import RegistrationRequestsOptions from "./options";
@@ -48,21 +47,23 @@ export default function Registrations(props: Readonly<RegistrationsProps>) {
   const { requests } = props;
   if (requests.length === 0) {
     return (
-      <TabPanel className="panel">
+      <div className="panel">
+        <h3>Registration requests</h3>
         <p className="text-gray p-2 dark:text-white/60">
-          There are no pending registration requests.
+          There are no pending requests.
         </p>
-      </TabPanel>
+      </div>
     );
   }
 
   return (
-    <TabPanel className="panel">
+    <div className="panel">
+      <h3>Registration requests</h3>
       <ul>
         {requests.map(r => (
           <Row key={r.uuid} request={r} />
         ))}
       </ul>
-    </TabPanel>
+    </div>
   );
 }

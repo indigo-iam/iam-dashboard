@@ -35,7 +35,11 @@ function GroupRequestView(props: Readonly<GroupRequestViewProps>) {
           <span className="text-sm font-light">Sent {sent}</span>
         </div>
       </Link>
-      <GroupRequestOptions userId={userId} request={request} />
+      <GroupRequestOptions
+        userId={userId}
+        userFormattedName={request.userFullName ?? "unknown user"}
+        request={request}
+      />
     </li>
   );
 }

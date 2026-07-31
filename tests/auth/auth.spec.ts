@@ -112,7 +112,7 @@ testAdmin(
     await testAdmin.step("'/requests' page is visible", async () => {
       await page.goto("./requests");
       await page.waitForURL("./requests");
-      const heading = page.getByRole("heading", { name: "Requests" });
+      const heading = page.getByRole("heading", { name: "Requests" }).first();
       await expect(heading).toBeVisible();
     });
 

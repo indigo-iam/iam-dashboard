@@ -12,6 +12,7 @@ import { GroupRequest } from "@/models/group-requests";
 import { rejectGroupRequest } from "@/services/group-requests";
 import { toast } from "@/components/toaster";
 import { Notice } from "@/components/notices";
+import Link from "@/components/link";
 
 type RejectRequestModalProps = {
   request: GroupRequest;
@@ -40,9 +41,16 @@ export default function RejectRequestModalProps(
         <ModalBody>
           <p>
             Are you sure you want to delete the request to join the group{" "}
-            <b>{request.groupName}</b> by the following user?
+            <Link className="iam-link" href={`/groups/${request.groupUuid}`}>
+              {request.groupName}
+            </Link>{" "}
+            by the following user?
           </p>
-          <Notice>{request.userFullName}</Notice>
+          <Notice>
+            <Link className="iam-link" href={`/users/${request.userUuid}`}>
+              {request.userFullName}
+            </Link>
+          </Notice>
           <div>
             <p className="text-sm">
               Optionally, write a motivation that will sent to the user.

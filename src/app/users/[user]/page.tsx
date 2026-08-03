@@ -117,7 +117,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
               count={searchParams?.count}
             />
           )}
-          {isMe && <ApprovedSites />}
+          {isMe && <ApprovedSites isAdmin={isAdmin} />}
           {isMe && <ActiveTokens />}
           <LinkedAccounts
             isMe={isMe}

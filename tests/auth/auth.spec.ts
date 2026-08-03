@@ -85,7 +85,7 @@ testAdmin(
       await page.waitForURL("./users/me");
       const navbar = page.getByRole("navigation");
       const navigationButtons = navbar.getByRole("link");
-      await expect(navigationButtons).toHaveCount(10);
+      await expect(navigationButtons).toHaveCount(9);
     });
 
     await testAdmin.step("'/users' page is visible", async () => {

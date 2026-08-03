@@ -10,6 +10,9 @@ import { ScaleIcon } from "@heroicons/react/24/solid";
 import { BeakerIcon } from "@heroicons/react/24/outline";
 
 export default async function Policies() {
+  // temporary hide this page until finished
+  redirect("/");
+
   const session = await getSession();
   if (!session) {
     redirect("/signin");

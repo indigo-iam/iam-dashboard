@@ -56,11 +56,11 @@ testAdmin(
       await page.goto("./aup");
       await page.waitForURL("./users/me");
     });
-
-    await testAdmin.step("'/policies' redirects to '/users/me'", async () => {
-      await page.goto("./policies");
-      await page.waitForURL("./users/me");
-    });
+    // Disable until the page is finished
+    // await testAdmin.step("'/policies' redirects to '/users/me'", async () => {
+    //   await page.goto("./policies");
+    //   await page.waitForURL("./users/me");
+    // });
   }
 );
 

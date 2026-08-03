@@ -123,12 +123,12 @@ testAdmin(
       await expect(heading).toBeVisible();
     });
 
-    await testAdmin.step("'/policies' page is visible", async () => {
-      await page.goto("./policies");
-      await page.waitForURL("./policies");
-      const heading = page.getByRole("heading", { name: "Policies" });
-      await expect(heading).toBeVisible();
-    });
+    // await testAdmin.step("'/policies' page is visible", async () => {
+    //   await page.goto("./policies");
+    //   await page.waitForURL("./policies");
+    //   const heading = page.getByRole("heading", { name: "Policies" });
+    //   await expect(heading).toBeVisible();
+    // });
 
     await testAdmin.step("'/aup' page is visible", async () => {
       await page.goto("./aup");

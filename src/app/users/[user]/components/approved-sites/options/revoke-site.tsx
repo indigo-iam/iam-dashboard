@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
+import { Notice } from "@/components/notices";
 import { toast } from "@/components/toaster";
 import { Site } from "@/models/sites";
 import { revokeSite } from "@/services/sites";
@@ -15,10 +16,12 @@ type RevokeSiteProps = {
 
 export function RevokeSite(props: Readonly<RevokeSiteProps>) {
   const { site, show, onClose } = props;
-  const action = async () => {
+
+  async function action() {
     const res = await revokeSite(site.id.toString());
     toast.toast(res);
-  };
+  }
+
   return (
     <ConfirmModal
       show={show}
@@ -28,10 +31,19 @@ export function RevokeSite(props: Readonly<RevokeSiteProps>) {
       onConfirm={action}
       danger
     >
-      <p>
-        Are you sure you want to revoke the consent for the site{" "}
-        <b>{site.clientId}</b>?
-      </p>
+      <div className="space-y-4">
+        <p>
+          Are you sure you want to revoke the consent for the following site?
+        </p>
+        <Notice>
+          <p>
+            <b>{site.clientName}</b>
+          </p>
+          {site.clientDescription && (
+            <p className="text-sm">{site.clientDescription}</p>
+          )}
+        </Notice>
+      </div>
     </ConfirmModal>
   );
 }

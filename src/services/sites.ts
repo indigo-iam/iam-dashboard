@@ -8,6 +8,7 @@ import { Notification } from "@/components/toaster";
 import { settings } from "@/config";
 import { ActiveToken, Site } from "@/models/sites";
 import { authFetch } from "@/utils/fetch";
+import { refresh } from "next/cache";
 
 const { IAM_API_URL } = settings;
 
@@ -29,6 +30,7 @@ export async function revokeSite(siteId: string): Promise<Notification> {
     method: "DELETE",
   });
   if (response.ok) {
+    refresh();
     return { type: "success", title: "Site revoked" };
   }
   const msg = await response.text();

@@ -15,7 +15,14 @@ OpenID Connect/OAuth2 authorization flow is handled by
 ## IAM Configuration
 
 In order to support the dashboard, IAM login service must be initialized with
-the following environment variables enabled:
+proper environment variables. For Indigo IAM v1.14.2 and above, only the
+`IAM_DASHBOARD_ENABLED` variable is needed:
+
+```shell
+IAM_DASHBOARD_ENABLED: true
+```
+
+For versions v1.14.0 and v1.14.1 the following variables are needed instead:
 
 ```shell
 IAM_DASHBOARD_ENABLED: true
@@ -28,8 +35,23 @@ IAM_SCIM_INCLUDE_AUTHORITIES: true
 The dashboard acts as a INDIGO IAM Login Service OpenID Connect/OAuth2 client
 and thus, a registered client is required to receive an access token.
 
-To register a new client, go to the chosen INDIGO IAM instance, login as admin
-and create a new client with the configuration described below.
+Since INDIGO IAM v1.14.0 and above, a OpenID Connect/OAuth2 client for the new
+dashboard is automatically registered by IAM Login Service during boot-time,
+if required.
+To automatically register the client, the `IAM_DASHBOARD_CLIENT_ID` and
+`IAM_DASHBOARD_CLIENT_SECRET` variables MUST be provided to **both** Indigo IAM
+Login Service as well as to the dashboard configuration file (see below).
+
+It is possibile to generate valid Client ID and Client Secret with
+
+```shell
+IAM_DASHBOARD_CLIENT_ID=$(uuid)
+IAM_DASHBOARD_CLIENT_SECRET=$(pwgen -1 32)
+```
+
+If you prefer to register a new client manually, go to the chosen INDIGO IAM
+instance, login as admin and create a new client with the configuration
+described below.
 
 #### Redirect URIs
 
@@ -93,16 +115,16 @@ openssl rand -base64 32
 Create `.env` file similar to:
 
 ```bash
-IAM_API_URL=https://iam-dev.cloud.cnaf.infn.it
-IAM_DASHBOARD_BASE_URL=https://iam-dev.cloud.cnaf.infn.it
-IAM_DASHBOARD_BASE_PATH=/ui
+IAM_API_URL="https://iam-dev.cloud.cnaf.infn.it"
+IAM_DASHBOARD_BASE_URL="https://iam-dev.cloud.cnaf.infn.it"
+IAM_DASHBOARD_BASE_PATH="/ui"
 IAM_DASHBOARD_CLIENT_ID="<your_client_id>"
 IAM_DASHBOARD_CLIENT_SECRET="<your_client_secret>"
 IAM_DASHBOARD_AUTH_SECRET="<authentication_secret>"
 IAM_DASHBOARD_OTEL_EXPORTER_OTLP_ENDPOINT="https://your.otel.example/collector"
-IAM_DASHBOARD_ORGANIZATION_NAME="INFN DataCloud"       # default "cnafsd"
-IAM_DASHBOARD_POLICY_URL=https://example.org/policy    # default undefined
-IAM_DASHBOARD_SUPPORT_URL=https://example.org/support  # default undefined
+IAM_DASHBOARD_ORGANIZATION_NAME="INFN DataCloud"         # default "cnafsd"
+IAM_DASHBOARD_POLICY_URL="https://example.org/policy"    # default undefined
+IAM_DASHBOARD_SUPPORT_URL="https://example.org/support"  # default undefined
 ```
 
 To start the application execute:

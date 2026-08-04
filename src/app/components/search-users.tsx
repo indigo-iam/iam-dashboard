@@ -35,6 +35,15 @@ export function SearchUsers(props: Readonly<SearchUserProps>) {
     });
   }
 
+  function onInput(event: React.InputEvent<HTMLInputElement>) {
+    const input = event.target as HTMLInputElement;
+    for (const result of searchResult) {
+      if (result.userName === input.value) {
+        onSelect(result);
+      }
+    }
+  }
+
   return (
     <Field>
       <Label>Search user</Label>
@@ -42,11 +51,12 @@ export function SearchUsers(props: Readonly<SearchUserProps>) {
         className="iam-input"
         list={listId}
         onChange={handleQueryChange}
+        onInput={onInput}
         placeholder="Type to search for a user..."
       />
       <datalist id={listId}>
         {searchResult.map(user => (
-          <option key={user.id} value={user.name?.formatted}>
+          <option key={user.id} value={user.userName}>
             {user.emails?.[0].value}
           </option>
         ))}

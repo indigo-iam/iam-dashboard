@@ -13,6 +13,7 @@ import { toast } from "@/components/toaster";
 import { User } from "@/models/scim";
 import { addUserToGroup } from "@/services/groups";
 import Link from "@/components/link";
+import { Notice } from "@/components/notices";
 
 type SearchUsersViewProps = {
   groupName: string;
@@ -24,14 +25,13 @@ function SearchUsersView(props: Readonly<SearchUsersViewProps>) {
   const { groupName, groupDescription, onSelect } = props;
   return (
     <div className="space-y-4">
-      <p>
-        Type to search for an user add to the group <b>{groupName}</b>{" "}
-        {groupDescription && (
-          <>
-            (<span className="italic">{groupDescription}</span>)
-          </>
-        )}
-      </p>
+      <p>Type to search for a user add to group</p>
+      <Notice>
+        <p>
+          <b>{groupName}</b>
+        </p>
+        {groupDescription && <p>{groupDescription}</p>}
+      </Notice>
       <SearchUsers onSelect={onSelect} listId="search-member" />
     </div>
   );
@@ -42,21 +42,23 @@ type ConfirmViewPros = {
   userName: string;
   userEmail: string;
   groupName: string;
-  groupDescription?: string | null;
 };
 
 function ConfirmView(props: Readonly<ConfirmViewPros>) {
-  const { userId, userName, userEmail, groupName, groupDescription } = props;
+  const { userId, userName, userEmail, groupName } = props;
   return (
-    // prettier-ignore
-    <p>
-      Are you sure you want to add the user{" "}
-      <Link href={`/users/${userId}`} className="underline">
-        <b>{userName}</b>{" "}(<i>{userEmail}</i>)
-      </Link>{" "}
-      to group to group <b>{groupName}</b>{" "}
-      (<span className="italic">{groupDescription}</span>)?
-    </p>
+    <div className="space-y-4">
+      <p>
+        Are you sure you want to add the following user to group{" "}
+        <b>{groupName}</b>?
+      </p>
+      <Notice>
+        <Link href={`/users/${userId}`} className="iam-link">
+          {userName}
+        </Link>
+        <p>{userEmail}</p>
+      </Notice>
+    </div>
   );
 }
 
@@ -67,19 +69,23 @@ type AddMemberModalProps = ModalProps & {
 };
 
 export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
-  const { groupId, groupName, groupDescription, onClose, ...modalProps } =
-    props;
+  const {
+    groupId, //
+    groupName,
+    groupDescription,
+    onClose,
+    ...modalProps
+  } = props;
 
   const [user, setUser] = useState<User>();
-
   const clear = () => setUser(undefined);
 
-  const clearAndClose = () => {
+  function clearAndClose() {
     onClose();
-    setTimeout(() => clear, 500);
-  };
+    setTimeout(() => clear(), 500);
+  }
 
-  const addMember = async () => {
+  async function addMember() {
     if (!user) {
       console.warn("Cannot add member, user is undefined");
       return;
@@ -92,15 +98,15 @@ export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
     }
     toast.toast(res);
     clearAndClose();
-  };
+  }
 
   return (
     <ConfirmModal
       {...modalProps}
       onClose={clearAndClose}
-      title={`Add member to group ${groupName}`}
+      title={`Add member to group '${groupName}'?`}
       onConfirm={addMember}
-      onCancel={clear}
+      onCancel={clearAndClose}
       confirmButtonDisabled={!user}
     >
       <>
@@ -110,7 +116,6 @@ export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
             userName={user.name?.formatted ?? "unknown user"}
             userEmail={user.emails?.[0].value ?? "unknown email"}
             groupName={groupName}
-            groupDescription={groupDescription}
           />
         ) : (
           <SearchUsersView

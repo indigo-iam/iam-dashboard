@@ -33,10 +33,12 @@ function Row(props: Readonly<RowProps>) {
             {client.client_name}
           </Link>
           <div className="flex flex-col">
-            <p className="truncate text-sm font-light">
-              {client.client_description}
-            </p>
-            <p title={scopes} className="truncate text-sm font-light italic">
+            {client.client_description && (
+              <p className="truncate text-sm font-light">
+                {client.client_description}
+              </p>
+            )}
+            <p title={scopes} className="truncate text-sm font-extralight">
               {scopes}
             </p>
           </div>

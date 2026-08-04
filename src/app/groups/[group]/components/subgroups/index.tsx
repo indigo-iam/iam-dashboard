@@ -9,6 +9,7 @@ import { fetchSubgroupsPage } from "@/services/groups";
 import Paginator from "@/components/paginator";
 
 type SubgroupsProps = {
+  isAdmin: boolean;
   groupId: string;
   groupName: string;
   count: number;
@@ -16,7 +17,7 @@ type SubgroupsProps = {
 };
 
 export default async function Subgroups(props: Readonly<SubgroupsProps>) {
-  const { groupId, groupName, count, page } = props;
+  const { isAdmin, groupId, groupName, count, page } = props;
   const subgroupsPage = await fetchSubgroupsPage(groupId, 1, 0);
   const numberOfPages = Math.ceil(subgroupsPage.totalResults / count);
   return (
@@ -31,7 +32,9 @@ export default async function Subgroups(props: Readonly<SubgroupsProps>) {
             {subgroupsPage.totalResults}
           </div>
         </div>
-        <AddSubgroupButton rootGroupId={groupId} rootGroupName={groupName} />
+        {isAdmin && (
+          <AddSubgroupButton rootGroupId={groupId} rootGroupName={groupName} />
+        )}
       </div>
       {subgroupsPage.totalResults > 0 ? (
         <div>

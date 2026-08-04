@@ -79,6 +79,7 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
         <TabPanels>
           <GroupInfo group={group} />
           <Subgroups
+            isAdmin={isAdmin}
             groupId={groupId}
             groupName={groupName}
             count={countSubgroups}

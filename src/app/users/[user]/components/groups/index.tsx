@@ -42,7 +42,7 @@ export async function UserGroups(props: Readonly<UserGroupsProps>) {
         userGroups={userGroups}
         isAdmin={isAdmin}
       />
-      <ManagedGroups userId={userId} />
+      <ManagedGroups userId={userId} isAdmin={isAdmin} />
       {requests.length > 0 && (
         <GroupRequests userId={userId} requests={requests} isAdmin={isAdmin} />
       )}

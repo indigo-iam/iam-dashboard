@@ -12,16 +12,21 @@ type RowProps = {
   userDisplay: string;
   groupId: string;
   groupDisplay: string;
+  isAdmin: boolean;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const { userId, userDisplay, groupId, groupDisplay } = props;
+  const { userId, userDisplay, groupId, groupDisplay, isAdmin } = props;
   return (
     <li className="iam-list-item">
       <div className="flex w-0 grow flex-col">
-        <Link className="iam-link" href={`/users/${userId}`}>
-          {userDisplay}
-        </Link>
+        {isAdmin ? (
+          <Link className="iam-link" href={`/users/${userId}`}>
+            {userDisplay}
+          </Link>
+        ) : (
+          <p className="text-gray-950 dark:text-gray-100">{userDisplay}</p>
+        )}
         <p className="truncate text-sm font-light">{userId}</p>
       </div>
       <MemberOptions
@@ -39,9 +44,10 @@ type MembersProps = {
   groupDisplay: string;
   count: number;
   page: number;
+  isAdmin: boolean;
 };
 export default async function Members(props: Readonly<MembersProps>) {
-  const { groupId, groupDisplay, count, page } = props;
+  const { groupId, groupDisplay, count, page, isAdmin } = props;
   const startIndex = 1 + count * (page - 1);
   const membersPage = await fetchGroupMembersPage(groupId, count, startIndex);
   const members = membersPage.Resources;
@@ -54,6 +60,7 @@ export default async function Members(props: Readonly<MembersProps>) {
           userDisplay={member.display}
           groupId={groupId}
           groupDisplay={groupDisplay}
+          isAdmin={isAdmin}
         />
       ))}
     </ul>

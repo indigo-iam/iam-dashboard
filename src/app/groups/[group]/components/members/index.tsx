@@ -50,6 +50,7 @@ export default async function Members(props: Readonly<MembersProps>) {
             groupDisplay={groupName}
             count={count}
             page={page}
+            isAdmin={isAdmin}
           />
           <Paginator numberOfPages={numberOfPages} suffix="Members" />
         </div>

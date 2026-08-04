@@ -5,6 +5,7 @@
 import { Textarea } from "@/components/textarea";
 import ConfirmButton from "./components/confirm-button";
 import { Description, Field, Label } from "@/components/form";
+import { redirect } from "next/navigation";
 
 const POLICY_EXAMPLE = `{
   "id": 1,
@@ -17,6 +18,9 @@ const POLICY_EXAMPLE = `{
 }  `;
 
 export default async function Policies() {
+  // temporary hide this page until finished
+  redirect("/");
+
   return (
     <section>
       <header className="section-header">

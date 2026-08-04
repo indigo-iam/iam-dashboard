@@ -56,11 +56,11 @@ testAdmin(
       await page.goto("./aup");
       await page.waitForURL("./users/me");
     });
-
-    await testAdmin.step("'/policies' redirects to '/users/me'", async () => {
-      await page.goto("./policies");
-      await page.waitForURL("./users/me");
-    });
+    // Disable until the page is finished
+    // await testAdmin.step("'/policies' redirects to '/users/me'", async () => {
+    //   await page.goto("./policies");
+    //   await page.waitForURL("./users/me");
+    // });
   }
 );
 
@@ -85,7 +85,7 @@ testAdmin(
       await page.waitForURL("./users/me");
       const navbar = page.getByRole("navigation");
       const navigationButtons = navbar.getByRole("link");
-      await expect(navigationButtons).toHaveCount(10);
+      await expect(navigationButtons).toHaveCount(9);
     });
 
     await testAdmin.step("'/users' page is visible", async () => {
@@ -123,12 +123,12 @@ testAdmin(
       await expect(heading).toBeVisible();
     });
 
-    await testAdmin.step("'/policies' page is visible", async () => {
-      await page.goto("./policies");
-      await page.waitForURL("./policies");
-      const heading = page.getByRole("heading", { name: "Policies" });
-      await expect(heading).toBeVisible();
-    });
+    // await testAdmin.step("'/policies' page is visible", async () => {
+    //   await page.goto("./policies");
+    //   await page.waitForURL("./policies");
+    //   const heading = page.getByRole("heading", { name: "Policies" });
+    //   await expect(heading).toBeVisible();
+    // });
 
     await testAdmin.step("'/aup' page is visible", async () => {
       await page.goto("./aup");

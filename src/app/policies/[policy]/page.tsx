@@ -12,6 +12,9 @@ type PolicyPageProps = {
 };
 
 export default async function PolicyPage(props: Readonly<PolicyPageProps>) {
+  // temporary hide this page until finished
+  redirect("/");
+
   const session = await getSession();
   if (!session) {
     redirect("/signin");

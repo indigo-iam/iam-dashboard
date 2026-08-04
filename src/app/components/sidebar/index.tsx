@@ -10,7 +10,6 @@ import {
   HomeIcon,
   InboxArrowDownIcon,
   CubeIcon,
-  ScaleIcon,
   UserGroupIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
@@ -56,9 +55,6 @@ function Links(props: Readonly<LinksProps>) {
         </Link>
         <Link title="AUP" href="/aup">
           <DocumentTextIcon className="size-5" />
-        </Link>
-        <Link title="Policies" href="/policies">
-          <ScaleIcon className="size-5" />
         </Link>
       </div>
     );

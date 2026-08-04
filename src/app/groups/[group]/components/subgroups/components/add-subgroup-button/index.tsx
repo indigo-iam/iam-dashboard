@@ -23,7 +23,7 @@ export default function AddSubgroupButton(
   return (
     <>
       <Button className="btn-secondary" type="button" onClick={open}>
-        Add Subgroup
+        Add subgroup
       </Button>
       <AddSubgroupModal
         rootGroupId={rootGroupId}

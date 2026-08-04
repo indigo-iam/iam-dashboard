@@ -64,7 +64,7 @@ export default function AddSubgroupModal(
             Cancel
           </Button>
           <Button className="btn-primary" type="submit">
-            Add Subgroup
+            Add subgroup
           </Button>
         </ModalFooter>
       </Form>

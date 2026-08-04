@@ -132,10 +132,12 @@ export async function UserManagedGroupsTable(
       {groups.map(g => {
         return (
           <li key={g.id} className="iam-list-item">
-            <Link className="w-full" href={`/groups/${g.id}`}>
-              <p className="text-gray-950 dark:text-white">{g.name}</p>
+            <div className="w-full">
+              <Link className="iam-link" href={`/groups/${g.id}`}>
+                {g.name}
+              </Link>
               <p className="text-sm font-light">{g.id}</p>
-            </Link>
+            </div>
           </li>
         );
       })}

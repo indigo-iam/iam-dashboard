@@ -40,6 +40,7 @@ export function Options(props: Readonly<OptionsProps>) {
     <div>
       <button
         data-testid="option"
+        type="button"
         className="group relative my-auto cursor-pointer rounded-md transition hover:bg-gray-200 data-open:bg-gray-200 dark:hover:bg-gray-500 dark:data-active:bg-gray-200 dark:data-open:bg-gray-500"
         aria-labelledby={tooltipId}
         popoverTarget={popoverId}

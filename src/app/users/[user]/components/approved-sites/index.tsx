@@ -12,10 +12,11 @@ import { Suspense } from "react";
 
 type ApprovedSiteProps = {
   site: Site;
+  isAdmin: boolean;
 };
 
 function ApprovedSite(props: Readonly<ApprovedSiteProps>) {
-  const { site } = props;
+  const { site, isAdmin } = props;
   const { clientName, clientId, clientDescription } = site;
   const scopes = site.allowedScopes.join(" ");
   const accessDate = new Date(site.accessDate).toLocaleDateString();
@@ -25,13 +26,16 @@ function ApprovedSite(props: Readonly<ApprovedSiteProps>) {
   return (
     <li className="iam-list-item">
       <div className="flex w-0 grow flex-col">
-        <Link
-          className="flex grow flex-col gap-0.5 lg:flex-row"
-          href={`/clients/${clientId}`}
-        >
+        <div className="flex grow flex-col gap-0.5 lg:flex-row">
           <div className="flex grow flex-col gap-0.5 lg:w-0">
             <div className="text-gray-950 dark:text-white">
-              <p>{clientName}</p>
+              {isAdmin ? (
+                <Link className="iam-link" href={`/clients/${clientId}`}>
+                  {clientName}
+                </Link>
+              ) : (
+                <p>{clientName}</p>
+              )}
               {clientDescription && (
                 <p className="truncate text-sm font-light italic">
                   {clientDescription}
@@ -51,14 +55,19 @@ function ApprovedSite(props: Readonly<ApprovedSiteProps>) {
               Authorized {authorizationDate}
             </p>
           </div>
-        </Link>
+        </div>
       </div>
       <ApprovedSiteOptions site={site} />
     </li>
   );
 }
 
-async function Content() {
+type ApprovedSitesProps = {
+  isAdmin: boolean;
+};
+
+async function Content(props: Readonly<ApprovedSitesProps>) {
+  const { isAdmin } = props;
   const approvedSites = await getApprovedSites();
   if (approvedSites.length === 0) {
     return null;
@@ -66,18 +75,19 @@ async function Content() {
   return (
     <ul>
       {approvedSites.map(site => (
-        <ApprovedSite site={site} key={site.id} />
+        <ApprovedSite site={site} key={site.id} isAdmin={isAdmin} />
       ))}
     </ul>
   );
 }
 
-export async function ApprovedSites() {
+export async function ApprovedSites(props: Readonly<ApprovedSitesProps>) {
+  const { isAdmin } = props;
   return (
     <TabPanel className="panel">
       <h2 className="py-2">Linked Apps and Websites</h2>
       <Suspense fallback={<LoadingList />}>
-        <Content />
+        <Content isAdmin={isAdmin} />
       </Suspense>
     </TabPanel>
   );

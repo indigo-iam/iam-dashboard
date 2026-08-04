@@ -2,9 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { useRef } from "react";
+import { useId, useRef } from "react";
 
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { EllipsisHorizontalIcon } from "@heroicons/react/24/solid";
 import { Tooltip, useTooltip } from "../tooltip";
 
@@ -35,27 +34,35 @@ type OptionsProps = {
 export function Options(props: Readonly<OptionsProps>) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { tooltipId, tooltipRef } = useTooltip(buttonRef);
+  const popoverId = useId();
   const { children } = props;
   return (
-    <Popover>
-      <PopoverButton
+    <div>
+      <button
         data-testid="option"
+        type="button"
         className="group relative my-auto cursor-pointer rounded-md transition hover:bg-gray-200 data-open:bg-gray-200 dark:hover:bg-gray-500 dark:data-active:bg-gray-200 dark:data-open:bg-gray-500"
         aria-labelledby={tooltipId}
+        popoverTarget={popoverId}
+        popoverTargetAction="toggle"
         ref={buttonRef}
       >
         <EllipsisHorizontalIcon className="size-8 text-gray-800 dark:text-gray-400" />
         <Tooltip tooltipId={tooltipId} tooltipRef={tooltipRef}>
           More
         </Tooltip>
-      </PopoverButton>
-      <PopoverPanel
-        anchor="bottom"
-        transition
-        className="easy-out overlay flex flex-col p-2 data-closed:opacity-0"
+      </button>
+      <div
+        id={popoverId}
+        popover="auto"
+        className="easy-out overlay absolute inset-auto m-0 p-2 opacity-0 transition-opacity [&:popover-open]:opacity-100 [&:popover-open]:starting:opacity-0"
+        style={{
+          positionArea: "block-end center",
+          transitionProperty: "display, opacity, overlay",
+        }}
       >
         {children}
-      </PopoverPanel>
-    </Popover>
+      </div>
+    </div>
   );
 }

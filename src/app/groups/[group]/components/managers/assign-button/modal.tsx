@@ -13,6 +13,7 @@ import { assignGroupManager } from "@/services/groups";
 
 import { useState } from "react";
 import Link from "next/link";
+import { Notice } from "@/components/notices";
 
 type SearchUserViewProps = {
   groupName: string;
@@ -24,15 +25,13 @@ function SearchUserView(props: Readonly<SearchUserViewProps>) {
   const { groupName, groupDescription, onSelect } = props;
   return (
     <div className="space-y-4">
-      <p>
-        Type to search for an user to become manager of group <b>{groupName}</b>
-        {groupDescription && (
-          <>
-            {" "}
-            (<i>{groupDescription}</i>)
-          </>
-        )}
-      </p>{" "}
+      <p>Type to search for an user to become manager of the following group</p>
+      <Notice>
+        <p>
+          <b>{groupName}</b>
+        </p>
+        {groupDescription && <p> {groupDescription}</p>}
+      </Notice>
       <SearchUsers listId="search-list-managers" onSelect={onSelect} />
     </div>
   );
@@ -58,18 +57,17 @@ function ConfirmView(props: Readonly<ConfirmViewProps>) {
     <div className="space-y-4">
       <p>
         Are you sure you want to make the user{" "}
-        <Link href={`/users/${userId}`} className="underline">
-          <b>{userFormattedName}</b> (<i>{userEmail}</i>)
+        <Link href={`/users/${userId}`} className="iam-link">
+          <b>{userFormattedName}</b>
         </Link>{" "}
-        manager of the group <b>{groupName}</b>
-        {groupDescription && (
-          <>
-            {" "}
-            (<i>{groupDescription}</i>)
-          </>
-        )}
-        ?
+        ({userEmail}) manager of the following group?
       </p>
+      <Notice>
+        <p>
+          <b>{groupName}</b>
+        </p>
+        {groupDescription && <p> {groupDescription}</p>}
+      </Notice>
     </div>
   );
 }
@@ -112,9 +110,9 @@ export default function AssignGroupManagerModal(
     <ConfirmModal
       onClose={clearAndClose}
       {...modalProps}
-      title="Assign group manager"
+      title="Assign group manager?"
       onConfirm={assignManager}
-      onCancel={clear}
+      onCancel={clearAndClose}
       confirmButtonDisabled={!user}
     >
       <>

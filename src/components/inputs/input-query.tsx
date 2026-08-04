@@ -16,6 +16,7 @@ export function InputQuery(props: Readonly<InputQueryProps>) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+  const defaultValue = searchParams.get("query") ?? undefined;
 
   const setQuery = (query: string) => {
     const params = new URLSearchParams(searchParams);
@@ -30,6 +31,11 @@ export function InputQuery(props: Readonly<InputQueryProps>) {
   };
 
   return (
-    <InputSearch onQueryChange={setQuery} onClear={clearQuery} {...props} />
+    <InputSearch
+      onQueryChange={setQuery}
+      onClear={clearQuery}
+      {...props}
+      defaultValue={defaultValue}
+    />
   );
 }

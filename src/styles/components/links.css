@@ -5,5 +5,5 @@
  */
 
 @utility iam-link {
-  @apply underline-offset-3 max-w-fit text-sm font-semibold tracking-wide text-gray-950 decoration-1 hover:text-blue-600 hover:underline dark:text-gray-100;
+  @apply max-w-fit font-semibold tracking-wide text-gray-950 decoration-1 underline-offset-3 hover:text-blue-600 hover:underline dark:text-gray-100;
 }

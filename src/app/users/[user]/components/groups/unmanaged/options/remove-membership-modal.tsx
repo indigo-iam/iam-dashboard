@@ -37,12 +37,14 @@ export default function RemoveMembershipModal(
     <ConfirmModal
       show={show}
       onClose={onClose}
-      confirmButtonText="Leave Group"
-      title="Leave Group"
+      confirmButtonText="Leave group"
+      title="Leave group"
       onConfirm={handleConfirm}
       danger
     >
-      Are you sure you want to leave the group <b>{groupDisplay}</b>?
+      <p className="py-2 text-center">
+        Are you sure you want to leave the group <b>{groupDisplay}</b>?
+      </p>
     </ConfirmModal>
   );
 }

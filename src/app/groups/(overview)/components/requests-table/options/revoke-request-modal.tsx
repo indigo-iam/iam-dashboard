@@ -3,13 +3,14 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
+import { Note } from "@/components/notices";
 import { GroupRequest } from "@/models/group-requests";
 import { abortGroupRequest } from "@/services/group-requests";
 import { dateToHuman } from "@/utils/dates";
-import { ClockIcon } from "@heroicons/react/24/outline";
 
 interface RevokeRequestModalProps {
   userId: string;
+  userFormattedName: string;
   request: GroupRequest;
   show: boolean;
   onClose: () => void;
@@ -18,7 +19,14 @@ interface RevokeRequestModalProps {
 export default function RevokeRequestModal(
   props: Readonly<RevokeRequestModalProps>
 ) {
-  const { userId, request, show, onClose, onDeleted } = props;
+  const {
+    userId, //
+    userFormattedName,
+    request,
+    show,
+    onClose,
+    onDeleted,
+  } = props;
   const sent = request.creationTime
     ? dateToHuman(new Date(request.creationTime))
     : "/NA";
@@ -38,21 +46,20 @@ export default function RevokeRequestModal(
       title="Revoke group request"
       danger={true}
     >
-      <div>
-        <p>Are you sure you want to revoke request for group</p>
-        <div>
-          <p className="font-bold">{request.groupName}</p>
-        </div>
+      <div className="flex flex-col items-center gap-4">
+        <p>Are you sure you want to revoke the following request?</p>
         {request.notes && (
-          <p>
-            <span>Motivation: </span>
-            <span className="italic">{request.notes}</span>
-          </p>
+          <Note>
+            <div className="space-y-4">
+              <p>
+                User <b>{userFormattedName}</b> wants to join group{" "}
+                <b>{request.groupName}</b> with the following motivation:{" "}
+                <q className="italic">{request.notes}</q>
+              </p>
+              <p className="text-sm font-light">Sent {sent}</p>
+            </div>
+          </Note>
         )}
-        <p className="flex items-center gap-1">
-          <ClockIcon className="size-4" />
-          <span>Sent {sent}</span>
-        </p>
       </div>
     </ConfirmModal>
   );

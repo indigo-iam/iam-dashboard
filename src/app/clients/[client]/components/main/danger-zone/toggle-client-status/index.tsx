@@ -4,33 +4,37 @@
 
 "use client";
 
-import DeleteClientModal from "@/app/components/clients/options/delete-client-modal";
-import { Button } from "@/components/buttons";
 import { useState } from "react";
 
-type DeleteButtonProps = {
+import { Button } from "@/components/buttons";
+import ToggleStatusModal from "./modal";
+
+type DisableButtonProps = {
   clientId: string;
   clientName: string;
   clientDescription: string | null;
-  isAdmin: boolean;
+  active: boolean;
 };
 
-export function DeleteButton(props: Readonly<DeleteButtonProps>) {
-  const { clientId, clientName, clientDescription, isAdmin } = props;
+export function ToggleStatusButton(props: Readonly<DisableButtonProps>) {
+  const { clientId, clientName, clientDescription, active } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
   return (
     <>
-      <Button className="btn-danger" onClick={open}>
-        Delete
+      <Button
+        className={active ? "btn-danger-tertiary" : "btn-tertiary"}
+        onClick={open}
+      >
+        {active ? "Disable" : "Enable"}
       </Button>
-      <DeleteClientModal
+      <ToggleStatusModal
         clientId={clientId}
         clientName={clientName}
         clientDescription={clientDescription}
+        active={active}
         show={show}
-        isAdmin={isAdmin}
         onClose={close}
       />
     </>

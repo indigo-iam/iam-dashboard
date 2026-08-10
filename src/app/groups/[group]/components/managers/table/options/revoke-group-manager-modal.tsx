@@ -2,11 +2,10 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import Link from "@/components/link";
-
 import ConfirmModal from "@/components/confirm-modal";
 import { toast } from "@/components/toaster";
 import { revokeGroupManager } from "@/services/groups";
+import { Notice } from "@/components/notices";
 
 type RevokeGroupManagerModal = {
   userId: string;
@@ -14,7 +13,6 @@ type RevokeGroupManagerModal = {
   userEmail: string;
   groupId: string;
   groupName: string;
-  groupDescription?: string | null;
   show: boolean;
   onClose: () => void;
   onUnlinked?: () => void;
@@ -29,7 +27,6 @@ export default function RevokeGroupManagerModal(
     userEmail,
     groupId,
     groupName,
-    groupDescription,
     show,
     onClose,
     onUnlinked,
@@ -46,24 +43,23 @@ export default function RevokeGroupManagerModal(
       show={show}
       onClose={onClose}
       confirmButtonText="Revoke"
-      title="Revoke group manager privileges"
+      title="Revoke user from group managers?"
       onConfirm={handleConfirm}
       danger
     >
-      <p>
-        Are you sure you want to revoke group manager privileges from user{" "}
-        <Link href={`/users/${userId}`} className="underline">
-          <b className="text-nowrap">{userFormattedName}</b> (
-          <i className="text-nowrap">{userEmail}</i>)
-        </Link>{" "}
-        for group <b>{groupName}</b>
-        {groupDescription && (
-          <>
-            (<i> {groupDescription}</i>)
-          </>
-        )}
-        ?
-      </p>
+      <div className="space-y-4">
+        <p>
+          {" "}
+          Are you sure you want revoke manager privileges for group{" "}
+          <b>{groupName}</b> from the following user?
+        </p>
+        <Notice>
+          <p>
+            <b>{userFormattedName}</b>
+          </p>
+          <p className="text-sm">{userEmail}</p>
+        </Notice>
+      </div>
     </ConfirmModal>
   );
 }

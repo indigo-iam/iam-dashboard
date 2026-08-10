@@ -4,8 +4,9 @@
 
 "use client";
 
-import { useId } from "react";
+import { useRef } from "react";
 
+import { Tooltip, useTooltip } from "../tooltip";
 import { PaginatedGroupRequests } from "@/models/group-requests";
 import { Registration } from "@/models/registration";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
@@ -40,18 +41,22 @@ export function NotificationsPopover(
   props: Readonly<NotificationsPopoverProps>
 ) {
   const { groupRequests, registrationRequests, className, ...others } = props;
-  const tooltipId = useId();
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const { tooltipId, tooltipRef } = useTooltip(buttonRef);
   const totalRequests =
     groupRequests.totalResults + registrationRequests.length;
 
   return (
     <Popover className={className} {...others}>
-      <PopoverButton className="group relative flex size-8 cursor-pointer items-center justify-center rounded-full p-1 hover:bg-white/10 dark:hover:bg-white/10">
+      <PopoverButton
+        className="group relative flex size-8 cursor-pointer items-center justify-center rounded-full p-1 hover:bg-white/10 dark:hover:bg-white/10"
+        ref={buttonRef}
+      >
         <BellIcon className="size-6 text-white dark:text-white" />
         <Badge count={totalRequests} />
-        <div role="tooltip" className="tooltip top-10 left-1/2" id={tooltipId}>
+        <Tooltip tooltipId={tooltipId} tooltipRef={tooltipRef}>
           Notifications
-        </div>
+        </Tooltip>
       </PopoverButton>
       <PopoverPanel
         transition

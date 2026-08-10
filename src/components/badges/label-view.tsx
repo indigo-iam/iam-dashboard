@@ -20,7 +20,7 @@ export default function LabelView(props: Readonly<LabelProps>) {
         <b>{name}</b> {value}
       </span>
       {onClick && (
-        <button onClick={onClick} className="cursor-pointer">
+        <button type="button" onClick={onClick} className="cursor-pointer">
           <XCircleIcon className="size-4 hover:text-gray-300" />
         </button>
       )}

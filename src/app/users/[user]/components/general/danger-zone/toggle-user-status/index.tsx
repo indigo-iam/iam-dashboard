@@ -11,8 +11,7 @@
 import { useState } from "react";
 
 import { Button } from "@/components/buttons";
-import ConfirmModal from "@/components/confirm-modal";
-import { changeUserStatus } from "@/services/users";
+import ToggleUserStatusModal from "./modal";
 
 type DisableButtonProps = {
   userId: string;
@@ -26,13 +25,6 @@ export function ToggleStatusButton(props: Readonly<DisableButtonProps>) {
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
-  const title = `${userIsActive ? "Disable" : "Enable"} user ${userFormattedName}`;
-  const confirmButtonText = userIsActive ? "Disable" : "Enabled";
-
-  const handleConfirm = async () => {
-    return changeUserStatus(userId, !userIsActive);
-  };
-
   return (
     <>
       <Button
@@ -41,19 +33,14 @@ export function ToggleStatusButton(props: Readonly<DisableButtonProps>) {
       >
         {userIsActive ? "Disable" : "Enable"}
       </Button>
-      <ConfirmModal
+      <ToggleUserStatusModal
+        userId={userId}
+        userFormattedName={userFormattedName}
+        userEmail={userEmail}
+        userIsActive={userIsActive}
         show={show}
         onClose={close}
-        danger={userIsActive}
-        title={title}
-        confirmButtonText={confirmButtonText}
-        onConfirm={handleConfirm}
-      >
-        <span>
-          {`Are you sure you want to ${userIsActive ? "disable" : "enable"} user`}{" "}
-          <b>{userFormattedName}?</b> ({userEmail})
-        </span>
-      </ConfirmModal>
+      />
     </>
   );
 }

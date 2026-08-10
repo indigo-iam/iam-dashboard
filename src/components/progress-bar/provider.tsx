@@ -70,8 +70,6 @@ export function ProgressBarProvider(props: Readonly<ProgressBarProviderProps>) {
       amount = 0.02;
     } else if (n >= 0.8 && n < 0.99) {
       amount = 0.005;
-    } else {
-      amount = 0;
     }
     progressRef.current = clamp(n + amount, 0, 1);
     setProgress(progressRef.current);

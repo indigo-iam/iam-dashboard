@@ -4,14 +4,15 @@
 
 "use client";
 
-import { useId } from "react";
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
+import { useEffect, useRef } from "react";
 
 import { Gravatar } from "@/components/gravatar";
-import { AdminModeButton, UserModeButton } from "./admin-user-buttons";
-import { SignoutButton } from "./signout-button";
+import { Button } from "@/components/buttons";
 import { User } from "@/models/scim";
 import { useDisabled } from "@/utils/hooks";
+import { AdminModeButton, UserModeButton } from "./admin-user-buttons";
+import { SignoutButton } from "./signout-button";
+import { Tooltip, useTooltip } from "@/components/tooltip";
 
 type UserPopoverProps = {
   hasRoleAdmin?: boolean;
@@ -21,37 +22,55 @@ type UserPopoverProps = {
 
 export function UserPopover(props: Readonly<UserPopoverProps>) {
   const { hasRoleAdmin, isAdmin, user } = props;
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
+  const { tooltipId, tooltipRef } = useTooltip(buttonRef);
   const disabled = useDisabled();
   const email = user.emails?.[0].value;
-  const tooltipId = useId();
-  const extraProps = {
-    autoComplete: "off", // https://github.com/vercel/next.js/issues/35558
-  };
+
+  function handleInternalClick(event: MouseEvent) {
+    event.preventDefault();
+    const target = event.target as HTMLElement;
+    if (target.tagName === "BUTTON") {
+      target?.click();
+      popoverRef.current?.hidePopover();
+    }
+  }
+
+  useEffect(() => {
+    const popover = popoverRef.current;
+    if (!popover) {
+      return;
+    }
+    popover.addEventListener("mousedown", handleInternalClick);
+    return () => {
+      popover.removeEventListener("mousedown", handleInternalClick);
+    };
+  }, []);
+
   return (
-    <Popover className="relative size-8">
-      <PopoverButton
-        className="group static hover:cursor-pointer"
+    <div className="relative flex items-center">
+      <Button
+        className="group static size-8 cursor-pointer"
         aria-labelledby={tooltipId}
         data-testid="user-menu-btn"
         disabled={disabled}
-        {...extraProps}
+        type="button"
+        popoverTarget="user-popover-menu"
+        ref={buttonRef}
       >
         <Gravatar email={email} />
-        <div
-          role="tooltip"
-          className="tooltip top-10 -left-1/2 whitespace-nowrap"
-          id={tooltipId}
-        >
-          Open user menu
-        </div>
-      </PopoverButton>
-      <PopoverPanel
-        transition
-        anchor="bottom end"
+        <Tooltip tooltipId={tooltipId} tooltipRef={tooltipRef}>
+          <p className="whitespace-nowrap">Open user menu</p>
+        </Tooltip>
+      </Button>
+      <div
         id="user-popover-menu"
         data-testid="user-menu"
-        unmount={false}
-        className="items overlay flex w-56 flex-col overflow-hidden ease-in-out [--anchor-gap:--spacing(5)] data-closed:-translate-y-1 data-closed:opacity-0"
+        aria-label="User menu"
+        className="overlay fixed mt-12 mr-4 ml-auto w-56 flex-col opacity-0 transition-all transition-discrete ease-in-out [&:popover-open]:opacity-100 [&:popover-open]:starting:opacity-0"
+        popover="auto"
+        ref={popoverRef}
       >
         <div className="space-y-2">
           <div className="flex items-center gap-2 pb-2">
@@ -69,7 +88,7 @@ export function UserPopover(props: Readonly<UserPopoverProps>) {
             <SignoutButton />
           </div>
         </div>
-      </PopoverPanel>
-    </Popover>
+      </div>
+    </div>
   );
 }

@@ -17,8 +17,8 @@ type UseClientsProps = {
 
 export async function UserClients(props: Readonly<UseClientsProps>) {
   const { userId, isAdmin } = props;
-  const count = props.count ? parseInt(props.count) : 10;
-  const page = props.page ? parseInt(props.page) : 1;
+  const count = props.count ? Number.parseInt(props.count) : 10;
+  const page = props.page ? Number.parseInt(props.page) : 1;
   const startIndex = 1 + count * (page - 1);
   const clientPage = await getClientsByAccount(userId, count, startIndex);
   const numberOfPages =

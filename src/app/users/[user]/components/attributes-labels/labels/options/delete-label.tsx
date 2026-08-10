@@ -55,7 +55,7 @@ export function DeleteLabelModal(props: Readonly<DeleteLabelModalProps>) {
         <b>{userFormattedName}</b>?
       </p>
       <div className="flex w-full justify-center">
-        <div className="flex flex-col items-start rounded border-l-4 border-l-gray-400 bg-gray-100 p-4">
+        <div className="flex grow flex-col items-start rounded border-l-4 border-l-gray-400 bg-gray-100 p-4">
           <span className="grow text-xs break-all">{prefix}</span>
           <span className="font-medium break-all text-gray-950 dark:text-gray-400">
             {name}

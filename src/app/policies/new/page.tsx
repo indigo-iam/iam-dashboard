@@ -4,8 +4,23 @@
 
 import ConfirmButton from "./components/confirm-button";
 import { ScopePoliciesForm } from "../components";
+import { Description, Field, Label } from "@/components/form";
+import { redirect } from "next/navigation";
+
+const POLICY_EXAMPLE = `{
+  "id": 1,
+  "description": "Default Permit ALL policy",
+  "rule": "PERMIT",
+  "matchingPolicy": "EQ",
+  "account": null,
+  "group": null,
+  "scopes": null
+}  `;
 
 export default async function Policies() {
+  // temporary hide this page until finished
+  redirect("/");
+
   return (
     <section>
       <header className="section-header">

@@ -25,14 +25,11 @@ function Row(props: Readonly<RowProps>) {
     : "N/A";
   return (
     <li className="iam-list-item lg:gap-2">
-      <Link
-        className="text-md flex grow flex-col break-all lg:flex-row"
-        href={`/users/${userId}`}
-      >
+      <div className="text-md flex grow flex-col break-all lg:flex-row">
         <div className="grow flex-col">
-          <p className="text-gray-950 dark:text-gray-100">
+          <Link href={`/users/${userId}`} className="iam-link">
             {userFormattedName}
-          </p>
+          </Link>
           <p className="text-sm font-light">{userEmail}</p>
         </div>
         <div className="my-auto flex flex-col">
@@ -41,7 +38,7 @@ function Row(props: Readonly<RowProps>) {
             <p className="py-1 text-xs font-light lg:p-0">Created {created}</p>
           </div>
         </div>
-      </Link>
+      </div>
       <UserOptions
         userId={userId}
         userFormattedName={userFormattedName}

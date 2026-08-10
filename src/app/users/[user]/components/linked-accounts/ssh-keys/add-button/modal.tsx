@@ -73,9 +73,6 @@ export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
           >
             Cancel
           </Button>
-          <Button className="btn-secondary" type="reset">
-            Reset Form
-          </Button>
           <Button className="btn-primary" type="submit">
             Add SSH Key
           </Button>

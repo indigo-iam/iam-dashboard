@@ -12,7 +12,7 @@ import {
   expect,
   logout,
 } from "../auth/fixture";
-import { changeTabPanel, dismissToast } from "../utils";
+import { changeTabPanel, dismissToast, navigateToTestUserPage } from "../utils";
 import fs from "fs";
 
 async function openLinkCertificateDialog(page: Page) {
@@ -90,21 +90,6 @@ async function selectLinkedAccountTab(page: Page) {
   const linkedAccountsBtn = page.getByText("LINKED ACCOUNTS");
   await linkedAccountsBtn.scrollIntoViewIfNeeded();
   await changeTabPanel(linkedAccountsBtn);
-}
-
-async function navigateToTestUserPage(page: Page) {
-  await page.goto("./users");
-  const newUserBtn = page.getByRole("button", { name: "New user" });
-  await expect(newUserBtn).toBeEnabled(); // wait for page fully loaded
-  const searchbar = page.getByPlaceholder("Type to search a user");
-  await searchbar.pressSequentially("test user");
-  const testUser = page.getByRole("link").filter({ hasText: "Test User" });
-  const users = page.locator(".iam-list-item").filter({ visible: true });
-  await expect(users).toHaveCount(1);
-  await expect(users).toBeEnabled();
-  await testUser.click();
-  const heading = page.getByRole("heading").filter({ hasText: "Test User" });
-  await expect(heading).toBeVisible();
 }
 
 test.afterEach(async ({ page }) => {
@@ -277,7 +262,7 @@ test("admin can link certificate and proxy on themselves", async ({ page }) => {
   });
 });
 
-test.describe("admin assigns certificate to user and user self-assign proxy", () => {
+test.describe("admin assigns certificate to user and user self-assigns proxy", () => {
   test("user cannot add proxy without a valid certificate", async ({
     page,
   }) => {

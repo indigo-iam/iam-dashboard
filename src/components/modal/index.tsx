@@ -7,6 +7,8 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { Button } from "../buttons";
+import { Tooltip, useTooltip } from "../tooltip";
 
 export type ModalProps = {
   show: boolean;
@@ -79,8 +81,10 @@ export function Modal(props: Readonly<ModalProps>) {
   }, [domLoaded]);
 
   useEffect(() => {
-    if (show && !dialogRef.current?.open) {
+    if (show && dialogRef.current && !dialogRef.current?.open) {
+      dialogRef.current.inert = true;
       open();
+      dialogRef.current.inert = false;
     } else if (!show && dialogRef.current?.open) {
       close();
     }
@@ -110,12 +114,24 @@ type ModalHeaderProps = {
 
 export function ModalHeader(props: Readonly<ModalHeaderProps>) {
   const { onClose, children } = props;
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const { tooltipId, tooltipRef } = useTooltip(buttonRef);
   return (
     <div className="flex">
       <h2 className="grow">{children}</h2>
-      <button onClick={onClose} className="cursor-pointer" title="Close">
+      <Button
+        type="button"
+        onClick={onClose}
+        className="cursor-pointer"
+        title="Close"
+        ref={buttonRef}
+        aria-labelledby={tooltipId}
+      >
         <XMarkIcon className="size-6 rounded-full bg-gray-100 p-1 transition duration-200 hover:bg-gray-200 dark:bg-gray-400 dark:hover:bg-gray-300 dark:hover:text-gray-500" />
-      </button>
+        <Tooltip tooltipId={tooltipId} tooltipRef={tooltipRef}>
+          Close
+        </Tooltip>
+      </Button>
     </div>
   );
 }

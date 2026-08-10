@@ -7,7 +7,7 @@ export function toTitleCase(s: string) {
 }
 
 export function camelCaseToTitle(s: string) {
-  return toTitleCase(s.split("_").join(" "));
+  return toTitleCase(s.replaceAll("_", " "));
 }
 
 export function capitalize(s: string) {

@@ -7,12 +7,12 @@ import { ScimReference } from "@/models/scim";
 import GroupOptions from "./options";
 import JoinGroupButton from "./join-group-button";
 
-type StaticViewProps = {
+type ViewProps = {
   groupId: string;
   groupDisplay: string;
 };
 
-function StaticView(props: Readonly<StaticViewProps>) {
+function StaticView(props: Readonly<ViewProps>) {
   const { groupId, groupDisplay } = props;
   return (
     <div className="flex grow flex-col">
@@ -22,15 +22,15 @@ function StaticView(props: Readonly<StaticViewProps>) {
   );
 }
 
-type LinkViewProps = StaticViewProps;
-
-function LinkView(props: Readonly<LinkViewProps>) {
+function LinkView(props: Readonly<ViewProps>) {
   const { groupId, groupDisplay } = props;
   return (
-    <Link href={`/groups/${groupId}`} className="flex grow flex-col">
-      <p className="text-gray-950 dark:text-gray-100">{groupDisplay}</p>
+    <div className="flex grow flex-col">
+      <Link className="iam-link" href={`/groups/${groupId}`}>
+        {groupDisplay}
+      </Link>
       <p className="text-sm font-light">{groupId}</p>
-    </Link>
+    </div>
   );
 }
 

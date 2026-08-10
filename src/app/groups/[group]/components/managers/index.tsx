@@ -2,14 +2,10 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { getSession } from "@/auth";
 import { TabPanel } from "@/components/tabs";
 import { fetchGroupManagers } from "@/services/groups";
 import ManagersTable from "./table";
 import AssignGroupManagerButton from "./assign-button";
-
-import { redirect } from "next/navigation";
-import { User } from "@/models/scim";
 
 type ManagersProps = {
   groupId: string;
@@ -19,27 +15,34 @@ type ManagersProps = {
 
 export default async function Managers(props: Readonly<ManagersProps>) {
   const { groupId, groupName, groupDescription } = props;
-  const session = await getSession();
-  if (!session) {
-    redirect("/signin");
-  }
-  const managers = ((await fetchGroupManagers(groupId)) as User[]) ?? [];
+  const managers = (await fetchGroupManagers(groupId)) ?? [];
   return (
     <TabPanel className="panel space-y-4">
       <div className="flex flex-wrap gap-2">
-        <h2 className="grow">Managers</h2>
+        <div className="flex grow items-center gap-2">
+          <h2>Managers</h2>
+          <div
+            title="Number of managers of this group"
+            className="middle my-auto rounded-full bg-gray-400 px-2 py-0.5 text-xs font-semibold text-white"
+          >
+            {managers.length}
+          </div>
+        </div>
         <AssignGroupManagerButton
           groupId={groupId}
           groupName={groupName}
           groupDescription={groupDescription}
         />
       </div>
-      <ManagersTable
-        groupId={groupId}
-        groupName={groupName}
-        groupDescription={groupDescription}
-        managers={managers}
-      />
+      {managers.length > 0 ? (
+        <ManagersTable
+          groupId={groupId}
+          groupName={groupName}
+          managers={managers}
+        />
+      ) : (
+        <p>This group has no managers.</p>
+      )}
     </TabPanel>
   );
 }

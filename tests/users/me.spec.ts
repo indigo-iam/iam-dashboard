@@ -13,7 +13,7 @@ import {
 import { dismissToast } from "../utils";
 
 for (const user of [TEST_USER, ADMIN_USER]) {
-  test.describe(`'${user.user}' can edit its own profile`, () => {
+  test.describe(`${user.user} can edit its own profile`, () => {
     test.afterEach("tear down", async ({ page }) => {
       await test.step("reset user info", async () => {
         const saveButton = page.getByRole("button", { name: "Save changes" });
@@ -44,7 +44,7 @@ for (const user of [TEST_USER, ADMIN_USER]) {
         await expect(saveButton).toBeEnabled();
       });
 
-      await test.step(`'${user.user}' can edit 'First Name' with a valid name`, async () => {
+      await test.step(`${user.user} can edit 'First Name' with a valid name`, async () => {
         await expect(saveButton).toBeEnabled();
         const firstName = page.getByLabel("First Name");
         await expect(firstName).toHaveAttribute("required");
@@ -55,7 +55,7 @@ for (const user of [TEST_USER, ADMIN_USER]) {
         await expect(firstName).toHaveValue("Albert");
       });
 
-      await test.step(`'${user.user}' cannot edit 'First Name' with empty string`, async () => {
+      await test.step(`${user.user} cannot edit 'First Name' with empty string`, async () => {
         await expect(saveButton).toBeEnabled();
         const firstName = page.getByLabel("First Name");
         await firstName.fill("");
@@ -66,7 +66,7 @@ for (const user of [TEST_USER, ADMIN_USER]) {
         await expect(firstName).toHaveValue("Albert");
       });
 
-      await test.step(`'${user.user}' can edit 'Last Name' with a valid name`, async () => {
+      await test.step(`${user.user} can edit 'Last Name' with a valid name`, async () => {
         await expect(saveButton).toBeEnabled();
         const lastName = page.getByLabel("Last Name");
         await expect(lastName).toHaveAttribute("required");
@@ -78,7 +78,7 @@ for (const user of [TEST_USER, ADMIN_USER]) {
         await expect(lastName).toHaveValue("Einstein");
       });
 
-      await test.step(`'${user.user}' cannot edit 'Last Name' with empty string`, async () => {
+      await test.step(`${user.user} cannot edit 'Last Name' with empty string`, async () => {
         await expect(saveButton).toBeEnabled();
         const lastName = page.getByLabel("Last Name");
         await lastName.fill("");
@@ -88,7 +88,7 @@ for (const user of [TEST_USER, ADMIN_USER]) {
         await expect(lastName).toHaveValue("Einstein");
       });
 
-      await test.step(`'${user.user}' can edit 'Email' with a valid email`, async () => {
+      await test.step(`${user.user} can edit 'Email' with a valid email`, async () => {
         await expect(saveButton).toBeEnabled();
         const email = page.getByLabel("Email");
         await expect(email).toHaveAttribute("type", "email");
@@ -99,7 +99,7 @@ for (const user of [TEST_USER, ADMIN_USER]) {
         await expect(email).toHaveValue("albert.einstein@science.org");
       });
 
-      await test.step(`'${user.user}' cannot edit 'Email' with an empty string`, async () => {
+      await test.step(`${user.user} cannot edit 'Email' with an empty string`, async () => {
         await expect(saveButton).toBeEnabled();
         const email = page.getByLabel("Email");
         await email.fill("");
@@ -109,7 +109,7 @@ for (const user of [TEST_USER, ADMIN_USER]) {
         await expect(email).toHaveValue("albert.einstein@science.org");
       });
 
-      await test.step(`'${user.user}' cannot edit 'Email' with an invalid email`, async () => {
+      await test.step(`${user.user} cannot edit 'Email' with an invalid email`, async () => {
         await expect(saveButton).toBeEnabled();
         const email = page.getByLabel("Email");
         await email.fill("albert.einstein#science.org");
@@ -119,7 +119,7 @@ for (const user of [TEST_USER, ADMIN_USER]) {
         await expect(email).toHaveValue("albert.einstein@science.org");
       });
 
-      await test.step(`'${user.user}' can reset profile form`, async () => {
+      await test.step(`${user.user} can reset profile form`, async () => {
         await expect(saveButton).toBeEnabled();
         const firstName = page.getByLabel("First Name");
         const lastName = page.getByLabel("Last Name");
@@ -127,9 +127,9 @@ for (const user of [TEST_USER, ADMIN_USER]) {
         await firstName.fill("Enrico");
         await lastName.fill("Fermi");
         await email.fill("enrico.fermi@science.org");
-        const cancel = page.getByRole("button", { name: "Cancel" });
-        await expect(cancel).toBeEnabled();
-        await cancel.click();
+        const reset = page.getByRole("button", { name: "Reset" });
+        await expect(reset).toBeEnabled();
+        await reset.click();
         await expect(firstName).toHaveValue("Albert");
         await expect(lastName).toHaveValue("Einstein");
         await expect(email).toHaveValue("albert.einstein@science.org");

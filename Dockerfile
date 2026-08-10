@@ -13,7 +13,8 @@ WORKDIR /app
 # Install dependencies based on the preferred package manager
 COPY package.json package-lock.json ./
 RUN apk add --no-cache libc6-compat && \
-  npm ci
+  npm ci --ignore-scripts && \
+  npm rebuild better-sqlite3 sharp
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -45,7 +46,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 # COPY --from=builder /app/public ./public
 
 # Set the correct permission for prerender cache
-RUN apk add curl && \
+RUN apk add curl --no-cache && \
   addgroup --system --gid 1001 nodejs && \
   adduser --system --uid 1001 nextjs && \
   addgroup nextjs nodejs && \

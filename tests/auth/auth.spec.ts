@@ -11,7 +11,7 @@ import {
  */
 
 testAdmin(
-  "Admin cannot see privileged pages in user mode",
+  "admin cannot see privileged pages in user mode",
   async ({ signedUpPage }) => {
     const page = signedUpPage;
 
@@ -56,16 +56,16 @@ testAdmin(
       await page.goto("./aup");
       await page.waitForURL("./users/me");
     });
-
-    await testAdmin.step("'/policies' redirects to '/users/me'", async () => {
-      await page.goto("./policies");
-      await page.waitForURL("./users/me");
-    });
+    // Disable until the page is finished
+    // await testAdmin.step("'/policies' redirects to '/users/me'", async () => {
+    //   await page.goto("./policies");
+    //   await page.waitForURL("./users/me");
+    // });
   }
 );
 
 testAdmin(
-  "Admin can see privileged pages in admin mode",
+  "admin can see privileged pages in admin mode",
   async ({ signedUpPage }) => {
     const page = signedUpPage;
 
@@ -85,7 +85,7 @@ testAdmin(
       await page.waitForURL("./users/me");
       const navbar = page.getByRole("navigation");
       const navigationButtons = navbar.getByRole("link");
-      await expect(navigationButtons).toHaveCount(10);
+      await expect(navigationButtons).toHaveCount(9);
     });
 
     await testAdmin.step("'/users' page is visible", async () => {
@@ -112,7 +112,7 @@ testAdmin(
     await testAdmin.step("'/requests' page is visible", async () => {
       await page.goto("./requests");
       await page.waitForURL("./requests");
-      const heading = page.getByRole("heading", { name: "Requests" });
+      const heading = page.getByRole("heading", { name: "Requests" }).first();
       await expect(heading).toBeVisible();
     });
 
@@ -123,12 +123,12 @@ testAdmin(
       await expect(heading).toBeVisible();
     });
 
-    await testAdmin.step("'/policies' page is visible", async () => {
-      await page.goto("./policies");
-      await page.waitForURL("./policies");
-      const heading = page.getByRole("heading", { name: "Policies" });
-      await expect(heading).toBeVisible();
-    });
+    // await testAdmin.step("'/policies' page is visible", async () => {
+    //   await page.goto("./policies");
+    //   await page.waitForURL("./policies");
+    //   const heading = page.getByRole("heading", { name: "Policies" });
+    //   await expect(heading).toBeVisible();
+    // });
 
     await testAdmin.step("'/aup' page is visible", async () => {
       await page.goto("./aup");
@@ -150,7 +150,7 @@ testAdmin(
  * Regular user
  */
 
-testUser("User cannot see privileged pages", async ({ signedUpPage }) => {
+testUser("user cannot see privileged pages", async ({ signedUpPage }) => {
   const page = signedUpPage;
 
   await testUser.step("navbar has exactly five buttons", async () => {
@@ -201,7 +201,7 @@ testUser("User cannot see privileged pages", async ({ signedUpPage }) => {
   });
 });
 
-testUser("User cannot enable admin mode", async ({ signedUpPage }) => {
+testUser("user cannot enable admin mode", async ({ signedUpPage }) => {
   await testUser.step("login", async () => {
     await signedUpPage.goto("./");
     await expect(

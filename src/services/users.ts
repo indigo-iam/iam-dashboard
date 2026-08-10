@@ -4,7 +4,7 @@
 
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, refresh } from "next/cache";
 import { authFetch, getItem } from "@/utils/fetch";
 import { Attribute } from "@/models/attributes";
 import { Certificate, OidcId, SamlId, SSHKey } from "@/models/indigo-user";
@@ -13,7 +13,6 @@ import { Paginated } from "@/models/pagination";
 import { User, ScimUser, ScimRequest, ScimOp } from "@/models/scim";
 import { Notification } from "@/components/toaster";
 import { settings } from "@/config";
-import { URLSearchParams } from "url";
 
 const { IAM_API_URL } = settings;
 
@@ -104,7 +103,6 @@ export async function editUser(userData: {
     };
     operations.push(mailOp);
   }
-  console.log(JSON.stringify(operations));
   const response = await patchUser(operations, userId);
 
   if (response.ok) {
@@ -126,7 +124,6 @@ export async function patchUser(operations: ScimOp[], userId: string | null) {
   const url = userId
     ? `${IAM_API_URL}/scim/Users/${userId}`
     : `${IAM_API_URL}/scim/Me`;
-  console.log(JSON.stringify(request));
   return await authFetch(url, {
     body: JSON.stringify(request),
     method: "PATCH",
@@ -348,12 +345,12 @@ export async function deleteAttribute(
   };
 }
 
-export async function changeMembershipEndTime(
+export async function changeMembershipEndtime(
   userId: string,
-  date: string
+  date: string | null
 ): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/account/${userId}/endTime`;
-  const body = JSON.stringify({ endTime: date });
+  const body = date ? JSON.stringify({ endTime: date }) : "{}";
   const response = await authFetch(url, {
     method: "PUT",
     body,
@@ -362,42 +359,16 @@ export async function changeMembershipEndTime(
     },
   });
   if (response.ok) {
-    revalidatePath(`/users/${userId}`);
+    refresh();
     return {
       type: "success",
-      title: "Membership end time updated",
+      title: `Membership endtime ${date ? "updated" : "revoked"}`,
     };
   }
   const msg = await response.text();
   return {
     type: "error",
-    title: "Cannot update membership end date",
-    description: `Error ${response.status} ${msg}`,
-  };
-}
-
-// todo: this is not used?
-export async function revokeMembershipEndTime(userId: string) {
-  const url = `${IAM_API_URL}/iam/account/${userId}/endTime`;
-  const body = JSON.stringify({});
-  const response = await authFetch(url, {
-    method: "PUT",
-    body,
-    headers: {
-      "content-type": "application/json;charset=utf-8",
-    },
-  });
-  if (response.ok) {
-    revalidatePath(`/users/${userId}`);
-    return {
-      type: "success",
-      title: "Membership end time revoked",
-    };
-  }
-  const msg = await response.text();
-  return {
-    type: "error",
-    title: "Cannot revoke membership end time",
+    title: "Cannot update membership endtime",
     description: `Error ${response.status} ${msg}`,
   };
 }

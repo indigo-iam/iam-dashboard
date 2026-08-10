@@ -8,8 +8,8 @@ import { useState } from "react";
 import { PowerIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 import { Options, Option } from "@/components/options";
-import DeleteClientModal from "./delete-client-modal";
-import ToggleStatusModal from "./toggle-status-modal";
+import ToggleStatusModal from "@/app/clients/[client]/components/main/danger-zone/toggle-client-status/modal";
+import DeleteClientModal from "@/app/clients/[client]/components/main/danger-zone/delete-client/modal";
 
 type ClientOptionsProps = {
   clientId: string;

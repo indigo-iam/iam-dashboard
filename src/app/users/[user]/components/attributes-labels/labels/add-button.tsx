@@ -186,9 +186,6 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
           >
             Cancel
           </Button>
-          <Button className="btn-secondary" type="reset" onClick={resetStates}>
-            Reset
-          </Button>
           <Button
             className="btn-primary"
             type="submit"

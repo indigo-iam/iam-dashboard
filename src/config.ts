@@ -17,7 +17,7 @@ function loadEnvVariable(key: string, defaultValue?: string) {
   if (isBuilding) {
     return "";
   }
-  throw Error(`${key} environment variable not set`);
+  throw new Error(`${key} environment variable not set`);
 }
 
 function loadOptionalUrlFromEnv(key: string) {
@@ -74,10 +74,7 @@ function loadOidcAdminScopes() {
 }
 
 function loadOtelExporterOtlpEndpoint() {
-  return loadEnvVariable(
-    "IAM_OTEL_EXPORTER_OTLP_ENDPOINT",
-    "https://otello.cloud.cnaf.infn.it:8443/collector/v1/traces"
-  );
+  return loadOptionalUrlFromEnv("IAM_DASHBOARD_OTEL_EXPORTER_OTLP_ENDPOINT");
 }
 
 function loadOrganizationName() {

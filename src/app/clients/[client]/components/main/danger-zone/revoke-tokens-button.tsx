@@ -12,14 +12,16 @@ import ConfirmModal from "@/components/confirm-modal";
 import { Field } from "@/components/form";
 import { revokeTokens } from "@/services/clients";
 import { toast } from "@/components/toaster";
+import { Notice } from "@/components/notices";
 
 type ConfirmModalProps = ModalProps & {
   clientId: string;
   clientName: string;
+  clientDescription: string | null;
 };
 
 function Modal(props: Readonly<ConfirmModalProps>) {
-  const { show, onClose, clientId, clientName } = props;
+  const { show, onClose, clientId, clientName, clientDescription } = props;
   const formRef = useRef<HTMLFormElement>(null);
 
   async function action() {
@@ -47,6 +49,13 @@ function Modal(props: Readonly<ConfirmModalProps>) {
       formRef={formRef}
       danger
     >
+      <p>Revoke tokens for client:</p>
+      <Notice>
+        <p>
+          <b>{clientName}</b>
+        </p>
+        {clientDescription && <p className="text-sm">{clientDescription}</p>}
+      </Notice>
       <p>Select a type of tokens to revoke:</p>
       <div className="space-y-2 p-2 px-4">
         <Field className="flex items-center gap-2">
@@ -78,10 +87,11 @@ function Modal(props: Readonly<ConfirmModalProps>) {
 type RevokeTokensButtonProps = {
   clientId: string;
   clientName: string;
+  clientDescription: string | null;
 };
 
 export function RevokeTokensButton(props: Readonly<RevokeTokensButtonProps>) {
-  const { clientId, clientName } = props;
+  const { clientId, clientName, clientDescription } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
@@ -95,6 +105,7 @@ export function RevokeTokensButton(props: Readonly<RevokeTokensButtonProps>) {
         onClose={close}
         clientId={clientId}
         clientName={clientName}
+        clientDescription={clientDescription}
       />
     </>
   );

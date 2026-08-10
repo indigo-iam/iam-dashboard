@@ -7,8 +7,12 @@ import { fetchScopePolicies } from "@/services/scope-policies";
 import { AddPolicyButton, PoliciesTable } from "./components";
 import { redirect } from "next/navigation";
 import { ScaleIcon } from "@heroicons/react/24/solid";
+import { BeakerIcon } from "@heroicons/react/24/outline";
 
 export default async function Policies() {
+  // temporary hide this page until finished
+  redirect("/");
+
   const session = await getSession();
   if (!session) {
     redirect("/signin");
@@ -28,14 +32,10 @@ export default async function Policies() {
         <AddPolicyButton />
       </header>
       <div className="container space-y-4">
-        <p className="font-light">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in
-          accumsan leo. Suspendisse potenti. Pellentesque habitant morbi
-          tristique senectus et netus et malesuada fames ac turpis egestas.
-          Vestibulum a metus sed ipsum sodales laoreet ac efficitur mi. Integer
-          tempus sit amet enim eget consequat. Phasellus sit amet fringilla mi,
-          id hendrerit quam.
-        </p>
+        <h2 className="flex items-center gap-2">
+          <BeakerIcon className="size-7" />
+          Experimental
+        </h2>
         <div className="panel">
           <PoliciesTable policies={policies} />
         </div>

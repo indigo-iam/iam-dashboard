@@ -16,15 +16,15 @@ interface InputSearchProps extends InputProps {
 }
 
 export function InputSearch(props: Readonly<InputSearchProps>) {
-  const { onQueryChange, onClear, ...others } = props;
-  const [value, setValue] = useState("");
+  const { onQueryChange, onClear, defaultValue, ...others } = props;
+  const [value, setValue] = useState(defaultValue ?? "");
   const timeoutRef = useRef<number | null>(null);
 
-  const searchCallback = async (filter: string) => {
-    if (filter.length > 2) {
+  async function searchCallback(filter: string) {
+    if (filter.length > 1) {
       onQueryChange(filter);
     }
-  };
+  }
 
   const clearSearch = () => {
     setValue("");
@@ -37,7 +37,7 @@ export function InputSearch(props: Readonly<InputSearchProps>) {
     }
     timeoutRef.current = globalThis.window.setTimeout(() => {
       if (value) {
-        searchCallback(value);
+        searchCallback(value.toString());
       } else {
         onClear();
       }
@@ -55,13 +55,18 @@ export function InputSearch(props: Readonly<InputSearchProps>) {
         onChange={e => setValue(e.currentTarget.value)}
         {...others}
       />
-      <button
-        className="text-gray-300 hover:cursor-pointer hover:text-gray-950 dark:text-gray-400 dark:hover:text-gray-500"
-        onClick={clearSearch}
-        title="Clear search"
-      >
-        <XCircleIcon className="size-4" />
-      </button>
+      {value ? (
+        <button
+          type="button"
+          className="text-gray-300 hover:cursor-pointer hover:text-gray-950 dark:text-gray-400 dark:hover:text-gray-500"
+          onClick={clearSearch}
+          title="Clear search"
+        >
+          <XCircleIcon className="size-4" />
+        </button>
+      ) : (
+        <div className="size-4" />
+      )}
     </div>
   );
 }

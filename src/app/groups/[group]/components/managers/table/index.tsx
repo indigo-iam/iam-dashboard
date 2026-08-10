@@ -2,9 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client";
+
 import { User } from "@/models/scim";
 import ManagerOptions from "./options";
 import Link from "@/components/link";
+import Paginator from "@/components/paginator";
+import { usePaginator } from "@/components/paginator/hook";
 
 type RowProps = {
   userId: string;
@@ -12,33 +16,24 @@ type RowProps = {
   userEmail: string;
   groupId: string;
   groupName: string;
-  groupDescription?: string | null;
 };
 
 function Row(props: Readonly<RowProps>) {
-  const {
-    userId,
-    userFormattedName,
-    userEmail,
-    groupId,
-    groupName,
-    groupDescription,
-  } = props;
+  const { userId, userFormattedName, userEmail, groupId, groupName } = props;
   return (
     <li className="iam-list-item">
-      <Link className="flex w-0 grow flex-col" href={`/users/${userId}`}>
-        <p className="truncate text-gray-950 dark:text-gray-200">
+      <div className="flex w-0 grow flex-col">
+        <Link className="iam-link" href={`/users/${userId}`}>
           {userFormattedName}
-        </p>
+        </Link>
         <p className="truncate text-sm font-light">{userEmail}</p>
-      </Link>
+      </div>
       <ManagerOptions
         userId={userId}
         userFormattedName={userFormattedName}
         userEmail={userEmail}
         groupId={groupId}
         groupName={groupName}
-        groupDescription={groupDescription}
       />
     </li>
   );
@@ -47,28 +42,36 @@ function Row(props: Readonly<RowProps>) {
 type ManagerTableProps = {
   groupId: string;
   groupName: string;
-  groupDescription?: string | null;
   managers: User[];
 };
 
 export default function ManagersTable(props: Readonly<ManagerTableProps>) {
-  const { groupId, groupName, groupDescription, managers } = props;
-  if (managers.length === 0) {
-    return <p>This group has no managers.</p>;
-  }
+  const { groupId, groupName, managers } = props;
+  const { count, numberOfPages, start, end, ...paginator } = usePaginator(
+    managers.length
+  );
+  const managerSlice = managers.slice(start, end);
   return (
-    <ul className="w-full">
-      {managers.map(manager => (
-        <Row
-          key={manager.id}
-          userId={manager.id}
-          userFormattedName={manager.name?.formatted ?? "unknown user"}
-          userEmail={manager.emails?.[0].value ?? "unknown email"}
-          groupId={groupId}
-          groupName={groupName}
-          groupDescription={groupDescription}
-        />
-      ))}
-    </ul>
+    <div className="space-y-2">
+      <ul className="w-full">
+        {managerSlice.map(manager => (
+          <Row
+            key={manager.id}
+            userId={manager.id}
+            userFormattedName={manager.name?.formatted ?? "unknown user"}
+            userEmail={manager.emails?.[0].value ?? "unknown email"}
+            groupId={groupId}
+            groupName={groupName}
+          />
+        ))}
+      </ul>
+      <Paginator
+        numberOfPages={numberOfPages}
+        overrides={{
+          count,
+          ...paginator,
+        }}
+      />
+    </div>
   );
 }

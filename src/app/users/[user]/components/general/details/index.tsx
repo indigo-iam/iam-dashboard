@@ -148,7 +148,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
           </Field>
           <Field className="flex justify-between">
             <Button className="btn-tertiary" type="reset">
-              Cancel
+              Reset
             </Button>
             <Button className="btn-secondary" type="submit">
               Save changes

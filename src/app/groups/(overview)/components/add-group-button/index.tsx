@@ -49,9 +49,6 @@ function AddGroupForm(props: Readonly<AddGroupFormProps>) {
         <Button className="btn-tertiary" type="reset" onClick={onClose}>
           Cancel
         </Button>
-        <Button className="btn-secondary" type="reset">
-          Reset
-        </Button>
         <Button className="btn-primary" type="submit">
           Add group
         </Button>

@@ -8,8 +8,8 @@ import { PowerIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
 import { Options, Option } from "@/components/options";
-import ToggleUserStatusModal from "./user-status-modal";
-import DeleteUserModal from "./delete-user-modal";
+import ToggleUserStatusModal from "@/app/users/[user]/components/general/danger-zone/toggle-user-status/modal";
+import DeleteUserModal from "@/app/users/[user]/components/general/danger-zone/delete-user/modal";
 
 type UserOptions = {
   userId: string;

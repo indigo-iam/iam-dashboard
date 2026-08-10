@@ -37,11 +37,11 @@ export function Authentication(props: Readonly<AuthenticationProps>) {
       </div>
       <div className="w-full space-y-4 pb-4 lg:w-2/3">
         <Field>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             <Label>Client Authentication</Label>
-            <Info anchor="left" className="pb-1.5">
-              How the client authenticate to the Token Endpoint.
-            </Info>
+            <div>
+              <Info>How the client authenticate to the Token Endpoint.</Info>
+            </div>
           </div>
           <ClientAuthentication
             name="token_endpoint_auth_method"
@@ -50,12 +50,14 @@ export function Authentication(props: Readonly<AuthenticationProps>) {
           />
         </Field>
         <Field>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             <Label>Registration Access Token</Label>
-            <Info anchor="left" className="pb-1.5">
-              Registration access token provides management access to the
-              client.
-            </Info>
+            <div>
+              <Info>
+                Registration access token provides management access to the
+                client.
+              </Info>
+            </div>
           </div>
           <Button className="btn-secondary">
             Rotate Registration Access Token

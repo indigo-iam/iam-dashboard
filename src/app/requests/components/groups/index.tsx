@@ -2,11 +2,10 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { TabPanel } from "@/components/tabs";
 import { GroupRequest } from "@/models/group-requests";
 import { dateToHuman } from "@/utils/dates";
 import GroupRequestOptions from "./options";
-import Link from "next/link";
+import Link from "@/components/link";
 
 type RowPros = {
   request: GroupRequest;
@@ -22,21 +21,25 @@ export function Row(props: Readonly<RowPros>) {
   return (
     <li className="iam-list-item">
       <div className="flex grow">
-        <Link
-          href={`/users/${userUuid}`}
-          className="flex grow flex-col lg:flex-row"
-        >
+        <div className="flex grow flex-col lg:flex-row">
           <div className="flex grow flex-col">
             <p className="text-gray-950 dark:text-gray-100">
-              User <b>{userFullName}</b> (<i>{username}</i>) asked to join group{" "}
-              <b>{groupName}</b>.
+              User{" "}
+              <Link className="iam-link" href={`/users/${userUuid}`}>
+                {userFullName} (<i>{username}</i>)
+              </Link>{" "}
+              asked to join group{" "}
+              <Link className="iam-link" href={`/groups/${request.groupUuid}`}>
+                {groupName}
+              </Link>
+              .
             </p>
             <p className="text-sm">Motivation: {request.notes}</p>
           </div>
           <p className="flex items-center text-xs whitespace-nowrap lg:px-2 lg:text-right">
             Sent {creationTime}
           </p>
-        </Link>
+        </div>
       </div>
       <GroupRequestOptions request={request} />
     </li>
@@ -51,18 +54,20 @@ export default function Groups(props: Readonly<GroupsProps>) {
   const { requests } = props;
   if (requests.length === 0) {
     return (
-      <TabPanel className="panel flex flex-col gap-4 divide-y">
-        There are no pending requests.
-      </TabPanel>
+      <div className="panel flex flex-col gap-4">
+        <h3>Group requests</h3>
+        <p>There are no pending requests.</p>
+      </div>
     );
   }
   return (
-    <TabPanel className="panel space-y-4">
+    <div className="panel space-y-4">
+      <h3>Group requests</h3>
       <ul className="w-full table-auto">
         {requests.map(r => (
           <Row key={r.uuid} request={r} />
         ))}
       </ul>
-    </TabPanel>
+    </div>
   );
 }

@@ -5,18 +5,17 @@
 import { Info } from "@/components/info";
 import { RoleCheckbox } from "./assign-role-checkbox";
 import { DeleteUser } from "./delete-user";
-import { EditExpirationDate } from "./expiration-date";
+import { EditEndtime } from "./edit-end-time";
 import { ServiceAccountCheckbox } from "./service-account-checkbox";
 import { ToggleStatusButton } from "./toggle-user-status";
 
 type DangerZoneProps = {
   userId: string;
-  userName: string;
   userFormattedName: string;
   userEmail: string;
   userIsActive: boolean;
   userIsServiceAccount: boolean;
-  userEndTime?: string;
+  userEndtime?: string;
   userAuthorities: string[];
   isAdmin: boolean;
 };
@@ -24,12 +23,11 @@ type DangerZoneProps = {
 export function DangerZone(props: Readonly<DangerZoneProps>) {
   const {
     userId,
-    userName,
     userFormattedName,
     userEmail,
     userIsActive,
     userIsServiceAccount,
-    userEndTime,
+    userEndtime,
     userAuthorities,
   } = props;
   const authorities = new Set<string>(userAuthorities);
@@ -49,6 +47,11 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
         </div>
       </div>
       <div className="w-full space-y-4 lg:w-2/3">
+        <EditEndtime
+          userId={userId}
+          userFormattedName={userFormattedName}
+          userEndtime={userEndtime}
+        />
         <div className="space-y-1">
           <h5 className="text-sm font-semibold text-gray-600 dark:text-gray-100">
             Privileges
@@ -60,7 +63,7 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
               role="ROLE_ADMIN"
               hasRole={authorities.has("ROLE_ADMIN")}
             />
-            <Info anchor="left">
+            <Info>
               A user with <b>admin</b> role can create, delete and modify user,
               groups and client. Admins can also assign restricted scopes to
               clients.
@@ -73,7 +76,7 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
               role="ROLE_READER"
               hasRole={authorities.has("ROLE_READER")}
             />
-            <Info anchor="left">
+            <Info>
               Grants <b>read-only</b> access to authorized resources, allowing
               users to view information without modifying it.
             </Info>
@@ -89,19 +92,13 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
               userFormattedName={userFormattedName}
               enabled={userIsServiceAccount}
             />
-            <Info anchor="left">
+            <Info>
               A service account is a <b>non-human</b> identity used by
               applications to securely access protected resources through IAM
               managed credentials and permissions.
             </Info>
           </div>
         </div>
-        <EditExpirationDate
-          userId={userId}
-          userName={userName}
-          userFormattedName={userFormattedName}
-          userEndTime={userEndTime}
-        />
         <div className="flex items-center justify-end gap-4">
           <ToggleStatusButton
             userId={userId}
@@ -111,7 +108,7 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
           />
           <DeleteUser
             userId={userId}
-            userName={userName}
+            userEmail={userEmail}
             userFormattedName={userFormattedName}
           />
         </div>

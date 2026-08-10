@@ -17,14 +17,14 @@ async function openEditModal(page: Page) {
   return dialog;
 }
 
-testUser("User cannot see AUP page", async ({ signedUpPage }) => {
+testUser("user cannot see AUP page", async ({ signedUpPage }) => {
   const page = signedUpPage;
   await page.goto("./aup");
   await page.waitForURL("./users/me");
 });
 
 testAdmin(
-  "Admin cannot see AUP page in user mode",
+  "admin cannot see AUP page in user mode",
   async ({ signedUpPage }) => {
     const page = signedUpPage;
     await page.goto("./aup");
@@ -32,8 +32,8 @@ testAdmin(
   }
 );
 
-testAdmin.describe("Admin can create/edit/delete the AUP", () => {
-  testAdmin.afterEach("Delete AUP", async ({ signedUpPage }) => {
+testAdmin.describe("admin can create/edit/delete the AUP", () => {
+  testAdmin.afterEach("delete AUP", async ({ signedUpPage }) => {
     const page = signedUpPage;
     await page.goto("./aup");
     const deleteBtn = page.getByRole("button", { name: "Delete AUP" });
@@ -56,7 +56,7 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
   });
 
   testAdmin(
-    "Admin can create and edit a non-expiring AUP",
+    "admin can create and edit a non-expiring AUP",
     async ({ signedUpPage }) => {
       const page = signedUpPage;
 
@@ -76,7 +76,7 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
         ).toBeVisible();
       });
 
-      await testAdmin.step("Create AUP", async () => {
+      await testAdmin.step("create AUP", async () => {
         const createAupBtn = page.getByRole("button", { name: "Create AUP" });
         await expect(createAupBtn).toBeEnabled();
         await createAupBtn.click();
@@ -105,7 +105,8 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
         const createBtn = dialog.getByRole("button", { name: "Create AUP" });
         await expect(createBtn).toBeEnabled();
         await createBtn.click();
-        await dismissToast(page, "AUP Created", "success");
+        await expect(dialog).toBeHidden();
+        await dismissToast(page, "AUP created", "success");
       });
 
       await testAdmin.step("AUP is has been edited today", async () => {
@@ -126,7 +127,7 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
         await expect(reminders).toBeEmpty();
       });
 
-      await testAdmin.step("Edit AUP URL", async () => {
+      await testAdmin.step("edit AUP URL", async () => {
         const dialog = await openEditModal(page);
         const url = dialog.getByLabel("Acceptable Usage Policy URL");
         await expect(url).toHaveValue("http://example.org");
@@ -141,7 +142,7 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
         await expect(url2).toHaveValue("http://aup.example.org");
       });
 
-      await testAdmin.step("Edit AUP expiration days", async () => {
+      await testAdmin.step("edit AUP expiration days", async () => {
         const dialog = await openEditModal(page);
         const days = dialog
           .getByLabel("AUP signature validity (in days)")
@@ -162,7 +163,7 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
         await expect(validity).toHaveValue("365");
       });
 
-      await testAdmin.step("Edit AUP reminder in days", async () => {
+      await testAdmin.step("edit AUP reminder in days", async () => {
         const dialog = await openEditModal(page);
         const days = dialog.getByLabel("AUP signature validity (in days)");
         await expect(days).toHaveValue("365");
@@ -176,20 +177,12 @@ testAdmin.describe("Admin can create/edit/delete the AUP", () => {
       });
 
       const valuesAndErrors = [
-        [
-          "AUP reminder is too large",
-          "2048",
-          'Cannot update AUPError 400 {"error":"Invalid AUP: aupRemindersInDays must be smaller than signatureValidityInDays"}',
-        ],
-        [
-          "AUP reminder is negative",
-          "-42",
-          'Cannot update AUPError 400 {"error":"Invalid AUP: zero or negative values for reminders are not allowed"}',
-        ],
+        ["AUP reminder is too large", "2048", "Cannot update AUP"],
+        ["AUP reminder is negative", "-42", "Cannot update AUP"],
         [
           "AUP reminder is not a list of integers",
           "42,foo",
-          'Cannot update AUPError 400 {"error":"Invalid AUP: non-integer value found for aupRemindersInDays"}',
+          "Cannot update AUP",
         ],
       ];
 

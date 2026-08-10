@@ -47,7 +47,7 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
               <Field
                 as="li"
                 key={s.id}
-                className="dark:hover:bg-neutral-200/10; flex flex-row items-center gap-2 p-2 hover:rounded-md hover:bg-neutral-200"
+                className="flex flex-row items-center gap-2 p-2 hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-400"
               >
                 <Checkbox name="scope" value={s.value} />
                 <div className="flex grow flex-col">
@@ -73,7 +73,7 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
   );
 }
 
-export function AddScopeButton(props: AddScopeProps) {
+export function AddScopeButton(props: Readonly<AddScopeProps>) {
   const { client, isAdmin, availableScopes } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);

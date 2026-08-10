@@ -9,7 +9,11 @@ import { toast } from "@/components/toaster";
 import { Scope } from "@/models/client";
 import { editScope } from "@/services/scopes";
 
-export default function ScopeTypeSelect(props: { scope: Scope }) {
+type ScopeTypeSelectProps = {
+  scope: Scope;
+};
+
+export default function ScopeTypeSelect(props: Readonly<ScopeTypeSelectProps>) {
   const { scope } = props;
 
   const options = [

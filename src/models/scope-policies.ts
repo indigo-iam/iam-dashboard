@@ -14,7 +14,7 @@ export type GroupSelector = {
   location?: string;
 };
 
-export interface ScopePolicy {
+export type ScopePolicy = {
   id: number;
   description: string;
   creationTime: Date;
@@ -23,5 +23,14 @@ export interface ScopePolicy {
   matchingPolicy: "EQ" | "REGEXP" | "PATH";
   group?: GroupSelector;
   account?: AccountSelector;
-  scopes: [string];
+  scopes: string[];
+}
+
+export type ScopePolicyRequest = {
+  description?: string;
+  rule: "PERMIT" | "DENY";
+  matchingPolicy: "EQ" | "REGEXP" | "PATH";
+  group: GroupSelector | null;
+  account: AccountSelector | null;
+  scopes: string[];
 }

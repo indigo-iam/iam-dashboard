@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import ConfirmButton from "./components/confirm-button";
 import { ScopePoliciesForm } from "../components";
 import { Description, Field, Label } from "@/components/form";
 import { redirect } from "next/navigation";

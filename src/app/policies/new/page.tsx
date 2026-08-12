@@ -38,7 +38,6 @@ export default async function Policies() {
           </p>
           <div className="panel space-y-4">
             <ScopePoliciesForm />
-            <ConfirmButton />
           </div>
         </div>
       </div>

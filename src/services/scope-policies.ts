@@ -40,7 +40,7 @@ export async function addScopePolicy(policy: ScopePolicyRequest) {
 export async function updateScopePolicy(id: number, policy: ScopePolicyRequest) {
   const url = `${IAM_API_URL}/iam/scope_policies/${id}`;
   const response = await authFetch(url, {
-    body: JSON.stringify(policy), method: "PUT", headers: {
+    body: JSON.stringify({ ...policy, id }), method: "PUT", headers: {
       "content-type": "application/json"
     }
   });

@@ -14,8 +14,8 @@ import { Group } from "@/models/groups";
 import { AccountSelector, GroupSelector, ScopePolicy } from "@/models/scope-policies";
 
 export type AccountGroupSelection = {
-  users: AccountSelector[];
-  groups: GroupSelector[];
+  user: AccountSelector | null;
+  group: GroupSelector | null;
 };
 
 type AccountGroupSelectorProps = {
@@ -44,33 +44,27 @@ export function AccountGroupSelector(props: Readonly<AccountGroupSelectorProps>)
   }
 
   const [entityType, setEntityType] = useState(entitySelector.id);
-  const [selectedUser, setSelectedUser] = useState<AccountSelector[]>(
-    policy?.account ? [policy.account] : []
-  );
-  const [selectedGroup, setSelectedGroup] = useState<GroupSelector[]>(
-    policy?.group ? [policy.group] : []
-  );
+  const [selectedUser, setSelectedUser] = useState<AccountSelector | null>(policy?.account ?? null);
+  const [selectedGroup, setSelectedGroup] = useState<GroupSelector | null>(policy?.group ?? null);
 
   useEffect(() => {
-    onChange?.({ users: selectedUser, groups: selectedGroup });
+    onChange?.({ user: selectedUser, group: selectedGroup });
   }, [selectedUser, selectedGroup, onChange]);
 
   function addUser(user: User) {
-    const selector: AccountSelector = { uuid: user.id, username: user.userName };
-    setSelectedUser([selector]);
+    setSelectedUser({ uuid: user.id, username: user.userName });
   }
 
   function addGroup(group: Group) {
-    const selector: GroupSelector = { uuid: group.id, name: group.displayName };
-    setSelectedGroup([selector]);
+    setSelectedGroup({ uuid: group.id, name: group.displayName });
   }
 
-  function removeUser(uuid: string) {
-    setSelectedUser(users => users.filter(u => u.uuid !== uuid));
+  function removeUser() {
+    setSelectedUser(null);
   }
 
-  function removeGroup(uuid: string) {
-    setSelectedGroup(groups => groups.filter(g => g.uuid !== uuid));
+  function removeGroup() {
+    setSelectedGroup(null);
   }
 
   return (
@@ -93,19 +87,19 @@ export function AccountGroupSelector(props: Readonly<AccountGroupSelectorProps>)
         <>
           <SearchUsers listId="account-group-users" onSelect={addUser} />
           <ul className="mt-2">
-            {selectedUser.map(user => (
-              <li key={user.uuid} className="mt-1 flex flex-row items-center gap-2">
+            {selectedUser && (
+              <li key={selectedUser.uuid} className="mt-1 flex flex-row items-center gap-2">
                 <button
                   title="Remove user"
                   type="button"
-                  onClick={() => removeUser(user.uuid)}
+                  onClick={removeUser}
                   className="bg-secondary-100 hover:bg-danger hover:text-white dark:text-white/80 w-5 rounded dark:bg-transparent"
                 >
                   <XMarkIcon />
                 </button>
-                <label>{user.username}</label>
+                <label>{selectedUser.username}</label>
               </li>
-            ))}
+            )}
           </ul>
         </>
       )}
@@ -114,19 +108,19 @@ export function AccountGroupSelector(props: Readonly<AccountGroupSelectorProps>)
         <>
           <SearchGroups listId="account-group-groups" onSelect={addGroup} />
           <ul className="mt-2">
-            {selectedGroup.map(group => (
-              <li key={group.uuid} className="mt-1 flex flex-row items-center gap-2">
+            {selectedGroup && (
+              <li key={selectedGroup.uuid} className="mt-1 flex flex-row items-center gap-2">
                 <button
                   title="Remove group"
                   type="button"
-                  onClick={() => removeGroup(group.uuid)}
+                  onClick={removeGroup}
                   className="bg-secondary-100 hover:bg-danger hover:text-white dark:text-white/80 w-5 rounded dark:bg-transparent"
                 >
                   <XMarkIcon />
                 </button>
-                <label>{group.name}</label>
+                <label>{selectedGroup.name}</label>
               </li>
-            ))}
+            )}
           </ul>
         </>
       )}

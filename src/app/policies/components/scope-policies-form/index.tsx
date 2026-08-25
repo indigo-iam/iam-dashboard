@@ -40,8 +40,8 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
   const [rule, setRule] = useState(policy.rule);
   const [matchingPolicy, setMatchingPolicy] = useState(policy.matchingPolicy);
   const [accountGroupSelection, setAccountGroupSelection] = useState<AccountGroupSelection>({
-    users: props.policy?.account ? [props.policy.account] : [],
-    groups: props.policy?.group ? [props.policy.group] : [],
+    user: props.policy?.account ?? null,
+    group: props.policy?.group ?? null,
   });
 
   const selectedRule = { id: rule, name: rule };

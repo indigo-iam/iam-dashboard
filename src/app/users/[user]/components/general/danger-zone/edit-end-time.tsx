@@ -129,12 +129,12 @@ export function EditEndtime(props: Readonly<EditEndtimeProps>) {
   return (
     <>
       <Field>
-        <div className="flex items-center gap-1">
-          <Label>Endtime date</Label>
-          <div className="pb-0.5">
+        <Label>
+          <div className="flex items-center gap-1">
+            <span>Endtime date</span>
             <Info>After this date user will be automatically disabled.</Info>
           </div>
-        </div>
+        </Label>
         <div className="flex justify-between gap-4">
           <Input
             defaultValue={userEndtime?.split("T")[0]}

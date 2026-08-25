@@ -35,13 +35,17 @@ const matchingPolicyOptions = [
 
 export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
   const policy = props.policy ?? defaultValues;
-  const rule = { id: policy.rule, name: policy.rule };
-  const matchingPolicySelector = {
-    id: policy.matchingPolicy,
-    name: policy.matchingPolicy,
-  };
 
-  const [accountGroupSelection, setAccountGroupSelection] = useState<AccountGroupSelection>({ users: [], groups: [] });
+  const [description, setDescription] = useState(policy.description);
+  const [rule, setRule] = useState(policy.rule);
+  const [matchingPolicy, setMatchingPolicy] = useState(policy.matchingPolicy);
+  const [accountGroupSelection, setAccountGroupSelection] = useState<AccountGroupSelection>({
+    users: props.policy?.account ? [props.policy.account] : [],
+    groups: props.policy?.group ? [props.policy.group] : [],
+  });
+
+  const selectedRule = { id: rule, name: rule };
+  const matchingPolicySelector = { id: matchingPolicy, name: matchingPolicy };
 
   return (
     <div className="panel space-y-4">
@@ -52,6 +56,8 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           type="text"
           name="description"
           title="Description"
+          value={description}
+          onChange={e => setDescription(e.target.value)}
           placeholder={policy?.description ?? "Default Permit ALL policy"}
           required
         />
@@ -61,7 +67,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
         <Field>
           <Label>Rule</Label>
           <Description>Select permit or deny</Description>
-          <Select name="rule" defaultValue={rule}>
+          <Select name="rule" defaultValue={selectedRule} onChange={value => setRule(value.name)}>
             {ruleOptions.map(rule => (
               <SelectOption key={rule.id} value={rule}>
                 {rule.name}
@@ -73,7 +79,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
         <Field>
           <Label>Matching Policy</Label>
           <Description>Select the right matching policy</Description>
-          <Select name="rule" defaultValue={matchingPolicySelector}>
+          <Select name="matchingPolicy" defaultValue={matchingPolicySelector} onChange={value => setMatchingPolicy(value.name)}>
             {matchingPolicyOptions.map(mp => (
               <SelectOption key={mp.id} value={mp}>
                 {mp.name}

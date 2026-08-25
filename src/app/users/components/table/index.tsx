@@ -8,6 +8,7 @@ import Link from "@/components/link";
 import { Status } from "@/components/badges";
 import { User } from "@/models/scim";
 import UserOptions from "./options";
+import { dateToHuman } from "@/utils/dates";
 
 type RowProps = {
   userId: string;
@@ -20,9 +21,7 @@ type RowProps = {
 function Row(props: Readonly<RowProps>) {
   const { userId, userFormattedName, userEmail, userIsActive, userCreatedAt } =
     props;
-  const created = userCreatedAt
-    ? new Date(userCreatedAt).toDateString()
-    : "N/A";
+  const created = userCreatedAt ? dateToHuman(new Date(userCreatedAt)) : "N/A";
   return (
     <li className="iam-list-item lg:gap-2">
       <div className="text-md flex grow flex-col break-all lg:flex-row">

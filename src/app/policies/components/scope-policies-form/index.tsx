@@ -7,8 +7,10 @@
 import { useState } from "react";
 import { Field, Label, Description, Select, SelectOption } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { ScopePolicy } from "@/models/scope-policies";
+import { ScopePolicy, ScopePolicyRequest } from "@/models/scope-policies";
+import { addScopePolicy, updateScopePolicy } from "@/services/scope-policies";
 import { AccountGroupSelector, AccountGroupSelection } from "./account-group-selector";
+import ConfirmButton from "./confirm-button";
 
 type ScopePoliciesProps = {
   policy?: ScopePolicy;
@@ -35,6 +37,7 @@ const matchingPolicyOptions = [
 
 export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
   const policy = props.policy ?? defaultValues;
+  const isEditing = props.policy ? true : false;
 
   const [description, setDescription] = useState(policy.description);
   const [rule, setRule] = useState(policy.rule);
@@ -46,6 +49,23 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
 
   const selectedRule = { id: rule, name: rule };
   const matchingPolicySelector = { id: matchingPolicy, name: matchingPolicy };
+
+  async function handleConfirm() {
+    const request: ScopePolicyRequest = {
+      description,
+      rule: rule as ScopePolicy["rule"],
+      matchingPolicy: matchingPolicy as ScopePolicy["matchingPolicy"],
+      group: accountGroupSelection.group,
+      account: accountGroupSelection.user,
+      scopes: props.policy?.scopes ?? []
+    }
+    if (props.policy) {
+      await updateScopePolicy(props.policy.id, request);
+    }
+    else {
+      await addScopePolicy(request);
+    }
+  }
 
   return (
     <div className="panel space-y-4">

@@ -114,6 +114,16 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
         <Description>Select account or group</Description>
         <AccountGroupSelector policy={props.policy} onChange={setAccountGroupSelection} />
       </Field>
+
+      <ConfirmButton
+        label={isEditing ? "Save changes" : "Add Scope Policy"}
+        title={isEditing ? "Edit Scope Policy" : "Create Scope Policy"}
+        onConfirm={handleConfirm}
+      >
+        <p>
+          {isEditing ? "Are you sure you want to update this scope policy?" : "Are you sure you want to add this new scope policy?"}
+        </p>
+      </ConfirmButton>
     </div>
   );
 }

@@ -44,37 +44,33 @@ export function AccountGroupSelector(props: Readonly<AccountGroupSelectorProps>)
   }
 
   const [entityType, setEntityType] = useState(entitySelector.id);
-  const [selectedUsers, setSelectedUsers] = useState<AccountSelector[]>(
+  const [selectedUser, setSelectedUser] = useState<AccountSelector[]>(
     policy?.account ? [policy.account] : []
   );
-  const [selectedGroups, setSelectedGroups] = useState<GroupSelector[]>(
+  const [selectedGroup, setSelectedGroup] = useState<GroupSelector[]>(
     policy?.group ? [policy.group] : []
   );
 
   useEffect(() => {
-    onChange?.({ users: selectedUsers, groups: selectedGroups });
-  }, [selectedUsers, selectedGroups, onChange]);
+    onChange?.({ users: selectedUser, groups: selectedGroup });
+  }, [selectedUser, selectedGroup, onChange]);
 
   function addUser(user: User) {
     const selector: AccountSelector = { uuid: user.id, username: user.userName };
-    setSelectedUsers(users =>
-      users.some(u => u.uuid === selector.uuid) ? users : [...users, selector]
-    );
+    setSelectedUser([selector]);
   }
 
   function addGroup(group: Group) {
     const selector: GroupSelector = { uuid: group.id, name: group.displayName };
-    setSelectedGroups(groups =>
-      groups.some(g => g.uuid === selector.uuid) ? groups : [...groups, selector]
-    );
+    setSelectedGroup([selector]);
   }
 
   function removeUser(uuid: string) {
-    setSelectedUsers(users => users.filter(u => u.uuid !== uuid));
+    setSelectedUser(users => users.filter(u => u.uuid !== uuid));
   }
 
   function removeGroup(uuid: string) {
-    setSelectedGroups(groups => groups.filter(g => g.uuid !== uuid));
+    setSelectedGroup(groups => groups.filter(g => g.uuid !== uuid));
   }
 
   return (
@@ -97,7 +93,7 @@ export function AccountGroupSelector(props: Readonly<AccountGroupSelectorProps>)
         <>
           <SearchUsers listId="account-group-users" onSelect={addUser} />
           <ul className="mt-2">
-            {selectedUsers.map(user => (
+            {selectedUser.map(user => (
               <li key={user.uuid} className="mt-1 flex flex-row items-center gap-2">
                 <button
                   title="Remove user"
@@ -118,7 +114,7 @@ export function AccountGroupSelector(props: Readonly<AccountGroupSelectorProps>)
         <>
           <SearchGroups listId="account-group-groups" onSelect={addGroup} />
           <ul className="mt-2">
-            {selectedGroups.map(group => (
+            {selectedGroup.map(group => (
               <li key={group.uuid} className="mt-1 flex flex-row items-center gap-2">
                 <button
                   title="Remove group"

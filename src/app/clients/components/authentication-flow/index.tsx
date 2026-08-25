@@ -87,12 +87,12 @@ export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
   return (
     <div className="space-y-2">
       <Field>
-        <div className="flex items-center gap-1">
-          <Label>Default authorization grant</Label>
-          <div>
+        <Label>
+          <div className="flex items-center gap-1">
+            <span>Default authorization grant</span>
             <Info>Select the default authorization grant for this client.</Info>
           </div>
-        </div>
+        </Label>
         <Select
           name="grant_type"
           defaultValue={defaultOption}

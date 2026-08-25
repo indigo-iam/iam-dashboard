@@ -8,27 +8,22 @@ import { cache } from "react";
 export const getNow = cache(() => Date.now());
 export const getDate = cache(() => new Date());
 
-export function dateToHuman(date: Date): string {
-  const now = getNow();
-  const delta = now - date.getTime();
-  const sign = delta >= 0 ? -1 : 1;
-
-  if (delta >= 0 && delta < 86400000) {
+export function dateToHuman(date: Date) {
+  const now = new Date();
+  if (date.toDateString() === now.toDateString()) {
     return "today";
   }
-  const absDelta = Math.abs(delta);
-  const formatter = new Intl.RelativeTimeFormat("en");
-  const days = Math.ceil(absDelta / 86400000);
+  const timeDifference = date.getTime() - now.getTime();
+  const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
-  if (days <= 31) {
-    return formatter.format(sign * days, "day");
+  if (Math.abs(daysDifference) <= 30) {
+    const formatter = new Intl.RelativeTimeFormat("en", { style: "short" });
+    return formatter.format(daysDifference, "days");
   }
-
-  const months = Math.floor(absDelta / 2678400000);
-  if (months < 12) {
-    return formatter.format(sign * months, "month");
-  }
-
-  const years = Math.floor(absDelta / 32140800000);
-  return formatter.format(sign * years, "year");
+  const formatter = new Intl.DateTimeFormat(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+  return `on ${formatter.format(date)}`;
 }

@@ -38,6 +38,7 @@ export interface ClientBase {
   client_secret: string;
   contacts: string[];
   created_at: number;
+  last_used: number;
   redirect_uris: string[];
   dynamically_registered: boolean;
   status_changed_on?: number;

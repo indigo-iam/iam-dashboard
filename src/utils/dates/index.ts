@@ -8,18 +8,35 @@ import { cache } from "react";
 export const getNow = cache(() => Date.now());
 export const getDate = cache(() => new Date());
 
+const ONE_DAY_IN_MS = 1000 * 3600 * 24;
+
+function isSameDate(a: Date, b: Date) {
+  return (
+    a.getUTCFullYear() === b.getUTCFullYear() &&
+    a.getUTCMonth() === b.getUTCMonth() &&
+    a.getUTCDate() === b.getUTCDate()
+  );
+}
+
 export function dateToHuman(date: Date) {
-  const now = new Date();
-  if (date.toDateString() === now.toDateString()) {
+  const today = getDate();
+
+  if (isSameDate(date, today)) {
     return "today";
   }
-  const timeDifference = date.getTime() - now.getTime();
-  const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
-  if (Math.abs(daysDifference) <= 30) {
+  const timeDifference = date.getTime() - today.getTime();
+  if (timeDifference < ONE_DAY_IN_MS) {
+    return "yesterday";
+  }
+
+  const daysDifference = Math.ceil(timeDifference / ONE_DAY_IN_MS);
+
+  if (Math.abs(daysDifference) <= 14) {
     const formatter = new Intl.RelativeTimeFormat("en", { style: "short" });
     return formatter.format(daysDifference, "days");
   }
+
   const formatter = new Intl.DateTimeFormat(undefined, {
     year: "numeric",
     month: "short",

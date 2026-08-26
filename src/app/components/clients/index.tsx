@@ -29,7 +29,7 @@ function Row(props: Readonly<RowProps>) {
     : "Never used";
   return (
     <li className="iam-list-item gap-2">
-      <div className="flex w-0 grow flex-col space-y-2 lg:flex-row lg:gap-8 lg:space-y-0">
+      <div className="flex w-0 grow flex-col space-y-2 lg:flex-row lg:gap-16 lg:space-y-0">
         <div className="flex grow flex-col lg:w-0">
           <Link className="iam-link" href={`/clients/${client.client_id}`}>
             {client.client_name}
@@ -40,8 +40,12 @@ function Row(props: Readonly<RowProps>) {
                 {client.client_description}
               </p>
             )}
+
             <div className="flex flex-col text-xs font-extralight">
-              <div className="flex gap-1">
+              <div className="flex items-center gap-1">
+                <div className="lg:hidden">
+                  <Status active={client.active} autoHide={true} />
+                </div>
                 <span className="whitespace-nowrap">{lastUsed}</span>
                 <span>•</span>
                 <span title={scopes} className="truncate">
@@ -51,7 +55,7 @@ function Row(props: Readonly<RowProps>) {
             </div>
           </div>
         </div>
-        <div className="flex flex-row items-center lg:flex-col lg:items-end lg:justify-center">
+        <div className="hidden items-center lg:flex lg:flex-col lg:items-end lg:justify-center">
           <Status active={client.active} autoHide={true} />
         </div>
       </div>

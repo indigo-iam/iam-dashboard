@@ -7,6 +7,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 import { Group, ManagedGroup } from "@/models/groups";
 import { ScimReference } from "@/models/scim";
+import { dateToHuman } from "@/utils/dates";
 import GroupOptions from "./options";
 
 type LabelsProps = {
@@ -45,7 +46,7 @@ function Row(props: Readonly<RowProps>) {
   const { group } = props;
   const indigoGroup = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
   const created = group.meta?.created
-    ? new Date(group.meta.created).toLocaleString()
+    ? dateToHuman(new Date(group.meta.created))
     : "N/A";
   return (
     <li className="iam-list-item">

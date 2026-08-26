@@ -26,7 +26,7 @@ export function dateToHuman(date: Date) {
   }
 
   const timeDifference = date.getTime() - today.getTime();
-  if (timeDifference < ONE_DAY_IN_MS) {
+  if (-ONE_DAY_IN_MS * 2 < timeDifference && timeDifference < -ONE_DAY_IN_MS) {
     return "yesterday";
   }
 

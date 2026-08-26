@@ -55,16 +55,14 @@ function Row(props: Readonly<RowProps>) {
           <Link className="iam-link" href={`/groups/${group.id}`}>
             {group.displayName}
           </Link>
-          <p className="truncate text-sm font-light">
-            {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description}
-          </p>
+          <div>
+            <p className="truncate text-sm font-light">
+              {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description}
+            </p>
+            <p className="text-xs font-light">Created {created}</p>
+          </div>
         </div>
-        <div className="flex grow items-center">
-          <Labels group={group} />
-        </div>
-        <p className="my-auto flex flex-col py-1 pr-2 text-xs font-light">
-          Created {created}
-        </p>
+        <Labels group={group} />
       </div>
       <GroupOptions
         groupId={group.id}

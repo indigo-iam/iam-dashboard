@@ -30,7 +30,7 @@ export default function ConfirmButton(props: Readonly<ConfirmButtonProps>) {
 
     return (
         <div className="flex justify-end">
-            <Button className="btn-primary" onClick={open}>
+            <Button className="btn-primary" onClick={open} disabled={confirmButtonDisabled}>
                 {label}
             </Button>
             <ConfirmModal

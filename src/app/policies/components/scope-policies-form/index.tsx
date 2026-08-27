@@ -119,6 +119,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
         label={isEditing ? "Save changes" : "Add Scope Policy"}
         title={isEditing ? "Edit Scope Policy" : "Create Scope Policy"}
         onConfirm={handleConfirm}
+        confirmButtonDisabled={description.trim() === ""}
       >
         <p>
           {isEditing ? "Are you sure you want to update this scope policy?" : "Are you sure you want to add this new scope policy?"}

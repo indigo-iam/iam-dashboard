@@ -24,32 +24,37 @@ export async function fetchScopePolicy(id: number) {
 export async function addScopePolicy(policy: ScopePolicyRequest) {
   const url = `${IAM_API_URL}/iam/scope_policies`;
   const response = await authFetch(url, {
-    body: JSON.stringify(policy), method: "POST", headers: {
-      "content-type": "application/json"
-    }
+    body: JSON.stringify(policy),
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
   });
   if (response.ok) {
     console.log(await response.text());
     revalidatePath("/policies");
-  }
-  else {
+  } else {
     console.log(`${response.status} ${await response.text()}`);
   }
 }
 
-export async function updateScopePolicy(id: number, policy: ScopePolicyRequest) {
+export async function updateScopePolicy(
+  id: number,
+  policy: ScopePolicyRequest
+) {
   const url = `${IAM_API_URL}/iam/scope_policies/${id}`;
   const response = await authFetch(url, {
-    body: JSON.stringify({ ...policy, id }), method: "PUT", headers: {
-      "content-type": "application/json"
-    }
+    body: JSON.stringify({ ...policy, id }),
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+    },
   });
   if (response.ok) {
     console.log(await response.text());
     revalidatePath(`/policies/${id}`);
     revalidatePath("/policies");
-  }
-  else {
+  } else {
     console.log(`${response.status} ${await response.text()}`);
   }
 }

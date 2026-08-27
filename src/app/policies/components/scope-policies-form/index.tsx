@@ -92,7 +92,8 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
     statePolicy.description === originalPolicy.description &&
     statePolicy.rule === originalPolicy.rule &&
     statePolicy.matchingPolicy === originalPolicy.matchingPolicy &&
-    accountGroupSelection.user?.uuid === (originalPolicy.account?.uuid ?? null) &&
+    accountGroupSelection.user?.uuid ===
+      (originalPolicy.account?.uuid ?? null) &&
     accountGroupSelection.group?.uuid === (originalPolicy.group?.uuid ?? null);
 
   return (

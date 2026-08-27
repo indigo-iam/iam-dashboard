@@ -5,12 +5,23 @@
 "use client";
 
 import { useState } from "react";
-import { Field, Label, Description, Select, SelectOption } from "@/components/form";
+
+import {
+  AccountGroupSelector,
+  AccountGroupSelection,
+} from "./account-group-selector";
+import ConfirmButton from "./confirm-button";
+import { addScopePolicy, updateScopePolicy } from "@/services/scope-policies";
+import {
+  Field,
+  Label,
+  Description,
+  Select,
+  SelectOption,
+} from "@/components/form";
 import { Input } from "@/components/inputs";
 import { ScopePolicy, ScopePolicyRequest } from "@/models/scope-policies";
-import { addScopePolicy, updateScopePolicy } from "@/services/scope-policies";
-import { AccountGroupSelector, AccountGroupSelection } from "./account-group-selector";
-import ConfirmButton from "./confirm-button";
+
 
 type ScopePoliciesProps = {
   policy?: ScopePolicy;
@@ -42,10 +53,11 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
   const [description, setDescription] = useState(policy.description);
   const [rule, setRule] = useState(policy.rule);
   const [matchingPolicy, setMatchingPolicy] = useState(policy.matchingPolicy);
-  const [accountGroupSelection, setAccountGroupSelection] = useState<AccountGroupSelection>({
-    user: props.policy?.account ?? null,
-    group: props.policy?.group ?? null,
-  });
+  const [accountGroupSelection, setAccountGroupSelection] =
+    useState<AccountGroupSelection>({
+      user: props.policy?.account ?? null,
+      group: props.policy?.group ?? null,
+    });
 
   const selectedRule = { id: rule, name: rule };
   const matchingPolicySelector = { id: matchingPolicy, name: matchingPolicy };
@@ -57,12 +69,11 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
       matchingPolicy: matchingPolicy as ScopePolicy["matchingPolicy"],
       group: accountGroupSelection.group,
       account: accountGroupSelection.user,
-      scopes: props.policy?.scopes ?? []
-    }
+      scopes: props.policy?.scopes ?? [],
+    };
     if (props.policy) {
       await updateScopePolicy(props.policy.id, request);
-    }
-    else {
+    } else {
       await addScopePolicy(request);
     }
   }
@@ -87,7 +98,11 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
         <Field>
           <Label>Rule</Label>
           <Description>Select permit or deny</Description>
-          <Select name="rule" defaultValue={selectedRule} onChange={value => setRule(value.name)}>
+          <Select
+            name="rule"
+            defaultValue={selectedRule}
+            onChange={value => setRule(value.name)}
+          >
             {ruleOptions.map(rule => (
               <SelectOption key={rule.id} value={rule}>
                 {rule.name}
@@ -99,7 +114,11 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
         <Field>
           <Label>Matching Policy</Label>
           <Description>Select the right matching policy</Description>
-          <Select name="matchingPolicy" defaultValue={matchingPolicySelector} onChange={value => setMatchingPolicy(value.name)}>
+          <Select
+            name="matchingPolicy"
+            defaultValue={matchingPolicySelector}
+            onChange={value => setMatchingPolicy(value.name)}
+          >
             {matchingPolicyOptions.map(mp => (
               <SelectOption key={mp.id} value={mp}>
                 {mp.name}
@@ -112,7 +131,10 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
       <Field>
         <Label>Account/Group</Label>
         <Description>Select account or group</Description>
-        <AccountGroupSelector policy={props.policy} onChange={setAccountGroupSelection} />
+        <AccountGroupSelector
+          policy={props.policy}
+          onChange={setAccountGroupSelection}
+        />
       </Field>
 
       <ConfirmButton
@@ -122,7 +144,9 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
         confirmButtonDisabled={description.trim() === ""}
       >
         <p>
-          {isEditing ? "Are you sure you want to update this scope policy?" : "Are you sure you want to add this new scope policy?"}
+          {isEditing
+            ? "Are you sure you want to update this scope policy?"
+            : "Are you sure you want to add this new scope policy?"}
         </p>
       </ConfirmButton>
     </div>

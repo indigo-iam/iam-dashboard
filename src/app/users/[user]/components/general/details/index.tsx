@@ -62,7 +62,6 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
     });
     toast.toast(res);
   }
-
   const created = userCreatedAt ? dateToHuman(new Date(userCreatedAt)) : "N/A";
   const modified = userLastModified
     ? dateToHuman(new Date(userLastModified))
@@ -84,8 +83,8 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
           {userId}
         </p>
         <div>
-          <p>Created {created}.</p>
-          <p>Last modified {modified}.</p>
+          <p>Created {created}</p>
+          <p>Updated {modified}</p>
         </div>
       </div>
       <div className="w-full space-y-4 lg:w-2/3">

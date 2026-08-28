@@ -21,24 +21,22 @@ export function Row(props: Readonly<RowPros>) {
   return (
     <li className="iam-list-item">
       <div className="flex grow">
-        <div className="flex grow flex-col lg:flex-row">
-          <div className="flex grow flex-col">
-            <p className="text-gray-950 dark:text-gray-100">
-              User{" "}
-              <Link className="iam-link" href={`/users/${userUuid}`}>
-                {userFullName} (<i>{username}</i>)
-              </Link>{" "}
-              asked to join group{" "}
-              <Link className="iam-link" href={`/groups/${request.groupUuid}`}>
-                {groupName}
-              </Link>
-              .
-            </p>
-            <p className="text-sm">Motivation: {request.notes}</p>
-          </div>
-          <p className="flex items-center text-xs whitespace-nowrap lg:px-2 lg:text-right">
-            Sent {creationTime}
+        <div className="grow">
+          <p className="text-gray-950 dark:text-gray-100">
+            User{" "}
+            <Link className="iam-link" href={`/users/${userUuid}`}>
+              {userFullName} (<i>{username}</i>)
+            </Link>{" "}
+            asked to join group{" "}
+            <Link className="iam-link" href={`/groups/${request.groupUuid}`}>
+              {groupName}
+            </Link>
+            .
           </p>
+          <p className="text-sm">
+            Motivation: <q>{request.notes}</q>
+          </p>
+          <p className="text-xs">Sent {creationTime}</p>
         </div>
       </div>
       <GroupRequestOptions request={request} />
@@ -61,7 +59,7 @@ export default function Groups(props: Readonly<GroupsProps>) {
     );
   }
   return (
-    <div className="panel space-y-4">
+    <div className="panel">
       <h3>Group requests</h3>
       <ul className="w-full table-auto">
         {requests.map(r => (

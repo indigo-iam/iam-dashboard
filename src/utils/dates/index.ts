@@ -8,27 +8,39 @@ import { cache } from "react";
 export const getNow = cache(() => Date.now());
 export const getDate = cache(() => new Date());
 
-export function dateToHuman(date: Date): string {
-  const now = getNow();
-  const delta = now - date.getTime();
-  const sign = delta >= 0 ? -1 : 1;
+const ONE_DAY_IN_MS = 1000 * 3600 * 24;
 
-  if (delta >= 0 && delta < 86400000) {
+function isSameDate(a: Date, b: Date) {
+  return (
+    a.getUTCFullYear() === b.getUTCFullYear() &&
+    a.getUTCMonth() === b.getUTCMonth() &&
+    a.getUTCDate() === b.getUTCDate()
+  );
+}
+
+export function dateToHuman(date: Date) {
+  const today = getDate();
+
+  if (isSameDate(date, today)) {
     return "today";
   }
-  const absDelta = Math.abs(delta);
-  const formatter = new Intl.RelativeTimeFormat("en");
-  const days = Math.ceil(absDelta / 86400000);
 
-  if (days <= 31) {
-    return formatter.format(sign * days, "day");
+  const timeDifference = date.getTime() - today.getTime();
+  if (-ONE_DAY_IN_MS * 2 < timeDifference && timeDifference < -ONE_DAY_IN_MS) {
+    return "yesterday";
   }
 
-  const months = Math.floor(absDelta / 2678400000);
-  if (months < 12) {
-    return formatter.format(sign * months, "month");
+  const daysDifference = Math.ceil(timeDifference / ONE_DAY_IN_MS);
+
+  if (Math.abs(daysDifference) <= 14) {
+    const formatter = new Intl.RelativeTimeFormat("en", { style: "short" });
+    return formatter.format(daysDifference, "days");
   }
 
-  const years = Math.floor(absDelta / 32140800000);
-  return formatter.format(sign * years, "year");
+  const formatter = new Intl.DateTimeFormat(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+  return `on ${formatter.format(date)}`;
 }

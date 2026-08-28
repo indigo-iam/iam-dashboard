@@ -2,10 +2,12 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+
 import Link from "@/components/link";
 import { Status } from "@/components/badges";
 import { Client } from "@/models/client";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { dateToHuman } from "@/utils/dates";
 import ClientOptions from "./options";
 
 function sortScopes(scope: string) {
@@ -22,12 +24,12 @@ type RowProps = {
 function Row(props: Readonly<RowProps>) {
   const { client, isAdmin } = props;
   const scopes = client.scope ? sortScopes(client.scope) : undefined;
-  const createdAt = client.created_at
-    ? new Date(client.created_at).toLocaleString()
-    : "N/A";
+  const lastUsed = client.last_used
+    ? `Last used ${dateToHuman(new Date(client.last_used))}`
+    : "Never used";
   return (
-    <li className="iam-list-item lg:gap-2">
-      <div className="flex w-0 grow flex-col space-y-2 lg:flex-row lg:space-y-0">
+    <li className="iam-list-item gap-2">
+      <div className="flex w-0 grow flex-col space-y-2 lg:flex-row lg:gap-16 lg:space-y-0">
         <div className="flex grow flex-col lg:w-0">
           <Link className="iam-link" href={`/clients/${client.client_id}`}>
             {client.client_name}
@@ -38,16 +40,23 @@ function Row(props: Readonly<RowProps>) {
                 {client.client_description}
               </p>
             )}
-            <p title={scopes} className="truncate text-sm font-extralight">
-              {scopes}
-            </p>
+
+            <div className="flex flex-col text-xs font-extralight">
+              <div className="flex items-center gap-1">
+                <div className="lg:hidden">
+                  <Status active={client.active} autoHide={true} />
+                </div>
+                <span className="whitespace-nowrap">{lastUsed}</span>
+                <span>•</span>
+                <span title={scopes} className="truncate">
+                  {scopes}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="flex flex-row items-center gap-1.5 lg:flex-col lg:items-end lg:justify-center">
+        <div className="hidden items-center lg:flex lg:flex-col lg:items-end lg:justify-center">
           <Status active={client.active} autoHide={true} />
-          <p className="text-xs font-light whitespace-nowrap sm:text-right">
-            Created {createdAt}
-          </p>
         </div>
       </div>
       <ClientOptions

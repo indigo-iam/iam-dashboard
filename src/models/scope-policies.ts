@@ -2,7 +2,11 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-export type AccountSelector = "none";
+export type AccountSelector = {
+  uuid: string;
+  username?: string;
+  location?: string;
+};
 
 export type GroupSelector = {
   uuid: string;
@@ -10,7 +14,7 @@ export type GroupSelector = {
   location?: string;
 };
 
-export interface ScopePolicy {
+export type ScopePolicy = {
   id: number;
   description: string;
   creationTime: Date;
@@ -19,5 +23,14 @@ export interface ScopePolicy {
   matchingPolicy: "EQ" | "REGEXP" | "PATH";
   group?: GroupSelector;
   account?: AccountSelector;
-  scopes: [string];
+  scopes: string[];
+}
+
+export type ScopePolicyRequest = {
+  description?: string;
+  rule: "PERMIT" | "DENY";
+  matchingPolicy: "EQ" | "REGEXP" | "PATH";
+  group: GroupSelector | null;
+  account: AccountSelector | null;
+  scopes: string[];
 }

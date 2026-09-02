@@ -12,16 +12,18 @@ interface DeleteUserModalProps extends ModalProps {
   userId: string;
   userFormattedName: string;
   userEmail: string;
+  onDeleted?: () => void;
 }
 
 export default function DeleteUserModal(props: Readonly<DeleteUserModalProps>) {
-  const { userId, userFormattedName, userEmail, ...modalProps } = props;
+  const { userId, userFormattedName, userEmail, onDeleted, ...modalProps } = props;
   const action = async () => {
     const res = await deleteUser(userId);
     if (res.type === "success") {
       res.description = `User ${userFormattedName} has been deleted`;
     }
     toast.toast(res);
+    onDeleted?.();
   };
   return (
     // prettier-ignore

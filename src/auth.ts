@@ -137,7 +137,8 @@ const indigoIam = () =>
 
 export const authConfig = (db: Database.Database) => {
   return {
-    baseURL: `${IAM_DASHBOARD_BASE_URL}${IAM_DASHBOARD_BASE_PATH}/api/auth`,
+    baseURL: `${IAM_DASHBOARD_BASE_URL}`,
+    basePath: `${IAM_DASHBOARD_BASE_PATH}/api/auth/oauth2`,
     secret: IAM_DASHBOARD_AUTH_SECRET,
     database: db,
     user: {
@@ -326,9 +327,9 @@ export async function isUserAdmin() {
 
 export async function signIn() {
   const scopes = IAM_DASHBOARD_OIDC_ADMIN_SCOPES.split(" ");
-  const { url } = await auth.api.signInWithOAuth2({
+  const { url } = await auth.api.signInSocial({
     body: {
-      providerId: "indigo-iam",
+      provider: "indigo-iam",
       callbackURL: `${IAM_DASHBOARD_BASE_URL}${IAM_DASHBOARD_BASE_PATH}`,
       scopes,
     },

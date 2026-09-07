@@ -14,13 +14,16 @@ export type GroupSelector = {
   location?: string;
 };
 
+export type PolicyRule = "PERMIT" | "DENY";
+export type PolicyMatcher = "EQ" | "REGEXP" | "PATH";
+
 export type ScopePolicy = {
   id: number;
   description: string;
   creationTime: Date;
   lastUpdateTime: Date;
-  rule: "PERMIT" | "DENY";
-  matchingPolicy: "EQ" | "REGEXP" | "PATH";
+  rule: PolicyRule;
+  matchingPolicy: PolicyMatcher;
   group?: GroupSelector;
   account?: AccountSelector;
   scopes: string[];
@@ -28,8 +31,8 @@ export type ScopePolicy = {
 
 export type ScopePolicyRequest = {
   description?: string;
-  rule: "PERMIT" | "DENY";
-  matchingPolicy: "EQ" | "REGEXP" | "PATH";
+  rule: PolicyRule;
+  matchingPolicy: PolicyMatcher;
   group: GroupSelector | null;
   account: AccountSelector | null;
   scopes: string[];

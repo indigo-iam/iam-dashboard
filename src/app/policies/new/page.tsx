@@ -2,9 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Textarea } from "@/components/textarea";
-import ConfirmButton from "./components/confirm-button";
-import { Description, Field, Label } from "@/components/form";
+import { ScopePoliciesForm } from "../components";
 import { redirect } from "next/navigation";
 
 const POLICY_EXAMPLE = `{
@@ -37,16 +35,7 @@ export default async function Policies() {
             fringilla mi, id hendrerit quam.
           </p>
           <div className="panel space-y-4">
-            <Field>
-              <Label>Enter Policy</Label>
-              <Description>Policy must in as JSON format</Description>
-              <Textarea
-                className="iam-input w-full font-mono"
-                placeholder={POLICY_EXAMPLE}
-                rows={POLICY_EXAMPLE.split("\n").length}
-              />
-            </Field>
-            <ConfirmButton />
+            <ScopePoliciesForm />
           </div>
         </div>
       </div>

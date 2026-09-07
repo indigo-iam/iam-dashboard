@@ -89,12 +89,13 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
   }
 
   const policyChanged =
-    statePolicy.description === originalPolicy.description &&
-    statePolicy.rule === originalPolicy.rule &&
-    statePolicy.matchingPolicy === originalPolicy.matchingPolicy &&
-    accountGroupSelection.user?.uuid ===
-      (originalPolicy.account?.uuid ?? null) &&
-    accountGroupSelection.group?.uuid === (originalPolicy.group?.uuid ?? null);
+    statePolicy.description !== policy.description ||
+    statePolicy.rule !== policy.rule ||
+    statePolicy.matchingPolicy !== policy.matchingPolicy ||
+    (accountGroupSelection.user?.uuid ?? null) !==
+      (policy.account?.uuid ?? null) ||
+    (accountGroupSelection.group?.uuid ?? null) !==
+      (policy.group?.uuid ?? null);
 
   return (
     <div className="panel space-y-4">

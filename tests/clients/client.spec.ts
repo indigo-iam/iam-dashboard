@@ -15,8 +15,10 @@ interface Client {
 async function createNewClient(page: Page, client: Client) {
     await page.goto("./clients");
 
-    await page.getByRole('button', { name: 'New client' }).click();
-
+    const newClientBtn = page.getByRole("button", { name: "New client" });
+    await expect(newClientBtn).toBeEnabled();
+    await newClientBtn.click();
+    
     await page.getByRole('textbox', { name: 'Client Name*' }).fill(client.name);
     await page.getByRole('textbox', { name: 'Client Description' }).fill(client.description);
     await page.getByRole('button', { name: 'Continue' }).click();
@@ -32,8 +34,10 @@ async function createNewClient(page: Page, client: Client) {
 
 async function navigateToClientPage(page: Page, clientName: string) {
     await page.goto("./clients");
+
     const newClientBtn = page.getByRole("button", { name: "New client" });
     await expect(newClientBtn).toBeEnabled(); // wait for page fully loaded
+
     const searchbar = page.getByPlaceholder("Type to search a client");
     await searchbar.pressSequentially(clientName);
     const testClient = page.getByRole("link").filter({ hasText: clientName });

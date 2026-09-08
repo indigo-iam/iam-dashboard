@@ -18,7 +18,7 @@ async function createNewClient(page: Page, client: Client) {
     const newClientBtn = page.getByRole("button", { name: "New client" });
     await expect(newClientBtn).toBeEnabled();
     await newClientBtn.click();
-    
+
     await page.getByRole('textbox', { name: 'Client Name*' }).fill(client.name);
     await page.getByRole('textbox', { name: 'Client Description' }).fill(client.description);
     await page.getByRole('button', { name: 'Continue' }).click();
@@ -30,6 +30,7 @@ async function createNewClient(page: Page, client: Client) {
     await dismissToast(page, "Client created", "success");
 
     await page.getByRole('button', { name: 'Continue' }).click();
+    await page.waitForLoadState("domcontentloaded");
 }
 
 async function navigateToClientPage(page: Page, clientName: string) {

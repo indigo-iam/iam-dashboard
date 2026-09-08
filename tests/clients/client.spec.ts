@@ -28,9 +28,6 @@ async function createNewClient(page: Page, client: Client) {
     await page.getByRole('button', { name: 'Save' }).click();
 
     await dismissToast(page, "Client created", "success");
-
-    await page.getByRole('button', { name: 'Continue' }).click();
-    await page.waitForLoadState("domcontentloaded");
 }
 
 async function navigateToClientPage(page: Page, clientName: string) {

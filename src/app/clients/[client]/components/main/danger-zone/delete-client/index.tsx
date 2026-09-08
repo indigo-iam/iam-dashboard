@@ -8,6 +8,7 @@ import { useState } from "react";
 
 import { Button } from "@/components/buttons";
 import DeleteClientModal from "./modal";
+import { redirect } from "next/navigation";
 
 type DeleteButtonProps = {
   clientId: string;
@@ -21,6 +22,7 @@ export function DeleteButton(props: Readonly<DeleteButtonProps>) {
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
+  const deleted = () => redirect("/clients");
   return (
     <>
       <Button className="btn-danger" onClick={open}>
@@ -33,6 +35,7 @@ export function DeleteButton(props: Readonly<DeleteButtonProps>) {
         show={show}
         isAdmin={isAdmin}
         onClose={close}
+        onDeleted={deleted}
       />
     </>
   );

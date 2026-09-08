@@ -8,6 +8,7 @@ import { useState } from "react";
 
 import { Button } from "@/components/buttons";
 import DeleteUserModal from "./modal";
+import { redirect } from "next/navigation";
 
 type DeleteUserProps = {
   userId: string;
@@ -20,6 +21,7 @@ export function DeleteUser(props: Readonly<DeleteUserProps>) {
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
+  const deleted = () => redirect("/users");
   return (
     <>
       <Button className="btn-danger" onClick={open}>
@@ -31,6 +33,7 @@ export function DeleteUser(props: Readonly<DeleteUserProps>) {
         userEmail={userEmail}
         show={show}
         onClose={close}
+        onDeleted={deleted}
       />
     </>
   );

@@ -16,9 +16,6 @@ const POLICY_EXAMPLE = `{
 }  `;
 
 export default async function Policies() {
-  // temporary hide this page until finished
-  redirect("/");
-
   return (
     <section>
       <header className="section-header">

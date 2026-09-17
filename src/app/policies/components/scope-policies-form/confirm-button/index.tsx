@@ -37,7 +37,7 @@ export default function ConfirmButton(props: Readonly<ConfirmButtonProps>) {
   };
 
   return (
-    <div className="flex justify-end">
+    <>
       <Button
         className="btn-primary"
         onClick={open}
@@ -55,6 +55,6 @@ export default function ConfirmButton(props: Readonly<ConfirmButtonProps>) {
       >
         {children}
       </ConfirmModal>
-    </div>
+    </>
   );
 }

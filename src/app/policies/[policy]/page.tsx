@@ -4,17 +4,14 @@
 
 import { getSession, isUserAdmin } from "@/auth";
 import { fetchScopePolicy } from "@/services/scope-policies";
-import Editor from "./components/editor";
 import { redirect } from "next/navigation";
+import { ScopePoliciesForm } from "../components";
 
 type PolicyPageProps = {
   params: Promise<{ policy: number }>;
 };
 
 export default async function PolicyPage(props: Readonly<PolicyPageProps>) {
-  // temporary hide this page until finished
-  redirect("/");
-
   const session = await getSession();
   if (!session) {
     redirect("/signin");
@@ -34,7 +31,7 @@ export default async function PolicyPage(props: Readonly<PolicyPageProps>) {
       <div className="container">
         <div className="panel space-y-4">
           <h2>{policy.description}</h2>
-          <Editor policy={policy} />
+          <ScopePoliciesForm policy={policy} />
         </div>
       </div>
     </section>

@@ -18,6 +18,7 @@ import { Drawer, Link } from "@/components/drawer";
 import NextLink from "next/link";
 import { settings } from "@/config";
 import { getLoginServiceVersion } from "@/services/actuator";
+import { ScaleIcon } from "@heroicons/react/16/solid";
 
 const {
   IAM_DASHBOARD_APP_VERSION,
@@ -52,6 +53,9 @@ function Links(props: Readonly<LinksProps>) {
         </Link>
         <Link title="Scopes" href="/scopes">
           <ClipboardDocumentCheckIcon className="size-5" />
+        </Link>
+        <Link title="Policies" href="/policies">
+          <ScaleIcon className="size-5" />
         </Link>
         <Link title="AUP" href="/aup">
           <DocumentTextIcon className="size-5" />

@@ -34,17 +34,17 @@ export async function dismissToast(
   await expect(toast).toBeHidden();
 }
 
-export async function navigateToTestUserPage(page: Page) {
+export async function navigateToTestUserPage(page: Page, userName: string) {
   await page.goto("./users");
   const newUserBtn = page.getByRole("button", { name: "New user" });
   await expect(newUserBtn).toBeEnabled(); // wait for page fully loaded
   const searchbar = page.getByPlaceholder("Type to search a user");
-  await searchbar.pressSequentially("test user");
-  const testUser = page.getByRole("link").filter({ hasText: "Test User" });
+  await searchbar.pressSequentially(userName);
+  const testUser = page.getByRole("link").filter({ hasText: userName });
   const users = page.locator(".iam-list-item").filter({ visible: true });
   await expect(users).toHaveCount(1);
   await expect(users).toBeEnabled();
   await testUser.click();
-  const heading = page.getByRole("heading").filter({ hasText: "Test User" });
+  const heading = page.getByRole("heading").filter({ hasText: userName });
   await expect(heading).toBeVisible();
 }

@@ -3,17 +3,6 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { ScopePoliciesForm } from "../components";
-import { redirect } from "next/navigation";
-
-const POLICY_EXAMPLE = `{
-  "id": 1,
-  "description": "Default Permit ALL policy",
-  "rule": "PERMIT",
-  "matchingPolicy": "EQ",
-  "account": null,
-  "group": null,
-  "scopes": null
-}  `;
 
 export default async function Policies() {
   return (

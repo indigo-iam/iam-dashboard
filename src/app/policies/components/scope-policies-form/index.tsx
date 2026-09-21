@@ -171,7 +171,6 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           onChange={event =>
             updateStatePolicy(event.target.name, event.target.value)
           }
-          placeholder={statePolicy.description}
           required
         />
         <Description>Something users will recognize and trust</Description>
@@ -180,7 +179,6 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
       <div className="flex gap-5">
         <Field>
           <Label>Rule</Label>
-          <Description>Select permit or deny</Description>
           <Select
             name="rule"
             defaultValue={selectedRule}
@@ -192,11 +190,11 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
               </SelectOption>
             ))}
           </Select>
+          <Description>Permit or deny this policy</Description>
         </Field>
 
         <Field>
           <Label>Matching Policy</Label>
-          <Description>Select the right matching policy</Description>
           <Select
             name="matchingPolicy"
             defaultValue={selectedMatchingPolicy}
@@ -208,11 +206,12 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
               </SelectOption>
             ))}
           </Select>
+          <Description>Select the right matching policy</Description>
         </Field>
       </div>
 
       <Field>
-        <Label>Account/Group</Label>
+        <Label>Target</Label>
         <AccountGroupSelector
           entityType={entityType}
           onChange={handleEntityTypeChange}
@@ -223,7 +222,9 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           initialEntity={getInitialEntity(originalPolicy)}
           onChange={handleEntityChange}
         />
-        <Description>Select account or group</Description>
+        <Description>
+          Select account, group or both to which this policy applies
+        </Description>
       </Field>
 
       <div className="flex justify-end gap-2">

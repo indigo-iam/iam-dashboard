@@ -25,6 +25,23 @@ type SearchTargetProps = {
   onChange: (entity: Entity | null) => void;
 };
 
+type SearchEntityProps = {
+  entityType: EntityType;
+  onAddUser: (user: User) => void;
+  onAddGroup: (group: Group) => void;
+};
+
+function SearchEntity(props: Readonly<SearchEntityProps>) {
+  const { entityType, onAddUser, onAddGroup } = props;
+  if (entityType === "user") {
+    return <SearchUsers listId="account-group-users" onSelect={onAddUser} />;
+  }
+  if (entityType === "group") {
+    return <SearchGroups listId="account-group-groups" onSelect={onAddGroup} />;
+  }
+  return null;
+}
+
 export function SearchTarget(props: Readonly<SearchTargetProps>) {
   const { entityType, initialEntity, onChange } = props;
   const [selectedEntity, setSelectedEntity] = useState<Entity | null>(
@@ -54,16 +71,6 @@ export function SearchTarget(props: Readonly<SearchTargetProps>) {
     onChange(null);
   }
 
-  const SearchEntity = () => {
-    if (entityType === "user") {
-      return <SearchUsers listId="account-group-users" onSelect={addUser} />;
-    }
-    if (entityType === "group") {
-      return <SearchGroups listId="account-group-groups" onSelect={addGroup} />;
-    }
-    return null;
-  };
-
   if (entityType === "null") {
     return;
   }
@@ -83,7 +90,11 @@ export function SearchTarget(props: Readonly<SearchTargetProps>) {
           <p>{selectedEntity.name}</p>
         </div>
       ) : (
-        <SearchEntity />
+        <SearchEntity
+          entityType={entityType}
+          onAddUser={addUser}
+          onAddGroup={addGroup}
+        />
       )}
     </>
   );

@@ -102,6 +102,10 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
     name: statePolicy.matchingPolicy.toUpperCase(),
   };
 
+  const entitySelectedButNull =
+    (entityType === "user" && statePolicy.account === null) ||
+    (entityType === "group" && statePolicy.group === null);
+
   const policyChanged =
     statePolicy.description !== originalPolicy.description ||
     statePolicy.rule !== originalPolicy.rule ||
@@ -231,7 +235,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           label={isEditing ? "Save changes" : "Add Scope Policy"}
           title={isEditing ? "Edit Scope Policy" : "Create Scope Policy"}
           onConfirm={handleConfirm}
-          confirmButtonDisabled={!policyChanged}
+          confirmButtonDisabled={!policyChanged || entitySelectedButNull}
         >
           <p>
             {isEditing

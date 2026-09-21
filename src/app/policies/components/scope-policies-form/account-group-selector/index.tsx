@@ -14,7 +14,7 @@ type AccountGroupSelectorProps = {
 };
 
 const entityOptions = [
-  { id: "null", name: "NULL" },
+  { id: "null", name: "BOTH" },
   { id: "user", name: "USER" },
   { id: "group", name: "GROUP" },
 ];
@@ -23,7 +23,7 @@ export function AccountGroupSelector(
   props: Readonly<AccountGroupSelectorProps>
 ) {
   const { entityType, onChange } = props;
-  const selectedOption = { id: entityType, name: entityType.toUpperCase() };
+  const selectedOption = entityOptions.find(option => option.id === entityType) ?? entityOptions[0];
 
   function handleChange(value: SelectOption) {
     const entityType = value.id;

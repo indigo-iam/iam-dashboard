@@ -44,23 +44,23 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
       <AuthenticationFlow redirectUris={[]} onStatusChange={setAuthFlowOk} />
       <Field>
         <Label>Client Authentication</Label>
-        <Description>
-          How the client authenticate to the Token Endpoint.
-        </Description>
         <ClientAuthentication
           name="token_endpoint_auth_method"
           onStatusChange={setClientAuthOk}
         />
+        <Description>
+          How the client authenticate to the Token Endpoint.
+        </Description>
       </Field>
       <Field>
         <Label>Scopes</Label>
-        <Description>A little description.</Description>
         <DropdownList
           name="scope"
           title="Add Scope"
           options={scopes}
           defaultOptions={defaultScopes}
         />
+        <Description>Select one or more scope.</Description>
       </Field>
       <div className="flex flex-row justify-end py-2">
         <Button className="btn-tertiary" onClick={goBack}>

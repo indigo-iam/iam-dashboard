@@ -239,9 +239,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           confirmButtonDisabled={!policyChanged || entitySelectedButNull}
         >
           <p>
-            {isEditing
-              ? "Are you sure you want to update this scope policy?"
-              : "Are you sure you want to add this new scope policy?"}
+            {`Are you sure you want to ${isEditing ? "update" : "add"} this scope policy?`}
           </p>
         </ConfirmButton>
       </div>

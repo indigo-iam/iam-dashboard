@@ -12,14 +12,6 @@ export default async function Policies() {
       </header>
       <div className="container">
         <div className="space-y-4">
-          <p className="font-light">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in
-            accumsan leo. Suspendisse potenti. Pellentesque habitant morbi
-            tristique senectus et netus et malesuada fames ac turpis egestas.
-            Vestibulum a metus sed ipsum sodales laoreet ac efficitur mi.
-            Integer tempus sit amet enim eget consequat. Phasellus sit amet
-            fringilla mi, id hendrerit quam.
-          </p>
           <div className="panel space-y-4">
             <ScopePoliciesForm />
           </div>

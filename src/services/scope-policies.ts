@@ -4,10 +4,11 @@
 
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import { authFetch, getItem } from "@/utils/fetch";
 import { ScopePolicy, ScopePolicyRequest } from "@/models/scope-policies";
 import { settings } from "@/config";
-import { revalidatePath } from "next/cache";
 
 const { IAM_API_URL } = settings;
 
@@ -31,7 +32,7 @@ export async function addScopePolicy(policy: ScopePolicyRequest) {
     },
   });
   if (response.ok) {
-    console.log(await response.text());
+    // da sistemare il return
     revalidatePath("/policies");
   } else {
     console.log(`${response.status} ${await response.text()}`);
@@ -51,9 +52,8 @@ export async function updateScopePolicy(
     },
   });
   if (response.ok) {
-    console.log(await response.text());
+    // da sistemare il return
     revalidatePath(`/policies/${id}`);
-    revalidatePath("/policies");
   } else {
     console.log(`${response.status} ${await response.text()}`);
   }

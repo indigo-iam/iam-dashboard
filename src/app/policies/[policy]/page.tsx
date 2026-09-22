@@ -2,9 +2,10 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { redirect } from "next/navigation";
+
 import { getSession, isUserAdmin } from "@/auth";
 import { fetchScopePolicy } from "@/services/scope-policies";
-import { redirect } from "next/navigation";
 import { ScopePoliciesForm } from "../components";
 
 type PolicyPageProps = {

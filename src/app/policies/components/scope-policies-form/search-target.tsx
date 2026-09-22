@@ -21,7 +21,7 @@ type EntityType = "null" | "user" | "group";
 
 type SearchTargetProps = {
   entityType: EntityType;
-  initialEntity?: Entity | null;
+  initialEntity: Entity | null;
   onChange: (entity: Entity | null) => void;
 };
 
@@ -44,9 +44,7 @@ function SearchEntity(props: Readonly<SearchEntityProps>) {
 
 export function SearchTarget(props: Readonly<SearchTargetProps>) {
   const { entityType, initialEntity, onChange } = props;
-  const [selectedEntity, setSelectedEntity] = useState<Entity | null>(
-    initialEntity ?? null
-  );
+  const [selectedEntity, setSelectedEntity] = useState<Entity | null>(initialEntity);
 
   function addUser(user: User) {
     const entity = {
@@ -75,27 +73,26 @@ export function SearchTarget(props: Readonly<SearchTargetProps>) {
     return;
   }
 
+  if (selectedEntity) {
+    return (
+      <div className="mt-1 flex flex-row items-center gap-2">
+        <button
+          title={`Remove ${entityType}`}
+          type="button"
+          onClick={unselectEntity}
+          className="bg-secondary-100 hover:bg-danger w-5 rounded hover:text-white dark:bg-transparent dark:text-white/80"
+        >
+          <XMarkIcon />
+        </button>
+        <p>{selectedEntity.name}</p>
+      </div>
+    )
+  }
   return (
-    <>
-      {selectedEntity ? (
-        <div className="mt-1 flex flex-row items-center gap-2">
-          <button
-            title={`Remove ${entityType}`}
-            type="button"
-            onClick={unselectEntity}
-            className="bg-secondary-100 hover:bg-danger w-5 rounded hover:text-white dark:bg-transparent dark:text-white/80"
-          >
-            <XMarkIcon />
-          </button>
-          <p>{selectedEntity.name}</p>
-        </div>
-      ) : (
-        <SearchEntity
-          entityType={entityType}
-          onAddUser={addUser}
-          onAddGroup={addGroup}
-        />
-      )}
-    </>
+    <SearchEntity
+      entityType={entityType}
+      onAddUser={addUser}
+      onAddGroup={addGroup}
+    />
   );
 }

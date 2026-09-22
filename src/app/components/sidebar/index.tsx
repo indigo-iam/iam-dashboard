@@ -13,12 +13,12 @@ import {
   UserGroupIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
+import { ScaleIcon } from "@heroicons/react/16/solid";
 
 import { Drawer, Link } from "@/components/drawer";
 import NextLink from "next/link";
 import { settings } from "@/config";
 import { getLoginServiceVersion } from "@/services/actuator";
-import { ScaleIcon } from "@heroicons/react/16/solid";
 
 const {
   IAM_DASHBOARD_APP_VERSION,

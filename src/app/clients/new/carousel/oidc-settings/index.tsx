@@ -4,6 +4,9 @@
 
 "use client";
 
+import { useState } from "react";
+import { ChevronLeftIcon } from "@heroicons/react/20/solid";
+
 import {
   AuthenticationFlow,
   ClientAuthentication,
@@ -12,27 +15,30 @@ import { Button } from "@/components/buttons";
 import { CarouselPanel } from "@/components/carousel";
 import { Description, DropdownList, Field, Label } from "@/components/form";
 import { type Scope } from "@/models/client";
-import { ChevronLeftIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
 
 type OIDCSettingsProps = {
+  isAdmin: boolean;
   systemScopes: Scope[];
   goBack: () => void;
   goNext: () => void;
 };
 
 export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
-  const { systemScopes, goBack, goNext } = props;
+  const { isAdmin, systemScopes, goBack, goNext } = props;
   const [authFlowOk, setAuthFlowOk] = useState(false);
   const [clientAuthOk, setClientAuthOk] = useState(false);
 
-  const defaultScopes = systemScopes
+  const allowedScopes = systemScopes.filter(
+    scope => !scope.restricted || isAdmin
+  );
+
+  const defaultScopes = allowedScopes
     .filter(scope => scope.defaultScope)
     .map(scope => {
       return { id: scope.id.toString(), name: scope.value };
     });
 
-  const scopes = systemScopes.map(scope => {
+  const scopes = allowedScopes.map(scope => {
     return { id: scope.id.toString(), name: scope.value };
   });
 

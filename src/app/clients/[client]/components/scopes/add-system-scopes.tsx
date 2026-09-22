@@ -25,6 +25,9 @@ type AddScopeModalProps = AddScopeProps & {
 
 function AddScopeModal(props: Readonly<AddScopeModalProps>) {
   const { client, availableScopes, show, onClose, isAdmin } = props;
+  const allowedScopes = availableScopes.filter(
+    scope => !scope.restricted || isAdmin
+  );
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -43,7 +46,7 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
       <Form onSubmit={submit}>
         <ModalBody className="p-0">
           <ul>
-            {availableScopes.map(s => (
+            {allowedScopes.map(s => (
               <Field
                 as="li"
                 key={s.id}

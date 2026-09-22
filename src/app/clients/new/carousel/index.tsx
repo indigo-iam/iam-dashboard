@@ -119,6 +119,7 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
           <CarouselPanels>
             <GeneralSettings goNext={next} />
             <OIDCSettings
+              isAdmin={isAdmin}
               systemScopes={systemScopes}
               goBack={back}
               goNext={next}

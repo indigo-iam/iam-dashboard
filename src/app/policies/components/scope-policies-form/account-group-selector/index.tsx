@@ -26,15 +26,15 @@ export function AccountGroupSelector(
   const selectedOption = entityOptions.find(option => option.id === entityType) ?? entityOptions[0];
 
   function handleChange(value: SelectOption) {
-    const entityType = value.id;
+    const newEntityType = value.id;
     if (
-      entityType !== "null" &&
-      entityType !== "user" &&
-      entityType !== "group"
+      newEntityType !== "null" &&
+      newEntityType !== "user" &&
+      newEntityType !== "group"
     ) {
-      throw new Error(`${entityType} not valid`);
+      throw new Error(`${newEntityType} not valid`);
     }
-    onChange(entityType);
+    onChange(newEntityType);
   }
 
   return (

@@ -36,9 +36,9 @@ type ClientDetailsProps = {
 export default function ClientDetails(props: Readonly<ClientDetailsProps>) {
   const { client } = props;
 
-  function changePage() {
+  const changePage = () => {
     return redirect("/clients");
-  }
+  };
 
   return (
     <CarouselPanel className="panel flex flex-col gap-2" unmount={false}>

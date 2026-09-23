@@ -69,6 +69,13 @@ async function navigateToClientPage(page: Page, clientName: string) {
   await expect(heading).toBeVisible();
 }
 
+async function navigateToScopeTab(page: Page) {
+  const scopes = page.getByRole("tab", { name: "SCOPES" });
+  await scopes.scrollIntoViewIfNeeded();
+  await expect(scopes).toBeEnabled();
+  await changeTabPanel(scopes);
+}
+
 async function openDeleteClientModal(page: Page) {
   await page.getByRole("button", { name: "Delete" }).click();
   const dialog = page.getByRole("dialog").filter({ visible: true });
@@ -76,6 +83,20 @@ async function openDeleteClientModal(page: Page) {
   await expect(dialog.getByRole("heading").first()).toHaveText(
     `Delete client?`
   );
+  return dialog;
+}
+
+async function openSystemScopeModal(page: Page) {
+  const addSystemScopes = page.getByRole("button", {
+    name: "Add system scope(s)",
+  });
+  await expect(addSystemScopes).toBeVisible();
+  await expect(addSystemScopes).toBeEnabled();
+  await addSystemScopes.click();
+  const dialog = page.getByRole("dialog").filter({ visible: true });
+  await expect(dialog).toBeVisible();
+  const heading = dialog.getByRole("heading");
+  await expect(heading).toHaveText("Add system scopes");
   return dialog;
 }
 
@@ -127,20 +148,8 @@ testAdmin(
     });
 
     await testAdmin.step("admin can add a restricted scope", async () => {
-      const scopes = page.getByRole("tab", { name: "SCOPES" });
-      await scopes.scrollIntoViewIfNeeded();
-      await expect(scopes).toBeEnabled();
-      await changeTabPanel(scopes);
-      const addSystemScopes = page.getByRole("button", {
-        name: "Add system scope(s)",
-      });
-      await expect(addSystemScopes).toBeVisible();
-      await expect(addSystemScopes).toBeEnabled();
-      await addSystemScopes.click();
-      const dialog = page.getByRole("dialog").filter({ visible: true });
-      await expect(dialog).toBeVisible();
-      const heading = dialog.getByRole("heading");
-      await expect(heading).toHaveText("Add system scopes");
+      await navigateToScopeTab(page);
+      const dialog = await openSystemScopeModal(page);
 
       // scope already added during creation
       let scopeAdminRead = dialog.getByLabel("iam:admin.read");
@@ -219,20 +228,8 @@ testUser(
     });
 
     await testUser.step("user cannot add a restricted scope", async () => {
-      const scopes = page.getByRole("tab", { name: "SCOPES" });
-      await scopes.scrollIntoViewIfNeeded();
-      await expect(scopes).toBeEnabled();
-      await changeTabPanel(scopes);
-      const addSystemScopes = page.getByRole("button", {
-        name: "Add system scope(s)",
-      });
-      await expect(addSystemScopes).toBeVisible();
-      await expect(addSystemScopes).toBeEnabled();
-      await addSystemScopes.click();
-      const dialog = page.getByRole("dialog").filter({ visible: true });
-      await expect(dialog).toBeVisible();
-      const heading = dialog.getByRole("heading");
-      await expect(heading).toHaveText("Add system scopes");
+      await navigateToScopeTab(page);
+      const dialog = await openSystemScopeModal(page);
 
       const scopeAdminRead = dialog.getByLabel("iam:admin.read");
       await expect(scopeAdminRead).toBeHidden();

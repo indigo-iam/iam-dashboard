@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Page } from "@playwright/test";
-import { testAdmin, expect, enableAdminMode } from "../auth/fixture";
-import { dismissToast } from "../utils";
+import { testAdmin, expect, enableAdminMode, testUser } from "../auth/fixture";
+import { changeTabPanel, dismissToast } from "../utils";
 
 type Client = {
   name: string;
@@ -30,17 +30,33 @@ async function createNewClient(page: Page, client: Client) {
   await dismissToast(page, "Client created", "success");
 }
 
+async function deleteClient(page: Page) {
+  const general = page.getByRole("tab", { name: "GENERAL" });
+  await general.scrollIntoViewIfNeeded();
+  await expect(general).toBeVisible();
+  await expect(general).toBeEnabled();
+  await changeTabPanel(general);
+  const dialog = await openDeleteClientModal(page);
+  const deleteBtn = dialog.getByRole("button", { name: "Delete" });
+  await expect(deleteBtn).toBeEnabled();
+  await deleteBtn.click();
+  await expect(dialog).toBeHidden();
+  await dismissToast(page, "Client deleted", "success");
+}
+
 async function navigateToClientPage(page: Page, clientName: string) {
   await page.goto("./clients");
   const newClientBtn = page.getByRole("button", { name: "New client" });
   await expect(newClientBtn).toBeEnabled(); // wait for page fully loaded
   const searchbar = page.getByPlaceholder("Type to search a client");
   await searchbar.pressSequentially(clientName);
+  await page.waitForURL("./clients?*");
   const testClient = page.getByRole("link").filter({ hasText: clientName });
   const clients = page.locator(".iam-list-item").filter({ visible: true });
   await expect(clients).toHaveCount(1);
   await expect(clients).toBeEnabled();
   await testClient.click();
+  await page.waitForURL("./clients/*");
   const heading = page.getByRole("heading").filter({ hasText: clientName });
   await expect(heading).toBeVisible();
 }
@@ -56,10 +72,11 @@ async function openDeleteClientModal(page: Page) {
 }
 
 testAdmin(
-  "admin can delete client and it returns to the clients page",
+  "admin can crete/edit/delete their client",
   async ({ signedUpPage }) => {
     const page = signedUpPage;
     await page.waitForURL("./users/me");
+
     const client: Client = {
       name: "Test1",
       description: "To be deleted",
@@ -78,16 +95,108 @@ testAdmin(
       await navigateToClientPage(page, client.name);
     });
 
-    await testAdmin.step("delete the client", async () => {
-      const dialog = await openDeleteClientModal(page);
-      const deleteBtn = dialog.getByRole("button", { name: "Delete" });
-      await expect(deleteBtn).toBeEnabled();
-      await deleteBtn.click();
+    await testAdmin.step("admin can add a restricted scope", async () => {
+      const scopes = page.getByRole("tab", { name: "SCOPES" });
+      await scopes.scrollIntoViewIfNeeded();
+      await expect(scopes).toBeEnabled();
+      await changeTabPanel(scopes);
+      const addSystemScopes = page.getByRole("button", {
+        name: "Add system scope(s)",
+      });
+      await expect(addSystemScopes).toBeVisible();
+      await expect(addSystemScopes).toBeEnabled();
+      await addSystemScopes.click();
+      const dialog = page.getByRole("dialog").filter({ visible: true });
+      await expect(dialog).toBeVisible();
+      const heading = dialog.getByRole("heading");
+      await expect(heading).toHaveText("Add system scopes");
+
+      let scopeAdminRead = dialog.getByLabel("iam:admin.read");
+      await scopeAdminRead.scrollIntoViewIfNeeded();
+      await expect(scopeAdminRead).toBeVisible();
+      await expect(scopeAdminRead).toBeEnabled();
+      await scopeAdminRead.click();
+      let scopeAdminWrite = dialog.getByLabel("iam:admin.write");
+      await scopeAdminWrite.scrollIntoViewIfNeeded();
+      await expect(scopeAdminWrite).toBeVisible();
+      await expect(scopeAdminWrite).toBeEnabled();
+      await scopeAdminWrite.click();
+      const addScopes = dialog.getByRole("button", { name: "Add scope(s)" });
+      await expect(addScopes).toBeEnabled();
+      await addScopes.click();
       await expect(dialog).toBeHidden();
-      await dismissToast(page, "Client deleted", "success");
+      await dismissToast(page, "Client saved", "success");
+      scopeAdminRead = page
+        .locator(".iam-list-item")
+        .filter({ hasText: "iam:admin.read" });
+      await expect(scopeAdminRead).toBeVisible();
+      scopeAdminWrite = page
+        .locator(".iam-list-item")
+        .filter({ hasText: "iam:admin.write" });
+      await expect(scopeAdminWrite).toBeVisible();
+    });
+
+    await testAdmin.step("delete the client", async () => {
+      await deleteClient(page);
     });
 
     await testAdmin.step("return to clients page", async () => {
+      await expect(page).toHaveURL("./clients");
+    });
+  }
+);
+
+testUser(
+  "user can crete/edit/delete their client",
+  async ({ signedUpPage }) => {
+    const page = signedUpPage;
+    await page.waitForURL("./users/me");
+    const client: Client = {
+      name: "Test2",
+      description: "To be deleted",
+      redirectUri: "https://www.abc.com",
+    };
+
+    await testUser.step("create a new test client", async () => {
+      await createNewClient(page, client);
+    });
+
+    await testUser.step("navigate to test client page", async () => {
+      await navigateToClientPage(page, client.name);
+    });
+
+    await testUser.step("user cannot add a restricted scope", async () => {
+      const scopes = page.getByRole("tab", { name: "SCOPES" });
+      await scopes.scrollIntoViewIfNeeded();
+      await expect(scopes).toBeEnabled();
+      await changeTabPanel(scopes);
+      const addSystemScopes = page.getByRole("button", {
+        name: "Add system scope(s)",
+      });
+      await expect(addSystemScopes).toBeVisible();
+      await expect(addSystemScopes).toBeEnabled();
+      await addSystemScopes.click();
+      const dialog = page.getByRole("dialog").filter({ visible: true });
+      await expect(dialog).toBeVisible();
+      const heading = dialog.getByRole("heading");
+      await expect(heading).toHaveText("Add system scopes");
+
+      const scopeAdminRead = dialog.getByLabel("iam:admin.read");
+      await expect(scopeAdminRead).toBeHidden();
+      const scopeAdminWrite = dialog.getByLabel("iam:admin.write");
+      await expect(scopeAdminWrite).toBeHidden();
+
+      const close = dialog.getByTitle("Close");
+      await expect(close).toBeEnabled();
+      await close.click();
+      await expect(dialog).toBeHidden();
+    });
+
+    await testUser.step("delete the client", async () => {
+      await deleteClient(page);
+    });
+
+    await testUser.step("return to clients page", async () => {
       await expect(page).toHaveURL("./clients");
     });
   }

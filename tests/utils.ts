@@ -4,7 +4,7 @@
 
 import { ToastTypes } from "@/components/toaster";
 import { expect, Locator, Page } from "@playwright/test";
-import crypto from "crypto";
+import crypto from "node:crypto";
 
 export function randomString(length: number) {
   return crypto.randomBytes(length).toString("hex");

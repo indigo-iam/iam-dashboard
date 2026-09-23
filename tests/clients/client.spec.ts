@@ -4,13 +4,21 @@
 
 import { Page } from "@playwright/test";
 import { testAdmin, expect, enableAdminMode, testUser } from "../auth/fixture";
-import { changeTabPanel, dismissToast } from "../utils";
+import { changeTabPanel, dismissToast, randomString } from "../utils";
 
 type Client = {
   name: string;
   description: string;
   redirectUri: string;
 };
+
+function randomClient(): Client {
+  return {
+    name: `test-client-bot-${randomString(6)}`,
+    description: "To be deleted",
+    redirectUri: "https://www.abc.com",
+  };
+}
 
 async function createNewClient(page: Page, client: Client) {
   await page.goto("./clients");
@@ -58,11 +66,9 @@ async function navigateToClientPage(page: Page, clientName: string) {
     .getByPlaceholder("Type to search a client")
     .filter({ visible: true });
   await searchbar.pressSequentially(clientName);
-  await page.waitForURL("./clients?*");
+  await expect(searchbar).toHaveValue(clientName);
+  await page.waitForURL(`./clients?query=${clientName}`);
   const testClient = page.getByRole("link").filter({ hasText: clientName });
-  const clients = page.locator(".iam-list-item").filter({ visible: true });
-  await expect(clients).toHaveCount(1);
-  await expect(clients).toBeEnabled();
   await testClient.click();
   await page.waitForURL("./clients/*");
   const heading = page.getByRole("heading").filter({ hasText: clientName });
@@ -106,11 +112,7 @@ testAdmin(
     const page = signedUpPage;
     await page.waitForURL("./users/me");
 
-    const client: Client = {
-      name: "Test1",
-      description: "To be deleted",
-      redirectUri: "https://www.abc.com",
-    };
+    const client = randomClient();
 
     await testAdmin.step("enable admin mode", async () => {
       await enableAdminMode(page);
@@ -190,11 +192,8 @@ testUser(
   async ({ signedUpPage }) => {
     const page = signedUpPage;
     await page.waitForURL("./users/me");
-    const client: Client = {
-      name: "Test2",
-      description: "To be deleted",
-      redirectUri: "https://www.abc.com",
-    };
+
+    const client = randomClient();
 
     await testUser.step("create a new test client", async () => {
       await createNewClient(page, client);

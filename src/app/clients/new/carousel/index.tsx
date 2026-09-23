@@ -125,7 +125,7 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
               goNext={next}
             />
             <OtherSettings goBack={back} />
-            <ClientDetails client={client} isAdmin={isAdmin} />
+            <ClientDetails client={client} />
           </CarouselPanels>
         </Carousel>
       </Form>

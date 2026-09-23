@@ -31,14 +31,13 @@ function ClientSecret(props: Readonly<ClientSecretProps>) {
 
 type ClientDetailsProps = {
   client?: Client;
-  isAdmin: boolean;
 };
 
 export default function ClientDetails(props: Readonly<ClientDetailsProps>) {
-  const { client, isAdmin } = props;
+  const { client } = props;
 
   function changePage() {
-    return isAdmin ? redirect("/clients") : redirect("/clients?me");
+    return redirect("/clients");
   }
 
   return (

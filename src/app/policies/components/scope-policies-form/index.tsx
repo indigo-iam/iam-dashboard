@@ -27,6 +27,7 @@ import { Button } from "@/components/buttons";
 import { SearchTarget } from "./search-target";
 import { Info } from "@/components/info";
 import ConfirmModal from "@/components/confirm-modal";
+import { Notice } from "@/components/notices";
 
 type ScopePoliciesProps = {
   policy?: ScopePolicy;
@@ -57,7 +58,7 @@ const matchingPolicyOptions = [
   { id: "path", name: "PATH" },
 ];
 
-function getInitialEntity(
+function getEntityFromPolicy(
   policy: ScopePolicy
 ): { uuid: string; name: string } | null {
   if (policy.account) {
@@ -232,7 +233,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
         <SearchTarget
           key={entityType}
           entityType={entityType}
-          initialEntity={getInitialEntity(originalPolicy)}
+          initialEntity={getEntityFromPolicy(originalPolicy)}
           onChange={handleEntityChange}
         />
         <Description>
@@ -259,7 +260,31 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           title={isEditing ? "Edit Scope Policy" : "Create Scope Policy"}
           confirmButtonDisabled={!policyChanged || entitySelectedButNull}
         >
-          {`Are you sure you want to ${isEditing ? "update" : "add"} this scope policy?`}
+          <div className="space-y-4">
+            <p>
+              {`Are you sure you want to ${isEditing ? "update" : "add"} this scope policy?`}
+            </p>
+            <Notice>
+              <p>
+                <b>Description: </b>
+                {statePolicy.description}
+              </p>
+              <p>
+                <b>Rule: </b>
+                {statePolicy.rule}
+              </p>
+              <p>
+                <b>Matching Policy: </b>
+                {statePolicy.matchingPolicy}
+              </p>
+              <p>
+                <b>Target: </b>
+                {entityType === "null"
+                  ? "both accounts and groups"
+                  : (getEntityFromPolicy(statePolicy)?.name ?? "-")}
+              </p>
+            </Notice>
+          </div>
         </ConfirmModal>
       </div>
     </Form>

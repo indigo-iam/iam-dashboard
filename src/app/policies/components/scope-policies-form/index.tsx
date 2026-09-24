@@ -7,7 +7,6 @@
 import { useState } from "react";
 
 import { AccountGroupSelector } from "./account-group-selector";
-import ConfirmButton from "./confirm-button";
 import { addScopePolicy, updateScopePolicy } from "@/services/scope-policies";
 import {
   Field,
@@ -27,6 +26,7 @@ import {
 import { Button } from "@/components/buttons";
 import { SearchTarget } from "./search-target";
 import { Info } from "@/components/info";
+import ConfirmModal from "@/components/confirm-modal";
 
 type ScopePoliciesProps = {
   policy?: ScopePolicy;
@@ -96,6 +96,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
   const [entityType, setEntityType] = useState<EntityType>(
     getDefaultEntityType(originalPolicy)
   );
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const selectedRule = { id: statePolicy.rule, name: statePolicy.rule };
   const selectedMatchingPolicy = {
@@ -244,16 +245,22 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           Reset
         </Button>
 
-        <ConfirmButton
-          label={isEditing ? "Save changes" : "Add Scope Policy"}
-          title={isEditing ? "Edit Scope Policy" : "Create Scope Policy"}
+        <Button
+          className="btn-primary"
+          onClick={() => setShowConfirm(true)}
+          disabled={!policyChanged || entitySelectedButNull}
+        >
+          {isEditing ? "Save changes" : "Add Scope Policy"}
+        </Button>
+        <ConfirmModal
+          show={showConfirm}
+          onClose={() => setShowConfirm(false)}
           onConfirm={handleConfirm}
+          title={isEditing ? "Edit Scope Policy" : "Create Scope Policy"}
           confirmButtonDisabled={!policyChanged || entitySelectedButNull}
         >
-          <p>
-            {`Are you sure you want to ${isEditing ? "update" : "add"} this scope policy?`}
-          </p>
-        </ConfirmButton>
+          {`Are you sure you want to ${isEditing ? "update" : "add"} this scope policy?`}
+        </ConfirmModal>
       </div>
     </Form>
   );

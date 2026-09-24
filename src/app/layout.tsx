@@ -44,7 +44,8 @@ export default async function RootLayout(props: Readonly<RootLayoutProps>) {
     <html lang="en">
       <body>
         {/*this div is required by https://github.com/tailwindlabs/headlessui/issues/2752*/}
-        <div>
+        {/*id="app" is the node that Modal sets `inert` on while a dialog is open*/}
+        <div id="app">
           <LoadingProvider>
             <ProgressBarProvider>
               <Header hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
@@ -52,10 +53,10 @@ export default async function RootLayout(props: Readonly<RootLayoutProps>) {
                 <Sidebar hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
                 <div className="content">{children}</div>
               </main>
-              <Toaster />
             </ProgressBarProvider>
           </LoadingProvider>
         </div>
+        <Toaster />
       </body>
     </html>
   );

@@ -197,7 +197,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
         <Field>
           <div className="flex items-center gap-1">
             <Label>Matching Policy</Label>
-            <div className="align-left">
+            <div>
               <Info>
                 EQ: exact string match
                 <br />

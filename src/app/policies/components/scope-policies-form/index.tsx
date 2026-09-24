@@ -26,6 +26,7 @@ import {
 } from "@/models/scope-policies";
 import { Button } from "@/components/buttons";
 import { SearchTarget } from "./search-target";
+import { Info } from "@/components/info";
 
 type ScopePoliciesProps = {
   policy?: ScopePolicy;
@@ -194,7 +195,18 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
         </Field>
 
         <Field>
-          <Label>Matching Policy</Label>
+          <div className="flex items-center gap-1">
+            <Label>Matching Policy</Label>
+            <div className="align-left">
+              <Info>
+                EQ: exact string match
+                <br />
+                REGEXP: match via regular expression
+                <br />
+                PATH: WLCG-specific path-based matching
+              </Info>
+            </div>
+          </div>
           <Select
             name="matchingPolicy"
             defaultValue={selectedMatchingPolicy}

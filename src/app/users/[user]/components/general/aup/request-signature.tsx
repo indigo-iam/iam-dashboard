@@ -6,6 +6,7 @@
 
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
+import { Note } from "@/components/notices";
 import { toast } from "@/components/toaster";
 import { AUP } from "@/models/aup";
 import { requestAUPSignature, signAUP } from "@/services/users";
@@ -41,17 +42,20 @@ export function RequestSignature(props: Readonly<RequestSignatureProps>) {
           show={show}
           onConfirm={handleSignAUP}
           onClose={close}
-          title="Re-sign AUP"
+          title="Re-sign Acceptable Usage Policy"
         >
-          In order to proceed, you need to declare that you have read and that
-          you accept the terms of this organization{" "}
-          <a
-            href={aup?.url}
-            target="_blank"
-            className="text-blue-400 hover:underline"
-          >
-            Acceptable Usage Policy (AUP).
-          </a>
+          <p>Do you want to re-sign the Acceptable Usage Policy?</p>
+          <Note>
+            By clicking <b>Confirm</b> you declare that you have read and accept
+            this organization{" "}
+            <a
+              href={aup?.url}
+              target="_blank"
+              className="text-blue-400 hover:underline"
+            >
+              Acceptable Usage Policy (AUP).
+            </a>
+          </Note>
         </ConfirmModal>
         <Button className="btn-secondary max-w-fit" onClick={open}>
           Re-sign AUP

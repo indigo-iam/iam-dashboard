@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
-import { Note } from "@/components/notices";
+import { Notice } from "@/components/notices";
 import { GroupRequest } from "@/models/group-requests";
 import { abortGroupRequest } from "@/services/group-requests";
 import { dateToHuman } from "@/utils/dates";
@@ -49,16 +49,20 @@ export default function RevokeRequestModal(
       <div className="flex flex-col items-center gap-4">
         <p>Are you sure you want to revoke the following request?</p>
         {request.notes && (
-          <Note>
+          <Notice>
             <div className="space-y-4">
-              <p>
-                User <b>{userFormattedName}</b> wants to join group{" "}
-                <b>{request.groupName}</b> with the following motivation:{" "}
-                <q className="italic">{request.notes}</q>
-              </p>
+              <div>
+                <p>
+                  User <b>{userFormattedName}</b> wants to join group{" "}
+                  <b>{request.groupName}</b> with the following motivation:
+                </p>
+                <p>
+                  <q className="italic">{request.notes}</q>
+                </p>
+              </div>
               <p className="text-sm font-light">Sent {sent}</p>
             </div>
-          </Note>
+          </Notice>
         )}
       </div>
     </ConfirmModal>

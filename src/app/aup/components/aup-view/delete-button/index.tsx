@@ -4,11 +4,13 @@
 
 "use client";
 
+import { useState } from "react";
+
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
+import { Warning } from "@/components/notices";
 import { toast } from "@/components/toaster";
 import { deleteAUP } from "@/services/aup";
-import { useState } from "react";
 
 export default function DeleteButton() {
   const [isShown, setIsShown] = useState(false);
@@ -29,8 +31,14 @@ export default function DeleteButton() {
         danger={true}
         confirmButtonText="Delete"
       >
-        If you proceed, the acceptance of the AUP will not be requested for new
-        users at registration time.
+        <p>
+          Are you sure you want to delete the Acceptable Usage Policy for this
+          organization?
+        </p>
+        <Warning>
+          If you proceed, the acceptance of the AUP will not be requested for
+          new users at registration time.
+        </Warning>
       </ConfirmModal>
       <Button className="btn-danger" onClick={show}>
         Delete AUP

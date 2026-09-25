@@ -40,14 +40,16 @@ export default function DeleteGroupModal(
       <div className="space-y-4">
         <p>Are you sure you want to delete the following group?</p>
         <Notice>
-          <p>
-            <b>{groupName}</b>
-          </p>
-          {groupDescription && (
+          <div className="flex flex-col items-center">
             <p>
-              <i>{groupDescription}</i>
+              <b>{groupName}</b>
             </p>
-          )}
+            {groupDescription && (
+              <p className="text-sm text-gray-500 dark:text-gray-200">
+                {groupDescription}
+              </p>
+            )}
+          </div>
         </Notice>
         {/* prettier-ignore */}
         <Warning>

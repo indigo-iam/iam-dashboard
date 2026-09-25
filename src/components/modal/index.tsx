@@ -21,7 +21,6 @@ export function Modal(props: Readonly<ModalProps>) {
   const { show, onClose, children } = props;
   const [domLoaded, setDomLoaded] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const backdropRef = useRef<HTMLDivElement>(null);
 
   const handleEscape = useCallback(
     (e: KeyboardEvent) => {
@@ -32,23 +31,32 @@ export function Modal(props: Readonly<ModalProps>) {
     [onClose]
   );
 
+  const handleClick = useCallback(
+    (e: MouseEvent) => {
+      if (e.target === dialogRef.current) {
+        onClose();
+      }
+    },
+    [onClose]
+  );
+
   // hack to create the portal only client side avoiding hydration errors
   useEffect(() => {
     const dialog = dialogRef.current;
-    const backdrop = backdropRef.current;
     if (domLoaded) {
       dialog?.addEventListener("keydown", handleEscape);
-      backdrop?.addEventListener("mousedown", onClose);
+      dialog?.addEventListener("mousedown", handleClick);
     } else {
       (() => {
         setDomLoaded(true);
+        dialog?.close();
       })();
     }
     return () => {
       dialog?.addEventListener("keydown", handleEscape);
-      backdrop?.removeEventListener("mousedown", onClose);
+      dialog?.removeEventListener("mousedown", handleClick);
     };
-  }, [domLoaded, handleEscape, onClose]);
+  }, [domLoaded, handleEscape, handleClick]);
 
   useEffect(() => {
     if (show && dialogRef.current && !dialogRef.current?.open) {
@@ -66,17 +74,11 @@ export function Modal(props: Readonly<ModalProps>) {
 
   return createPortal(
     <dialog
-      className="fixed inset-0 z-30 h-full w-full space-y-4 bg-transparent opacity-0 transition-opacity transition-discrete duration-300 open:opacity-100 open:starting:opacity-0"
+      className="fixed inset-0 top-8 z-30 h-full w-full flex-col items-center space-y-4 bg-gray-900/30 opacity-0 transition-opacity transition-discrete duration-300 open:flex open:opacity-100 md:top-0 md:justify-center open:starting:opacity-0"
       ref={dialogRef}
       aria-modal={true}
     >
-      <div
-        className="justify flex h-full w-full items-center justify-center bg-gray-900/30 py-32 md:items-start"
-        ref={backdropRef}
-        tabIndex={-1}
-      >
-        <div className="overlay w-md space-y-4 p-8 xl:w-xl">{children}</div>
-      </div>
+      <div className="overlay w-md space-y-4 p-8 xl:w-xl">{children}</div>
     </dialog>,
     globalThis.document.body
   );

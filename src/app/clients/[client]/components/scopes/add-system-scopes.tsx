@@ -3,6 +3,8 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+import { useState } from "react";
+import { Label } from "@headlessui/react";
 
 import { Button } from "@/components/buttons";
 import { Checkbox, Field, Form } from "@/components/form";
@@ -10,7 +12,29 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { Client, Scope } from "@/models/client";
 import { editClient } from "@/services/clients";
-import { useState } from "react";
+
+type ScopeCheckboxProps = {
+  value: string;
+  description: string;
+};
+
+function ScopeCheckbox(props: Readonly<ScopeCheckboxProps>) {
+  const { value, description } = props;
+  return (
+    <Field
+      as="li"
+      className="flex flex-row items-center gap-2 p-2 hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-400"
+    >
+      <Checkbox name="scope" value={value} />
+      <div className="flex grow flex-col">
+        <Label className="text-gray-500 dark:text-white/70">{value}</Label>
+        <p className="text-sm font-light text-gray-500 dark:text-white/70">
+          {description}
+        </p>
+      </div>
+    </Field>
+  );
+}
 
 type AddScopeProps = {
   client: Client;
@@ -25,6 +49,9 @@ type AddScopeModalProps = AddScopeProps & {
 
 function AddScopeModal(props: Readonly<AddScopeModalProps>) {
   const { client, availableScopes, show, onClose, isAdmin } = props;
+  const allowedScopes = availableScopes.filter(
+    scope => !scope.restricted || isAdmin
+  );
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -43,20 +70,12 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
       <Form onSubmit={submit}>
         <ModalBody className="p-0">
           <ul>
-            {availableScopes.map(s => (
-              <Field
-                as="li"
+            {allowedScopes.map(s => (
+              <ScopeCheckbox
                 key={s.id}
-                className="flex flex-row items-center gap-2 p-2 hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-400"
-              >
-                <Checkbox name="scope" value={s.value} />
-                <div className="flex grow flex-col">
-                  <p className="text-gray-500 dark:text-white/70">{s.value}</p>
-                  <p className="text-sm font-light text-gray-500 dark:text-white/70">
-                    {s.description}
-                  </p>
-                </div>
-              </Field>
+                value={s.value}
+                description={s.description}
+              />
             ))}
           </ul>
         </ModalBody>

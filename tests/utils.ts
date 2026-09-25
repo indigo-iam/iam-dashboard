@@ -4,6 +4,11 @@
 
 import { ToastTypes } from "@/components/toaster";
 import { expect, Locator, Page } from "@playwright/test";
+import crypto from "node:crypto";
+
+export function randomString(length: number) {
+  return crypto.randomBytes(length).toString("hex");
+}
 
 export async function changeTabPanel(button: Locator) {
   await expect(button).toBeVisible();

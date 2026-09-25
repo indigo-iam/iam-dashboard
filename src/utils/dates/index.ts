@@ -18,6 +18,14 @@ function isSameDate(a: Date, b: Date) {
   );
 }
 
+function isDaybefore(d: Date, other: Date) {
+  return (
+    d.getUTCFullYear() === other.getUTCFullYear() &&
+    d.getUTCMonth() === other.getUTCMonth() &&
+    d.getUTCDate() === other.getUTCDate() - 1
+  );
+}
+
 export function dateToHuman(date: Date) {
   const today = getDate();
 
@@ -25,11 +33,11 @@ export function dateToHuman(date: Date) {
     return "today";
   }
 
-  const timeDifference = date.getTime() - today.getTime();
-  if (-ONE_DAY_IN_MS * 2 < timeDifference && timeDifference < -ONE_DAY_IN_MS) {
+  if (isDaybefore(date, today)) {
     return "yesterday";
   }
 
+  const timeDifference = date.getTime() - today.getTime();
   const daysDifference = Math.ceil(timeDifference / ONE_DAY_IN_MS);
 
   if (Math.abs(daysDifference) <= 14) {

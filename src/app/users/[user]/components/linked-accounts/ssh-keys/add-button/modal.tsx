@@ -41,7 +41,7 @@ export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
 
   return (
     <Modal {...modalProps}>
-      <ModalHeader onClose={modalProps.onClose}>Add SSH Key</ModalHeader>
+      <ModalHeader>Add SSH Key</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>

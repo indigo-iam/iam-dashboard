@@ -63,7 +63,7 @@ function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
 
   return (
     <Modal show={show} onClose={onClose}>
-      <ModalHeader onClose={onClose}>Edit user endtime</ModalHeader>
+      <ModalHeader>Edit user endtime</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <p>

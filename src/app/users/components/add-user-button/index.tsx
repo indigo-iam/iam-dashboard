@@ -124,7 +124,7 @@ function AddUserModal(props: Readonly<AddUserModalProps>) {
   const { onUserAdded, ...modalProps } = props;
   return (
     <Modal {...modalProps}>
-      <ModalHeader onClose={modalProps.onClose}>Add new user</ModalHeader>
+      <ModalHeader>Add new user</ModalHeader>
       <AddUserForm onClose={modalProps.onClose} onUserAdded={onUserAdded} />
     </Modal>
   );

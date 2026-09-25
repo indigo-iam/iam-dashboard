@@ -116,7 +116,7 @@ export default function AddAttributeModal(
 
   return (
     <Modal show={show} onClose={closeAndReset}>
-      <ModalHeader onClose={closeAndReset}>Add user attribute</ModalHeader>
+      <ModalHeader>Add user attribute</ModalHeader>
       <Form onSubmit={submit} ref={formRef}>
         <ModalBody>
           <Field>

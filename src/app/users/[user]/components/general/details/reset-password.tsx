@@ -34,7 +34,7 @@ function ModalPassword(props: Readonly<ModalPasswordProps>) {
 
   return (
     <Modal {...modalProps}>
-      <ModalHeader onClose={modalProps.onClose}>Change password</ModalHeader>
+      <ModalHeader>Change password</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>

@@ -78,7 +78,7 @@ export default function AupModal(props: Readonly<AupModalProps>) {
 
   return (
     <Modal show={show} onClose={close}>
-      <ModalHeader onClose={close}>
+      <ModalHeader>
         {isEditing
           ? "Edit AUP for this organization"
           : "Create the Acceptable Usage Policy for this organization"}

@@ -115,7 +115,7 @@ function RequestCertificateLinkingModal(
   }
   return (
     <Modal show={show} onClose={close}>
-      <ModalHeader onClose={close}>Request Certificate Linking</ModalHeader>
+      <ModalHeader>Request Certificate Linking</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>

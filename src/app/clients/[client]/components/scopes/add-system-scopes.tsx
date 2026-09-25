@@ -39,7 +39,7 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
 
   return (
     <Modal show={show} onClose={onClose}>
-      <ModalHeader onClose={onClose}>Add system scopes</ModalHeader>
+      <ModalHeader>Add system scopes</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody className="p-0">
           <ul>

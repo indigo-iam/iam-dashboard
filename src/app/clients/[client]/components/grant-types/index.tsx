@@ -25,7 +25,7 @@ function FormButtons(props: Readonly<FormButtonsProps>) {
   return (
     <div className="flex flex-row justify-end">
       <Button className="btn-tertiary" type="reset">
-        Cancel
+        Reset
       </Button>
       <Button className="btn-secondary" type="submit" disabled={!canSave}>
         Save changes

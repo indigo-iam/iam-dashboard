@@ -4,7 +4,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { AccountGroupSelector } from "./account-group-selector";
 import { addScopePolicy, updateScopePolicy } from "@/services/scope-policies";
@@ -89,6 +89,16 @@ function getDefaultEntityType(policy: ScopePolicy): EntityType {
   throw new Error("policy bad formed");
 }
 
+function comparePolicies(a: ScopePolicy, b: ScopePolicy): boolean {
+  return (
+    a.description === b.description &&
+    a.rule === b.rule &&
+    a.matchingPolicy === b.matchingPolicy &&
+    (a.account?.uuid ?? null) === (b.account?.uuid ?? null) &&
+    (a.group?.uuid ?? null) === (b.group?.uuid ?? null)
+  );
+}
+
 export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
   const originalPolicy = props.policy ?? defaultValues;
   const isEditing = props.policy !== undefined;
@@ -99,6 +109,10 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
   );
   const [showConfirm, setShowConfirm] = useState(false);
 
+  const initialEntity = useMemo(
+    () => getEntityFromPolicy(originalPolicy),
+    [originalPolicy]
+  );
   const selectedRule = { id: statePolicy.rule, name: statePolicy.rule };
   const selectedMatchingPolicy = {
     id: statePolicy.matchingPolicy,
@@ -109,13 +123,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
     (entityType === "user" && statePolicy.account === null) ||
     (entityType === "group" && statePolicy.group === null);
 
-  const policyChanged =
-    statePolicy.description !== originalPolicy.description ||
-    statePolicy.rule !== originalPolicy.rule ||
-    statePolicy.matchingPolicy !== originalPolicy.matchingPolicy ||
-    (statePolicy.account?.uuid ?? null) !==
-      (originalPolicy.account?.uuid ?? null) ||
-    (statePolicy.group?.uuid ?? null) !== (originalPolicy.group?.uuid ?? null);
+  const policyChanged = !comparePolicies(statePolicy, originalPolicy);
 
   async function handleConfirm() {
     const request: ScopePolicyRequest = {
@@ -233,7 +241,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
         <SearchTarget
           key={entityType}
           entityType={entityType}
-          initialEntity={getEntityFromPolicy(originalPolicy)}
+          initialEntity={initialEntity}
           onChange={handleEntityChange}
         />
         <Description>

@@ -29,7 +29,7 @@ export function DisableMFAModal(props: Readonly<DisableMFAModalProps>) {
 
   return (
     <Modal show={show} onClose={onClose}>
-      <ModalHeader onClose={onClose}>Disable MFA</ModalHeader>
+      <ModalHeader>Disable MFA</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <p>

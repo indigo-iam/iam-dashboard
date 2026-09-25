@@ -5,7 +5,7 @@
 "use client";
 
 import ConfirmModal from "@/components/confirm-modal";
-import { Warning } from "@/components/notices";
+import { Notice, Warning } from "@/components/notices";
 import { useProgressBar } from "@/components/progress-bar";
 import { toast } from "@/components/toaster";
 import { OidcId } from "@/models/indigo-user";
@@ -46,22 +46,24 @@ export default function UnlinkAccountModal(
         <p className="text-center">
           Are you sure you want to unlink the following account?
         </p>
-        <div className="flex grow flex-col items-center gap-2">
-          <div>
-            <p>
-              <span className="inline-block min-w-12 text-end text-xs font-light text-gray-500 dark:text-gray-300">
-                Issuer
-              </span>{" "}
-              {oidcId.issuer}
-            </p>
-            <p>
-              <span className="inline-block min-w-12 text-end text-xs font-light text-gray-500 dark:text-gray-300">
-                Subject
-              </span>{" "}
-              {oidcId.subject}
-            </p>
+        <Notice>
+          <div className="flex grow flex-col items-center gap-2">
+            <div>
+              <p>
+                <span className="inline-block min-w-12 text-end text-xs font-light text-gray-500 dark:text-gray-300">
+                  Issuer
+                </span>{" "}
+                {oidcId.issuer}
+              </p>
+              <p>
+                <span className="inline-block min-w-12 text-end text-xs font-light text-gray-500 dark:text-gray-300">
+                  Subject
+                </span>{" "}
+                {oidcId.subject}
+              </p>
+            </div>
           </div>
-        </div>
+        </Notice>
         <Warning>
           <p>
             Login with the above linked account will NOT be possible if you

@@ -41,7 +41,7 @@ function EditModal(props: Readonly<EditModalProps>) {
 
   return (
     <Modal {...modalProps}>
-      <ModalHeader onClose={modalProps.onClose}>{modalProps.title}</ModalHeader>
+      <ModalHeader>{modalProps.title}</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>

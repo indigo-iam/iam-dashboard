@@ -4,7 +4,7 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { type ModalProps } from "@/components/modal";
-import { Warning } from "@/components/notices";
+import { Notice, Warning } from "@/components/notices";
 import { toast } from "@/components/toaster";
 import { deleteUser } from "@/services/users";
 
@@ -16,7 +16,8 @@ interface DeleteUserModalProps extends ModalProps {
 }
 
 export default function DeleteUserModal(props: Readonly<DeleteUserModalProps>) {
-  const { userId, userFormattedName, userEmail, onDeleted, ...modalProps } = props;
+  const { userId, userFormattedName, userEmail, onDeleted, ...modalProps } =
+    props;
   const action = async () => {
     const res = await deleteUser(userId);
     if (res.type === "success") {
@@ -26,7 +27,6 @@ export default function DeleteUserModal(props: Readonly<DeleteUserModalProps>) {
     onDeleted?.();
   };
   return (
-    // prettier-ignore
     <ConfirmModal
       {...modalProps}
       title={`Delete user '${userFormattedName}'?`}
@@ -34,19 +34,27 @@ export default function DeleteUserModal(props: Readonly<DeleteUserModalProps>) {
       danger
     >
       <p className="text-center">
-        Are you sure you want to delete the
-        following user from this organization?
+        Are you sure you want to delete the following user from this
+        organization?
       </p>
-      <div className="flex justify-center">
-        <div>
+      <Notice>
+        <div className="flex flex-col items-center">
           <p>
-            <b>{userFormattedName}</b>{" "}
-            <span className="text-sm text-gray-500 dark:text-gray-200">({userEmail})</span>
+            <b>{userFormattedName}</b>
+          </p>
+          <p className="text-sm text-gray-500 dark:text-gray-200">
+            ({userEmail})
           </p>
         </div>
-      </div>
+      </Notice>
       <Warning>
-        The user will be completely removed from this organization and they will be not able any more to access to resources. <b><br/>This action can not be undone</b>.
+        <p>
+          The user will be completely removed from this organization and they
+          will be not able any more to access to resources.
+        </p>
+        <p>
+          <b>This action can not be undone</b>.
+        </p>
       </Warning>
     </ConfirmModal>
   );

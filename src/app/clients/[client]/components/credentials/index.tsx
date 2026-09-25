@@ -53,7 +53,7 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
         </div>
         <div className="flex flex-row justify-end">
           <Button className="btn-tertiary" type="reset">
-            Cancel
+            Reset
           </Button>
           <Button className="btn-secondary" type="submit">
             Save changes

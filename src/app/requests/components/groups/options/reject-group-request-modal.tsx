@@ -36,7 +36,7 @@ export default function RejectRequestModalProps(
 
   return (
     <Modal show={show} onClose={onClose}>
-      <ModalHeader onClose={onClose}>Reject group request</ModalHeader>
+      <ModalHeader>Reject group request</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <p>

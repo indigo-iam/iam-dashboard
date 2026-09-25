@@ -6,7 +6,6 @@ import {
   ClientAuthentication,
   TOKEN_ENDPOINT_AUTH_VALUES,
 } from "@/app/clients/components";
-import { Button } from "@/components/buttons";
 import { Field, Label } from "@/components/form";
 import { Info } from "@/components/info";
 import { TokenEndpointAuthMethod } from "@/models/client";
@@ -48,20 +47,6 @@ export function Authentication(props: Readonly<AuthenticationProps>) {
             defaultValue={defaultValue}
             clientId={clientId}
           />
-        </Field>
-        <Field>
-          <Label>
-            <div className="flex items-center gap-1">
-              <span>Registration Access Token</span>
-              <Info>
-                Registration access token provides management access to the
-                client.
-              </Info>
-            </div>
-          </Label>
-          <Button className="btn-secondary">
-            Rotate Registration Access Token
-          </Button>
         </Field>
       </div>
     </div>

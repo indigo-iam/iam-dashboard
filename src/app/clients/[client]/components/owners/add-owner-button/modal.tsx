@@ -29,7 +29,7 @@ export function AddOwnerModal(props: Readonly<AddOwnerModalProps>) {
   };
   return (
     <Modal {...modalProps}>
-      <ModalHeader onClose={modalProps.onClose}>Add client owner</ModalHeader>
+      <ModalHeader>Add client owner</ModalHeader>
       <ModalBody>
         {user ? (
           <div className="space-y-4">

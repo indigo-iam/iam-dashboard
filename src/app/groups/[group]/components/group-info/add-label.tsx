@@ -56,7 +56,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
 
   return (
     <Modal {...modalProps}>
-      <ModalHeader onClose={modalProps.onClose}>{modalProps.title}</ModalHeader>
+      <ModalHeader>{modalProps.title}</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Fieldset>

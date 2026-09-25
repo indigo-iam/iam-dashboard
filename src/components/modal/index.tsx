@@ -7,6 +7,7 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+
 import { Button } from "../buttons";
 import { Tooltip, useTooltip } from "../tooltip";
 
@@ -21,90 +22,66 @@ export function Modal(props: Readonly<ModalProps>) {
   const [domLoaded, setDomLoaded] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  const close = useCallback(() => {
-    // wait for animation to end before closing
-    dialogRef.current?.removeAttribute("data-open");
-    setTimeout(() => {
-      dialogRef.current?.close();
-    }, 300);
-  }, []);
-
   const handleEscape = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        e.preventDefault();
         onClose();
       }
     },
     [onClose]
   );
 
-  const hitTest = useCallback(
-    (event: MouseEvent) => {
-      const dialog = dialogRef.current;
-      if (!dialog) {
-        return;
-      }
-      const dialogRect = dialog.getBoundingClientRect();
-      const isOutside =
-        event.clientX < dialogRect.left ||
-        event.clientX > dialogRect.right ||
-        event.clientY < dialogRect.top ||
-        event.clientY > dialogRect.bottom;
-      if (isOutside) {
+  const handleClick = useCallback(
+    (e: MouseEvent) => {
+      if (e.target === dialogRef.current) {
         onClose();
       }
     },
     [onClose]
   );
-
-  const open = useCallback(() => {
-    dialogRef.current?.showModal();
-    dialogRef.current?.setAttribute("data-open", "");
-    dialogRef.current?.addEventListener("mousedown", hitTest);
-    dialogRef.current?.addEventListener("keydown", handleEscape);
-  }, [hitTest, handleEscape]);
-
-  const clearEventListeners = useCallback(() => {
-    const dialog = dialogRef.current;
-    dialog?.removeEventListener("mousedown", hitTest);
-    dialog?.removeEventListener("keydown", handleEscape);
-  }, [hitTest, handleEscape]);
 
   // hack to create the portal only client side avoiding hydration errors
   useEffect(() => {
-    if (!domLoaded) {
+    const dialog = dialogRef.current;
+    if (domLoaded) {
+      dialog?.addEventListener("keydown", handleEscape);
+      dialog?.addEventListener("mousedown", handleClick);
+    } else {
       (() => {
         setDomLoaded(true);
+        dialog?.close();
       })();
     }
-  }, [domLoaded]);
+    return () => {
+      dialog?.addEventListener("keydown", handleEscape);
+      dialog?.removeEventListener("mousedown", handleClick);
+    };
+  }, [domLoaded, handleEscape, handleClick]);
 
   useEffect(() => {
     if (show && dialogRef.current && !dialogRef.current?.open) {
-      dialogRef.current.inert = true;
-      open();
-      dialogRef.current.inert = false;
+      dialogRef.current.show();
+      document.getElementById("app")?.setAttribute("inert", "");
     } else if (!show && dialogRef.current?.open) {
-      close();
+      dialogRef.current.close();
+      document.getElementById("app")?.removeAttribute("inert");
     }
-    return () => {
-      clearEventListeners();
-    };
-  }, [show, open, close, clearEventListeners]);
+  }, [show]);
 
-  if (domLoaded) {
-    return createPortal(
-      <dialog
-        className="overlay m-auto w-md space-y-4 p-8 opacity-0 transition-all duration-300 backdrop:bg-gray-950/30 backdrop:opacity-0 backdrop:transition-all backdrop:duration-300 data-open:opacity-100 data-open:backdrop:opacity-100 xl:w-xl data-open:starting:opacity-0 data-open:backdrop:starting:opacity-0"
-        ref={dialogRef}
-      >
-        {children}
-      </dialog>,
-      globalThis.document.body
-    );
+  if (!domLoaded) {
+    return;
   }
-  return null;
+
+  return createPortal(
+    <dialog
+      className="fixed inset-0 top-8 z-30 h-full w-full flex-col items-center space-y-4 bg-gray-900/30 opacity-0 transition-opacity transition-discrete duration-300 open:flex open:opacity-100 md:top-0 md:justify-center open:starting:opacity-0"
+      ref={dialogRef}
+      aria-modal={true}
+    >
+      <div className="overlay w-md space-y-4 p-8 xl:w-xl">{children}</div>
+    </dialog>,
+    globalThis.document.body
+  );
 }
 
 type ModalHeaderProps = {

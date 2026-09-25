@@ -41,7 +41,7 @@ testAdmin.describe("admin can create/edit/delete the AUP", () => {
     await expect(deleteBtn).toBeEnabled();
     await deleteBtn.click();
     const dialog = page.getByRole("dialog").filter({ visible: true });
-    const heading = dialog.getByRole("heading");
+    const heading = dialog.getByRole("heading").first();
     await expect(heading).toHaveText(
       "Delete the Acceptable Usage Policy for this organization?"
     );

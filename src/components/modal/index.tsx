@@ -5,8 +5,9 @@
 "use client";
 
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+
 import { Button } from "../buttons";
 import { Tooltip, useTooltip } from "../tooltip";
 
@@ -20,25 +21,34 @@ export function Modal(props: Readonly<ModalProps>) {
   const { show, onClose, children } = props;
   const [domLoaded, setDomLoaded] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
 
-  function handleEscape(
-    e:
-      | React.KeyboardEvent<HTMLDialogElement>
-      | React.KeyboardEvent<HTMLDivElement>
-  ) {
-    if (e.key === "Escape") {
-      onClose();
-    }
-  }
+  const handleEscape = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    },
+    [onClose]
+  );
 
   // hack to create the portal only client side avoiding hydration errors
   useEffect(() => {
-    if (!domLoaded) {
+    const dialog = dialogRef.current;
+    const backdrop = backdropRef.current;
+    if (domLoaded) {
+      dialog?.addEventListener("keydown", handleEscape);
+      backdrop?.addEventListener("mousedown", onClose);
+    } else {
       (() => {
         setDomLoaded(true);
       })();
     }
-  }, [domLoaded]);
+    return () => {
+      dialog?.addEventListener("keydown", handleEscape);
+      backdrop?.removeEventListener("mousedown", onClose);
+    };
+  }, [domLoaded, handleEscape, onClose]);
 
   useEffect(() => {
     if (show && dialogRef.current && !dialogRef.current?.open) {
@@ -50,29 +60,26 @@ export function Modal(props: Readonly<ModalProps>) {
     }
   }, [show]);
 
-  if (domLoaded) {
-    return createPortal(
-      <div className="group pointer-events-none">
-        <div
-          className="pointer-events-none fixed inset-0 z-30 opacity-0 transition duration-300 group-has-open:pointer-events-auto group-has-open:bg-gray-900/30 group-has-open:opacity-100"
-          onMouseDown={onClose}
-          onKeyDown={handleEscape}
-        >
-          <dialog
-            className="overlay inset-0 z-40 m-auto w-md space-y-4 p-8 opacity-0 transition-all duration-300 backdrop:transition-all open:opacity-100 xl:w-xl open:starting:opacity-0"
-            ref={dialogRef}
-            onMouseDown={e => e.stopPropagation()}
-            onKeyDown={handleEscape}
-            aria-modal={true}
-          >
-            {children}:
-          </dialog>
-        </div>
-      </div>,
-      globalThis.document.body
-    );
+  if (!domLoaded) {
+    return;
   }
-  return null;
+
+  return createPortal(
+    <dialog
+      className="fixed inset-0 z-30 h-full w-full space-y-4 bg-transparent opacity-0 transition-opacity transition-discrete duration-300 open:opacity-100 open:starting:opacity-0"
+      ref={dialogRef}
+      aria-modal={true}
+    >
+      <div
+        className="justify flex h-full w-full items-center justify-center bg-gray-900/30 py-32 md:items-start"
+        ref={backdropRef}
+        tabIndex={-1}
+      >
+        <div className="overlay w-md space-y-4 p-8 xl:w-xl">{children}</div>
+      </div>
+    </dialog>,
+    globalThis.document.body
+  );
 }
 
 type ModalHeaderProps = {

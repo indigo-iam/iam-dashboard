@@ -74,7 +74,9 @@ export function Modal(props: Readonly<ModalProps>) {
       ref={dialogRef}
       aria-modal={true}
     >
-      <div className="overlay w-md space-y-4 p-8 xl:w-xl">{children}</div>
+      <div className="overlay m-8 max-h-screen w-md space-y-4 overflow-y-auto p-8 xl:w-xl">
+        {children}
+      </div>
     </dialog>,
     globalThis.document.body
   );

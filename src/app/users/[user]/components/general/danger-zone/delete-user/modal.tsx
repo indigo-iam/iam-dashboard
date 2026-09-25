@@ -48,13 +48,13 @@ export default function DeleteUserModal(props: Readonly<DeleteUserModalProps>) {
         </div>
       </Notice>
       <Warning>
-        The user will be completely removed from this organization and they will
-        be not able any more to access to resources.{" "}
-        <b>
-          <br />
-          This action can not be undone
-        </b>
-        .
+        <p>
+          The user will be completely removed from this organization and they
+          will be not able any more to access to resources.
+        </p>
+        <p>
+          <b>This action can not be undone</b>.
+        </p>
       </Warning>
     </ConfirmModal>
   );

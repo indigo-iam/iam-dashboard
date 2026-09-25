@@ -235,7 +235,7 @@ testUser(
       const scopeAdminWrite = dialog.getByLabel("iam:admin.write");
       await expect(scopeAdminWrite).toBeHidden();
 
-      const close = dialog.getByTitle("Close");
+      const close = dialog.getByRole("button", { name: "Cancel" });
       await expect(close).toBeEnabled();
       await close.click();
       await expect(dialog).toBeHidden();

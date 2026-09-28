@@ -4,6 +4,7 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { ScopePolicy } from "@/models/scope-policies";
+import { deleteScopePolicy } from "@/services/scope-policies";
 
 type DeletePolicyModal = {
   show: boolean;
@@ -14,8 +15,7 @@ type DeletePolicyModal = {
 export default function DeletePolicyModal(props: Readonly<DeletePolicyModal>) {
   const { show, onClose, policy } = props;
   const handleConfirm = async () => {
-    console.log("TODO");
-    onClose();
+    await deleteScopePolicy(policy.id);
   };
   return (
     <ConfirmModal

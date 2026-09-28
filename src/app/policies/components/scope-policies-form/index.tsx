@@ -242,9 +242,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           initialEntity={initialEntity}
           onChange={handleEntityChange}
         />
-        <Description>
-          Select which entity to apply the policy to
-        </Description>
+        <Description>Select which entity to apply the policy to</Description>
       </Field>
       <div className="flex justify-end gap-2">
         <Button className="btn-tertiary" type="button" onClick={reset}>

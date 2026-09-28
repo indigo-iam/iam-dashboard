@@ -5,7 +5,6 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 import { authFetch, getItem } from "@/utils/fetch";
 import { ScopePolicy, ScopePolicyRequest } from "@/models/scope-policies";
@@ -66,7 +65,6 @@ export async function deleteScopePolicy(id: number) {
   if (response.ok) {
     // TODO: implement return message
     revalidatePath("/policies");
-    redirect("/policies");
   } else {
     console.log(`${response.status} ${await response.text()}`);
   }

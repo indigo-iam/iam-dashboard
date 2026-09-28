@@ -25,9 +25,14 @@ export function GeneralForm(props: Readonly<GeneralFormProps>) {
   const createdAt = client.created_at
     ? dateToHuman(new Date(client.created_at))
     : "N/A";
+
+  const lastUsed = client.last_used
+    ? `Last used ${dateToHuman(new Date(client.last_used))}`
+    : "Never used";
+
   const statusChangedOn = client.status_changed_on
     ? dateToHuman(new Date(client.status_changed_on))
-    : "N/A";
+    : null;
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -54,12 +59,11 @@ export function GeneralForm(props: Readonly<GeneralFormProps>) {
           </h5>
           <Status active={client.active ?? false} />
         </div>
-        <div className="flex flex-col gap-2">
-          <p>Created {createdAt}.</p>
-          <div>
-            <p>Status changed {statusChangedOn}.</p>
-            {client.dynamically_registered && <p>Dynamically registered.</p>}
-          </div>
+        <div>
+          <p>Created {createdAt}</p>
+          <p>{lastUsed}</p>
+          {statusChangedOn && <p>Status changed {statusChangedOn}</p>}
+          {client.dynamically_registered && <p>Dynamically registered.</p>}
         </div>
       </div>
       <Form className="w-full space-y-4 lg:w-2/3" onSubmit={submit}>

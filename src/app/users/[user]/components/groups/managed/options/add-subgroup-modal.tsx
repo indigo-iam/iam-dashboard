@@ -39,9 +39,7 @@ export default function AddSubgroupModal(
 
   return (
     <Modal {...modalProps}>
-      <ModalHeader
-        onClose={modalProps.onClose}
-      >{`Add new subgroup to '${rootGroupDisplayName}'`}</ModalHeader>
+      <ModalHeader>{`Add new subgroup to '${rootGroupDisplayName}'`}</ModalHeader>
       <Form id="add-subgroup-form" onSubmit={submit}>
         <ModalBody>
           <Field>

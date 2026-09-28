@@ -35,7 +35,7 @@ export function AddCustomScopeModal(props: Readonly<AddCustomScopeModalProps>) {
   }
   return (
     <Modal show={show} onClose={onClose}>
-      <ModalHeader onClose={onClose}>New custom scope</ModalHeader>
+      <ModalHeader>New custom scope</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>

@@ -127,7 +127,7 @@ test.describe("admin can link oidc account and user can unlink", async () => {
     await expect(oidc).toBeVisible();
 
     await test.step("navigate to test user page", async () => {
-      await navigateToTestUserPage(page);
+      await navigateToTestUserPage(page, "Test User");
       await selectLinkedAccountTab(page);
     });
 
@@ -304,7 +304,7 @@ test.describe("admin assigns certificate to user and user self-assigns proxy", (
     });
 
     await test.step("navigate to Test User page", async () => {
-      await navigateToTestUserPage(page);
+      await navigateToTestUserPage(page, "Test User");
       const saveBtn = page.getByRole("button", { name: "Save changes" });
       await expect(saveBtn).toBeEnabled();
       const email = page.getByLabel("Email");

@@ -39,7 +39,7 @@ export default function EditScopeModal(props: Readonly<EditScopeModalProps>) {
 
   return (
     <Modal show={show} onClose={onClose}>
-      <ModalHeader onClose={onClose}>Edit scope</ModalHeader>
+      <ModalHeader>Edit scope</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>

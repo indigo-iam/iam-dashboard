@@ -45,10 +45,12 @@ export default function ToggleStatusModal(
         client?
       </p>
       <Notice>
-        <p>
-          <b>{clientName}</b>
-        </p>
-        {clientDescription && <p className="text-sm">{clientDescription}</p>}
+        <div className="flex flex-col items-center">
+          <p>
+            <b>{clientName}</b>
+          </p>
+          {clientDescription && <p className="text-sm">{clientDescription}</p>}
+        </div>
       </Notice>
       {/* prettier-ignore */}
       <Warning>

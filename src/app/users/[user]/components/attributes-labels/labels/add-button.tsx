@@ -145,7 +145,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
 
   return (
     <Modal show={show} onClose={closeAndReset}>
-      <ModalHeader onClose={closeAndReset}>Add user label</ModalHeader>
+      <ModalHeader>Add user label</ModalHeader>
       <Form onSubmit={submit} ref={formRef}>
         <ModalBody>
           <Field>

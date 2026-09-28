@@ -5,7 +5,7 @@
 "use client";
 
 import ConfirmModal from "@/components/confirm-modal";
-import { Warning } from "@/components/notices";
+import { Notice, Warning } from "@/components/notices";
 import { useProgressBar } from "@/components/progress-bar";
 import { toast } from "@/components/toaster";
 import { SamlId } from "@/models/indigo-user";
@@ -46,28 +46,30 @@ export default function UnlinkAccountModal(
         <p className="text-center">
           Are you sure you want to unlink the following account?
         </p>
-        <div className="flex flex-col items-center gap-2">
-          <div>
-            <p>
-              <span className="inline-block min-w-24 text-end text-xs font-light text-gray-500 dark:text-gray-300">
-                Identity Provider
-              </span>{" "}
-              {samlId.idpId}
-            </p>
-            <p>
-              <span className="inline-block min-w-24 text-end text-xs font-light text-gray-500 dark:text-gray-300">
-                User ID
-              </span>{" "}
-              {samlId.userId}
-            </p>
-            <p>
-              <span className="inline-block min-w-24 text-end text-xs font-light text-gray-500 dark:text-gray-300">
-                Attribute ID
-              </span>{" "}
-              {samlId.attributeId}
-            </p>
+        <Notice>
+          <div className="flex flex-col items-center gap-2">
+            <div>
+              <p>
+                <span className="inline-block min-w-24 text-end text-xs font-light text-gray-500 dark:text-gray-300">
+                  Identity Provider
+                </span>{" "}
+                {samlId.idpId}
+              </p>
+              <p>
+                <span className="inline-block min-w-24 text-end text-xs font-light text-gray-500 dark:text-gray-300">
+                  User ID
+                </span>{" "}
+                {samlId.userId}
+              </p>
+              <p>
+                <span className="inline-block min-w-24 text-end text-xs font-light text-gray-500 dark:text-gray-300">
+                  Attribute ID
+                </span>{" "}
+                {samlId.attributeId}
+              </p>
+            </div>
           </div>
-        </div>
+        </Notice>
         <Warning>
           <p>
             Login with the above linked account will NOT be possible if you

@@ -37,7 +37,7 @@ export default function RejectRegistrationRequestModal(
 
   return (
     <Modal show={show} onClose={onClose}>
-      <ModalHeader onClose={onClose}>
+      <ModalHeader>
         Reject user registration request?
       </ModalHeader>
       <Form id="reject-registration-form" onSubmit={submit}>

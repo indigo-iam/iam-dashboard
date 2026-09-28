@@ -59,7 +59,7 @@ export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
 
   return (
     <Modal show={show} onClose={onClose}>
-      <ModalHeader onClose={onClose}>Add new system scope</ModalHeader>
+      <ModalHeader>Add new system scope</ModalHeader>
       <Form onSubmit={submit} onReset={() => setScopeType(options[0])}>
         <ModalBody className="space-y-4 pb-4">
           <p>

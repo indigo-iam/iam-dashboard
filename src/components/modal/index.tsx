@@ -4,11 +4,8 @@
 
 "use client";
 
-import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { Button } from "../buttons";
-import { Tooltip, useTooltip } from "../tooltip";
 
 export type ModalProps = {
   show: boolean;
@@ -21,119 +18,77 @@ export function Modal(props: Readonly<ModalProps>) {
   const [domLoaded, setDomLoaded] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  const close = useCallback(() => {
-    // wait for animation to end before closing
-    dialogRef.current?.removeAttribute("data-open");
-    setTimeout(() => {
-      dialogRef.current?.close();
-    }, 300);
-  }, []);
-
   const handleEscape = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        e.preventDefault();
         onClose();
       }
     },
     [onClose]
   );
 
-  const hitTest = useCallback(
-    (event: MouseEvent) => {
-      const dialog = dialogRef.current;
-      if (!dialog) {
-        return;
-      }
-      const dialogRect = dialog.getBoundingClientRect();
-      const isOutside =
-        event.clientX < dialogRect.left ||
-        event.clientX > dialogRect.right ||
-        event.clientY < dialogRect.top ||
-        event.clientY > dialogRect.bottom;
-      if (isOutside) {
+  const handleClick = useCallback(
+    (e: MouseEvent) => {
+      if (e.target === dialogRef.current) {
         onClose();
       }
     },
     [onClose]
   );
-
-  const open = useCallback(() => {
-    dialogRef.current?.showModal();
-    dialogRef.current?.setAttribute("data-open", "");
-    dialogRef.current?.addEventListener("mousedown", hitTest);
-    dialogRef.current?.addEventListener("keydown", handleEscape);
-  }, [hitTest, handleEscape]);
-
-  const clearEventListeners = useCallback(() => {
-    const dialog = dialogRef.current;
-    dialog?.removeEventListener("mousedown", hitTest);
-    dialog?.removeEventListener("keydown", handleEscape);
-  }, [hitTest, handleEscape]);
 
   // hack to create the portal only client side avoiding hydration errors
   useEffect(() => {
-    if (!domLoaded) {
+    const dialog = dialogRef.current;
+    if (domLoaded) {
+      dialog?.addEventListener("keydown", handleEscape);
+      dialog?.addEventListener("mousedown", handleClick);
+    } else {
       (() => {
         setDomLoaded(true);
+        dialog?.close();
       })();
     }
-  }, [domLoaded]);
+    return () => {
+      dialog?.addEventListener("keydown", handleEscape);
+      dialog?.removeEventListener("mousedown", handleClick);
+    };
+  }, [domLoaded, handleEscape, handleClick]);
 
   useEffect(() => {
     if (show && dialogRef.current && !dialogRef.current?.open) {
-      dialogRef.current.inert = true;
-      open();
-      dialogRef.current.inert = false;
+      dialogRef.current.show();
+      document.getElementById("app")?.setAttribute("inert", "");
     } else if (!show && dialogRef.current?.open) {
-      close();
+      dialogRef.current.close();
+      document.getElementById("app")?.removeAttribute("inert");
     }
-    return () => {
-      clearEventListeners();
-    };
-  }, [show, open, close, clearEventListeners]);
+  }, [show]);
 
-  if (domLoaded) {
-    return createPortal(
-      <dialog
-        className="overlay m-auto w-md space-y-4 p-8 opacity-0 transition-all duration-300 backdrop:bg-gray-950/30 backdrop:opacity-0 backdrop:transition-all backdrop:duration-300 data-open:opacity-100 data-open:backdrop:opacity-100 xl:w-xl data-open:starting:opacity-0 data-open:backdrop:starting:opacity-0"
-        ref={dialogRef}
-      >
-        {children}
-      </dialog>,
-      globalThis.document.body
-    );
+  if (!domLoaded) {
+    return;
   }
-  return null;
+
+  return createPortal(
+    <dialog
+      className="fixed inset-0 top-8 z-30 h-full w-full flex-col items-center space-y-4 bg-gray-900/30 opacity-0 transition-opacity transition-discrete duration-300 open:flex open:opacity-100 md:top-0 md:justify-center open:starting:opacity-0"
+      ref={dialogRef}
+      aria-modal={true}
+    >
+      <div className="overlay m-8 max-h-screen w-md space-y-4 overflow-y-auto p-8 xl:w-xl">
+        {children}
+      </div>
+    </dialog>,
+    globalThis.document.body
+  );
 }
 
 type ModalHeaderProps = {
-  onClose: () => void;
   children: React.ReactNode;
 };
 
 export function ModalHeader(props: Readonly<ModalHeaderProps>) {
-  const { onClose, children } = props;
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const { tooltipId, tooltipRef } = useTooltip(buttonRef);
-  return (
-    <div className="flex">
-      <h2 className="grow">{children}</h2>
-      <Button
-        type="button"
-        onClick={onClose}
-        className="cursor-pointer"
-        title="Close"
-        ref={buttonRef}
-        aria-labelledby={tooltipId}
-      >
-        <XMarkIcon className="size-6 rounded-full bg-gray-100 p-1 transition duration-200 hover:bg-gray-200 dark:bg-gray-400 dark:hover:bg-gray-300 dark:hover:text-gray-500" />
-        <Tooltip tooltipId={tooltipId} tooltipRef={tooltipRef}>
-          Close
-        </Tooltip>
-      </Button>
-    </div>
-  );
+  const { children } = props;
+  return <h2>{children}</h2>;
 }
 
 type ModalBodyProps = {

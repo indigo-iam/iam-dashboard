@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import Link from "@/components/link";
-import { ClockIcon } from "@heroicons/react/24/outline";
 
 import { GroupRequest } from "@/models/group-requests";
 import { dateToHuman } from "@/utils/dates";
@@ -20,9 +19,9 @@ function GroupRequestView(props: Readonly<GroupRequestViewProps>) {
   const { groupName, groupUuid, notes, creationTime } = request;
   const sent = creationTime ? dateToHuman(new Date(creationTime)) : "N/A";
   return (
-    <li key={groupName} className="iam-list-item lg:gap-2">
-      <div className="flex grow flex-col lg:flex-row">
-        <div className="flex grow flex-col">
+    <li key={groupName} className="iam-list-item">
+      <div className="flex grow">
+        <div>
           {isAdmin ? (
             <Link className="iam-link" href={`/groups/${groupUuid}`}>
               {groupName}
@@ -30,13 +29,10 @@ function GroupRequestView(props: Readonly<GroupRequestViewProps>) {
           ) : (
             <p className="text-gray-950 dark:text-gray-100">{groupName}</p>
           )}
-          <p className="text-sm font-light">
-            <span>Motivation</span>: <span className="italic">{notes}</span>
+          <p className="text-sm">
+            Motivation: <q>{notes}</q>
           </p>
-        </div>
-        <div className="flex items-center gap-1">
-          <ClockIcon className="size-4" />
-          <span className="text-sm font-light">Sent {sent}</span>
+          <p className="text-xs">Sent {sent}</p>
         </div>
       </div>
       <GroupRequestOptions

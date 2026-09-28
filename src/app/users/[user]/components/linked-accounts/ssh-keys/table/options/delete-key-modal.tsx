@@ -45,11 +45,15 @@ export default function DeleteSSHKeyModal(
       </Field>
       <Field>
         <Label>Fingerprint</Label>
-        <Input value={sshKey.fingerprint} disabled />
+        <Input
+          value={sshKey.fingerprint}
+          className="font-code iam-input w-full text-sm"
+          disabled
+        />
       </Field>
       <Field>
         <Label>Public key</Label>
-        <p className="font-code text-sm break-all">{sshKey.value}</p>
+        <p className="font-code iam-input text-sm break-all">{sshKey.value}</p>
       </Field>
     </ConfirmModal>
   );

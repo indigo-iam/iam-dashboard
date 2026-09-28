@@ -9,5 +9,8 @@ import { redirect } from "next/navigation";
 
 export async function login() {
   const url = await signIn();
+  if (!url) {
+    throw new Error("Failed to complete authorization flow");
+  }
   redirect(url);
 }

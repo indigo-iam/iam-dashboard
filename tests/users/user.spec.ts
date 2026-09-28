@@ -92,7 +92,7 @@ testAdmin("admin can edit user's endtime", async ({ signedUpPage }) => {
   });
 
   await testAdmin.step("navigate to test user page", async () => {
-    await navigateToTestUserPage(page);
+    await navigateToTestUserPage(page, "Test User");
   });
 
   await testAdmin.step("endtime is initially not set", async () => {
@@ -142,3 +142,75 @@ testAdmin("admin can edit user's endtime", async ({ signedUpPage }) => {
     await expect(endtime).toHaveValue("");
   });
 });
+
+type User = {
+  firstName: string;
+  surname: string;
+  username: string;
+  email: string;
+};
+
+async function createNewUser(page: Page, user: User) {
+  await page.goto("./users");
+  await page.getByRole("button", { name: "New user" }).click();
+  const firstName = page.getByLabel("First Name");
+  await firstName.fill(user.firstName);
+  const surname = page.getByLabel("Surname");
+  await surname.fill(user.surname);
+  const username = page.getByLabel("Username");
+  await username.fill(user.username);
+  const email = page.getByLabel("Email");
+  await email.fill(user.email);  
+  await page.getByRole("button", { name: "Create User" }).click();
+  await dismissToast(page, "User created", "success");
+}
+
+async function openDeleteUserModal(page: Page, fullName: string) {
+  await page.getByRole("button", { name: "Delete user" }).click();
+  const dialog = page.getByRole("dialog").filter({ visible: true });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole("heading").first()).toHaveText(
+    `Delete user '${fullName}'?`
+  );
+  return dialog;
+}
+
+testAdmin(
+  "admin can delete user and it returns to the users page",
+  async ({ signedUpPage }) => {
+    const page = signedUpPage;
+    await page.waitForURL("./users/me");
+    const user: User = {
+      firstName: "Test",
+      surname: "Delete",
+      username: "test_delete",
+      email: "test_delete@example.com",
+    };
+    const userName = `${user.firstName} ${user.surname}`;
+
+    await testAdmin.step("enable admin mode", async () => {
+      await enableAdminMode(page);
+    });
+
+    await testAdmin.step("create a new test user", async () => {
+      await createNewUser(page, user);
+    });
+
+    await testAdmin.step("navigate to test user page", async () => {
+      await navigateToTestUserPage(page, userName);
+    });
+
+    await testAdmin.step("delete the user", async () => {
+      const dialog = await openDeleteUserModal(page, userName);
+      const confirmBtn = dialog.getByRole("button", { name: "Confirm" });
+      await expect(confirmBtn).toBeEnabled();
+      await confirmBtn.click();
+      await expect(dialog).toBeHidden();
+      await dismissToast(page, "User deleted", "success");
+    });
+
+    await testAdmin.step("return to users page", async () => {
+      await expect(page).toHaveURL("./users");
+    });
+  }
+);

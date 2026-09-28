@@ -48,12 +48,12 @@ export function RotateClientSecret(props: Readonly<RotateClientSecretProps>) {
 
   return (
     <Field>
-      <div className="flex items-center gap-1">
-        <Label>Generate a new secret for this client</Label>
-        <div>
+      <Label>
+        <div className="flex items-center gap-1">
+          <span>Generate a new secret for this client</span>
           <Info>Clients secrets provides authentication for this client.</Info>
         </div>
-      </div>
+      </Label>
       <Button className="btn-secondary" onClick={open}>
         Rotate Secret
       </Button>

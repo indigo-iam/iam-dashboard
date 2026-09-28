@@ -50,7 +50,7 @@ export function EnableMFAModal(props: Readonly<MFAModalProps>) {
 
   return (
     <Modal show={show} onClose={onClose}>
-      <ModalHeader onClose={onClose}>Enable authenticator</ModalHeader>
+      <ModalHeader>Enable authenticator</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <div className="flex flex-col gap-4">

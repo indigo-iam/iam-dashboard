@@ -4,7 +4,7 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { ModalProps } from "@/components/modal";
-import { Warning } from "@/components/notices";
+import { Notice, Warning } from "@/components/notices";
 import { toast } from "@/components/toaster";
 import { changeUserStatus } from "@/services/users";
 
@@ -48,16 +48,16 @@ export default function ToggleUserStatusModal(
         Are you sure you want to {userIsActive ? "disable" : "enable"} the
         following user?
       </p>
-      <div className="flex justify-center">
-        <div>
+      <Notice>
+        <div className="flex flex-col items-center">
           <p>
-            <b>{userFormattedName}</b>{" "}
-            <span className="text-sm text-gray-500 dark:text-gray-200">
-              ({userEmail})
-            </span>
+            <b>{userFormattedName}</b>
+          </p>
+          <p className="text-sm text-gray-500 dark:text-gray-200">
+            ({userEmail})
           </p>
         </div>
-      </div>
+      </Notice>
       {userIsActive && (
         <Warning>
           The user will not be able to login anymore but they will not be

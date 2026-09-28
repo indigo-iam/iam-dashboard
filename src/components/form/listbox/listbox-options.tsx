@@ -12,7 +12,7 @@ export default function ListboxOptions(props: Readonly<ListboxOptionsProps>) {
     <HeadlessListboxOptions
       {...props}
       anchor="bottom start"
-      className="overlay z-10 mt-2 w-(--input-width) p-2"
+      className="overlay z-50 mt-2 w-(--input-width) p-2"
     />
   );
 }

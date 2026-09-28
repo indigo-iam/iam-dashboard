@@ -43,7 +43,7 @@ function LinkAccountModal(props: Readonly<LinkAccountModalProps>) {
   return (
     <Modal show={show} onClose={onClose}>
       <Form onSubmit={submit}>
-        <ModalHeader onClose={onClose}>Link OpenID Connect account</ModalHeader>
+        <ModalHeader>Link OpenID Connect account</ModalHeader>
         <ModalBody className="space-y-4 py-8">
           <p>
             Connect external OpenID Connect/OAuth2 provider to user{" "}

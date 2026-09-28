@@ -41,7 +41,7 @@ function LinkProxyModal(props: Readonly<LinkProxyModalProps>) {
   if (disabled) {
     return (
       <Modal show={show} onClose={close}>
-        <ModalHeader onClose={close}>Link proxy certificate</ModalHeader>
+        <ModalHeader>Link proxy certificate</ModalHeader>
         <ModalBody>
           <div className="flex w-full flex-row justify-center">
             <InformationCircleIcon className="size-12" />
@@ -83,7 +83,7 @@ function LinkProxyModal(props: Readonly<LinkProxyModalProps>) {
 
   return (
     <Modal show={show} onClose={close}>
-      <ModalHeader onClose={close}>Link proxy certificate</ModalHeader>
+      <ModalHeader>Link proxy certificate</ModalHeader>
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>

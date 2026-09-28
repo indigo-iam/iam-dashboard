@@ -18,8 +18,8 @@ function Row(props: Readonly<RowProps>) {
     : "N/A";
   return (
     <li className="iam-list-item">
-      <div className="flex grow flex-col space-y-2 lg:flex-row">
-        <div className="grow space-y-2">
+      <div className="flex grow">
+        <div>
           <p className="text-gray-950 dark:text-gray-100">
             User{" "}
             <Link className="iam-link" href={`/users/${request.accountId}`}>
@@ -28,11 +28,11 @@ function Row(props: Readonly<RowProps>) {
             </Link>{" "}
             applied for an account.
           </p>
-          <p className="text-sm">Motivation: {request.notes}</p>
+          <p className="text-sm">
+            Motivation: <q>{request.notes}</q>
+          </p>
+          <p className="text-xs">Sent {creationTime}</p>
         </div>
-        <p className="flex items-center text-xs whitespace-nowrap lg:px-2 lg:text-right">
-          Sent {creationTime}
-        </p>
       </div>
       <RegistrationRequestsOptions request={request} />
     </li>

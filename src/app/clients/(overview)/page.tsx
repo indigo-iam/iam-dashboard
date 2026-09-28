@@ -22,7 +22,6 @@ function Buttons() {
           New client
         </Button>
       </Link>
-      <Button className="btn-secondary">Redeem</Button>
     </div>
   );
 }

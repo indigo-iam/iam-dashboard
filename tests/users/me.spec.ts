@@ -61,7 +61,7 @@ for (const user of [TEST_USER, ADMIN_USER]) {
         await firstName.fill("");
         await saveButton.click();
         await expect(firstName).toHaveValue("");
-        await page.goto("./users/me", { waitUntil: "networkidle" });
+        await page.goto("./users/me");
         await expect(saveButton).toBeEnabled();
         await expect(firstName).toHaveValue("Albert");
       });

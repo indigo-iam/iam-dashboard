@@ -50,10 +50,12 @@ export default function DeleteClientModal(
         Are you sure you want to delete the following client?
       </p>
       <Notice>
-        <p>
-          <b>{clientName}</b>
-        </p>
-        {clientDescription && <p className="text-sm">{clientDescription}</p>}
+        <div className="flex flex-col items-center">
+          <p>
+            <b>{clientName}</b>
+          </p>
+          {clientDescription && <p className="text-sm">{clientDescription}</p>}
+        </div>
       </Notice>
       <Warning>
         Completely delete the client from this organization and revoke all its

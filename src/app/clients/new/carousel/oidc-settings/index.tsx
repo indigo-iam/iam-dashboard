@@ -28,18 +28,28 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
   const [authFlowOk, setAuthFlowOk] = useState(false);
   const [clientAuthOk, setClientAuthOk] = useState(false);
 
-  const allowedScopes = systemScopes.filter(
-    scope => !scope.restricted || isAdmin
-  );
-
-  const defaultScopes = allowedScopes
+  const defaultScopes = systemScopes
     .filter(scope => scope.defaultScope)
     .map(scope => {
-      return { id: scope.id.toString(), name: scope.value };
+      const title = scope.restricted
+        ? `${scope.value} (restricted)`
+        : scope.value;
+      return {
+        title,
+        value: { id: scope.id.toString(), name: scope.value },
+        disabled: scope.restricted && !isAdmin,
+      };
     });
 
-  const scopes = allowedScopes.map(scope => {
-    return { id: scope.id.toString(), name: scope.value };
+  const scopes = systemScopes.map(scope => {
+    const title = scope.restricted
+      ? `${scope.value} (restricted)`
+      : scope.value;
+    return {
+      title,
+      value: { id: scope.id.toString(), name: scope.value },
+      disabled: scope.restricted && !isAdmin,
+    };
   });
 
   const canContinue = authFlowOk && clientAuthOk;
@@ -66,7 +76,11 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
           options={scopes}
           defaultOptions={defaultScopes}
         />
-        <Description>Select one or more scope.</Description>
+        <Description>
+          Restricted scopes can be enabled only by an administrator. If you need
+          a restricted scope for your client, please contact the administrator
+          of your organization.
+        </Description>
       </Field>
       <div className="flex flex-row justify-end py-2">
         <Button className="btn-tertiary" onClick={goBack}>

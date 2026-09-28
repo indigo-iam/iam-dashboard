@@ -8,14 +8,16 @@ import { CheckIcon } from "@heroicons/react/16/solid";
 export type ListboxOptionProps = {
   children: React.ReactNode;
   value: { id: string; name: string };
+  disabled?: boolean;
 };
 
 export default function ListboxOption(props: Readonly<ListboxOptionProps>) {
-  const { children, value } = props;
+  const { children, value, disabled } = props;
   return (
     <HeadlessListboxOption
       className="group btn-popover cursor-pointer gap-1"
       value={value}
+      disabled={disabled}
     >
       <CheckIcon className="invisible my-auto size-4 group-data-selected:visible" />
       {children}

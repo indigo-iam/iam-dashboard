@@ -14,8 +14,12 @@ import {
 } from "./listbox";
 
 type DropdownListOption = {
-  id: string;
-  name: string;
+  value: {
+    id: string;
+    name: string;
+  };
+  title?: string;
+  disabled?: boolean;
 };
 
 type DropdownListProps = {
@@ -27,7 +31,7 @@ type DropdownListProps = {
 
 export function DropdownList(props: Readonly<DropdownListProps>) {
   const { name, title, options, defaultOptions } = props;
-  const [items, setItems] = useState(defaultOptions);
+  const [items, setItems] = useState(defaultOptions.map(o => o.value));
   const removeItem = (index: number) => setItems(items.toSpliced(index, 1));
 
   const listItems = items.map((item, index) => (
@@ -36,7 +40,7 @@ export function DropdownList(props: Readonly<DropdownListProps>) {
         title="Remove scope"
         type="button"
         onClick={() => removeItem(index)}
-        className="bg-secondary-100 hover:bg-danger hover:text-white dark:text-white/80 w-5 rounded dark:bg-transparent"
+        className="bg-secondary-100 hover:bg-danger w-5 rounded hover:text-white dark:bg-transparent dark:text-white/80"
       >
         <XMarkIcon />
       </button>
@@ -51,8 +55,12 @@ export function DropdownList(props: Readonly<DropdownListProps>) {
           <ListboxButton>{title}</ListboxButton>
           <ListboxOptions>
             {options.map(opt => (
-              <ListboxOption key={opt.id} value={opt}>
-                {opt.name}
+              <ListboxOption
+                key={opt.value.id}
+                value={opt.value}
+                disabled={opt.disabled}
+              >
+                {opt.title ?? opt.value.name}
               </ListboxOption>
             ))}
           </ListboxOptions>

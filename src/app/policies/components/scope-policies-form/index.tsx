@@ -124,6 +124,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
     (entityType === "group" && statePolicy.group === null);
 
   const policyChanged = !comparePolicies(statePolicy, originalPolicy);
+  const formDisabled = !policyChanged || entitySelectedButNull;
 
   async function handleConfirm() {
     const request: ScopePolicyRequest = {
@@ -186,7 +187,6 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
         />
         <Description>Something users will recognize and trust</Description>
       </Field>
-
       <div className="flex gap-5">
         <Field>
           <Label>Rule</Label>
@@ -203,7 +203,6 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           </Select>
           <Description>Permit or deny this policy</Description>
         </Field>
-
         <Field>
           <div className="flex items-center gap-1">
             <Label>Matching Policy</Label>
@@ -231,7 +230,6 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           <Description>Select the right matching policy</Description>
         </Field>
       </div>
-
       <Field>
         <Label>Target</Label>
         <AccountGroupSelector
@@ -245,19 +243,17 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           onChange={handleEntityChange}
         />
         <Description>
-          Select account, group or both to which this policy applies
+          Select which entity to apply the policy to
         </Description>
       </Field>
-
       <div className="flex justify-end gap-2">
         <Button className="btn-tertiary" type="button" onClick={reset}>
           Reset
         </Button>
-
         <Button
           className="btn-primary"
           onClick={() => setShowConfirm(true)}
-          disabled={!policyChanged || entitySelectedButNull}
+          disabled={formDisabled}
         >
           {isEditing ? "Save changes" : "Add Scope Policy"}
         </Button>
@@ -266,7 +262,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           onClose={() => setShowConfirm(false)}
           onConfirm={handleConfirm}
           title={isEditing ? "Edit Scope Policy" : "Create Scope Policy"}
-          confirmButtonDisabled={!policyChanged || entitySelectedButNull}
+          confirmButtonDisabled={formDisabled}
         >
           <div className="space-y-4">
             <p>
@@ -288,7 +284,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
               <p>
                 <b>Target: </b>
                 {entityType === "null"
-                  ? "both accounts and groups"
+                  ? "accounts and groups"
                   : (getEntityFromPolicy(statePolicy)?.name ?? "-")}
               </p>
             </Notice>

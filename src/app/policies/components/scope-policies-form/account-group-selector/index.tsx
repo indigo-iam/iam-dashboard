@@ -14,7 +14,7 @@ type AccountGroupSelectorProps = {
 };
 
 const entityOptions = [
-  { id: "null", name: "BOTH" },
+  { id: "null", name: "ALL" },
   { id: "user", name: "USER" },
   { id: "group", name: "GROUP" },
 ];

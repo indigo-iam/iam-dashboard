@@ -5,6 +5,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 import { authFetch, getItem } from "@/utils/fetch";
 import { ScopePolicy, ScopePolicyRequest } from "@/models/scope-policies";
@@ -32,7 +33,7 @@ export async function addScopePolicy(policy: ScopePolicyRequest) {
     },
   });
   if (response.ok) {
-    // da sistemare il return
+    // TODO: implement return message
     revalidatePath("/policies");
   } else {
     console.log(`${response.status} ${await response.text()}`);
@@ -52,8 +53,20 @@ export async function updateScopePolicy(
     },
   });
   if (response.ok) {
-    // da sistemare il return
+    // TODO: implement return message
     revalidatePath(`/policies/${id}`);
+  } else {
+    console.log(`${response.status} ${await response.text()}`);
+  }
+}
+
+export async function deleteScopePolicy(id: number) {
+  const url = `${IAM_API_URL}/iam/scope_policies/${id}`;
+  const response = await authFetch(url, { method: "DELETE" });
+  if (response.ok) {
+    // TODO: implement return message
+    revalidatePath("/policies");
+    redirect("/policies");
   } else {
     console.log(`${response.status} ${await response.text()}`);
   }

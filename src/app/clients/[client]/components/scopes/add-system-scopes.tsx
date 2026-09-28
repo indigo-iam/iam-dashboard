@@ -16,21 +16,22 @@ import { editClient } from "@/services/clients";
 type ScopeCheckboxProps = {
   value: string;
   description: string;
+  title?: string;
+  disabled?: boolean;
 };
 
 function ScopeCheckbox(props: Readonly<ScopeCheckboxProps>) {
-  const { value, description } = props;
+  const { value, description, title, disabled } = props;
   return (
     <Field
       as="li"
-      className="flex flex-row items-center gap-2 p-2 hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-400"
+      className="group flex flex-row items-center gap-2 p-2 text-gray-600 hover:rounded-md hover:bg-gray-100 data-disabled:cursor-not-allowed data-disabled:text-gray-400 dark:text-gray-200 dark:hover:bg-gray-400 dark:data-disabled:text-white/40"
+      disabled={disabled}
     >
       <Checkbox name="scope" value={value} />
       <div className="flex grow flex-col">
-        <Label className="text-gray-500 dark:text-white/70">{value}</Label>
-        <p className="text-sm font-light text-gray-500 dark:text-white/70">
-          {description}
-        </p>
+        <Label>{title ?? value}</Label>
+        <p className="text-sm font-light">{description}</p>
       </div>
     </Field>
   );
@@ -49,9 +50,6 @@ type AddScopeModalProps = AddScopeProps & {
 
 function AddScopeModal(props: Readonly<AddScopeModalProps>) {
   const { client, availableScopes, show, onClose, isAdmin } = props;
-  const allowedScopes = availableScopes.filter(
-    scope => !scope.restricted || isAdmin
-  );
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -70,11 +68,13 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
       <Form onSubmit={submit}>
         <ModalBody className="p-0">
           <ul>
-            {allowedScopes.map(s => (
+            {availableScopes.map(s => (
               <ScopeCheckbox
                 key={s.id}
                 value={s.value}
                 description={s.description}
+                title={s.restricted ? `${s.value} (restricted)` : s.value}
+                disabled={s.restricted && !isAdmin}
               />
             ))}
           </ul>

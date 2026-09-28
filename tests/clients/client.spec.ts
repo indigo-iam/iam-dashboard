@@ -129,7 +129,7 @@ testAdmin(
         await expect(addScopes).toBeEnabled();
         await addScopes.click();
         const scopesList = page.getByRole("listbox").filter({ visible: true });
-        const adminRead = scopesList.getByText("iam:admin.read");
+        const adminRead = scopesList.getByText("iam:admin.read (restricted)");
         await adminRead.scrollIntoViewIfNeeded();
         await expect(adminRead).toBeVisible();
         await adminRead.click();
@@ -154,7 +154,7 @@ testAdmin(
       const dialog = await openSystemScopeModal(page);
 
       // scope already added during creation
-      let scopeAdminRead = dialog.getByLabel("iam:admin.read");
+      let scopeAdminRead = dialog.getByLabel("iam:admin.read (restricted)");
       await expect(scopeAdminRead).toBeHidden();
 
       let scopeAdminWrite = dialog.getByLabel("iam:admin.write");
@@ -169,7 +169,7 @@ testAdmin(
       await dismissToast(page, "Client saved", "success");
       scopeAdminRead = page
         .locator(".iam-list-item")
-        .filter({ hasText: "iam:admin.read" });
+        .filter({ hasText: "iam:admin.read (restricted)" });
       await expect(scopeAdminRead).toBeVisible();
       scopeAdminWrite = page
         .locator(".iam-list-item")
@@ -206,10 +206,12 @@ testUser(
         await expect(addScopes).toBeEnabled();
         await addScopes.click();
         const scopesList = page.getByRole("listbox").filter({ visible: true });
-        const adminRead = scopesList.getByText("iam:admin.read");
-        const adminWrite = scopesList.getByText("iam:admin.write");
-        await expect(adminRead).toBeHidden();
-        await expect(adminWrite).toBeHidden();
+        const adminRead = scopesList.getByText("iam:admin.read (restricted)");
+        const adminWrite = scopesList.getByText("iam:admin.write (restricted)");
+        await expect(adminRead).toBeVisible();
+        await expect(adminRead).toBeDisabled();
+        await expect(adminWrite).toBeVisible();
+        await expect(adminWrite).toBeDisabled();
         await page.keyboard.press("Escape"); // dismiss the selection list
       }
     );
@@ -230,10 +232,12 @@ testUser(
       await navigateToScopeTab(page);
       const dialog = await openSystemScopeModal(page);
 
-      const scopeAdminRead = dialog.getByLabel("iam:admin.read");
-      await expect(scopeAdminRead).toBeHidden();
-      const scopeAdminWrite = dialog.getByLabel("iam:admin.write");
-      await expect(scopeAdminWrite).toBeHidden();
+      const scopeAdminRead = dialog.getByLabel("iam:admin.read (restricted)");
+      await expect(scopeAdminRead).toBeVisible();
+      await expect(scopeAdminRead).toBeDisabled();
+      const scopeAdminWrite = dialog.getByLabel("iam:admin.write (restricted)");
+      await expect(scopeAdminWrite).toBeVisible();
+      await expect(scopeAdminWrite).toBeDisabled();
 
       const close = dialog.getByRole("button", { name: "Cancel" });
       await expect(close).toBeEnabled();

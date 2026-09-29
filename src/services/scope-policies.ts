@@ -9,6 +9,7 @@ import { revalidatePath } from "next/cache";
 import { authFetch, getItem } from "@/utils/fetch";
 import { ScopePolicy, ScopePolicyRequest } from "@/models/scope-policies";
 import { settings } from "@/config";
+import { Notification } from "@/components/toaster";
 
 const { IAM_API_URL } = settings;
 
@@ -22,7 +23,7 @@ export async function fetchScopePolicy(id: number) {
   return await getItem<ScopePolicy>(url);
 }
 
-export async function addScopePolicy(policy: ScopePolicyRequest) {
+export async function addScopePolicy(policy: ScopePolicyRequest): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/scope_policies`;
   const response = await authFetch(url, {
     body: JSON.stringify(policy),
@@ -32,17 +33,21 @@ export async function addScopePolicy(policy: ScopePolicyRequest) {
     },
   });
   if (response.ok) {
-    // TODO: implement return message
     revalidatePath("/policies");
-  } else {
-    console.log(`${response.status} ${await response.text()}`);
+    return { type: "success", title: "Scope policy created" };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot add scope policy",
+    description: `Error ${response.status} ${msg}`,
+  };
 }
 
 export async function updateScopePolicy(
   id: number,
   policy: ScopePolicyRequest
-) {
+): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/scope_policies/${id}`;
   const response = await authFetch(url, {
     body: JSON.stringify({ ...policy, id }),
@@ -52,20 +57,28 @@ export async function updateScopePolicy(
     },
   });
   if (response.ok) {
-    // TODO: implement return message
     revalidatePath(`/policies/${id}`);
-  } else {
-    console.log(`${response.status} ${await response.text()}`);
+    return { type: "success", title: "Scope policy updated" };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot update scope policy",
+    description: `Error ${response.status} ${msg}`,
+  };
 }
 
-export async function deleteScopePolicy(id: number) {
+export async function deleteScopePolicy(id: number): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/scope_policies/${id}`;
   const response = await authFetch(url, { method: "DELETE" });
   if (response.ok) {
-    // TODO: implement return message
     revalidatePath("/policies");
-  } else {
-    console.log(`${response.status} ${await response.text()}`);
+    return { type: "success", title: "Scope policy deleted" };
   }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot delete scope policy",
+    description: `Error ${response.status} ${msg}`,
+  };
 }

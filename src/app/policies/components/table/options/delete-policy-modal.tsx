@@ -4,6 +4,7 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { Notice, Warning } from "@/components/notices";
+import { toast } from "@/components/toaster";
 import { ScopePolicy } from "@/models/scope-policies";
 import { deleteScopePolicy } from "@/services/scope-policies";
 
@@ -17,8 +18,15 @@ type DeletePolicyModal = {
 export default function DeletePolicyModal(props: Readonly<DeletePolicyModal>) {
   const { show, onClose, policy, onDeleted } = props;
   const handleConfirm = async () => {
-    await deleteScopePolicy(policy.id);
-    onDeleted?.();
+    const response = await deleteScopePolicy(policy.id);
+    const success = response.type === "success";
+    if (success) {
+      response.description = `Policy "${policy.description}" has been deleted`;
+    }
+    toast.toast(response);
+    if (success) {
+      onDeleted?.();
+    }
   };
   return (
     <ConfirmModal

@@ -30,6 +30,7 @@ import { SearchTarget } from "./search-target";
 import { Info } from "@/components/info";
 import ConfirmModal from "@/components/confirm-modal";
 import { Notice } from "@/components/notices";
+import { toast } from "@/components/toaster";
 
 type ScopePoliciesProps = {
   policy?: ScopePolicy;
@@ -138,11 +139,13 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
       account: statePolicy.account ?? null,
       scopes: originalPolicy.scopes ?? [],
     };
-    if (isEditing) {
-      await updateScopePolicy(originalPolicy.id, request);
-    } else {
-      await addScopePolicy(request);
+    const response = isEditing
+      ? await updateScopePolicy(originalPolicy.id, request)
+      : await addScopePolicy(request);
+    if (response.type === "success") {
+      response.description = `Policy "${statePolicy.description}" has been ${isEditing ? "updated" : "created"}`;
     }
+    toast.toast(response);
   }
 
   function handleEntityChange(entity: { uuid: string; name: string } | null) {

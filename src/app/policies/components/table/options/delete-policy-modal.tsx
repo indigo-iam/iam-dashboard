@@ -3,19 +3,30 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
+import { Notice, Warning } from "@/components/notices";
+import { toast } from "@/components/toaster";
 import { ScopePolicy } from "@/models/scope-policies";
+import { deleteScopePolicy } from "@/services/scope-policies";
 
 type DeletePolicyModal = {
   show: boolean;
   onClose: () => void;
   policy: ScopePolicy;
+  onDeleted?: () => void;
 };
 
 export default function DeletePolicyModal(props: Readonly<DeletePolicyModal>) {
-  const { show, onClose, policy } = props;
+  const { show, onClose, policy, onDeleted } = props;
   const handleConfirm = async () => {
-    console.log("TODO");
-    onClose();
+    const response = await deleteScopePolicy(policy.id);
+    const success = response.type === "success";
+    if (success) {
+      response.description = `Policy "${policy.description}" has been deleted`;
+    }
+    toast.toast(response);
+    if (success) {
+      onDeleted?.();
+    }
   };
   return (
     <ConfirmModal
@@ -26,7 +37,22 @@ export default function DeletePolicyModal(props: Readonly<DeletePolicyModal>) {
       onConfirm={handleConfirm}
       danger={true}
     >
-      Are you sure you want to delete policy <b>{policy.description}</b>?
+      <p>Are you sure you want to delete the following policy?</p>
+      <Notice>
+        <p>
+          <b>{policy.description}</b>
+        </p>
+      </Notice>
+      <Warning>
+        <p>Delete the policy to completely remove it from the organization.</p>
+        <p>
+          This will revoke the permit/deny rule for the associated account,
+          group, or both.
+        </p>
+        <p>
+          <b>This action cannot be undone.</b>
+        </p>
+      </Warning>
     </ConfirmModal>
   );
 }

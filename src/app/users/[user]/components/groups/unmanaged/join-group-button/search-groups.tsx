@@ -4,6 +4,7 @@
 
 "use client";
 
+import { Field, Label } from "@/components/form";
 import { Group } from "@/models/groups";
 import { searchGroup } from "@/services/groups";
 import { useDeferredCallback } from "@/utils/hooks";
@@ -37,21 +38,24 @@ export function SearchGroups(props: Readonly<SearchGroupProps>) {
   }
 
   return (
-    <div className="space-y-2">
-      <input
-        className="iam-input"
-        list={listId}
-        onChange={handleQueryChange}
-        placeholder="Type to search for a group..."
-      />
-      <datalist id={listId}>
-        {searchResult.map(group => (
-          <option key={group.id} value={group.displayName}>
-            {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description}
-          </option>
-        ))}
-      </datalist>
-      {searchResult.length === 0 && query && <p>No group found.</p>}
-    </div>
+    <Field>
+      <Label>Select group</Label>
+      <div className="space-y-2">
+        <input
+          className="iam-input"
+          list={listId}
+          onChange={handleQueryChange}
+          placeholder="Type to search for a group..."
+        />
+        <datalist id={listId}>
+          {searchResult.map(group => (
+            <option key={group.id} value={group.displayName}>
+              {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description}
+            </option>
+          ))}
+        </datalist>
+        {searchResult.length === 0 && query && <p>No group found.</p>}
+      </div>
+    </Field>
   );
 }

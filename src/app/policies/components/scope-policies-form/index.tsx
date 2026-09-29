@@ -5,9 +5,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { redirect } from "next/navigation";
 
 import { AccountGroupSelector } from "./account-group-selector";
 import { addScopePolicy, updateScopePolicy } from "@/services/scope-policies";
+import DeletePolicyModal from "../table/options/delete-policy-modal";
 import {
   Field,
   Label,
@@ -108,6 +110,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
     getDefaultEntityType(originalPolicy)
   );
   const [showConfirm, setShowConfirm] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
   const initialEntity = useMemo(
     () => getEntityFromPolicy(originalPolicy),
@@ -289,6 +292,39 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           </div>
         </ConfirmModal>
       </div>
+      {isEditing && (
+        <div className="flex justify-between border-t py-4">
+          <div className="flex w-full flex-col space-y-2 text-sm font-light lg:w-1/3">
+            <h5 className="text-danger dark:text-danger-light font-semibold">
+              Danger zone
+            </h5>
+            <div className="space-y-1">
+              <p>
+                Delete the policy to completely remove it from the organization.
+              </p>
+              <p>
+                This will revoke the permit/deny rule for the associated
+                account, group, or both.
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-end">
+            <Button
+              className="btn-danger"
+              type="button"
+              onClick={() => setShowDelete(true)}
+            >
+              Delete
+            </Button>
+            <DeletePolicyModal
+              show={showDelete}
+              onClose={() => setShowDelete(false)}
+              policy={originalPolicy}
+              onDeleted={() => redirect("/policies")}
+            />
+          </div>
+        </div>
+      )}
     </Form>
   );
 }

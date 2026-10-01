@@ -44,10 +44,9 @@ export default function DeletePolicyModal(props: Readonly<DeletePolicyModal>) {
         </p>
       </Notice>
       <Warning>
-        <p>Delete the policy to completely remove it from the organization.</p>
         <p>
-          This will revoke the permit/deny rule for the associated account,
-          group, or both.
+          Deliting this policy will permanently remove it from the organization.
+          User/Group it applies to may gain more access than intended.
         </p>
         <p>
           <b>This action cannot be undone.</b>

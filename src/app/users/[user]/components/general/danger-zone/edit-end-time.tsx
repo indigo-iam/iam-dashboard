@@ -84,11 +84,13 @@ function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
                 disabled={disabled}
               />
               <Button
+                variant="plain"
                 className="group relative cursor-pointer hover:text-gray-500"
                 type="button"
                 onClick={clearEndtime}
                 aria-labelledby={tooltipId}
                 ref={buttonRef}
+                disabled={disabled}
               >
                 <XCircleIcon className="size-4" />
                 <Tooltip tooltipId={tooltipId} tooltipRef={tooltipRef}>
@@ -103,12 +105,10 @@ function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
           </Warning>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" type="reset" onClick={onClose}>
+          <Button variant="underline" type="reset" onClick={onClose}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Save
-          </Button>
+          <Button type="submit">Save</Button>
         </ModalFooter>
       </Form>
     </Modal>
@@ -141,7 +141,7 @@ export function EditEndtime(props: Readonly<EditEndtimeProps>) {
             type="date"
             readOnly
           />
-          <Button className="btn-secondary" onClick={open}>
+          <Button variant="outline" type="button" onClick={open}>
             Edit
           </Button>
         </div>

@@ -4,13 +4,14 @@
 
 "use client";
 
+import { redirect } from "next/navigation";
+
 import { InputSecret } from "@/app/components/input-secret";
 import { Button } from "@/components/buttons";
 import { CarouselPanel } from "@/components/carousel";
 import { Field, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import { Client } from "@/models/client";
-import { redirect } from "next/navigation";
 
 type ClientSecretProps = {
   secret?: string;
@@ -58,7 +59,7 @@ export default function ClientDetails(props: Readonly<ClientDetailsProps>) {
         </Field>
       )}
       <div className="mt-4 mr-16 flex w-full flex-row items-end justify-end">
-        <Button className="btn-secondary" onClick={changePage}>
+        <Button variant="outline" onClick={changePage} type="button">
           Continue
         </Button>
       </div>

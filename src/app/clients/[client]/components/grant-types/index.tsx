@@ -4,6 +4,8 @@
 
 "use client";
 
+import { useState } from "react";
+
 import { Button } from "@/components/buttons";
 import { Form } from "@/components/form";
 import { TabPanel } from "@/components/tabs";
@@ -14,8 +16,6 @@ import { editClient } from "@/services/clients";
 import { MainGrantTypes } from "./main-grant-types";
 import { OtherGrantTypes } from "./other-grant-types";
 
-import { useState } from "react";
-
 type FormButtonsProps = {
   canSave: boolean;
 };
@@ -23,11 +23,11 @@ type FormButtonsProps = {
 function FormButtons(props: Readonly<FormButtonsProps>) {
   const { canSave } = props;
   return (
-    <div className="flex flex-row justify-end">
-      <Button className="btn-tertiary" type="reset">
+    <div className="flex flex-row justify-end gap-2">
+      <Button variant="underline" type="reset">
         Reset
       </Button>
-      <Button className="btn-secondary" type="submit" disabled={!canSave}>
+      <Button variant="outline" type="submit" disabled={!canSave}>
         Save changes
       </Button>
     </div>

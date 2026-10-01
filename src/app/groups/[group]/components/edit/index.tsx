@@ -4,6 +4,8 @@
 
 "use client";
 
+import { useState } from "react";
+
 import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
@@ -17,8 +19,6 @@ import {
 import { toast } from "@/components/toaster";
 import { Group } from "@/models/groups";
 import { editGroup } from "@/services/groups";
-
-import { useState } from "react";
 
 interface EditModalProps extends ModalProps {
   group: Group;
@@ -54,16 +54,10 @@ function EditModal(props: Readonly<EditModalProps>) {
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button
-            className="btn-tertiary"
-            type="reset"
-            onClick={modalProps.onClose}
-          >
+          <Button variant="underline" type="reset" onClick={modalProps.onClose}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Submit
-          </Button>
+          <Button type="submit">Submit</Button>
         </ModalFooter>
       </Form>
     </Modal>
@@ -81,7 +75,7 @@ export default function EditGroupButton(props: Readonly<EditGroupButtonProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Button className="btn-secondary" type="button" onClick={open}>
+      <Button variant="outline" type="button" onClick={open}>
         Edit group
       </Button>
       <EditModal title="Edit group" show={show} onClose={close} group={group} />

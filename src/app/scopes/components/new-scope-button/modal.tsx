@@ -93,13 +93,13 @@ export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" type="reset" onClick={onClose}>
+          <Button variant="underline" type="reset" onClick={onClose}>
             Cancel
           </Button>
-          <Button className="btn-secondary" type="reset">
+          <Button variant="outline" type="reset">
             Reset
           </Button>
-          <Button className="btn-primary" type="submit">
+          <Button type="submit">
             <PlusIcon className="my-auto size-5" />
             Add Scope
           </Button>

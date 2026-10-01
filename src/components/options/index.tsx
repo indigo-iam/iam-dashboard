@@ -5,7 +5,8 @@
 import { useId, useRef } from "react";
 
 import { EllipsisHorizontalIcon } from "@heroicons/react/24/solid";
-import { Tooltip, useTooltip } from "../tooltip";
+import { Button } from "../buttons";
+import { PopoverButton } from "../popover";
 
 type OptionProps = {
   onClick?: () => void;
@@ -17,13 +18,9 @@ type OptionProps = {
 export function Option(props: Readonly<OptionProps>) {
   const { children, ...other } = props;
   return (
-    <button
-      type="button"
-      className="hover:not:dark:text-gray-500 data-danger:text-danger dark:data-danger:text-danger-light btn-popover px-2 py-1.5 text-start text-base whitespace-nowrap dark:text-gray-200"
-      {...other}
-    >
+    <PopoverButton type="button" {...other}>
       {children}
-    </button>
+    </PopoverButton>
   );
 }
 
@@ -33,25 +30,22 @@ type OptionsProps = {
 
 export function Options(props: Readonly<OptionsProps>) {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const { tooltipId, tooltipRef } = useTooltip(buttonRef);
   const popoverId = useId();
   const { children } = props;
   return (
     <div>
-      <button
+      <Button
         data-testid="option"
+        name="More"
         type="button"
+        variant="plain"
         className="group relative my-auto cursor-pointer rounded-md transition hover:bg-gray-200 data-open:bg-gray-200 dark:hover:bg-gray-500 dark:data-active:bg-gray-200 dark:data-open:bg-gray-500"
-        aria-labelledby={tooltipId}
         popoverTarget={popoverId}
         popoverTargetAction="toggle"
         ref={buttonRef}
       >
         <EllipsisHorizontalIcon className="size-8 text-gray-800 dark:text-gray-400" />
-        <Tooltip tooltipId={tooltipId} tooltipRef={tooltipRef}>
-          More
-        </Tooltip>
-      </button>
+      </Button>
       <div
         id={popoverId}
         popover="auto"

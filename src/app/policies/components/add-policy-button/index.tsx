@@ -2,14 +2,15 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Button } from "@/components/buttons";
-import { PlusIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
+import { PlusIcon } from "@heroicons/react/16/solid";
+
+import { Button } from "@/components/buttons";
 
 export default function AddPolicyButton() {
   return (
     <Link href="/policies/new">
-      <Button className="btn-secondary">
+      <Button variant="outline" type="button">
         <PlusIcon className="size-4" />
         New policy
       </Button>

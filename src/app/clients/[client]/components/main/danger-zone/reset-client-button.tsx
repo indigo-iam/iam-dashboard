@@ -72,7 +72,7 @@ export function ResetClientButton(props: Readonly<ResetClientButtonProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Button className="btn-danger-secondary" onClick={open}>
+      <Button accent="danger" variant="outline" type="button" onClick={open}>
         Reset client
       </Button>
       <Modal

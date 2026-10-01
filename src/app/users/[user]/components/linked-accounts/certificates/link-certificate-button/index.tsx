@@ -4,8 +4,9 @@
 
 "use client";
 
-import { Button } from "@/components/buttons";
 import { useState } from "react";
+
+import { Button } from "@/components/buttons";
 import LinkCertificateModal from "./modal";
 
 type LinkButtonProps = {
@@ -23,7 +24,7 @@ export default function LinkCertificateButton(
   const close = () => setShow(false);
   return (
     <>
-      <Button onClick={open} className="btn-secondary">
+      <Button variant="outline" type="button" onClick={open}>
         Link certificate
       </Button>
       <LinkCertificateModal

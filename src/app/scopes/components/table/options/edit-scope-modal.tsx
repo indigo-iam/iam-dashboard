@@ -52,12 +52,10 @@ export default function EditScopeModal(props: Readonly<EditScopeModalProps>) {
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" type="reset" onClick={onClose}>
+          <Button variant="underline" type="reset" onClick={onClose}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Save scope
-          </Button>
+          <Button type="submit">Save scope</Button>
         </ModalFooter>
       </Form>
     </Modal>

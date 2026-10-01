@@ -52,10 +52,10 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
           <Advanced codeChallengeMethod={client.code_challenge_method} />
         </div>
         <div className="flex flex-row justify-end">
-          <Button className="btn-tertiary" type="reset">
+          <Button variant="underline" type="reset">
             Reset
           </Button>
-          <Button className="btn-secondary" type="submit">
+          <Button variant="outline" type="submit">
             Save changes
           </Button>
         </div>

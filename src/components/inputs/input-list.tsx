@@ -6,6 +6,7 @@
 
 import { useRef, useState } from "react";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/16/solid";
+
 import { Input } from "@/components/inputs";
 import { Button } from "@/components/buttons";
 
@@ -100,7 +101,7 @@ export function InputList(props: Readonly<InputListProps>) {
           type={type}
         />
         <Button
-          className="btn-primary items-center"
+          variant="outline"
           type="button"
           onClick={handleClick}
           disabled={value.length === 0}

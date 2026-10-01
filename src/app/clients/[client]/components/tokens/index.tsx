@@ -48,11 +48,11 @@ export default function Tokens(props: Readonly<TokensProps>) {
             deviceCodeValiditySeconds={client.device_code_validity_seconds}
           />
         </div>
-        <div className="flex flex-row justify-end">
-          <Button className="btn-tertiary" type="reset">
+        <div className="flex flex-row justify-end gap-2">
+          <Button variant="underline" type="reset">
             Reset
           </Button>
-          <Button className="btn-secondary" type="submit">
+          <Button variant="outline" type="submit">
             Save changes
           </Button>
         </div>

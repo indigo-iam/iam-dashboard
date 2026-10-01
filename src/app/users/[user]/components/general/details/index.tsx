@@ -5,6 +5,7 @@
 "use client";
 
 import { IdentificationIcon } from "@heroicons/react/24/outline";
+
 import { Status } from "@/components/badges";
 import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
@@ -146,10 +147,10 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
             />
           </Field>
           <Field className="flex justify-between">
-            <Button className="btn-tertiary" type="reset">
+            <Button variant="outline" type="reset">
               Reset
             </Button>
-            <Button className="btn-secondary" type="submit">
+            <Button variant="outline" type="submit">
               Save changes
             </Button>
           </Field>

@@ -5,11 +5,11 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { CloseButton } from "@headlessui/react";
 import { BuildingLibraryIcon, UserIcon } from "@heroicons/react/24/outline";
 
-import { setAdminMode, setUserMode } from "./actions";
 import { useLoading } from "@/components/loading";
+import { PopoverButton } from "@/components/popover";
+import { setAdminMode, setUserMode } from "./actions";
 
 export function AdminModeButton() {
   const router = useRouter();
@@ -25,15 +25,14 @@ export function AdminModeButton() {
 
   return (
     <form onSubmit={submit}>
-      <CloseButton
+      <PopoverButton
         type="submit"
-        name="Switch to admin"
+        name="Switch to admin mode"
         data-testid="admin-mode-btn"
-        className="btn-popover"
       >
         <BuildingLibraryIcon className="size-5" />
         Admin mode
-      </CloseButton>
+      </PopoverButton>
     </form>
   );
 }
@@ -56,15 +55,14 @@ export function UserModeButton() {
 
   return (
     <form onSubmit={submit}>
-      <CloseButton
+      <PopoverButton
         type="submit"
         name="Switch to user mode"
         data-testid="user-mode-btn"
-        className="btn-popover"
       >
         <UserIcon className="size-5" />
         User mode
-      </CloseButton>
+      </PopoverButton>
     </form>
   );
 }

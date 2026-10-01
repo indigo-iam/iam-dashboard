@@ -43,7 +43,7 @@ export function AdvancedSettings(props: Readonly<AdvancedSettings>) {
           </LabeledCheckbox>
         </Field>
         <div className="flex justify-end">
-          <Button className="btn-secondary" type="submit">
+          <Button variant="outline" type="submit">
             Save
           </Button>
         </div>

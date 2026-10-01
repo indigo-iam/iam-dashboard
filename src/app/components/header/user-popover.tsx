@@ -12,7 +12,6 @@ import { User } from "@/models/scim";
 import { useDisabled } from "@/utils/hooks";
 import { AdminModeButton, UserModeButton } from "./admin-user-buttons";
 import { SignoutButton } from "./signout-button";
-import { Tooltip, useTooltip } from "@/components/tooltip";
 
 type UserPopoverProps = {
   hasRoleAdmin?: boolean;
@@ -24,7 +23,6 @@ export function UserPopover(props: Readonly<UserPopoverProps>) {
   const { hasRoleAdmin, isAdmin, user } = props;
   const buttonRef = useRef<HTMLButtonElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
-  const { tooltipId, tooltipRef } = useTooltip(buttonRef);
   const disabled = useDisabled();
   const email = user.emails?.[0].value;
 
@@ -52,17 +50,14 @@ export function UserPopover(props: Readonly<UserPopoverProps>) {
     <div className="relative flex items-center">
       <Button
         className="group static size-8 cursor-pointer"
-        aria-labelledby={tooltipId}
         data-testid="user-menu-btn"
         disabled={disabled}
         type="button"
         popoverTarget="user-popover-menu"
+        name="Open user menu"
         ref={buttonRef}
       >
         <Gravatar email={email} />
-        <Tooltip tooltipId={tooltipId} tooltipRef={tooltipRef}>
-          <p className="whitespace-nowrap">Open user menu</p>
-        </Tooltip>
       </Button>
       <div
         id="user-popover-menu"

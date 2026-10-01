@@ -2,13 +2,14 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { redirect } from "next/navigation";
+import { ClipboardDocumentCheckIcon } from "@heroicons/react/24/solid";
+
 import { getSession, isUserAdmin } from "@/auth";
 import Paginator from "@/components/paginator";
 import { InputQuery } from "@/components/inputs";
 import { fetchPaginatedScopes } from "@/services/scopes";
 import { NewScopeButton, ScopesTable } from "./components";
-import { redirect } from "next/navigation";
-import { ClipboardDocumentCheckIcon } from "@heroicons/react/24/solid";
 
 type ScopeProps = {
   searchParams?: Promise<{

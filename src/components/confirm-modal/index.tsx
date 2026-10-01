@@ -51,22 +51,19 @@ export default function ConfirmModal(props: Readonly<ConfirmModal>) {
   return (
     <Modal {...modalProps}>
       <form ref={formRef} onSubmit={e => e.preventDefault()}>
-        <ModalHeader>
-          {modalProps.title}
-        </ModalHeader>
+        <ModalHeader>{modalProps.title}</ModalHeader>
         <ModalBody>{children}</ModalBody>
         <ModalFooter>
           <Button
-            className="btn-tertiary"
+            variant="underline"
             type="reset"
             onClick={onCancel ?? modalProps.onClose}
           >
             {cancelText}
           </Button>
           <Button
-            className="btn-primary data-[danger=true]:btn-danger"
             type="submit"
-            data-danger={danger}
+            accent={danger ? "danger" : "primary"}
             onClick={submit}
             disabled={confirmButtonDisabled}
           >

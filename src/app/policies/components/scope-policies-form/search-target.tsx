@@ -75,7 +75,7 @@ export function SearchTarget(props: Readonly<SearchTargetProps>) {
 
   if (selectedEntity) {
     return (
-      <div className="mt-1 flex flex-row items-center gap-2">
+      <div className="mt-1 flex flex-row items-center gap-2 pt-1">
         <button
           title={`Remove ${entityType}`}
           type="button"

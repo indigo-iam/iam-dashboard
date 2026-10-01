@@ -38,24 +38,22 @@ export function SearchGroups(props: Readonly<SearchGroupProps>) {
   }
 
   return (
-    <Field>
+    <Field className="pt-2">
       <Label>Select group</Label>
-      <div className="space-y-2">
-        <input
-          className="iam-input"
-          list={listId}
-          onChange={handleQueryChange}
-          placeholder="Type to search for a group..."
-        />
-        <datalist id={listId}>
-          {searchResult.map(group => (
-            <option key={group.id} value={group.displayName}>
-              {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description}
-            </option>
-          ))}
-        </datalist>
-        {searchResult.length === 0 && query && <p>No group found.</p>}
-      </div>
+      <input
+        className="iam-input"
+        list={listId}
+        onChange={handleQueryChange}
+        placeholder="Type to search for a group..."
+      />
+      <datalist id={listId}>
+        {searchResult.map(group => (
+          <option key={group.id} value={group.displayName}>
+            {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description}
+          </option>
+        ))}
+      </datalist>
+      {searchResult.length === 0 && query && <p>No group found.</p>}
     </Field>
   );
 }

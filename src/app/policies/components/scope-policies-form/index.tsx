@@ -250,67 +250,8 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
         />
         <Description>Select which entity to apply the policy to</Description>
       </Field>
-      <div className="flex justify-end gap-2">
-        <Button className="btn-tertiary" type="button" onClick={reset}>
-          Reset
-        </Button>
-        <Button
-          className="btn-primary"
-          onClick={() => setShowConfirm(true)}
-          disabled={formDisabled}
-        >
-          {isEditing ? "Save changes" : "Add Scope Policy"}
-        </Button>
-        <ConfirmModal
-          show={showConfirm}
-          onClose={() => setShowConfirm(false)}
-          onConfirm={handleConfirm}
-          title={isEditing ? "Edit Scope Policy" : "Create Scope Policy"}
-          confirmButtonDisabled={formDisabled}
-        >
-          <div className="space-y-4">
-            <p>
-              {`Are you sure you want to ${isEditing ? "update" : "add"} this scope policy?`}
-            </p>
-            <Notice>
-              <p>
-                <b>Description: </b>
-                {statePolicy.description}
-              </p>
-              <p>
-                <b>Rule: </b>
-                {statePolicy.rule}
-              </p>
-              <p>
-                <b>Matching Policy: </b>
-                {statePolicy.matchingPolicy}
-              </p>
-              <p>
-                <b>Target: </b>
-                {entityType === "null"
-                  ? "accounts and groups"
-                  : (getEntityFromPolicy(statePolicy)?.name ?? "-")}
-              </p>
-            </Notice>
-          </div>
-        </ConfirmModal>
-      </div>
-      {isEditing && (
-        <div className="flex justify-between border-t py-4">
-          <div className="flex w-full flex-col space-y-2 text-sm font-light lg:w-1/3">
-            <h5 className="text-danger dark:text-danger-light font-semibold">
-              Danger zone
-            </h5>
-            <div className="space-y-1">
-              <p>
-                Delete the policy to completely remove it from the organization.
-              </p>
-              <p>
-                This will revoke the permit/deny rule for the associated
-                account, group, or both.
-              </p>
-            </div>
-          </div>
+      <div className="flex justify-between">
+        {isEditing && (
           <div className="flex justify-end">
             <Button
               className="btn-danger"
@@ -326,8 +267,53 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
               onDeleted={() => redirect("/policies")}
             />
           </div>
+        )}
+        <div className="flex justify-end gap-2">
+          <Button className="btn-tertiary" type="button" onClick={reset}>
+            Reset
+          </Button>
+          <Button
+            className="btn-primary"
+            onClick={() => setShowConfirm(true)}
+            disabled={formDisabled}
+          >
+            {isEditing ? "Save changes" : "Add Scope Policy"}
+          </Button>
+          <ConfirmModal
+            show={showConfirm}
+            onClose={() => setShowConfirm(false)}
+            onConfirm={handleConfirm}
+            title={isEditing ? "Edit Scope Policy" : "Create Scope Policy"}
+            confirmButtonDisabled={formDisabled}
+          >
+            <div className="space-y-4">
+              <p>
+                {`Are you sure you want to ${isEditing ? "update" : "add"} this scope policy?`}
+              </p>
+              <Notice>
+                <p>
+                  <b>Description: </b>
+                  {statePolicy.description}
+                </p>
+                <p>
+                  <b>Rule: </b>
+                  {statePolicy.rule}
+                </p>
+                <p>
+                  <b>Matching Policy: </b>
+                  {statePolicy.matchingPolicy}
+                </p>
+                <p>
+                  <b>Target: </b>
+                  {entityType === "null"
+                    ? "accounts and groups"
+                    : (getEntityFromPolicy(statePolicy)?.name ?? "-")}
+                </p>
+              </Notice>
+            </div>
+          </ConfirmModal>
         </div>
-      )}
+      </div>
     </Form>
   );
 }

@@ -64,14 +64,12 @@ export function Button(props: Readonly<ButtonProps>) {
       aria-describedby={tooltipId}
       ref={buttonRef}
     >
-      <>
-        {children}
-        {name && (
-          <Tooltip tooltipId={tooltipId} tooltipRef={tooltipRef}>
-            {name}
-          </Tooltip>
-        )}
-      </>
+      {children}
+      {name && (
+        <Tooltip tooltipId={tooltipId} tooltipRef={tooltipRef}>
+          {name}
+        </Tooltip>
+      )}
     </button>
   );
 }

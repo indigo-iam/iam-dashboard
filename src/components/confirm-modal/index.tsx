@@ -38,7 +38,7 @@ export default function ConfirmModal(props: Readonly<ConfirmModal>) {
     ...modalProps
   } = props;
 
-  async function submit() {
+  function submit() {
     if (autoclose !== false) {
       modalProps.onClose();
     }

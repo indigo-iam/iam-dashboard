@@ -111,7 +111,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
     /^[A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9].[A-Za-z]{2,6}$/.test(prefix);
   const nameIsValid = /^[a-zA-Z][a-zA-Z0-9-_.]*/.test(name);
 
-  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+  function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const prefix = (formData.get("prefix") as string | null) ?? "";

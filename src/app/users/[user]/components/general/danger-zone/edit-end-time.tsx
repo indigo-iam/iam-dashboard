@@ -22,7 +22,6 @@ import { Warning } from "@/components/notices";
 import { toast } from "@/components/toaster";
 import { changeMembershipEndtime } from "@/services/users";
 import { useDisabled } from "@/utils/hooks";
-import { Tooltip, useTooltip } from "@/components/tooltip";
 
 type EditEndtimeModalProps = ModalProps & {
   userId: string;
@@ -34,7 +33,6 @@ function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
   const { show, onClose, userId, userFormattedName, userEndtime } = props;
   const [endtime, setEndtime] = useState(userEndtime?.split("T")[0] ?? "");
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const { tooltipId, tooltipRef } = useTooltip(buttonRef);
   const disabled = useDisabled();
   const inputId = useId();
   const minDate = (() => {
@@ -84,18 +82,15 @@ function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
                 disabled={disabled}
               />
               <Button
+                name="Clear"
                 variant="plain"
                 className="group relative cursor-pointer hover:text-gray-500"
                 type="button"
                 onClick={clearEndtime}
-                aria-labelledby={tooltipId}
                 ref={buttonRef}
                 disabled={disabled}
               >
                 <XCircleIcon className="size-4" />
-                <Tooltip tooltipId={tooltipId} tooltipRef={tooltipRef}>
-                  Clear
-                </Tooltip>
               </Button>
             </div>
           </Field>

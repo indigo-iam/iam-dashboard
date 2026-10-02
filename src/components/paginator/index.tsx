@@ -136,6 +136,7 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
       <div className="flex">
         <Button
           title="First Page"
+          variant="plain"
           className={className}
           disabled={currentPage <= 1}
           onClick={goFirst}
@@ -144,6 +145,7 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
         </Button>
         <Button
           title="Previous Page"
+          variant="plain"
           className={className}
           disabled={currentPage <= 1}
           onClick={goPrevious}
@@ -152,6 +154,7 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
         </Button>
         <Button
           title="Next Page"
+          variant="plain"
           className={className}
           disabled={currentPage >= numberOfPages}
           onClick={goNext}
@@ -160,6 +163,7 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
         </Button>
         <Button
           title="Last Page"
+          variant="plain"
           className={className}
           disabled={currentPage >= numberOfPages}
           onClick={goLast}

@@ -5,6 +5,7 @@
 "use client";
 
 import { XCircleIcon } from "@heroicons/react/16/solid";
+import { Button } from "../buttons";
 
 type LabelProps = {
   name?: string;
@@ -20,9 +21,14 @@ export default function LabelView(props: Readonly<LabelProps>) {
         <b>{name}</b> {value}
       </span>
       {onClick && (
-        <button type="button" onClick={onClick} className="cursor-pointer">
+        <Button
+          type="button"
+          onClick={onClick}
+          variant="plain"
+          className="cursor-pointer"
+        >
           <XCircleIcon className="size-4 hover:text-gray-300" />
-        </button>
+        </Button>
       )}
     </div>
   );

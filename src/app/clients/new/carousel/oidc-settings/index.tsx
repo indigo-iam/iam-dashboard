@@ -4,6 +4,9 @@
 
 "use client";
 
+import { useState } from "react";
+import { ChevronLeftIcon } from "@heroicons/react/20/solid";
+
 import {
   AuthenticationFlow,
   ClientAuthentication,
@@ -12,8 +15,6 @@ import { Button } from "@/components/buttons";
 import { CarouselPanel } from "@/components/carousel";
 import { Description, DropdownList, Field, Label } from "@/components/form";
 import { type Scope } from "@/models/client";
-import { ChevronLeftIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
 
 type OIDCSettingsProps = {
   systemScopes: Scope[];
@@ -63,16 +64,17 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
         />
       </Field>
       <div className="flex flex-row justify-end py-2">
-        <Button className="btn-tertiary" onClick={goBack}>
+        <Button variant="underline" type="button" onClick={goBack}>
           <div className="flex items-center">
             <ChevronLeftIcon className="-ml-2 size-5" />
             Back
           </div>
         </Button>
         <Button
-          className="btn-secondary"
+          variant="outline"
           onClick={goNext}
           disabled={!canContinue}
+          type="button"
         >
           Continue
         </Button>

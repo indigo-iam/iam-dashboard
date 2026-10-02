@@ -142,15 +142,13 @@ function RequestCertificateLinkingModal(
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" type="reset" onClick={close}>
+          <Button variant="underline" type="reset" onClick={close}>
             Cancel
           </Button>
-          <Button className="btn-secondary" type="reset">
+          <Button variant="outline" type="reset">
             Reset
           </Button>
-          <Button className="btn-primary" type="submit">
-            Add Certificate
-          </Button>
+          <Button type="submit">Add Certificate</Button>
         </ModalFooter>
       </Form>
     </Modal>

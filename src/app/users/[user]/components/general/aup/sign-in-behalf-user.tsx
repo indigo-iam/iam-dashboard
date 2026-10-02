@@ -29,7 +29,7 @@ export function SignInBehalfOfUser(props: Readonly<SignInBehalfOfUserProps>) {
 
   return (
     <>
-      <Button className="btn-secondary" onClick={open}>
+      <Button variant="outline" type="button" onClick={open}>
         Sign AUP in behalf of this user
       </Button>
       <ConfirmModal

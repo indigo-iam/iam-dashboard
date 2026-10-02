@@ -2,11 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import Link from "next/link";
+
 import { ClientsTable } from "@/app/components/clients";
+import { Button } from "@/components/buttons";
 import Paginator from "@/components/paginator";
 import { TabPanel } from "@/components/tabs";
 import { getClientsByAccount } from "@/services/clients";
-import Link from "next/link";
 
 type UseClientsProps = {
   userId: string;
@@ -26,8 +28,10 @@ export async function UserClients(props: Readonly<UseClientsProps>) {
   const clients = clientPage.Resources;
   return (
     <TabPanel className="space-y-4">
-      <Link className="btn-secondary max-w-fit" href="/clients/new">
-        New Client
+      <Link href="/clients/new">
+        <Button variant="outline" type="button">
+          New Client
+        </Button>
       </Link>
       <div className="panel space-y-4">
         <h2>Owned Clients</h2>

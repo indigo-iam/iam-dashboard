@@ -111,7 +111,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
     /^[A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9].[A-Za-z]{2,6}$/.test(prefix);
   const nameIsValid = /^[a-zA-Z][a-zA-Z0-9-_.]*/.test(name);
 
-  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+  function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const prefix = (formData.get("prefix") as string | null) ?? "";
@@ -179,18 +179,10 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button
-            className="btn-tertiary"
-            type="button"
-            onClick={closeAndReset}
-          >
+          <Button variant="underline" type="button" onClick={closeAndReset}>
             Cancel
           </Button>
-          <Button
-            className="btn-primary"
-            type="submit"
-            disabled={!prefixIsValid || !nameIsValid}
-          >
+          <Button type="submit" disabled={!prefixIsValid || !nameIsValid}>
             Add label
           </Button>
         </ModalFooter>
@@ -210,7 +202,7 @@ export function AddLabelButton(props: Readonly<AddLabelButtonProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Button className="btn-secondary" onClick={open}>
+      <Button variant="outline" type="button" onClick={open}>
         Add label
       </Button>
       <AddLabelModal userId={userId} show={show} onClose={close} />

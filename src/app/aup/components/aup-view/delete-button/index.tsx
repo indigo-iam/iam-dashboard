@@ -40,7 +40,7 @@ export default function DeleteButton() {
           new users at registration time.
         </Warning>
       </ConfirmModal>
-      <Button className="btn-danger" onClick={show}>
+      <Button accent="danger" type="button" onClick={show}>
         Delete AUP
       </Button>
     </>

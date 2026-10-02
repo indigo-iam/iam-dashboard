@@ -4,9 +4,10 @@
 
 "use client";
 
+import { useState } from "react";
+
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
-import { useState } from "react";
 
 export default function ConfirmButton() {
   const [show, setShow] = useState(false);
@@ -19,7 +20,7 @@ export default function ConfirmButton() {
 
   return (
     <div className="flex justify-end">
-      <Button className="btn-primary" onClick={open}>
+      <Button type="button" onClick={open}>
         Add Scope Policy
       </Button>
       <ConfirmModal

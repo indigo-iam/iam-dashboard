@@ -2,13 +2,14 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { useState } from "react";
+
 import { SearchUsers } from "@/app/components/search-users";
 import { Button } from "@/components/buttons";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { Notice } from "@/components/notices";
 import { User } from "@/models/scim";
 import { addOwner } from "@/services/clients";
-import { useState } from "react";
 
 type AddOwnerModalProps = {
   clientId: string;
@@ -20,13 +21,19 @@ type AddOwnerModalProps = {
 export function AddOwnerModal(props: Readonly<AddOwnerModalProps>) {
   const { clientId, clientName, ...modalProps } = props;
   const [user, setUser] = useState<User>();
-  const clear = () => setUser(undefined);
-  const action = async () => {
+
+  function clearAndClose() {
+    setUser(undefined);
+    modalProps.onClose();
+  }
+
+  async function action() {
     if (user) {
       await addOwner(clientId, user.id);
     }
     modalProps.onClose();
-  };
+  }
+
   return (
     <Modal {...modalProps}>
       <ModalHeader>Add client owner</ModalHeader>
@@ -55,15 +62,10 @@ export function AddOwnerModal(props: Readonly<AddOwnerModalProps>) {
         )}
       </ModalBody>
       <ModalFooter>
-        <Button className="btn-tertiary" type="button" onClick={clear}>
+        <Button variant="underline" type="button" onClick={clearAndClose}>
           Cancel
         </Button>
-        <Button
-          className="btn-primary"
-          type="button"
-          disabled={!user}
-          onClick={action}
-        >
+        <Button type="button" disabled={!user} onClick={action}>
           Add owner
         </Button>
       </ModalFooter>

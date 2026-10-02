@@ -119,12 +119,13 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
           <CarouselPanels>
             <GeneralSettings goNext={next} />
             <OIDCSettings
+              isAdmin={isAdmin}
               systemScopes={systemScopes}
               goBack={back}
               goNext={next}
             />
             <OtherSettings goBack={back} />
-            <ClientDetails client={client} isAdmin={isAdmin} />
+            <ClientDetails client={client} />
           </CarouselPanels>
         </Carousel>
       </Form>

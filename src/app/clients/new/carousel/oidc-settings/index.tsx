@@ -4,6 +4,9 @@
 
 "use client";
 
+import { useState } from "react";
+import { ChevronLeftIcon } from "@heroicons/react/20/solid";
+
 import {
   AuthenticationFlow,
   ClientAuthentication,
@@ -12,28 +15,41 @@ import { Button } from "@/components/buttons";
 import { CarouselPanel } from "@/components/carousel";
 import { Description, DropdownList, Field, Label } from "@/components/form";
 import { type Scope } from "@/models/client";
-import { ChevronLeftIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
 
 type OIDCSettingsProps = {
+  isAdmin: boolean;
   systemScopes: Scope[];
   goBack: () => void;
   goNext: () => void;
 };
 
 export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
-  const { systemScopes, goBack, goNext } = props;
+  const { isAdmin, systemScopes, goBack, goNext } = props;
   const [authFlowOk, setAuthFlowOk] = useState(false);
   const [clientAuthOk, setClientAuthOk] = useState(false);
 
   const defaultScopes = systemScopes
     .filter(scope => scope.defaultScope)
     .map(scope => {
-      return { id: scope.id.toString(), name: scope.value };
+      const title = scope.restricted
+        ? `${scope.value} (restricted)`
+        : scope.value;
+      return {
+        title,
+        value: { id: scope.id.toString(), name: scope.value },
+        disabled: scope.restricted && !isAdmin,
+      };
     });
 
   const scopes = systemScopes.map(scope => {
-    return { id: scope.id.toString(), name: scope.value };
+    const title = scope.restricted
+      ? `${scope.value} (restricted)`
+      : scope.value;
+    return {
+      title,
+      value: { id: scope.id.toString(), name: scope.value },
+      disabled: scope.restricted && !isAdmin,
+    };
   });
 
   const canContinue = authFlowOk && clientAuthOk;
@@ -44,23 +60,27 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
       <AuthenticationFlow redirectUris={[]} onStatusChange={setAuthFlowOk} />
       <Field>
         <Label>Client Authentication</Label>
-        <Description>
-          How the client authenticate to the Token Endpoint.
-        </Description>
         <ClientAuthentication
           name="token_endpoint_auth_method"
           onStatusChange={setClientAuthOk}
         />
+        <Description>
+          How the client authenticate to the Token Endpoint.
+        </Description>
       </Field>
       <Field>
         <Label>Scopes</Label>
-        <Description>A little description.</Description>
         <DropdownList
           name="scope"
           title="Add Scope"
           options={scopes}
           defaultOptions={defaultScopes}
         />
+        <Description>
+          Restricted scopes can be enabled only by an administrator. If you need
+          a restricted scope for your client, please contact the administrator
+          of your organization.
+        </Description>
       </Field>
       <div className="flex flex-row justify-end py-2">
         <Button className="btn-tertiary" onClick={goBack}>

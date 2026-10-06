@@ -7,9 +7,4 @@ export { Description } from "./description";
 export { DropdownList } from "./dropdown-list";
 export { Form } from "./form";
 export { Label } from "./label";
-export {
-  Select,
-  SelectOption,
-  type SelectOption as SelectOptionProps,
-} from "./select";
 export { Field } from "@headlessui/react";

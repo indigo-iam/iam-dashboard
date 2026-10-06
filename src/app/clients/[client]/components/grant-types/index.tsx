@@ -46,9 +46,7 @@ export default function GrantTypes(props: Readonly<GrantTypesProps>) {
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const grant_types = (formData.getAll("grant_type") as GrantType[]).concat(
-      formData.getAll("grant_type[id]") as GrantType[]
-    );
+    const grant_types = formData.getAll("grant_type") as GrantType[];
     const redirect_uris = formData.getAll("redirect_uris") as string[];
     const requestBody: Client = { ...client, grant_types, redirect_uris };
     const res = await editClient(requestBody, isAdmin);

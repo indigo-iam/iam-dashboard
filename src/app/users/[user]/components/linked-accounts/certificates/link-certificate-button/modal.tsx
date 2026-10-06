@@ -8,7 +8,7 @@ import { useRef, useState } from "react";
 
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
-import { Field, Form, Label, Select } from "@/components/form";
+import { Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -17,6 +17,7 @@ import {
   ModalFooter,
   ModalProps,
 } from "@/components/modal";
+import { Select, Option } from "@/components/select";
 import { Textarea } from "@/components/textarea";
 import { toast } from "@/components/toaster";
 import { linkCertificate, sendCertificateLinkRequest } from "@/services/certs";
@@ -78,7 +79,7 @@ function IssuerField() {
     <Field>
       <Label data-required>Issuer</Label>
       <Select name="issuer" disabled>
-        <option>No options</option>
+        <Option>No options</Option>
       </Select>
     </Field>
   );

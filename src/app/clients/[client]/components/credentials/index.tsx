@@ -31,10 +31,10 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
     const requestBody: Client = {
       ...client,
       token_endpoint_auth_method: formData.get(
-        "token_endpoint_auth_method[id]"
+        "token_endpoint_auth_method"
       ) as TokenEndpointAuthMethod,
       code_challenge_method: formData.get(
-        "code_challenge_method[id]"
+        "code_challenge_method"
       ) as CodeChallengeMethod,
     };
     const res = await editClient(requestBody, isAdmin);

@@ -4,10 +4,8 @@
 
 "use client";
 
-import { useEffect, useRef } from "react";
-
 import { Gravatar } from "@/components/gravatar";
-import { Button } from "@/components/buttons";
+import { Popover, PopoverButton, PopoverPanel } from "@/components/popover";
 import { User } from "@/models/scim";
 import { useDisabled } from "@/utils/hooks";
 import { AdminModeButton, UserModeButton } from "./admin-user-buttons";
@@ -21,69 +19,42 @@ type UserPopoverProps = {
 
 export function UserPopover(props: Readonly<UserPopoverProps>) {
   const { hasRoleAdmin, isAdmin, user } = props;
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const popoverRef = useRef<HTMLDivElement>(null);
   const disabled = useDisabled();
   const email = user.emails?.[0].value;
-
-  function handleInternalClick(event: MouseEvent) {
-    event.preventDefault();
-    const target = event.target as HTMLElement;
-    if (target.tagName === "BUTTON") {
-      target?.click();
-      popoverRef.current?.hidePopover();
-    }
-  }
-
-  useEffect(() => {
-    const popover = popoverRef.current;
-    if (!popover) {
-      return;
-    }
-    popover.addEventListener("mousedown", handleInternalClick);
-    return () => {
-      popover.removeEventListener("mousedown", handleInternalClick);
-    };
-  }, []);
-
   return (
     <div className="relative flex items-center">
-      <Button
-        className="group static size-8 cursor-pointer"
-        data-testid="user-menu-btn"
-        disabled={disabled}
-        type="button"
-        popoverTarget="user-popover-menu"
-        name="Open user menu"
-        ref={buttonRef}
-      >
-        <Gravatar email={email} />
-      </Button>
-      <div
-        id="user-popover-menu"
-        data-testid="user-menu"
-        aria-label="User menu"
-        className="overlay fixed mt-12 mr-4 ml-auto w-56 flex-col opacity-0 transition-all transition-discrete ease-in-out [&:popover-open]:opacity-100 [&:popover-open]:starting:opacity-0"
-        popover="auto"
-        ref={popoverRef}
-      >
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 pb-2">
-            <Gravatar email={email} />
-            <div className="flex flex-col leading-normal">
-              <p>{user.name?.formatted}</p>
-              <p>
-                <b>{user.displayName}</b>
-              </p>
+      <Popover data-testid="user-menu">
+        <PopoverButton
+          variant="plain"
+          className="group static size-8 cursor-pointer text-nowrap"
+          data-testid="user-menu-btn"
+          disabled={disabled}
+          name="Open user menu"
+        >
+          <Gravatar email={email} />
+        </PopoverButton>
+        <PopoverPanel
+          className="p-4 [position-area:bottom_span-left]"
+          aria-label="User menu"
+        >
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 pb-2">
+              <Gravatar email={email} />
+              <div className="flex flex-col leading-normal">
+                <p>{user.name?.formatted}</p>
+                <p>
+                  <b>{user.displayName}</b>
+                </p>
+              </div>
+            </div>
+            <div>
+              {hasRoleAdmin &&
+                (isAdmin ? <UserModeButton /> : <AdminModeButton />)}
+              <SignoutButton />
             </div>
           </div>
-          <div>
-            {hasRoleAdmin &&
-              (isAdmin ? <UserModeButton /> : <AdminModeButton />)}
-            <SignoutButton />
-          </div>
-        </div>
-      </div>
+        </PopoverPanel>
+      </Popover>
     </div>
   );
 }

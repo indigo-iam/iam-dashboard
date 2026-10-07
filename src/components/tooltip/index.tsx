@@ -14,18 +14,19 @@ type TooltipProps = {
 };
 
 export function Tooltip(props: Readonly<TooltipProps>) {
-  const { tooltipId, tooltipRef, positionArea, children } = props;
+  const {
+    tooltipId,
+    tooltipRef,
+    positionArea = "block-center_right",
+    children,
+  } = props;
   return (
     <div
       role="tooltip"
       popover="hint"
       id={tooltipId}
       ref={tooltipRef}
-      className="pointer-events-none inset-auto max-w-52 rounded-md border border-gray-700 bg-gray-900 p-2 text-xs text-white opacity-100 transition-opacity delay-500 duration-300 ease-in-out [&:popover-open]:opacity-100 [&:popover-open]:starting:opacity-0"
-      style={{
-        positionArea: positionArea ?? "block-end center",
-        transitionProperty: "display, opacity",
-      }}
+      className={`pointer-events-none inset-auto max-w-52 rounded-md border border-gray-700 bg-gray-900 p-2 text-xs text-white opacity-100 transition-opacity delay-500 duration-300 ease-in-out [position-area:${positionArea}] [&:popover-open]:opacity-100 [&:popover-open]:starting:opacity-0`}
     >
       {children}
     </div>

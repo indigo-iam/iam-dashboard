@@ -8,15 +8,14 @@ import { usePathname, useRouter } from "next/navigation";
 import { BuildingLibraryIcon, UserIcon } from "@heroicons/react/24/outline";
 
 import { useLoading } from "@/components/loading";
-import { PopoverButton } from "@/components/popover";
+import { PopoverOption } from "@/components/popover";
 import { setAdminMode, setUserMode } from "./actions";
 
 export function AdminModeButton() {
   const router = useRouter();
   const { startLoadingTransition } = useLoading();
 
-  function submit(event: React.SubmitEvent<HTMLFormElement>) {
-    event.preventDefault();
+  function handleClick() {
     startLoadingTransition(async () => {
       await setAdminMode();
       router.refresh();
@@ -24,16 +23,14 @@ export function AdminModeButton() {
   }
 
   return (
-    <form onSubmit={submit}>
-      <PopoverButton
-        type="submit"
-        name="Switch to admin mode"
-        data-testid="admin-mode-btn"
-      >
-        <BuildingLibraryIcon className="size-5" />
-        Admin mode
-      </PopoverButton>
-    </form>
+    <PopoverOption
+      type="button"
+      data-testid="admin-mode-btn"
+      onClick={handleClick}
+    >
+      <BuildingLibraryIcon className="size-5" />
+      Admin mode
+    </PopoverOption>
   );
 }
 
@@ -42,8 +39,7 @@ export function UserModeButton() {
   const pathname = usePathname();
   const { startLoadingTransition } = useLoading();
 
-  function submit(event: React.SubmitEvent<HTMLFormElement>) {
-    event.preventDefault();
+  function handleClick() {
     startLoadingTransition(async () => {
       if (pathname.startsWith("/clients/")) {
         router.push("/clients");
@@ -54,15 +50,13 @@ export function UserModeButton() {
   }
 
   return (
-    <form onSubmit={submit}>
-      <PopoverButton
-        type="submit"
-        name="Switch to user mode"
-        data-testid="user-mode-btn"
-      >
-        <UserIcon className="size-5" />
-        User mode
-      </PopoverButton>
-    </form>
+    <PopoverOption
+      type="button"
+      data-testid="user-mode-btn"
+      onClick={handleClick}
+    >
+      <UserIcon className="size-5" />
+      User mode
+    </PopoverOption>
   );
 }

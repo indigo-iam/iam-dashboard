@@ -26,6 +26,7 @@ export function AdminModeButton() {
     <PopoverOption
       type="button"
       data-testid="admin-mode-btn"
+      autoClose
       onClick={handleClick}
     >
       <BuildingLibraryIcon className="size-5" />
@@ -53,6 +54,7 @@ export function UserModeButton() {
     <PopoverOption
       type="button"
       data-testid="user-mode-btn"
+      autoClose
       onClick={handleClick}
     >
       <UserIcon className="size-5" />

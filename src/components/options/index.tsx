@@ -39,9 +39,7 @@ export function Options(props: Readonly<OptionsProps>) {
       >
         <EllipsisHorizontalIcon className="size-8 text-gray-800 dark:text-gray-400" />
       </PopoverButton>
-      <PopoverPanel className="[position-area:bottom_center]">
-        {children}
-      </PopoverPanel>
+      <PopoverPanel positionArea="bottom">{children}</PopoverPanel>
     </Popover>
   );
 }

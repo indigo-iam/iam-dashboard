@@ -66,7 +66,11 @@ export function Button(props: Readonly<ButtonProps>) {
     >
       {children}
       {name && (
-        <Tooltip tooltipId={tooltipId} tooltipRef={tooltipRef}>
+        <Tooltip
+          tooltipId={tooltipId}
+          tooltipRef={tooltipRef}
+          positionArea="bottom"
+        >
           {name}
         </Tooltip>
       )}

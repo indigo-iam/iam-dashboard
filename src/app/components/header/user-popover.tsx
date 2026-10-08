@@ -34,7 +34,8 @@ export function UserPopover(props: Readonly<UserPopoverProps>) {
           <Gravatar email={email} />
         </PopoverButton>
         <PopoverPanel
-          className="p-4 [position-area:bottom_span-left]"
+          className="mx-4 my-2 min-w-48 p-4"
+          positionArea="bottom"
           aria-label="User menu"
         >
           <div className="space-y-2">

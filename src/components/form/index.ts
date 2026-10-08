@@ -4,7 +4,6 @@
 
 export { LabeledCheckbox, Checkbox } from "./checkbox";
 export { Description } from "./description";
-export { DropdownList } from "./dropdown-list";
 export { Form } from "./form";
 export { Label } from "./label";
 export { Field } from "@headlessui/react";

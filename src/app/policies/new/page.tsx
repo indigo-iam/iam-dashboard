@@ -4,7 +4,7 @@
 
 import { ScopePoliciesForm } from "../components";
 
-export default async function Policies() {
+export default function Policies() {
   return (
     <section>
       <header className="section-header">

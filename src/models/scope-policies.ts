@@ -35,5 +35,5 @@ export type ScopePolicyRequest = {
   matchingPolicy: PolicyMatcher;
   group: GroupSelector | null;
   account: AccountSelector | null;
-  scopes: string[];
+  scopes: string[] | null;
 }

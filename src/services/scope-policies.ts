@@ -20,7 +20,8 @@ export async function fetchScopePolicies() {
 
 export async function fetchScopePolicy(id: number) {
   const url = `${IAM_API_URL}/iam/scope_policies/${id}`;
-  return await getItem<ScopePolicy>(url);
+  const policy = await getItem<ScopePolicy>(url);
+  return { ...policy, scopes: policy.scopes ?? [] };
 }
 
 export async function addScopePolicy(policy: ScopePolicyRequest): Promise<Notification> {

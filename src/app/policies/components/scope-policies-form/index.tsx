@@ -18,7 +18,7 @@ import {
   SelectOption,
   Form,
 } from "@/components/form";
-import { Input } from "@/components/inputs";
+import { Input, InputList } from "@/components/inputs";
 import {
   PolicyMatcher,
   PolicyRule,
@@ -61,6 +61,12 @@ const matchingPolicyOptions = [
   { id: "path", name: "PATH" },
 ];
 
+const scopePlaceholders = {
+  EQ: "openid",
+  REGEXP: "^wlcg\\.groups:/cms/.*$",
+  PATH: "storage.read:/cms",
+};
+
 function getEntityFromPolicy(
   policy: ScopePolicy
 ): { uuid: string; name: string } | null {
@@ -96,9 +102,11 @@ function comparePolicies(a: ScopePolicy, b: ScopePolicy): boolean {
   return (
     a.description === b.description &&
     a.rule === b.rule &&
-    a.matchingPolicy === b.matchingPolicy &&
+    (a.scopes.length === 0 || a.matchingPolicy === b.matchingPolicy) &&
     (a.account?.uuid ?? null) === (b.account?.uuid ?? null) &&
-    (a.group?.uuid ?? null) === (b.group?.uuid ?? null)
+    (a.group?.uuid ?? null) === (b.group?.uuid ?? null) &&
+    a.scopes.length === b.scopes.length &&
+    a.scopes.every(scope => b.scopes.includes(scope))
   );
 }
 
@@ -128,7 +136,11 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
     (entityType === "group" && statePolicy.group === null);
 
   const policyChanged = !comparePolicies(statePolicy, originalPolicy);
-  const formDisabled = !policyChanged || entitySelectedButNull;
+  const scopesMissing =
+    (statePolicy.matchingPolicy === "PATH" ||
+      statePolicy.matchingPolicy === "REGEXP") &&
+    statePolicy.scopes.length === 0;
+  const formDisabled = !policyChanged || entitySelectedButNull || scopesMissing;
 
   async function handleConfirm() {
     const request: ScopePolicyRequest = {
@@ -137,7 +149,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
       matchingPolicy: statePolicy.matchingPolicy as PolicyMatcher,
       group: statePolicy.group ?? null,
       account: statePolicy.account ?? null,
-      scopes: originalPolicy.scopes ?? [],
+      scopes: statePolicy.scopes.length > 0 ? statePolicy.scopes : null,
     };
     const response = isEditing
       ? await updateScopePolicy(originalPolicy.id, request)
@@ -146,6 +158,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
       response.description = `Policy "${statePolicy.description}" has been ${isEditing ? "updated" : "created"}`;
     }
     toast.toast(response);
+    redirect("/policies");
   }
 
   function handleEntityChange(entity: { uuid: string; name: string } | null) {
@@ -170,6 +183,10 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
   function handleEntityTypeChange(newEntityType: EntityType) {
     setEntityType(newEntityType);
     setStatePolicy({ ...statePolicy, account: null, group: null });
+  }
+
+  function handleScopesChange(items: string[]) {
+    setStatePolicy({ ...statePolicy, scopes: items });
   }
 
   // resets only the description until the Select component accepts `value={}`
@@ -250,6 +267,27 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
         />
         <Description>Select which entity to apply the policy to</Description>
       </Field>
+
+      <Field>
+        <Label
+          data-required={
+            statePolicy.matchingPolicy === "PATH" ||
+            statePolicy.matchingPolicy === "REGEXP" ||
+            undefined
+          }
+        >
+          Scopes
+        </Label>
+        <InputList
+          originalItems={originalPolicy.scopes}
+          name="scopes"
+          type="text"
+          placeholder={scopePlaceholders[statePolicy.matchingPolicy]}
+          onChange={handleScopesChange}
+        />
+        <Description>Scopes this policy applies to. Required for PATH and REGEXP</Description>
+      </Field>
+
       <div className="flex justify-between">
         {isEditing && (
           <div className="flex justify-end">
@@ -268,7 +306,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
             />
           </div>
         )}
-        <div className="flex justify-end gap-2">
+        <div className="ml-auto flex justify-end gap-2">
           <Button className="btn-tertiary" type="button" onClick={reset}>
             Reset
           </Button>
@@ -308,6 +346,10 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
                   {entityType === "null"
                     ? "accounts and groups"
                     : (getEntityFromPolicy(statePolicy)?.name ?? "-")}
+                </p>
+                <p>
+                  <b>Scopes: </b>
+                  {statePolicy.scopes.length === 0 ? "all" : statePolicy.scopes.join(" ")}
                 </p>
               </Notice>
             </div>

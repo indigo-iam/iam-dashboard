@@ -63,7 +63,7 @@ const matchingPolicyOptions = [
 
 const scopePlaceholders = {
   EQ: "openid",
-  REGEXP: "^wlcg\\.groups:/cms/.*$",
+  REGEXP: String.raw`^wlcg\.groups:/cms/.*$`,
   PATH: "storage.read:/cms",
 };
 

@@ -4,13 +4,14 @@
 
 "use client";
 
-import { Button } from "@/components/buttons";
 import { Bars3Icon } from "@heroicons/react/24/solid";
+import { Button } from "@/components/buttons";
 import { toggleDrawer } from "./drawer";
 
 export function ToggleDrawerButton() {
   return (
     <Button
+      variant="plain"
       className="md:hidden"
       onClick={toggleDrawer}
       title="Menu"

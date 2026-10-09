@@ -43,12 +43,13 @@ export function Drawer(props: Readonly<DrawerProps>) {
     <>
       <Button
         id="backdrop-drawer-btn"
-        className="invisible fixed inset-0 z-20 bg-black/30 opacity-0 transition-opacity data-open:visible data-open:z-30 data-open:opacity-100 md:hidden"
+        variant="plain"
+        className="invisible fixed inset-0 z-20 mt-14 bg-black/30 opacity-0 transition-opacity data-open:visible data-open:z-30 data-open:opacity-100 md:hidden"
         onClick={toggleDrawer}
       />
       <aside
         id="drawer"
-        className="easy-in-out over visible fixed inset-0 top-14 z-30 w-0 -translate-x-full overflow-hidden bg-sky-950 duration-100 data-open:visible data-open:w-80 data-open:translate-x-0 md:visible md:w-80 md:translate-x-0 dark:bg-gray-800 border-r"
+        className="easy-in-out over visible fixed inset-0 top-14 z-30 w-0 -translate-x-full overflow-hidden border-r bg-sky-950 duration-100 data-open:visible data-open:w-80 data-open:translate-x-0 md:visible md:w-80 md:translate-x-0 dark:bg-gray-800"
         data-testid="sidebar"
       >
         {children}

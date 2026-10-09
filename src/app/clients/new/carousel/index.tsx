@@ -49,7 +49,7 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
       token_endpoint_auth_method: formData.get(
         "token_endpoint_auth_method"
       ) as string,
-      scope: formData.getAll("scope").join(" "),
+      scope: (formData.getAll("scope") as string[]).join(" "),
       grant_types: formData.getAll("grant_type") as string[],
     };
 

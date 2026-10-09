@@ -36,15 +36,20 @@ export function EnableMFAModal(props: Readonly<MFAModalProps>) {
     if (!show) {
       return;
     }
-    addMFASecret().then(response => {
-      if (response.result) {
-        setMfa(response.result);
-      }
-      if (response.error) {
-        const { title, status } = response.error;
-        toast.error("Cannot enable MFA", `${title}, status: ${status}`);
-      }
-    });
+    addMFASecret()
+      .then(response => {
+        if (response.result) {
+          setMfa(response.result);
+        }
+        if (response.error) {
+          const { title, status } = response.error;
+          toast.error("Cannot enable MFA", `${title}, status: ${status}`);
+        }
+      })
+      .catch(err => {
+        toast.error("Cannot enable MFA: unknown error");
+        console.error(err);
+      });
   }, [show]);
 
   return (

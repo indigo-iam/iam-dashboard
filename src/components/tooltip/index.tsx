@@ -18,7 +18,7 @@ type TooltipProps = {
 export function Tooltip(props: Readonly<TooltipProps>) {
   const { tooltipId, tooltipRef, positionArea = "bottom", children } = props;
   const className =
-    "pointer-events-none inset-auto max-w-52 rounded-md border border-gray-700 bg-gray-900 p-2 text-xs text-white opacity-100 transition-opacity delay-500 duration-300 ease-in-out  [&:popover-open]:opacity-100 [&:popover-open]:starting:opacity-0 " +
+    "pointer-events-none inset-auto max-w-52 rounded-md border border-gray-700 bg-gray-900 p-2 text-xs text-white opacity-100 transition-opacity delay-500 duration-300 ease-in-out [&:popover-open]:opacity-100 [&:popover-open]:starting:opacity-0 " +
     parsePositionArea(positionArea);
   return (
     <div

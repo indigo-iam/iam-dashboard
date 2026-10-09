@@ -36,6 +36,7 @@ async function openUserMenu(page: Page) {
   await userMenuButton.click();
   const userMenu = page.getByLabel("User menu", { exact: true });
   await expect(userMenu).toBeVisible();
+  await expect(userMenu).toBeInViewport();
   return userMenu;
 }
 

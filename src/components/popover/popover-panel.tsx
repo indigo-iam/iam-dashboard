@@ -23,7 +23,7 @@ export function PopoverPanel(props: Readonly<PopoverPanelProps>) {
       id={popoverId}
       ref={popoverRef}
       popover="auto"
-      className={`inset-0 max-h-dvh overflow-y-auto rounded-xl border bg-white p-2 text-gray-800 shadow-xl transition-all duration-200 focus:outline-none dark:bg-gray-700 dark:text-gray-100 ${_positionArea} ${className ?? ""}`}
+      className={`inset-auto max-h-dvh overflow-y-auto rounded-xl border bg-white p-2 text-gray-800 opacity-0 shadow-xl transition-opacity transition-discrete duration-200 focus:outline-none dark:bg-gray-700 dark:text-gray-100 [&:popover-open]:opacity-100 [&:popover-open]:starting:opacity-0 ${_positionArea} ${className ?? ""}`}
       {...others}
     >
       {children}

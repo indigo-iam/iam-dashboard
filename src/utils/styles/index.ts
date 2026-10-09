@@ -13,11 +13,11 @@ export type PositionArea =
 export function parsePositionArea(s: PositionArea) {
   switch (s) {
     case "top":
-      return "[position-area:top_center]";
+      return "[position-area:top]";
     case "right":
       return "[position-area:right]";
     case "bottom":
-      return "[position-area:bottom_center]";
+      return "[position-area:bottom]";
     case "bottom_span-left":
       return "[position-area:bottom_span-left]";
     case "bottom_span-right":

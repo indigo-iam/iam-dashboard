@@ -86,7 +86,7 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
       toast.toast(res.notification);
     };
 
-    save();
+    await save();
     next();
   }
 

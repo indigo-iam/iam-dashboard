@@ -13,11 +13,6 @@ export default function ConfirmButton() {
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
-
-  const action = async () => {
-    close();
-  };
-
   return (
     <div className="flex justify-end">
       <Button type="button" onClick={open}>
@@ -26,7 +21,7 @@ export default function ConfirmButton() {
       <ConfirmModal
         show={show}
         onClose={close}
-        onConfirm={action}
+        onConfirm={close}
         title="Create Scope Policy"
       >
         <p>Are you sure you want to add new scope policy?</p>

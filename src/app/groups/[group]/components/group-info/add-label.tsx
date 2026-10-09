@@ -33,7 +33,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
   const { group, ...modalProps } = props;
   const { startTransition } = useProgressBar();
 
-  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+  function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     let gl: GroupLabel = {

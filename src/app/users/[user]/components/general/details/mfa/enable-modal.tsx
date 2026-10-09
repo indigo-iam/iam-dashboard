@@ -36,8 +36,7 @@ export function EnableMFAModal(props: Readonly<MFAModalProps>) {
     if (!show) {
       return;
     }
-    const f = async () => {
-      const response = await addMFASecret();
+    addMFASecret().then(response => {
       if (response.result) {
         setMfa(response.result);
       }
@@ -45,8 +44,7 @@ export function EnableMFAModal(props: Readonly<MFAModalProps>) {
         const { title, status } = response.error;
         toast.error("Cannot enable MFA", `${title}, status: ${status}`);
       }
-    };
-    f();
+    });
   }, [show]);
 
   return (

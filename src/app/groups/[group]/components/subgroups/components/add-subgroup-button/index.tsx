@@ -4,9 +4,10 @@
 
 "use client";
 
+import { useState } from "react";
+
 import AddSubgroupModal from "@/app/groups/(overview)/components/table/options/add-subgroup-modal";
 import { Button } from "@/components/buttons";
-import { useState } from "react";
 
 type AddSubgroupButtonProps = {
   rootGroupId: string;
@@ -22,7 +23,7 @@ export default function AddSubgroupButton(
   const close = () => setShow(false);
   return (
     <>
-      <Button className="btn-secondary" type="button" onClick={open}>
+      <Button variant="outline" type="button" onClick={open}>
         Add Subgroup
       </Button>
       <AddSubgroupModal

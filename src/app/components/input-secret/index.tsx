@@ -47,14 +47,18 @@ export function InputSecret(props: Readonly<InputSecretProps>) {
       <div className="flex items-center rounded">
         <Button
           title="Show/Hide secret"
+          variant="plain"
+          className="h-full cursor-pointer items-center rounded-none border-0 border-r p-1 dark:border-t dark:border-b"
+          type="button"
           onClick={toggleVisibility}
-          className="btn-secondary h-full items-center rounded-none border-0 border-r dark:border-t dark:border-b"
         >
           <Icon secretIsVisible={isVisible} />
         </Button>
         <Button
           title="Copy secret"
-          className="btn-secondary h-full items-center rounded-none rounded-r border-0 dark:border"
+          variant="plain"
+          className="h-full cursor-pointer items-center rounded-none rounded-r border-0 p-1 dark:border"
+          type="button"
           onClick={copyToClipboard}
         >
           <ClipboardDocumentIcon className="size-5 dark:text-white/60" />

@@ -2,13 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import {
-  Description,
-  Field,
-  Label,
-  Select,
-  SelectOption,
-} from "@/components/form";
+import { Description, Field, Label } from "@/components/form";
+import { Select, Option } from "@/components/select";
 import { Info } from "@/components/info";
 import { CodeChallengeMethod } from "@/models/client";
 
@@ -27,15 +22,14 @@ function Pkce(props: Readonly<PkceProps>) {
     { id: "S256", name: "SHA-256 hash algorithm" },
   ];
 
-  const defaultValue =
-    options.find(o => o.id === codeChallengeMethod) ?? options[0];
+  const defaultValue = codeChallengeMethod ?? options[0].id;
 
   return (
     <Select name={name} defaultValue={defaultValue}>
       {options.map(o => (
-        <SelectOption key={o.id} value={o}>
+        <Option key={o.id} value={o.id}>
           {o.name}
-        </SelectOption>
+        </Option>
       ))}
     </Select>
   );
@@ -49,7 +43,7 @@ export function Advanced(props: Readonly<AdvancedProps>) {
   const { codeChallengeMethod } = props;
 
   return (
-    <div className="flex flex-col lg:gap-8 pt-4 lg:flex-row">
+    <div className="flex flex-col pt-4 lg:flex-row lg:gap-8">
       <div className="w-full space-y-2 lg:w-1/3">
         <h5 className="text-sm font-semibold text-gray-600 dark:text-gray-100">
           Advanced

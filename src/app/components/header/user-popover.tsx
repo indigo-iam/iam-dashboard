@@ -4,15 +4,12 @@
 
 "use client";
 
-import { useEffect, useRef } from "react";
-
 import { Gravatar } from "@/components/gravatar";
-import { Button } from "@/components/buttons";
+import { Popover, PopoverButton, PopoverPanel } from "@/components/popover";
 import { User } from "@/models/scim";
 import { useDisabled } from "@/utils/hooks";
 import { AdminModeButton, UserModeButton } from "./admin-user-buttons";
 import { SignoutButton } from "./signout-button";
-import { Tooltip, useTooltip } from "@/components/tooltip";
 
 type UserPopoverProps = {
   hasRoleAdmin?: boolean;
@@ -22,73 +19,54 @@ type UserPopoverProps = {
 
 export function UserPopover(props: Readonly<UserPopoverProps>) {
   const { hasRoleAdmin, isAdmin, user } = props;
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const popoverRef = useRef<HTMLDivElement>(null);
-  const { tooltipId, tooltipRef } = useTooltip(buttonRef);
   const disabled = useDisabled();
   const email = user.emails?.[0].value;
-
-  function handleInternalClick(event: MouseEvent) {
-    event.preventDefault();
-    const target = event.target as HTMLElement;
-    if (target.tagName === "BUTTON") {
-      target?.click();
-      popoverRef.current?.hidePopover();
-    }
-  }
-
-  useEffect(() => {
-    const popover = popoverRef.current;
-    if (!popover) {
-      return;
-    }
-    popover.addEventListener("mousedown", handleInternalClick);
-    return () => {
-      popover.removeEventListener("mousedown", handleInternalClick);
-    };
-  }, []);
-
   return (
-    <div className="relative flex items-center">
-      <Button
-        className="group static size-8 cursor-pointer"
-        aria-labelledby={tooltipId}
-        data-testid="user-menu-btn"
-        disabled={disabled}
-        type="button"
-        popoverTarget="user-popover-menu"
-        ref={buttonRef}
-      >
-        <Gravatar email={email} />
-        <Tooltip tooltipId={tooltipId} tooltipRef={tooltipRef}>
-          <p className="whitespace-nowrap">Open user menu</p>
-        </Tooltip>
-      </Button>
-      <div
-        id="user-popover-menu"
-        data-testid="user-menu"
-        aria-label="User menu"
-        className="overlay fixed mt-12 mr-4 ml-auto w-56 flex-col opacity-0 transition-all transition-discrete ease-in-out [&:popover-open]:opacity-100 [&:popover-open]:starting:opacity-0"
-        popover="auto"
-        ref={popoverRef}
-      >
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 pb-2">
-            <Gravatar email={email} />
-            <div className="flex flex-col leading-normal">
-              <p>{user.name?.formatted}</p>
-              <p>
-                <b>{user.displayName}</b>
-              </p>
+    <div className="flex items-center">
+      <Popover data-testid="user-menu">
+        <PopoverButton
+          variant="plain"
+          className="group static size-8 cursor-pointer text-nowrap"
+          data-testid="user-menu-btn"
+          disabled={disabled}
+          name="Open user menu"
+        >
+          <Gravatar email={email} />
+        </PopoverButton>
+        {/* Safari/WebKit (bug 326820) misplaces popovers positioned through CSS
+            anchor positioning (position-area) once the page scrolls, because the
+            trigger button lives in the fixed header. The panel is therefore
+            placed with static viewport coordinates: it keeps `position: fixed`
+            (the only mode WebKit pins to the viewport) and anchoring is
+            disabled. `!` is required to override the base PopoverPanel classes
+            (`inset-auto`, `[position-area:bottom]`). Coordinates: top = header
+            content padding (py-2: 0.5rem) + button (size-8: 2rem) + 0.5rem
+            gap = 3rem; right mirrors the header padding (px-4 / md:px-8). Keep
+            in sync with the header in src/app/components/header/index.tsx.
+            Once WebKit ships a fix for bug 326820 this can be reverted to
+            positionArea="bottom". */}
+        <PopoverPanel
+          className="min-w-48 p-4 [position-area:none]! top-12! right-4! md:right-8!"
+          aria-label="User menu"
+        >
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 pb-2">
+              <Gravatar email={email} />
+              <div className="flex flex-col leading-normal">
+                <p>{user.name?.formatted}</p>
+                <p>
+                  <b>{user.displayName}</b>
+                </p>
+              </div>
+            </div>
+            <div>
+              {hasRoleAdmin &&
+                (isAdmin ? <UserModeButton /> : <AdminModeButton />)}
+              <SignoutButton />
             </div>
           </div>
-          <div>
-            {hasRoleAdmin &&
-              (isAdmin ? <UserModeButton /> : <AdminModeButton />)}
-            <SignoutButton />
-          </div>
-        </div>
-      </div>
+        </PopoverPanel>
+      </Popover>
     </div>
   );
 }

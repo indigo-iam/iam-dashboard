@@ -4,20 +4,15 @@
 
 "use client";
 
-import {
-  Field,
-  Label,
-  Select,
-  SelectOption,
-  Description,
-} from "@/components/form";
+import { useState } from "react";
+
+import { Field, Label, Description } from "@/components/form";
+import { Info } from "@/components/info";
+import { Select, Option } from "@/components/select";
 import { GrantType } from "@/models/openid-configuration";
 import AuthorizationCode from "./authorization-code";
 import ClientCredentials from "./client-credentials";
 import DeviceCode from "./device-code";
-
-import { useState } from "react";
-import { Info } from "@/components/info";
 
 type AuthenticationFlowSettingsProps = {
   grantType: GrantType;
@@ -48,7 +43,7 @@ const AuthenticationFlowSettings = (
 
 type AuthenticationFlowProps = {
   redirectUris: string[];
-  defaultValue?: SelectOption;
+  defaultValue?: string;
   onStatusChange?: (status: boolean) => void;
 };
 
@@ -74,15 +69,15 @@ export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
     { id: "client_credentials", name: "Client Credentials" },
     { id: "urn:ietf:params:oauth:grant-type:device_code", name: "Device Code" },
   ];
-  const defaultOption = defaultValue ?? options[0];
+  const defaultOption = defaultValue ?? options[0].id;
   const [selectedGrantType, setSelectedGrantType] = useState(defaultOption);
 
-  const handleGrantTypeChange = (grantType: { id: string; name: string }) => {
+  function handleGrantTypeChange(e: React.ChangeEvent<HTMLSelectElement>) {
     onStatusChange?.(false);
-    setSelectedGrantType(grantType);
-  };
+    setSelectedGrantType(e.target.value);
+  }
 
-  const description = descriptions.get(selectedGrantType.id);
+  const description = descriptions.get(selectedGrantType);
 
   return (
     <div className="space-y-2">
@@ -99,9 +94,9 @@ export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
           onChange={handleGrantTypeChange}
         >
           {options.map(option => (
-            <SelectOption key={option.id} value={option}>
+            <Option key={option.id} value={option.id}>
               {option.name}
-            </SelectOption>
+            </Option>
           ))}
         </Select>
         <Description>{description}</Description>
@@ -109,7 +104,7 @@ export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
       <AuthenticationFlowSettings
         redirectUris={redirectUris}
         onStatusChange={onStatusChange}
-        grantType={selectedGrantType.id as GrantType}
+        grantType={selectedGrantType as GrantType}
       />
     </div>
   );

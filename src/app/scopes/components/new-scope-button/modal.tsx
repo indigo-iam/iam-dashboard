@@ -4,18 +4,10 @@
 
 "use client";
 
-import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/16/solid";
 
 import { Button } from "@/components/buttons";
-import {
-  Form,
-  Description,
-  Field,
-  Label,
-  Select,
-  SelectOption,
-} from "@/components/form";
+import { Form, Description, Field, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -24,6 +16,7 @@ import {
   ModalFooter,
   ModalProps,
 } from "@/components/modal";
+import { Option, Select } from "@/components/select";
 import { toast } from "@/components/toaster";
 import { addScope } from "@/services/scopes";
 
@@ -36,15 +29,16 @@ export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
     { id: "default", name: "Default" },
     { id: "restricted", name: "Restricted" },
   ];
-  const [scopeType, setScopeType] = useState(options[0]);
+  const defaultScopeType = options[0].id;
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const value = formData.get("value") as string;
     const description = formData.get("description") as string;
-    const defaultScope = scopeType.id === "default";
-    const restricted = scopeType.id === "restricted";
+    const scopeType = formData.get("scope-type") as string;
+    const defaultScope = scopeType === "default";
+    const restricted = scopeType === "restricted";
     const icon = "";
     const res = await addScope({
       value,
@@ -60,7 +54,7 @@ export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
   return (
     <Modal show={show} onClose={onClose}>
       <ModalHeader>Add new system scope</ModalHeader>
-      <Form onSubmit={submit} onReset={() => setScopeType(options[0])}>
+      <Form onSubmit={submit}>
         <ModalBody className="space-y-4 pb-4">
           <p>
             System scopes are available to all clients. <b>Default</b> scopes
@@ -83,23 +77,23 @@ export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
           </Field>
           <Field>
             <Label>Scope Type</Label>
-            <Select name="scope-type" defaultValue={scopeType}>
+            <Select name="scope-type" defaultValue={defaultScopeType}>
               {options.map(option => (
-                <SelectOption key={option.id} value={option}>
+                <Option key={option.id} value={option.id}>
                   {option.name}
-                </SelectOption>
+                </Option>
               ))}
             </Select>
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" type="reset" onClick={onClose}>
+          <Button variant="underline" type="reset" onClick={onClose}>
             Cancel
           </Button>
-          <Button className="btn-secondary" type="reset">
+          <Button variant="outline" type="reset">
             Reset
           </Button>
-          <Button className="btn-primary" type="submit">
+          <Button type="submit">
             <PlusIcon className="my-auto size-5" />
             Add Scope
           </Button>

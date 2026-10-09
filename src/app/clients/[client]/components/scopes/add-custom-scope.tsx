@@ -4,6 +4,8 @@
 
 "use client";
 
+import { useState } from "react";
+
 import { Button } from "@/components/buttons";
 import { Field, Form, Label } from "@/components/form";
 import { InputList } from "@/components/inputs";
@@ -11,7 +13,6 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { Client } from "@/models/client";
 import { editClient } from "@/services/clients";
-import { useState } from "react";
 
 type AddCustomScopeModalProps = {
   client: Client;
@@ -49,12 +50,10 @@ export function AddCustomScopeModal(props: Readonly<AddCustomScopeModalProps>) {
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" type="reset" onClick={onClose}>
+          <Button variant="underline" type="reset" onClick={onClose}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            New custom scopes
-          </Button>
+          <Button type="submit">New custom scopes</Button>
         </ModalFooter>
       </Form>
     </Modal>
@@ -73,7 +72,7 @@ export function AddCustomScope(props: Readonly<AddCustomScopeProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Button className="btn-secondary" onClick={open}>
+      <Button variant="outline" type="button" onClick={open}>
         New custom scope
       </Button>
       <AddCustomScopeModal

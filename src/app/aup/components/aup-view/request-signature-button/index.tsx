@@ -4,11 +4,12 @@
 
 "use client";
 
+import { useState } from "react";
+
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
 import { toast } from "@/components/toaster";
 import { touchAUP } from "@/services/aup";
-import { useState } from "react";
 
 export default function RequestSignatureButton() {
   const [isShown, setIsShown] = useState(false);
@@ -35,7 +36,7 @@ export default function RequestSignatureButton() {
           <b>ALL</b> users at their next login.
         </p>
       </ConfirmModal>
-      <Button className="btn-primary" onClick={show}>
+      <Button accent="danger" variant="outline" type="button" onClick={show}>
         Request AUP signature
       </Button>
     </>

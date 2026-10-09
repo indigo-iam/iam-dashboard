@@ -20,7 +20,7 @@ export function PopoverOption(props: Readonly<PopoverOptionProps>) {
       type="button"
       popoverTarget={popoverTarget}
       popoverTargetAction="hide"
-      className="hover:not:dark:text-gray-500 data-danger:text-danger dark:data-danger:text-danger-light group mx-auto flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-start text-base whitespace-nowrap text-gray-700 transition enabled:hover:bg-gray-200 disabled:text-gray-300 dark:text-white dark:hover:bg-white/10 disabled:cursor-not-allowed"
+      className="hover:not:dark:text-gray-500 data-danger:text-danger dark:data-danger:text-danger-light group mx-auto flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-start text-base whitespace-nowrap text-gray-700 transition enabled:hover:bg-gray-200 disabled:cursor-not-allowed disabled:text-gray-300 dark:text-white enabled:dark:hover:bg-gray-500"
     />
   );
 }

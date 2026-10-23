@@ -1,8 +1,7 @@
 {
   "name": "iam-dashboard",
   "private": true,
-  "version": "0.6.1",
-  "type": "module",
+  "version": "0.6.2",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

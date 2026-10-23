@@ -2,11 +2,12 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { useState } from "react";
+
 import { Button } from "@/components/buttons";
 import { CarouselPanel } from "@/components/carousel";
 import { Field, Label, Description } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { useState } from "react";
 
 type GeneralSettingsProps = {
   goNext: () => void;
@@ -48,9 +49,10 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
       </Field>
       <div className="flex flex-row justify-end py-2">
         <Button
-          className="btn-secondary"
+          variant="outline"
           onClick={goNext}
           disabled={!canContinue}
+          type="button"
         >
           Continue
         </Button>

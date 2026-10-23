@@ -63,12 +63,10 @@ function LinkAccountModal(props: Readonly<LinkAccountModalProps>) {
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" type="reset" onClick={onClose}>
+          <Button variant="underline" type="reset" onClick={onClose}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Link account
-          </Button>
+          <Button type="submit">Link account</Button>
         </ModalFooter>
       </Form>
     </Modal>
@@ -87,7 +85,7 @@ export function LinkAccountButton(props: Readonly<LinkAccountButtonProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Button className="btn-secondary" type="button" onClick={open}>
+      <Button variant="outline" type="button" onClick={open}>
         <SquaresPlusIcon className="size-4" />
         Link account
       </Button>

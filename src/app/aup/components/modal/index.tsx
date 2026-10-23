@@ -4,6 +4,9 @@
 
 "use client";
 
+import { Field } from "@headlessui/react";
+import { useRef, useState } from "react";
+
 import { Button } from "@/components/buttons";
 import { Form, Description, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
@@ -17,8 +20,6 @@ import {
 import { toast } from "@/components/toaster";
 import { AUP } from "@/models/aup";
 import { createAUP, patchAUP } from "@/services/aup";
-import { Field } from "@headlessui/react";
-import { useRef, useState } from "react";
 
 interface AupModalProps extends ModalProps {
   aup?: AUP;
@@ -145,13 +146,13 @@ export default function AupModal(props: Readonly<AupModalProps>) {
           )}
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" type="reset" onClick={close}>
+          <Button variant="underline" type="reset" onClick={close}>
             Cancel
           </Button>
-          <Button className="btn-secondary" type="reset" onClick={reset}>
+          <Button variant="outline" type="reset" onClick={reset}>
             Reset
           </Button>
-          <Button className="btn-primary" type="submit" disabled={!formIsValid}>
+          <Button type="submit" disabled={!formIsValid}>
             {aup ? "Confirm" : "Create AUP"}
           </Button>
         </ModalFooter>

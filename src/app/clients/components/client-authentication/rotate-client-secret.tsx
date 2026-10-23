@@ -4,6 +4,8 @@
 
 "use client";
 
+import { useState } from "react";
+
 import { InputSecret } from "@/app/components/input-secret";
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
@@ -11,7 +13,6 @@ import { Field, Label } from "@/components/form";
 import { Info } from "@/components/info";
 import { toast } from "@/components/toaster";
 import { rotateClientSecret } from "@/services/clients";
-import { useState } from "react";
 
 type ClientSecretViewProps = {
   secret: string;
@@ -54,7 +55,7 @@ export function RotateClientSecret(props: Readonly<RotateClientSecretProps>) {
           <Info>Clients secrets provides authentication for this client.</Info>
         </div>
       </Label>
-      <Button className="btn-secondary" onClick={open}>
+      <Button variant="outline" type="button" onClick={open}>
         Rotate Secret
       </Button>
       <ConfirmModal

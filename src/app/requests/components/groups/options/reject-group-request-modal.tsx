@@ -63,14 +63,14 @@ export default function RejectRequestModalProps(
         </ModalBody>
         <ModalFooter>
           <Button
-            className="btn-tertiary"
+            variant="underline"
             title="Cancel"
             type="reset"
             onClick={onClose}
           >
             Cancel
           </Button>
-          <Button className="btn-danger" title="Reject request" type="submit">
+          <Button accent="danger" title="Reject request" type="submit">
             Reject request
           </Button>
         </ModalFooter>

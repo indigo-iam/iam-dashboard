@@ -5,18 +5,17 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { CloseButton } from "@headlessui/react";
 import { BuildingLibraryIcon, UserIcon } from "@heroicons/react/24/outline";
 
-import { setAdminMode, setUserMode } from "./actions";
 import { useLoading } from "@/components/loading";
+import { PopoverOption } from "@/components/popover";
+import { setAdminMode, setUserMode } from "./actions";
 
 export function AdminModeButton() {
   const router = useRouter();
   const { startLoadingTransition } = useLoading();
 
-  function submit(event: React.SubmitEvent<HTMLFormElement>) {
-    event.preventDefault();
+  function handleClick() {
     startLoadingTransition(async () => {
       await setAdminMode();
       router.refresh();
@@ -24,17 +23,15 @@ export function AdminModeButton() {
   }
 
   return (
-    <form onSubmit={submit}>
-      <CloseButton
-        type="submit"
-        name="Switch to admin"
-        data-testid="admin-mode-btn"
-        className="btn-popover"
-      >
-        <BuildingLibraryIcon className="size-5" />
-        Admin mode
-      </CloseButton>
-    </form>
+    <PopoverOption
+      type="button"
+      data-testid="admin-mode-btn"
+      autoClose
+      onClick={handleClick}
+    >
+      <BuildingLibraryIcon className="size-5" />
+      Admin mode
+    </PopoverOption>
   );
 }
 
@@ -43,8 +40,7 @@ export function UserModeButton() {
   const pathname = usePathname();
   const { startLoadingTransition } = useLoading();
 
-  function submit(event: React.SubmitEvent<HTMLFormElement>) {
-    event.preventDefault();
+  function handleClick() {
     startLoadingTransition(async () => {
       if (pathname.startsWith("/clients/")) {
         router.push("/clients");
@@ -55,16 +51,14 @@ export function UserModeButton() {
   }
 
   return (
-    <form onSubmit={submit}>
-      <CloseButton
-        type="submit"
-        name="Switch to user mode"
-        data-testid="user-mode-btn"
-        className="btn-popover"
-      >
-        <UserIcon className="size-5" />
-        User mode
-      </CloseButton>
-    </form>
+    <PopoverOption
+      type="button"
+      data-testid="user-mode-btn"
+      autoClose
+      onClick={handleClick}
+    >
+      <UserIcon className="size-5" />
+      User mode
+    </PopoverOption>
   );
 }

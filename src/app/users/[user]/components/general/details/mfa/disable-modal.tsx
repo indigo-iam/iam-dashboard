@@ -45,10 +45,10 @@ export function DisableMFAModal(props: Readonly<DisableMFAModalProps>) {
           <Input name="code" />
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" type="reset" onClick={onClose}>
+          <Button variant="underline" type="reset" onClick={onClose}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
+          <Button accent="danger" type="submit">
             Disable MFA
           </Button>
         </ModalFooter>

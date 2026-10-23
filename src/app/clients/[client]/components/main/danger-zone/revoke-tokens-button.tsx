@@ -97,7 +97,7 @@ export function RevokeTokensButton(props: Readonly<RevokeTokensButtonProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Button className="btn-danger-secondary" onClick={open}>
+      <Button accent="danger" variant="outline" type="button" onClick={open}>
         Revoke tokens
       </Button>
       <Modal

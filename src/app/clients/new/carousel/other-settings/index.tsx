@@ -2,11 +2,12 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { ChevronLeftIcon } from "@heroicons/react/20/solid";
+
 import { Button } from "@/components/buttons";
 import { CarouselPanel } from "@/components/carousel";
 import { Field, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
-import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 
 type OtherSettingsProps = {
   goBack: () => void;
@@ -43,13 +44,11 @@ export default function OtherSettings(props: Readonly<OtherSettingsProps>) {
         />
       </Field>
       <div className="flex flex-row justify-end py-2">
-        <Button className="btn-tertiary" onClick={goBack}>
-          <div className="flex items-center">
-            <ChevronLeftIcon className="-ml-2 size-5" />
-            Back
-          </div>
+        <Button variant="underline" onClick={goBack}>
+          <ChevronLeftIcon className="size-5" />
+          Back
         </Button>
-        <Button className="btn-primary" type="submit" disabled={!canSave}>
+        <Button type="submit" disabled={!canSave}>
           Save
         </Button>
       </div>

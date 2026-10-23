@@ -47,24 +47,11 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
       client_description: (formData.get("client_description") as string) ?? "",
       contacts: formData.getAll("contacts") as string[],
       token_endpoint_auth_method: formData.get(
-        "token_endpoint_auth_method[id]"
+        "token_endpoint_auth_method"
       ) as string,
-      scope: "",
-      grant_types: [formData.get("grant_type[id]") as string],
+      scope: (formData.getAll("scope") as string[]).join(" "),
+      grant_types: formData.getAll("grant_type") as string[],
     };
-
-    const scopes: string[] = [];
-    const it = formData.keys();
-    let result = it.next();
-    while (!result.done) {
-      const key = result.value;
-      if (key.startsWith("scope") && key.includes("[name]")) {
-        scopes.push(formData.get(key) as string);
-      }
-      result = it.next();
-    }
-
-    request.scope = scopes.join(" ");
 
     const jwk_uri = formData.get("jwk_uri") as string | undefined;
     const jwk = formData.get("jwk") as string | undefined;
@@ -99,7 +86,7 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
       toast.toast(res.notification);
     };
 
-    save();
+    await save();
     next();
   }
 
@@ -119,6 +106,7 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
           <CarouselPanels>
             <GeneralSettings goNext={next} />
             <OIDCSettings
+              isAdmin={isAdmin}
               systemScopes={systemScopes}
               goBack={back}
               goNext={next}

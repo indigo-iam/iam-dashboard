@@ -5,6 +5,7 @@
 "use client";
 
 import { ComputerDesktopIcon } from "@heroicons/react/24/outline";
+
 import { Client } from "@/models/client";
 import { Status } from "@/components/badges";
 import { Button } from "@/components/buttons";
@@ -138,11 +139,11 @@ export function GeneralForm(props: Readonly<GeneralFormProps>) {
             the user in the consent page.
           </Description>
         </Field>
-        <div className="flex justify-end">
-          <Button className="btn-tertiary" type="reset">
+        <div className="flex justify-end gap-2">
+          <Button variant="underline" type="reset">
             Reset
           </Button>
-          <Button className="btn-secondary" type="submit">
+          <Button variant="outline" type="submit">
             Save changes
           </Button>
         </div>

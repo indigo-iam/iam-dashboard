@@ -4,6 +4,8 @@
 
 "use client";
 
+import { useState } from "react";
+
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
 import { Field, Form, Label } from "@/components/form";
@@ -17,7 +19,6 @@ import {
 } from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { changePassword, resetUserPassword } from "@/services/users";
-import { useState } from "react";
 
 interface ModalPasswordProps extends ModalProps {
   userId: string;
@@ -61,16 +62,10 @@ function ModalPassword(props: Readonly<ModalPasswordProps>) {
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button
-            className="btn-tertiary"
-            type="reset"
-            onClick={modalProps.onClose}
-          >
+          <Button variant="underline" type="reset" onClick={modalProps.onClose}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Change password
-          </Button>
+          <Button type="submit">Change password</Button>
         </ModalFooter>
       </Form>
     </Modal>
@@ -127,7 +122,7 @@ export function ResetPassword(props: Readonly<ResetPasswordProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Button className="btn-secondary" onClick={open}>
+      <Button variant="outline" type="button" onClick={open}>
         {isMe ? "Change password" : "Reset password"}
       </Button>
       {isMe ? (

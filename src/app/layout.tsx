@@ -11,6 +11,7 @@ import { Toaster } from "@/components/toaster";
 import { LoadingProvider } from "@/components/loading";
 import { ProgressBarProvider } from "@/components/progress-bar";
 import "@/styles/main.css";
+import "@/styles/app.css";
 
 export const metadata: Metadata = {
   title: "INDIGO IAM",

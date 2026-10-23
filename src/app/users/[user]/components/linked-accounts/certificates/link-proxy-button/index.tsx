@@ -53,12 +53,10 @@ function LinkProxyModal(props: Readonly<LinkProxyModalProps>) {
           </p>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" onClick={close}>
+          <Button variant="outline" type="reset" onClick={close}>
             Cancel
           </Button>
-          <Button className="btn-primary" disabled={disabled}>
-            Confirm
-          </Button>
+          <Button disabled={disabled}>Confirm</Button>
         </ModalFooter>
       </Modal>
     );
@@ -103,12 +101,10 @@ function LinkProxyModal(props: Readonly<LinkProxyModalProps>) {
           {error && <p className="text-danger">{error}</p>}
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" onClick={close}>
+          <Button variant="underline" type="reset" onClick={close}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Confirm
-          </Button>
+          <Button type="submit">Confirm</Button>
         </ModalFooter>
       </Form>
     </Modal>
@@ -128,7 +124,7 @@ export function LinkProxyButton(props: Readonly<LinkProxyButtonProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Button onClick={open} className="btn-secondary">
+      <Button variant="outline" type="button" onClick={open}>
         Link proxy certificate
       </Button>
       <LinkProxyModal

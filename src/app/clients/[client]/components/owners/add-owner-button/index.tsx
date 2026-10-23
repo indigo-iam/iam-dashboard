@@ -4,11 +4,11 @@
 
 "use client";
 
-import { Button } from "@/components/buttons";
-import { PlusIcon } from "@heroicons/react/24/outline";
-import { AddOwnerModal } from "./modal";
-
 import { useState } from "react";
+import { PlusIcon } from "@heroicons/react/24/outline";
+
+import { Button } from "@/components/buttons";
+import { AddOwnerModal } from "./modal";
 
 type AddOwnerButtonProps = {
   clientId: string;
@@ -22,11 +22,9 @@ export function AddOwnerButton(props: Readonly<AddOwnerButtonProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Button className="btn-secondary" onClick={open}>
-        <div className="flex items-center gap-1">
-          <PlusIcon className="size-4" />
-          <span>Add owner</span>
-        </div>
+      <Button variant="outline" type="button" onClick={open}>
+        <PlusIcon className="size-4" />
+        <span>Add owner</span>
       </Button>
       <AddOwnerModal
         clientId={clientId}

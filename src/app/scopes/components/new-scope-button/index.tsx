@@ -5,9 +5,10 @@
 "use client";
 
 import { useState } from "react";
-import NewScopeModal from "./modal";
-import { Button } from "@/components/buttons";
 import { PlusIcon } from "@heroicons/react/16/solid";
+
+import { Button } from "@/components/buttons";
+import NewScopeModal from "./modal";
 
 export default function NewScopeButton() {
   const [isShown, setIsShown] = useState(false);
@@ -17,7 +18,7 @@ export default function NewScopeButton() {
   return (
     <>
       <NewScopeModal show={isShown} onClose={hide} />
-      <Button className="btn-secondary" onClick={show}>
+      <Button variant="outline" type="button" onClick={show}>
         <PlusIcon className="size-4" />
         New Scope
       </Button>

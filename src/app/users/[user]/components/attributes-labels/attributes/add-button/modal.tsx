@@ -157,15 +157,10 @@ export default function AddAttributeModal(
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button
-            className="btn-tertiary"
-            type="button"
-            onClick={closeAndReset}
-          >
+          <Button variant="underline" type="button" onClick={closeAndReset}>
             Cancel
           </Button>
           <Button
-            className="btn-primary"
             type="submit"
             disabled={!nameValidator.isValid || !valueValidator.isValid}
           >

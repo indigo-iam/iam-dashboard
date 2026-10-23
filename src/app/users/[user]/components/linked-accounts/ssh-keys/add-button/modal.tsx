@@ -66,16 +66,10 @@ export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button
-            className="btn-tertiary"
-            type="reset"
-            onClick={modalProps.onClose}
-          >
+          <Button variant="underline" type="reset" onClick={modalProps.onClose}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Add SSH Key
-          </Button>
+          <Button type="submit">Add SSH Key</Button>
         </ModalFooter>
       </Form>
     </Modal>

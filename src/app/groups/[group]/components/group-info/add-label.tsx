@@ -4,6 +4,10 @@
 
 "use client";
 
+import { useState } from "react";
+import { Fieldset } from "@headlessui/react";
+import { PlusIcon } from "@heroicons/react/24/outline";
+
 import { Button } from "@/components/buttons";
 import { Description, Field, Form, Label } from "@/components/form";
 import { Input } from "@/components/inputs";
@@ -18,9 +22,7 @@ import { useProgressBar } from "@/components/progress-bar";
 import { toast } from "@/components/toaster";
 import { Group, GroupLabel } from "@/models/groups";
 import { addGroupLabel } from "@/services/groups";
-import { Fieldset } from "@headlessui/react";
-import { PlusIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useDisabled } from "@/utils/hooks";
 
 interface AddLabelModalProps extends ModalProps {
   group: Group;
@@ -31,7 +33,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
   const { group, ...modalProps } = props;
   const { startTransition } = useProgressBar();
 
-  async function submit(event: React.SubmitEvent<HTMLFormElement>) {
+  function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     let gl: GroupLabel = {
@@ -77,16 +79,10 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
           </Fieldset>
         </ModalBody>
         <ModalFooter>
-          <Button
-            className="btn-tertiary"
-            type="reset"
-            onClick={modalProps.onClose}
-          >
+          <Button variant="underline" type="reset" onClick={modalProps.onClose}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Add label
-          </Button>
+          <Button type="submit">Add label</Button>
         </ModalFooter>
       </Form>
     </Modal>
@@ -100,6 +96,7 @@ type AddLabelProps = {
 export function AddLabel(props: Readonly<AddLabelProps>) {
   const { group } = props;
   const [show, setShow] = useState(false);
+  const disabled = useDisabled();
   const open = () => setShow(true);
   const close = () => setShow(false);
   return (
@@ -112,9 +109,11 @@ export function AddLabel(props: Readonly<AddLabelProps>) {
       />
       <Button
         title="Add group label"
+        variant="plain"
         className="flex cursor-pointer items-center rounded-full bg-gray-300 py-0.5 pr-3 pl-1 text-sm hover:bg-gray-400/60 dark:bg-gray-600 dark:text-white hover:dark:bg-gray-500"
         type="button"
         onClick={open}
+        disabled={disabled}
       >
         <PlusIcon className="size-4" />
         Add label

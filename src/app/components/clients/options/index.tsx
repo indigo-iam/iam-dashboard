@@ -30,24 +30,18 @@ export default function ClientOptions(props: Readonly<ClientOptionsProps>) {
       <Options>
         {active ? (
           <Option onClick={openToggleStatus} data-danger={active}>
-            <div className="flex items-center gap-2">
-              <PowerIcon className="size-4" />
-              <span>Disable</span>
-            </div>
+            <PowerIcon className="size-4" />
+            <span>Disable</span>
           </Option>
         ) : (
           <Option onClick={openToggleStatus}>
-            <div className="flex items-center gap-2">
-              <PowerIcon className="size-4" />
-              <span>Enable</span>
-            </div>
+            <PowerIcon className="size-4" />
+            <span>Enable</span>
           </Option>
         )}
         <Option onClick={openDelete} data-danger>
-          <div className="flex items-center gap-2">
-            <TrashIcon className="size-4" />
-            <span>Delete</span>
-          </div>
+          <TrashIcon className="size-4" />
+          <span>Delete</span>
         </Option>
       </Options>
       <ToggleStatusModal

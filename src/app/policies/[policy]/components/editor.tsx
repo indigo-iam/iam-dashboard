@@ -4,10 +4,11 @@
 
 "use client";
 
+import { ChangeEvent, useState } from "react";
+
 import { Button } from "@/components/buttons";
 import { Textarea } from "@/components/textarea";
 import { ScopePolicy } from "@/models/scope-policies";
-import { ChangeEvent, useState } from "react";
 
 type EditorProps = {
   policy: ScopePolicy;
@@ -44,11 +45,11 @@ export default function Editor(props: Readonly<EditorProps>) {
         onChange={handleChange}
       />
       <div className="flex justify-end gap-2">
-        <Button className="btn-secondary" onClick={handleOnClickEdit}>
+        <Button variant="outline" type="button" onClick={handleOnClickEdit}>
           {editing ? "Cancel" : "Edit"}
         </Button>
         <Button
-          className="btn-primary"
+          type="button"
           disabled={!editing || newPolicy === policy_str}
           onClick={handleSubmit}
         >

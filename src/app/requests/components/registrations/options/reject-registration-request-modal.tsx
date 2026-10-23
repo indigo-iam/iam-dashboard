@@ -37,9 +37,7 @@ export default function RejectRegistrationRequestModal(
 
   return (
     <Modal show={show} onClose={onClose}>
-      <ModalHeader>
-        Reject user registration request?
-      </ModalHeader>
+      <ModalHeader>Reject user registration request?</ModalHeader>
       <Form id="reject-registration-form" onSubmit={submit}>
         <ModalBody>
           <div className="space-y-4">
@@ -62,14 +60,14 @@ export default function RejectRegistrationRequestModal(
         </ModalBody>
         <ModalFooter>
           <Button
-            className="btn-tertiary"
+            variant="underline"
             title="Cancel"
             type="reset"
             onClick={onClose}
           >
             Cancel
           </Button>
-          <Button className="btn-danger" type="submit">
+          <Button accent="danger" type="submit">
             Reject request
           </Button>
         </ModalFooter>

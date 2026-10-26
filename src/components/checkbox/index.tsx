@@ -4,10 +4,10 @@
 
 "use client";
 
+import { useRef } from "react";
 import { CheckIcon } from "@heroicons/react/16/solid";
 
 import { Label } from "@/components/label";
-import { useRef } from "react";
 
 export interface CheckboxState<T> {
   checked: boolean;
@@ -40,12 +40,21 @@ export function Checkbox(props: Readonly<CheckboxProps>) {
       checkboxRef.current.checked = !checkboxRef.current.checked;
     }
   }
+
+  function handleKeydown(e: React.KeyboardEvent<HTMLSpanElement>) {
+    if (e.code === "Space") {
+      handleChange();
+    }
+  }
+
   return (
     <span
       className="group flex aspect-square size-4 items-center rounded border bg-white dark:bg-gray-800"
       onClick={handleChange}
+      onKeyDown={handleKeydown}
       role="checkbox"
       aria-checked={other.checked}
+      tabIndex={0}
     >
       <CheckIcon className="hidden size-4 fill-gray-700 group-has-checked:block dark:fill-gray-300" />
       <input {...other} type="checkbox" hidden readOnly ref={checkboxRef} />

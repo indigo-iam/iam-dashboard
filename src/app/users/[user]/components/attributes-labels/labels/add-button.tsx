@@ -7,7 +7,9 @@
 import { useRef, useState } from "react";
 
 import { Button } from "@/components/buttons";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -149,7 +151,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
       <Form onSubmit={submit} ref={formRef}>
         <ModalBody>
           <Field>
-            <Label data-required>Prefix</Label>
+            <Label>Prefix</Label>
             <Input
               name="prefix"
               placeholder="hr.cern"
@@ -159,7 +161,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
             {prefix && <ValidatePrefixView prefix={prefix} />}
           </Field>
           <Field>
-            <Label data-required>Name</Label>
+            <Label>Name</Label>
             <Input
               name="name"
               placeholder="cern_person_id"

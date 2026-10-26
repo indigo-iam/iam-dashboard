@@ -4,11 +4,13 @@
 
 "use client";
 
-import { Field } from "@headlessui/react";
 import { useRef, useState } from "react";
 
 import { Button } from "@/components/buttons";
-import { Form, Description, Label } from "@/components/form";
+import { Description } from "@/components/description";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -87,7 +89,7 @@ export default function AupModal(props: Readonly<AupModalProps>) {
       <Form onSubmit={submit} ref={formRef}>
         <ModalBody>
           <Field>
-            <Label data-required>Acceptable Usage Policy URL</Label>
+            <Label>Acceptable Usage Policy URL</Label>
             <Input
               type="url"
               name="url"
@@ -101,7 +103,7 @@ export default function AupModal(props: Readonly<AupModalProps>) {
             </Description>
           </Field>
           <Field>
-            <Label data-required>AUP signature validity (in days)</Label>
+            <Label>AUP signature validity (in days)</Label>
             <Input
               name="validity"
               type="number"
@@ -118,7 +120,7 @@ export default function AupModal(props: Readonly<AupModalProps>) {
           </Field>
           {validity !== undefined && validity > 0 && (
             <Field>
-              <Label data-required>AUP reminders (in days)</Label>
+              <Label>AUP reminders (in days)</Label>
               <Input
                 type="text"
                 name="reminders"

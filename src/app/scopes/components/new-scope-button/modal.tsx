@@ -7,7 +7,10 @@
 import { PlusIcon } from "@heroicons/react/16/solid";
 
 import { Button } from "@/components/buttons";
-import { Form, Description, Field, Label } from "@/components/form";
+import { Description } from "@/components/description";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,

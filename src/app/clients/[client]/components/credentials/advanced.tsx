@@ -2,7 +2,9 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Description, Field, Label } from "@/components/form";
+import { Description } from "@/components/description";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Select, Option } from "@/components/select";
 import { Info } from "@/components/info";
 import { CodeChallengeMethod } from "@/models/client";

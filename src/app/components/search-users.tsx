@@ -4,7 +4,8 @@
 
 "use client";
 
-import { Field, Label } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { User } from "@/models/scim";
 import { searchUser } from "@/services/users";
 import { useDeferredCallback } from "@/utils/hooks";

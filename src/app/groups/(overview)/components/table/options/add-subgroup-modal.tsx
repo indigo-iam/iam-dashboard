@@ -5,7 +5,10 @@
 "use client";
 
 import { Button } from "@/components/buttons";
-import { Description, Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Description } from "@/components/description";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -47,7 +50,7 @@ export default function AddSubgroupModal(
             Add a subgroup to group <b>{rootGroupName}</b>:
           </p>
           <Field>
-            <Label data-required>Subgroup name</Label>
+            <Label>Subgroup name</Label>
             <Input
               title="Name"
               type="text"

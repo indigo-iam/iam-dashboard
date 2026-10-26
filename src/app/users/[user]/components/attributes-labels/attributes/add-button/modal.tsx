@@ -7,7 +7,9 @@
 import { useRef, useState } from "react";
 
 import { Button } from "@/components/buttons";
-import { Form, Field, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -120,7 +122,7 @@ export default function AddAttributeModal(
       <Form onSubmit={submit} ref={formRef}>
         <ModalBody>
           <Field>
-            <Label data-required>Name</Label>
+            <Label>Name</Label>
             <Input
               id="attr-name"
               title="Attribute Name"
@@ -138,7 +140,7 @@ export default function AddAttributeModal(
             )}
           </Field>
           <Field>
-            <Label data-required>Value</Label>
+            <Label>Value</Label>
             <Input
               id="attr-value"
               title="Attribute Value"

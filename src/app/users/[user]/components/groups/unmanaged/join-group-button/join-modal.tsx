@@ -5,7 +5,9 @@
 "use client";
 
 import ConfirmModal from "@/components/confirm-modal";
-import { Field, Label, Description } from "@/components/form";
+import { Description } from "@/components/description";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Textarea } from "@/components/textarea";
 import { toast } from "@/components/toaster";
 import { JoinGroupRequest } from "@/models/group-requests";
@@ -117,7 +119,7 @@ export function JoinGroupModal(props: Readonly<JoinGroupModalProps>) {
         <div className="space-y-4">
           <GroupView group={selected} />
           <Field className="flex flex-col">
-            <Label data-required>Provide a motivation for your request</Label>
+            <Label>Provide a motivation for your request</Label>
             <Textarea
               id="group-request-notes"
               name="group-request-notes"

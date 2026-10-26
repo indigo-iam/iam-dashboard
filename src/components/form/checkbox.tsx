@@ -2,8 +2,10 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Checkbox as HeadlessCheckbox, Label } from "@headlessui/react";
+import { Checkbox as HeadlessCheckbox } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/16/solid";
+
+import { Label } from "@/components/label";
 
 export interface CheckboxState<T> {
   checked: boolean;

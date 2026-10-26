@@ -8,7 +8,9 @@ import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
 import { Button } from "@/components/buttons";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { toast } from "@/components/toaster";
@@ -36,7 +38,7 @@ function AddGroupForm(props: Readonly<AddGroupFormProps>) {
     <Form id="add-root-group-form" onSubmit={submit}>
       <ModalBody>
         <Field className="mb-8">
-          <Label data-required>Group Name</Label>
+          <Label>Group Name</Label>
           <Input
             type="text"
             name="groupName"

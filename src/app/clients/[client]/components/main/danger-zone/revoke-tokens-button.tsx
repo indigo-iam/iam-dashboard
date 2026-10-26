@@ -9,7 +9,7 @@ import { useRef, useState } from "react";
 import { Button } from "@/components/buttons";
 import { ModalProps } from "@/components/modal";
 import ConfirmModal from "@/components/confirm-modal";
-import { Field } from "@/components/form";
+import { Field } from "@/components/field";
 import { revokeTokens } from "@/services/clients";
 import { toast } from "@/components/toaster";
 import { Notice } from "@/components/notices";

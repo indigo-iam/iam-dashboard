@@ -13,7 +13,9 @@ import {
 } from "@/app/clients/components";
 import { Button } from "@/components/buttons";
 import { CarouselPanel } from "@/components/carousel";
-import { Description, Field, Label } from "@/components/form";
+import { Description } from "@/components/description";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { type Scope } from "@/models/client";
 import { Dropdown, DropdownOption } from "@/components/dropdown";
 

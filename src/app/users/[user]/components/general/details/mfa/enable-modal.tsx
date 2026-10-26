@@ -8,7 +8,9 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 import { Button } from "@/components/buttons";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { AddSecretResponse } from "@/models/mfa";
@@ -83,7 +85,7 @@ export function EnableMFAModal(props: Readonly<MFAModalProps>) {
             )}
           </div>
           <Field>
-            <Label data-required>TOTP</Label>
+            <Label>TOTP</Label>
             <Input name="code" placeholder="Insert TOTP..." type="string" />
           </Field>
         </ModalBody>

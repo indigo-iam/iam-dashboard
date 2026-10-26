@@ -8,7 +8,8 @@ import { useState } from "react";
 import Link from "next/link";
 
 import ConfirmModal from "@/components/confirm-modal";
-import { Field, Label } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { toast } from "@/components/toaster";
 import { Group } from "@/models/groups";
 import { addUserToGroup } from "@/services/groups";

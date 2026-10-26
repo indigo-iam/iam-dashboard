@@ -4,7 +4,9 @@
 
 "use client";
 
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,

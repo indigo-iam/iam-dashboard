@@ -6,7 +6,8 @@ import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 
 import { Button } from "@/components/buttons";
 import { CarouselPanel } from "@/components/carousel";
-import { Field, Label } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 
 type OtherSettingsProps = {

@@ -6,7 +6,8 @@ import {
   ClientAuthentication,
   TOKEN_ENDPOINT_AUTH_VALUES,
 } from "@/app/clients/components";
-import { Field, Label } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Info } from "@/components/info";
 import { TokenEndpointAuthMethod } from "@/models/client";
 

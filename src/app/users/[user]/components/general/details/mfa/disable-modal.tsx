@@ -5,7 +5,8 @@
 "use client";
 
 import { Button } from "@/components/buttons";
-import { Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { toast } from "@/components/toaster";
@@ -41,7 +42,7 @@ export function DisableMFAModal(props: Readonly<DisableMFAModalProps>) {
             some IAM services.
           </p>
           <p>To continue, please enter a TOTP from your authenticator.</p>
-          <Label data-required>TOTP</Label>
+          <Label>TOTP</Label>
           <Input name="code" />
         </ModalBody>
         <ModalFooter>

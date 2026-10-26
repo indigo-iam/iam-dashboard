@@ -8,7 +8,9 @@ import { useState } from "react";
 
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -39,7 +41,7 @@ function ModalPassword(props: Readonly<ModalPasswordProps>) {
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>
-            <Label data-required>Current password</Label>
+            <Label>Current password</Label>
             <Input
               name="currentPassword"
               type="password"
@@ -48,7 +50,7 @@ function ModalPassword(props: Readonly<ModalPasswordProps>) {
             />
           </Field>
           <Field>
-            <Label data-required>New password</Label>
+            <Label>New password</Label>
             <Input
               name="updatedPassword"
               type="password"
@@ -57,7 +59,7 @@ function ModalPassword(props: Readonly<ModalPasswordProps>) {
             />
           </Field>
           <Field>
-            <Label data-required>Repeat password</Label>
+            <Label>Repeat password</Label>
             <Input type="password" placeholder="Repeat password..." required />
           </Field>
         </ModalBody>

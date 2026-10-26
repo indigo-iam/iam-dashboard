@@ -2,7 +2,9 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Field, Label, LabeledCheckbox } from "@/components/form";
+import { LabeledCheckbox } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Info } from "@/components/info";
 import { Input } from "@/components/inputs";
 

@@ -8,7 +8,9 @@ import { useState } from "react";
 import { UserPlusIcon } from "@heroicons/react/24/outline";
 
 import { Button } from "@/components/buttons";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -62,7 +64,7 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
           information:
         </p>
         <Field className="flex flex-col gap-1">
-          <Label data-required>First Name</Label>
+          <Label>First Name</Label>
           <Input
             type="text"
             name="name"
@@ -72,7 +74,7 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
           />
         </Field>
         <Field className="flex flex-col gap-1">
-          <Label data-required>Surname</Label>
+          <Label>Surname</Label>
           <Input
             type="text"
             name="surname"
@@ -82,7 +84,7 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
           />
         </Field>
         <Field className="flex flex-col gap-1">
-          <Label data-required>Username</Label>
+          <Label>Username</Label>
           <Input
             type="text"
             name="username"
@@ -92,7 +94,7 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
           />
         </Field>
         <Field className="flex flex-col gap-1">
-          <Label data-required>Email</Label>
+          <Label>Email</Label>
           <Input
             type="email"
             name="email"

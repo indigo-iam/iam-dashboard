@@ -9,7 +9,10 @@ import { Fieldset } from "@headlessui/react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
 import { Button } from "@/components/buttons";
-import { Description, Field, Form, Label } from "@/components/form";
+import { Description } from "@/components/description";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -63,7 +66,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
         <ModalBody>
           <Fieldset>
             <Field>
-              <Label data-required>Name</Label>
+              <Label>Name</Label>
               <Input name="name" type="text" required />
             </Field>
             <Field>

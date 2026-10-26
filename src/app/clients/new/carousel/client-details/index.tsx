@@ -9,7 +9,8 @@ import { redirect } from "next/navigation";
 import { InputSecret } from "@/app/components/input-secret";
 import { Button } from "@/components/buttons";
 import { CarouselPanel } from "@/components/carousel";
-import { Field, Label } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import { Client } from "@/models/client";
 

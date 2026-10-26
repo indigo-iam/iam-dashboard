@@ -6,7 +6,9 @@
 
 import { useState } from "react";
 
-import { Field, Label, Description } from "@/components/form";
+import { Description } from "@/components/description";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Info } from "@/components/info";
 import { Select, Option } from "@/components/select";
 import { GrantType } from "@/models/openid-configuration";

@@ -6,7 +6,9 @@
 
 import { Button } from "@/components/buttons";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Textarea } from "@/components/textarea";
 import { GroupRequest } from "@/models/group-requests";
 import { rejectGroupRequest } from "@/services/group-requests";

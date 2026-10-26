@@ -8,8 +8,9 @@ import { useState } from "react";
 
 import ConfirmModal from "@/components/confirm-modal";
 import { toast } from "@/components/toaster";
+import { LabeledCheckbox } from "@/components/form";
+import { Field } from "@/components/field";
 import { assignRole, revokeRole } from "@/services/authorities";
-import { Field, LabeledCheckbox } from "@/components/form";
 
 export type Role = "ROLE_ADMIN" | "ROLE_READER";
 

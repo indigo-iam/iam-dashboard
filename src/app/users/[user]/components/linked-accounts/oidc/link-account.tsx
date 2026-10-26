@@ -15,7 +15,9 @@ import {
   ModalHeader,
   ModalProps,
 } from "@/components/modal";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import { linkOidcAccount } from "@/services/users";
 import { toast } from "@/components/toaster";
@@ -58,7 +60,7 @@ function LinkAccountModal(props: Readonly<LinkAccountModalProps>) {
             />
           </Field>
           <Field>
-            <Label data-required>Subject</Label>
+            <Label>Subject</Label>
             <Input name="subject" placeholder="abc-12345-defg" required />
           </Field>
         </ModalBody>

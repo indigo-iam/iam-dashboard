@@ -8,7 +8,9 @@ import { useId, useRef, useState } from "react";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 
 import { Button } from "@/components/buttons";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Info } from "@/components/info";
 import { Input } from "@/components/inputs";
 import {

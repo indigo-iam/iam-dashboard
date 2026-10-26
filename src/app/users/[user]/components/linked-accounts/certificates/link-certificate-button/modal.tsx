@@ -8,7 +8,9 @@ import { useRef, useState } from "react";
 
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -62,7 +64,7 @@ function PEMField() {
     "-----BEGIN PKCS12-----\nMIIF2gIBAzCCBf8GCSqGSIb3DQEHAaCCBf8wggVgMI...\n-----END PKCS12-----";
   return (
     <Field>
-      <Label data-required>Certificate</Label>
+      <Label>Certificate</Label>
       <Textarea
         name="certificate"
         className="iam-input w-full"
@@ -77,7 +79,7 @@ function PEMField() {
 function IssuerField() {
   return (
     <Field>
-      <Label data-required>Issuer</Label>
+      <Label>Issuer</Label>
       <Select name="issuer" disabled>
         <Option>No options</Option>
       </Select>
@@ -124,7 +126,7 @@ function RequestCertificateLinkingModal(
             <Input defaultValue={userName} disabled />
           </Field>
           <Field>
-            <Label data-required>Label</Label>
+            <Label>Label</Label>
             <Input
               required
               name="label"
@@ -209,11 +211,11 @@ function LinkCertificateModal(props: Readonly<LinkCertificateModalProps>) {
         <Input value={userName} disabled />
       </Field>
       <Field>
-        <Label data-required>Label</Label>
+        <Label>Label</Label>
         <Input name="label" placeholder="example" required />
       </Field>
       <Field>
-        <Label data-required>Certificate</Label>
+        <Label>Certificate</Label>
         <Textarea
           name="certificate"
           placeholder="PEM encoded certificate..."

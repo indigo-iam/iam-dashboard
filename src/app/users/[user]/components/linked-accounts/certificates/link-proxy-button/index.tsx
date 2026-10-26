@@ -8,7 +8,9 @@ import { useState } from "react";
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 
 import { Button } from "@/components/buttons";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import {
   Modal,
   ModalBody,
@@ -89,7 +91,7 @@ function LinkProxyModal(props: Readonly<LinkProxyModalProps>) {
             <Input defaultValue={userName} disabled />
           </Field>
           <Field>
-            <Label data-required>Proxy certificate</Label>
+            <Label>Proxy certificate</Label>
             <Textarea
               name="proxy-cert"
               className="iam-input w-full"

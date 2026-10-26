@@ -7,7 +7,8 @@
 import { useState } from "react";
 
 import { Button } from "@/components/buttons";
-import { Checkbox, Field, Form } from "@/components/form";
+import { Checkbox, Form } from "@/components/form";
+import { Field } from "@/components/field";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { Client, Scope } from "@/models/client";
@@ -46,7 +47,7 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
           <ul>
             {availableScopes.map(s => (
               <Field
-                as="li"
+                role="listitem"
                 key={s.id}
                 className="flex flex-row items-center gap-2 p-2 hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-400"
               >

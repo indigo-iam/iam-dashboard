@@ -6,7 +6,9 @@ import { useState } from "react";
 
 import { Button } from "@/components/buttons";
 import { CarouselPanel } from "@/components/carousel";
-import { Field, Label, Description } from "@/components/form";
+import { Description } from "@/components/description";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 
 type GeneralSettingsProps = {
@@ -27,7 +29,7 @@ export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
     <CarouselPanel className="panel flex flex-col gap-2" unmount={false}>
       <h2>General Settings</h2>
       <Field>
-        <Label data-required>Client Name</Label>
+        <Label>Client Name</Label>
         <Input
           title="Client Name"
           name="client_name"

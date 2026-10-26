@@ -7,7 +7,8 @@
 import { useState } from "react";
 
 import { Button } from "@/components/buttons";
-import { Checkbox, Form } from "@/components/form";
+import { Checkbox } from "@/components/checkbox";
+import { Form } from "@/components/form";
 import { Field } from "@/components/field";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { toast } from "@/components/toaster";

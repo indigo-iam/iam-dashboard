@@ -2,10 +2,12 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Checkbox as HeadlessCheckbox } from "@headlessui/react";
+"use client";
+
 import { CheckIcon } from "@heroicons/react/16/solid";
 
 import { Label } from "@/components/label";
+import { useRef } from "react";
 
 export interface CheckboxState<T> {
   checked: boolean;
@@ -24,13 +26,30 @@ type CheckboxProps = {
 };
 
 export function Checkbox(props: Readonly<CheckboxProps>) {
+  const { onChange, ...other } = props;
+  const checkboxRef = useRef<HTMLInputElement>(null);
+  const isControlled = other.checked !== undefined;
+
+  function handleChange() {
+    if (!checkboxRef.current) {
+      return;
+    }
+    if (isControlled) {
+      onChange?.(!other.checked);
+    } else {
+      checkboxRef.current.checked = !checkboxRef.current.checked;
+    }
+  }
   return (
-    <HeadlessCheckbox
-      {...props}
+    <span
       className="group flex aspect-square size-4 items-center rounded border bg-white dark:bg-gray-800"
+      onClick={handleChange}
+      role="checkbox"
+      aria-checked={other.checked}
     >
-      <CheckIcon className="hidden size-4 fill-gray-700 group-data-checked:block dark:fill-gray-300" />
-    </HeadlessCheckbox>
+      <CheckIcon className="hidden size-4 fill-gray-700 group-has-checked:block dark:fill-gray-300" />
+      <input {...other} type="checkbox" hidden readOnly ref={checkboxRef} />
+    </span>
   );
 }
 
@@ -42,13 +61,8 @@ export function LabeledCheckbox(props: Readonly<LabeledCheckboxProps>) {
   const { children, ...checkboxProps } = props;
   return (
     <div className="flex flex-row items-center gap-2">
-      <HeadlessCheckbox
-        {...checkboxProps}
-        className="group flex aspect-square size-4 items-center rounded border bg-white dark:bg-gray-800"
-      >
-        <CheckIcon className="hidden size-4 fill-gray-700 group-data-checked:block dark:fill-gray-300" />
-      </HeadlessCheckbox>
-      <Label className="text-sm">{children}</Label>
+      <Checkbox {...checkboxProps} />
+      <Label className="pb-0.5! text-sm">{children}</Label>
     </div>
   );
 }

@@ -8,7 +8,7 @@ import { useState } from "react";
 
 import ConfirmModal from "@/components/confirm-modal";
 import { toast } from "@/components/toaster";
-import { LabeledCheckbox } from "@/components/form";
+import { LabeledCheckbox } from "@/components/checkbox";
 import { Field } from "@/components/field";
 import { assignRole, revokeRole } from "@/services/authorities";
 

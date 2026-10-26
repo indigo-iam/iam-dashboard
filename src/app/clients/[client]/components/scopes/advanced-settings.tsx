@@ -5,7 +5,7 @@
 "use client";
 
 import { Button } from "@/components/buttons";
-import { LabeledCheckbox } from "@/components/form";
+import { LabeledCheckbox } from "@/components/checkbox";
 import { Field } from "@/components/field";
 import { toast } from "@/components/toaster";
 import { Client } from "@/models/client";

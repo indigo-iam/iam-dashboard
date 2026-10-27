@@ -24,7 +24,7 @@ export function DeleteUser(props: Readonly<DeleteUserProps>) {
   const handleDeleted = () => redirect("/users");
   return (
     <>
-      <Button className="btn-danger" onClick={open}>
+      <Button accent="danger" type="button" onClick={open}>
         Delete user
       </Button>
       <DeleteUserModal

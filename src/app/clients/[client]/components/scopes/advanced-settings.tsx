@@ -5,7 +5,8 @@
 "use client";
 
 import { Button } from "@/components/buttons";
-import { Field, LabeledCheckbox } from "@/components/form";
+import { LabeledCheckbox } from "@/components/checkbox";
+import { Field } from "@/components/field";
 import { toast } from "@/components/toaster";
 import { Client } from "@/models/client";
 import { editClient } from "@/services/clients";
@@ -43,7 +44,7 @@ export function AdvancedSettings(props: Readonly<AdvancedSettings>) {
           </LabeledCheckbox>
         </Field>
         <div className="flex justify-end">
-          <Button className="btn-secondary" type="submit">
+          <Button variant="outline" type="submit">
             Save
           </Button>
         </div>

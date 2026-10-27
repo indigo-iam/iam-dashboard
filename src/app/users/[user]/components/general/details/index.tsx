@@ -5,9 +5,12 @@
 "use client";
 
 import { IdentificationIcon } from "@heroicons/react/24/outline";
+
 import { Status } from "@/components/badges";
 import { Button } from "@/components/buttons";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import { editUser } from "@/services/users";
 import { toast } from "@/components/toaster";
@@ -91,36 +94,29 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
         <Form className="space-y-4" onSubmit={submit}>
           <div className="flex flex-wrap gap-4">
             <Field className="flex max-w-full grow flex-col">
-              <Label htmlFor="given-name" data-required>
-                First Name
-              </Label>
+              <Label>First Name</Label>
               <Input
                 required
                 type="text"
-                id="given-name"
                 name="given-name"
                 minLength={2}
                 defaultValue={userGivenName}
               />
             </Field>
             <Field className="flex max-w-full grow flex-col">
-              <Label htmlFor="family-name" data-required>
-                Last Name
-              </Label>
+              <Label>Last Name</Label>
               <Input
                 required
                 type="text"
-                id="family-name"
                 name="family-name"
                 minLength={2}
                 defaultValue={userFamilyName}
               />
             </Field>
             <Field className="flex max-w-full grow flex-col">
-              <Label htmlFor="middle-name">Middle Name</Label>
+              <Label>Middle Name</Label>
               <Input
                 type="text"
-                id="middle-name"
                 name="middle-name"
                 minLength={2}
                 defaultValue={userMiddleName ?? undefined}
@@ -128,15 +124,11 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
             </Field>
           </div>
           <Field className="flex flex-col">
-            <Label htmlFor="username" data-required>
-              Username
-            </Label>
+            <Label>Username</Label>
             <Input name="username" defaultValue={userName} required disabled />
           </Field>
           <Field className="flex flex-col">
-            <Label htmlFor="email" data-required>
-              Email
-            </Label>
+            <Label>Email</Label>
             <Input
               required
               type="email"
@@ -146,10 +138,10 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
             />
           </Field>
           <Field className="flex justify-between">
-            <Button className="btn-tertiary" type="reset">
+            <Button variant="outline" type="reset">
               Reset
             </Button>
-            <Button className="btn-secondary" type="submit">
+            <Button variant="outline" type="submit">
               Save changes
             </Button>
           </Field>

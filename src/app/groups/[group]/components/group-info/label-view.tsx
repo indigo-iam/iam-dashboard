@@ -4,6 +4,7 @@
 
 "use client";
 
+import { Button } from "@/components/buttons";
 import { useProgressBar } from "@/components/progress-bar";
 import { toast } from "@/components/toaster";
 import { Group, GroupLabel } from "@/models/groups";
@@ -36,14 +37,15 @@ export default function LabelView(props: Readonly<LabelProps>) {
       <span>
         <b>{label.name}</b> {label.value}
       </span>
-      <button
+      <Button
         id={`delete-label-${label.name}`}
         title={`Delete ${label.name} ${label.value}`.trimEnd()}
         type="submit"
+        variant="plain"
         className="cursor-pointer"
       >
         <XCircleIcon className="size-4 hover:text-gray-300" />
-      </button>
+      </Button>
     </form>
   );
 }

@@ -4,8 +4,13 @@
 
 "use client";
 
+import { useState } from "react";
+import { UserPlusIcon } from "@heroicons/react/24/outline";
+
 import { Button } from "@/components/buttons";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -18,8 +23,6 @@ import { toast } from "@/components/toaster";
 import { ScimUser } from "@/models/scim";
 import { addUser } from "@/services/users";
 import { toTitleCase } from "@/utils/strings";
-import { UserPlusIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
 
 type AddUserFormProps = {
   onClose?: () => void;
@@ -61,7 +64,7 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
           information:
         </p>
         <Field className="flex flex-col gap-1">
-          <Label data-required>First Name</Label>
+          <Label>First Name</Label>
           <Input
             type="text"
             name="name"
@@ -71,7 +74,7 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
           />
         </Field>
         <Field className="flex flex-col gap-1">
-          <Label data-required>Surname</Label>
+          <Label>Surname</Label>
           <Input
             type="text"
             name="surname"
@@ -81,7 +84,7 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
           />
         </Field>
         <Field className="flex flex-col gap-1">
-          <Label data-required>Username</Label>
+          <Label>Username</Label>
           <Input
             type="text"
             name="username"
@@ -91,7 +94,7 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
           />
         </Field>
         <Field className="flex flex-col gap-1">
-          <Label data-required>Email</Label>
+          <Label>Email</Label>
           <Input
             type="email"
             name="email"
@@ -102,15 +105,13 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
         </Field>
       </ModalBody>
       <ModalFooter>
-        <Button className="btn-tertiary" type="reset" onClick={onClose}>
+        <Button variant="underline" type="reset" onClick={onClose}>
           Cancel
         </Button>
-        <Button className="btn-secondary" type="reset">
+        <Button variant="outline" type="reset">
           Reset
         </Button>
-        <Button className="btn-primary" type="submit">
-          Create User
-        </Button>
+        <Button type="submit">Create User</Button>
       </ModalFooter>
     </Form>
   );
@@ -149,7 +150,7 @@ export default function AddUser(props: Readonly<AddUserProps>) {
   return (
     <>
       <AddUserModal show={show} onClose={close} onUserAdded={onUserAdded} />
-      <Button className="btn-secondary" onClick={open}>
+      <Button variant="outline" onClick={open}>
         <UserPlusIcon className="size-4" />
         New user
       </Button>

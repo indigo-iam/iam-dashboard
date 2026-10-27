@@ -4,7 +4,9 @@
 
 import { Textarea } from "@/components/textarea";
 import ConfirmButton from "./components/confirm-button";
-import { Description, Field, Label } from "@/components/form";
+import { Description } from "@/components/description";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { redirect } from "next/navigation";
 
 const POLICY_EXAMPLE = `{

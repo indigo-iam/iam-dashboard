@@ -15,7 +15,9 @@ import {
   ModalHeader,
   ModalProps,
 } from "@/components/modal";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import { linkOidcAccount } from "@/services/users";
 import { toast } from "@/components/toaster";
@@ -58,17 +60,15 @@ function LinkAccountModal(props: Readonly<LinkAccountModalProps>) {
             />
           </Field>
           <Field>
-            <Label data-required>Subject</Label>
+            <Label>Subject</Label>
             <Input name="subject" placeholder="abc-12345-defg" required />
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" type="reset" onClick={onClose}>
+          <Button variant="underline" type="reset" onClick={onClose}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Link account
-          </Button>
+          <Button type="submit">Link account</Button>
         </ModalFooter>
       </Form>
     </Modal>
@@ -87,7 +87,7 @@ export function LinkAccountButton(props: Readonly<LinkAccountButtonProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Button className="btn-secondary" type="button" onClick={open}>
+      <Button variant="outline" type="button" onClick={open}>
         <SquaresPlusIcon className="size-4" />
         Link account
       </Button>

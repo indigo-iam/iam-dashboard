@@ -12,19 +12,21 @@ import {
   ClientAuthentication,
 } from "@/app/clients/components";
 import { Button } from "@/components/buttons";
-import { CarouselPanel } from "@/components/carousel";
-import { Description, DropdownList, Field, Label } from "@/components/form";
+import { CarouselPanel, useCarousel } from "@/components/carousel";
+import { Description } from "@/components/description";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { type Scope } from "@/models/client";
+import { Dropdown, DropdownOption } from "@/components/dropdown";
 
 type OIDCSettingsProps = {
   isAdmin: boolean;
   systemScopes: Scope[];
-  goBack: () => void;
-  goNext: () => void;
 };
 
 export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
-  const { isAdmin, systemScopes, goBack, goNext } = props;
+  const { isAdmin, systemScopes } = props;
+  const actions = useCarousel();
   const [authFlowOk, setAuthFlowOk] = useState(false);
   const [clientAuthOk, setClientAuthOk] = useState(false);
 
@@ -53,9 +55,14 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
   });
 
   const canContinue = authFlowOk && clientAuthOk;
-
+  function goBack() {
+    actions.previousTab();
+  }
+  function goNext() {
+    actions.nextTab();
+  }
   return (
-    <CarouselPanel className="panel flex flex-col gap-2" unmount={false}>
+    <CarouselPanel className="panel flex flex-col gap-2">
       <h2>OpenID Connect - OAuth 2</h2>
       <AuthenticationFlow redirectUris={[]} onStatusChange={setAuthFlowOk} />
       <Field>
@@ -70,29 +77,37 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
       </Field>
       <Field>
         <Label>Scopes</Label>
-        <DropdownList
+        <Dropdown
           name="scope"
-          title="Add Scope"
-          options={scopes}
-          defaultOptions={defaultScopes}
-        />
+          placeholder="Add scopes..."
+          defaultValue={defaultScopes.map(s => s.value.name)}
+        >
+          {scopes.map(s => (
+            <DropdownOption
+              key={s.value.id}
+              value={s.value.name}
+              disabled={s.disabled && !isAdmin}
+            >
+              {s.title}
+            </DropdownOption>
+          ))}
+        </Dropdown>
         <Description>
           Restricted scopes can be enabled only by an administrator. If you need
-          a restricted scope for your client, please contact the administrator
-          of your organization.
+          a restricted scope, please contact your the administrator of your
+          organization.
         </Description>
       </Field>
       <div className="flex flex-row justify-end py-2">
-        <Button className="btn-tertiary" onClick={goBack}>
-          <div className="flex items-center">
-            <ChevronLeftIcon className="-ml-2 size-5" />
-            Back
-          </div>
+        <Button variant="underline" type="button" onClick={goBack}>
+          <ChevronLeftIcon className="mt-0.5 size-4" />
+          Back
         </Button>
         <Button
-          className="btn-secondary"
+          variant="outline"
           onClick={goNext}
           disabled={!canContinue}
+          type="button"
         >
           Continue
         </Button>

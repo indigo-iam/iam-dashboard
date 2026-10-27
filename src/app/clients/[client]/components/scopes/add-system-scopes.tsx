@@ -4,14 +4,16 @@
 
 "use client";
 import { useState } from "react";
-import { Label } from "@headlessui/react";
 
 import { Button } from "@/components/buttons";
-import { Checkbox, Field, Form } from "@/components/form";
+import { Checkbox } from "@/components/checkbox";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { Client, Scope } from "@/models/client";
 import { editClient } from "@/services/clients";
+import { Label } from "@/components/label";
 
 type ScopeCheckboxProps = {
   value: string;
@@ -24,11 +26,11 @@ function ScopeCheckbox(props: Readonly<ScopeCheckboxProps>) {
   const { value, description, title, disabled } = props;
   return (
     <Field
-      as="li"
-      className="group flex flex-row items-center gap-2 p-2 text-gray-600 hover:rounded-md hover:bg-gray-100 data-disabled:cursor-not-allowed data-disabled:text-gray-400 dark:text-gray-200 dark:hover:bg-gray-400 dark:data-disabled:text-white/40"
-      disabled={disabled}
+      role="listitem"
+      className="group flex flex-row items-center gap-2 p-2 text-gray-600 hover:rounded-md hover:bg-gray-50 data-disabled:cursor-not-allowed data-disabled:text-gray-400 dark:text-gray-200 dark:hover:bg-gray-400 dark:data-disabled:text-white/40"
+      data-disabled={disabled || null}
     >
-      <Checkbox name="scope" value={value} />
+      <Checkbox name="scope" value={value} disabled={disabled} />
       <div className="flex grow flex-col">
         <Label>{title ?? value}</Label>
         <p className="text-sm font-light">{description}</p>
@@ -80,12 +82,10 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
           </ul>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" onClick={onClose} type="reset">
+          <Button variant="underline" onClick={onClose} type="reset">
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Add scope(s)
-          </Button>
+          <Button type="submit">Add scope(s)</Button>
         </ModalFooter>
       </Form>
     </Modal>
@@ -99,7 +99,7 @@ export function AddScopeButton(props: Readonly<AddScopeProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Button className="btn-secondary" onClick={open}>
+      <Button variant="outline" type="button" onClick={open}>
         Add system scope(s)
       </Button>
       <AddScopeModal

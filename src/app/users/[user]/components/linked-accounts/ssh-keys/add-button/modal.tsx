@@ -5,7 +5,9 @@
 "use client";
 
 import { Button } from "@/components/buttons";
-import { Form, Field, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -66,16 +68,10 @@ export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button
-            className="btn-tertiary"
-            type="reset"
-            onClick={modalProps.onClose}
-          >
+          <Button variant="underline" type="reset" onClick={modalProps.onClose}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Add SSH Key
-          </Button>
+          <Button type="submit">Add SSH Key</Button>
         </ModalFooter>
       </Form>
     </Modal>

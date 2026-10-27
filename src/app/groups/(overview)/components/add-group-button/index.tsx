@@ -4,14 +4,17 @@
 
 "use client";
 
+import { useState } from "react";
+import { PlusIcon } from "@heroicons/react/24/outline";
+
 import { Button } from "@/components/buttons";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { addGroup } from "@/services/groups";
-import { PlusIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
 
 type AddGroupFormProps = {
   onClose?: () => void;
@@ -35,7 +38,7 @@ function AddGroupForm(props: Readonly<AddGroupFormProps>) {
     <Form id="add-root-group-form" onSubmit={submit}>
       <ModalBody>
         <Field className="mb-8">
-          <Label data-required>Group Name</Label>
+          <Label>Group Name</Label>
           <Input
             type="text"
             name="groupName"
@@ -46,12 +49,10 @@ function AddGroupForm(props: Readonly<AddGroupFormProps>) {
         </Field>
       </ModalBody>
       <ModalFooter>
-        <Button className="btn-tertiary" type="reset" onClick={onClose}>
+        <Button variant="underline" type="reset" onClick={onClose}>
           Cancel
         </Button>
-        <Button className="btn-primary" type="submit">
-          Add group
-        </Button>
+        <Button type="submit">Add group</Button>
       </ModalFooter>
     </Form>
   );
@@ -72,7 +73,7 @@ export default function AddGroupButton(props: Readonly<AddGroupButtonProps>) {
         <ModalHeader>Create new group</ModalHeader>
         <AddGroupForm onClose={close} onGroupAdded={onGroupAdded} />
       </Modal>
-      <Button className="btn-secondary" data-testid="add-group" onClick={open}>
+      <Button variant="outline" data-testid="add-group" onClick={open}>
         <PlusIcon className="size-4" />
         New group
       </Button>

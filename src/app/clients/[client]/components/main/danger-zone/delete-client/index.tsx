@@ -25,7 +25,7 @@ export function DeleteButton(props: Readonly<DeleteButtonProps>) {
   const handleDeleted = () => redirect("/clients");
   return (
     <>
-      <Button className="btn-danger" onClick={open}>
+      <Button accent="danger" type="button" onClick={open}>
         Delete
       </Button>
       <DeleteClientModal

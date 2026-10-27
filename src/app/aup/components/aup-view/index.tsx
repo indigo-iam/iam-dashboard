@@ -2,7 +2,10 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Form, Field, Label, Description } from "@/components/form";
+import { Description } from "@/components/description";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs/input";
 import { AUP } from "@/models/aup";
 import { dateToHuman } from "@/utils/dates";

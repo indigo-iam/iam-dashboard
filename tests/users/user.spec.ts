@@ -13,8 +13,7 @@ testUser(
     await page.waitForURL("./users/me");
 
     await testUser.step("Select groups panel", async () => {
-      const tab = page.getByText("GROUPS", { exact: true });
-      await changeTabPanel(tab);
+      await changeTabPanel(page, "GROUPS");
     });
 
     await testUser.step("Initially there are no pending requests", async () => {

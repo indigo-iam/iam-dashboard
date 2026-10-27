@@ -1,9 +1,10 @@
 {
   "name": "iam-dashboard",
   "private": true,
-  "version": "0.6.1",
+  "version": "0.6.2",
+  "type": "module",
   "scripts": {
-    "dev": "next dev -p 3000 --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "PORT=3000 HOSTNAME=127.0.0.1 node .next/standalone/server.js",
     "playwright:install": "playwright install --with-deps",
@@ -11,7 +12,6 @@
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
-    "@headlessui/react": "^2",
     "@heroicons/react": "^2",
     "@vercel/otel": "^2",
     "better-auth": "^1.7",

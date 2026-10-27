@@ -4,7 +4,7 @@
 
 "use client";
 
-import { Select, SelectOption } from "@/components/form";
+import { Select, Option } from "@/components/select";
 import { toast } from "@/components/toaster";
 import { Scope } from "@/models/client";
 import { editScope } from "@/services/scopes";
@@ -29,9 +29,10 @@ export default function ScopeTypeSelect(props: Readonly<ScopeTypeSelectProps>) {
     defaultOption = options[2];
   }
 
-  async function handleChange(value: { id: string; name: string }) {
+  async function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const value = e.target.value;
     const newScope = { ...scope };
-    switch (value.id) {
+    switch (value) {
       case "default": {
         newScope.defaultScope = true;
         newScope.restricted = false;
@@ -55,12 +56,12 @@ export default function ScopeTypeSelect(props: Readonly<ScopeTypeSelectProps>) {
     <Select
       name="scope-type"
       onChange={handleChange}
-      defaultValue={defaultOption}
+      defaultValue={defaultOption.id}
     >
       {options.map(o => (
-        <SelectOption key={o.id} value={o}>
+        <Option key={o.id} value={o.id}>
           {o.name}
-        </SelectOption>
+        </Option>
       ))}
     </Select>
   );

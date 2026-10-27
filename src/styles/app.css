@@ -1,0 +1,47 @@
+/*
+ * SPDX-FileCopyrightText: 2026 Istituto Nazionale di Fisica Nucleare
+ *
+ * SPDX-License-Identifier: EUPL-1.2
+ */
+
+@import "tailwindcss";
+
+@theme {
+  --color-success: var(--color-green-700);
+  --color-warning: var(--color-yellow-400);
+  --color-danger: var(--color-red-600);
+  --color-danger-light: var(--color-red-500);
+  --color-danger-hover: var(--color-red-800);
+  --color-sky-980: oklch(25% 14% 242deg);
+  --breakpoint-3xl: 120rem;
+  --breakpoint-4xl: 140rem;
+  --breakpoint-5xl: 160rem;
+}
+
+@layer base {
+  * {
+    @apply border-gray-200 dark:border-gray-700;
+  }
+  body {
+    @apply bg-gray-100 text-gray-950 dark:bg-gray-900 dark:text-white;
+  }
+  h1 {
+    @apply text-4xl font-bold text-gray-950 dark:text-gray-100;
+  }
+  h2 {
+    @apply text-2xl font-bold text-gray-950 dark:text-gray-100;
+  }
+  h3 {
+    @apply text-lg font-bold text-gray-950 dark:text-gray-100;
+  }
+  h4 {
+    @apply text-base font-bold text-gray-950 dark:text-gray-100;
+  }
+  h5 {
+    @apply dark:text-gray-100;
+  }
+}
+
+@utility font-code {
+  @apply rounded bg-gray-100 px-1 py-0.5 font-mono dark:bg-gray-500;
+}

@@ -33,6 +33,7 @@ type MainGrantTypesProps = {
 
 export function MainGrantTypes(props: Readonly<MainGrantTypesProps>) {
   const { grantTypes, redirectUris, onAuthGrantChange } = props;
+  const defaultValue = defaultGrantType(grantTypes).id;
   return (
     <div className="flex flex-col gap-4 pb-4 lg:flex-row lg:gap-8">
       <div className="w-full space-y-4 text-sm lg:w-1/3">
@@ -50,7 +51,7 @@ export function MainGrantTypes(props: Readonly<MainGrantTypesProps>) {
       <div className="lg:w-2/3">
         <AuthenticationFlow
           redirectUris={redirectUris}
-          defaultValue={defaultGrantType(grantTypes)}
+          defaultValue={defaultValue}
           onStatusChange={onAuthGrantChange}
         />
       </div>

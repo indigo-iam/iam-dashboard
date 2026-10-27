@@ -8,7 +8,9 @@ import { useState } from "react";
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 
 import { Button } from "@/components/buttons";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import {
   Modal,
   ModalBody,
@@ -53,12 +55,10 @@ function LinkProxyModal(props: Readonly<LinkProxyModalProps>) {
           </p>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" onClick={close}>
+          <Button variant="outline" type="reset" onClick={close}>
             Cancel
           </Button>
-          <Button className="btn-primary" disabled={disabled}>
-            Confirm
-          </Button>
+          <Button disabled={disabled}>Confirm</Button>
         </ModalFooter>
       </Modal>
     );
@@ -91,7 +91,7 @@ function LinkProxyModal(props: Readonly<LinkProxyModalProps>) {
             <Input defaultValue={userName} disabled />
           </Field>
           <Field>
-            <Label data-required>Proxy certificate</Label>
+            <Label>Proxy certificate</Label>
             <Textarea
               name="proxy-cert"
               className="iam-input w-full"
@@ -103,12 +103,10 @@ function LinkProxyModal(props: Readonly<LinkProxyModalProps>) {
           {error && <p className="text-danger">{error}</p>}
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" onClick={close}>
+          <Button variant="underline" type="reset" onClick={close}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Confirm
-          </Button>
+          <Button type="submit">Confirm</Button>
         </ModalFooter>
       </Form>
     </Modal>
@@ -128,7 +126,7 @@ export function LinkProxyButton(props: Readonly<LinkProxyButtonProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Button onClick={open} className="btn-secondary">
+      <Button variant="outline" type="button" onClick={open}>
         Link proxy certificate
       </Button>
       <LinkProxyModal

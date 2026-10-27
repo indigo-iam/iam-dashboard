@@ -45,11 +45,7 @@ async function saveNewClient(page: Page) {
 }
 
 async function deleteClient(page: Page) {
-  const general = page.getByRole("tab", { name: "GENERAL" });
-  await general.scrollIntoViewIfNeeded();
-  await expect(general).toBeVisible();
-  await expect(general).toBeEnabled();
-  await changeTabPanel(general);
+  await changeTabPanel(page, "GENERAL");
   const dialog = await openDeleteClientModal(page);
   const deleteBtn = dialog.getByRole("button", { name: "Delete" });
   await expect(deleteBtn).toBeEnabled();
@@ -76,10 +72,7 @@ async function navigateToClientPage(page: Page, clientName: string) {
 }
 
 async function navigateToScopeTab(page: Page) {
-  const scopes = page.getByRole("tab", { name: "SCOPES" });
-  await scopes.scrollIntoViewIfNeeded();
-  await expect(scopes).toBeEnabled();
-  await changeTabPanel(scopes);
+  await changeTabPanel(page, "SCOPES");
 }
 
 async function openDeleteClientModal(page: Page) {
@@ -206,8 +199,12 @@ testUser(
         await expect(addScopes).toBeEnabled();
         await addScopes.click();
         const scopesList = page.getByRole("listbox").filter({ visible: true });
-        const adminRead = scopesList.getByText("iam:admin.read (restricted)");
-        const adminWrite = scopesList.getByText("iam:admin.write (restricted)");
+        const adminRead = scopesList.getByRole("option", {
+          name: "iam:admin.read (restricted)",
+        });
+        const adminWrite = scopesList.getByRole("option", {
+          name: "iam:admin.write (restricted)",
+        });
         await expect(adminRead).toBeVisible();
         await expect(adminRead).toBeDisabled();
         await expect(adminWrite).toBeVisible();

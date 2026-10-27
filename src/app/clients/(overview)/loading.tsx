@@ -2,8 +2,9 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { InputQuery } from "@/components/inputs";
 import { PlusIcon, CubeIcon } from "@heroicons/react/24/solid";
+
+import { InputQuery } from "@/components/inputs";
 import Paginator from "@/components/paginator";
 import { Button } from "@/components/buttons";
 import { LoadingList } from "@/components/loading";
@@ -12,12 +13,9 @@ import { isUserAdmin } from "@/auth";
 function Buttons() {
   return (
     <div className="flex flex-row gap-2">
-      <Button className="btn-secondary" tabIndex={-1} disabled>
+      <Button variant="outline" type="button" tabIndex={-1} disabled>
         <PlusIcon className="size-4" />
         New client
-      </Button>
-      <Button className="btn-secondary" disabled>
-        Redeem
       </Button>
     </div>
   );

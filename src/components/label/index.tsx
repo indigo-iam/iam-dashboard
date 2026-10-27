@@ -14,7 +14,7 @@ type LabelProps = {
 
 export function Label(props: Readonly<LabelProps>) {
   const { children, className, htmlFor } = props;
-  const { labelledBy } = useLabelledBy();
+  const labelledBy = useLabelledBy();
   return (
     <label
       className={`group-has-required:after:text-danger block pb-1.5 text-sm text-gray-600 group-has-required:after:content-['*'] dark:text-gray-300 ${className ?? ""}`}

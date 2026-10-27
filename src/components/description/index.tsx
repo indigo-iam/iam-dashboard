@@ -12,7 +12,7 @@ type DescriptionProps = {
 
 export function Description(props: Readonly<DescriptionProps>) {
   const { children } = props;
-  const { describedBy } = useDescribedBy();
+  const describedBy = useDescribedBy();
   return (
     <p
       id={describedBy}

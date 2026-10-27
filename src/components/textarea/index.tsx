@@ -10,8 +10,8 @@ import { useLabelledBy } from "../label/context";
 type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 export function Textarea(props: Readonly<TextareaProps>) {
-  const { labelledBy } = useLabelledBy();
-  const { describedBy } = useDescribedBy();
+  const labelledBy = useLabelledBy();
+  const describedBy = useDescribedBy();
   return (
     <textarea
       {...props}

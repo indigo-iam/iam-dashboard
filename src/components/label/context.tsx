@@ -14,8 +14,7 @@ export const LabelContext = createContext<LabelContextProps | null>(null);
 
 export function useLabelledBy() {
   const context = useContext(LabelContext);
-  if (!context) {
-    throw new Error("Use <Label> component inside <Field>");
+  if (context) {
+    return context.labelledBy;
   }
-  return context;
 }

@@ -16,8 +16,7 @@ export const DescriptionContext = createContext<DescriptionContextProps | null>(
 
 export function useDescribedBy() {
   const context = useContext(DescriptionContext);
-  if (!context) {
-    throw new Error("Use <Description> component inside <Field>");
+  if (context) {
+    return context.describedBy;
   }
-  return context;
 }

@@ -8,8 +8,6 @@ import { RefObject, useRef } from "react";
 
 import { useDisabled } from "@/utils/hooks";
 import { Tooltip, useTooltip } from "../tooltip";
-import { useLabelledBy } from "../label/context";
-import { useDescribedBy } from "../description/context";
 
 const classNames = {
   base: "flex max-h-fit max-w-fit min-w-fit cursor-pointer items-center gap-1 rounded-md p-1 px-2 text-sm font-normal text-nowrap transition ease-out disabled:cursor-not-allowed",

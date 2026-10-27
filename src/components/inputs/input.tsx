@@ -7,7 +7,7 @@
 import { useDescribedBy } from "../description/context";
 import { useLabelledBy } from "../label/context";
 
-type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   "data-testid"?: string;
 };
 

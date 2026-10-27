@@ -44,7 +44,6 @@ export default async function RootLayout(props: Readonly<RootLayoutProps>) {
   return (
     <html lang="en">
       <body>
-        {/*this div is required by https://github.com/tailwindlabs/headlessui/issues/2752*/}
         {/*id="app" is the node that Modal sets `inert` on while a dialog is open*/}
         <div id="app">
           <LoadingProvider>

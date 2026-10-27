@@ -44,7 +44,7 @@ export default function ClientDetails(props: Readonly<ClientDetailsProps>) {
   }
 
   return (
-    <CarouselPanel className="panel flex flex-col gap-2" unmount={false}>
+    <CarouselPanel className="panel flex flex-col gap-2">
       <h2>Client details</h2>
       <Field>
         <Label>Client Name</Label>

@@ -28,6 +28,8 @@ type TabActionsContextProps = {
   registerPanel: (_: RefPanel) => void;
   unregisterPanel: (_: RefPanel) => void;
   selectTab: (_: number) => void;
+  previousTab: () => void;
+  nextTab: () => void;
 };
 
 export const TabActionsContext = createContext<TabActionsContextProps | null>(

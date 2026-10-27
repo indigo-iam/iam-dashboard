@@ -5,28 +5,27 @@
 import { useState } from "react";
 
 import { Button } from "@/components/buttons";
-import { CarouselPanel } from "@/components/carousel";
+import { CarouselPanel, useCarousel } from "@/components/carousel";
 import { Description } from "@/components/description";
 import { Field } from "@/components/field";
 import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 
-type GeneralSettingsProps = {
-  goNext: () => void;
-};
-
-export default function GeneralSettings(props: Readonly<GeneralSettingsProps>) {
-  const { goNext } = props;
+export default function GeneralSettings() {
   const [name, setName] = useState("");
-
-  const handleClientNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-
+  const actions = useCarousel();
   const canContinue = name.length >= 4;
 
+  function handleClientNameChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setName(e.target.value);
+  }
+
+  function goNext() {
+    actions.nextTab();
+  }
+
   return (
-    <CarouselPanel className="panel flex flex-col gap-2" unmount={false}>
+    <CarouselPanel className="panel flex flex-col gap-2">
       <h2>General Settings</h2>
       <Field>
         <Label>Client Name</Label>

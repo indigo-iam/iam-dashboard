@@ -2,8 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { TabPanel, TabPanelProps } from "@headlessui/react";
+import { TabPanel, TabPanelProps } from "@/components/tabs";
 
 export default function CarouselPanel(props: Readonly<TabPanelProps>) {
-  return <TabPanel {...props} />
+  return <TabPanel {...props} />;
 }

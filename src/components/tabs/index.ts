@@ -3,6 +3,11 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 export { Tab } from "./tab";
-export { TabGroup } from "./tab-group";
-export { TabList } from "./tab-list";
-export { TabPanel, TabPanels } from "./tab-panel";
+export { TabGroup, type TabGroupProps } from "./tab-group";
+export { TabList, type TabListProps } from "./tab-list";
+export {
+  TabPanel,
+  TabPanels,
+  type TabPanelProps,
+  type TabPanelsProps,
+} from "./tab-panel";

@@ -12,7 +12,7 @@ import {
   useTabIndex,
 } from "./context";
 
-type TabPanelProps = {
+export type TabPanelProps = {
   children: React.ReactNode;
   className?: string;
 };

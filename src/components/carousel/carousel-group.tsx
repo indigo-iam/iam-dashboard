@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { TabGroup, TabGroupProps } from "@headlessui/react";
+import { TabGroup, TabGroupProps } from "@/components/tabs";
 
 type CarouselGroupProps = TabGroupProps;
 

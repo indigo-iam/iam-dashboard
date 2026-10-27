@@ -12,7 +12,7 @@ import {
   ClientAuthentication,
 } from "@/app/clients/components";
 import { Button } from "@/components/buttons";
-import { CarouselPanel } from "@/components/carousel";
+import { CarouselPanel, useCarousel } from "@/components/carousel";
 import { Description } from "@/components/description";
 import { Field } from "@/components/field";
 import { Label } from "@/components/label";
@@ -22,18 +22,23 @@ import { Dropdown, DropdownOption } from "@/components/dropdown";
 type OIDCSettingsProps = {
   isAdmin: boolean;
   systemScopes: Scope[];
-  goBack: () => void;
-  goNext: () => void;
 };
 
 export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
-  const { isAdmin, systemScopes, goBack, goNext } = props;
+  const { isAdmin, systemScopes } = props;
+  const actions = useCarousel();
   const [authFlowOk, setAuthFlowOk] = useState(false);
   const [clientAuthOk, setClientAuthOk] = useState(false);
   const defaultScopes = systemScopes.filter(scope => scope.defaultScope);
   const canContinue = authFlowOk && clientAuthOk;
+  function goBack() {
+    actions.previousTab();
+  }
+  function goNext() {
+    actions.nextTab();
+  }
   return (
-    <CarouselPanel className="panel flex flex-col gap-2" unmount={false}>
+    <CarouselPanel className="panel flex flex-col gap-2">
       <h2>OpenID Connect - OAuth 2</h2>
       <AuthenticationFlow redirectUris={[]} onStatusChange={setAuthFlowOk} />
       <Field>

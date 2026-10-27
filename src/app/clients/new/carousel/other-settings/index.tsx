@@ -5,20 +5,22 @@
 import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 
 import { Button } from "@/components/buttons";
-import { CarouselPanel } from "@/components/carousel";
+import { CarouselPanel, useCarousel } from "@/components/carousel";
 import { Field } from "@/components/field";
 import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 
-type OtherSettingsProps = {
-  goBack: () => void;
-};
-
-export default function OtherSettings(props: Readonly<OtherSettingsProps>) {
-  const { goBack } = props;
+export default function OtherSettings() {
   const canSave = true;
+  const actions = useCarousel();
+  function goBack() {
+    actions.previousTab();
+  }
+  function goNext() {
+    actions.nextTab();
+  }
   return (
-    <CarouselPanel className="panel flex flex-col gap-2" unmount={false}>
+    <CarouselPanel className="panel flex flex-col gap-2">
       <h2>Other Settings</h2>
       <Field>
         <Label>Home Page</Label>
@@ -49,7 +51,7 @@ export default function OtherSettings(props: Readonly<OtherSettingsProps>) {
           <ChevronLeftIcon className="size-5" />
           Back
         </Button>
-        <Button type="submit" disabled={!canSave}>
+        <Button type="submit" disabled={!canSave} onClick={goNext}>
           Save
         </Button>
       </div>

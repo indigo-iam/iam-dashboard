@@ -8,7 +8,7 @@ import { Children, ReactElement } from "react";
 import { TabProps } from "./tab";
 import { TabIndexContext } from "./context";
 
-export type TabListProps = {
+export type TabListProps = React.HTMLAttributes<HTMLElement> & {
   children: (ReactElement<TabProps> | boolean | null)[];
   className?: string;
 };

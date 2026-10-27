@@ -5,7 +5,7 @@
 "use client";
 
 import {
-  Carousel,
+  CarouselGroup,
   CarouselList,
   CarouselPanels,
   CarouselTab,
@@ -35,8 +35,6 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
   const { systemScopes, isAdmin } = props;
   const [currentPage, setCurrentPage] = useState(0);
   const [client, setClient] = useState<Client>();
-  const back = () => setCurrentPage(Math.max(0, currentPage - 1));
-  const next = () => setCurrentPage(Math.min(currentPage + 1, TOTAL_PAGES));
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -87,7 +85,6 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
     };
 
     await save();
-    next();
   }
 
   return (
@@ -96,7 +93,7 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
         <Stepper currentPage={currentPage} totalPages={TOTAL_PAGES} />
       </div>
       <Form onSubmit={submit} className="grow">
-        <Carousel selectedIndex={currentPage}>
+        <CarouselGroup onChangePage={index => setCurrentPage(index)}>
           <CarouselList>
             <CarouselTab>General Settings</CarouselTab>
             <CarouselTab>OIDC/OAuth2</CarouselTab>
@@ -104,17 +101,12 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
             <CarouselTab>Client Details</CarouselTab>
           </CarouselList>
           <CarouselPanels>
-            <GeneralSettings goNext={next} />
-            <OIDCSettings
-              isAdmin={isAdmin}
-              systemScopes={systemScopes}
-              goBack={back}
-              goNext={next}
-            />
-            <OtherSettings goBack={back} />
+            <GeneralSettings />
+            <OIDCSettings isAdmin={isAdmin} systemScopes={systemScopes} />
+            <OtherSettings />
             <ClientDetails client={client} isAdmin={isAdmin} />
           </CarouselPanels>
-        </Carousel>
+        </CarouselGroup>
       </Form>
     </div>
   );

@@ -62,7 +62,7 @@ export function TabPanels(props: Readonly<TabPanelsProps>) {
   return (
     <div className={props.className}>
       {panels.map((child, index) => (
-        <TabIndexContext value={index} key={index}>
+        <TabIndexContext value={index} key={`tab-panel-index-${index}`}>
           {child}
         </TabIndexContext>
       ))}

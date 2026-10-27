@@ -18,7 +18,7 @@ export function TabList(props: Readonly<TabListProps>) {
   return (
     <div role="tablist" className={props.className}>
       {tabs.map((child, index) => (
-        <TabIndexContext value={index} key={index}>
+        <TabIndexContext value={index} key={`tab-index_${index}`}>
           {child}
         </TabIndexContext>
       ))}

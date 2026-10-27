@@ -5,13 +5,13 @@
 "use client";
 
 import { useRef } from "react";
-
-import { Tooltip, useTooltip } from "../tooltip";
-import { PaginatedGroupRequests } from "@/models/group-requests";
-import { Registration } from "@/models/registration";
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { BellIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+
+import { PaginatedGroupRequests } from "@/models/group-requests";
+import { Registration } from "@/models/registration";
+import { Popover, PopoverButton, PopoverPanel } from "../popover";
+import { Tooltip, useTooltip } from "../tooltip";
 
 type BadgeProps = {
   count: number;
@@ -34,21 +34,21 @@ function Badge(props: Readonly<BadgeProps>) {
 type NotificationsPopoverProps = {
   groupRequests: PaginatedGroupRequests;
   registrationRequests: Registration[];
-  className?: string;
 };
 
 export function NotificationsPopover(
   props: Readonly<NotificationsPopoverProps>
 ) {
-  const { groupRequests, registrationRequests, className, ...others } = props;
+  const { groupRequests, registrationRequests } = props;
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { tooltipId, tooltipRef } = useTooltip(buttonRef);
   const totalRequests =
     groupRequests.totalResults + registrationRequests.length;
 
   return (
-    <Popover className={className} {...others}>
+    <Popover>
       <PopoverButton
+        variant="plain"
         className="group relative flex size-8 cursor-pointer items-center justify-center rounded-full p-1 hover:bg-white/10 dark:hover:bg-white/10"
         ref={buttonRef}
       >
@@ -59,24 +59,15 @@ export function NotificationsPopover(
         </Tooltip>
       </PopoverButton>
       <PopoverPanel
-        transition
-        anchor="bottom"
-        className="items z-50 flex flex-col items-center overflow-hidden rounded-xl bg-white p-4 text-sm/6 text-gray-500 shadow transition duration-200 ease-in-out [--anchor-gap:--spacing(5)] data-closed:-translate-y-1 data-closed:opacity-0 dark:bg-slate-600 dark:text-white"
+        positionArea="bottom"
+        className="p-4 text-center text-sm/6 text-gray-500 shadow transition duration-200 ease-in-out [--anchor-gap:--spacing(5)] data-closed:-translate-y-1 data-closed:opacity-0 dark:bg-slate-600 dark:text-white"
       >
-        {({ close }) => (
-          <>
-            <p className="text-nowrap">
-              You have {totalRequests} pending requests.
-            </p>
-            <Link
-              className="underline"
-              href="/requests"
-              onClick={() => close()}
-            >
-              View all
-            </Link>
-          </>
-        )}
+        <p className="text-nowrap">
+          You have {totalRequests} pending requests.
+        </p>
+        <Link className="underline" href="/requests">
+          View all
+        </Link>
       </PopoverPanel>
     </Popover>
   );

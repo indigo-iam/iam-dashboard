@@ -29,7 +29,31 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
   const actions = useCarousel();
   const [authFlowOk, setAuthFlowOk] = useState(false);
   const [clientAuthOk, setClientAuthOk] = useState(false);
-  const defaultScopes = systemScopes.filter(scope => scope.defaultScope);
+
+  const defaultScopes = systemScopes
+    .filter(scope => scope.defaultScope)
+    .map(scope => {
+      const title = scope.restricted
+        ? `${scope.value} (restricted)`
+        : scope.value;
+      return {
+        title,
+        value: { id: scope.id.toString(), name: scope.value },
+        disabled: scope.restricted && !isAdmin,
+      };
+    });
+
+  const scopes = systemScopes.map(scope => {
+    const title = scope.restricted
+      ? `${scope.value} (restricted)`
+      : scope.value;
+    return {
+      title,
+      value: { id: scope.id.toString(), name: scope.value },
+      disabled: scope.restricted && !isAdmin,
+    };
+  });
+
   const canContinue = authFlowOk && clientAuthOk;
   function goBack() {
     actions.previousTab();
@@ -56,15 +80,15 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
         <Dropdown
           name="scope"
           placeholder="Add scopes..."
-          defaultValue={defaultScopes.map(e => e.value)}
+          defaultValue={defaultScopes.map(s => s.value.name)}
         >
-          {systemScopes.map(s => (
+          {scopes.map(s => (
             <DropdownOption
-              key={s.id}
-              value={s.value}
-              disabled={s.restricted && !isAdmin}
+              key={s.value.id}
+              value={s.value.name}
+              disabled={s.disabled && !isAdmin}
             >
-              {s.value}
+              {s.title}
             </DropdownOption>
           ))}
         </Dropdown>

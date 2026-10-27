@@ -43,7 +43,7 @@ export function Button(props: Readonly<ButtonProps>) {
     variant = "solid",
     className,
     children,
-    ...others
+    ...buttonProps
   } = props;
   // https://github.com/vercel/next.js/issues/35558
   const extraProps = { autoComplete: "off" };
@@ -57,11 +57,11 @@ export function Button(props: Readonly<ButtonProps>) {
   return (
     <button
       className={cls}
-      {...others}
+      {...buttonProps}
       {...extraProps}
       disabled={isDisabled}
-      aria-labelledby={tooltipId}
-      aria-describedby={tooltipId}
+      aria-labelledby={buttonProps["aria-labelledby"] || tooltipId}
+      aria-describedby={buttonProps["aria-describedby"] || tooltipId}
       ref={buttonRef}
     >
       {children}

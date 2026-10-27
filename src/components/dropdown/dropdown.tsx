@@ -9,8 +9,9 @@ import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { XMarkIcon } from "@heroicons/react/16/solid";
 
 import { Popover, PopoverButton, PopoverPanel } from "@/components/popover";
+import { useLabelledBy } from "../label/context";
+import { useDescribedBy } from "../description/context";
 import { DropdownContext } from "./context";
-
 type ChipProps = {
   value: string;
   onClick: () => void;
@@ -64,6 +65,8 @@ export function Dropdown(props: Readonly<DropdownProps>) {
   const isControlled = value !== undefined;
   const [internal, setInternal] = useState<string[]>(defaultValue ?? []);
   const selected = isControlled ? value! : internal;
+  const labelledBy = useLabelledBy();
+  const describedBy = useDescribedBy();
 
   function commit(next: string[]) {
     if (!isControlled) {
@@ -95,6 +98,8 @@ export function Dropdown(props: Readonly<DropdownProps>) {
             type="button"
             disabled={disabled}
             aria-haspopup="listbox"
+            aria-labelledby={labelledBy}
+            aria-describedby={describedBy}
             {...others}
           >
             {placeholder}

@@ -133,9 +133,13 @@ export async function disableClient(clientId: string): Promise<Notification> {
 export async function getClientsByAccount(
   accountId: string,
   count: number,
-  startIndex: number = 1
+  startIndex: number = 1,
+  query?: string
 ) {
-  const url = `${IAM_API_URL}/iam/account/${accountId}/clients?startIndex=${startIndex}&count=${count}`;
+  let url = `${IAM_API_URL}/iam/account/${accountId}/clients?startIndex=${startIndex}&count=${count}`;
+  if (query) {
+    url += `&searchType=name&search=${query}`;
+  }
   return await getItem<Paginated<Client>>(url);
 }
 

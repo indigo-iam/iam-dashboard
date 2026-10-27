@@ -3,6 +3,11 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { ToastTypes } from "@/components/toaster";
+import crypto from "node:crypto";
+
+export function randomString(length: number) {
+  return crypto.randomBytes(length).toString("hex");
+}
 import { expect, Page } from "@playwright/test";
 
 export async function changeTabPanel(page: Page, tab: string) {

@@ -104,7 +104,7 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
             <GeneralSettings />
             <OIDCSettings isAdmin={isAdmin} systemScopes={systemScopes} />
             <OtherSettings />
-            <ClientDetails client={client} isAdmin={isAdmin} />
+            <ClientDetails client={client} />
           </CarouselPanels>
         </CarouselGroup>
       </Form>

@@ -8,6 +8,8 @@ import { useRef } from "react";
 import { CheckIcon } from "@heroicons/react/16/solid";
 
 import { Label } from "@/components/label";
+import { useLabelledBy } from "../label/context";
+import { useDescribedBy } from "../description/context";
 
 export interface CheckboxState<T> {
   checked: boolean;
@@ -29,9 +31,11 @@ export function Checkbox(props: Readonly<CheckboxProps>) {
   const { onChange, ...other } = props;
   const checkboxRef = useRef<HTMLInputElement>(null);
   const isControlled = other.checked !== undefined;
+  const labelledBy = useLabelledBy();
+  const describedBy = useDescribedBy();
 
   function handleChange() {
-    if (!checkboxRef.current) {
+    if (other.disabled || !checkboxRef.current) {
       return;
     }
     if (isControlled) {
@@ -42,6 +46,9 @@ export function Checkbox(props: Readonly<CheckboxProps>) {
   }
 
   function handleKeydown(e: React.KeyboardEvent<HTMLSpanElement>) {
+    if (other.disabled) {
+      return;
+    }
     if (e.code === "Space") {
       handleChange();
     }
@@ -49,12 +56,16 @@ export function Checkbox(props: Readonly<CheckboxProps>) {
 
   return (
     <span
-      className="group flex aspect-square size-4 items-center rounded border bg-white dark:bg-gray-800"
+      className="group flex aspect-square size-4 items-center rounded border bg-white data-disabled:cursor-not-allowed data-disabled:bg-gray-100 dark:bg-gray-800"
       onClick={handleChange}
       onKeyDown={handleKeydown}
       role="checkbox"
       aria-checked={other.checked}
       tabIndex={0}
+      data-disabled={other.disabled || null}
+      aria-labelledby={labelledBy}
+      aria-describedby={describedBy}
+      aria-disabled={other.disabled}
     >
       <CheckIcon className="hidden size-4 fill-gray-700 group-has-checked:block dark:fill-gray-300" />
       <input {...other} type="checkbox" hidden readOnly ref={checkboxRef} />

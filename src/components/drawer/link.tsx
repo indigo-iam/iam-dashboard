@@ -5,7 +5,7 @@
 "use client";
 
 import NextLink from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 import { toggleDrawer } from "./drawer";
 import { useProgressBar } from "../progress-bar";
@@ -19,7 +19,6 @@ export type LinkProps = {
 export function Link(props: Readonly<LinkProps>) {
   const { title, href, children } = props;
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const { startProgressBar } = useProgressBar();
 
   let selected = false;
@@ -34,14 +33,10 @@ export function Link(props: Readonly<LinkProps>) {
       selected = href === "/users/me/groups";
       break;
     case "/clients":
-      selected =
-        (href === "/clients?me" && searchParams.has("me")) ||
-        (href === "/clients" && !searchParams.has("me"));
+      selected = href === "/clients";
       break;
     case "/groups":
-      selected =
-        (href === "/groups?me" && searchParams.has("me")) ||
-        (href === "/groups" && !searchParams.has("me"));
+      selected = href === "/groups";
       break;
     default:
       selected = pathname === href;

@@ -4,5 +4,5 @@
 
 export { Tab } from "./tab";
 export { TabGroup } from "./tab-group";
-export { TabPanel } from "./tab-panel";
-export { TabPanels, TabList } from "@headlessui/react";
+export { TabList } from "./tab-list";
+export { TabPanel, TabPanels } from "./tab-panel";

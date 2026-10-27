@@ -3,17 +3,16 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { ToastTypes } from "@/components/toaster";
-import { expect, Locator, Page } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
-export async function changeTabPanel(button: Locator) {
+export async function changeTabPanel(page: Page, tab: string) {
+  const button = page.getByRole("tab", { name: tab });
+  await button.scrollIntoViewIfNeeded();
   await expect(button).toBeVisible();
   await expect(button).toBeEnabled();
-  await expect(button).toHaveAttribute(
-    "aria-controls",
-    /headlessui-tabs-panel-.*/
-  );
+  await expect(button).toHaveAttribute("aria-controls", /tab-panel.*/);
   await button.click();
-  await expect(button).toHaveAttribute("data-selected", "");
+  await expect(button).toHaveAttribute("aria-selected");
 }
 
 export async function dismissToast(

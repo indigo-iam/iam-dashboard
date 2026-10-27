@@ -4,13 +4,16 @@
 
 "use client";
 
+import { useState } from "react";
+
 import { Button } from "@/components/buttons";
-import { Checkbox, Field, Form } from "@/components/form";
+import { Checkbox } from "@/components/checkbox";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { toast } from "@/components/toaster";
 import { Client, Scope } from "@/models/client";
 import { editClient } from "@/services/clients";
-import { useState } from "react";
 
 type AddScopeProps = {
   client: Client;
@@ -45,7 +48,7 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
           <ul>
             {availableScopes.map(s => (
               <Field
-                as="li"
+                role="listitem"
                 key={s.id}
                 className="flex flex-row items-center gap-2 p-2 hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-400"
               >
@@ -61,12 +64,10 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
           </ul>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" onClick={onClose} type="reset">
+          <Button variant="underline" onClick={onClose} type="reset">
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Add scope(s)
-          </Button>
+          <Button type="submit">Add scope(s)</Button>
         </ModalFooter>
       </Form>
     </Modal>
@@ -80,7 +81,7 @@ export function AddScopeButton(props: Readonly<AddScopeProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Button className="btn-secondary" onClick={open}>
+      <Button variant="outline" type="button" onClick={open}>
         Add system scope(s)
       </Button>
       <AddScopeModal

@@ -44,19 +44,14 @@ export default function CarouselNavigator(
   return (
     <div className="flex flex-row justify-end gap-2">
       <Button
-        className="btn-tertiary"
+        variant="underline"
         onClick={back}
         type="button"
         disabled={backButtonDisabled}
       >
         {backButtonTitle}
       </Button>
-      <Button
-        className="btn-primary"
-        onClick={next}
-        type={buttonType}
-        disabled={nextButtonDisabled}
-      >
+      <Button onClick={next} type={buttonType} disabled={nextButtonDisabled}>
         {nextButtonTitle}
       </Button>
     </div>

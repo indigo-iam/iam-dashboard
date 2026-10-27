@@ -8,7 +8,9 @@ import { useRef, useState } from "react";
 
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
-import { Field, Form, Label, Select } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -17,6 +19,7 @@ import {
   ModalFooter,
   ModalProps,
 } from "@/components/modal";
+import { Select, Option } from "@/components/select";
 import { Textarea } from "@/components/textarea";
 import { toast } from "@/components/toaster";
 import { linkCertificate, sendCertificateLinkRequest } from "@/services/certs";
@@ -61,7 +64,7 @@ function PEMField() {
     "-----BEGIN PKCS12-----\nMIIF2gIBAzCCBf8GCSqGSIb3DQEHAaCCBf8wggVgMI...\n-----END PKCS12-----";
   return (
     <Field>
-      <Label data-required>Certificate</Label>
+      <Label>Certificate</Label>
       <Textarea
         name="certificate"
         className="iam-input w-full"
@@ -76,9 +79,9 @@ function PEMField() {
 function IssuerField() {
   return (
     <Field>
-      <Label data-required>Issuer</Label>
+      <Label>Issuer</Label>
       <Select name="issuer" disabled>
-        <option>No options</option>
+        <Option>No options</Option>
       </Select>
     </Field>
   );
@@ -123,7 +126,7 @@ function RequestCertificateLinkingModal(
             <Input defaultValue={userName} disabled />
           </Field>
           <Field>
-            <Label data-required>Label</Label>
+            <Label>Label</Label>
             <Input
               required
               name="label"
@@ -142,15 +145,13 @@ function RequestCertificateLinkingModal(
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" type="reset" onClick={close}>
+          <Button variant="underline" type="reset" onClick={close}>
             Cancel
           </Button>
-          <Button className="btn-secondary" type="reset">
+          <Button variant="outline" type="reset">
             Reset
           </Button>
-          <Button className="btn-primary" type="submit">
-            Add Certificate
-          </Button>
+          <Button type="submit">Add Certificate</Button>
         </ModalFooter>
       </Form>
     </Modal>
@@ -210,11 +211,11 @@ function LinkCertificateModal(props: Readonly<LinkCertificateModalProps>) {
         <Input value={userName} disabled />
       </Field>
       <Field>
-        <Label data-required>Label</Label>
+        <Label>Label</Label>
         <Input name="label" placeholder="example" required />
       </Field>
       <Field>
-        <Label data-required>Certificate</Label>
+        <Label>Certificate</Label>
         <Textarea
           name="certificate"
           placeholder="PEM encoded certificate..."

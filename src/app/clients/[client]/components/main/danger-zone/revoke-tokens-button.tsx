@@ -9,7 +9,7 @@ import { useRef, useState } from "react";
 import { Button } from "@/components/buttons";
 import { ModalProps } from "@/components/modal";
 import ConfirmModal from "@/components/confirm-modal";
-import { Field } from "@/components/form";
+import { Field } from "@/components/field";
 import { revokeTokens } from "@/services/clients";
 import { toast } from "@/components/toaster";
 import { Notice } from "@/components/notices";
@@ -97,7 +97,7 @@ export function RevokeTokensButton(props: Readonly<RevokeTokensButtonProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Button className="btn-danger-secondary" onClick={open}>
+      <Button accent="danger" variant="outline" type="button" onClick={open}>
         Revoke tokens
       </Button>
       <Modal

@@ -4,15 +4,18 @@
 
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
+
 import { Button } from "@/components/buttons";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { AddSecretResponse } from "@/models/mfa";
 import { addMFASecret, enableMFA } from "@/services/users";
 import { toast } from "@/components/toaster";
-import { useEffect, useState } from "react";
 
 type MFAModalProps = {
   show: boolean;
@@ -35,17 +38,20 @@ export function EnableMFAModal(props: Readonly<MFAModalProps>) {
     if (!show) {
       return;
     }
-    const f = async () => {
-      const response = await addMFASecret();
-      if (response.result) {
-        setMfa(response.result);
-      }
-      if (response.error) {
-        const { title, status } = response.error;
-        toast.error("Cannot enable MFA", `${title}, status: ${status}`);
-      }
-    };
-    f();
+    addMFASecret()
+      .then(response => {
+        if (response.result) {
+          setMfa(response.result);
+        }
+        if (response.error) {
+          const { title, status } = response.error;
+          toast.error("Cannot enable MFA", `${title}, status: ${status}`);
+        }
+      })
+      .catch(err => {
+        toast.error("Cannot enable MFA: unknown error");
+        console.error(err);
+      });
   }, [show]);
 
   return (
@@ -79,17 +85,15 @@ export function EnableMFAModal(props: Readonly<MFAModalProps>) {
             )}
           </div>
           <Field>
-            <Label data-required>TOTP</Label>
+            <Label>TOTP</Label>
             <Input name="code" placeholder="Insert TOTP..." type="string" />
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" type="reset" onClick={onClose}>
+          <Button variant="underline" type="reset" onClick={onClose}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Enable MFA
-          </Button>
+          <Button type="submit">Enable MFA</Button>
         </ModalFooter>
       </Form>
     </Modal>

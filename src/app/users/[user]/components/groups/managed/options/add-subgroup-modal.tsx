@@ -5,7 +5,9 @@
 "use client";
 
 import { Button } from "@/components/buttons";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -43,7 +45,7 @@ export default function AddSubgroupModal(
       <Form id="add-subgroup-form" onSubmit={submit}>
         <ModalBody>
           <Field>
-            <Label data-required>Group Name</Label>
+            <Label>Group Name</Label>
             <Input
               title="Name"
               type="text"
@@ -54,16 +56,10 @@ export default function AddSubgroupModal(
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button
-            className="btn-tertiary"
-            type="reset"
-            onClick={modalProps.onClose}
-          >
+          <Button variant="underline" type="reset" onClick={modalProps.onClose}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Add Subgroup
-          </Button>
+          <Button type="submit">Add subgroup</Button>
         </ModalFooter>
       </Form>
     </Modal>

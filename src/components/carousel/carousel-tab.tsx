@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Tab } from "@headlessui/react";
+import { Tab } from "@/components/tabs";
 
 type CarouselTabProps = {
   children?: React.ReactNode;

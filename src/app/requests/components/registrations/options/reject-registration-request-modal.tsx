@@ -7,7 +7,9 @@
 import Link from "next/link";
 
 import { Button } from "@/components/buttons";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { Textarea } from "@/components/textarea";
 import { Registration } from "@/models/registration";
@@ -37,9 +39,7 @@ export default function RejectRegistrationRequestModal(
 
   return (
     <Modal show={show} onClose={onClose}>
-      <ModalHeader>
-        Reject user registration request?
-      </ModalHeader>
+      <ModalHeader>Reject user registration request?</ModalHeader>
       <Form id="reject-registration-form" onSubmit={submit}>
         <ModalBody>
           <div className="space-y-4">
@@ -56,20 +56,20 @@ export default function RejectRegistrationRequestModal(
           </div>
           <p>To proceed provide a motivation that will be sent to the user:</p>
           <Field>
-            <Label data-required>Motivation</Label>
+            <Label>Motivation</Label>
             <Textarea name="motivation" className="iam-input" required />
           </Field>
         </ModalBody>
         <ModalFooter>
           <Button
-            className="btn-tertiary"
+            variant="underline"
             title="Cancel"
             type="reset"
             onClick={onClose}
           >
             Cancel
           </Button>
-          <Button className="btn-danger" type="submit">
+          <Button accent="danger" type="submit">
             Reject request
           </Button>
         </ModalFooter>

@@ -23,7 +23,7 @@ export default function AddMemberButton(props: Readonly<AddMemberButtonProps>) {
   const closeModal = () => setShow(false);
   return (
     <>
-      <Button className="btn-secondary" onClick={openModal}>
+      <Button variant="outline" type="button" onClick={openModal}>
         <UserPlusIcon className="size-4" />
         <span>Add member</span>
       </Button>

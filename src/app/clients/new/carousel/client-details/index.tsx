@@ -4,13 +4,15 @@
 
 "use client";
 
+import { redirect } from "next/navigation";
+
 import { InputSecret } from "@/app/components/input-secret";
 import { Button } from "@/components/buttons";
 import { CarouselPanel } from "@/components/carousel";
-import { Field, Label } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import { Client } from "@/models/client";
-import { redirect } from "next/navigation";
 
 type ClientSecretProps = {
   secret?: string;
@@ -42,7 +44,7 @@ export default function ClientDetails(props: Readonly<ClientDetailsProps>) {
   }
 
   return (
-    <CarouselPanel className="panel flex flex-col gap-2" unmount={false}>
+    <CarouselPanel className="panel flex flex-col gap-2">
       <h2>Client details</h2>
       <Field>
         <Label>Client Name</Label>
@@ -58,7 +60,7 @@ export default function ClientDetails(props: Readonly<ClientDetailsProps>) {
         </Field>
       )}
       <div className="mt-4 mr-16 flex w-full flex-row items-end justify-end">
-        <Button className="btn-secondary" onClick={changePage}>
+        <Button variant="outline" onClick={changePage} type="button">
           Continue
         </Button>
       </div>

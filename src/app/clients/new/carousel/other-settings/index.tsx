@@ -2,21 +2,25 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Button } from "@/components/buttons";
-import { CarouselPanel } from "@/components/carousel";
-import { Field, Label } from "@/components/form";
-import { Input } from "@/components/inputs";
 import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 
-type OtherSettingsProps = {
-  goBack: () => void;
-};
+import { Button } from "@/components/buttons";
+import { CarouselPanel, useCarousel } from "@/components/carousel";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
+import { Input } from "@/components/inputs";
 
-export default function OtherSettings(props: Readonly<OtherSettingsProps>) {
-  const { goBack } = props;
+export default function OtherSettings() {
   const canSave = true;
+  const actions = useCarousel();
+  function goBack() {
+    actions.previousTab();
+  }
+  function goNext() {
+    actions.nextTab();
+  }
   return (
-    <CarouselPanel className="panel flex flex-col gap-2" unmount={false}>
+    <CarouselPanel className="panel flex flex-col gap-2">
       <h2>Other Settings</h2>
       <Field>
         <Label>Home Page</Label>
@@ -43,13 +47,11 @@ export default function OtherSettings(props: Readonly<OtherSettingsProps>) {
         />
       </Field>
       <div className="flex flex-row justify-end py-2">
-        <Button className="btn-tertiary" onClick={goBack}>
-          <div className="flex items-center">
-            <ChevronLeftIcon className="-ml-2 size-5" />
-            Back
-          </div>
+        <Button variant="underline" onClick={goBack}>
+          <ChevronLeftIcon className="size-5" />
+          Back
         </Button>
-        <Button className="btn-primary" type="submit" disabled={!canSave}>
+        <Button type="submit" disabled={!canSave} onClick={goNext}>
           Save
         </Button>
       </div>

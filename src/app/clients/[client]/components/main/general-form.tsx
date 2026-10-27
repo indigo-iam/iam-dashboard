@@ -5,10 +5,14 @@
 "use client";
 
 import { ComputerDesktopIcon } from "@heroicons/react/24/outline";
+
 import { Client } from "@/models/client";
 import { Status } from "@/components/badges";
 import { Button } from "@/components/buttons";
-import { Description, Field, Form, Label } from "@/components/form";
+import { Description } from "@/components/description";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import { Textarea } from "@/components/textarea";
 import { toast } from "@/components/toaster";
@@ -68,7 +72,7 @@ export function GeneralForm(props: Readonly<GeneralFormProps>) {
       </div>
       <Form className="w-full space-y-4 lg:w-2/3" onSubmit={submit}>
         <Field>
-          <Label data-required>Client Name</Label>
+          <Label>Client Name</Label>
           <Input
             required
             type="text"
@@ -79,7 +83,7 @@ export function GeneralForm(props: Readonly<GeneralFormProps>) {
           <Description>Something users will recognize and trust.</Description>
         </Field>
         <Field>
-          <Label data-required>Client ID</Label>
+          <Label>Client ID</Label>
           <Input
             required
             type="text"
@@ -138,11 +142,11 @@ export function GeneralForm(props: Readonly<GeneralFormProps>) {
             the user in the consent page.
           </Description>
         </Field>
-        <div className="flex justify-end">
-          <Button className="btn-tertiary" type="reset">
+        <div className="flex justify-end gap-2">
+          <Button variant="underline" type="reset">
             Reset
           </Button>
-          <Button className="btn-secondary" type="submit">
+          <Button variant="outline" type="submit">
             Save changes
           </Button>
         </div>

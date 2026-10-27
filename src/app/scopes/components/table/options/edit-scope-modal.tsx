@@ -4,7 +4,9 @@
 
 "use client";
 
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -52,12 +54,10 @@ export default function EditScopeModal(props: Readonly<EditScopeModalProps>) {
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" type="reset" onClick={onClose}>
+          <Button variant="underline" type="reset" onClick={onClose}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Save scope
-          </Button>
+          <Button type="submit">Save scope</Button>
         </ModalFooter>
       </Form>
     </Modal>

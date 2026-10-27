@@ -6,7 +6,8 @@ import {
   ClientAuthentication,
   TOKEN_ENDPOINT_AUTH_VALUES,
 } from "@/app/clients/components";
-import { Field, Label } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Info } from "@/components/info";
 import { TokenEndpointAuthMethod } from "@/models/client";
 
@@ -19,8 +20,7 @@ export function Authentication(props: Readonly<AuthenticationProps>) {
   const { clientId, tokenEndpointAuthMethod } = props;
 
   const defaultValue =
-    TOKEN_ENDPOINT_AUTH_VALUES.find(el => el.id === tokenEndpointAuthMethod) ??
-    TOKEN_ENDPOINT_AUTH_VALUES[0];
+    tokenEndpointAuthMethod ?? TOKEN_ENDPOINT_AUTH_VALUES[0].id;
 
   return (
     <div className="flex flex-col gap-8 pb-4 lg:flex-row">

@@ -13,8 +13,7 @@ testUser(
     await page.waitForURL("./users/me");
 
     await testUser.step("Select groups panel", async () => {
-      const tab = page.getByText("GROUPS", { exact: true });
-      await changeTabPanel(tab);
+      await changeTabPanel(page, "GROUPS");
     });
 
     await testUser.step("Initially there are no pending requests", async () => {
@@ -160,7 +159,7 @@ async function createNewUser(page: Page, user: User) {
   const username = page.getByLabel("Username");
   await username.fill(user.username);
   const email = page.getByLabel("Email");
-  await email.fill(user.email);  
+  await email.fill(user.email);
   await page.getByRole("button", { name: "Create User" }).click();
   await dismissToast(page, "User created", "success");
 }

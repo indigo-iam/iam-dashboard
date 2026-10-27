@@ -6,7 +6,9 @@
 
 import { Button } from "@/components/buttons";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Textarea } from "@/components/textarea";
 import { GroupRequest } from "@/models/group-requests";
 import { rejectGroupRequest } from "@/services/group-requests";
@@ -63,14 +65,14 @@ export default function RejectRequestModalProps(
         </ModalBody>
         <ModalFooter>
           <Button
-            className="btn-tertiary"
+            variant="underline"
             title="Cancel"
             type="reset"
             onClick={onClose}
           >
             Cancel
           </Button>
-          <Button className="btn-danger" title="Reject request" type="submit">
+          <Button accent="danger" title="Reject request" type="submit">
             Reject request
           </Button>
         </ModalFooter>

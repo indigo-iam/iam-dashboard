@@ -16,7 +16,7 @@ export type TabListProps = React.HTMLAttributes<HTMLElement> & {
 export function TabList(props: Readonly<TabListProps>) {
   const tabs = Children.toArray(props.children);
   return (
-    <div role="tablist" className={props.className}>
+    <div role="tablist" {...props}>
       {tabs.map((child, index) => (
         <TabIndexContext value={index} key={`tab-index_${index}`}>
           {child}

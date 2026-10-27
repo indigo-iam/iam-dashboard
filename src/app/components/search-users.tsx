@@ -45,8 +45,8 @@ export function SearchUsers(props: Readonly<SearchUserProps>) {
   }
 
   return (
-    <Field>
-      <Label>Search user</Label>
+    <Field className="pt-2">
+      <Label>Select user</Label>
       <input
         className="iam-input"
         list={listId}

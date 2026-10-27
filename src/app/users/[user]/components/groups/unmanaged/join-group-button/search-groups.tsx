@@ -4,6 +4,7 @@
 
 "use client";
 
+import { Field, Label } from "@/components/form";
 import { Group } from "@/models/groups";
 import { searchGroup } from "@/services/groups";
 import { useDeferredCallback } from "@/utils/hooks";
@@ -37,7 +38,8 @@ export function SearchGroups(props: Readonly<SearchGroupProps>) {
   }
 
   return (
-    <div className="space-y-2">
+    <Field className="pt-2">
+      <Label>Select group</Label>
       <input
         className="iam-input"
         list={listId}
@@ -52,6 +54,6 @@ export function SearchGroups(props: Readonly<SearchGroupProps>) {
         ))}
       </datalist>
       {searchResult.length === 0 && query && <p>No group found.</p>}
-    </div>
+    </Field>
   );
 }

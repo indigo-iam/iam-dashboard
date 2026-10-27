@@ -4,9 +4,12 @@
 
 "use server";
 
-import { getItem } from "@/utils/fetch";
-import { ScopePolicy } from "@/models/scope-policies";
+import { revalidatePath } from "next/cache";
+
+import { authFetch, getItem } from "@/utils/fetch";
+import { ScopePolicy, ScopePolicyRequest } from "@/models/scope-policies";
 import { settings } from "@/config";
+import { Notification } from "@/components/toaster";
 
 const { IAM_API_URL } = settings;
 
@@ -17,5 +20,66 @@ export async function fetchScopePolicies() {
 
 export async function fetchScopePolicy(id: number) {
   const url = `${IAM_API_URL}/iam/scope_policies/${id}`;
-  return await getItem<ScopePolicy>(url);
+  const policy = await getItem<ScopePolicy>(url);
+  return { ...policy, scopes: policy.scopes ?? [] };
+}
+
+export async function addScopePolicy(policy: ScopePolicyRequest): Promise<Notification> {
+  const url = `${IAM_API_URL}/iam/scope_policies`;
+  const response = await authFetch(url, {
+    body: JSON.stringify(policy),
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+  if (response.ok) {
+    revalidatePath("/policies");
+    return { type: "success", title: "Scope policy created" };
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot add scope policy",
+    description: `Error ${response.status} ${msg}`,
+  };
+}
+
+export async function updateScopePolicy(
+  id: number,
+  policy: ScopePolicyRequest
+): Promise<Notification> {
+  const url = `${IAM_API_URL}/iam/scope_policies/${id}`;
+  const response = await authFetch(url, {
+    body: JSON.stringify({ ...policy, id }),
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+  if (response.ok) {
+    revalidatePath(`/policies/${id}`);
+    return { type: "success", title: "Scope policy updated" };
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot update scope policy",
+    description: `Error ${response.status} ${msg}`,
+  };
+}
+
+export async function deleteScopePolicy(id: number): Promise<Notification> {
+  const url = `${IAM_API_URL}/iam/scope_policies/${id}`;
+  const response = await authFetch(url, { method: "DELETE" });
+  if (response.ok) {
+    revalidatePath("/policies");
+    return { type: "success", title: "Scope policy deleted" };
+  }
+  const msg = await response.text();
+  return {
+    type: "error",
+    title: "Cannot delete scope policy",
+    description: `Error ${response.status} ${msg}`,
+  };
 }

@@ -13,9 +13,9 @@ export function proxy(request: NextRequest) {
   const isDev = process.env.NODE_ENV === "development";
   const cspHeader = `
     default-src 'self';
-    script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${isDev ? " 'unsafe-eval'" : ""};
-    style-src 'self' 'nonce-${nonce}';
-    img-src 'self' blob: data:;
+    script-src 'strict-dynamic' 'nonce-${nonce}'${isDev ? " 'unsafe-eval'" : ""};
+    style-src 'self' ${isDev ? "'unsafe-inline'" : `'nonce-${nonce}'`};
+    img-src 'self' data: https://gravatar.com/avatar/;
     font-src 'self';
     object-src 'none';
     base-uri 'self';

@@ -9,7 +9,7 @@ import { Form } from "@/components/form";
 import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { disableMFA } from "@/services/users";
 
 type DisableMFAModalProps = {
@@ -19,12 +19,13 @@ type DisableMFAModalProps = {
 
 export function DisableMFAModal(props: Readonly<DisableMFAModalProps>) {
   const { show, onClose } = props;
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const res = await disableMFA(formData);
-    toast.toast(res);
+    toast(res);
     onClose();
   }
 

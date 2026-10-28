@@ -8,7 +8,7 @@ import { useState } from "react";
 
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { signAUP } from "@/services/users";
 
 type SignInBehalfOfUserProps = {
@@ -19,12 +19,13 @@ type SignInBehalfOfUserProps = {
 export function SignInBehalfOfUser(props: Readonly<SignInBehalfOfUserProps>) {
   const { userId, userFormattedName } = props;
   const [show, setShow] = useState(false);
+  const { toast } = useToaster();
   const open = () => setShow(true);
   const close = () => setShow(false);
 
   async function signAupInBehalfOfUser() {
     const res = await signAUP(userId);
-    toast.toast(res);
+    toast(res);
   }
 
   return (

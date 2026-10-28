@@ -7,7 +7,7 @@
 import ConfirmModal from "@/components/confirm-modal";
 import { Notice, Warning } from "@/components/notices";
 import { useProgressBar } from "@/components/progress-bar";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { OidcId } from "@/models/indigo-user";
 import { unlinkOidcAccount } from "@/services/users";
 
@@ -23,12 +23,13 @@ export default function UnlinkAccountModal(
 ) {
   const { userId, oidcId, show, onClose } = props;
   const { startTransition } = useProgressBar();
+  const { toast } = useToaster();
 
   function handleConfirm() {
     startTransition(async () => {
       const res = await unlinkOidcAccount(userId, oidcId);
       if (res) {
-        toast.toast(res);
+        toast(res);
       }
     });
     onClose();

@@ -14,7 +14,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { Textarea } from "@/components/textarea";
 import { Registration } from "@/models/registration";
 import { rejectRegistrationRequest } from "@/services/registration";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { Notice } from "@/components/notices";
 
 type RejectRegistrationRequestModalProps = {
@@ -27,13 +27,14 @@ export default function RejectRegistrationRequestModal(
   props: Readonly<RejectRegistrationRequestModalProps>
 ) {
   const { request, show, onClose } = props;
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const motivation = formData.get("motivation") as string;
     const res = await rejectRegistrationRequest(request.uuid, motivation);
-    toast.toast(res);
+    toast(res);
     onClose();
   }
 

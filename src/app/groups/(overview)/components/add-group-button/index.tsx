@@ -13,7 +13,7 @@ import { Field } from "@/components/field";
 import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { addGroup } from "@/services/groups";
 
 type AddGroupFormProps = {
@@ -23,13 +23,14 @@ type AddGroupFormProps = {
 
 function AddGroupForm(props: Readonly<AddGroupFormProps>) {
   const { onClose, onGroupAdded } = props;
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const name = formData.get("groupName") as string;
     const res = await addGroup(name);
-    toast.toast(res);
+    toast(res);
     onClose?.();
     onGroupAdded?.();
   }

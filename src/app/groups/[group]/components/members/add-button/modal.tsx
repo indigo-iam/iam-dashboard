@@ -9,7 +9,7 @@ import { useState } from "react";
 import { SearchUsers } from "@/app/components/search-users";
 import ConfirmModal from "@/components/confirm-modal";
 import { type ModalProps } from "@/components/modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { User } from "@/models/scim";
 import { addUserToGroup } from "@/services/groups";
 import Link from "@/components/link";
@@ -76,7 +76,7 @@ export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
     onClose,
     ...modalProps
   } = props;
-
+  const { toast } = useToaster();
   const [user, setUser] = useState<User>();
   const clear = () => setUser(undefined);
 
@@ -96,7 +96,7 @@ export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
     if (res.type === "success") {
       res.description = `User ${userName} has been added to group ${groupName}`;
     }
-    toast.toast(res);
+    toast(res);
     clearAndClose();
   }
 

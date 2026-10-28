@@ -5,7 +5,7 @@
 import ConfirmModal from "@/components/confirm-modal";
 import { type ModalProps } from "@/components/modal";
 import { Notice, Warning } from "@/components/notices";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { deleteUser } from "@/services/users";
 
 interface DeleteUserModalProps extends ModalProps {
@@ -16,14 +16,21 @@ interface DeleteUserModalProps extends ModalProps {
 }
 
 export default function DeleteUserModal(props: Readonly<DeleteUserModalProps>) {
-  const { userId, userFormattedName, userEmail, onDeleted, ...modalProps } =
-    props;
+  const {
+    userId, //
+    userFormattedName,
+    userEmail,
+    onDeleted,
+    ...modalProps
+  } = props;
+  const { toast } = useToaster();
+
   const action = async () => {
     const res = await deleteUser(userId);
     if (res.type === "success") {
       res.description = `User ${userFormattedName} has been deleted`;
     }
-    toast.toast(res);
+    toast(res);
     onDeleted?.();
   };
   return (

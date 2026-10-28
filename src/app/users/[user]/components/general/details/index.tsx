@@ -13,7 +13,7 @@ import { Field } from "@/components/field";
 import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import { editUser } from "@/services/users";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { dateToHuman } from "@/utils/dates";
 import { ResetPassword } from "./reset-password";
 import { MFAButton } from "./mfa";
@@ -34,6 +34,7 @@ type UserDetailsFormProps = {
 };
 
 export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
+  const { toast } = useToaster();
   const {
     userId,
     userName,
@@ -63,7 +64,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
       email,
       userId: isMe ? null : userId,
     });
-    toast.toast(res);
+    toast(res);
   }
   const created = userCreatedAt ? dateToHuman(new Date(userCreatedAt)) : "N/A";
   const modified = userLastModified

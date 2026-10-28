@@ -4,7 +4,7 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { ModalProps } from "@/components/modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { removeUserFromGroup } from "@/services/groups";
 import { Notice } from "@/components/notices";
 
@@ -19,6 +19,7 @@ export default function RemoveMemberFromGroupModal(
   props: Readonly<RevokeMemberFromGroupModalProps>
 ) {
   const { userId, userDisplay, groupId, groupDisplay, ...modalProps } = props;
+  const { toast } = useToaster();
 
   async function action() {
     const res = await removeUserFromGroup(
@@ -27,7 +28,7 @@ export default function RemoveMemberFromGroupModal(
       groupId,
       groupDisplay
     );
-    toast.toast(res);
+    toast(res);
   }
 
   return (

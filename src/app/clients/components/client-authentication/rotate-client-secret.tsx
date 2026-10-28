@@ -12,7 +12,7 @@ import ConfirmModal from "@/components/confirm-modal";
 import { Field } from "@/components/field";
 import { Label } from "@/components/label";
 import { Info } from "@/components/info";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { rotateClientSecret } from "@/services/clients";
 
 type ClientSecretViewProps = {
@@ -38,11 +38,12 @@ export function RotateClientSecret(props: Readonly<RotateClientSecretProps>) {
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
+  const { toast } = useToaster();
 
   const action = async () => {
     const response = await rotateClientSecret(clientId);
     if (typeof response === "object") {
-      toast.toast(response);
+      toast(response);
     } else {
       setSecret(response);
     }

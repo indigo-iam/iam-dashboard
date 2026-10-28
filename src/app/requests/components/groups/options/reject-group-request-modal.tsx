@@ -12,7 +12,7 @@ import { Label } from "@/components/label";
 import { Textarea } from "@/components/textarea";
 import { GroupRequest } from "@/models/group-requests";
 import { rejectGroupRequest } from "@/services/group-requests";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { Notice } from "@/components/notices";
 import Link from "@/components/link";
 
@@ -26,13 +26,14 @@ export default function RejectRequestModalProps(
   props: Readonly<RejectRequestModalProps>
 ) {
   const { request, show, onClose } = props;
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const motivation = formData.get("motivation") as string;
     const res = await rejectGroupRequest(request.uuid, motivation);
-    toast.toast(res);
+    toast(res);
     onClose();
   }
 

@@ -7,7 +7,7 @@
 import ConfirmModal from "@/components/confirm-modal";
 import { ModalProps } from "@/components/modal";
 import { useProgressBar } from "@/components/progress-bar";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { deleteUserLabel } from "@/services/users";
 
 type DeleteLabelModalProps = ModalProps & {
@@ -30,12 +30,13 @@ export function DeleteLabelModal(props: Readonly<DeleteLabelModalProps>) {
   } = props;
 
   const { startTransition } = useProgressBar();
+  const { toast } = useToaster();
 
   async function deleteLabel() {
     startTransition(async () => {
       const res = await deleteUserLabel(userId, prefix, name);
       if (res) {
-        toast.toast(res);
+        toast(res);
       }
       onClose();
     });

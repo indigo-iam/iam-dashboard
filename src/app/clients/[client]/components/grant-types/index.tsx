@@ -9,7 +9,7 @@ import { useState } from "react";
 import { Button } from "@/components/buttons";
 import { Form } from "@/components/form";
 import { TabPanel } from "@/components/tabs";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { Client } from "@/models/client";
 import { GrantType } from "@/models/openid-configuration";
 import { editClient } from "@/services/clients";
@@ -42,6 +42,7 @@ type GrantTypesProps = {
 export default function GrantTypes(props: Readonly<GrantTypesProps>) {
   const { client, isAdmin } = props;
   const [isAuthGrantOk, setIsAuthGrantOk] = useState(false);
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -50,7 +51,7 @@ export default function GrantTypes(props: Readonly<GrantTypesProps>) {
     const redirect_uris = formData.getAll("redirect_uris") as string[];
     const requestBody: Client = { ...client, grant_types, redirect_uris };
     const res = await editClient(requestBody, isAdmin);
-    toast.toast(res);
+    toast(res);
   }
 
   return (

@@ -21,7 +21,7 @@ import {
   ModalProps,
 } from "@/components/modal";
 import { Warning } from "@/components/notices";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { changeMembershipEndtime } from "@/services/users";
 import { useDisabled } from "@/utils/hooks";
 
@@ -37,6 +37,8 @@ function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const disabled = useDisabled();
   const inputId = useId();
+  const { toast } = useToaster();
+
   const minDate = (() => {
     const d = new Date();
     return d.toISOString().split("T")[0];
@@ -47,7 +49,7 @@ function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
     const formData = new FormData(event.target);
     const endtime = formData.get("endtime") as string | null;
     const res = await changeMembershipEndtime(userId, endtime);
-    toast.toast(res);
+    toast(res);
     if (res.type === "success") {
       onClose();
     }

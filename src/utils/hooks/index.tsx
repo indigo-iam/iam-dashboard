@@ -53,3 +53,15 @@ export function useDisabled() {
 
   return disabled;
 }
+
+export function useTimeout(callbackFn: () => void, delay: number) {
+  const callbackRef = useRef(callbackFn);
+
+  useEffect(() => {
+    callbackRef.current = callbackFn;
+  }, [callbackFn]);
+
+  useEffect(() => {
+    setTimeout(() => callbackRef.current(), delay);
+  });
+}

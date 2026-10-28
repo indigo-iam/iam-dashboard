@@ -20,13 +20,15 @@ import {
   ModalProps,
 } from "@/components/modal";
 import { Option, Select } from "@/components/select";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { addScope } from "@/services/scopes";
 
 type NewScopeModalProps = ModalProps;
 
 export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
   const { show, onClose } = props;
+  const { toast } = useToaster();
+
   const options = [
     { id: "none", name: "None" },
     { id: "default", name: "Default" },
@@ -50,7 +52,7 @@ export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
       restricted,
       icon,
     });
-    toast.toast(res);
+    toast(res);
     onClose();
   }
 

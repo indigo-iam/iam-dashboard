@@ -4,7 +4,7 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { Notice, Warning } from "@/components/notices";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { disableClient, enableClient } from "@/services/clients";
 
 type ToggleStatusModalProps = {
@@ -21,13 +21,14 @@ export default function ToggleStatusModal(
 ) {
   const { clientId, clientName, clientDescription, active, show, onClose } =
     props;
+  const { toast } = useToaster();
   const title = `${active ? "Disable" : "Enable"} client?`;
 
   async function handleConfirm() {
     const res = active
       ? await disableClient(clientId)
       : await enableClient(clientId);
-    toast.toast(res);
+    toast(res);
     onClose();
   }
 

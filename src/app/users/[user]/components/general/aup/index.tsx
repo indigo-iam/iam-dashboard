@@ -6,12 +6,22 @@ import { Form } from "@/components/form";
 import { Field } from "@/components/field";
 import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
-import { toast } from "@/components/toaster";
+import { Notification, useToaster } from "@/components/toaster";
 import { AUP } from "@/models/aup";
 import { fetchAUP } from "@/services/aup";
 import { dateToHuman, getDate } from "@/utils/dates";
 import { RequestSignature } from "./request-signature";
 import { SignInBehalfOfUser } from "./sign-in-behalf-user";
+
+type ErrorViewProps = {
+  error: Notification;
+};
+
+function ErrorView(props: Readonly<ErrorViewProps>) {
+  const { toast } = useToaster();
+  toast(props.error);
+  return null;
+}
 
 async function getExpirationDate(
   aup: AUP,
@@ -60,8 +70,7 @@ export async function Aup(props: Readonly<AupProps>) {
   }
 
   if ("title" in aup && "type" in aup) {
-    toast.toast(aup);
-    return null;
+    return <ErrorView error={aup} />;
   }
 
   const { expiresAt, expired } = await getExpirationDate(

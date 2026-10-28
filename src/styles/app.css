@@ -16,6 +16,22 @@
   --breakpoint-3xl: 120rem;
   --breakpoint-4xl: 140rem;
   --breakpoint-5xl: 160rem;
+  --animate-slidein: slidein 0.3s ease-in-out;
+
+  @keyframes slidein {
+    0% {
+      transform: translateX(100%);
+    }
+    60% {
+      transform: translateX(-5%);
+    }
+    80% {
+      transform: translateX(5%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
 }
 
 @layer base {

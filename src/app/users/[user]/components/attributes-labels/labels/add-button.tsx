@@ -18,7 +18,7 @@ import {
   ModalHeader,
   ModalProps,
 } from "@/components/modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { addUserLabel } from "@/services/users";
 import { useProgressBar } from "@/components/progress-bar";
 
@@ -108,6 +108,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
   const [prefix, setPrefix] = useState("");
   const [name, setName] = useState("");
   const [value, setValue] = useState<string | null>(null);
+  const { toast } = useToaster();
 
   const prefixIsValid =
     /^[A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9].[A-Za-z]{2,6}$/.test(prefix);
@@ -122,7 +123,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
     startTransition(async () => {
       const res = await addUserLabel(userId, prefix, name, value);
       if (res) {
-        toast.toast(res);
+        toast(res);
       }
     });
     onClose();

@@ -22,7 +22,7 @@ import { Input } from "@/components/inputs";
 import { Textarea } from "@/components/textarea";
 import { useProgressBar } from "@/components/progress-bar";
 import { addProxyCert } from "@/services/certs";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 
 type LinkProxyModalProps = ModalProps & {
   userId: string;
@@ -34,6 +34,7 @@ function LinkProxyModal(props: Readonly<LinkProxyModalProps>) {
   const { show, onClose, userId, userName, disabled } = props;
   const [error, setError] = useState<string | null>(null);
   const { startTransition } = useProgressBar();
+  const toast = useToaster();
 
   function close() {
     setError(null);

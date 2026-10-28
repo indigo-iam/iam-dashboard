@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { ScimReference } from "@/models/scim";
 import { deleteGroup } from "@/services/groups";
 
@@ -17,10 +17,11 @@ export default function DeleteSubgroupModal(
   props: Readonly<DeleteGroupModalProps>
 ) {
   const { groupRef, show, onClose, onDeleted } = props;
+  const { toast } = useToaster();
 
   const handleConfirm = async () => {
     const res = await deleteGroup(groupRef.value);
-    toast.toast(res);
+    toast(res);
     onClose();
     onDeleted?.();
   };

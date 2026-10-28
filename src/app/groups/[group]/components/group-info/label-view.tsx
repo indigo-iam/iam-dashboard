@@ -6,7 +6,7 @@
 
 import { Button } from "@/components/buttons";
 import { useProgressBar } from "@/components/progress-bar";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { Group, GroupLabel } from "@/models/groups";
 import { deleteGroupLabel } from "@/services/groups";
 import { XCircleIcon } from "@heroicons/react/16/solid";
@@ -19,13 +19,14 @@ type LabelProps = {
 export default function LabelView(props: Readonly<LabelProps>) {
   const { group, label } = props;
   const { startTransition } = useProgressBar();
+  const { toast } = useToaster();
 
   function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     startTransition(async () => {
       const res = await deleteGroupLabel(group.id, label);
       if (res.type !== "success") {
-        toast.toast(res);
+        toast(res);
       }
     });
   }

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { revokeGroupManager } from "@/services/groups";
 import { Notice } from "@/components/notices";
 
@@ -31,9 +31,11 @@ export default function RevokeGroupManagerModal(
     onClose,
     onUnlinked,
   } = props;
+  const { toast } = useToaster();
+
   const handleConfirm = async () => {
     const res = await revokeGroupManager(groupId, userId);
-    toast.toast(res);
+    toast(res);
     onClose();
     onUnlinked?.();
   };

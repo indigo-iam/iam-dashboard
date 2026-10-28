@@ -8,17 +8,18 @@ import { useState } from "react";
 
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { touchAUP } from "@/services/aup";
 
 export default function RequestSignatureButton() {
   const [isShown, setIsShown] = useState(false);
+  const { toast } = useToaster();
   const show = () => setIsShown(true);
   const hide = () => setIsShown(false);
   const action = async () => {
     const res = await touchAUP();
     if (res) {
-      toast.toast(res);
+      toast(res);
     }
     hide();
   };

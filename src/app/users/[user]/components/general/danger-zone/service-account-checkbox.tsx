@@ -11,7 +11,7 @@ import { LabeledCheckbox } from "@/components/checkbox";
 import { Field } from "@/components/field";
 import { ModalProps } from "@/components/modal";
 import { setServiceAccount } from "@/services/users";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 
 type ServiceAccountModalProps = ModalProps & {
   userId: string;
@@ -21,10 +21,11 @@ type ServiceAccountModalProps = ModalProps & {
 
 function ServiceAccountModal(props: Readonly<ServiceAccountModalProps>) {
   const { userId, userFormattedName, enabled, show, onClose } = props;
+  const { toast } = useToaster();
 
   async function toggleServiceAccount() {
     const res = await setServiceAccount(userId, !enabled);
-    toast.toast(res);
+    toast(res);
   }
 
   return (

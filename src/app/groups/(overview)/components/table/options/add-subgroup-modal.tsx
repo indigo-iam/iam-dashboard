@@ -17,7 +17,7 @@ import {
   ModalFooter,
   ModalProps,
 } from "@/components/modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { addSubgroup } from "@/services/groups";
 
 interface AddSubgroupModalProps extends ModalProps {
@@ -29,6 +29,7 @@ export default function AddSubgroupModal(
   props: Readonly<AddSubgroupModalProps>
 ) {
   const { rootGroupId, rootGroupName, onAdded, ...modalProps } = props;
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -36,7 +37,7 @@ export default function AddSubgroupModal(
     const name = formData.get("name") as string;
 
     const res = await addSubgroup(name, rootGroupId, rootGroupName);
-    toast.toast(res);
+    toast(res);
     onAdded?.();
     modalProps.onClose();
   }

@@ -9,7 +9,7 @@ import { Description } from "@/components/description";
 import { Field } from "@/components/field";
 import { Label } from "@/components/label";
 import { Textarea } from "@/components/textarea";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { JoinGroupRequest } from "@/models/group-requests";
 import { Group } from "@/models/groups";
 import { submitGroupRequest } from "@/services/group-requests";
@@ -70,6 +70,7 @@ export function JoinGroupModal(props: Readonly<JoinGroupModalProps>) {
   const formRef = useRef<HTMLFormElement>(null);
   const [selected, setSelected] = useState<Group>();
   const [motivation, setMotivation] = useState<string>();
+  const toast = useToaster();
   const enabled =
     selected && (motivation?.length ?? 0) >= MIN_MOTIVATION_LENGTH;
 

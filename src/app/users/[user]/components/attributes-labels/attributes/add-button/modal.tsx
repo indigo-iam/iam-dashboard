@@ -19,7 +19,7 @@ import {
   ModalProps,
 } from "@/components/modal";
 import { useProgressBar } from "@/components/progress-bar";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { addAttribute } from "@/services/users";
 
 function validateField(s: string) {
@@ -83,6 +83,7 @@ export default function AddAttributeModal(
   const [name, setName] = useState("");
   const [value, setValue] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
+  const { toast } = useToaster();
 
   function resetStates() {
     setName("");
@@ -108,7 +109,7 @@ export default function AddAttributeModal(
     const value = formData.get("attr-value") as string;
     startTransition(async () => {
       const res = await addAttribute(userId, { name, value });
-      toast.toast(res);
+      toast(res);
     });
     closeAndReset();
   }

@@ -10,7 +10,7 @@ import { Checkbox } from "@/components/checkbox";
 import { Form } from "@/components/form";
 import { Field } from "@/components/field";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { Client, Scope } from "@/models/client";
 import { editClient } from "@/services/clients";
 import { Label } from "@/components/label";
@@ -52,6 +52,7 @@ type AddScopeModalProps = AddScopeProps & {
 
 function AddScopeModal(props: Readonly<AddScopeModalProps>) {
   const { client, availableScopes, show, onClose, isAdmin } = props;
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -60,7 +61,7 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
     const scopes = (client.scope?.split(" ") ?? []).concat(newScope);
     const scope = scopes.join(" ");
     const res = await editClient({ ...client, scope }, isAdmin);
-    toast.toast(res);
+    toast(res);
     onClose();
   }
 

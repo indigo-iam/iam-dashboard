@@ -5,7 +5,7 @@
 "use client";
 
 import { Select, Option } from "@/components/select";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { Scope } from "@/models/client";
 import { editScope } from "@/services/scopes";
 
@@ -15,6 +15,7 @@ type ScopeTypeSelectProps = {
 
 export default function ScopeTypeSelect(props: Readonly<ScopeTypeSelectProps>) {
   const { scope } = props;
+  const { toast } = useToaster();
 
   const options = [
     { id: "none", name: "None" },
@@ -49,7 +50,7 @@ export default function ScopeTypeSelect(props: Readonly<ScopeTypeSelectProps>) {
       }
     }
     const res = await editScope(newScope);
-    toast.toast(res);
+    toast(res);
   }
 
   return (

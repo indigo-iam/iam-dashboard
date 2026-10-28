@@ -15,7 +15,7 @@ import { Field } from "@/components/field";
 import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import { Textarea } from "@/components/textarea";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { dateToHuman } from "@/utils/dates";
 import { editClient } from "@/services/clients";
 
@@ -26,6 +26,8 @@ type GeneralFormProps = {
 
 export function GeneralForm(props: Readonly<GeneralFormProps>) {
   const { client, isAdmin } = props;
+  const { toast } = useToaster();
+
   const createdAt = client.created_at
     ? dateToHuman(new Date(client.created_at))
     : "N/A";
@@ -50,7 +52,7 @@ export function GeneralForm(props: Readonly<GeneralFormProps>) {
       policy_uri: formData.get("policy_uri") as string,
     };
     const res = await editClient(requestBody, isAdmin);
-    toast.toast(res);
+    toast(res);
   }
 
   return (

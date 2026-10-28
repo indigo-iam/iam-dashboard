@@ -7,7 +7,7 @@ import type { Metadata, Viewport } from "next";
 import { getSession, isUserAdmin } from "@/auth";
 import { Header } from "@/app/components/header";
 import { Sidebar } from "@/app/components/sidebar";
-import { Toaster } from "@/components/toaster";
+import { ToasterProvider } from "@/components/toaster";
 import { LoadingProvider } from "@/components/loading";
 import { ProgressBarProvider } from "@/components/progress-bar";
 import "@/styles/main.css";
@@ -48,15 +48,16 @@ export default async function RootLayout(props: Readonly<RootLayoutProps>) {
         <div id="app">
           <LoadingProvider>
             <ProgressBarProvider>
-              <Header hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
-              <main>
-                <Sidebar hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
-                <div className="content">{children}</div>
-              </main>
+              <ToasterProvider>
+                <Header hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
+                <main>
+                  <Sidebar hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
+                  <div className="content">{children}</div>
+                </main>
+              </ToasterProvider>
             </ProgressBarProvider>
           </LoadingProvider>
         </div>
-        <Toaster />
       </body>
     </html>
   );

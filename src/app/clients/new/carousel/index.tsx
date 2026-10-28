@@ -4,6 +4,8 @@
 
 "use client";
 
+import { useState } from "react";
+
 import {
   CarouselGroup,
   CarouselList,
@@ -12,6 +14,7 @@ import {
 } from "@/components/carousel";
 import { Form } from "@/components/form";
 import { Stepper } from "@/components/stepper";
+import { useToaster } from "@/components/toaster";
 import { Client, ClientRequest, Scope } from "@/models/client";
 import { OpenIdConfiguration } from "@/models/openid-configuration";
 import { registerClient } from "@/services/clients";
@@ -19,9 +22,6 @@ import ClientDetails from "./client-details";
 import GeneralSettings from "./general-settings";
 import OIDCSettings from "./oidc-settings";
 import OtherSettings from "./other-settings";
-
-import { useState } from "react";
-import { toast } from "@/components/toaster";
 
 const TOTAL_PAGES = 4;
 
@@ -35,6 +35,7 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
   const { systemScopes, isAdmin } = props;
   const [currentPage, setCurrentPage] = useState(0);
   const [client, setClient] = useState<Client>();
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -81,7 +82,7 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
       if (res.payload) {
         setClient(res.payload);
       }
-      toast.toast(res.notification);
+      toast(res.notification);
     };
 
     await save();

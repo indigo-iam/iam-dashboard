@@ -19,7 +19,7 @@ import {
   ModalFooter,
   ModalProps,
 } from "@/components/modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { AUP } from "@/models/aup";
 import { createAUP, patchAUP } from "@/services/aup";
 
@@ -34,6 +34,8 @@ export default function AupModal(props: Readonly<AupModalProps>) {
     aup?.signatureValidityInDays ?? 0
   );
   const formRef = useRef<HTMLFormElement>(null);
+  const { toast } = useToaster();
+
   const isEditing = !!aup;
 
   function reset() {
@@ -70,7 +72,7 @@ export default function AupModal(props: Readonly<AupModalProps>) {
       aupRemindersInDays,
     };
     const res = isEditing ? await patchAUP(body) : await createAUP(body);
-    toast.toast(res);
+    toast(res);
     if (res.type !== "success") {
       reset();
     }

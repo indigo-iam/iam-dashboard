@@ -10,7 +10,7 @@ import { Button } from "@/components/buttons";
 import { ModalProps } from "@/components/modal";
 import ConfirmModal from "@/components/confirm-modal";
 import { resetClient } from "@/services/clients";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { Notice, Warning } from "@/components/notices";
 
 type ConfirmModalProps = ModalProps & {
@@ -21,10 +21,11 @@ type ConfirmModalProps = ModalProps & {
 
 function Modal(props: Readonly<ConfirmModalProps>) {
   const { show, onClose, clientId, clientName, clientDescription } = props;
+  const { toast } = useToaster();
 
   async function action() {
     const res = await resetClient(clientId);
-    toast.toast(res);
+    toast(res);
   }
 
   return (

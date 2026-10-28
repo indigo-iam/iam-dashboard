@@ -18,7 +18,7 @@ import {
 import { Scope } from "@/models/client";
 import { editScope } from "@/services/scopes";
 import { Button } from "@/components/buttons";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 
 interface EditScopeModalProps extends ModalProps {
   scope: Scope;
@@ -26,6 +26,7 @@ interface EditScopeModalProps extends ModalProps {
 
 export default function EditScopeModal(props: Readonly<EditScopeModalProps>) {
   const { scope, show, onClose } = props;
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -35,7 +36,7 @@ export default function EditScopeModal(props: Readonly<EditScopeModalProps>) {
     const value = (formData.get("value") as string) ?? scope.value;
     const newScope = { ...scope, description, value };
     const res = await editScope(newScope);
-    toast.toast(res);
+    toast(res);
     onClose?.();
   }
 

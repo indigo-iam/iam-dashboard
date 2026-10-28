@@ -18,7 +18,7 @@ import {
   ModalFooter,
   type ModalProps,
 } from "@/components/modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { Group } from "@/models/groups";
 import { editGroup } from "@/services/groups";
 
@@ -29,6 +29,7 @@ interface EditModalProps extends ModalProps {
 
 function EditModal(props: Readonly<EditModalProps>) {
   const { group, ...modalProps } = props;
+  const { toast } = useToaster();
   const description =
     group["urn:indigo-dc:scim:schemas:IndigoGroup"].description ?? "";
 
@@ -37,7 +38,7 @@ function EditModal(props: Readonly<EditModalProps>) {
     const formData = new FormData(event.currentTarget);
     const description = formData.get("description") as string | null;
     const res = await editGroup(group.id, description);
-    toast.toast(res);
+    toast(res);
     props.onClose();
   }
 

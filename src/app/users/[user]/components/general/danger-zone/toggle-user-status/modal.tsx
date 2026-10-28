@@ -5,7 +5,7 @@
 import ConfirmModal from "@/components/confirm-modal";
 import { ModalProps } from "@/components/modal";
 import { Notice, Warning } from "@/components/notices";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { changeUserStatus } from "@/services/users";
 
 interface ToggleUserModalProps extends ModalProps {
@@ -26,13 +26,13 @@ export default function ToggleUserStatusModal(
     show,
     onClose,
   } = props;
-
+  const { toast } = useToaster();
   const title = `${userIsActive ? "Disable user" : "Enable user"} '${userFormattedName}'?`;
 
   async function action() {
     const newStatus = !userIsActive;
     const res = await changeUserStatus(userId, newStatus);
-    toast.toast(res);
+    toast(res);
     onClose();
   }
   return (

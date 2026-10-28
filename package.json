@@ -19,8 +19,7 @@
     "next": "^16",
     "react": "^19",
     "react-dom": "^19",
-    "sharp": "^0.35",
-    "sonner": "^2"
+    "sharp": "^0.35"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.0",
@@ -35,7 +34,6 @@
     "prettier": "^3",
     "prettier-plugin-tailwindcss": "^0",
     "tailwindcss": "^4.3",
-    "ts-jest": "^29",
     "typescript": "^6"
   }
 }

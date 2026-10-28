@@ -7,7 +7,7 @@
 import { SearchUsers } from "@/app/components/search-users";
 import ConfirmModal from "@/components/confirm-modal";
 import { type ModalProps } from "@/components/modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { User } from "@/models/scim";
 import { assignGroupManager } from "@/services/groups";
 
@@ -81,8 +81,14 @@ type AssignGroupManagerModalProps = ModalProps & {
 export default function AssignGroupManagerModal(
   props: Readonly<AssignGroupManagerModalProps>
 ) {
-  const { groupId, groupName, groupDescription, onClose, ...modalProps } =
-    props;
+  const {
+    groupId, //
+    groupName,
+    groupDescription,
+    onClose,
+    ...modalProps
+  } = props;
+  const { toast } = useToaster();
   const [user, setUser] = useState<User>();
   const clear = () => setUser(undefined);
 
@@ -102,7 +108,7 @@ export default function AssignGroupManagerModal(
     if (res.type === "success") {
       res.description = `User ${userFormattedName} has been assigned manager of group ${groupName}`;
     }
-    toast.toast(res);
+    toast(res);
     clearAndClose();
   }
 

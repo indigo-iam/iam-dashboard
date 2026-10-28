@@ -19,7 +19,7 @@ import {
   ModalFooter,
   ModalProps,
 } from "@/components/modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { changePassword, resetUserPassword } from "@/services/users";
 
 interface ModalPasswordProps extends ModalProps {
@@ -28,11 +28,13 @@ interface ModalPasswordProps extends ModalProps {
 
 function ModalPassword(props: Readonly<ModalPasswordProps>) {
   const { userId, ...modalProps } = props;
+  const { toast } = useToaster();
+
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const res = await changePassword(userId, formData);
-    toast.toast(res);
+    toast(res);
   }
 
   return (
@@ -85,10 +87,11 @@ function ResetPasswordForUserModal(
   props: Readonly<ResetPasswordForUserModalProps>
 ) {
   const { userFormattedName, userEmail, show, onClose } = props;
+  const { toast } = useToaster();
 
   async function resetPassword() {
     const res = await resetUserPassword(userEmail);
-    toast.toast(res);
+    toast(res);
   }
 
   return (

@@ -19,7 +19,7 @@ import {
   ModalFooter,
   ModalProps,
 } from "@/components/modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { ScimUser } from "@/models/scim";
 import { addUser } from "@/services/users";
 import { toTitleCase } from "@/utils/strings";
@@ -31,6 +31,7 @@ type AddUserFormProps = {
 
 function AddUserForm(props: Readonly<AddUserFormProps>) {
   const { onClose, onUserAdded } = props;
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -51,7 +52,7 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
       schemas: ["urn:ietf:params:scim:schemas:core:2.0:User"],
     };
     const res = await addUser(user);
-    toast.toast(res);
+    toast(res);
     onUserAdded?.();
     onClose?.();
   }

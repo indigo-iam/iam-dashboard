@@ -15,7 +15,7 @@ import { Input } from "@/components/inputs";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { AddSecretResponse } from "@/models/mfa";
 import { addMFASecret, enableMFA } from "@/services/users";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 
 type MFAModalProps = {
   show: boolean;
@@ -25,6 +25,7 @@ type MFAModalProps = {
 export function EnableMFAModal(props: Readonly<MFAModalProps>) {
   const { show, onClose } = props;
   const [mfa, setMfa] = useState<AddSecretResponse>();
+  const toast = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -52,7 +53,7 @@ export function EnableMFAModal(props: Readonly<MFAModalProps>) {
         toast.error("Cannot enable MFA: unknown error");
         console.error(err);
       });
-  }, [show]);
+  }, [show, toast]);
 
   return (
     <Modal show={show} onClose={onClose}>

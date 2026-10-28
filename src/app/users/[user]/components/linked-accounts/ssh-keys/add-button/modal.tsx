@@ -17,7 +17,7 @@ import {
   ModalProps,
 } from "@/components/modal";
 import { Textarea } from "@/components/textarea";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { SSHKey } from "@/models/indigo-user";
 
 import { addSSHKey } from "@/services/users";
@@ -28,6 +28,7 @@ interface AddSSHKeyModalProps extends ModalProps {
 
 export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
   const { userId, ...modalProps } = props;
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -37,7 +38,7 @@ export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
       value: formData.get("ssh-key") as string,
     };
     const res = await addSSHKey(userId, sshKey);
-    toast.toast(res);
+    toast(res);
     modalProps.onClose();
   }
 

@@ -21,7 +21,7 @@ import {
 } from "@/components/modal";
 import { Select, Option } from "@/components/select";
 import { Textarea } from "@/components/textarea";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { linkCertificate, sendCertificateLinkRequest } from "@/services/certs";
 import { useProgressBar } from "@/components/progress-bar";
 
@@ -96,6 +96,7 @@ function RequestCertificateLinkingModal(
   props: Readonly<RequestCertificateLinkingModalProps>
 ) {
   const { userName, issuers, show, onClose } = props;
+  const { toast } = useToaster();
   const [format, setFormat] = useState<CertificateType>("pem");
   const close = () => {
     onClose();
@@ -113,7 +114,7 @@ function RequestCertificateLinkingModal(
       pemEncodedCertificate,
       notes,
     });
-    toast.toast(res);
+    toast(res);
     close();
   }
   return (
@@ -168,6 +169,7 @@ function LinkCertificateModal(props: Readonly<LinkCertificateModalProps>) {
   const [error, setError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const { startTransition } = useProgressBar();
+  const { toast } = useToaster();
 
   function close() {
     onClose();
@@ -187,7 +189,7 @@ function LinkCertificateModal(props: Readonly<LinkCertificateModalProps>) {
     }
     startTransition(async () => {
       const res = await linkCertificate(userId, label, cert);
-      toast.toast(res);
+      toast(res);
       if (res.type === "error") {
         setError(res.description ?? "unknown error");
       } else {

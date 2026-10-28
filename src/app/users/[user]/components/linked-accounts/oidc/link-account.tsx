@@ -20,7 +20,7 @@ import { Field } from "@/components/field";
 import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import { linkOidcAccount } from "@/services/users";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 
 type LinkAccountModalProps = ModalProps & {
   userId: string;
@@ -29,6 +29,7 @@ type LinkAccountModalProps = ModalProps & {
 
 function LinkAccountModal(props: Readonly<LinkAccountModalProps>) {
   const { show, onClose, userId, userFormattedName } = props;
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -39,7 +40,7 @@ function LinkAccountModal(props: Readonly<LinkAccountModalProps>) {
     if (res.type === "success") {
       onClose();
     }
-    toast.toast(res);
+    toast(res);
   }
 
   return (

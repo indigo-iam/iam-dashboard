@@ -55,9 +55,7 @@ type ManagedGroupProps = {
   userId: string;
 };
 
-export default async function ManagedGroups(
-  props: Readonly<ManagedGroupProps>
-) {
+export default function ManagedGroups(props: Readonly<ManagedGroupProps>) {
   const { userId } = props;
   return (
     <Suspense>

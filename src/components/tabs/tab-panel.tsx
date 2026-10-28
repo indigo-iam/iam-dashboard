@@ -4,7 +4,8 @@
 
 "use client";
 
-import { ReactElement, useId, useEffect, useRef } from "react";
+import { ReactElement, useId, useEffect, useRef, Children } from "react";
+
 import {
   TabIndexContext,
   useTabActions,
@@ -60,16 +61,9 @@ export type TabPanelsProps = {
 export function TabPanels(props: Readonly<TabPanelsProps>) {
   return (
     <div className={props.className}>
-      {props.children.map((child, index) =>
-        typeof child === "object" ? (
-          <TabIndexContext
-            value={index}
-            key={`tab-panel-index-${child.props?.children ?? index}`}
-          >
-            {child}
-          </TabIndexContext>
-        ) : null
-      )}
+      {Children.map(props.children, (child, index) => (
+        <TabIndexContext value={index}>{child}</TabIndexContext>
+      ))}
     </div>
   );
 }

@@ -56,7 +56,7 @@ type CertificateProps = {
   isAdmin: boolean;
 };
 
-export async function Certificates(props: Readonly<CertificateProps>) {
+export function Certificates(props: Readonly<CertificateProps>) {
   const { isMe, userId, userName, userFormattedName, certificates, isAdmin } =
     props;
   return (

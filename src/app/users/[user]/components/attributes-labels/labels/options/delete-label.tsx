@@ -32,7 +32,7 @@ export function DeleteLabelModal(props: Readonly<DeleteLabelModalProps>) {
   const { startTransition } = useProgressBar();
   const { toast } = useToaster();
 
-  async function deleteLabel() {
+  function deleteLabel() {
     startTransition(async () => {
       const res = await deleteUserLabel(userId, prefix, name);
       if (res) {

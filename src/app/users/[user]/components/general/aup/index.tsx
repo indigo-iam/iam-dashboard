@@ -23,10 +23,7 @@ function ErrorView(props: Readonly<ErrorViewProps>) {
   return null;
 }
 
-async function getExpirationDate(
-  aup: AUP,
-  userAupSignatureTime: string | null
-) {
+function getExpirationDate(aup: AUP, userAupSignatureTime: string | null) {
   if (aup.signatureValidityInDays === 0) {
     return {
       expiresAt: "N/A",
@@ -73,10 +70,7 @@ export async function Aup(props: Readonly<AupProps>) {
     return <ErrorView error={aup} />;
   }
 
-  const { expiresAt, expired } = await getExpirationDate(
-    aup,
-    userAupSignatureTime
-  );
+  const { expiresAt, expired } = getExpirationDate(aup, userAupSignatureTime);
   return (
     <div className="flex flex-col gap-8 py-4 last:pb-0 lg:flex-row">
       <div className="w-full space-y-2 text-sm font-light lg:w-1/3">

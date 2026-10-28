@@ -27,7 +27,7 @@ type GeneralProps = {
   isAdmin: boolean;
 };
 
-export async function General(props: Readonly<GeneralProps>) {
+export function General(props: Readonly<GeneralProps>) {
   const {
     userId,
     userName,

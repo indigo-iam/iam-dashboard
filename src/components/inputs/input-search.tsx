@@ -4,10 +4,12 @@
 
 "use client";
 
-import { Input, InputProps } from "./input";
+import { useRef, useState } from "react";
 import { XCircleIcon } from "@heroicons/react/16/solid";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { useRef, useState } from "react";
+
+import { useToaster } from "../toaster";
+import { Input, InputProps } from "./input";
 
 export type InputSearchProps = InputProps & {
   onQueryChange: (filter: string) => void;
@@ -18,6 +20,7 @@ export function InputSearch(props: Readonly<InputSearchProps>) {
   const { onQueryChange, onClear, defaultValue, ...others } = props;
   const [value, setValue] = useState(defaultValue ?? "");
   const timeoutRef = useRef<number | null>(null);
+  const toast = useToaster();
 
   async function searchCallback(filter: string) {
     if (filter.length > 1) {
@@ -36,7 +39,9 @@ export function InputSearch(props: Readonly<InputSearchProps>) {
     }
     timeoutRef.current = globalThis.window.setTimeout(() => {
       if (value) {
-        searchCallback(value.toString());
+        searchCallback(value.toString()).catch(e =>
+          toast.error("Failed to search", e)
+        );
       } else {
         onClear();
       }

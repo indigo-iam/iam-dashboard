@@ -78,6 +78,6 @@ async function setupAuthDb() {
 
 // executed only once at startup.
 export async function register() {
-  setupAuthDb();
+  await setupAuthDb();
   setupOtel();
 }

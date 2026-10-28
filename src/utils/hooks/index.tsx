@@ -4,26 +4,6 @@
 
 import { useState, useEffect, useRef } from "react";
 
-export function useSessionStorage() {
-  const [storage, setStorage] = useState<Storage>();
-
-  useEffect(() => {
-    (async () => {
-      setStorage(sessionStorage);
-    })();
-  }, []);
-
-  function getItem(key: string) {
-    return storage?.getItem(key);
-  }
-
-  function setItem(key: string, value: string) {
-    storage?.setItem(key, value);
-  }
-
-  return { getItem, setItem };
-}
-
 export function useDeferredCallback() {
   const timeoutRef = useRef<number>(null);
 
@@ -35,7 +15,6 @@ export function useDeferredCallback() {
       await callback();
     }, 150);
   }
-
   return {
     deferredCallback,
   };
@@ -43,12 +22,13 @@ export function useDeferredCallback() {
 
 export function useDisabled() {
   const [disabled, setDisabled] = useState(true);
+  const lock = useRef(false);
 
   useEffect(() => {
-    const f = async () => {
+    if (!lock.current) {
       setDisabled(false);
-    };
-    f();
+      lock.current = true;
+    }
   }, []);
 
   return disabled;

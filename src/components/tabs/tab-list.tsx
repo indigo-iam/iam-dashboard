@@ -4,7 +4,8 @@
 
 "use client";
 
-import { ReactElement } from "react";
+import { Children, ReactElement } from "react";
+
 import { TabProps } from "./tab";
 import { TabIndexContext } from "./context";
 
@@ -16,16 +17,9 @@ export type TabListProps = React.HTMLAttributes<HTMLElement> & {
 export function TabList(props: Readonly<TabListProps>) {
   return (
     <div role="tablist" {...props}>
-      {props.children.map((child, index) =>
-        typeof child === "object" ? (
-          <TabIndexContext
-            value={index}
-            key={`tab-index_${child.props?.children || index}`}
-          >
-            {child}
-          </TabIndexContext>
-        ) : null
-      )}
+      {Children.map(props.children, (child, index) => (
+        <TabIndexContext value={index}>{child}</TabIndexContext>
+      ))}
     </div>
   );
 }

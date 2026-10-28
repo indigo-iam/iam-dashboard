@@ -2,14 +2,12 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-"use server";
+import { Suspense } from "react";
+import { BellIcon } from "@heroicons/react/24/outline";
 
 import { fetchGroupsRequests } from "@/services/group-requests";
 import { fetchRegistrationRequests } from "@/services/registration";
 import { NotificationsPopover } from "./popover";
-
-import { BellIcon } from "@heroicons/react/24/outline";
-import { Suspense } from "react";
 
 async function Content() {
   const [registrationRequests, groupRequests] = await Promise.all([
@@ -36,7 +34,7 @@ function Fallback() {
   );
 }
 
-export default async function Notifications() {
+export default function Notifications() {
   return (
     <Suspense fallback={<Fallback />}>
       <Content />

@@ -14,7 +14,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN apk add --no-cache libc6-compat && \
   npm ci --ignore-scripts && \
-  npm rebuild better-sqlite3 sharp
+  npm rebuild better-sqlite3
 
 # Rebuild the source code only when needed
 FROM base AS builder

@@ -102,6 +102,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
                 name="given-name"
                 minLength={2}
                 defaultValue={userGivenName}
+                autoComplete="given-name"
               />
             </Field>
             <Field className="flex max-w-full grow flex-col">
@@ -112,6 +113,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
                 name="family-name"
                 minLength={2}
                 defaultValue={userFamilyName}
+                autoComplete="family-name"
               />
             </Field>
             <Field className="flex max-w-full grow flex-col">
@@ -121,12 +123,19 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
                 name="middle-name"
                 minLength={2}
                 defaultValue={userMiddleName ?? undefined}
+                autoComplete="additional-name"
               />
             </Field>
           </div>
           <Field className="flex flex-col">
             <Label>Username</Label>
-            <Input name="username" defaultValue={userName} required disabled />
+            <Input
+              name="username"
+              defaultValue={userName}
+              required
+              disabled
+              autoComplete="off"
+            />
           </Field>
           <Field className="flex flex-col">
             <Label>Email</Label>
@@ -136,6 +145,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
               id="email"
               name="email"
               defaultValue={userEmail}
+              autoComplete="off"
             />
           </Field>
           <Field className="flex justify-between">

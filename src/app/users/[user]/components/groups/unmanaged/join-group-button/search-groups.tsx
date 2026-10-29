@@ -7,7 +7,7 @@
 import { Group } from "@/models/groups";
 import { searchGroup } from "@/services/groups";
 import { useDeferredCallback } from "@/utils/hooks";
-import { useState } from "react";
+import { useId, useState } from "react";
 
 type SearchGroupProps = {
   listId: string;
@@ -43,6 +43,8 @@ export function SearchGroups(props: Readonly<SearchGroupProps>) {
         list={listId}
         onChange={handleQueryChange}
         placeholder="Type to search for a group..."
+        id={useId()}
+        autoComplete="off"
       />
       <datalist id={listId}>
         {searchResult.map(group => (

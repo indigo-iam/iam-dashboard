@@ -19,7 +19,7 @@ const POLICY_EXAMPLE = `{
   "scopes": null
 }  `;
 
-export default async function Policies() {
+export default function Policies() {
   // temporary hide this page until finished
   redirect("/");
 

@@ -13,7 +13,7 @@ type DeletePolicyModal = {
 
 export default function DeletePolicyModal(props: Readonly<DeletePolicyModal>) {
   const { show, onClose, policy } = props;
-  const handleConfirm = async () => {
+  const handleConfirm = () => {
     console.log("TODO");
     onClose();
   };

@@ -16,7 +16,7 @@ type SystemScopesProps = {
   isAdmin: boolean;
 };
 
-async function SystemScopes(props: Readonly<SystemScopesProps>) {
+function SystemScopes(props: Readonly<SystemScopesProps>) {
   const { client, scopes, isAdmin } = props;
   return scopes.map(s => (
     <li className="iam-list-item" key={s.id}>
@@ -39,7 +39,7 @@ type CustomScopesProps = {
   isAdmin: boolean;
 };
 
-async function CustomScopes(props: Readonly<CustomScopesProps>) {
+function CustomScopes(props: Readonly<CustomScopesProps>) {
   const { client, scopes, isAdmin } = props;
   return scopes.map(s => (
     <li className="iam-list-item" key={s}>

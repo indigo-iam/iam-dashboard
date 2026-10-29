@@ -22,12 +22,12 @@ function rewriteRequest(req: NextRequest) {
   return new NextRequest(url, req);
 }
 
-export async function GET(req: NextRequest) {
+export function GET(req: NextRequest) {
   const modified = rewriteRequest(req);
   return handlers.GET(modified);
 }
 
-export async function POST(req: NextRequest) {
+export function POST(req: NextRequest) {
   const modified = rewriteRequest(req);
   return handlers.POST(modified);
 }

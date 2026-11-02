@@ -122,7 +122,6 @@ export function JoinGroupModal(props: Readonly<JoinGroupModalProps>) {
           <Field className="flex flex-col">
             <Label>Provide a motivation for your request</Label>
             <Textarea
-              id="group-request-notes"
               name="group-request-notes"
               placeholder="Explain why you want to be a member of group..."
               className="iam-input w-full"
@@ -137,7 +136,7 @@ export function JoinGroupModal(props: Readonly<JoinGroupModalProps>) {
       ) : (
         <Field>
           <Label>Select a group to join</Label>
-          <SearchGroups listId="search-group-join" onSelect={setSelected} />
+          <SearchGroups onSelect={setSelected} />
         </Field>
       )}
     </ConfirmModal>

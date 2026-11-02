@@ -75,7 +75,7 @@ export function AssignUserToGroupModal(
       ) : (
         <Field>
           <Label>Select a group</Label>
-          <SearchGroups listId="search-group-assign" onSelect={setSelected} />
+          <SearchGroups onSelect={setSelected} />
         </Field>
       )}
     </ConfirmModal>

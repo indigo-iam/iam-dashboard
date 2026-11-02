@@ -68,7 +68,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
           <Fieldset>
             <Field>
               <Label>Name</Label>
-              <Input name="name" type="text" required />
+              <Input name="name" type="text" autoComplete="off" required />
             </Field>
             <Field>
               <Label>Value</Label>

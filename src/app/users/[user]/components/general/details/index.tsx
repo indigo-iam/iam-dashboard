@@ -142,7 +142,6 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
             <Input
               required
               type="email"
-              id="email"
               name="email"
               defaultValue={userEmail}
               autoComplete="off"
@@ -159,6 +158,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
         </Form>
         <Field className="col-span-full flex flex-col">
           <Label>Authentication</Label>
+          <Input hidden disabled />
           <div className="flex flex-wrap gap-2">
             {isMe && <MFAButton enabled={mfaEnabled} />}
             <ResetPassword

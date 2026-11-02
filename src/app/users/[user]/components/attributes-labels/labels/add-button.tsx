@@ -165,6 +165,7 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
             <Label>Name</Label>
             <Input
               name="name"
+              autoComplete="off"
               placeholder="cern_person_id"
               required
               onChange={e => setName(e.currentTarget.value)}

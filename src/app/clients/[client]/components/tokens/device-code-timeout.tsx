@@ -35,7 +35,6 @@ export function DeviceCodeTimeout(props: Readonly<DeviceCodeTimeoutProps>) {
           <Label>Device Code timeout (seconds)</Label>
           <Input
             type="number"
-            id="device-code-validity-input"
             name="device_code_validity_seconds"
             defaultValue={deviceCodeValiditySeconds}
           />

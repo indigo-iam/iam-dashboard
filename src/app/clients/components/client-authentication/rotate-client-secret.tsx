@@ -14,6 +14,7 @@ import { Label } from "@/components/label";
 import { Info } from "@/components/info";
 import { useToaster } from "@/components/toaster";
 import { rotateClientSecret } from "@/services/clients";
+import { Input } from "@/components/inputs";
 
 type ClientSecretViewProps = {
   secret: string;
@@ -57,6 +58,7 @@ export function RotateClientSecret(props: Readonly<RotateClientSecretProps>) {
           <Info>Clients secrets provides authentication for this client.</Info>
         </div>
       </Label>
+      <Input hidden disabled />
       <Button variant="outline" type="button" onClick={open}>
         Rotate Secret
       </Button>

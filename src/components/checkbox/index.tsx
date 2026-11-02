@@ -10,6 +10,7 @@ import { CheckIcon } from "@heroicons/react/16/solid";
 import { Label } from "@/components/label";
 import { useLabelledBy } from "../label/context";
 import { useDescribedBy } from "../description/context";
+import { useField } from "../field/context";
 
 export interface CheckboxState<T> {
   checked: boolean;
@@ -79,9 +80,11 @@ type LabeledCheckboxProps = CheckboxProps & {
 
 export function LabeledCheckbox(props: Readonly<LabeledCheckboxProps>) {
   const { children, ...checkboxProps } = props;
+  const { inputId } = useField();
+  const id = props.id ?? inputId;
   return (
     <div className="flex flex-row items-center gap-2">
-      <Checkbox {...checkboxProps} />
+      <Checkbox {...checkboxProps} id={id} />
       <Label className="pb-0.5! text-sm">{children}</Label>
     </div>
   );

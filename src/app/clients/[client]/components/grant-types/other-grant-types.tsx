@@ -2,8 +2,11 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Field, Label, LabeledCheckbox } from "@/components/form";
+import { LabeledCheckbox } from "@/components/checkbox";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Info } from "@/components/info";
+import { Input } from "@/components/inputs";
 
 type OtherGrantTypesProps = {
   grantTypes: string[];
@@ -34,6 +37,7 @@ export function OtherGrantTypes(props: Readonly<OtherGrantTypesProps>) {
       <div className="flex flex-col gap-2 lg:w-2/3">
         <Field>
           <Label>Other grant types</Label>
+          <Input hidden readOnly />
         </Field>
         <Field className="flex items-center gap-1">
           <LabeledCheckbox

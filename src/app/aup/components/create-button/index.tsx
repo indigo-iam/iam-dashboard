@@ -5,9 +5,9 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/buttons";
 import { PlusIcon } from "@heroicons/react/16/solid";
 
+import { Button } from "@/components/buttons";
 import AupModal from "../modal";
 
 export default function CreateButton() {
@@ -17,7 +17,7 @@ export default function CreateButton() {
   return (
     <>
       <AupModal show={isShown} onClose={hide} />
-      <Button className="btn-secondary" onClick={show}>
+      <Button variant="outline" type="button" onClick={show}>
         <PlusIcon className="my-auto size-5" />
         Create AUP
       </Button>

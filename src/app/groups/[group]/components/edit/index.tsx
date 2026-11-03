@@ -4,8 +4,12 @@
 
 "use client";
 
+import { useState } from "react";
+
 import { Button } from "@/components/buttons";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -14,11 +18,9 @@ import {
   ModalFooter,
   type ModalProps,
 } from "@/components/modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { Group } from "@/models/groups";
 import { editGroup } from "@/services/groups";
-
-import { useState } from "react";
 
 interface EditModalProps extends ModalProps {
   group: Group;
@@ -27,6 +29,7 @@ interface EditModalProps extends ModalProps {
 
 function EditModal(props: Readonly<EditModalProps>) {
   const { group, ...modalProps } = props;
+  const { toast } = useToaster();
   const description =
     group["urn:indigo-dc:scim:schemas:IndigoGroup"].description ?? "";
 
@@ -35,7 +38,7 @@ function EditModal(props: Readonly<EditModalProps>) {
     const formData = new FormData(event.currentTarget);
     const description = formData.get("description") as string | null;
     const res = await editGroup(group.id, description);
-    toast.toast(res);
+    toast(res);
     props.onClose();
   }
 
@@ -54,16 +57,10 @@ function EditModal(props: Readonly<EditModalProps>) {
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button
-            className="btn-tertiary"
-            type="reset"
-            onClick={modalProps.onClose}
-          >
+          <Button variant="underline" type="reset" onClick={modalProps.onClose}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Submit
-          </Button>
+          <Button type="submit">Submit</Button>
         </ModalFooter>
       </Form>
     </Modal>
@@ -81,7 +78,7 @@ export default function EditGroupButton(props: Readonly<EditGroupButtonProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Button className="btn-secondary" type="button" onClick={open}>
+      <Button variant="outline" type="button" onClick={open}>
         Edit group
       </Button>
       <EditModal title="Edit group" show={show} onClose={close} group={group} />

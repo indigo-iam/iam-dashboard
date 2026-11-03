@@ -2,7 +2,9 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Description, Field, Label } from "@/components/form";
+import { Description } from "@/components/description";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { InputList } from "@/components/inputs";
 import { useEffect } from "react";
 
@@ -27,7 +29,7 @@ export default function AuthorizationCode(
 
   return (
     <Field>
-      <Label data-required>Redirect URIs</Label>
+      <Label>Redirect URIs</Label>
       <InputList
         originalItems={redirectUris}
         name="redirect_uris"

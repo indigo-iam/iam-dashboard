@@ -8,8 +8,9 @@ import { useState } from "react";
 import Link from "next/link";
 
 import ConfirmModal from "@/components/confirm-modal";
-import { Field, Label } from "@/components/form";
-import { toast } from "@/components/toaster";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
+import { useToaster } from "@/components/toaster";
 import { Group } from "@/models/groups";
 import { addUserToGroup } from "@/services/groups";
 import { SearchGroups } from "./search-groups";
@@ -27,6 +28,7 @@ export function AssignUserToGroupModal(
 ) {
   const { userId, userFormattedName, userEmail, show, onClose } = props;
   const [selected, setSelected] = useState<Group>();
+  const { toast } = useToaster();
   const disabled = selected === undefined;
 
   function unselect() {
@@ -44,7 +46,7 @@ export function AssignUserToGroupModal(
       return;
     }
     const res = await addUserToGroup(selected.id, userId, userFormattedName);
-    toast.toast(res);
+    toast(res);
     close();
   }
 
@@ -73,7 +75,7 @@ export function AssignUserToGroupModal(
       ) : (
         <Field>
           <Label>Select a group</Label>
-          <SearchGroups listId="search-group-assign" onSelect={setSelected} />
+          <SearchGroups onSelect={setSelected} />
         </Field>
       )}
     </ConfirmModal>

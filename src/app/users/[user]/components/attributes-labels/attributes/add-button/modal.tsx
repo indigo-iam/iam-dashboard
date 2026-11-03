@@ -7,7 +7,9 @@
 import { useRef, useState } from "react";
 
 import { Button } from "@/components/buttons";
-import { Form, Field, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -17,7 +19,7 @@ import {
   ModalProps,
 } from "@/components/modal";
 import { useProgressBar } from "@/components/progress-bar";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { addAttribute } from "@/services/users";
 
 function validateField(s: string) {
@@ -81,6 +83,7 @@ export default function AddAttributeModal(
   const [name, setName] = useState("");
   const [value, setValue] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
+  const { toast } = useToaster();
 
   function resetStates() {
     setName("");
@@ -106,7 +109,7 @@ export default function AddAttributeModal(
     const value = formData.get("attr-value") as string;
     startTransition(async () => {
       const res = await addAttribute(userId, { name, value });
-      toast.toast(res);
+      toast(res);
     });
     closeAndReset();
   }
@@ -120,9 +123,8 @@ export default function AddAttributeModal(
       <Form onSubmit={submit} ref={formRef}>
         <ModalBody>
           <Field>
-            <Label data-required>Name</Label>
+            <Label>Name</Label>
             <Input
-              id="attr-name"
               title="Attribute Name"
               name="attr-name"
               placeholder="Attribute name"
@@ -138,9 +140,8 @@ export default function AddAttributeModal(
             )}
           </Field>
           <Field>
-            <Label data-required>Value</Label>
+            <Label>Value</Label>
             <Input
-              id="attr-value"
               title="Attribute Value"
               name="attr-value"
               placeholder="Attribute value"
@@ -157,15 +158,10 @@ export default function AddAttributeModal(
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button
-            className="btn-tertiary"
-            type="button"
-            onClick={closeAndReset}
-          >
+          <Button variant="underline" type="button" onClick={closeAndReset}>
             Cancel
           </Button>
           <Button
-            className="btn-primary"
             type="submit"
             disabled={!nameValidator.isValid || !valueValidator.isValid}
           >

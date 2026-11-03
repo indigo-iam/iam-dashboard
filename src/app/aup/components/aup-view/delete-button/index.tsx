@@ -9,16 +9,17 @@ import { useState } from "react";
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
 import { Warning } from "@/components/notices";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { deleteAUP } from "@/services/aup";
 
 export default function DeleteButton() {
   const [isShown, setIsShown] = useState(false);
+  const { toast } = useToaster();
   const show = () => setIsShown(true);
   const hide = () => setIsShown(false);
   const handleConfirm = async () => {
     const res = await deleteAUP();
-    toast.toast(res);
+    toast(res);
     hide();
   };
   return (
@@ -40,7 +41,7 @@ export default function DeleteButton() {
           new users at registration time.
         </Warning>
       </ConfirmModal>
-      <Button className="btn-danger" onClick={show}>
+      <Button accent="danger" type="button" onClick={show}>
         Delete AUP
       </Button>
     </>

@@ -51,9 +51,7 @@ type GroupRequestProps = {
   isMe: boolean;
 };
 
-export default async function GroupRequests(
-  props: Readonly<GroupRequestProps>
-) {
+export default function GroupRequests(props: Readonly<GroupRequestProps>) {
   const { user, isMe } = props;
   return (
     <TabPanel className="panel">

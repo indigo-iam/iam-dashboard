@@ -5,7 +5,9 @@
 "use client";
 
 import { Button } from "@/components/buttons";
-import { Form, Field, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -15,7 +17,7 @@ import {
   ModalProps,
 } from "@/components/modal";
 import { Textarea } from "@/components/textarea";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { SSHKey } from "@/models/indigo-user";
 
 import { addSSHKey } from "@/services/users";
@@ -26,6 +28,7 @@ interface AddSSHKeyModalProps extends ModalProps {
 
 export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
   const { userId, ...modalProps } = props;
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -35,7 +38,7 @@ export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
       value: formData.get("ssh-key") as string,
     };
     const res = await addSSHKey(userId, sshKey);
-    toast.toast(res);
+    toast(res);
     modalProps.onClose();
   }
 
@@ -47,35 +50,29 @@ export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
           <Field>
             <Label>Label</Label>
             <Input
-              id="ssh-label"
               name="ssh-label"
               required={true}
               placeholder="Type a label..."
+              autoComplete="off"
             />
           </Field>
           <Field>
             <Label>SSH Key</Label>
             <Textarea
-              id="ssh-key"
               name="ssh-key"
               title="SSH Key"
               className="iam-input w-full"
               placeholder="SSH Key..."
+              autoComplete="off"
               required={true}
             />
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button
-            className="btn-tertiary"
-            type="reset"
-            onClick={modalProps.onClose}
-          >
+          <Button variant="underline" type="reset" onClick={modalProps.onClose}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Add SSH Key
-          </Button>
+          <Button type="submit">Add SSH Key</Button>
         </ModalFooter>
       </Form>
     </Modal>

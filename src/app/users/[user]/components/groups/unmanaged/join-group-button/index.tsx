@@ -26,10 +26,7 @@ export default function JoinGroupButton(props: Readonly<JoinGroupButtonProps>) {
   const closeModal = () => setShow(false);
   return (
     <>
-      <Button
-        className="btn-secondary flex items-center gap-1"
-        onClick={openModal}
-      >
+      <Button variant="outline" onClick={openModal}>
         <UserPlusIcon className="size-4" />
         <span>{isAdmin ? "Assign to group" : "Join group"}</span>
       </Button>

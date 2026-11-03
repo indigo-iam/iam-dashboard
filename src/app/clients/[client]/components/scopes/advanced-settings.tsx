@@ -5,8 +5,9 @@
 "use client";
 
 import { Button } from "@/components/buttons";
-import { Field, LabeledCheckbox } from "@/components/form";
-import { toast } from "@/components/toaster";
+import { LabeledCheckbox } from "@/components/checkbox";
+import { Field } from "@/components/field";
+import { useToaster } from "@/components/toaster";
 import { Client } from "@/models/client";
 import { editClient } from "@/services/clients";
 
@@ -17,6 +18,7 @@ type AdvancedSettings = {
 
 export function AdvancedSettings(props: Readonly<AdvancedSettings>) {
   const { client, isAdmin } = props;
+  const { toast } = useToaster();
   const upScopingEnabled = client.up_scoping_enabled;
 
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
@@ -25,7 +27,7 @@ export function AdvancedSettings(props: Readonly<AdvancedSettings>) {
     const up_scoping_enabled = formData.get("up-scoping-enabled") === "on";
     const body: Client = { ...client, up_scoping_enabled };
     const res = await editClient(body, isAdmin);
-    toast.toast(res);
+    toast(res);
   }
 
   return (
@@ -43,7 +45,7 @@ export function AdvancedSettings(props: Readonly<AdvancedSettings>) {
           </LabeledCheckbox>
         </Field>
         <div className="flex justify-end">
-          <Button className="btn-secondary" type="submit">
+          <Button variant="outline" type="submit">
             Save
           </Button>
         </div>

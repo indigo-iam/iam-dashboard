@@ -5,9 +5,11 @@
 "use client";
 
 import ConfirmModal from "@/components/confirm-modal";
-import { Field, Label, Description } from "@/components/form";
+import { Description } from "@/components/description";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Textarea } from "@/components/textarea";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { JoinGroupRequest } from "@/models/group-requests";
 import { Group } from "@/models/groups";
 import { submitGroupRequest } from "@/services/group-requests";
@@ -68,6 +70,7 @@ export function JoinGroupModal(props: Readonly<JoinGroupModalProps>) {
   const formRef = useRef<HTMLFormElement>(null);
   const [selected, setSelected] = useState<Group>();
   const [motivation, setMotivation] = useState<string>();
+  const toast = useToaster();
   const enabled =
     selected && (motivation?.length ?? 0) >= MIN_MOTIVATION_LENGTH;
 
@@ -117,9 +120,8 @@ export function JoinGroupModal(props: Readonly<JoinGroupModalProps>) {
         <div className="space-y-4">
           <GroupView group={selected} />
           <Field className="flex flex-col">
-            <Label data-required>Provide a motivation for your request</Label>
+            <Label>Provide a motivation for your request</Label>
             <Textarea
-              id="group-request-notes"
               name="group-request-notes"
               placeholder="Explain why you want to be a member of group..."
               className="iam-input w-full"
@@ -134,7 +136,7 @@ export function JoinGroupModal(props: Readonly<JoinGroupModalProps>) {
       ) : (
         <Field>
           <Label>Select a group to join</Label>
-          <SearchGroups listId="search-group-join" onSelect={setSelected} />
+          <SearchGroups onSelect={setSelected} />
         </Field>
       )}
     </ConfirmModal>

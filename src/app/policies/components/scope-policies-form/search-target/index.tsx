@@ -33,10 +33,10 @@ type SearchEntityProps = {
 function SearchEntity(props: Readonly<SearchEntityProps>) {
   const { accountType, onAddUser, onAddGroup } = props;
   if (accountType === "USER") {
-    return <SearchUsers listId="account-group-users" onSelect={onAddUser} />;
+    return <SearchUsers onSelect={onAddUser} />;
   }
   if (accountType === "GROUP") {
-    return <SearchGroups listId="account-group-groups" onSelect={onAddGroup} />;
+    return <SearchGroups onSelect={onAddGroup} />;
   }
   return null;
 }

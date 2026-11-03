@@ -77,7 +77,7 @@ type AdminGroupsTableProps = {
   groups: Group[];
 };
 
-export async function AdminGroupsTable(props: Readonly<AdminGroupsTableProps>) {
+export function AdminGroupsTable(props: Readonly<AdminGroupsTableProps>) {
   const { groups } = props;
   if (groups.length === 0) {
     return (
@@ -100,7 +100,7 @@ type UserGroupsTablesProps = {
   groupRefs: ScimReference[];
 };
 
-export async function UserGroupsTable(props: Readonly<UserGroupsTablesProps>) {
+export function UserGroupsTable(props: Readonly<UserGroupsTablesProps>) {
   const { groupRefs } = props;
   return (
     <ul>
@@ -122,7 +122,7 @@ type UserManagedGroupsTableProps = {
   groups: ManagedGroup[];
 };
 
-export async function UserManagedGroupsTable(
+export function UserManagedGroupsTable(
   props: Readonly<UserManagedGroupsTableProps>
 ) {
   const { groups } = props;

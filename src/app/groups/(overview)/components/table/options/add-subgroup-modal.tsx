@@ -5,7 +5,10 @@
 "use client";
 
 import { Button } from "@/components/buttons";
-import { Description, Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Description } from "@/components/description";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -14,7 +17,7 @@ import {
   ModalFooter,
   ModalProps,
 } from "@/components/modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { addSubgroup } from "@/services/groups";
 
 interface AddSubgroupModalProps extends ModalProps {
@@ -26,6 +29,7 @@ export default function AddSubgroupModal(
   props: Readonly<AddSubgroupModalProps>
 ) {
   const { rootGroupId, rootGroupName, onAdded, ...modalProps } = props;
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -33,7 +37,7 @@ export default function AddSubgroupModal(
     const name = formData.get("name") as string;
 
     const res = await addSubgroup(name, rootGroupId, rootGroupName);
-    toast.toast(res);
+    toast(res);
     onAdded?.();
     modalProps.onClose();
   }
@@ -47,12 +51,13 @@ export default function AddSubgroupModal(
             Add a subgroup to group <b>{rootGroupName}</b>:
           </p>
           <Field>
-            <Label data-required>Subgroup name</Label>
+            <Label>Subgroup name</Label>
             <Input
               title="Name"
               type="text"
               name="name"
               placeholder="Insert group name..."
+              autoComplete="off"
               required
             />
             <Description>
@@ -61,16 +66,10 @@ export default function AddSubgroupModal(
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button
-            className="btn-tertiary"
-            type="reset"
-            onClick={modalProps.onClose}
-          >
+          <Button variant="underline" type="reset" onClick={modalProps.onClose}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Add Subgroup
-          </Button>
+          <Button type="submit">Add Subgroup</Button>
         </ModalFooter>
       </Form>
     </Modal>

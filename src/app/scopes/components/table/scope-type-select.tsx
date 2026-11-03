@@ -4,8 +4,8 @@
 
 "use client";
 
-import { Select, SelectOption } from "@/components/form";
-import { toast } from "@/components/toaster";
+import { Select, Option } from "@/components/select";
+import { useToaster } from "@/components/toaster";
 import { Scope } from "@/models/client";
 import { editScope } from "@/services/scopes";
 
@@ -15,6 +15,7 @@ type ScopeTypeSelectProps = {
 
 export default function ScopeTypeSelect(props: Readonly<ScopeTypeSelectProps>) {
   const { scope } = props;
+  const { toast } = useToaster();
 
   const options = [
     { id: "none", name: "None" },
@@ -29,9 +30,10 @@ export default function ScopeTypeSelect(props: Readonly<ScopeTypeSelectProps>) {
     defaultOption = options[2];
   }
 
-  async function handleChange(value: { id: string; name: string }) {
+  async function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const value = e.target.value;
     const newScope = { ...scope };
-    switch (value.id) {
+    switch (value) {
       case "default": {
         newScope.defaultScope = true;
         newScope.restricted = false;
@@ -48,19 +50,19 @@ export default function ScopeTypeSelect(props: Readonly<ScopeTypeSelectProps>) {
       }
     }
     const res = await editScope(newScope);
-    toast.toast(res);
+    toast(res);
   }
 
   return (
     <Select
       name="scope-type"
       onChange={handleChange}
-      defaultValue={defaultOption}
+      defaultValue={defaultOption.id}
     >
       {options.map(o => (
-        <SelectOption key={o.id} value={o}>
+        <Option key={o.id} value={o.id}>
           {o.name}
-        </SelectOption>
+        </Option>
       ))}
     </Select>
   );

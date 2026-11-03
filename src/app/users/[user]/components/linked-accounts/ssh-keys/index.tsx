@@ -11,7 +11,7 @@ type SSHKeysProps = {
   sshKeys: SSHKey[];
 };
 
-export async function SSHKeys(props: Readonly<SSHKeysProps>) {
+export function SSHKeys(props: Readonly<SSHKeysProps>) {
   const { userId, sshKeys } = props;
   return (
     <div className="panel space-y-2">

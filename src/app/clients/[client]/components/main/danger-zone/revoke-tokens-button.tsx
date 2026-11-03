@@ -9,9 +9,9 @@ import { useRef, useState } from "react";
 import { Button } from "@/components/buttons";
 import { ModalProps } from "@/components/modal";
 import ConfirmModal from "@/components/confirm-modal";
-import { Field } from "@/components/form";
+import { Field } from "@/components/field";
 import { revokeTokens } from "@/services/clients";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { Notice } from "@/components/notices";
 
 type ConfirmModalProps = ModalProps & {
@@ -22,6 +22,7 @@ type ConfirmModalProps = ModalProps & {
 
 function Modal(props: Readonly<ConfirmModalProps>) {
   const { show, onClose, clientId, clientName, clientDescription } = props;
+  const { toast } = useToaster();
   const formRef = useRef<HTMLFormElement>(null);
 
   async function action() {
@@ -33,10 +34,10 @@ function Modal(props: Readonly<ConfirmModalProps>) {
     const tokensType = formData.get("token-type");
     if (tokensType === "access-token") {
       const res = await revokeTokens(clientId, "revoke-access-tokens");
-      toast.toast(res);
+      toast(res);
     } else if (tokensType === "refresh-token") {
       const res = await revokeTokens(clientId, "revoke-refresh-tokens");
-      toast.toast(res);
+      toast(res);
     }
   }
 
@@ -97,7 +98,7 @@ export function RevokeTokensButton(props: Readonly<RevokeTokensButtonProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Button className="btn-danger-secondary" onClick={open}>
+      <Button accent="danger" variant="outline" type="button" onClick={open}>
         Revoke tokens
       </Button>
       <Modal

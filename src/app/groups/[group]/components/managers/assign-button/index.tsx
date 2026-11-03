@@ -25,10 +25,7 @@ export default function AssignGroupManagerButton(
   const closeModal = () => setShow(false);
   return (
     <>
-      <Button
-        className="btn-secondary flex items-center gap-1"
-        onClick={openModal}
-      >
+      <Button variant="outline" type="button" onClick={openModal}>
         <UserGroupIcon className="size-4" />
         <span>Assign manager</span>
       </Button>

@@ -8,7 +8,7 @@ import ConfirmModal from "@/components/confirm-modal";
 import { ModalProps } from "@/components/modal";
 import { Notice, Warning } from "@/components/notices";
 import { useProgressBar } from "@/components/progress-bar";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { Certificate } from "@/models/indigo-user";
 import { deleteAccountLink } from "@/services/certs";
 import { unlinkCertificate } from "@/services/users";
@@ -26,6 +26,7 @@ export function UnlinkCertificateModal(
   const { show, onClose, isAdmin, userId, userFormattedName, certificate } =
     props;
   const { startTransition } = useProgressBar();
+  const { toast } = useToaster();
 
   function handleConfirm() {
     startTransition(async () => {
@@ -33,7 +34,7 @@ export function UnlinkCertificateModal(
         ? await unlinkCertificate(userId, certificate)
         : await deleteAccountLink(certificate.issuerDn, certificate.subjectDn);
       if (res) {
-        toast.toast(res);
+        toast(res);
       }
     });
   }

@@ -2,14 +2,24 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { TabList as HeadlessUITabList } from "@headlessui/react";
+"use client";
 
-export type TabListProps = {
-  children?: React.ReactNode;
+import { Children, ReactElement } from "react";
+
+import { TabProps } from "./tab";
+import { TabIndexContext } from "./context";
+
+export type TabListProps = React.HTMLAttributes<HTMLElement> & {
+  children: (ReactElement<TabProps> | boolean)[];
+  className?: string;
 };
 
-export default function TabList(props: Readonly<TabListProps>) {
+export function TabList(props: Readonly<TabListProps>) {
   return (
-    <HeadlessUITabList className="flex">{props.children}</HeadlessUITabList>
+    <div role="tablist" {...props}>
+      {Children.map(props.children, (child, index) => (
+        <TabIndexContext value={index}>{child}</TabIndexContext>
+      ))}
+    </div>
   );
 }

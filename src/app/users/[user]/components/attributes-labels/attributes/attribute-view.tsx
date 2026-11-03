@@ -10,7 +10,7 @@
 
 import BaseLabelView from "@/components/badges/label-view";
 import { useProgressBar } from "@/components/progress-bar";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { Attribute } from "@/models/attributes";
 import { deleteAttribute } from "@/services/users";
 
@@ -23,11 +23,12 @@ type AttributeViewProps = {
 export function AttributeView(props: Readonly<AttributeViewProps>) {
   const { isAdmin, userId, attr } = props;
   const { startTransition } = useProgressBar();
+  const { toast } = useToaster();
   function deleteLabel() {
     startTransition(async () => {
       const res = await deleteAttribute(userId, attr);
       if (res) {
-        toast.toast(res);
+        toast(res);
       }
     });
   }

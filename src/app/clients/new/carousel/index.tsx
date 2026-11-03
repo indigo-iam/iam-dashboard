@@ -4,14 +4,17 @@
 
 "use client";
 
+import { useState } from "react";
+
 import {
-  Carousel,
+  CarouselGroup,
   CarouselList,
   CarouselPanels,
   CarouselTab,
 } from "@/components/carousel";
 import { Form } from "@/components/form";
 import { Stepper } from "@/components/stepper";
+import { useToaster } from "@/components/toaster";
 import { Client, ClientRequest, Scope } from "@/models/client";
 import { OpenIdConfiguration } from "@/models/openid-configuration";
 import { registerClient } from "@/services/clients";
@@ -19,9 +22,6 @@ import ClientDetails from "./client-details";
 import GeneralSettings from "./general-settings";
 import OIDCSettings from "./oidc-settings";
 import OtherSettings from "./other-settings";
-
-import { useState } from "react";
-import { toast } from "@/components/toaster";
 
 const TOTAL_PAGES = 4;
 
@@ -35,8 +35,7 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
   const { systemScopes, isAdmin } = props;
   const [currentPage, setCurrentPage] = useState(0);
   const [client, setClient] = useState<Client>();
-  const back = () => setCurrentPage(Math.max(0, currentPage - 1));
-  const next = () => setCurrentPage(Math.min(currentPage + 1, TOTAL_PAGES));
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -47,24 +46,11 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
       client_description: (formData.get("client_description") as string) ?? "",
       contacts: formData.getAll("contacts") as string[],
       token_endpoint_auth_method: formData.get(
-        "token_endpoint_auth_method[id]"
+        "token_endpoint_auth_method"
       ) as string,
-      scope: "",
-      grant_types: [formData.get("grant_type[id]") as string],
+      scope: (formData.getAll("scope") as string[]).join(" "),
+      grant_types: formData.getAll("grant_type") as string[],
     };
-
-    const scopes: string[] = [];
-    const it = formData.keys();
-    let result = it.next();
-    while (!result.done) {
-      const key = result.value;
-      if (key.startsWith("scope") && key.includes("[name]")) {
-        scopes.push(formData.get(key) as string);
-      }
-      result = it.next();
-    }
-
-    request.scope = scopes.join(" ");
 
     const jwk_uri = formData.get("jwk_uri") as string | undefined;
     const jwk = formData.get("jwk") as string | undefined;
@@ -96,11 +82,10 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
       if (res.payload) {
         setClient(res.payload);
       }
-      toast.toast(res.notification);
+      toast(res.notification);
     };
 
-    save();
-    next();
+    await save();
   }
 
   return (
@@ -109,7 +94,7 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
         <Stepper currentPage={currentPage} totalPages={TOTAL_PAGES} />
       </div>
       <Form onSubmit={submit} className="grow">
-        <Carousel selectedIndex={currentPage}>
+        <CarouselGroup onChangePage={index => setCurrentPage(index)}>
           <CarouselList>
             <CarouselTab>General Settings</CarouselTab>
             <CarouselTab>OIDC/OAuth2</CarouselTab>
@@ -117,16 +102,12 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
             <CarouselTab>Client Details</CarouselTab>
           </CarouselList>
           <CarouselPanels>
-            <GeneralSettings goNext={next} />
-            <OIDCSettings
-              systemScopes={systemScopes}
-              goBack={back}
-              goNext={next}
-            />
-            <OtherSettings goBack={back} />
-            <ClientDetails client={client} isAdmin={isAdmin} />
+            <GeneralSettings />
+            <OIDCSettings isAdmin={isAdmin} systemScopes={systemScopes} />
+            <OtherSettings />
+            <ClientDetails client={client} />
           </CarouselPanels>
-        </Carousel>
+        </CarouselGroup>
       </Form>
     </div>
   );

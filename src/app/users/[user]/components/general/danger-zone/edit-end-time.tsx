@@ -8,7 +8,9 @@ import { useId, useRef, useState } from "react";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 
 import { Button } from "@/components/buttons";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Info } from "@/components/info";
 import { Input } from "@/components/inputs";
 import {
@@ -19,10 +21,9 @@ import {
   ModalProps,
 } from "@/components/modal";
 import { Warning } from "@/components/notices";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { changeMembershipEndtime } from "@/services/users";
 import { useDisabled } from "@/utils/hooks";
-import { Tooltip, useTooltip } from "@/components/tooltip";
 
 type EditEndtimeModalProps = ModalProps & {
   userId: string;
@@ -34,9 +35,10 @@ function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
   const { show, onClose, userId, userFormattedName, userEndtime } = props;
   const [endtime, setEndtime] = useState(userEndtime?.split("T")[0] ?? "");
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const { tooltipId, tooltipRef } = useTooltip(buttonRef);
   const disabled = useDisabled();
   const inputId = useId();
+  const { toast } = useToaster();
+
   const minDate = (() => {
     const d = new Date();
     return d.toISOString().split("T")[0];
@@ -47,7 +49,7 @@ function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
     const formData = new FormData(event.target);
     const endtime = formData.get("endtime") as string | null;
     const res = await changeMembershipEndtime(userId, endtime);
-    toast.toast(res);
+    toast(res);
     if (res.type === "success") {
       onClose();
     }
@@ -84,16 +86,15 @@ function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
                 disabled={disabled}
               />
               <Button
+                name="Clear"
+                variant="plain"
                 className="group relative cursor-pointer hover:text-gray-500"
                 type="button"
                 onClick={clearEndtime}
-                aria-labelledby={tooltipId}
                 ref={buttonRef}
+                disabled={disabled}
               >
                 <XCircleIcon className="size-4" />
-                <Tooltip tooltipId={tooltipId} tooltipRef={tooltipRef}>
-                  Clear
-                </Tooltip>
               </Button>
             </div>
           </Field>
@@ -103,12 +104,10 @@ function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
           </Warning>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" type="reset" onClick={onClose}>
+          <Button variant="underline" type="reset" onClick={onClose}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Save
-          </Button>
+          <Button type="submit">Save</Button>
         </ModalFooter>
       </Form>
     </Modal>
@@ -141,7 +140,7 @@ export function EditEndtime(props: Readonly<EditEndtimeProps>) {
             type="date"
             readOnly
           />
-          <Button className="btn-secondary" onClick={open}>
+          <Button variant="outline" type="button" onClick={open}>
             Edit
           </Button>
         </div>

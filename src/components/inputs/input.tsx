@@ -2,15 +2,40 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import {
-  Input as HeadlessInput,
-  type InputProps as HeadlessInputProps,
-} from "@headlessui/react";
+"use client";
 
-export interface InputProps extends HeadlessInputProps {
+import { RefObject, useId } from "react";
+
+import { useDescribedBy } from "../description/context";
+import { useField } from "../field/context";
+import { useLabelledBy } from "../label/context";
+
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  ref?: RefObject<HTMLInputElement | null>;
   "data-testid"?: string;
-}
+  variant?: "plain";
+};
 
 export function Input(props: Readonly<InputProps>) {
-  return <HeadlessInput className="iam-input" {...props} />;
+  const { variant, ...others } = props;
+  const labelledBy = useLabelledBy();
+  const describedBy = useDescribedBy();
+  const { inputId } = useField();
+  const fallbackId = useId();
+  const id = props.id ?? inputId ?? fallbackId;
+  const defaultClassName =
+    "invalid:outline-danger invalid:text-danger w-full rounded border-none bg-neutral-100 px-2 py-1 text-gray-600 placeholder:text-gray-400 invalid:outline disabled:text-gray-500 dark:bg-white/10 dark:text-white dark:disabled:text-gray-400";
+  const className =
+    variant === "plain"
+      ? props.className
+      : `${defaultClassName} ${props.className}`;
+  return (
+    <input
+      className={className}
+      {...others}
+      id={id}
+      aria-labelledby={labelledBy}
+      aria-describedby={describedBy}
+    />
+  );
 }

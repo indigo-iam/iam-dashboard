@@ -12,7 +12,6 @@ export default function Contacts(props: Readonly<ContactsProps>) {
   const { contacts } = props;
   return (
     <InputList
-      id="contacts_input"
       name="contacts"
       originalItems={contacts ?? []}
       type="email"

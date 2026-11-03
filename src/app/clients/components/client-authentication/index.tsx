@@ -4,7 +4,7 @@
 
 "use client";
 
-import { Select, SelectOption } from "@/components/form";
+import { Select, Option } from "@/components/select";
 import { useEffect, useState } from "react";
 import ClientSecretJwt from "./client-secret-jwt";
 import PrivateKeyJwt from "./private-key-jwt";
@@ -49,7 +49,7 @@ function ClientAuthenticationSettings(
 
 type ClientAuthenticationProps = {
   name: string;
-  defaultValue?: SelectOption;
+  defaultValue?: string;
   clientId?: string;
   onStatusChange?: (status: boolean) => void;
 };
@@ -66,10 +66,10 @@ export function ClientAuthentication(
     onStatusChange?.(true);
   });
 
-  const handleAuthMethodChange = (authMethod: { id: string; name: string }) => {
+  function handleAuthMethodChange(e: React.ChangeEvent<HTMLSelectElement>) {
     onStatusChange?.(true); // change me
-    setAuthMethod(authMethod);
-  };
+    setAuthMethod(e.target.value);
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -77,18 +77,18 @@ export function ClientAuthentication(
         <Select
           name={name}
           onChange={handleAuthMethodChange}
-          defaultValue={defaultValue ?? TOKEN_ENDPOINT_AUTH_VALUES[0]}
+          defaultValue={defaultValue ?? TOKEN_ENDPOINT_AUTH_VALUES[0].id}
         >
           {TOKEN_ENDPOINT_AUTH_VALUES.map(method => (
-            <SelectOption key={method.id} value={method}>
+            <Option key={method.id} value={method.id}>
               {method.name}
-            </SelectOption>
+            </Option>
           ))}
         </Select>
       </div>
       {authMethod && (
         <ClientAuthenticationSettings
-          authMethod={authMethod.id}
+          authMethod={authMethod}
           onStatusChange={onStatusChange}
           clientId={clientId}
         />

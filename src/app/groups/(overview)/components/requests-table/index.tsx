@@ -50,9 +50,7 @@ type GroupRequestsTableProps = {
   isAdmin: boolean;
 };
 
-export async function GroupRequestsTable(
-  props: Readonly<GroupRequestsTableProps>
-) {
+export function GroupRequestsTable(props: Readonly<GroupRequestsTableProps>) {
   const { userId, requests, isAdmin } = props;
   return (
     <ul>

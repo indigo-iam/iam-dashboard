@@ -70,11 +70,11 @@ export function Modal(props: Readonly<ModalProps>) {
 
   return createPortal(
     <dialog
-      className="fixed inset-0 top-8 z-30 h-full w-full flex-col items-center space-y-4 bg-gray-900/30 opacity-0 transition-opacity transition-discrete duration-300 open:flex open:opacity-100 md:top-0 md:justify-center open:starting:opacity-0"
+      className="fixed inset-0 z-30 h-full w-full flex-col items-center space-y-4 bg-gray-900/30 opacity-0 transition-opacity transition-discrete duration-300 open:flex open:opacity-100 md:top-0 md:justify-center open:starting:opacity-0"
       ref={dialogRef}
       aria-modal={true}
     >
-      <div className="overlay m-8 max-h-screen w-md space-y-4 overflow-y-auto p-8 xl:w-xl">
+      <div className="m-8 mt-16 max-h-screen space-y-4 overflow-y-auto rounded-lg bg-white p-8 md:w-md xl:w-xl dark:bg-gray-700 dark:text-gray-100">
         {children}
       </div>
     </dialog>,

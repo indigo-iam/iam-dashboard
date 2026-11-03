@@ -4,13 +4,14 @@
 
 "use client";
 
+import { useState } from "react";
+
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
 import { Note } from "@/components/notices";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { AUP } from "@/models/aup";
 import { requestAUPSignature, signAUP } from "@/services/users";
-import { useState } from "react";
 
 type RequestSignatureProps = {
   userId: string;
@@ -24,15 +25,16 @@ export function RequestSignature(props: Readonly<RequestSignatureProps>) {
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
+  const { toast } = useToaster();
 
   const handleSignAUP = async () => {
     const res = await signAUP(userId);
-    toast.toast(res);
+    toast(res);
   };
 
   const handleRequestAUPSignature = async () => {
     const res = await requestAUPSignature(userId);
-    toast.toast(res);
+    toast(res);
   };
 
   if (isMe) {
@@ -57,7 +59,7 @@ export function RequestSignature(props: Readonly<RequestSignatureProps>) {
             </a>
           </Note>
         </ConfirmModal>
-        <Button className="btn-secondary max-w-fit" onClick={open}>
+        <Button variant="outline" type="button" onClick={open}>
           Re-sign AUP
         </Button>
       </>
@@ -75,7 +77,7 @@ export function RequestSignature(props: Readonly<RequestSignatureProps>) {
         Are you sure you want to ask the user <b>{userFormattedName}</b> to sign
         the AUP?
       </ConfirmModal>
-      <Button className="btn-secondary max-w-fit" onClick={open}>
+      <Button variant="outline" type="button" onClick={open}>
         Request AUP Signature
       </Button>
     </>

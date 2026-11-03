@@ -4,8 +4,13 @@
 
 "use client";
 
+import { useState } from "react";
+import { UserPlusIcon } from "@heroicons/react/24/outline";
+
 import { Button } from "@/components/buttons";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -14,12 +19,10 @@ import {
   ModalFooter,
   ModalProps,
 } from "@/components/modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { ScimUser } from "@/models/scim";
 import { addUser } from "@/services/users";
 import { toTitleCase } from "@/utils/strings";
-import { UserPlusIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
 
 type AddUserFormProps = {
   onClose?: () => void;
@@ -28,6 +31,7 @@ type AddUserFormProps = {
 
 function AddUserForm(props: Readonly<AddUserFormProps>) {
   const { onClose, onUserAdded } = props;
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -48,7 +52,7 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
       schemas: ["urn:ietf:params:scim:schemas:core:2.0:User"],
     };
     const res = await addUser(user);
-    toast.toast(res);
+    toast(res);
     onUserAdded?.();
     onClose?.();
   }
@@ -61,56 +65,58 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
           information:
         </p>
         <Field className="flex flex-col gap-1">
-          <Label data-required>First Name</Label>
+          <Label>First Name</Label>
           <Input
             type="text"
             name="name"
             title="Name"
             placeholder="Enter first name"
+            autoComplete="given-name"
             required
           />
         </Field>
         <Field className="flex flex-col gap-1">
-          <Label data-required>Surname</Label>
+          <Label>Surname</Label>
           <Input
             type="text"
             name="surname"
             title="Surname"
             placeholder="Enter surname"
+            autoComplete="family-name"
             required
           />
         </Field>
         <Field className="flex flex-col gap-1">
-          <Label data-required>Username</Label>
+          <Label>Username</Label>
           <Input
             type="text"
             name="username"
             title="Username"
             placeholder="Enter username"
+            autoComplete="off"
             required
           />
         </Field>
         <Field className="flex flex-col gap-1">
-          <Label data-required>Email</Label>
+          <Label>Email</Label>
           <Input
             type="email"
             name="email"
             title="Email"
             placeholder="Enter email"
+            autoComplete="off"
             required
           />
         </Field>
       </ModalBody>
       <ModalFooter>
-        <Button className="btn-tertiary" type="reset" onClick={onClose}>
+        <Button variant="underline" type="reset" onClick={onClose}>
           Cancel
         </Button>
-        <Button className="btn-secondary" type="reset">
+        <Button variant="outline" type="reset">
           Reset
         </Button>
-        <Button className="btn-primary" type="submit">
-          Create User
-        </Button>
+        <Button type="submit">Create User</Button>
       </ModalFooter>
     </Form>
   );
@@ -149,7 +155,7 @@ export default function AddUser(props: Readonly<AddUserProps>) {
   return (
     <>
       <AddUserModal show={show} onClose={close} onUserAdded={onUserAdded} />
-      <Button className="btn-secondary" onClick={open}>
+      <Button variant="outline" onClick={open}>
         <UserPlusIcon className="size-4" />
         New user
       </Button>

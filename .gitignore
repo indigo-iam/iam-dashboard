@@ -69,3 +69,5 @@ node_modules/
 
 # agents
 AGENTS.md
+opencode.json
+opencode.jsonc

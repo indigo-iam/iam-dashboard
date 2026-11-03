@@ -32,7 +32,7 @@ async function AsyncActiveTokens() {
   return <TokensPage tokens={activeTokens} />;
 }
 
-export async function ActiveTokens() {
+export function ActiveTokens() {
   return (
     <TabPanel>
       <Suspense fallback={<Fallback />}>

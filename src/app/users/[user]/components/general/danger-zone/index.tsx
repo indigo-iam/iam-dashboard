@@ -99,7 +99,7 @@ export function DangerZone(props: Readonly<DangerZoneProps>) {
             </Info>
           </div>
         </div>
-        <div className="flex items-center justify-end gap-4">
+        <div className="flex items-center justify-end gap-2">
           <ToggleStatusButton
             userId={userId}
             userFormattedName={userFormattedName}

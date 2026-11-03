@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { TabList, TabListProps } from "@headlessui/react";
+import { TabList, TabListProps } from "@/components/tabs";
 
 type CarouselListProps = TabListProps;
 

@@ -2,7 +2,9 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Field, Description, Label } from "@/components/form";
+import { Description } from "@/components/description";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import { Textarea } from "@/components/textarea";
 import { ChangeEvent, useState } from "react";
@@ -28,7 +30,7 @@ export default function PrivateKeyJwt(props: Readonly<PrivateKeyJwtProps>) {
 
   return (
     <Field>
-      <Label data-required>Public Key Set</Label>
+      <Label>Public Key Set</Label>
       <Description>
         The JSON Web Keyset for this client. Used for client authentication and
         token encryption. Keys can be provided by reference or by value.

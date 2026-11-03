@@ -28,7 +28,9 @@ export function ToggleStatusButton(props: Readonly<DisableButtonProps>) {
   return (
     <>
       <Button
-        className={userIsActive ? "btn-danger-tertiary" : "btn-tertiary"}
+        accent={userIsActive ? "danger" : "primary"}
+        variant="underline"
+        type="button"
         onClick={open}
       >
         {userIsActive ? "Disable" : "Enable"}

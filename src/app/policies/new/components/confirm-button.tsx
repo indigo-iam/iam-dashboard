@@ -1,0 +1,31 @@
+// SPDX-FileCopyrightText: 2026 Istituto Nazionale di Fisica Nucleare
+//
+// SPDX-License-Identifier: EUPL-1.2
+
+"use client";
+
+import { useState } from "react";
+
+import { Button } from "@/components/buttons";
+import ConfirmModal from "@/components/confirm-modal";
+
+export default function ConfirmButton() {
+  const [show, setShow] = useState(false);
+  const open = () => setShow(true);
+  const close = () => setShow(false);
+  return (
+    <div className="flex justify-end">
+      <Button type="button" onClick={open}>
+        Add Scope Policy
+      </Button>
+      <ConfirmModal
+        show={show}
+        onClose={close}
+        onConfirm={close}
+        title="Create Scope Policy"
+      >
+        <p>Are you sure you want to add new scope policy?</p>
+      </ConfirmModal>
+    </div>
+  );
+}

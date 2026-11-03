@@ -4,9 +4,10 @@
 
 "use client";
 
+import { useState } from "react";
+
 import { Button } from "@/components/buttons";
 import AddSSHKeyModal from "./modal";
-import { useState } from "react";
 
 type AddSSHKeyButtonProps = {
   userId: string;
@@ -19,7 +20,7 @@ export default function AddSSHKeyButton(props: Readonly<AddSSHKeyButtonProps>) {
   const closeModal = () => setShow(false);
   return (
     <>
-      <Button className="btn-secondary" onClick={openModal}>
+      <Button variant="outline" type="button" onClick={openModal}>
         Add SSH Key
       </Button>
       <AddSSHKeyModal show={show} onClose={closeModal} userId={userId} />

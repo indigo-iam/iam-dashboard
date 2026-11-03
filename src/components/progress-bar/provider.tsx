@@ -42,13 +42,13 @@ export function ProgressBarProvider(props: Readonly<ProgressBarProviderProps>) {
     }
   }
 
-  async function startProgressBar() {
+  function startProgressBar() {
     progressRef.current = 0;
     timerRef.current = setInterval(trickle, TRICKLE_DURATION);
     setIsProgressBarHidden(false);
   }
 
-  async function stopProgressBar() {
+  function stopProgressBar() {
     if (timerRef.current) {
       clearInterval(timerRef.current);
     }

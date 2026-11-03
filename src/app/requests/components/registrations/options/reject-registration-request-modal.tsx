@@ -7,12 +7,14 @@
 import Link from "next/link";
 
 import { Button } from "@/components/buttons";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
 import { Textarea } from "@/components/textarea";
 import { Registration } from "@/models/registration";
 import { rejectRegistrationRequest } from "@/services/registration";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { Notice } from "@/components/notices";
 
 type RejectRegistrationRequestModalProps = {
@@ -25,21 +27,20 @@ export default function RejectRegistrationRequestModal(
   props: Readonly<RejectRegistrationRequestModalProps>
 ) {
   const { request, show, onClose } = props;
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const motivation = formData.get("motivation") as string;
     const res = await rejectRegistrationRequest(request.uuid, motivation);
-    toast.toast(res);
+    toast(res);
     onClose();
   }
 
   return (
     <Modal show={show} onClose={onClose}>
-      <ModalHeader>
-        Reject user registration request?
-      </ModalHeader>
+      <ModalHeader>Reject user registration request?</ModalHeader>
       <Form id="reject-registration-form" onSubmit={submit}>
         <ModalBody>
           <div className="space-y-4">
@@ -56,20 +57,20 @@ export default function RejectRegistrationRequestModal(
           </div>
           <p>To proceed provide a motivation that will be sent to the user:</p>
           <Field>
-            <Label data-required>Motivation</Label>
+            <Label>Motivation</Label>
             <Textarea name="motivation" className="iam-input" required />
           </Field>
         </ModalBody>
         <ModalFooter>
           <Button
-            className="btn-tertiary"
+            variant="underline"
             title="Cancel"
             type="reset"
             onClick={onClose}
           >
             Cancel
           </Button>
-          <Button className="btn-danger" type="submit">
+          <Button accent="danger" type="submit">
             Reject request
           </Button>
         </ModalFooter>

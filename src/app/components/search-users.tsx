@@ -4,19 +4,22 @@
 
 "use client";
 
-import { Field, Label } from "@/components/form";
+import { useId, useState } from "react";
+
+import { Field } from "@/components/field";
+import { Input } from "@/components/inputs";
+import { Label } from "@/components/label";
 import { User } from "@/models/scim";
 import { searchUser } from "@/services/users";
 import { useDeferredCallback } from "@/utils/hooks";
-import { useState } from "react";
 
 type SearchUserProps = {
-  listId: string;
   onSelect: (user: User) => void;
 };
 
 export function SearchUsers(props: Readonly<SearchUserProps>) {
-  const { listId, onSelect } = props;
+  const { onSelect } = props;
+  const listId = useId();
   const [searchResult, setSearchResult] = useState<User[]>([]);
   const { deferredCallback } = useDeferredCallback();
 
@@ -45,10 +48,9 @@ export function SearchUsers(props: Readonly<SearchUserProps>) {
   }
 
   return (
-    <Field className="pt-2">
-      <Label>Select user</Label>
-      <input
-        className="iam-input"
+    <Field>
+      <Label>Search user</Label>
+      <Input
         list={listId}
         onChange={handleQueryChange}
         onInput={onInput}

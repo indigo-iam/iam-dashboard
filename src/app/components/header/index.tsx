@@ -4,6 +4,7 @@
 
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { ToggleDrawerButton } from "@/components/drawer/toggle-drawer-button";
+import { Gravatar } from "@/components/gravatar";
 import Notifications from "@/components/notifications";
 import { ProgressBar } from "@/components/progress-bar";
 import { fetchMe } from "@/services/me";
@@ -19,6 +20,8 @@ export async function Header(props: Readonly<HeaderProps>) {
   const { hasRoleAdmin, isAdmin } = props;
   const organization = settings.IAM_DASHBOARD_ORGANIZATION_NAME;
   const user = await fetchMe();
+  const email = user.emails?.[0]?.value;
+  const avatar = <Gravatar email={email} />;
   return (
     <header className="dark:bg-sky-980 fixed inset-0 top-0 z-10 h-14 bg-sky-900">
       <ProgressBar />
@@ -47,6 +50,7 @@ export async function Header(props: Readonly<HeaderProps>) {
             hasRoleAdmin={hasRoleAdmin}
             isAdmin={isAdmin}
             user={user}
+            avatar={avatar}
           />
         </div>
       </div>

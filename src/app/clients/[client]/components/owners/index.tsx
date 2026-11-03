@@ -26,7 +26,7 @@ type OwnersProps = {
   clientName: string;
 };
 
-export default async function Owners(props: Readonly<OwnersProps>) {
+export default function Owners(props: Readonly<OwnersProps>) {
   const { clientId, clientName } = props;
   return (
     <TabPanel className="panel">

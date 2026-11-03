@@ -3,10 +3,10 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Certificate } from "@/models/indigo-user";
+import { dateToHuman, getNow } from "@/utils/dates";
 import LinkCertificateButton from "./link-certificate-button";
 import { LinkProxyButton } from "./link-proxy-button/";
 import CertificateOptions from "./options";
-import { dateToHuman } from "@/utils/dates";
 
 type CertificateViewProps = {
   isAdmin: boolean;
@@ -17,9 +17,14 @@ type CertificateViewProps = {
 
 function CertificateView(props: Readonly<CertificateViewProps>) {
   const { isAdmin, userId, userFormattedName, cert } = props;
-  const proxyExpirationTime = cert.proxyExpirationTime
-    ? dateToHuman(new Date(cert.proxyExpirationTime))
-    : undefined;
+  const [proxyExpired, proxyExpirationTime] = (() => {
+    if (!cert.proxyExpirationTime) {
+      return [false, undefined];
+    }
+    const expirationTime = new Date(cert.proxyExpirationTime);
+    const expired = expirationTime.getTime() < getNow();
+    return [expired, dateToHuman(new Date(cert.proxyExpirationTime))];
+  })();
   return (
     <div className="iam-list-item items-center">
       <div className="grow space-y-2">
@@ -31,7 +36,7 @@ function CertificateView(props: Readonly<CertificateViewProps>) {
             <p className="text-xs font-semibold">
               Has proxy certificate.
               {proxyExpirationTime && (
-                <> Proxy expires {proxyExpirationTime}.</>
+                <>{` Proxy ${proxyExpired ? "expired" : "expires"} ${proxyExpirationTime}.`}</>
               )}
             </p>
           )}
@@ -56,7 +61,7 @@ type CertificateProps = {
   isAdmin: boolean;
 };
 
-export async function Certificates(props: Readonly<CertificateProps>) {
+export function Certificates(props: Readonly<CertificateProps>) {
   const { isMe, userId, userName, userFormattedName, certificates, isAdmin } =
     props;
   return (

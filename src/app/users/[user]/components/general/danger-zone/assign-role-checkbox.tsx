@@ -7,9 +7,10 @@
 import { useState } from "react";
 
 import ConfirmModal from "@/components/confirm-modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
+import { LabeledCheckbox } from "@/components/checkbox";
+import { Field } from "@/components/field";
 import { assignRole, revokeRole } from "@/services/authorities";
-import { Field, LabeledCheckbox } from "@/components/form";
 
 export type Role = "ROLE_ADMIN" | "ROLE_READER";
 
@@ -32,9 +33,11 @@ type AssignRoleProps = {
 
 function AssignRole(props: Readonly<AssignRoleProps>) {
   const { userId, userFormattedName, role, show, onClose } = props;
+  const { toast } = useToaster();
+
   const action = async () => {
     const res = await assignRole(userId, role);
-    toast.toast(res);
+    toast(res);
     close();
   };
 
@@ -64,9 +67,10 @@ type RevokeRoleProps = {
 
 function RevokeRole(props: Readonly<RevokeRoleProps>) {
   const { userId, userFormattedName, role, show, onClose } = props;
+  const { toast } = useToaster();
   const action = async () => {
     const res = await revokeRole(userId, role);
-    toast.toast(res);
+    toast(res);
     close();
   };
   return (

@@ -6,7 +6,7 @@ import Link from "next/link";
 
 import ConfirmModal from "@/components/confirm-modal";
 import { Textarea } from "@/components/textarea";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { Registration } from "@/models/registration";
 import { approveRegistrationRequest } from "@/services/registration";
 import { Notice } from "@/components/notices";
@@ -21,9 +21,10 @@ export default function ApproveRegistrationRequestModal(
   props: Readonly<ApproveRegistrationRequestModalProps>
 ) {
   const { request, show, onClose } = props;
+  const { toast } = useToaster();
   const action = async () => {
     const res = await approveRegistrationRequest(request.uuid);
-    toast.toast(res);
+    toast(res);
     onClose();
   };
   return (

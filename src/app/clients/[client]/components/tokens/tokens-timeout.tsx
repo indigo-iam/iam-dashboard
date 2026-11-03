@@ -2,7 +2,9 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Field, Label, LabeledCheckbox } from "@/components/form";
+import { LabeledCheckbox } from "@/components/checkbox";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Info } from "@/components/info";
 import { Input } from "@/components/inputs";
 
@@ -35,7 +37,6 @@ export function TokensTimeout(props: Readonly<TokensTimeoutProps>) {
           <Label>Access Token timeout (seconds)</Label>
           <Input
             name="access_token_validity_seconds"
-            id="access-token-validity-input"
             type="number"
             defaultValue={accessTokenValiditySeconds}
           />
@@ -44,7 +45,6 @@ export function TokensTimeout(props: Readonly<TokensTimeoutProps>) {
           <Label>ID Token timeout (seconds)</Label>
           <Input
             name="id_token_validity_seconds"
-            id="id-token-validity-input"
             type="number"
             defaultValue={idTokenValiditySeconds}
           />

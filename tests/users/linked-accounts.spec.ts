@@ -87,9 +87,7 @@ async function unlinkCertificate(page: Page) {
 }
 
 async function selectLinkedAccountTab(page: Page) {
-  const linkedAccountsBtn = page.getByText("LINKED ACCOUNTS");
-  await linkedAccountsBtn.scrollIntoViewIfNeeded();
-  await changeTabPanel(linkedAccountsBtn);
+  await changeTabPanel(page, "LINKED ACCOUNTS");
 }
 
 test.afterEach(async ({ page }) => {
@@ -275,9 +273,7 @@ test.describe("admin assigns certificate to user and user self-assigns proxy", (
     });
 
     await test.step("switch to linked account tab", async () => {
-      const linkedAccountsBtn = page.getByText("LINKED ACCOUNTS");
-      await linkedAccountsBtn.scrollIntoViewIfNeeded();
-      await changeTabPanel(linkedAccountsBtn);
+      await changeTabPanel(page, "LINKED ACCOUNTS");
     });
 
     await test.step("cannot add proxy because there are no certificates", async () => {
@@ -312,9 +308,7 @@ test.describe("admin assigns certificate to user and user self-assigns proxy", (
     });
 
     await test.step("select linked account tab", async () => {
-      const linkedAccountsBtn = page.getByText("LINKED ACCOUNTS");
-      await linkedAccountsBtn.scrollIntoViewIfNeeded();
-      await changeTabPanel(linkedAccountsBtn);
+      await changeTabPanel(page, "LINKED ACCOUNTS");
     });
 
     await test.step("link cert to user", async () => {
@@ -332,9 +326,7 @@ test.describe("admin assigns certificate to user and user self-assigns proxy", (
     });
 
     await test.step("switch to linked account tab", async () => {
-      const linkedAccountsBtn = page.getByText("LINKED ACCOUNTS");
-      await linkedAccountsBtn.scrollIntoViewIfNeeded();
-      await changeTabPanel(linkedAccountsBtn);
+      await changeTabPanel(page, "LINKED ACCOUNTS");
     });
 
     await test.step("user can link a proxy", async () => {
@@ -372,9 +364,7 @@ test.describe("admin assigns certificate to user and user self-assigns proxy", (
     });
 
     await test.step("select linked account tab", async () => {
-      const linkedAccountsBtn = page.getByText("LINKED ACCOUNTS");
-      await linkedAccountsBtn.scrollIntoViewIfNeeded();
-      await changeTabPanel(linkedAccountsBtn);
+      await changeTabPanel(page, "LINKED ACCOUNTS");
     });
 
     await test.step("unlink certificate", async () => {

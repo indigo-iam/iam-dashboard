@@ -7,7 +7,7 @@
 import { Button } from "@/components/buttons";
 import { Form } from "@/components/form";
 import { TabPanel } from "@/components/tabs";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import {
   Client,
   CodeChallengeMethod,
@@ -24,6 +24,7 @@ interface CredentialsProps {
 
 export default function Credentials(props: Readonly<CredentialsProps>) {
   const { client, isAdmin } = props;
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -31,14 +32,14 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
     const requestBody: Client = {
       ...client,
       token_endpoint_auth_method: formData.get(
-        "token_endpoint_auth_method[id]"
+        "token_endpoint_auth_method"
       ) as TokenEndpointAuthMethod,
       code_challenge_method: formData.get(
-        "code_challenge_method[id]"
+        "code_challenge_method"
       ) as CodeChallengeMethod,
     };
     const res = await editClient(requestBody, isAdmin);
-    toast.toast(res);
+    toast(res);
   }
 
   return (
@@ -52,10 +53,10 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
           <Advanced codeChallengeMethod={client.code_challenge_method} />
         </div>
         <div className="flex flex-row justify-end">
-          <Button className="btn-tertiary" type="reset">
+          <Button variant="underline" type="reset">
             Reset
           </Button>
-          <Button className="btn-secondary" type="submit">
+          <Button variant="outline" type="submit">
             Save changes
           </Button>
         </div>

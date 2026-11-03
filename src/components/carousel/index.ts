@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-export { default as Carousel } from "./carousel";
+export { useCarousel } from "./carousel-context";
 export { default as CarouselPanel } from "./carousel-panel";
 export { default as CarouselPanels } from "./carousel-panels";
 export { default as CarouselList } from "./carousel-list";

@@ -7,10 +7,11 @@ import type { Metadata, Viewport } from "next";
 import { getSession, isUserAdmin } from "@/auth";
 import { Header } from "@/app/components/header";
 import { Sidebar } from "@/app/components/sidebar";
-import { Toaster } from "@/components/toaster";
+import { ToasterProvider } from "@/components/toaster";
 import { LoadingProvider } from "@/components/loading";
 import { ProgressBarProvider } from "@/components/progress-bar";
 import "@/styles/main.css";
+import "@/styles/app.css";
 
 export const metadata: Metadata = {
   title: "INDIGO IAM",
@@ -43,20 +44,20 @@ export default async function RootLayout(props: Readonly<RootLayoutProps>) {
   return (
     <html lang="en">
       <body>
-        {/*this div is required by https://github.com/tailwindlabs/headlessui/issues/2752*/}
         {/*id="app" is the node that Modal sets `inert` on while a dialog is open*/}
         <div id="app">
           <LoadingProvider>
             <ProgressBarProvider>
-              <Header hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
-              <main>
-                <Sidebar hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
-                <div className="content">{children}</div>
-              </main>
+              <ToasterProvider>
+                <Header hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
+                <main>
+                  <Sidebar hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
+                  <div className="content">{children}</div>
+                </main>
+              </ToasterProvider>
             </ProgressBarProvider>
           </LoadingProvider>
         </div>
-        <Toaster />
       </body>
     </html>
   );

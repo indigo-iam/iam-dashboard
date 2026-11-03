@@ -16,12 +16,14 @@ type SystemScopesProps = {
   isAdmin: boolean;
 };
 
-async function SystemScopes(props: Readonly<SystemScopesProps>) {
+function SystemScopes(props: Readonly<SystemScopesProps>) {
   const { client, scopes, isAdmin } = props;
   return scopes.map(s => (
     <li className="iam-list-item" key={s.id}>
       <div className="flex grow flex-col">
-        <p className="text-gray-950 dark:text-gray-200">{s.value}</p>
+        <p className="text-gray-950 dark:text-gray-200">
+          {s.restricted ? `${s.value} (restricted)` : s.value}
+        </p>
         <p className="text-xs">{s.description}</p>
       </div>
       <div className="flex flex-col items-center">
@@ -37,7 +39,7 @@ type CustomScopesProps = {
   isAdmin: boolean;
 };
 
-async function CustomScopes(props: Readonly<CustomScopesProps>) {
+function CustomScopes(props: Readonly<CustomScopesProps>) {
   const { client, scopes, isAdmin } = props;
   return scopes.map(s => (
     <li className="iam-list-item" key={s}>

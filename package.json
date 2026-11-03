@@ -1,9 +1,10 @@
 {
   "name": "iam-dashboard",
   "private": true,
-  "version": "0.6.1",
+  "version": "0.7.0-alpha.0",
+  "type": "module",
   "scripts": {
-    "dev": "next dev -p 3000 --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "PORT=3000 HOSTNAME=127.0.0.1 node .next/standalone/server.js",
     "playwright:install": "playwright install --with-deps",
@@ -11,16 +12,13 @@
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
-    "@headlessui/react": "^2",
     "@heroicons/react": "^2",
     "@vercel/otel": "^2",
     "better-auth": "^1.7",
     "better-sqlite3": "^12",
     "next": "^16",
     "react": "^19",
-    "react-dom": "^19",
-    "sharp": "^0.35",
-    "sonner": "^2"
+    "react-dom": "^19"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.0",
@@ -35,7 +33,6 @@
     "prettier": "^3",
     "prettier-plugin-tailwindcss": "^0",
     "tailwindcss": "^4.3",
-    "ts-jest": "^29",
     "typescript": "^6"
   }
 }

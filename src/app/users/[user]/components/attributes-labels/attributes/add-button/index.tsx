@@ -4,8 +4,9 @@
 
 "use client";
 
-import { Button } from "@/components/buttons";
 import { useState } from "react";
+
+import { Button } from "@/components/buttons";
 import AddAttributeModal from "./modal";
 
 type AddButtonProps = {
@@ -19,7 +20,7 @@ export default function AddAttributeButton(props: Readonly<AddButtonProps>) {
   const closeModal = () => setShow(false);
   return (
     <>
-      <Button className="btn-secondary" onClick={openModal}>
+      <Button variant="outline" type="button" onClick={openModal}>
         Add attribute
       </Button>
       <AddAttributeModal show={show} onClose={closeModal} userId={userId} />

@@ -8,7 +8,7 @@ import { createContext, useContext } from "react";
 
 type ProgressBarContextProps = {
   startTransition: (callback: () => Promise<void>) => void;
-  startProgressBar: () => Promise<void>;
+  startProgressBar: () => void;
   stopProgressBar: () => void;
   isProgressBarHidden: boolean;
   progress: number;

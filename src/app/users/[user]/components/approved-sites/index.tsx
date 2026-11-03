@@ -81,7 +81,7 @@ async function Content(props: Readonly<ApprovedSitesProps>) {
   );
 }
 
-export async function ApprovedSites(props: Readonly<ApprovedSitesProps>) {
+export function ApprovedSites(props: Readonly<ApprovedSitesProps>) {
   const { isAdmin } = props;
   return (
     <TabPanel className="panel">

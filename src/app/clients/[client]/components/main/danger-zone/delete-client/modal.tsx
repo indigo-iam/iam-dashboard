@@ -4,7 +4,7 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { Notice, Warning } from "@/components/notices";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { deleteClient } from "@/services/clients";
 
 type DeleteClientModalProps = {
@@ -29,10 +29,11 @@ export default function DeleteClientModal(
     onClose,
     onDeleted,
   } = props;
+  const { toast } = useToaster();
 
   const handleConfirm = async () => {
     const res = await deleteClient(clientId, isAdmin);
-    toast.toast(res);
+    toast(res);
     onClose();
     onDeleted?.();
   };

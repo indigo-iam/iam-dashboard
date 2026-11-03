@@ -4,9 +4,13 @@
 
 "use client";
 
+import { useState } from "react";
+
 import { Button } from "@/components/buttons";
 import ConfirmModal from "@/components/confirm-modal";
-import { Field, Form, Label } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import {
   Modal,
@@ -15,9 +19,8 @@ import {
   ModalFooter,
   ModalProps,
 } from "@/components/modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { changePassword, resetUserPassword } from "@/services/users";
-import { useState } from "react";
 
 interface ModalPasswordProps extends ModalProps {
   userId: string;
@@ -25,11 +28,13 @@ interface ModalPasswordProps extends ModalProps {
 
 function ModalPassword(props: Readonly<ModalPasswordProps>) {
   const { userId, ...modalProps } = props;
+  const { toast } = useToaster();
+
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const res = await changePassword(userId, formData);
-    toast.toast(res);
+    toast(res);
   }
 
   return (
@@ -38,7 +43,7 @@ function ModalPassword(props: Readonly<ModalPasswordProps>) {
       <Form onSubmit={submit}>
         <ModalBody>
           <Field>
-            <Label data-required>Current password</Label>
+            <Label>Current password</Label>
             <Input
               name="currentPassword"
               type="password"
@@ -47,7 +52,7 @@ function ModalPassword(props: Readonly<ModalPasswordProps>) {
             />
           </Field>
           <Field>
-            <Label data-required>New password</Label>
+            <Label>New password</Label>
             <Input
               name="updatedPassword"
               type="password"
@@ -56,21 +61,15 @@ function ModalPassword(props: Readonly<ModalPasswordProps>) {
             />
           </Field>
           <Field>
-            <Label data-required>Repeat password</Label>
+            <Label>Repeat password</Label>
             <Input type="password" placeholder="Repeat password..." required />
           </Field>
         </ModalBody>
         <ModalFooter>
-          <Button
-            className="btn-tertiary"
-            type="reset"
-            onClick={modalProps.onClose}
-          >
+          <Button variant="underline" type="reset" onClick={modalProps.onClose}>
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Change password
-          </Button>
+          <Button type="submit">Change password</Button>
         </ModalFooter>
       </Form>
     </Modal>
@@ -88,10 +87,11 @@ function ResetPasswordForUserModal(
   props: Readonly<ResetPasswordForUserModalProps>
 ) {
   const { userFormattedName, userEmail, show, onClose } = props;
+  const { toast } = useToaster();
 
   async function resetPassword() {
     const res = await resetUserPassword(userEmail);
-    toast.toast(res);
+    toast(res);
   }
 
   return (
@@ -127,7 +127,7 @@ export function ResetPassword(props: Readonly<ResetPasswordProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Button className="btn-secondary" onClick={open}>
+      <Button variant="outline" type="button" onClick={open}>
         {isMe ? "Change password" : "Reset password"}
       </Button>
       {isMe ? (

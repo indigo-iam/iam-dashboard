@@ -3,14 +3,43 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 "use client";
+import { useState } from "react";
 
 import { Button } from "@/components/buttons";
-import { Checkbox, Field, Form } from "@/components/form";
+import { Checkbox } from "@/components/checkbox";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/components/modal";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { Client, Scope } from "@/models/client";
 import { editClient } from "@/services/clients";
-import { useState } from "react";
+import { Label } from "@/components/label";
+
+type ScopeCheckboxProps = {
+  value: string;
+  description: string;
+  title?: string;
+  disabled?: boolean;
+};
+
+function ScopeCheckbox(props: Readonly<ScopeCheckboxProps>) {
+  const { value, description, title, disabled } = props;
+  return (
+    <Field
+      role="listitem"
+      className="group flex flex-row items-center gap-2 p-2 text-gray-600 hover:rounded-md hover:bg-gray-50 data-disabled:cursor-not-allowed data-disabled:text-gray-400 dark:text-gray-200 dark:hover:bg-gray-400 dark:data-disabled:text-white/40"
+      data-disabled={disabled || null}
+    >
+      <Label className="flex cursor-pointer items-center gap-2">
+        <Checkbox name="scope" value={value} disabled={disabled} />
+        <div className="flex grow flex-col">
+          {title ?? value}
+          <p className="text-sm font-light">{description}</p>
+        </div>
+      </Label>
+    </Field>
+  );
+}
 
 type AddScopeProps = {
   client: Client;
@@ -25,6 +54,7 @@ type AddScopeModalProps = AddScopeProps & {
 
 function AddScopeModal(props: Readonly<AddScopeModalProps>) {
   const { client, availableScopes, show, onClose, isAdmin } = props;
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -33,7 +63,7 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
     const scopes = (client.scope?.split(" ") ?? []).concat(newScope);
     const scope = scopes.join(" ");
     const res = await editClient({ ...client, scope }, isAdmin);
-    toast.toast(res);
+    toast(res);
     onClose();
   }
 
@@ -44,29 +74,21 @@ function AddScopeModal(props: Readonly<AddScopeModalProps>) {
         <ModalBody className="p-0">
           <ul>
             {availableScopes.map(s => (
-              <Field
-                as="li"
+              <ScopeCheckbox
                 key={s.id}
-                className="flex flex-row items-center gap-2 p-2 hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-400"
-              >
-                <Checkbox name="scope" value={s.value} />
-                <div className="flex grow flex-col">
-                  <p className="text-gray-500 dark:text-white/70">{s.value}</p>
-                  <p className="text-sm font-light text-gray-500 dark:text-white/70">
-                    {s.description}
-                  </p>
-                </div>
-              </Field>
+                value={s.value}
+                description={s.description}
+                title={s.restricted ? `${s.value} (restricted)` : s.value}
+                disabled={s.restricted && !isAdmin}
+              />
             ))}
           </ul>
         </ModalBody>
         <ModalFooter>
-          <Button className="btn-tertiary" onClick={onClose} type="reset">
+          <Button variant="underline" onClick={onClose} type="reset">
             Cancel
           </Button>
-          <Button className="btn-primary" type="submit">
-            Add scope(s)
-          </Button>
+          <Button type="submit">Add scope(s)</Button>
         </ModalFooter>
       </Form>
     </Modal>
@@ -80,7 +102,7 @@ export function AddScopeButton(props: Readonly<AddScopeProps>) {
   const close = () => setShow(false);
   return (
     <>
-      <Button className="btn-secondary" onClick={open}>
+      <Button variant="outline" type="button" onClick={open}>
         Add system scope(s)
       </Button>
       <AddScopeModal

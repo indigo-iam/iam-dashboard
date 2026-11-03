@@ -2,7 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { Field, Label } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 
 type DeviceCodeTimeoutProps = {
@@ -34,7 +35,6 @@ export function DeviceCodeTimeout(props: Readonly<DeviceCodeTimeoutProps>) {
           <Label>Device Code timeout (seconds)</Label>
           <Input
             type="number"
-            id="device-code-validity-input"
             name="device_code_validity_seconds"
             defaultValue={deviceCodeValiditySeconds}
           />

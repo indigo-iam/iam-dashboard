@@ -4,13 +4,14 @@
 
 "use client";
 
-import { InputSearch } from "@/components/inputs";
-import { InputProps } from "@headlessui/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-interface InputQueryProps extends InputProps {
+import { InputSearch } from "./input-search";
+import { InputProps } from "./input";
+
+type InputQueryProps = InputProps & {
   "data-testid"?: string;
-}
+};
 
 export function InputQuery(props: Readonly<InputQueryProps>) {
   const searchParams = useSearchParams();

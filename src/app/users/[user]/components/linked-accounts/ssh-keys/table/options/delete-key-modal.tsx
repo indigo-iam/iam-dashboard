@@ -3,7 +3,8 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
-import { Field, Label } from "@/components/form";
+import { Field } from "@/components/field";
+import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import { SSHKey } from "@/models/indigo-user";
 import { deleteSSHKey } from "@/services/users";

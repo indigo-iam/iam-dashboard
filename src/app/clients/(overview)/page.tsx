@@ -2,6 +2,10 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { PlusIcon, CubeIcon } from "@heroicons/react/24/solid";
+
 import { getSession, isUserAdmin } from "@/auth";
 import { ClientsTable } from "@/app/components/clients";
 import { InputQuery } from "@/components/inputs";
@@ -9,15 +13,11 @@ import { getClientsByAccount, getClientsPage } from "@/services/clients";
 import Paginator from "@/components/paginator";
 import { Button } from "@/components/buttons";
 
-import Link from "next/link";
-import { redirect } from "next/navigation";
-import { PlusIcon, CubeIcon } from "@heroicons/react/24/solid";
-
 function Buttons() {
   return (
     <div className="flex flex-row gap-2">
       <Link href="/clients/new" tabIndex={-1}>
-        <Button className="btn-secondary">
+        <Button variant="outline" type="button">
           <PlusIcon className="size-4" />
           New client
         </Button>
@@ -47,7 +47,7 @@ export default async function Page(props: Readonly<PageProps>) {
   const startIndex = 1 + count * (page - 1);
   const clientPage = isAdmin
     ? await getClientsPage(count, startIndex, query)
-    : await getClientsByAccount(session.user.sub, count, startIndex);
+    : await getClientsByAccount(session.user.sub, count, startIndex, query);
   const numberOfPages = Math.ceil(clientPage.totalResults / count) || 1;
   const clients = clientPage.Resources;
   return (

@@ -21,7 +21,7 @@ type LinkedAccountsProps = {
   isAdmin: boolean;
 };
 
-export async function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
+export function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
   const {
     isMe,
     userId,

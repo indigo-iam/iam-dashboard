@@ -7,8 +7,10 @@
 import { useMemo, useState } from "react";
 import { redirect } from "next/navigation";
 
-import { addScopePolicy, updateScopePolicy } from "@/services/scope-policies";
-import { Field, Label, Description, Form } from "@/components/form";
+import { Form } from "@/components/form";
+import { Field } from "@/components/field";
+import { Description } from "@/components/description";
+import { Label } from "@/components/label";
 import { Input, InputList } from "@/components/inputs";
 import {
   AccountType,
@@ -21,7 +23,8 @@ import { Button } from "@/components/buttons";
 import { Info } from "@/components/info";
 import ConfirmModal from "@/components/confirm-modal";
 import { Notice } from "@/components/notices";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
+import { addScopePolicy, updateScopePolicy } from "@/services/scope-policies";
 
 import DeletePolicyModal from "../table/options/delete-policy-modal";
 import { AccountGroupSelector } from "./account-group-selector";
@@ -98,13 +101,13 @@ type ScopePoliciesProps = {
 export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
   const originalPolicy = props.policy ?? defaultValues;
   const isEditing = props.policy !== undefined;
-
   const [statePolicy, setStatePolicy] = useState(originalPolicy);
   const defaultAccountType = getDefaultAccountType(originalPolicy);
   const [accountType, setAccountType] =
     useState<AccountType>(defaultAccountType);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const { toast } = useToaster();
 
   const initialEntity = useMemo(
     () => getEntityFromPolicy(originalPolicy),
@@ -137,7 +140,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
     if (response.type === "success") {
       response.description = `Policy "${statePolicy.description}" has been ${isEditing ? "updated" : "created"}`;
     }
-    toast.toast(response);
+    toast(response);
     redirect("/policies");
   }
 

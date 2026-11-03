@@ -4,7 +4,7 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { Notice } from "@/components/notices";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { Site } from "@/models/sites";
 import { revokeSite } from "@/services/sites";
 
@@ -16,10 +16,11 @@ type RevokeSiteProps = {
 
 export function RevokeSite(props: Readonly<RevokeSiteProps>) {
   const { site, show, onClose } = props;
+  const { toast } = useToaster();
 
   async function action() {
     const res = await revokeSite(site.id.toString());
-    toast.toast(res);
+    toast(res);
   }
 
   return (

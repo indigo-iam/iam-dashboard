@@ -7,7 +7,7 @@
 import { Button } from "@/components/buttons";
 import { Form } from "@/components/form";
 import { TabPanel } from "@/components/tabs";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { Client } from "@/models/client";
 
 import { TokensTimeout } from "./tokens-timeout";
@@ -22,12 +22,13 @@ type TokensProps = {
 
 export default function Tokens(props: Readonly<TokensProps>) {
   const { client, isAdmin } = props;
+  const { toast } = useToaster();
 
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const res = await updateClient(client, formData, isAdmin);
-    toast.toast(res);
+    toast(res);
   }
 
   return (
@@ -48,11 +49,11 @@ export default function Tokens(props: Readonly<TokensProps>) {
             deviceCodeValiditySeconds={client.device_code_validity_seconds}
           />
         </div>
-        <div className="flex flex-row justify-end">
-          <Button className="btn-tertiary" type="reset">
+        <div className="flex flex-row justify-end gap-2">
+          <Button variant="underline" type="reset">
             Reset
           </Button>
-          <Button className="btn-secondary" type="submit">
+          <Button variant="outline" type="submit">
             Save changes
           </Button>
         </div>

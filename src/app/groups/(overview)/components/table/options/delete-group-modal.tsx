@@ -4,7 +4,7 @@
 
 import ConfirmModal from "@/components/confirm-modal";
 import { Notice, Warning } from "@/components/notices";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { deleteGroup } from "@/services/groups";
 
 interface DeleteGroupModalProps {
@@ -18,12 +18,19 @@ interface DeleteGroupModalProps {
 export default function DeleteGroupModal(
   props: Readonly<DeleteGroupModalProps>
 ) {
-  const { groupId, groupName, groupDescription, show, onClose, onDeleted } =
-    props;
+  const {
+    groupId, //
+    groupName,
+    groupDescription,
+    show,
+    onClose,
+    onDeleted,
+  } = props;
+  const { toast } = useToaster();
 
   async function handleConfirm() {
     const response = await deleteGroup(groupId);
-    toast.toast(response);
+    toast(response);
     onClose();
     onDeleted?.();
   }

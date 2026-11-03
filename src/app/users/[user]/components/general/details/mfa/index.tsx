@@ -4,10 +4,11 @@
 
 "use client";
 
+import { useState } from "react";
+
 import { Button } from "@/components/buttons";
 import { EnableMFAModal } from "./enable-modal";
 import { DisableMFAModal } from "./disable-modal";
-import { useState } from "react";
 
 type MFAButtonProps = {
   enabled: boolean;
@@ -22,7 +23,7 @@ export function MFAButton(props: Readonly<MFAButtonProps>) {
   if (enabled) {
     return (
       <>
-        <Button className="btn-secondary" onClick={open}>
+        <Button accent="danger" type="button" onClick={open}>
           Disable MFA
         </Button>
         <DisableMFAModal show={show} onClose={close} />
@@ -31,7 +32,7 @@ export function MFAButton(props: Readonly<MFAButtonProps>) {
   } else {
     return (
       <>
-        <Button className="btn-secondary" onClick={open}>
+        <Button variant="outline" type="button" onClick={open}>
           Enable MFA
         </Button>
         <EnableMFAModal show={show} onClose={close} />

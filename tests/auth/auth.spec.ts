@@ -210,11 +210,11 @@ testUser("user cannot enable admin mode", async ({ signedUpPage }) => {
   });
 
   await testUser.step("try enabling admin mode", async () => {
-    const userMenuBtn = signedUpPage.getByTestId("user-menu-btn");
+    const userMenuBtn = signedUpPage.getByLabel("Open user menu");
     await expect(userMenuBtn).toBeVisible();
     await expect(userMenuBtn).toBeEnabled();
     await userMenuBtn.click();
-    const userMenu = signedUpPage.getByTestId("user-menu");
+    const userMenu = signedUpPage.getByLabel("User menu", { exact: true });
     await expect(userMenu).toBeVisible();
     await expect(
       userMenu.getByRole("button", { name: "Admin mode" })

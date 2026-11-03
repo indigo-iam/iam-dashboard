@@ -2,9 +2,11 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client";
+
 import ConfirmModal from "@/components/confirm-modal";
 import { Notice, Warning } from "@/components/notices";
-import { toast } from "@/components/toaster";
+import { useToaster } from "@/components/toaster";
 import { ScopePolicy } from "@/models/scope-policies";
 import { deleteScopePolicy } from "@/services/scope-policies";
 
@@ -17,17 +19,20 @@ type DeletePolicyModal = {
 
 export default function DeletePolicyModal(props: Readonly<DeletePolicyModal>) {
   const { show, onClose, policy, onDeleted } = props;
-  const handleConfirm = async () => {
+  const { toast } = useToaster();
+
+  async function handleConfirm() {
     const response = await deleteScopePolicy(policy.id);
     const success = response.type === "success";
     if (success) {
       response.description = `Policy "${policy.description}" has been deleted`;
     }
-    toast.toast(response);
+    toast(response);
     if (success) {
       onDeleted?.();
     }
-  };
+  }
+
   return (
     <ConfirmModal
       show={show}
@@ -45,7 +50,7 @@ export default function DeletePolicyModal(props: Readonly<DeletePolicyModal>) {
       </Notice>
       <Warning>
         <p>
-          Deliting this policy will permanently remove it from the organization.
+          Deleting this policy will permanently remove it from the organization.
           User/Group it applies to may gain more access than intended.
         </p>
         <p>

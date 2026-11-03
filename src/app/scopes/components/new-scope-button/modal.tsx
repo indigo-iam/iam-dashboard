@@ -68,16 +68,12 @@ export default function NewScopeModal(props: Readonly<NewScopeModalProps>) {
           </p>
           <Field>
             <Label>Scope</Label>
-            <Input id="scope" name="value" placeholder="Scope name" />
+            <Input name="value" placeholder="Scope name" />
             <Description>Single string with no spaces.</Description>
           </Field>
           <Field>
             <Label>Description</Label>
-            <Input
-              id="scope"
-              name="description"
-              placeholder="Scope description"
-            />
+            <Input name="description" placeholder="Scope description" />
             <Description>Single string with no spaces.</Description>
           </Field>
           <Field>

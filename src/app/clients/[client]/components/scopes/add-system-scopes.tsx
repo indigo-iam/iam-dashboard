@@ -30,11 +30,13 @@ function ScopeCheckbox(props: Readonly<ScopeCheckboxProps>) {
       className="group flex flex-row items-center gap-2 p-2 text-gray-600 hover:rounded-md hover:bg-gray-50 data-disabled:cursor-not-allowed data-disabled:text-gray-400 dark:text-gray-200 dark:hover:bg-gray-400 dark:data-disabled:text-white/40"
       data-disabled={disabled || null}
     >
-      <Checkbox name="scope" value={value} disabled={disabled} />
-      <div className="flex grow flex-col">
-        <Label>{title ?? value}</Label>
-        <p className="text-sm font-light">{description}</p>
-      </div>
+      <Label className="flex cursor-pointer items-center gap-2">
+        <Checkbox name="scope" value={value} disabled={disabled} />
+        <div className="flex grow flex-col">
+          {title ?? value}
+          <p className="text-sm font-light">{description}</p>
+        </div>
+      </Label>
     </Field>
   );
 }

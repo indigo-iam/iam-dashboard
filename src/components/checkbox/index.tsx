@@ -4,13 +4,12 @@
 
 "use client";
 
-import { useRef } from "react";
 import { CheckIcon } from "@heroicons/react/16/solid";
 
 import { Label } from "@/components/label";
-import { useLabelledBy } from "../label/context";
-import { useDescribedBy } from "../description/context";
 import { useField } from "../field/context";
+import { Input } from "../inputs";
+import { InputProps } from "../inputs/input";
 
 export interface CheckboxState<T> {
   checked: boolean;
@@ -18,59 +17,21 @@ export interface CheckboxState<T> {
   index: number;
 }
 
-type CheckboxProps = {
-  id?: string;
-  name?: string;
-  value?: string;
-  defaultChecked?: boolean;
-  checked?: boolean;
-  disabled?: boolean;
-  onChange?: (value: boolean) => void;
-};
+type CheckboxProps = InputProps;
 
 export function Checkbox(props: Readonly<CheckboxProps>) {
-  const { onChange, ...other } = props;
-  const checkboxRef = useRef<HTMLInputElement>(null);
-  const isControlled = other.checked !== undefined;
-  const labelledBy = useLabelledBy();
-  const describedBy = useDescribedBy();
-
-  function handleChange() {
-    if (other.disabled || !checkboxRef.current) {
-      return;
-    }
-    if (isControlled) {
-      onChange?.(!other.checked);
-    } else {
-      checkboxRef.current.checked = !checkboxRef.current.checked;
-    }
-  }
-
-  function handleKeydown(e: React.KeyboardEvent<HTMLSpanElement>) {
-    if (other.disabled) {
-      return;
-    }
-    if (e.code === "Space") {
-      handleChange();
-    }
-  }
+  const { ...other } = props;
 
   return (
-    <span
-      className="group flex aspect-square size-4 items-center rounded border bg-white data-disabled:cursor-not-allowed data-disabled:bg-gray-100 dark:bg-gray-800"
-      onClick={handleChange}
-      onKeyDown={handleKeydown}
-      role="checkbox"
-      aria-checked={other.checked}
-      tabIndex={0}
-      data-disabled={other.disabled || null}
-      aria-labelledby={labelledBy}
-      aria-describedby={describedBy}
-      aria-disabled={other.disabled}
-    >
+    <div className="group relative flex aspect-square size-4 cursor-pointer items-center rounded border bg-white data-disabled:cursor-not-allowed data-disabled:bg-gray-100 dark:bg-gray-800">
       <CheckIcon className="hidden size-4 fill-gray-700 group-has-checked:block dark:fill-gray-300" />
-      <input {...other} type="checkbox" hidden readOnly ref={checkboxRef} />
-    </span>
+      <Input
+        variant="plain"
+        className="absolute h-5 w-5 appearance-none"
+        {...other}
+        type="checkbox"
+      />
+    </div>
   );
 }
 
@@ -83,9 +44,12 @@ export function LabeledCheckbox(props: Readonly<LabeledCheckboxProps>) {
   const { inputId } = useField();
   const id = props.id ?? inputId;
   return (
-    <div className="flex flex-row items-center gap-2">
+    <Label
+      className="flex cursor-pointer items-center gap-2 pb-0.5! text-sm"
+      htmlFor={id}
+    >
       <Checkbox {...checkboxProps} id={id} />
-      <Label className="pb-0.5! text-sm">{children}</Label>
-    </div>
+      {children}
+    </Label>
   );
 }

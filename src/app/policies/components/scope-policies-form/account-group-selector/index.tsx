@@ -4,50 +4,39 @@
 
 "use client";
 
-import { Select, SelectOption } from "@/components/form";
+import { AccountType } from "@/models/scope-policies";
 
-type EntityType = "null" | "user" | "group";
+const accountOptions: AccountType[] = ["ALL", "USER", "GROUP"];
 
 type AccountGroupSelectorProps = {
-  entityType: EntityType;
-  onChange: (entityType: EntityType) => void;
+  defaultValue: AccountType;
+  onChange: (accountType: AccountType) => void;
 };
-
-const entityOptions = [
-  { id: "null", name: "ALL" },
-  { id: "user", name: "USER" },
-  { id: "group", name: "GROUP" },
-];
 
 export function AccountGroupSelector(
   props: Readonly<AccountGroupSelectorProps>
 ) {
-  const { entityType, onChange } = props;
-  const selectedOption = entityOptions.find(option => option.id === entityType) ?? entityOptions[0];
+  const { defaultValue, onChange } = props;
 
-  function handleChange(value: SelectOption) {
-    const newEntityType = value.id;
-    if (
-      newEntityType !== "null" &&
-      newEntityType !== "user" &&
-      newEntityType !== "group"
-    ) {
-      throw new Error(`${newEntityType} not valid`);
+  function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
+    const selected = event.currentTarget.value;
+    if (selected !== "ALL" && selected !== "USER" && selected !== "GROUP") {
+      throw new Error(`AccountType '${selected}'' not valid`);
     }
-    onChange(newEntityType);
+    onChange(selected);
   }
 
   return (
-    <Select
-      name="entityType"
-      defaultValue={selectedOption}
+    <select
+      name="accountType"
+      defaultValue={defaultValue}
       onChange={handleChange}
     >
-      {entityOptions.map(ep => (
-        <SelectOption key={ep.id} value={ep}>
-          {ep.name}
-        </SelectOption>
+      {accountOptions.map(accountType => (
+        <option key={accountType} value={accountType}>
+          {accountType}
+        </option>
       ))}
-    </Select>
+    </select>
   );
 }

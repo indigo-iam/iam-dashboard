@@ -16,6 +16,7 @@ export type GroupSelector = {
 
 export type PolicyRule = "PERMIT" | "DENY";
 export type PolicyMatcher = "EQ" | "REGEXP" | "PATH";
+export type AccountType = "ALL" | "USER" | "GROUP";
 
 export type ScopePolicy = {
   id: number;
@@ -27,7 +28,7 @@ export type ScopePolicy = {
   group: GroupSelector | null;
   account: AccountSelector | null;
   scopes: string[];
-}
+};
 
 export type ScopePolicyRequest = {
   description?: string;
@@ -36,4 +37,4 @@ export type ScopePolicyRequest = {
   group: GroupSelector | null;
   account: AccountSelector | null;
   scopes: string[] | null;
-}
+};

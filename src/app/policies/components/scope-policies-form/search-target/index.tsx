@@ -11,40 +11,41 @@ import { User } from "@/models/scim";
 import { Group } from "@/models/groups";
 import { SearchUsers } from "@/app/components/search-users";
 import { SearchGroups } from "@/app/users/[user]/components/groups/unmanaged/join-group-button/search-groups";
+import { AccountType } from "@/models/scope-policies";
 
 type Entity = {
   uuid: string;
   name: string;
 };
 
-type EntityType = "null" | "user" | "group";
-
 type SearchTargetProps = {
-  entityType: EntityType;
+  accountType: AccountType;
   initialEntity: Entity | null;
   onChange: (entity: Entity | null) => void;
 };
 
 type SearchEntityProps = {
-  entityType: EntityType;
+  accountType: AccountType;
   onAddUser: (user: User) => void;
   onAddGroup: (group: Group) => void;
 };
 
 function SearchEntity(props: Readonly<SearchEntityProps>) {
-  const { entityType, onAddUser, onAddGroup } = props;
-  if (entityType === "user") {
+  const { accountType, onAddUser, onAddGroup } = props;
+  if (accountType === "USER") {
     return <SearchUsers listId="account-group-users" onSelect={onAddUser} />;
   }
-  if (entityType === "group") {
+  if (accountType === "GROUP") {
     return <SearchGroups listId="account-group-groups" onSelect={onAddGroup} />;
   }
   return null;
 }
 
 export function SearchTarget(props: Readonly<SearchTargetProps>) {
-  const { entityType, initialEntity, onChange } = props;
-  const [selectedEntity, setSelectedEntity] = useState<Entity | null>(initialEntity);
+  const { accountType, initialEntity, onChange } = props;
+  const [selectedEntity, setSelectedEntity] = useState<Entity | null>(
+    initialEntity
+  );
 
   function addUser(user: User) {
     const entity = {
@@ -69,7 +70,7 @@ export function SearchTarget(props: Readonly<SearchTargetProps>) {
     onChange(null);
   }
 
-  if (entityType === "null") {
+  if (accountType === "ALL") {
     return;
   }
 
@@ -77,7 +78,7 @@ export function SearchTarget(props: Readonly<SearchTargetProps>) {
     return (
       <div className="mt-1 flex flex-row items-center gap-2 pt-1">
         <button
-          title={`Remove ${entityType}`}
+          title={`Remove ${accountType}`}
           type="button"
           onClick={unselectEntity}
           className="bg-secondary-100 hover:bg-danger w-5 rounded hover:text-white dark:bg-transparent dark:text-white/80"
@@ -86,11 +87,11 @@ export function SearchTarget(props: Readonly<SearchTargetProps>) {
         </button>
         <p>{selectedEntity.name}</p>
       </div>
-    )
+    );
   }
   return (
     <SearchEntity
-      entityType={entityType}
+      accountType={accountType}
       onAddUser={addUser}
       onAddGroup={addGroup}
     />

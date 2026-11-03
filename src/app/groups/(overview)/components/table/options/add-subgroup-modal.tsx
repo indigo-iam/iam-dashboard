@@ -57,6 +57,7 @@ export default function AddSubgroupModal(
               type="text"
               name="name"
               placeholder="Insert group name..."
+              autoComplete="off"
               required
             />
             <Description>

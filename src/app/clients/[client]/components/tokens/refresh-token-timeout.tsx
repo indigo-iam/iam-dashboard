@@ -33,7 +33,6 @@ export function RefreshTokenTimeout(props: Readonly<RefreshTokenTimeoutProps>) {
         <Field>
           <Label>Refresh Token timeout (seconds)</Label>
           <Input
-            id="refresh-token-validity-input"
             name="refresh_token_validity_seconds"
             defaultValue={refreshTokenValiditySeconds}
           />

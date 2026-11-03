@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import ConfirmModal from "@/components/confirm-modal";
+import { useToaster } from "@/components/toaster";
 import { GroupRequest } from "@/models/group-requests";
 import { User } from "@/models/scim";
 import { abortGroupRequest } from "@/services/group-requests";
@@ -20,11 +21,13 @@ export default function DeleteGroupRequestModal(
   props: Readonly<DeleteGroupRequestModalProps>
 ) {
   const { user, isMe, groupRequest, show, onClose, onDeleted } = props;
-  const handleConfirm = async () => {
-    abortGroupRequest(isMe ? "me" : user.id, groupRequest);
+  const { toast } = useToaster();
+  async function handleConfirm() {
+    const res = await abortGroupRequest(isMe ? "me" : user.id, groupRequest);
+    toast(res);
     onClose();
     onDeleted?.();
-  };
+  }
   return (
     <ConfirmModal
       show={show}

@@ -71,6 +71,7 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
             name="name"
             title="Name"
             placeholder="Enter first name"
+            autoComplete="given-name"
             required
           />
         </Field>
@@ -81,6 +82,7 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
             name="surname"
             title="Surname"
             placeholder="Enter surname"
+            autoComplete="family-name"
             required
           />
         </Field>
@@ -91,6 +93,7 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
             name="username"
             title="Username"
             placeholder="Enter username"
+            autoComplete="off"
             required
           />
         </Field>
@@ -101,6 +104,7 @@ function AddUserForm(props: Readonly<AddUserFormProps>) {
             name="email"
             title="Email"
             placeholder="Enter email"
+            autoComplete="off"
             required
           />
         </Field>

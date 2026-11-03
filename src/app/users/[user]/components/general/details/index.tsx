@@ -102,6 +102,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
                 name="given-name"
                 minLength={2}
                 defaultValue={userGivenName}
+                autoComplete="given-name"
               />
             </Field>
             <Field className="flex max-w-full grow flex-col">
@@ -112,6 +113,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
                 name="family-name"
                 minLength={2}
                 defaultValue={userFamilyName}
+                autoComplete="family-name"
               />
             </Field>
             <Field className="flex max-w-full grow flex-col">
@@ -121,21 +123,28 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
                 name="middle-name"
                 minLength={2}
                 defaultValue={userMiddleName ?? undefined}
+                autoComplete="additional-name"
               />
             </Field>
           </div>
           <Field className="flex flex-col">
             <Label>Username</Label>
-            <Input name="username" defaultValue={userName} required disabled />
+            <Input
+              name="username"
+              defaultValue={userName}
+              required
+              disabled
+              autoComplete="off"
+            />
           </Field>
           <Field className="flex flex-col">
             <Label>Email</Label>
             <Input
               required
               type="email"
-              id="email"
               name="email"
               defaultValue={userEmail}
+              autoComplete="off"
             />
           </Field>
           <Field className="flex justify-between">
@@ -149,6 +158,7 @@ export function UserDetailsForm(props: Readonly<UserDetailsFormProps>) {
         </Form>
         <Field className="col-span-full flex flex-col">
           <Label>Authentication</Label>
+          <Input hidden disabled />
           <div className="flex flex-wrap gap-2">
             {isMe && <MFAButton enabled={mfaEnabled} />}
             <ResetPassword

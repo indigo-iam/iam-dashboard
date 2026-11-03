@@ -4,21 +4,23 @@
 
 "use client";
 
+import { useId, useState } from "react";
+
+import { Input } from "@/components/inputs";
 import { Group } from "@/models/groups";
 import { searchGroup } from "@/services/groups";
 import { useDeferredCallback } from "@/utils/hooks";
-import { useState } from "react";
 
 type SearchGroupProps = {
-  listId: string;
   onSelect: (group: Group) => void;
 };
 
 export function SearchGroups(props: Readonly<SearchGroupProps>) {
-  const { listId, onSelect } = props;
+  const { onSelect } = props;
   const [query, setQuery] = useState<string>();
   const [searchResult, setSearchResult] = useState<Group[]>([]);
   const { deferredCallback } = useDeferredCallback();
+  const listId = useId();
 
   function handleQueryChange(event: React.ChangeEvent<HTMLInputElement>) {
     const group = event.target.value;
@@ -38,11 +40,12 @@ export function SearchGroups(props: Readonly<SearchGroupProps>) {
 
   return (
     <div className="space-y-2">
-      <input
-        className="iam-input"
+      <Input
+        name="search-group"
         list={listId}
         onChange={handleQueryChange}
         placeholder="Type to search for a group..."
+        autoComplete="off"
       />
       <datalist id={listId}>
         {searchResult.map(group => (

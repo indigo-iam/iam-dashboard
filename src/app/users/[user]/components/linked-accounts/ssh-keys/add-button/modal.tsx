@@ -50,20 +50,20 @@ export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
           <Field>
             <Label>Label</Label>
             <Input
-              id="ssh-label"
               name="ssh-label"
               required={true}
               placeholder="Type a label..."
+              autoComplete="off"
             />
           </Field>
           <Field>
             <Label>SSH Key</Label>
             <Textarea
-              id="ssh-key"
               name="ssh-key"
               title="SSH Key"
               className="iam-input w-full"
               placeholder="SSH Key..."
+              autoComplete="off"
               required={true}
             />
           </Field>

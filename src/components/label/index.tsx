@@ -4,6 +4,7 @@
 
 "use client";
 
+import { useField } from "../field/context";
 import { useLabelledBy } from "./context";
 
 type LabelProps = {
@@ -13,13 +14,14 @@ type LabelProps = {
 };
 
 export function Label(props: Readonly<LabelProps>) {
-  const { children, className, htmlFor } = props;
+  const { children, className } = props;
   const labelledBy = useLabelledBy();
+  const { inputId } = useField();
   return (
     <label
       className={`group-has-required:after:text-danger block pb-1.5 text-sm text-gray-600 group-has-required:after:content-['*'] dark:text-gray-300 ${className ?? ""}`}
       id={labelledBy}
-      htmlFor={htmlFor}
+      htmlFor={props.htmlFor ?? inputId}
     >
       {children}
     </label>

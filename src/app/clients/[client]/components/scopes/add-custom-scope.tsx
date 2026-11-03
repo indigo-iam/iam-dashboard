@@ -45,7 +45,6 @@ export function AddCustomScopeModal(props: Readonly<AddCustomScopeModalProps>) {
           <Field>
             <Label>Enter one or more scope</Label>
             <InputList
-              id="scope"
               name="scope"
               placeholder="Enter a custom scope..."
               originalItems={[]}

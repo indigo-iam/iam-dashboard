@@ -4,6 +4,7 @@
 
 "use client";
 
+import { useId } from "react";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -16,6 +17,7 @@ import {
   useRouter,
   useSearchParams,
 } from "next/navigation";
+
 import { useProgressBar } from "../progress-bar";
 import { Button } from "../buttons";
 
@@ -51,6 +53,7 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
   const { startProgressBar } = useProgressBar();
   const pageKey = `page${suffix ?? ""}`;
   const countKey = `count${suffix ?? ""}`;
+  const paginatorId = useId();
 
   const currentPage =
     overrides?.currentPage ?? getSearchParam(pageKey, searchParams) ?? 1;
@@ -119,9 +122,9 @@ export default function Paginator(props: Readonly<PaginatorProps>) {
         <span>
           Page {currentPage} of {numberOfPages}
         </span>
-        <label htmlFor="items-per-page">Show</label>
+        <label htmlFor={paginatorId}>Show</label>
         <select
-          id="items-per-page"
+          id={paginatorId}
           value={itemsPerPage}
           className="block rounded-lg border bg-gray-50 p-1 text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:text-white/50"
           onChange={handleChange}

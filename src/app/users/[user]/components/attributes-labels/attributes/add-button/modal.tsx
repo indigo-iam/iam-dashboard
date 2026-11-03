@@ -125,7 +125,6 @@ export default function AddAttributeModal(
           <Field>
             <Label>Name</Label>
             <Input
-              id="attr-name"
               title="Attribute Name"
               name="attr-name"
               placeholder="Attribute name"
@@ -143,7 +142,6 @@ export default function AddAttributeModal(
           <Field>
             <Label>Value</Label>
             <Input
-              id="attr-value"
               title="Attribute Value"
               name="attr-value"
               placeholder="Attribute value"

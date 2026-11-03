@@ -36,7 +36,6 @@ testUser(
 
       const input = dialog.getByPlaceholder("Type to search for a group...");
       await expect(input).toBeVisible();
-      await expect(input).toHaveAttribute("list", "search-group-join");
       await input.pressSequentially("Test-001", { delay: 150 });
       const motivation = dialog.getByRole("textbox");
       await motivation.fill("Test motivation message");

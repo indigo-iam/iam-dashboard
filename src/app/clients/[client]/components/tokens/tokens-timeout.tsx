@@ -37,7 +37,6 @@ export function TokensTimeout(props: Readonly<TokensTimeoutProps>) {
           <Label>Access Token timeout (seconds)</Label>
           <Input
             name="access_token_validity_seconds"
-            id="access-token-validity-input"
             type="number"
             defaultValue={accessTokenValiditySeconds}
           />
@@ -46,7 +45,6 @@ export function TokensTimeout(props: Readonly<TokensTimeoutProps>) {
           <Label>ID Token timeout (seconds)</Label>
           <Input
             name="id_token_validity_seconds"
-            id="id-token-validity-input"
             type="number"
             defaultValue={idTokenValiditySeconds}
           />

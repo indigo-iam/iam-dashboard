@@ -4,6 +4,7 @@
 
 "use client";
 
+import { Option, Select } from "@/components/select";
 import { AccountType } from "@/models/scope-policies";
 
 const accountOptions: AccountType[] = ["ALL", "USER", "GROUP"];
@@ -27,16 +28,16 @@ export function AccountGroupSelector(
   }
 
   return (
-    <select
+    <Select
       name="accountType"
       defaultValue={defaultValue}
       onChange={handleChange}
     >
       {accountOptions.map(accountType => (
-        <option key={accountType} value={accountType}>
+        <Option key={accountType} value={accountType}>
           {accountType}
-        </option>
+        </Option>
       ))}
-    </select>
+    </Select>
   );
 }

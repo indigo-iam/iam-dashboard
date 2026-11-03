@@ -23,6 +23,7 @@ import { Button } from "@/components/buttons";
 import { Info } from "@/components/info";
 import ConfirmModal from "@/components/confirm-modal";
 import { Notice } from "@/components/notices";
+import { Option, Select } from "@/components/select";
 import { useToaster } from "@/components/toaster";
 import { addScopePolicy, updateScopePolicy } from "@/services/scope-policies";
 
@@ -216,17 +217,17 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
       <div className="flex gap-5">
         <Field>
           <Label>Rule</Label>
-          <select
+          <Select
             name="rule"
             defaultValue={statePolicy.rule}
             onChange={updateRule}
           >
             {ruleOptions.map(rule => (
-              <option key={rule} value={rule}>
+              <Option key={rule} value={rule}>
                 {rule}
-              </option>
+              </Option>
             ))}
-          </select>
+          </Select>
           <Description>Permit or deny this policy</Description>
         </Field>
         <Field>
@@ -242,17 +243,17 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
               </Info>
             </div>
           </div>
-          <select
+          <Select
             name="matchingPolicy"
             defaultValue={statePolicy.matchingPolicy}
             onChange={updateMatchingPolicy}
           >
             {matchingPolicyOptions.map(mp => (
-              <option key={mp} value={mp}>
+              <Option key={mp} value={mp}>
                 {mp}
-              </option>
+              </Option>
             ))}
-          </select>
+          </Select>
           <Description>Select the right matching policy</Description>
         </Field>
       </div>
@@ -262,14 +263,14 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           defaultValue={defaultAccountType}
           onChange={updateAccountType}
         />
-        <SearchTarget
-          key={accountType}
-          accountType={accountType}
-          initialEntity={initialEntity}
-          onChange={updateEntity}
-        />
         <Description>Select which entity to apply the policy to</Description>
       </Field>
+      <SearchTarget
+        key={accountType}
+        accountType={accountType}
+        initialEntity={initialEntity}
+        onChange={updateEntity}
+      />
       <Field>
         <Label
           data-required={

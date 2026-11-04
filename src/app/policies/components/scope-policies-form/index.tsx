@@ -300,9 +300,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           ref={scopesRef}
         />
         {scopesMissing && (
-          <p className="text-danger py-2 text-sm">
-            Add at least one scope matcher
-          </p>
+          <p className="text-danger text-sm">Add at least one scope matcher</p>
         )}
         <Description>
           Scopes this policy applies to. Required for PATH and REGEXP

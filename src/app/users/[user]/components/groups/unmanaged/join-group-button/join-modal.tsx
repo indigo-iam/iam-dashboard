@@ -68,14 +68,14 @@ type JoinGroupModalProps = {
 export function JoinGroupModal(props: Readonly<JoinGroupModalProps>) {
   const { show, onClose, userName } = props;
   const formRef = useRef<HTMLFormElement>(null);
-  const [selected, setSelected] = useState<Group>();
+  const [selected, setSelected] = useState<Group | null>(null);
   const [motivation, setMotivation] = useState<string>();
   const toast = useToaster();
   const enabled =
     selected && (motivation?.length ?? 0) >= MIN_MOTIVATION_LENGTH;
 
   function unselect() {
-    setSelected(undefined);
+    setSelected(null);
     setMotivation("");
   }
 

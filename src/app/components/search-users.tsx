@@ -79,7 +79,7 @@ export function SearchUsers(props: Readonly<SearchUserProps>) {
           </option>
         ))}
       </datalist>
-      {error && <p className="text-danger py-2 text-sm">{error}</p>}
+      {error && <p className="text-danger text-sm">{error}</p>}
     </Field>
   );
 }

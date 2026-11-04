@@ -19,7 +19,7 @@ type SearchEntityProps = {
   defaultValue?: string;
   accountType: AccountType;
   onAddUser: (user: User | null) => void;
-  onAddGroup: (group: Group) => void;
+  onAddGroup: (group: Group | null) => void;
 };
 
 function SearchEntity(props: Readonly<SearchEntityProps>) {
@@ -54,12 +54,16 @@ export function SearchTarget(props: Readonly<SearchTargetProps>) {
     }
   }
 
-  function addGroup(group: Group) {
-    const entity = {
-      uuid: group.id,
-      name: group.displayName ?? "unknown group",
-    };
-    onChange(entity);
+  function addGroup(group: Group | null) {
+    if (group) {
+      const entity = {
+        uuid: group.id,
+        name: group.displayName ?? "unknown group",
+      };
+      onChange(entity);
+    } else {
+      onChange(null);
+    }
   }
 
   if (accountType === "ALL") {

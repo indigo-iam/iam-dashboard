@@ -2,9 +2,16 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { getSession } from "@/auth";
+import { redirect } from "next/navigation";
+
 import { ScopePoliciesForm } from "../components";
 
-export default function Policies() {
+export default async function Policies() {
+  const session = await getSession();
+  if (!session) {
+    redirect("/signin");
+  }
   return (
     <section>
       <header className="section-header">

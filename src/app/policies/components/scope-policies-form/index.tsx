@@ -21,19 +21,23 @@ import {
 } from "@/models/scope-policies";
 import { Button } from "@/components/buttons";
 import { Info } from "@/components/info";
-import ConfirmModal from "@/components/confirm-modal";
-import { Notice } from "@/components/notices";
 import { Option, Select } from "@/components/select";
 import { useToaster } from "@/components/toaster";
 import { addScopePolicy, updateScopePolicy } from "@/services/scope-policies";
 
-import DeletePolicyModal from "../table/options/delete-policy-modal";
 import { AccountGroupSelector } from "./account-group-selector";
 import { SearchTarget } from "./search-target";
+import {
+  getEntityFromPolicy,
+  comparePolicies,
+  getDefaultAccountType,
+} from "./utils";
+import { DeletePolicyButton } from "./delete-button";
+import { SaveButton } from "./save-button";
 
 const defaultValues: ScopePolicy = {
   id: -1,
-  description: "Default Deny ALL policy",
+  description: "",
   creationTime: undefined,
   lastUpdateTime: undefined,
   rule: "DENY",
@@ -52,49 +56,6 @@ const scopePlaceholders = {
   PATH: "storage.read:/cms",
 };
 
-function getEntityFromPolicy(
-  policy: ScopePolicy
-): { uuid: string; name: string } | null {
-  if (policy.account) {
-    return {
-      uuid: policy.account.uuid,
-      name: policy.account.username ?? "unknown user",
-    };
-  }
-  if (policy.group) {
-    return {
-      uuid: policy.group.uuid,
-      name: policy.group.name ?? "unknown group",
-    };
-  }
-  return null;
-}
-
-function getDefaultAccountType(policy: ScopePolicy): AccountType {
-  if (policy.account === null && policy.group === null) {
-    return "ALL";
-  }
-  if (policy.account !== null && policy.group === null) {
-    return "USER";
-  }
-  if (policy.account === null && policy.group !== null) {
-    return "GROUP";
-  }
-  throw new Error("policy bad formed");
-}
-
-function comparePolicies(a: ScopePolicy, b: ScopePolicy): boolean {
-  return (
-    a.description === b.description &&
-    a.rule === b.rule &&
-    (a.scopes.length === 0 || a.matchingPolicy === b.matchingPolicy) &&
-    (a.account?.uuid ?? null) === (b.account?.uuid ?? null) &&
-    (a.group?.uuid ?? null) === (b.group?.uuid ?? null) &&
-    a.scopes.length === b.scopes.length &&
-    a.scopes.every(scope => b.scopes.includes(scope))
-  );
-}
-
 type ScopePoliciesProps = {
   policy?: ScopePolicy;
 };
@@ -106,8 +67,6 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
   const defaultAccountType = getDefaultAccountType(originalPolicy);
   const [accountType, setAccountType] =
     useState<AccountType>(defaultAccountType);
-  const [showConfirm, setShowConfirm] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
   const scopesRef = useRef<HTMLInputElement>(null);
   const { toast } = useToaster();
 
@@ -216,6 +175,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           type="text"
           name="description"
           title="Description"
+          placeholder="Default Deny ALL policy"
           value={statePolicy.description}
           onChange={updateDescription}
           autoComplete="off"
@@ -307,73 +267,18 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
         </Description>
       </Field>
       <div className="flex justify-between">
-        {isEditing && (
-          <div className="flex justify-end">
-            <Button
-              className="btn-danger"
-              type="button"
-              onClick={() => setShowDelete(true)}
-            >
-              Delete
-            </Button>
-            <DeletePolicyModal
-              show={showDelete}
-              onClose={() => setShowDelete(false)}
-              policy={originalPolicy}
-              onDeleted={() => redirect("/policies")}
-            />
-          </div>
-        )}
+        {isEditing && <DeletePolicyButton policy={statePolicy} />}
         <div className="ml-auto flex justify-end gap-2">
-          <Button className="btn-tertiary" type="button" onClick={reset}>
+          <Button variant="underline" type="button" onClick={reset}>
             Reset
           </Button>
-          <Button
-            type="button"
-            onClick={() => setShowConfirm(true)}
+          <SaveButton
+            policy={statePolicy}
             disabled={!canSubmit}
-          >
-            {isEditing ? "Save changes" : "Add Scope Policy"}
-          </Button>
-          <ConfirmModal
-            show={showConfirm}
-            onClose={() => setShowConfirm(false)}
+            isEditing={isEditing}
+            accountType={accountType}
             onConfirm={handleConfirm}
-            title={isEditing ? "Edit Scope Policy" : "Create Scope Policy"}
-            confirmButtonDisabled={!canSubmit}
-          >
-            <div className="space-y-4">
-              <p>
-                {`Are you sure you want to ${isEditing ? "update" : "add"} this scope policy?`}
-              </p>
-              <Notice>
-                <p>
-                  <b>Description: </b>
-                  {statePolicy.description}
-                </p>
-                <p>
-                  <b>Rule: </b>
-                  {statePolicy.rule}
-                </p>
-                <p>
-                  <b>Matching Policy: </b>
-                  {statePolicy.matchingPolicy}
-                </p>
-                <p>
-                  <b>Target: </b>
-                  {accountType === "ALL"
-                    ? "accounts and groups"
-                    : (getEntityFromPolicy(statePolicy)?.name ?? "-")}
-                </p>
-                <p>
-                  <b>Scopes: </b>
-                  {statePolicy.scopes.length === 0
-                    ? "all"
-                    : statePolicy.scopes.join(" ")}
-                </p>
-              </Notice>
-            </div>
-          </ConfirmModal>
+          />
         </div>
       </div>
     </Form>

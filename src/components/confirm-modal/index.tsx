@@ -11,7 +11,7 @@ import {
   ModalBody,
 } from "@/components/modal";
 
-interface ConfirmModal extends ModalProps {
+export type ConfirmModalProps = ModalProps & {
   title?: string;
   onConfirm?: () => void;
   onCancel?: () => void;
@@ -22,9 +22,9 @@ interface ConfirmModal extends ModalProps {
   autoclose?: boolean;
   danger?: boolean;
   formRef?: React.RefObject<HTMLFormElement | null>;
-}
+};
 
-export default function ConfirmModal(props: Readonly<ConfirmModal>) {
+export default function ConfirmModal(props: Readonly<ConfirmModalProps>) {
   const {
     onConfirm,
     onCancel,

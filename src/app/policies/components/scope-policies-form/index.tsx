@@ -4,7 +4,7 @@
 
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { redirect } from "next/navigation";
 
 import { Form } from "@/components/form";
@@ -108,6 +108,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
     useState<AccountType>(defaultAccountType);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const scopesRef = useRef<HTMLInputElement>(null);
   const { toast } = useToaster();
 
   const initialEntity = useMemo(
@@ -116,15 +117,16 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
   );
 
   const entityIsNull =
-    (accountType === "USER" && statePolicy.account === null) ||
-    (accountType === "GROUP" && statePolicy.group === null);
+    (accountType === "USER" && !statePolicy.account) ||
+    (accountType === "GROUP" && !statePolicy.group);
 
   const policyChanged = !comparePolicies(statePolicy, originalPolicy);
   const scopesMissing =
     (statePolicy.matchingPolicy === "PATH" ||
       statePolicy.matchingPolicy === "REGEXP") &&
     statePolicy.scopes.length === 0;
-  const formDisabled = !policyChanged || entityIsNull || scopesMissing;
+
+  const canSubmit = policyChanged && !entityIsNull && !scopesMissing;
 
   async function handleConfirm() {
     const request: ScopePolicyRequest = {
@@ -194,11 +196,18 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
     setStatePolicy({ ...statePolicy, scopes: items });
   }
 
+  useEffect(() => {
+    if (scopesMissing) {
+      scopesRef.current?.setCustomValidity("Add at least one scope matcher");
+    } else {
+      scopesRef.current?.setCustomValidity("");
+    }
+  }, [scopesMissing]);
+
   // resets only the description until the Select component accepts `value={}`
   function reset() {
     setStatePolicy({ ...statePolicy, description: originalPolicy.description });
   }
-
   return (
     <Form className="panel space-y-4 border-none">
       <Field>
@@ -268,7 +277,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
       <SearchTarget
         key={accountType}
         accountType={accountType}
-        initialEntity={initialEntity}
+        defaultValue={initialEntity}
         onChange={updateEntity}
       />
       <Field>
@@ -287,7 +296,14 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           type="text"
           placeholder={scopePlaceholders[statePolicy.matchingPolicy]}
           onChange={handleScopesChange}
+          required={true}
+          ref={scopesRef}
         />
+        {scopesMissing && (
+          <p className="text-danger py-2 text-sm">
+            Add at least one scope matcher
+          </p>
+        )}
         <Description>
           Scopes this policy applies to. Required for PATH and REGEXP
         </Description>
@@ -315,9 +331,9 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
             Reset
           </Button>
           <Button
-            className="btn-primary"
+            type="button"
             onClick={() => setShowConfirm(true)}
-            disabled={formDisabled}
+            disabled={!canSubmit}
           >
             {isEditing ? "Save changes" : "Add Scope Policy"}
           </Button>
@@ -326,7 +342,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
             onClose={() => setShowConfirm(false)}
             onConfirm={handleConfirm}
             title={isEditing ? "Edit Scope Policy" : "Create Scope Policy"}
-            confirmButtonDisabled={formDisabled}
+            confirmButtonDisabled={!canSubmit}
           >
             <div className="space-y-4">
               <p>

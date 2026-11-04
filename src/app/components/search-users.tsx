@@ -4,7 +4,7 @@
 
 "use client";
 
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
 
 import { Field } from "@/components/field";
 import { Input } from "@/components/inputs";
@@ -14,24 +14,28 @@ import { searchUser } from "@/services/users";
 import { useDeferredCallback } from "@/utils/hooks";
 
 type SearchUserProps = {
-  onSelect: (user: User) => void;
+  onSelect: (user: User | null) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement> | undefined) => void;
+  defaultValue?: string;
 };
 
 export function SearchUsers(props: Readonly<SearchUserProps>) {
-  const { onSelect } = props;
+  const { onSelect, defaultValue } = props;
+  const inputRef = useRef<HTMLInputElement>(null);
   const listId = useId();
   const [searchResult, setSearchResult] = useState<User[]>([]);
+  const [error, setError] = useState("");
+  const [selected, setSelected] = useState<User | null>(null);
+
   const { deferredCallback } = useDeferredCallback();
 
   function handleQueryChange(event: React.ChangeEvent<HTMLInputElement>) {
+    props.onChange?.(event);
     deferredCallback(async () => {
       const query = event.target.value;
       if (query) {
         const result = await searchUser(query);
         setSearchResult(result);
-        if (result.length === 1 && result[0].name?.formatted === query) {
-          onSelect(result[0]);
-        }
       } else {
         setSearchResult([]);
       }
@@ -43,7 +47,17 @@ export function SearchUsers(props: Readonly<SearchUserProps>) {
     for (const result of searchResult) {
       if (result.userName === input.value) {
         onSelect(result);
+        setSelected(result);
+        inputRef.current?.setCustomValidity("");
+        setError("");
+        return;
       }
+    }
+    inputRef.current?.setCustomValidity("User not found.");
+    setError("Please enter a valid user.");
+    if (selected) {
+      onSelect(null);
+      setSelected(null);
     }
   }
 
@@ -52,8 +66,10 @@ export function SearchUsers(props: Readonly<SearchUserProps>) {
       <Label>Search user</Label>
       <Input
         list={listId}
+        ref={inputRef}
         onChange={handleQueryChange}
         onInput={onInput}
+        defaultValue={defaultValue}
         placeholder="Type to search for a user..."
       />
       <datalist id={listId}>
@@ -63,6 +79,7 @@ export function SearchUsers(props: Readonly<SearchUserProps>) {
           </option>
         ))}
       </datalist>
+      {error && <p className="text-danger py-2 text-sm">{error}</p>}
     </Field>
   );
 }

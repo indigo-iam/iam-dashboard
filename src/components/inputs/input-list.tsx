@@ -4,7 +4,7 @@
 
 "use client";
 
-import { useRef, useState } from "react";
+import { RefObject, useRef, useState } from "react";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/16/solid";
 
 import { Input } from "@/components/inputs";
@@ -17,10 +17,20 @@ interface InputListProps {
   placeholder?: string;
   required?: boolean;
   onChange?: (items: string[]) => void;
+  "aria-invalid"?: boolean;
+  ref?: RefObject<HTMLInputElement | null>;
 }
 
 export function InputList(props: Readonly<InputListProps>) {
-  const { originalItems, name, placeholder, type, required, onChange } = props;
+  const {
+    originalItems, //
+    name,
+    placeholder,
+    type,
+    required,
+    onChange,
+    ref,
+  } = props;
   const inputRef = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState("");
   const [items, setItems] = useState(originalItems ?? []);
@@ -89,13 +99,14 @@ export function InputList(props: Readonly<InputListProps>) {
   };
 
   return (
-    <div className="">
+    <div>
       <div className="flex gap-4">
         <Input
           onChange={event => setValue(event.target.value)}
           value={value}
           placeholder={placeholder}
           type={type}
+          ref={ref}
         />
         <Button
           variant="outline"

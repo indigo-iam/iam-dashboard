@@ -20,10 +20,10 @@ type AddOwnerModalProps = {
 
 export function AddOwnerModal(props: Readonly<AddOwnerModalProps>) {
   const { clientId, clientName, ...modalProps } = props;
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User | null>(null);
 
   function clearAndClose() {
-    setUser(undefined);
+    setUser(null);
     modalProps.onClose();
   }
 

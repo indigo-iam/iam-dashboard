@@ -18,7 +18,7 @@ import { Notice } from "@/components/notices";
 type SearchUsersViewProps = {
   groupName: string;
   groupDescription?: string | null;
-  onSelect: (user: User) => void;
+  onSelect: (user: User | null) => void;
 };
 
 function SearchUsersView(props: Readonly<SearchUsersViewProps>) {
@@ -77,8 +77,8 @@ export default function AddMemberModal(props: Readonly<AddMemberModalProps>) {
     ...modalProps
   } = props;
   const { toast } = useToaster();
-  const [user, setUser] = useState<User>();
-  const clear = () => setUser(undefined);
+  const [user, setUser] = useState<User | null>(null);
+  const clear = () => setUser(null);
 
   function clearAndClose() {
     onClose();

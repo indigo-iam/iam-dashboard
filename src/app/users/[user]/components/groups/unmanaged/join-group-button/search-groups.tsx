@@ -13,10 +13,11 @@ import { useDeferredCallback } from "@/utils/hooks";
 
 type SearchGroupProps = {
   onSelect: (group: Group) => void;
+  defaultValue?: string;
 };
 
 export function SearchGroups(props: Readonly<SearchGroupProps>) {
-  const { onSelect } = props;
+  const { onSelect, defaultValue } = props;
   const [query, setQuery] = useState<string>();
   const [searchResult, setSearchResult] = useState<Group[]>([]);
   const { deferredCallback } = useDeferredCallback();
@@ -44,6 +45,7 @@ export function SearchGroups(props: Readonly<SearchGroupProps>) {
         name="search-group"
         list={listId}
         onChange={handleQueryChange}
+        defaultValue={defaultValue}
         placeholder="Type to search for a group..."
         autoComplete="off"
       />

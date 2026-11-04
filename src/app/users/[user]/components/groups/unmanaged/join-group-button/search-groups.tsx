@@ -36,7 +36,7 @@ export function SearchGroups(props: Readonly<SearchGroupProps>) {
         setSearchResult(result);
         if (result.length === 1 && result[0].displayName === group) {
           onSelect(result[0]);
-          setSelected(selected);
+          setSelected(result[0]);
           if (error) {
             setError("");
             inputRef.current?.setCustomValidity("");

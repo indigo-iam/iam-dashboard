@@ -12,6 +12,10 @@ import { ScopePolicy } from "@/models/scope-policies";
 
 import DeletePolicyModal from "../../table/options/delete-policy-modal";
 
+function redirectToPolicies() {
+  redirect("/policies");
+}
+
 type DeletePolicyButtonProps = {
   policy: ScopePolicy;
 };
@@ -21,9 +25,6 @@ export function DeletePolicyButton(props: Readonly<DeletePolicyButtonProps>) {
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
-  function redirectToPolicies() {
-    redirect("/policies");
-  }
   return (
     <>
       <Button accent="danger" type="button" onClick={open}>

@@ -2,13 +2,14 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { useState } from "react";
+
 import { Button } from "@/components/buttons";
 import ConfirmModal, { ConfirmModalProps } from "@/components/confirm-modal";
 import { Notice } from "@/components/notices";
 import { AccountType, ScopePolicy } from "@/models/scope-policies";
 
 import { getEntityFromPolicy } from "../utils";
-import { useState } from "react";
 
 type ScopePolicyConfirmModal = ConfirmModalProps & {
   policy: ScopePolicy;

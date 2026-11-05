@@ -13,7 +13,7 @@ export default function Contacts(props: Readonly<ContactsProps>) {
   return (
     <InputList
       name="contacts"
-      originalItems={contacts ?? []}
+      defaultValue={contacts}
       type="email"
       placeholder="admin@example.com"
     />

@@ -4,7 +4,7 @@
 
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { redirect } from "next/navigation";
 
 import { Form } from "@/components/form";
@@ -67,7 +67,6 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
   const defaultAccountType = getDefaultAccountType(originalPolicy);
   const [accountType, setAccountType] =
     useState<AccountType>(defaultAccountType);
-  const scopesRef = useRef<HTMLInputElement>(null);
   const { toast } = useToaster();
 
   const initialEntity = useMemo(
@@ -80,10 +79,10 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
     (accountType === "GROUP" && !statePolicy.group);
 
   const policyChanged = !comparePolicies(statePolicy, originalPolicy);
-  const scopesMissing =
-    (statePolicy.matchingPolicy === "PATH" ||
-      statePolicy.matchingPolicy === "REGEXP") &&
-    statePolicy.scopes.length === 0;
+  const scopesRequired =
+    statePolicy.matchingPolicy === "PATH" ||
+    statePolicy.matchingPolicy === "REGEXP";
+  const scopesMissing = scopesRequired && statePolicy.scopes.length === 0;
 
   const canSubmit = policyChanged && !entityIsNull && !scopesMissing;
 
@@ -128,7 +127,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
     ) {
       throw new Error(`PolicyMatcher '${matchingPolicy} is not valid`);
     }
-    setStatePolicy({ ...statePolicy, matchingPolicy });
+    setStatePolicy({ ...statePolicy, matchingPolicy, scopes: [] });
   }
 
   function updateAccountType(value: AccountType) {
@@ -155,20 +154,13 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
     setStatePolicy({ ...statePolicy, scopes: items });
   }
 
-  useEffect(() => {
-    if (scopesMissing) {
-      scopesRef.current?.setCustomValidity("Add at least one scope matcher");
-    } else {
-      scopesRef.current?.setCustomValidity("");
-    }
-  }, [scopesMissing]);
-
-  // resets only the description until the Select component accepts `value={}`
   function reset() {
-    setStatePolicy({ ...statePolicy, description: originalPolicy.description });
+    setStatePolicy(originalPolicy);
+    setAccountType(getDefaultAccountType(originalPolicy));
   }
+
   return (
-    <Form className="panel space-y-4 border-none">
+    <Form className="panel space-y-4 border-none" onReset={reset}>
       <Field>
         <Label data-required>Policy name</Label>
         <Input
@@ -201,7 +193,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
         </Field>
         <Field>
           <div className="flex items-center gap-1">
-            <Label>Matching Policy</Label>
+            <Label>Matching policy</Label>
             <div>
               <Info>
                 EQ: exact string match
@@ -232,7 +224,9 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           defaultValue={defaultAccountType}
           onChange={updateAccountType}
         />
-        <Description>Select which entity to apply the policy to</Description>
+        <Description>
+          Select which target to apply the policy to: User, Group, or both.
+        </Description>
       </Field>
       <SearchTarget
         key={accountType}
@@ -241,35 +235,23 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
         onChange={updateEntity}
       />
       <Field>
-        <Label
-          data-required={
-            statePolicy.matchingPolicy === "PATH" ||
-            statePolicy.matchingPolicy === "REGEXP" ||
-            undefined
-          }
-        >
-          Scopes
-        </Label>
+        <Label>Scope matchers</Label>
         <InputList
-          originalItems={originalPolicy.scopes}
+          value={statePolicy.scopes}
           name="scopes"
           type="text"
           placeholder={scopePlaceholders[statePolicy.matchingPolicy]}
+          required={scopesRequired}
           onChange={handleScopesChange}
-          required={true}
-          ref={scopesRef}
         />
-        {scopesMissing && (
-          <p className="text-danger text-sm">Add at least one scope matcher</p>
-        )}
         <Description>
-          Scopes this policy applies to. Required for PATH and REGEXP
+          Scope matchers this policy applies to. Required for PATH and REGEXP.
         </Description>
       </Field>
       <div className="flex justify-between">
         {isEditing && <DeletePolicyButton policy={statePolicy} />}
         <div className="ml-auto flex justify-end gap-2">
-          <Button variant="underline" type="button" onClick={reset}>
+          <Button variant="underline" type="reset">
             Reset
           </Button>
           <SaveButton

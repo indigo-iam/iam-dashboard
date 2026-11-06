@@ -20,15 +20,28 @@ type SearchEntityProps = {
   accountType: AccountType;
   onAddUser: (user: User | null) => void;
   onAddGroup: (group: Group | null) => void;
+  disabled?: boolean;
 };
 
 function SearchEntity(props: Readonly<SearchEntityProps>) {
-  const { defaultValue, accountType, onAddUser, onAddGroup } = props;
+  const { defaultValue, accountType, onAddUser, onAddGroup, disabled } = props;
   if (accountType === "USER") {
-    return <SearchUsers defaultValue={defaultValue} onSelect={onAddUser} />;
+    return (
+      <SearchUsers
+        defaultValue={defaultValue}
+        onSelect={onAddUser}
+        disabled={disabled}
+      />
+    );
   }
   if (accountType === "GROUP") {
-    return <SearchGroups defaultValue={defaultValue} onSelect={onAddGroup} />;
+    return (
+      <SearchGroups
+        defaultValue={defaultValue}
+        onSelect={onAddGroup}
+        disabled={disabled}
+      />
+    );
   }
   return null;
 }
@@ -37,10 +50,11 @@ type SearchTargetProps = {
   accountType: AccountType;
   defaultValue: Entity | null;
   onChange: (entity: Entity | null) => void;
+  disabled?: boolean;
 };
 
 export function SearchTarget(props: Readonly<SearchTargetProps>) {
-  const { accountType, defaultValue, onChange } = props;
+  const { accountType, defaultValue, onChange, disabled } = props;
 
   function addUser(user: User | null) {
     if (user) {
@@ -76,6 +90,7 @@ export function SearchTarget(props: Readonly<SearchTargetProps>) {
       accountType={accountType}
       onAddUser={addUser}
       onAddGroup={addGroup}
+      disabled={disabled}
     />
   );
 }

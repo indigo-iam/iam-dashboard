@@ -17,10 +17,11 @@ type SearchUserProps = {
   onSelect: (user: User | null) => void;
   onChange?: (event: React.ChangeEvent<HTMLInputElement> | undefined) => void;
   defaultValue?: string;
+  disabled?: boolean;
 };
 
 export function SearchUsers(props: Readonly<SearchUserProps>) {
-  const { onSelect, defaultValue } = props;
+  const { onSelect, defaultValue, disabled } = props;
   const inputRef = useRef<HTMLInputElement>(null);
   const listId = useId();
   const [searchResult, setSearchResult] = useState<User[]>([]);
@@ -71,6 +72,7 @@ export function SearchUsers(props: Readonly<SearchUserProps>) {
         onInput={onInput}
         defaultValue={defaultValue}
         placeholder="Type to search for a user..."
+        disabled={disabled}
       />
       <datalist id={listId}>
         {searchResult.map(user => (

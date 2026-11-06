@@ -12,12 +12,13 @@ const accountOptions: AccountType[] = ["ALL", "USER", "GROUP"];
 type AccountGroupSelectorProps = {
   defaultValue: AccountType;
   onChange: (accountType: AccountType) => void;
+  disabled?: boolean;
 };
 
 export function AccountGroupSelector(
   props: Readonly<AccountGroupSelectorProps>
 ) {
-  const { defaultValue, onChange } = props;
+  const { defaultValue, onChange, disabled } = props;
 
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const selected = event.currentTarget.value;
@@ -32,6 +33,7 @@ export function AccountGroupSelector(
       name="accountType"
       defaultValue={defaultValue}
       onChange={handleChange}
+      disabled={disabled}
     >
       {accountOptions.map(accountType => (
         <Option key={accountType} value={accountType}>

@@ -16,10 +16,11 @@ import { Label } from "@/components/label";
 type SearchGroupProps = {
   onSelect: (group: Group | null) => void;
   defaultValue?: string;
+  disabled?: boolean;
 };
 
 export function SearchGroups(props: Readonly<SearchGroupProps>) {
-  const { onSelect, defaultValue } = props;
+  const { onSelect, defaultValue, disabled } = props;
   const [query, setQuery] = useState<string>();
   const [searchResult, setSearchResult] = useState<Group[]>([]);
   const [selected, setSelected] = useState<Group | null>(null);
@@ -85,6 +86,7 @@ export function SearchGroups(props: Readonly<SearchGroupProps>) {
         placeholder="Type to search for a group..."
         autoComplete="off"
         ref={inputRef}
+        disabled={disabled}
       />
       <datalist id={listId}>
         {searchResult.map(group => (

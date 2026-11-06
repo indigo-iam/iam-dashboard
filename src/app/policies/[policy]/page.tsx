@@ -2,17 +2,23 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { redirect } from "next/navigation";
+import { redirect, notFound } from "next/navigation";
 
 import { getSession, isUserAdmin } from "@/auth";
+import { settings } from "@/config";
 import { fetchScopePolicy } from "@/services/scope-policies";
 import { ScopePoliciesForm } from "../components";
+
+const { IAM_DASHBOARD_SCOPE_POLICY_MODE } = settings;
 
 type PolicyPageProps = {
   params: Promise<{ policy: number }>;
 };
 
 export default async function PolicyPage(props: Readonly<PolicyPageProps>) {
+  if (IAM_DASHBOARD_SCOPE_POLICY_MODE === undefined) {
+    return notFound();
+  }
   const session = await getSession();
   if (!session) {
     redirect("/signin");
@@ -32,7 +38,10 @@ export default async function PolicyPage(props: Readonly<PolicyPageProps>) {
       <div className="container">
         <div className="panel space-y-4">
           <h2>{policy.description}</h2>
-          <ScopePoliciesForm policy={policy} />
+          <ScopePoliciesForm
+            policy={policy}
+            readWrite={IAM_DASHBOARD_SCOPE_POLICY_MODE === "readwrite"}
+          />
         </div>
       </div>
     </section>

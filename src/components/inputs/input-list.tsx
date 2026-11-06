@@ -18,6 +18,7 @@ type InputListProps = {
   placeholder?: string;
   required?: boolean;
   onChange?: (items: string[]) => void;
+  disabled?: boolean;
 };
 
 export function InputList(props: Readonly<InputListProps>) {
@@ -29,6 +30,7 @@ export function InputList(props: Readonly<InputListProps>) {
     required,
     type,
     onChange,
+    disabled,
   } = props;
   const [inputValue, setInputValue] = useState("");
   const [innerValue, setInnerValue] = useState(defaultValue ?? []);
@@ -71,6 +73,7 @@ export function InputList(props: Readonly<InputListProps>) {
         type="button"
         onClick={() => removeItem(index)}
         className="bg-secondary-100 hover:bg-danger dark:bg-secondary/60 dark:text-danger/80 w-5 rounded hover:text-white"
+        disabled={disabled}
       >
         <XMarkIcon />
       </button>
@@ -80,6 +83,7 @@ export function InputList(props: Readonly<InputListProps>) {
         name={name}
         required={required}
         readOnly
+        disabled={disabled}
       />
     </li>
   ));
@@ -113,12 +117,13 @@ export function InputList(props: Readonly<InputListProps>) {
           placeholder={placeholder}
           type={type}
           required={required && items.length === 0}
+          disabled={disabled}
         />
         <Button
           variant="outline"
           type="button"
           onClick={handleClick}
-          disabled={inputValue.length === 0}
+          disabled={disabled || inputValue.length === 0}
         >
           <PlusIcon className="size-5" />
           Add

@@ -20,6 +20,12 @@ function loadEnvVariable(key: string, defaultValue?: string) {
   throw new Error(`${key} environment variable not set`);
 }
 
+function loadOptionalEnvVariable(key: string) {
+  if (process.env[key]) {
+    return process.env[key];
+  }
+}
+
 function loadOptionalUrlFromEnv(key: string) {
   const url = process.env[key];
   // if a url is provided, validate it
@@ -91,6 +97,17 @@ function loadSupportUrl() {
   return loadOptionalUrlFromEnv(key);
 }
 
+function loadScopePoliciesMode(): "readonly" | "readwrite" | undefined {
+  const key = "IAM_DASHBOARD_SCOPE_POLICY_MODE";
+  const value = loadOptionalEnvVariable(key);
+  if (value !== undefined && value !== "readonly" && value !== "readwrite") {
+    throw new Error(
+      `value '${value}' not supported for variable '${key}: supported values are 'readonly' and 'readwrite'.`
+    );
+  }
+  return value;
+}
+
 export const settings = {
   IAM_API_URL: loadApiUrl(),
   IAM_DASHBOARD_APP_VERSION: loadAppVersion(),
@@ -105,4 +122,5 @@ export const settings = {
   IAM_DASHBOARD_ORGANIZATION_NAME: loadOrganizationName(),
   IAM_DASHBOARD_POLICY_URL: loadPolicyUrl(),
   IAM_DASHBOARD_SUPPORT_URL: loadSupportUrl(),
+  IAM_DASHBOARD_SCOPE_POLICY_MODE: loadScopePoliciesMode(),
 };

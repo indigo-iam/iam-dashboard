@@ -2,12 +2,19 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { notFound, redirect } from "next/navigation";
+
 import { getSession } from "@/auth";
-import { redirect } from "next/navigation";
+import { settings } from "@/config";
 
 import { ScopePoliciesForm } from "../components";
 
+const { IAM_DASHBOARD_SCOPE_POLICY_MODE } = settings;
+
 export default async function Policies() {
+  if (IAM_DASHBOARD_SCOPE_POLICY_MODE !== "readwrite") {
+    return notFound();
+  }
   const session = await getSession();
   if (!session) {
     redirect("/signin");

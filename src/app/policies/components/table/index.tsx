@@ -6,12 +6,13 @@ import Link from "@/components/link";
 import { ScopePolicy } from "@/models/scope-policies";
 import PolicyOptions from "./options";
 
-type PoliciesTableProps = {
-  policies: ScopePolicy[];
+type RowProps = {
+  policy: ScopePolicy;
+  readWrite?: boolean;
 };
 
-function Row(props: Readonly<{ policy: ScopePolicy }>) {
-  const { policy } = props;
+function Row(props: Readonly<RowProps>) {
+  const { policy, readWrite } = props;
   const scopes = policy.scopes ? policy.scopes.join(" ") : "";
   return (
     <li className="iam-list-item">
@@ -22,10 +23,14 @@ function Row(props: Readonly<{ policy: ScopePolicy }>) {
         {policy.description}
         <p className="truncate text-sm font-light italic">{scopes}</p>
       </Link>
-      <PolicyOptions policy={policy} />
+      {readWrite && <PolicyOptions policy={policy} />}
     </li>
   );
 }
+
+type PoliciesTableProps = {
+  policies: ScopePolicy[];
+};
 
 export default function PoliciesTable(props: Readonly<PoliciesTableProps>) {
   const { policies } = props;

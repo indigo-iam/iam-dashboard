@@ -2,13 +2,24 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { getSession, isUserAdmin } from "@/auth";
-import { fetchScopePolicies } from "@/services/scope-policies";
-import { AddPolicyButton, PoliciesTable } from "./components";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { ScaleIcon } from "@heroicons/react/24/solid";
 
+import { getSession, isUserAdmin } from "@/auth";
+import { settings } from "@/config";
+import { fetchScopePolicies } from "@/services/scope-policies";
+
+import { AddPolicyButton, PoliciesTable } from "./components";
+
+const { IAM_DASHBOARD_SCOPE_POLICY_MODE } = settings;
+
 export default async function Policies() {
+  if (
+    IAM_DASHBOARD_SCOPE_POLICY_MODE !== "readonly" &&
+    IAM_DASHBOARD_SCOPE_POLICY_MODE !== "readwrite"
+  ) {
+    return notFound();
+  }
   const session = await getSession();
   if (!session) {
     redirect("/signin");
@@ -25,7 +36,7 @@ export default async function Policies() {
           <ScaleIcon className="size-5" />
           <h2 className="text-base font-normal">Scope Policies</h2>
         </div>
-        <AddPolicyButton />
+        {IAM_DASHBOARD_SCOPE_POLICY_MODE === "readwrite" && <AddPolicyButton />}
       </header>
       <div className="container space-y-4">
         <div className="panel">

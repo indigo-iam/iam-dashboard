@@ -58,9 +58,11 @@ const scopePlaceholders = {
 
 type ScopePoliciesProps = {
   policy?: ScopePolicy;
+  readWrite?: boolean;
 };
 
 export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
+  const { readWrite } = props;
   const originalPolicy = props.policy ?? defaultValues;
   const isEditing = props.policy !== undefined;
   const [statePolicy, setStatePolicy] = useState(originalPolicy);
@@ -170,6 +172,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           placeholder="Default Deny ALL policy"
           value={statePolicy.description}
           onChange={updateDescription}
+          disabled={!readWrite}
           autoComplete="off"
           required
         />
@@ -182,6 +185,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
             name="rule"
             defaultValue={statePolicy.rule}
             onChange={updateRule}
+            disabled={!readWrite}
           >
             {ruleOptions.map(rule => (
               <Option key={rule} value={rule}>
@@ -208,6 +212,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
             name="matchingPolicy"
             defaultValue={statePolicy.matchingPolicy}
             onChange={updateMatchingPolicy}
+            disabled={!readWrite}
           >
             {matchingPolicyOptions.map(mp => (
               <Option key={mp} value={mp}>
@@ -223,6 +228,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
         <AccountGroupSelector
           defaultValue={defaultAccountType}
           onChange={updateAccountType}
+          disabled={!readWrite}
         />
         <Description>
           Select which target to apply the policy to: User, Group, or both.
@@ -233,6 +239,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
         accountType={accountType}
         defaultValue={initialEntity}
         onChange={updateEntity}
+        disabled={!readWrite}
       />
       <Field>
         <Label>Scope matchers</Label>
@@ -243,26 +250,29 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           placeholder={scopePlaceholders[statePolicy.matchingPolicy]}
           required={scopesRequired}
           onChange={handleScopesChange}
+          disabled={!readWrite}
         />
         <Description>
           Scope matchers this policy applies to. Required for PATH and REGEXP.
         </Description>
       </Field>
-      <div className="flex justify-between">
-        {isEditing && <DeletePolicyButton policy={statePolicy} />}
-        <div className="ml-auto flex justify-end gap-2">
-          <Button variant="underline" type="reset">
-            Reset
-          </Button>
-          <SaveButton
-            policy={statePolicy}
-            disabled={!canSubmit}
-            isEditing={isEditing}
-            accountType={accountType}
-            onConfirm={handleConfirm}
-          />
+      {readWrite && (
+        <div className="flex justify-between">
+          {isEditing && <DeletePolicyButton policy={statePolicy} />}
+          <div className="ml-auto flex justify-end gap-2">
+            <Button variant="underline" type="reset">
+              Reset
+            </Button>
+            <SaveButton
+              policy={statePolicy}
+              disabled={!canSubmit}
+              isEditing={isEditing}
+              accountType={accountType}
+              onConfirm={handleConfirm}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </Form>
   );
 }

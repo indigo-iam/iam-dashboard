@@ -13,6 +13,7 @@ import {
   UserGroupIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
+import { ScaleIcon } from "@heroicons/react/16/solid";
 
 import { Drawer, Link } from "@/components/drawer";
 import NextLink from "next/link";
@@ -23,6 +24,7 @@ const {
   IAM_DASHBOARD_APP_VERSION,
   IAM_DASHBOARD_POLICY_URL,
   IAM_DASHBOARD_SUPPORT_URL,
+  IAM_DASHBOARD_SCOPE_POLICY_MODE,
 } = settings;
 
 type LinksProps = {
@@ -53,6 +55,11 @@ function Links(props: Readonly<LinksProps>) {
         <Link title="Scopes" href="/scopes">
           <ClipboardDocumentCheckIcon className="size-5" />
         </Link>
+        {IAM_DASHBOARD_SCOPE_POLICY_MODE !== undefined && (
+          <Link title="Policies" href="/policies">
+            <ScaleIcon className="size-5" />
+          </Link>
+        )}
         <Link title="AUP" href="/aup">
           <DocumentTextIcon className="size-5" />
         </Link>

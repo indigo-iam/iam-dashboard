@@ -31,7 +31,7 @@ export default function AuthorizationCode(
     <Field>
       <Label>Redirect URIs</Label>
       <InputList
-        originalItems={redirectUris}
+        defaultValue={redirectUris}
         name="redirect_uris"
         type="url"
         placeholder="https://app.example.com/callback"

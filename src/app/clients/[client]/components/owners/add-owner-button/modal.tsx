@@ -20,10 +20,10 @@ type AddOwnerModalProps = {
 
 export function AddOwnerModal(props: Readonly<AddOwnerModalProps>) {
   const { clientId, clientName, ...modalProps } = props;
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User | null>(null);
 
   function clearAndClose() {
-    setUser(undefined);
+    setUser(null);
     modalProps.onClose();
   }
 
@@ -57,7 +57,7 @@ export function AddOwnerModal(props: Readonly<AddOwnerModalProps>) {
               Type to search for a user to be owner of client{" "}
               <b>{clientName}</b>
             </p>
-            <SearchUsers listId="search-list-owner" onSelect={setUser} />
+            <SearchUsers onSelect={setUser} />
           </div>
         )}
       </ModalBody>

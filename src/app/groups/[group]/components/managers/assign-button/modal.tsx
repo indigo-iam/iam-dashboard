@@ -18,7 +18,7 @@ import { Notice } from "@/components/notices";
 type SearchUserViewProps = {
   groupName: string;
   groupDescription?: string | null;
-  onSelect: (user: User) => void;
+  onSelect: (user: User | null) => void;
 };
 
 function SearchUserView(props: Readonly<SearchUserViewProps>) {
@@ -32,7 +32,7 @@ function SearchUserView(props: Readonly<SearchUserViewProps>) {
         </p>
         {groupDescription && <p> {groupDescription}</p>}
       </Notice>
-      <SearchUsers listId="search-list-managers" onSelect={onSelect} />
+      <SearchUsers onSelect={onSelect} />
     </div>
   );
 }
@@ -89,8 +89,8 @@ export default function AssignGroupManagerModal(
     ...modalProps
   } = props;
   const { toast } = useToaster();
-  const [user, setUser] = useState<User>();
-  const clear = () => setUser(undefined);
+  const [user, setUser] = useState<User | null>(null);
+  const clear = () => setUser(null);
 
   const clearAndClose = () => {
     setTimeout(clear, 500);

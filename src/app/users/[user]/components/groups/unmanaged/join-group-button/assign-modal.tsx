@@ -27,12 +27,12 @@ export function AssignUserToGroupModal(
   props: Readonly<AssignUserToGroupModalProps>
 ) {
   const { userId, userFormattedName, userEmail, show, onClose } = props;
-  const [selected, setSelected] = useState<Group>();
+  const [selected, setSelected] = useState<Group | null>(null);
   const { toast } = useToaster();
   const disabled = selected === undefined;
 
   function unselect() {
-    setSelected(undefined);
+    setSelected(null);
   }
 
   function close() {

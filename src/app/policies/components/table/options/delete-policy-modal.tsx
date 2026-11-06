@@ -2,21 +2,37 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+"use client";
+
 import ConfirmModal from "@/components/confirm-modal";
+import { Notice, Warning } from "@/components/notices";
+import { useToaster } from "@/components/toaster";
 import { ScopePolicy } from "@/models/scope-policies";
+import { deleteScopePolicy } from "@/services/scope-policies";
 
 type DeletePolicyModal = {
   show: boolean;
   onClose: () => void;
   policy: ScopePolicy;
+  onDeleted?: () => void;
 };
 
 export default function DeletePolicyModal(props: Readonly<DeletePolicyModal>) {
-  const { show, onClose, policy } = props;
-  const handleConfirm = () => {
-    console.log("TODO");
-    onClose();
-  };
+  const { show, onClose, policy, onDeleted } = props;
+  const { toast } = useToaster();
+
+  async function handleConfirm() {
+    const response = await deleteScopePolicy(policy.id);
+    const success = response.type === "success";
+    if (success) {
+      response.description = `Policy "${policy.description}" has been deleted`;
+    }
+    toast(response);
+    if (success) {
+      onDeleted?.();
+    }
+  }
+
   return (
     <ConfirmModal
       show={show}
@@ -26,7 +42,21 @@ export default function DeletePolicyModal(props: Readonly<DeletePolicyModal>) {
       onConfirm={handleConfirm}
       danger={true}
     >
-      Are you sure you want to delete policy <b>{policy.description}</b>?
+      <p>Are you sure you want to delete the following policy?</p>
+      <Notice>
+        <p>
+          <b>{policy.description}</b>
+        </p>
+      </Notice>
+      <Warning>
+        <p>
+          Deleting this policy will permanently remove it from the organization.
+          User/Group it applies to may gain more access than intended.
+        </p>
+        <p>
+          <b>This action cannot be undone.</b>
+        </p>
+      </Warning>
     </ConfirmModal>
   );
 }

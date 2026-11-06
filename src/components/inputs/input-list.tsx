@@ -10,23 +10,36 @@ import { PlusIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import { Input } from "@/components/inputs";
 import { Button } from "@/components/buttons";
 
-interface InputListProps {
-  originalItems: string[];
+type InputListProps = {
+  value?: string[];
+  defaultValue?: string[];
   name?: string;
   type?: string;
   placeholder?: string;
   required?: boolean;
   onChange?: (items: string[]) => void;
-}
+  disabled?: boolean;
+};
 
 export function InputList(props: Readonly<InputListProps>) {
-  const { originalItems, name, placeholder, type, required, onChange } = props;
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [value, setValue] = useState("");
-  const [items, setItems] = useState(originalItems ?? []);
+  const {
+    value, //
+    defaultValue,
+    name,
+    placeholder,
+    required,
+    type,
+    onChange,
+    disabled,
+  } = props;
+  const [inputValue, setInputValue] = useState("");
+  const [innerValue, setInnerValue] = useState(defaultValue ?? []);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const isControlled = value !== undefined;
+  const items = isControlled ? value : innerValue;
 
-  const addItem = (item: string) => {
+  function addItem(item: string) {
     const { value, error } = sanitizeValue(item);
     if (error) {
       setErrorMessage(error);
@@ -35,19 +48,24 @@ export function InputList(props: Readonly<InputListProps>) {
     if (!items.includes(value)) {
       const newItems = [...items, value];
       onChange?.(newItems);
-      setItems(newItems);
+      if (!isControlled) {
+        setInnerValue(newItems);
+      }
       if (errorMessage) {
         setErrorMessage(null);
       }
     } else {
       console.warn("item already present");
     }
-  };
-  const removeItem = (index: number) => {
+  }
+
+  function removeItem(index: number) {
     const newItems = items.toSpliced(index, 1);
+    if (!isControlled) {
+      setInnerValue(newItems);
+    }
     onChange?.(newItems);
-    setItems(newItems);
-  };
+  }
 
   const listItems = items.map((item, index) => (
     <li key={item} className="mt-1 flex flex-row items-center gap-2">
@@ -55,6 +73,7 @@ export function InputList(props: Readonly<InputListProps>) {
         type="button"
         onClick={() => removeItem(index)}
         className="bg-secondary-100 hover:bg-danger dark:bg-secondary/60 dark:text-danger/80 w-5 rounded hover:text-white"
+        disabled={disabled}
       >
         <XMarkIcon />
       </button>
@@ -62,13 +81,14 @@ export function InputList(props: Readonly<InputListProps>) {
         className="flex grow text-sm"
         defaultValue={item}
         name={name}
-        contentEditable={false}
         required={required}
+        readOnly
+        disabled={disabled}
       />
     </li>
   ));
 
-  const sanitizeValue = (value: string) => {
+  function sanitizeValue(value: string) {
     if (type == "url") {
       try {
         new URL(value);
@@ -78,30 +98,32 @@ export function InputList(props: Readonly<InputListProps>) {
       }
     }
     return { value };
-  };
+  }
 
-  const handleClick = () => {
-    addItem(value);
-    setValue("");
+  function handleClick() {
+    addItem(inputValue);
+    setInputValue("");
     if (inputRef.current) {
       inputRef.current.value = "";
     }
-  };
+  }
 
   return (
-    <div className="">
+    <>
       <div className="flex gap-4">
         <Input
-          onChange={event => setValue(event.target.value)}
-          value={value}
+          ref={inputRef}
+          onChange={event => setInputValue(event.target.value)}
           placeholder={placeholder}
           type={type}
+          required={required && items.length === 0}
+          disabled={disabled}
         />
         <Button
           variant="outline"
           type="button"
           onClick={handleClick}
-          disabled={value.length === 0}
+          disabled={disabled || inputValue.length === 0}
         >
           <PlusIcon className="size-5" />
           Add
@@ -111,6 +133,6 @@ export function InputList(props: Readonly<InputListProps>) {
         <small className="text-danger">{errorMessage}</small>
       ) : null}
       <ul className="mt-2">{listItems}</ul>
-    </div>
+    </>
   );
 }

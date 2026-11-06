@@ -6,15 +6,16 @@ import Link from "@/components/link";
 import { ScopePolicy } from "@/models/scope-policies";
 import PolicyOptions from "./options";
 
-type PoliciesTableProps = {
-  policies: ScopePolicy[];
+type RowProps = {
+  policy: ScopePolicy;
+  readWrite?: boolean;
 };
 
-function Row(props: Readonly<{ policy: ScopePolicy }>) {
-  const { policy } = props;
+function Row(props: Readonly<RowProps>) {
+  const { policy, readWrite } = props;
   const scopes = policy.scopes ? policy.scopes.join(" ") : "";
   return (
-    <div className="iam-list-item">
+    <li className="iam-list-item">
       <Link
         className="flex grow flex-col text-gray-950 dark:text-gray-200"
         href={`/policies/${policy.id}`}
@@ -22,18 +23,22 @@ function Row(props: Readonly<{ policy: ScopePolicy }>) {
         {policy.description}
         <p className="truncate text-sm font-light italic">{scopes}</p>
       </Link>
-      <PolicyOptions policy={policy} />
-    </div>
+      {readWrite && <PolicyOptions policy={policy} />}
+    </li>
   );
 }
+
+type PoliciesTableProps = {
+  policies: ScopePolicy[];
+};
 
 export default function PoliciesTable(props: Readonly<PoliciesTableProps>) {
   const { policies } = props;
   return (
-    <div className="overflow-x-auto">
+    <ul className="overflow-x-auto">
       {policies.map(policy => (
         <Row key={policy.id} policy={policy} />
       ))}
-    </div>
+    </ul>
   );
 }

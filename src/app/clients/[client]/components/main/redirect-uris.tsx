@@ -14,7 +14,7 @@ export default function RedirectUris(props: Readonly<RedirectUrisProps>) {
     <InputList
       name="redirect_uris"
       placeholder="http://example.com"
-      originalItems={redirect_uris ?? []}
+      defaultValue={redirect_uris}
       type="url"
     />
   );

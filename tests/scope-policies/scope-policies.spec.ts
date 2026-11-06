@@ -30,10 +30,7 @@ test.afterEach("delete policy", async ({ signedUpPage }, testInfo) => {
   const page = signedUpPage;
   await page.goto("./policies");
   const policyName = `scope-policy-${testInfo.testId}`;
-  const href = page.getByRole("link", { name: policyName });
-  await expect(href).toBeVisible();
-  await href.click();
-  await page.waitForURL("./policies/*");
+  await navigateToPolicy(page, policyName);
   await expect(page.getByLabel("Policy name")).toHaveValue(policyName);
   const deleteBtn = page.getByRole("button", { name: "Delete" });
   await expect(deleteBtn).toBeEnabled();
@@ -48,6 +45,30 @@ test.afterEach("delete policy", async ({ signedUpPage }, testInfo) => {
   await dismissToast(page, "Scope policy deleted", "success");
   await page.waitForURL("./policies");
 });
+
+async function selectTarget(
+  page: Page,
+  label: string,
+  target: "USER" | "GROUP" | "ALL"
+) {
+  const searchUser = page.getByLabel(label);
+  await expect(searchUser).toBeHidden();
+  const select = page.getByLabel("Target");
+  await expect(select).toBeEnabled();
+  await select.selectOption(target);
+  await expect(searchUser).toBeVisible();
+  const addBtn = page.getByRole("button", { name: "Add Scope Policy" });
+  await expect(addBtn).toBeDisabled();
+  await searchUser.pressSequentially("test", { delay: 250 });
+  await expect(addBtn).toBeEnabled();
+}
+
+async function navigateToPolicy(page: Page, policyName: string) {
+  const href = page.getByRole("link", { name: policyName });
+  await expect(href).toBeVisible();
+  await href.click();
+  await page.waitForURL("./policies/*");
+}
 
 async function savePolicy(page: Page) {
   const addBtn = page.getByRole("button", { name: "Add Scope Policy" });
@@ -116,16 +137,7 @@ test("regexp policy", async ({ signedUpPage }, testInfo) => {
   });
 
   await test.step("select user target", async () => {
-    const searchUser = page.getByLabel("Search user");
-    await expect(searchUser).toBeHidden();
-    const target = page.getByLabel("Target");
-    await expect(target).toBeEnabled();
-    await target.selectOption("USER");
-    await expect(searchUser).toBeVisible();
-    const addBtn = page.getByRole("button", { name: "Add Scope Policy" });
-    await expect(addBtn).toBeDisabled();
-    await searchUser.pressSequentially("test", { delay: 250 });
-    await expect(addBtn).toBeEnabled();
+    await selectTarget(page, "Search user", "USER");
   });
 
   await test.step("save policy", async () => {
@@ -135,10 +147,7 @@ test("regexp policy", async ({ signedUpPage }, testInfo) => {
   await test.step("verify policy", async () => {
     const page = signedUpPage;
     const policyName = `scope-policy-${testInfo.testId}`;
-    const href = page.getByRole("link", { name: policyName });
-    await expect(href).toBeVisible();
-    await href.click();
-    await page.waitForURL("./policies/*");
+    navigateToPolicy(page, policyName);
     await expect(page.getByLabel("Rule")).toHaveValue("DENY");
     await expect(page.getByLabel("Matching policy")).toHaveValue("REGEXP");
     await expect(
@@ -203,10 +212,7 @@ test("path policy", async ({ signedUpPage }, testInfo) => {
   await test.step("verify policy", async () => {
     const page = signedUpPage;
     const policyName = `scope-policy-${testInfo.testId}`;
-    const href = page.getByRole("link", { name: policyName });
-    await expect(href).toBeVisible();
-    await href.click();
-    await page.waitForURL("./policies/*");
+    await navigateToPolicy(page, policyName);
     await expect(page.getByLabel("Rule")).toHaveValue("PERMIT");
     await expect(page.getByLabel("Matching policy")).toHaveValue("PATH");
     await expect(page.locator("[value='storage.read:/cms']")).toBeVisible();

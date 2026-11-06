@@ -91,7 +91,7 @@ export function ToasterProvider(props: Readonly<ToasterProviderProps>) {
   return (
     <ToasterContext.Provider value={contextValue}>
       {children}
-      <div className="fixed top-8 right-8 z-50 min-h-fit">
+      <div className="fixed top-0 right-0 z-50 m-8 min-h-fit">
         <div className="flex flex-col gap-2">
           {toasts.map(t => {
             return <Toast key={t.id} {...t} closing={closingIds.has(t.id)} />;

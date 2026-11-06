@@ -24,7 +24,9 @@ export async function fetchScopePolicy(id: number) {
   return { ...policy, scopes: policy.scopes ?? [] };
 }
 
-export async function addScopePolicy(policy: ScopePolicyRequest): Promise<Notification> {
+export async function addScopePolicy(
+  policy: ScopePolicyRequest
+): Promise<Notification> {
   const url = `${IAM_API_URL}/iam/scope_policies`;
   const response = await authFetch(url, {
     body: JSON.stringify(policy),
@@ -37,11 +39,11 @@ export async function addScopePolicy(policy: ScopePolicyRequest): Promise<Notifi
     revalidatePath("/policies");
     return { type: "success", title: "Scope policy created" };
   }
-  const msg = await response.text();
+  const msg = await response.json();
   return {
     type: "error",
     title: "Cannot add scope policy",
-    description: `Error ${response.status} ${msg}`,
+    description: `${msg["error"]}`,
   };
 }
 
@@ -61,7 +63,8 @@ export async function updateScopePolicy(
     revalidatePath(`/policies/${id}`);
     return { type: "success", title: "Scope policy updated" };
   }
-  const msg = await response.text();
+  console.error(await response.text());
+  const msg = await response.json();
   return {
     type: "error",
     title: "Cannot update scope policy",

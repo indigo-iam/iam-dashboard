@@ -14,7 +14,7 @@ function Row(props: Readonly<{ policy: ScopePolicy }>) {
   const { policy } = props;
   const scopes = policy.scopes ? policy.scopes.join(" ") : "";
   return (
-    <div className="iam-list-item">
+    <li className="iam-list-item">
       <Link
         className="flex grow flex-col text-gray-950 dark:text-gray-200"
         href={`/policies/${policy.id}`}
@@ -23,17 +23,17 @@ function Row(props: Readonly<{ policy: ScopePolicy }>) {
         <p className="truncate text-sm font-light italic">{scopes}</p>
       </Link>
       <PolicyOptions policy={policy} />
-    </div>
+    </li>
   );
 }
 
 export default function PoliciesTable(props: Readonly<PoliciesTableProps>) {
   const { policies } = props;
   return (
-    <div className="overflow-x-auto">
+    <ul className="overflow-x-auto">
       {policies.map(policy => (
         <Row key={policy.id} policy={policy} />
       ))}
-    </div>
+    </ul>
   );
 }

@@ -27,7 +27,7 @@ export default async function Policies() {
       <div className="container">
         <div className="space-y-4">
           <div className="panel space-y-4">
-            <ScopePoliciesForm />
+            <ScopePoliciesForm readWrite={true} />
           </div>
         </div>
       </div>

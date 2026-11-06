@@ -2,10 +2,11 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { Page } from "@playwright/test";
 import { testAdmin as test, expect, enableAdminMode } from "../auth/fixture";
 import { dismissToast } from "../utils";
 
-test.beforeEach(async ({ signedUpPage }) => {
+test.beforeEach("open new policy", async ({ signedUpPage }) => {
   console.log(`Running ${test.info().title}`);
   const page = signedUpPage;
   await enableAdminMode(page);
@@ -19,10 +20,15 @@ test.beforeEach(async ({ signedUpPage }) => {
   await expect(defaultPolicy).toHaveText("Default Permit ALL policy", {
     useInnerText: true,
   });
+  const newPolicyBtn = page.getByRole("button", { name: "New policy" });
+  await expect(newPolicyBtn).toBeEnabled();
+  await newPolicyBtn.click();
+  await page.waitForURL("./policies/new");
 });
 
-test.afterEach(async ({ signedUpPage }, testInfo) => {
+test.afterEach("delete policy", async ({ signedUpPage }, testInfo) => {
   const page = signedUpPage;
+  await page.goto("./policies");
   const policyName = `scope-policy-${testInfo.testId}`;
   const href = page.getByRole("link", { name: policyName });
   await expect(href).toBeVisible();
@@ -40,14 +46,24 @@ test.afterEach(async ({ signedUpPage }, testInfo) => {
   await confirmBtn.click();
   await expect(dialog).toBeHidden();
   await dismissToast(page, "Scope policy deleted", "success");
+  await page.waitForURL("./policies");
 });
 
-test("Create policy", async ({ signedUpPage }, testInfo) => {
+async function savePolicy(page: Page) {
+  const addBtn = page.getByRole("button", { name: "Add Scope Policy" });
+  await expect(addBtn).toBeEnabled();
+  await addBtn.click();
+  const dialog = page.getByRole("dialog");
+  const heading = dialog.getByRole("heading");
+  await expect(heading).toHaveText("Create Scope Policy");
+  const confirmBtn = page.getByRole("button", { name: "Confirm" });
+  await confirmBtn.click();
+  await expect(dialog).toBeHidden();
+  await dismissToast(page, "Scope policy created", "success");
+}
+
+test("simple policy", async ({ signedUpPage }, testInfo) => {
   const page = signedUpPage;
-  const newPolicyBtn = page.getByRole("button", { name: "New policy" });
-  await expect(newPolicyBtn).toBeEnabled();
-  await newPolicyBtn.click();
-  await page.waitForURL("./policies/new");
   const addBtn = page.getByRole("button", { name: "Add Scope Policy" });
   await expect(addBtn).toBeDisabled();
   const policyName = `scope-policy-${testInfo.testId}`;
@@ -63,16 +79,70 @@ test("Create policy", async ({ signedUpPage }, testInfo) => {
   await expect(addScopeMatcherBtn).toBeEnabled();
   await addScopeMatcherBtn.click();
   await expect(page.locator("[value='phone']")).toBeVisible();
-  await addBtn.click();
-  const dialog = page.getByRole("dialog");
-  const heading = dialog.getByRole("heading");
-  await expect(heading).toHaveText("Create Scope Policy");
-  await expect(dialog)
-    .toHaveText(`Create Scope PolicyAre you sure you want to add this scope policy?Description: ${policyName}Rule: DENYMatching Policy: EQTarget: accounts and groupsScopes: phoneCancelConfirm
-`);
-  page.getByRole("textbox");
-  const confirmBtn = page.getByRole("button", { name: "Confirm" });
-  await confirmBtn.click();
-  await expect(dialog).toBeHidden();
-  await dismissToast(page, "Scope policy created", "success");
+  await savePolicy(page);
+});
+
+test("regexp policy", async ({ signedUpPage }, testInfo) => {
+  const page = signedUpPage;
+  const policyName = `scope-policy-${testInfo.testId}`;
+  const policyNameInput = page.getByLabel("Policy name");
+  await policyNameInput.fill(policyName);
+  const scopeMatchers = page.getByLabel("Scope matchers");
+  await expect(scopeMatchers).not.toHaveAttribute("required");
+
+  await test.step("At least one scope matcher is required", async () => {
+    await page.getByLabel("Matching policy").selectOption("REGEXP");
+    await expect(scopeMatchers).toHaveAttribute("required");
+    const isValid = await scopeMatchers.evaluate((el: HTMLInputElement) =>
+      el.checkValidity()
+    );
+    expect(isValid).toBe(false);
+  });
+
+  await test.step("add scope matchers", async () => {
+    const addScopeMatcherBtn = page.getByRole("button", {
+      name: "Add",
+      exact: true,
+    });
+    const scopeMatchers = page.getByLabel("Scope matchers");
+    await scopeMatchers.fill("^wlcg\.groups:/cms/.*$");
+    await addScopeMatcherBtn.click();
+    const isValid = await scopeMatchers.evaluate((el: HTMLInputElement) =>
+      el.checkValidity()
+    );
+    expect(isValid).toBe(true);
+    await scopeMatchers.fill("^wlcg\.groups:/atlas/.*$");
+    await addScopeMatcherBtn.click();
+  });
+
+  await test.step("select target user", async () => {
+    const searchUser = page.getByLabel("Search user");
+    await expect(searchUser).toBeHidden();
+    const target = page.getByLabel("Target");
+    await expect(target).toBeEnabled();
+    await target.selectOption("USER");
+    await expect(searchUser).toBeVisible();
+    const addBtn = page.getByRole("button", { name: "Add Scope Policy" });
+    await expect(addBtn).toBeDisabled();
+    await searchUser.pressSequentially("test", { delay: 250 });
+    await expect(addBtn).toBeEnabled();
+  });
+
+  await test.step("save policy", async () => {
+    await savePolicy(page);
+  });
+
+  await test.step("verify policy", async () => {
+    const page = signedUpPage;
+    const policyName = `scope-policy-${testInfo.testId}`;
+    const href = page.getByRole("link", { name: policyName });
+    await expect(href).toBeVisible();
+    await href.click();
+    await page.waitForURL("./policies/*");
+    await expect(page.getByLabel("Matching policy")).toHaveValue("REGEXP");
+    await expect(page.locator("[value='^wlcg\.groups:/cms/.*$']")).toBeVisible();
+    await expect(
+      page.locator("[value='^wlcg\.groups:/atlas/.*$']")
+    ).toBeVisible();
+  });
 });

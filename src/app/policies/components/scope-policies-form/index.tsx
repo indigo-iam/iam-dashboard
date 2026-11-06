@@ -76,6 +76,17 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
     [originalPolicy]
   );
 
+  const description = useMemo(() => {
+    switch (statePolicy.matchingPolicy) {
+      case "EQ":
+        return "The policy will be applied to scopes above. If empty, the policy will applied to all scopes.";
+      case "PATH":
+        return "The policy will be applied to matched path. At least one path is required.";
+      case "REGEXP":
+        return "The policy will be applied to the matched regular expression. At least one regular expression is required.";
+    }
+  }, [statePolicy.matchingPolicy]);
+
   const entityIsNull =
     (accountType === "USER" && !statePolicy.account) ||
     (accountType === "GROUP" && !statePolicy.group);
@@ -252,9 +263,7 @@ export default function ScopePoliciesForm(props: Readonly<ScopePoliciesProps>) {
           onChange={handleScopesChange}
           disabled={!readWrite}
         />
-        <Description>
-          Scope matchers this policy applies to. Required for PATH and REGEXP.
-        </Description>
+        <Description>{description}</Description>
       </Field>
       {readWrite && (
         <div className="flex justify-between">

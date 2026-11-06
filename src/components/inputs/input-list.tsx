@@ -78,7 +78,7 @@ export function InputList(props: Readonly<InputListProps>) {
         className="flex grow text-sm"
         defaultValue={item}
         name={name}
-        contentEditable={false}
+        disabled={true}
         required={required}
       />
     </li>

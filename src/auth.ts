@@ -326,13 +326,12 @@ export async function isUserAdmin() {
 }
 
 export async function signIn() {
-  const scopes = IAM_DASHBOARD_OIDC_ADMIN_SCOPES.split(" ");
+  const body = {
+    provider: "indigo-iam",
+    callbackURL: `${IAM_DASHBOARD_BASE_URL}${IAM_DASHBOARD_BASE_PATH}`,
+  };
   const { url } = await auth.api.signInSocial({
-    body: {
-      provider: "indigo-iam",
-      callbackURL: `${IAM_DASHBOARD_BASE_URL}${IAM_DASHBOARD_BASE_PATH}`,
-      scopes,
-    },
+    body,
   });
   return url; // '/authorize' endpoint
 }

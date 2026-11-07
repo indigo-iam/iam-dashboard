@@ -8,6 +8,7 @@ import { getSession } from "@/auth";
 import { settings } from "@/config";
 
 import { ScopePoliciesForm } from "../components";
+import { Container } from "@/components/container";
 
 const { IAM_DASHBOARD_SCOPE_POLICY_MODE } = settings;
 
@@ -24,13 +25,13 @@ export default async function Policies() {
       <header className="section-header">
         <h2 className="text-base font-normal">Create Scope Policy</h2>
       </header>
-      <div className="container">
+      <Container>
         <div className="space-y-4">
           <div className="panel space-y-4">
             <ScopePoliciesForm readWrite={true} />
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

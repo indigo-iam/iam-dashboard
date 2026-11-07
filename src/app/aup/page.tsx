@@ -7,6 +7,7 @@ import { fetchAUP } from "@/services/aup";
 import { AupView, CreateButton } from "./components/";
 import { DocumentTextIcon } from "@heroicons/react/24/solid";
 import { redirect } from "next/navigation";
+import { Container } from "@/components/container";
 
 export default async function AUP() {
   const session = await getSession();
@@ -28,12 +29,12 @@ export default async function AUP() {
           </div>
           <CreateButton />
         </header>
-        <div className="container flex flex-col items-center space-y-4">
+        <Container className="flex flex-col items-center">
           <DocumentTextIcon className="mt-32 size-48 text-gray-500 dark:text-gray-300" />
           <p className="text-center text-xl">
             AUP is not defined for this organization.
           </p>
-        </div>
+        </Container>
       </section>
     );
   }
@@ -47,9 +48,9 @@ export default async function AUP() {
         <DocumentTextIcon className="size-5" />
         <h2 className="text-base font-normal">Acceptable Usage Policy</h2>
       </header>
-      <div className="container space-y-4">
+      <Container>
         <div className="panel">{aupContent}</div>
-      </div>
+      </Container>
     </section>
   );
 }

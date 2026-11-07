@@ -10,10 +10,6 @@
   }
 }
 
-@utility container {
-  @apply p-4 xl:max-w-5xl xl:min-w-3xl;
-}
-
 @utility content {
   @apply mt-14 md:ml-80;
 }

@@ -8,6 +8,7 @@ import { PlusIcon, CubeIcon } from "@heroicons/react/24/solid";
 
 import { getSession, isUserAdmin } from "@/auth";
 import { ClientsTable } from "@/app/components/clients";
+import { Container } from "@/components/container";
 import { InputQuery } from "@/components/inputs";
 import { getClientsByAccount, getClientsPage } from "@/services/clients";
 import Paginator from "@/components/paginator";
@@ -73,12 +74,12 @@ export default async function Page(props: Readonly<PageProps>) {
         />
         <Buttons />
       </header>
-      <div className="container space-y-4">
+      <Container>
         <div className="panel">
           <ClientsTable clients={clients} isAdmin={isAdmin} />
         </div>
         <Paginator numberOfPages={numberOfPages} />
-      </div>
+      </Container>
     </section>
   );
 }

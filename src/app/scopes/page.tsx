@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { ClipboardDocumentCheckIcon } from "@heroicons/react/24/solid";
 
 import { getSession, isUserAdmin } from "@/auth";
+import { Container } from "@/components/container";
 import Paginator from "@/components/paginator";
 import { InputQuery } from "@/components/inputs";
 import { fetchPaginatedScopes } from "@/services/scopes";
@@ -56,12 +57,12 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
         />
         <NewScopeButton />
       </header>
-      <div className="container space-y-4">
+      <Container>
         <div className="panel">
           <ScopesTable scopes={scopes.Resources} />
         </div>
         <Paginator numberOfPages={numberOfPages} />
-      </div>
+      </Container>
     </section>
   );
 }

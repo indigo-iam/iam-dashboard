@@ -10,6 +10,7 @@ import { settings } from "@/config";
 import { fetchScopePolicies } from "@/services/scope-policies";
 
 import { AddPolicyButton, PoliciesTable } from "./components";
+import { Container } from "@/components/container";
 
 const { IAM_DASHBOARD_SCOPE_POLICY_MODE } = settings;
 
@@ -38,11 +39,11 @@ export default async function Policies() {
         </div>
         {IAM_DASHBOARD_SCOPE_POLICY_MODE === "readwrite" && <AddPolicyButton />}
       </header>
-      <div className="container space-y-4">
+      <Container>
         <div className="panel">
           <PoliciesTable policies={policies} />
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

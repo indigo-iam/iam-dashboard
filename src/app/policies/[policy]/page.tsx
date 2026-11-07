@@ -7,6 +7,7 @@ import { redirect, notFound } from "next/navigation";
 import { getSession, isUserAdmin } from "@/auth";
 import { settings } from "@/config";
 import { fetchScopePolicy } from "@/services/scope-policies";
+import { Container } from "@/components/container";
 import { ScopePoliciesForm } from "../components";
 
 const { IAM_DASHBOARD_SCOPE_POLICY_MODE } = settings;
@@ -35,7 +36,7 @@ export default async function PolicyPage(props: Readonly<PolicyPageProps>) {
       <header className="section-header">
         <h2 className="text-base font-normal">Edit Scope Policy</h2>
       </header>
-      <div className="container">
+      <Container>
         <div className="panel space-y-4">
           <h2>{policy.description}</h2>
           <ScopePoliciesForm
@@ -43,7 +44,7 @@ export default async function PolicyPage(props: Readonly<PolicyPageProps>) {
             readWrite={IAM_DASHBOARD_SCOPE_POLICY_MODE === "readwrite"}
           />
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

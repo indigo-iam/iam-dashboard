@@ -2,7 +2,11 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { CubeIcon } from "@heroicons/react/24/solid";
+import { redirect } from "next/navigation";
+
 import { getSession, isUserAdmin } from "@/auth";
+import { Container } from "@/components/container";
 import { TabGroup, TabList, TabPanels, Tab } from "@/components/tabs";
 import { getClient } from "@/services/clients";
 import {
@@ -13,9 +17,6 @@ import {
   Tokens,
   Owners,
 } from "./components";
-
-import { CubeIcon } from "@heroicons/react/24/solid";
-import { redirect } from "next/navigation";
 
 type ClientPageProps = {
   params: Promise<{ client: string }>;
@@ -42,29 +43,31 @@ export default async function Client(props: Readonly<ClientPageProps>) {
         <CubeIcon className="size-5" />
         <h2 className="text-base font-normal">{client.client_name}</h2>
       </header>
-      <TabGroup className="container space-y-8">
-        <TabList className="flex overflow-auto">
-          <Tab>GENERAL</Tab>
-          <Tab>CREDENTIALS</Tab>
-          <Tab>SCOPES</Tab>
-          <Tab>GRANT TYPES</Tab>
-          {isAdmin && <Tab>TOKENS</Tab>}
-          {isAdmin && <Tab>OWNERS</Tab>}
-        </TabList>
-        <TabPanels>
-          <Main client={client} isAdmin={isAdmin} />
-          <Credentials client={client} isAdmin={isAdmin} />
-          <Scopes client={client} isAdmin={isAdmin} />
-          <GrantTypes client={client} isAdmin={isAdmin} />
-          {isAdmin && <Tokens client={client} isAdmin={isAdmin} />}
-          {isAdmin && (
-            <Owners
-              clientId={client.client_id}
-              clientName={client.client_name}
-            />
-          )}
-        </TabPanels>
-      </TabGroup>
+      <Container>
+        <TabGroup>
+          <TabList className="flex overflow-auto">
+            <Tab>GENERAL</Tab>
+            <Tab>CREDENTIALS</Tab>
+            <Tab>SCOPES</Tab>
+            <Tab>GRANT TYPES</Tab>
+            {isAdmin && <Tab>TOKENS</Tab>}
+            {isAdmin && <Tab>OWNERS</Tab>}
+          </TabList>
+          <TabPanels>
+            <Main client={client} isAdmin={isAdmin} />
+            <Credentials client={client} isAdmin={isAdmin} />
+            <Scopes client={client} isAdmin={isAdmin} />
+            <GrantTypes client={client} isAdmin={isAdmin} />
+            {isAdmin && <Tokens client={client} isAdmin={isAdmin} />}
+            {isAdmin && (
+              <Owners
+                clientId={client.client_id}
+                clientName={client.client_name}
+              />
+            )}
+          </TabPanels>
+        </TabGroup>
+      </Container>
     </section>
   );
 }

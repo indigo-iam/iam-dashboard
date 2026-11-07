@@ -2,14 +2,15 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { redirect } from "next/navigation";
+import { UsersIcon } from "@heroicons/react/24/solid";
+
 import { getSession, isUserAdmin } from "@/auth";
+import { Container } from "@/components/container";
 import { InputQuery } from "@/components/inputs";
 import Paginator from "@/components/paginator";
 import { getUsersPage } from "@/services/users";
 import { AddUserButton, UsersTable } from "./components";
-
-import { redirect } from "next/navigation";
-import { UsersIcon } from "@heroicons/react/24/solid";
 
 type UsersProps = {
   searchParams?: Promise<{
@@ -57,12 +58,12 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
         />
         <AddUserButton />
       </header>
-      <div className="container space-y-4">
+      <Container>
         <div className="panel">
           <UsersTable users={users} />
         </div>
         <Paginator numberOfPages={numberOfPages} />
-      </div>
+      </Container>
     </section>
   );
 }

@@ -2,8 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { redirect } from "next/navigation";
+import { UserGroupIcon } from "@heroicons/react/24/solid";
+
 import { getSession, isUserAdmin } from "@/auth";
+import { Container } from "@/components/container";
 import { TabGroup, TabList, TabPanels, Tab } from "@/components/tabs";
+import { fetchGroup } from "@/services/groups";
 import {
   GroupInfo,
   Managers,
@@ -11,10 +16,6 @@ import {
   Subgroups,
   EditGroupButton,
 } from "./components";
-import { fetchGroup } from "@/services/groups";
-
-import { redirect } from "next/navigation";
-import { UserGroupIcon } from "@heroicons/react/24/solid";
 
 type GroupPageProps = {
   params: Promise<{ group: string }>;
@@ -69,38 +70,40 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
         </div>
         <EditGroupButton group={group} />
       </header>
-      <TabGroup className="container space-y-8">
-        <TabList className="flex overflow-auto">
-          <Tab>GENERAL</Tab>
-          <Tab>SUBGROUPS</Tab>
-          {isAdmin && <Tab>MANAGERS</Tab>}
-          <Tab>MEMBERS</Tab>
-        </TabList>
-        <TabPanels>
-          <GroupInfo group={group} />
-          <Subgroups
-            groupId={groupId}
-            groupName={groupName}
-            count={countSubgroups}
-            page={pageSubgroups}
-          />
-          {isAdmin && (
-            <Managers
+      <Container>
+        <TabGroup>
+          <TabList className="flex overflow-auto">
+            <Tab>GENERAL</Tab>
+            <Tab>SUBGROUPS</Tab>
+            {isAdmin && <Tab>MANAGERS</Tab>}
+            <Tab>MEMBERS</Tab>
+          </TabList>
+          <TabPanels>
+            <GroupInfo group={group} />
+            <Subgroups
+              groupId={groupId}
+              groupName={groupName}
+              count={countSubgroups}
+              page={pageSubgroups}
+            />
+            {isAdmin && (
+              <Managers
+                groupId={groupId}
+                groupName={groupName}
+                groupDescription={groupDescription}
+              />
+            )}
+            <Members
               groupId={groupId}
               groupName={groupName}
               groupDescription={groupDescription}
+              isAdmin={isAdmin}
+              count={countMembers}
+              page={pageMembers}
             />
-          )}
-          <Members
-            groupId={groupId}
-            groupName={groupName}
-            groupDescription={groupDescription}
-            isAdmin={isAdmin}
-            count={countMembers}
-            page={pageMembers}
-          />
-        </TabPanels>
-      </TabGroup>
+          </TabPanels>
+        </TabGroup>
+      </Container>
     </section>
   );
 }

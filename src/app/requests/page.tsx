@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { InboxArrowDownIcon } from "@heroicons/react/24/solid";
 
 import { getSession, isUserAdmin } from "@/auth";
+import { Container } from "@/components/container";
 import { fetchGroupsRequests } from "@/services/group-requests";
 import { fetchRegistrationRequests } from "@/services/registration";
 import { Groups, Registrations } from "./components";
@@ -35,10 +36,10 @@ export default async function Requests() {
           {totalRequests}
         </div>
       </header>
-      <div className="container space-y-4">
+      <Container>
         <Registrations requests={registrationRequests} />
         <Groups requests={groupRequests.Resources} />
-      </div>
+      </Container>
     </section>
   );
 }

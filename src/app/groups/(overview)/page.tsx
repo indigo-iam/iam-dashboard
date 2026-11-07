@@ -6,9 +6,12 @@ import { redirect } from "next/navigation";
 import { UserGroupIcon } from "@heroicons/react/24/solid";
 
 import { getSession, isUserAdmin } from "@/auth";
+import { Container } from "@/components/container";
 import { InputQuery } from "@/components/inputs";
 import Paginator from "@/components/paginator";
 import { fetchManagedGroups, getGroupsPage } from "@/services/groups";
+import { fetchGroupsRequests } from "@/services/group-requests";
+import { fetchMe } from "@/services/me";
 import {
   AddGroupButton,
   AdminGroupsTable,
@@ -16,9 +19,7 @@ import {
   UserGroupsTable,
   UserManagedGroupsTable,
 } from "./components";
-import { fetchMe } from "@/services/me";
 import JoinGroupButton from "@/app/users/[user]/components/groups/unmanaged/join-group-button";
-import { fetchGroupsRequests } from "@/services/group-requests";
 
 type GroupsProps = {
   searchParams?: Promise<{
@@ -58,12 +59,12 @@ async function AdminPage(props: Readonly<GroupsProps>) {
         />
         <AddGroupButton />
       </header>
-      <div className="container space-y-4">
+      <Container>
         <div className="panel">
           <AdminGroupsTable groups={groups} />
         </div>
         <Paginator numberOfPages={numberOfPages} />
-      </div>
+      </Container>
     </section>
   );
 }

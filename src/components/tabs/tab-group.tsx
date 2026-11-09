@@ -10,8 +10,8 @@ import {
   useEffect,
   useMemo,
   useReducer,
-  useRef,
 } from "react";
+
 import { RefPanel, TabDataContext, TabActionsContext } from "./context";
 import { TabListProps } from "./tab-list";
 import { TabPanelsProps } from "./tab-panel";
@@ -19,14 +19,12 @@ import { initialTabGroupState, reducer } from "./reducer";
 
 export type TabGroupProps = {
   children: [ReactElement<TabListProps>, ReactElement<TabPanelsProps>];
-  className?: string;
   onChangePage?: (_: number) => void;
 };
 
 export function TabGroup(props: Readonly<TabGroupProps>) {
-  const { onChangePage, ...other } = props;
+  const { onChangePage, children } = props;
   const [state, dispatch] = useReducer(reducer, initialTabGroupState);
-  const groupRef = useRef<HTMLDivElement | null>(null);
   const registerPanel = useCallback(
     (panel: RefPanel) => dispatch({ type: "REGISTER_PANEL", panel }),
     []
@@ -57,9 +55,7 @@ export function TabGroup(props: Readonly<TabGroupProps>) {
 
   return (
     <TabActionsContext value={actions}>
-      <TabDataContext value={state}>
-        <div ref={groupRef} {...other} />
-      </TabDataContext>
+      <TabDataContext value={state}>{children}</TabDataContext>
     </TabActionsContext>
   );
 }

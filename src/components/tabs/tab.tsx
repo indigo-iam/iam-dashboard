@@ -33,7 +33,7 @@ export function Tab(props: Readonly<TabProps>) {
       ref={tabRef}
       tabIndex={0}
       variant="plain"
-      className="text-gray min-w-fit grow cursor-pointer overflow-hidden border-b-2 border-gray-300 p-2 text-center text-sm tracking-wide -outline-offset-2 hover:border-sky-500 hover:text-sky-500 focus:not-data-focus:outline-none data-selected:border-sky-600 data-selected:font-bold data-selected:text-sky-500 dark:border-gray-600 dark:text-gray-400 dark:hover:border-blue-300 dark:hover:text-blue-300 dark:data-selected:border-sky-400 dark:data-selected:text-sky-500"
+      className="text-gray min-w-fit grow cursor-pointer overflow-hidden border-b-2 border-gray-300 p-2 text-center text-sm tracking-wide -outline-offset-2 hover:border-sky-500 hover:text-sky-500 focus:not-data-focus:outline-none aria-selected:border-sky-600 aria-selected:font-bold aria-selected:text-sky-500 dark:border-gray-600 dark:text-gray-400 dark:hover:border-blue-300 dark:hover:text-blue-300 dark:aria-selected:border-sky-400 dark:aria-selected:text-sky-500"
       onClick={select}
       aria-selected={selected}
       aria-controls={tabPanelId}

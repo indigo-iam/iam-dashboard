@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import Link from "@/components/link";
+import { ListItem, UnorderedList } from "@/components/list";
 import { ScimReference } from "@/models/scim";
 import GroupOptions from "./options";
 import JoinGroupButton from "./join-group-button";
@@ -26,9 +27,7 @@ function LinkView(props: Readonly<ViewProps>) {
   const { groupId, groupDisplay } = props;
   return (
     <div className="flex grow flex-col">
-      <Link className="iam-link" href={`/groups/${groupId}`}>
-        {groupDisplay}
-      </Link>
+      <Link href={`/groups/${groupId}`}>{groupDisplay}</Link>
       <p className="text-sm font-light">{groupId}</p>
     </div>
   );
@@ -45,7 +44,7 @@ type RowProps = {
 function Row(props: Readonly<RowProps>) {
   const { userId, userDisplay, groupId, groupDisplay, isAdmin } = props;
   return (
-    <li className="iam-list-item">
+    <ListItem>
       {isAdmin ? (
         <LinkView groupId={groupId} groupDisplay={groupDisplay} />
       ) : (
@@ -57,7 +56,7 @@ function Row(props: Readonly<RowProps>) {
         groupId={groupId}
         groupDisplay={groupDisplay}
       />
-    </li>
+    </ListItem>
   );
 }
 
@@ -110,7 +109,7 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
           isAdmin={isAdmin}
         />
       </div>
-      <ul className="w-full">
+      <UnorderedList>
         {userGroups.map(g => (
           <Row
             key={g.value}
@@ -121,7 +120,7 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
             isAdmin={isAdmin}
           />
         ))}
-      </ul>
+      </UnorderedList>
     </div>
   );
 }

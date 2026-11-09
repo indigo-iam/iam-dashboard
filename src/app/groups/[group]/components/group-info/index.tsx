@@ -23,7 +23,7 @@ export default function GroupInfo(props: Readonly<GroupInfoProps>) {
     ? dateToHuman(new Date(group.meta.created))
     : "N/A";
   return (
-    <TabPanel className="panel space-y-4">
+    <TabPanel>
       <h2>Group Information</h2>
       <div>
         <h3 className="mb-2 text-xl" title="Group Name">

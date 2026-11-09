@@ -8,6 +8,7 @@ import { Label } from "@/components/label";
 import { Input } from "@/components/inputs";
 import { SSHKey } from "@/models/indigo-user";
 import { deleteSSHKey } from "@/services/users";
+import { Textarea } from "@/components/textarea";
 
 type DeleteSSHKeyModalProps = {
   userId: string;
@@ -42,19 +43,19 @@ export default function DeleteSSHKeyModal(
       </p>
       <Field>
         <Label>Label</Label>
-        <Input value={sshKey.display} disabled />
+        <Input value={sshKey.display} readOnly />
       </Field>
       <Field>
         <Label>Fingerprint</Label>
-        <Input
+        <Textarea
           value={sshKey.fingerprint}
-          className="font-code iam-input w-full text-sm"
+          className="font-code text-sm"
           disabled
         />
       </Field>
       <Field>
         <Label>Public key</Label>
-        <p className="font-code iam-input text-sm break-all">{sshKey.value}</p>
+        <Textarea className="font-code text-sm" value={sshKey.value} readOnly />
       </Field>
     </ConfirmModal>
   );

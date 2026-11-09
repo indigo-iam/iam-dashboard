@@ -5,9 +5,11 @@
 import Link from "@/components/link";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
+import { ListItem, UnorderedList } from "@/components/list";
 import { Group, ManagedGroup } from "@/models/groups";
 import { ScimReference } from "@/models/scim";
 import { dateToHuman } from "@/utils/dates";
+
 import GroupOptions from "./options";
 
 type LabelsProps = {
@@ -49,12 +51,10 @@ function Row(props: Readonly<RowProps>) {
     ? dateToHuman(new Date(group.meta.created))
     : "N/A";
   return (
-    <li className="iam-list-item">
+    <ListItem>
       <div className="flex w-0 grow flex-col gap-0 break-all lg:flex-row lg:gap-2">
         <div className="flex flex-col lg:justify-center">
-          <Link className="iam-link" href={`/groups/${group.id}`}>
-            {group.displayName}
-          </Link>
+          <Link href={`/groups/${group.id}`}>{group.displayName}</Link>
           <div>
             <p className="truncate text-sm font-light">
               {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description}
@@ -69,7 +69,7 @@ function Row(props: Readonly<RowProps>) {
         groupName={group.displayName}
         groupDescription={indigoGroup.description}
       />
-    </li>
+    </ListItem>
   );
 }
 
@@ -88,11 +88,11 @@ export function AdminGroupsTable(props: Readonly<AdminGroupsTableProps>) {
     );
   }
   return (
-    <ul className="w-full table-auto">
+    <UnorderedList>
       {groups.map(group => (
         <Row key={group.id} group={group} />
       ))}
-    </ul>
+    </UnorderedList>
   );
 }
 
@@ -103,18 +103,18 @@ type UserGroupsTablesProps = {
 export function UserGroupsTable(props: Readonly<UserGroupsTablesProps>) {
   const { groupRefs } = props;
   return (
-    <ul>
+    <UnorderedList>
       {groupRefs.map(g => {
         return (
-          <li key={g.value} className="iam-list-item">
+          <ListItem key={g.value}>
             <div className="flex flex-col">
               <p className="text-gray-950 dark:text-white">{g.display}</p>
               <p className="text-sm font-light">{g.value}</p>
             </div>
-          </li>
+          </ListItem>
         );
       })}
-    </ul>
+    </UnorderedList>
   );
 }
 
@@ -127,17 +127,17 @@ export function UserManagedGroupsTable(
 ) {
   const { groups } = props;
   return (
-    <ul>
+    <UnorderedList>
       {groups.map(g => {
         return (
-          <li key={g.id} className="iam-list-item">
+          <ListItem key={g.id}>
             <Link className="w-full" href={`/groups/${g.id}`}>
               <p className="text-gray-950 dark:text-white">{g.name}</p>
               <p className="text-sm font-light">{g.id}</p>
             </Link>
-          </li>
+          </ListItem>
         );
       })}
-    </ul>
+    </UnorderedList>
   );
 }

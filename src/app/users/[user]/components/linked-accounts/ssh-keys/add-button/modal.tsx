@@ -61,7 +61,6 @@ export default function AddSSHKeyModal(props: Readonly<AddSSHKeyModalProps>) {
             <Textarea
               name="ssh-key"
               title="SSH Key"
-              className="iam-input w-full"
               placeholder="SSH Key..."
               autoComplete="off"
               required={true}

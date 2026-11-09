@@ -2,12 +2,14 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { redirect } from "next/navigation";
 import { UserIcon } from "@heroicons/react/24/solid";
+
 import { getSession, isUserAdmin } from "@/auth";
 import { Tab, TabGroup, TabList, TabPanels } from "@/components/tabs";
+import { Container, Header, Section } from "@/components/layout";
 import { fetchMe } from "@/services/me";
 import { fetchUser, statusMFA } from "@/services/users";
-import { redirect } from "next/navigation";
 import {
   AttributesAndLabels,
   General,
@@ -65,78 +67,80 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
   const sshKeys = indigoUser?.sshKeys ?? [];
 
   return (
-    <section>
-      <header className="section-header flex items-center">
+    <Section>
+      <Header>
         <UserIcon className="size-5" />
         <h2 className="text-base font-normal">{user.name?.formatted}</h2>
-      </header>
-      <TabGroup className="container space-y-8">
-        <TabList className="flex overflow-auto">
-          <Tab>GENERAL</Tab>
-          <Tab>GROUPS</Tab>
-          {!isMe && <Tab>CLIENTS</Tab>}
-          {isMe && <Tab>APPS AND WEBSITES</Tab>}
-          {isMe && <Tab>ACTIVE TOKENS</Tab>}
-          <Tab>LINKED ACCOUNTS</Tab>
-          <Tab>ATTRIBUTES AND LABELS</Tab>
-        </TabList>
-        <TabPanels>
-          <General
-            isMe={isMe}
-            mfaEnabled={mfaEnabled}
-            userId={userId}
-            userName={userName}
-            userFormattedName={userFormattedName}
-            userGivenName={userGivenName}
-            userFamilyName={userFamilyName}
-            userMiddleName={userMiddleName}
-            userAupSignatureTime={userAupSignatureTime}
-            userEmail={userEmail}
-            userIsActive={userIsActive}
-            userCreatedAt={userCreatedAt}
-            userLastModified={userLastModified}
-            userEndtime={userEndtime}
-            userIsServiceAccount={userIsServiceAccount}
-            userAuthorities={userAuthorities}
-            isAdmin={isAdmin}
-          />
-          <UserGroups
-            userId={userId}
-            userName={userName}
-            userDisplay={userDisplay}
-            userFormattedName={userFormattedName}
-            userEmail={userEmail}
-            userGroups={userGroups ?? []}
-            isAdmin={isAdmin}
-          />
-          {!isMe && (
-            <UserClients
+      </Header>
+      <Container>
+        <TabGroup>
+          <TabList className="flex overflow-auto">
+            <Tab>GENERAL</Tab>
+            <Tab>GROUPS</Tab>
+            {!isMe && <Tab>CLIENTS</Tab>}
+            {isMe && <Tab>APPS AND WEBSITES</Tab>}
+            {isMe && <Tab>ACTIVE TOKENS</Tab>}
+            <Tab>LINKED ACCOUNTS</Tab>
+            <Tab>ATTRIBUTES AND LABELS</Tab>
+          </TabList>
+          <TabPanels>
+            <General
+              isMe={isMe}
+              mfaEnabled={mfaEnabled}
               userId={userId}
+              userName={userName}
+              userFormattedName={userFormattedName}
+              userGivenName={userGivenName}
+              userFamilyName={userFamilyName}
+              userMiddleName={userMiddleName}
+              userAupSignatureTime={userAupSignatureTime}
+              userEmail={userEmail}
+              userIsActive={userIsActive}
+              userCreatedAt={userCreatedAt}
+              userLastModified={userLastModified}
+              userEndtime={userEndtime}
+              userIsServiceAccount={userIsServiceAccount}
+              userAuthorities={userAuthorities}
               isAdmin={isAdmin}
-              page={searchParams?.page}
-              count={searchParams?.count}
             />
-          )}
-          {isMe && <ApprovedSites isAdmin={isAdmin} />}
-          {isMe && <ActiveTokens />}
-          <LinkedAccounts
-            isMe={isMe}
-            userId={userId}
-            userName={userName}
-            userFormattedName={userFormattedName}
-            oidcIds={oidcIds}
-            samlIds={samlIds}
-            certificates={certificates}
-            sshKeys={sshKeys}
-            isAdmin={isAdmin}
-          />
-          <AttributesAndLabels
-            userId={userId}
-            userFormattedName={userFormattedName}
-            isAdmin={isAdmin}
-          />
-        </TabPanels>
-      </TabGroup>
-    </section>
+            <UserGroups
+              userId={userId}
+              userName={userName}
+              userDisplay={userDisplay}
+              userFormattedName={userFormattedName}
+              userEmail={userEmail}
+              userGroups={userGroups ?? []}
+              isAdmin={isAdmin}
+            />
+            {!isMe && (
+              <UserClients
+                userId={userId}
+                isAdmin={isAdmin}
+                page={searchParams?.page}
+                count={searchParams?.count}
+              />
+            )}
+            {isMe && <ApprovedSites isAdmin={isAdmin} />}
+            {isMe && <ActiveTokens />}
+            <LinkedAccounts
+              isMe={isMe}
+              userId={userId}
+              userName={userName}
+              userFormattedName={userFormattedName}
+              oidcIds={oidcIds}
+              samlIds={samlIds}
+              certificates={certificates}
+              sshKeys={sshKeys}
+              isAdmin={isAdmin}
+            />
+            <AttributesAndLabels
+              userId={userId}
+              userFormattedName={userFormattedName}
+              isAdmin={isAdmin}
+            />
+          </TabPanels>
+        </TabGroup>
+      </Container>
+    </Section>
   );
 }

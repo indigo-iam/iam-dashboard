@@ -37,7 +37,7 @@ export type ToastComponentProps = ToastProps & {
 };
 
 export const TOAST_EXIT_DURATION = 300;
-const TOAST_AUTO_DISMISS_DURATION = 3000;
+const TOAST_AUTO_DISMISS_DURATION = 4000;
 
 function Icon(props: Readonly<{ toastType: ToastTypes }>) {
   const { toastType } = props;
@@ -108,7 +108,7 @@ export function Toast(props: Readonly<ToastComponentProps>) {
       data-closing={closing || null}
     >
       <div
-        className="animate-slidein m-auto flex max-w-fit min-w-48 items-center rounded-lg border bg-white px-3 py-2 transition-all duration-300 ease-in-out data-closing:translate-x-[150%]"
+        className="animate-slidein m-auto flex max-w-xl min-w-48 items-center rounded-lg border bg-white px-3 py-2 transition-all data-closing:translate-x-[150%] dark:bg-gray-800"
         data-testid="toast"
         data-closing={closing || null}
         data-toast-type={type ?? "default"}
@@ -117,7 +117,7 @@ export function Toast(props: Readonly<ToastComponentProps>) {
         <div className="flex grow items-center gap-2">
           {type && <Icon toastType={type} />}
           <div>
-            <p className="text-normal font-semibold">{title}</p>
+            <p className="text-normal font-light">{title}</p>
             {description && (
               <p className="block text-sm text-gray-500 dark:text-gray-300">
                 {description}

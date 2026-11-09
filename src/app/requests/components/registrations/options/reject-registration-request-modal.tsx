@@ -49,7 +49,7 @@ export default function RejectRegistrationRequestModal(
               following user?
             </p>
             <Notice>
-              <Link href={`/users/${request.accountId}`} className="iam-link">
+              <Link href={`/users/${request.accountId}`}>
                 {`${request.givenname} ${request.familyname}`}
               </Link>
               <p className="text-sm">{request.email}</p>
@@ -58,7 +58,7 @@ export default function RejectRegistrationRequestModal(
           <p>To proceed provide a motivation that will be sent to the user:</p>
           <Field>
             <Label>Motivation</Label>
-            <Textarea name="motivation" className="iam-input" required />
+            <Textarea name="motivation" required />
           </Field>
         </ModalBody>
         <ModalFooter>

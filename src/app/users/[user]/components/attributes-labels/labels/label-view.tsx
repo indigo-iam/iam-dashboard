@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { ListItem } from "@/components/list";
 import { LabelOptions } from "./options";
 
 type LabelViewProps = {
@@ -16,7 +17,7 @@ type LabelViewProps = {
 export function LabelView(props: Readonly<LabelViewProps>) {
   const { userId, userFormattedName, prefix, name, value, isAdmin } = props;
   return (
-    <li className="iam-list-item">
+    <ListItem>
       <div className="flex w-full flex-row">
         <div className="flex grow flex-col">
           <span className="grow text-xs">{prefix}</span>
@@ -37,6 +38,6 @@ export function LabelView(props: Readonly<LabelViewProps>) {
           )}
         </div>
       </div>
-    </li>
+    </ListItem>
   );
 }

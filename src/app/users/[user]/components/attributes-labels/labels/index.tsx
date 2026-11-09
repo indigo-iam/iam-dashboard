@@ -2,7 +2,10 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { Panel } from "@/components/layout";
+import { UnorderedList } from "@/components/list";
 import { fetchUserLabels } from "@/services/users";
+
 import { AddLabelButton } from "./add-button";
 import { LabelView } from "./label-view";
 
@@ -27,7 +30,7 @@ async function LabelsContent(props: Readonly<LabelsContentProps>) {
   }
 
   return (
-    <ul>
+    <UnorderedList>
       {labels.map(label => (
         <LabelView
           isAdmin={isAdmin}
@@ -39,7 +42,7 @@ async function LabelsContent(props: Readonly<LabelsContentProps>) {
           userId={userId}
         />
       ))}
-    </ul>
+    </UnorderedList>
   );
 }
 
@@ -52,7 +55,7 @@ type LabelsPanelProps = {
 export function LabelsPanel(props: Readonly<LabelsPanelProps>) {
   const { isAdmin, userId, userFormattedName } = props;
   return (
-    <div className="panel space-y-2">
+    <Panel>
       <div className="flex justify-between">
         <h2>Labels</h2>
         {isAdmin && <AddLabelButton userId={userId} />}
@@ -64,6 +67,6 @@ export function LabelsPanel(props: Readonly<LabelsPanelProps>) {
           userId={userId}
         />
       }
-    </div>
+    </Panel>
   );
 }

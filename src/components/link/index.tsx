@@ -12,15 +12,22 @@ type LinkProps = {
   className?: string;
   title?: string;
   children: React.ReactNode;
+  variant?: "plain";
 } & { [key: `data-${string}`]: unknown };
 
 export default function Link(props: Readonly<LinkProps>) {
   const { startProgressBar } = useProgressBar();
-  const { href, className, title, children, ...others } = props;
+  const { href, className, variant, title, children, ...others } = props;
+  const outerClassName = className ? ` ${className}` : "";
   return (
     <NextLink
       href={href}
-      className={className}
+      className={
+        variant === "plain"
+          ? outerClassName
+          : outerClassName +
+            " max-w-fit font-semibold tracking-wide text-gray-950 decoration-1 underline-offset-3 hover:text-blue-600 hover:underline dark:text-gray-100"
+      }
       title={title}
       onClick={startProgressBar}
       {...others}

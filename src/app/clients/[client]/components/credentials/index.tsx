@@ -43,7 +43,7 @@ export default function Credentials(props: Readonly<CredentialsProps>) {
   }
 
   return (
-    <TabPanel className="panel">
+    <TabPanel>
       <Form onSubmit={submit} className="space-y-4">
         <div className="divide-y">
           <Authentication

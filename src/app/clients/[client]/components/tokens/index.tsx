@@ -32,7 +32,7 @@ export default function Tokens(props: Readonly<TokensProps>) {
   }
 
   return (
-    <TabPanel className="panel">
+    <TabPanel>
       <Form onSubmit={submit}>
         <div className="space-y-4 divide-y">
           <TokensTimeout

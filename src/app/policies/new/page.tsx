@@ -7,6 +7,7 @@ import { notFound, redirect } from "next/navigation";
 import { getSession } from "@/auth";
 import { settings } from "@/config";
 
+import { Container, Header, Panel, Section } from "@/components/layout";
 import { ScopePoliciesForm } from "../components";
 
 const { IAM_DASHBOARD_SCOPE_POLICY_MODE } = settings;
@@ -20,17 +21,15 @@ export default async function Policies() {
     redirect("/signin");
   }
   return (
-    <section>
-      <header className="section-header">
+    <Section>
+      <Header>
         <h2 className="text-base font-normal">Create Scope Policy</h2>
-      </header>
-      <div className="container">
-        <div className="space-y-4">
-          <div className="panel space-y-4">
-            <ScopePoliciesForm readWrite={true} />
-          </div>
-        </div>
-      </div>
-    </section>
+      </Header>
+      <Container>
+        <Panel>
+          <ScopePoliciesForm readWrite={true} />
+        </Panel>
+      </Container>
+    </Section>
   );
 }

@@ -7,7 +7,6 @@ import { testAdmin as test, expect, enableAdminMode } from "../auth/fixture";
 import { dismissToast } from "../utils";
 
 test.beforeEach("open new policy", async ({ signedUpPage }) => {
-  console.log(`Running ${test.info().title}`);
   const page = signedUpPage;
   await enableAdminMode(page);
   await page.goto("./policies");

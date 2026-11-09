@@ -4,8 +4,11 @@
 
 import { GroupRequest } from "@/models/group-requests";
 import { dateToHuman } from "@/utils/dates";
-import GroupRequestOptions from "./options";
+import { Panel } from "@/components/layout";
 import Link from "@/components/link";
+import { ListItem, UnorderedList } from "@/components/list";
+
+import GroupRequestOptions from "./options";
 
 type RowPros = {
   request: GroupRequest;
@@ -19,19 +22,16 @@ export function Row(props: Readonly<RowPros>) {
     : "N/A";
 
   return (
-    <li className="iam-list-item">
+    <ListItem>
       <div className="flex grow">
         <div className="grow">
           <p className="text-gray-950 dark:text-gray-100">
             User{" "}
-            <Link className="iam-link" href={`/users/${userUuid}`}>
+            <Link href={`/users/${userUuid}`}>
               {userFullName} (<i>{username}</i>)
             </Link>{" "}
             asked to join group{" "}
-            <Link className="iam-link" href={`/groups/${request.groupUuid}`}>
-              {groupName}
-            </Link>
-            .
+            <Link href={`/groups/${request.groupUuid}`}>{groupName}</Link>.
           </p>
           <p className="text-sm">
             Motivation: <q>{request.notes}</q>
@@ -40,7 +40,7 @@ export function Row(props: Readonly<RowPros>) {
         </div>
       </div>
       <GroupRequestOptions request={request} />
-    </li>
+    </ListItem>
   );
 }
 
@@ -52,20 +52,20 @@ export default function Groups(props: Readonly<GroupsProps>) {
   const { requests } = props;
   if (requests.length === 0) {
     return (
-      <div className="panel flex flex-col gap-4">
+      <Panel>
         <h3>Group requests</h3>
         <p>There are no pending requests.</p>
-      </div>
+      </Panel>
     );
   }
   return (
-    <div className="panel">
+    <Panel>
       <h3>Group requests</h3>
-      <ul className="w-full table-auto">
+      <UnorderedList>
         {requests.map(r => (
           <Row key={r.uuid} request={r} />
         ))}
-      </ul>
-    </div>
+      </UnorderedList>
+    </Panel>
   );
 }

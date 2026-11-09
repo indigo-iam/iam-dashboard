@@ -95,7 +95,6 @@ function LinkProxyModal(props: Readonly<LinkProxyModalProps>) {
             <Label>Proxy certificate</Label>
             <Textarea
               name="proxy-cert"
-              className="iam-input w-full"
               placeholder="Private key/public cert PEM here..."
               required
               rows={8}

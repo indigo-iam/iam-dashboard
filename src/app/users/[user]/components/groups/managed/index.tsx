@@ -2,10 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { fetchManagedGroups } from "@/services/groups";
-import Link from "@/components/link";
-import GroupOptions from "./options";
 import { Suspense } from "react";
+
+import { fetchManagedGroups } from "@/services/groups";
+import { Panel } from "@/components/layout";
+import Link from "@/components/link";
+import { ListItem, UnorderedList } from "@/components/list";
+import GroupOptions from "./options";
 
 type RowProps = {
   groupId: string;
@@ -15,15 +18,13 @@ type RowProps = {
 function Row(props: Readonly<RowProps>) {
   const { groupId, groupName } = props;
   return (
-    <li className="iam-list-item">
+    <ListItem>
       <div className="flex grow flex-col">
-        <Link className="iam-link" href={`/groups/${groupId}`}>
-          {groupName}
-        </Link>
+        <Link href={`/groups/${groupId}`}>{groupName}</Link>
         <p className="text-sm font-light">{groupId}</p>
       </div>
       <GroupOptions groupId={groupId} groupName={groupName} />
-    </li>
+    </ListItem>
   );
 }
 
@@ -40,14 +41,14 @@ async function Content(props: Readonly<ContentProps>) {
   }
 
   return (
-    <div className="panel space-y-4">
+    <Panel>
       <h2>Managed groups</h2>
-      <ul className="w-full">
+      <UnorderedList>
         {groups.map(group => (
           <Row key={group.id} groupId={group.id} groupName={group.name} />
         ))}
-      </ul>
-    </div>
+      </UnorderedList>
+    </Panel>
   );
 }
 

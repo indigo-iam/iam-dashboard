@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { Panel } from "@/components/layout";
 import { fetchAttributes } from "@/services/users";
 import AddAttributeButton from "./add-button";
 import { AttributeView } from "./attribute-view";
@@ -39,12 +40,12 @@ type AttributesPanelProps = {
 export function AttributesPanel(props: Readonly<AttributesPanelProps>) {
   const { userId, isAdmin } = props;
   return (
-    <div className="panel space-y-2">
+    <Panel>
       <div className="flex justify-between">
         <h2>Attributes</h2>
         {isAdmin && <AddAttributeButton userId={userId} />}
       </div>
       <AttributesContent isAdmin={isAdmin} userId={userId} />
-    </div>
+    </Panel>
   );
 }

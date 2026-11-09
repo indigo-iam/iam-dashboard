@@ -53,9 +53,7 @@ function ConfirmView(props: Readonly<ConfirmViewPros>) {
         <b>{groupName}</b>?
       </p>
       <Notice>
-        <Link href={`/users/${userId}`} className="iam-link">
-          {userName}
-        </Link>
+        <Link href={`/users/${userId}`}>{userName}</Link>
         <p>{userEmail}</p>
       </Notice>
     </div>

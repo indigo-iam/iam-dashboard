@@ -3,9 +3,11 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import Link from "@/components/link";
+import { ListItem, UnorderedList } from "@/components/list";
 
 import { GroupRequest } from "@/models/group-requests";
 import { dateToHuman } from "@/utils/dates";
+
 import { GroupRequestOptions } from "./options";
 
 type GroupRequestViewProps = {
@@ -19,13 +21,11 @@ function GroupRequestView(props: Readonly<GroupRequestViewProps>) {
   const { groupName, groupUuid, notes, creationTime } = request;
   const sent = creationTime ? dateToHuman(new Date(creationTime)) : "N/A";
   return (
-    <li key={groupName} className="iam-list-item">
+    <ListItem key={groupName}>
       <div className="flex grow">
         <div>
           {isAdmin ? (
-            <Link className="iam-link" href={`/groups/${groupUuid}`}>
-              {groupName}
-            </Link>
+            <Link href={`/groups/${groupUuid}`}>{groupName}</Link>
           ) : (
             <p className="text-gray-950 dark:text-gray-100">{groupName}</p>
           )}
@@ -40,7 +40,7 @@ function GroupRequestView(props: Readonly<GroupRequestViewProps>) {
         userFormattedName={request.userFullName ?? "unknown user"}
         request={request}
       />
-    </li>
+    </ListItem>
   );
 }
 
@@ -53,7 +53,7 @@ type GroupRequestsTableProps = {
 export function GroupRequestsTable(props: Readonly<GroupRequestsTableProps>) {
   const { userId, requests, isAdmin } = props;
   return (
-    <ul>
+    <UnorderedList>
       {requests.map(req => (
         <GroupRequestView
           key={req.uuid}
@@ -62,6 +62,6 @@ export function GroupRequestsTable(props: Readonly<GroupRequestsTableProps>) {
           isAdmin={isAdmin}
         />
       ))}
-    </ul>
+    </UnorderedList>
   );
 }

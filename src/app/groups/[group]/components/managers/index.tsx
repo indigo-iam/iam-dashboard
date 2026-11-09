@@ -17,7 +17,7 @@ export default async function Managers(props: Readonly<ManagersProps>) {
   const { groupId, groupName, groupDescription } = props;
   const managers = (await fetchGroupManagers(groupId)) ?? [];
   return (
-    <TabPanel className="panel space-y-4">
+    <TabPanel>
       <div className="flex flex-wrap gap-2">
         <div className="flex grow items-center gap-2">
           <h2>Managers</h2>

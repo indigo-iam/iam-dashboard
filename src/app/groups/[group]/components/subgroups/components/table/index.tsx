@@ -5,20 +5,20 @@
 import { ScimReference } from "@/models/scim";
 import { fetchSubgroupsPage } from "@/services/groups";
 import Link from "@/components/link";
+import { ListItem, UnorderedList } from "@/components/list";
+
 import SubgroupOptions from "./options";
 
 function Row(props: Readonly<{ groupRef: ScimReference }>) {
   const { groupRef } = props;
   return (
-    <li className="iam-list-item">
+    <ListItem>
       <div className="flex w-0 grow flex-col">
-        <Link className="iam-link" href={`/groups/${groupRef.value}`}>
-          {groupRef.display}
-        </Link>
+        <Link href={`/groups/${groupRef.value}`}>{groupRef.display}</Link>
         <p className="truncate text-sm font-light">{groupRef.value}</p>
       </div>
       <SubgroupOptions groupRef={groupRef} />
-    </li>
+    </ListItem>
   );
 }
 
@@ -36,10 +36,10 @@ export default async function SubgroupsTable(
   const firstPage = await fetchSubgroupsPage(groupId, count, startIndex);
   const subgroups = firstPage.Resources;
   return (
-    <ul className="w-full">
+    <UnorderedList>
       {subgroups.map(groupRef => (
         <Row key={groupRef.value} groupRef={groupRef} />
       ))}
-    </ul>
+    </UnorderedList>
   );
 }

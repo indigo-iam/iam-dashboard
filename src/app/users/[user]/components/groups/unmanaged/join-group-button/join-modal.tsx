@@ -124,7 +124,6 @@ export function JoinGroupModal(props: Readonly<JoinGroupModalProps>) {
             <Textarea
               name="group-request-notes"
               placeholder="Explain why you want to be a member of group..."
-              className="iam-input w-full"
               required={true}
               onChange={e => setMotivation(e.currentTarget.value)}
             />

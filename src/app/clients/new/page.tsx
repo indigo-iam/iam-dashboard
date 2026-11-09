@@ -2,13 +2,14 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { getSession, isUserAdmin } from "@/auth";
-import { fetchOpenIdConfiguration } from "@/services/openid-configuration";
-import { fetchScopes } from "@/services/scopes";
-import { redirect } from "next/navigation";
-import { NewClientCarousel } from "./carousel";
-
 import { CubeIcon } from "@heroicons/react/24/solid";
+import { redirect } from "next/navigation";
+
+import { getSession, isUserAdmin } from "@/auth";
+import { Container, Section } from "@/components/layout";
+import { fetchScopes } from "@/services/scopes";
+import { fetchOpenIdConfiguration } from "@/services/openid-configuration";
+import { NewClientCarousel } from "./carousel";
 
 export default async function NewClient() {
   const session = await getSession();
@@ -19,18 +20,18 @@ export default async function NewClient() {
   const openIdConfiguration = await fetchOpenIdConfiguration();
   const isAdmin = await isUserAdmin();
   return (
-    <section className="space-y-4">
+    <Section>
       <header className="section-header">
         <CubeIcon className="size-5" />
         <h2 className="text-base font-normal">New client</h2>
       </header>
-      <div className="container">
+      <Container>
         <NewClientCarousel
           systemScopes={scopes}
           openIdConfiguration={openIdConfiguration}
           isAdmin={isAdmin}
         />
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

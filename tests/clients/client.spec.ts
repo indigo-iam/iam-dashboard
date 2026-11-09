@@ -161,11 +161,11 @@ testAdmin(
       await expect(dialog).toBeHidden();
       await dismissToast(page, "Client saved", "success");
       scopeAdminRead = page
-        .locator(".iam-list-item")
+        .getByRole("listitem")
         .filter({ hasText: "iam:admin.read (restricted)" });
       await expect(scopeAdminRead).toBeVisible();
       scopeAdminWrite = page
-        .locator(".iam-list-item")
+        .getByRole("listitem")
         .filter({ hasText: "iam:admin.write" });
       await expect(scopeAdminWrite).toBeVisible();
     });

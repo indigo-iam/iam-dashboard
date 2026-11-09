@@ -10,7 +10,6 @@ import { Sidebar } from "@/app/components/sidebar";
 import { ToasterProvider } from "@/components/toaster";
 import { LoadingProvider } from "@/components/loading";
 import { ProgressBarProvider } from "@/components/progress-bar";
-import "@/styles/main.css";
 import "@/styles/app.css";
 
 export const metadata: Metadata = {
@@ -52,7 +51,7 @@ export default async function RootLayout(props: Readonly<RootLayoutProps>) {
                 <Header hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
                 <main>
                   <Sidebar hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
-                  <div className="content">{children}</div>
+                  <div className="mt-14 md:ml-80">{children}</div>
                 </main>
               </ToasterProvider>
             </ProgressBarProvider>

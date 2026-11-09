@@ -45,7 +45,7 @@ export async function navigateToTestUserPage(page: Page, userName: string) {
   const searchbar = page.getByPlaceholder("Type to search a user");
   await searchbar.pressSequentially(userName);
   const testUser = page.getByRole("link").filter({ hasText: userName });
-  const users = page.locator(".iam-list-item").filter({ visible: true });
+  const users = page.getByRole("listitem").filter({ visible: true });
   await expect(users).toHaveCount(1);
   await expect(users).toBeEnabled();
   await testUser.click();

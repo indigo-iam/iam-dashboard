@@ -37,19 +37,17 @@ export default function AcceptGroupRequestModal(
       <div className="space-y-4">
         <p>
           Are you sure you want the following user to join the group{" "}
-          <Link className="iam-link" href={`/groups/${request.groupUuid}`}>
-            {request.groupName}
-          </Link>
+          <Link href={`/groups/${request.groupUuid}`}>{request.groupName}</Link>
           ?
         </p>
         <Notice>
-          <Link className="iam-link" href={`/users/${request.userUuid}`}>
+          <Link href={`/users/${request.userUuid}`}>
             {request.userFullName}
           </Link>
         </Notice>
       </div>
       <p>They provided the following motivation:</p>
-      <Textarea className="iam-input" defaultValue={request.notes} disabled />
+      <Textarea defaultValue={request.notes} disabled />
     </ConfirmModal>
   );
 }

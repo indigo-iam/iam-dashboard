@@ -57,7 +57,7 @@ function ConfirmView(props: Readonly<ConfirmViewProps>) {
     <div className="space-y-4">
       <p>
         Are you sure you want to make the user{" "}
-        <Link href={`/users/${userId}`} className="iam-link">
+        <Link href={`/users/${userId}`}>
           <b>{userFormattedName}</b>
         </Link>{" "}
         ({userEmail}) manager of the following group?

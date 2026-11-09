@@ -5,11 +5,14 @@
 "use client";
 
 import Link from "@/components/link";
+import { Panel } from "@/components/layout";
+import { ListItem } from "@/components/list";
 import Paginator from "@/components/paginator";
 import { ActiveToken } from "@/models/sites";
 import { dateToHuman, getDate } from "@/utils/dates";
-import { ActiveTokenOptions } from "./options";
 import { usePaginator } from "@/components/paginator/hook";
+
+import { ActiveTokenOptions } from "./options";
 
 type ActiveTokenViewProps = {
   token: ActiveToken;
@@ -23,7 +26,7 @@ function ActiveTokenView(props: Readonly<ActiveTokenViewProps>) {
   const expired = expiration < getDate();
   const tokenStr = `${token.value?.slice(0, 8)}...${token.value?.slice(-8)}`;
   return (
-    <li className="iam-list-item">
+    <ListItem>
       <div className="flex w-0 grow flex-col">
         <Link
           className="flex grow flex-col gap-0.5 lg:flex-row"
@@ -44,7 +47,7 @@ function ActiveTokenView(props: Readonly<ActiveTokenViewProps>) {
         </Link>
       </div>
       <ActiveTokenOptions token={token} />
-    </li>
+    </ListItem>
   );
 }
 
@@ -59,8 +62,8 @@ export function TokensPage(props: Readonly<TokensPageProps>) {
   );
   const activeTokens = tokens.slice(start, end);
   return (
-    <div className="space-y-4">
-      <div className="panel">
+    <>
+      <Panel>
         <div className="flex items-center gap-2">
           <h2 className="py-2">Active Tokens</h2>
           <div
@@ -75,7 +78,7 @@ export function TokensPage(props: Readonly<TokensPageProps>) {
             <ActiveTokenView token={token} key={token.id} />
           ))}
         </ul>
-      </div>
+      </Panel>
       <Paginator
         numberOfPages={numberOfPages}
         overrides={{
@@ -83,6 +86,6 @@ export function TokensPage(props: Readonly<TokensPageProps>) {
           count,
         }}
       />
-    </div>
+    </>
   );
 }

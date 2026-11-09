@@ -39,7 +39,13 @@ export function useTooltip(buttonRef: RefObject<HTMLButtonElement | null>) {
 
   function showTooltip() {
     const source = buttonRef.current ?? undefined;
-    tooltipRef.current?.showPopover({ source });
+    try {
+      tooltipRef.current?.showPopover({ source });
+    } catch {
+      // showPopover() throws when another popover is currently showing or
+      // hiding (e.g. the menu panel is closing and focus is being restored
+      // to this button). Skip: the tooltip will appear on the next event.
+    }
   }
 
   function hideTooltip() {

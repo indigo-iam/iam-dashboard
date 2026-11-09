@@ -4,8 +4,9 @@
 
 import { GroupRequest } from "@/models/group-requests";
 import { dateToHuman } from "@/utils/dates";
-import GroupRequestOptions from "./options";
 import Link from "@/components/link";
+import { Panel } from "@/components/layout";
+import GroupRequestOptions from "./options";
 
 type RowPros = {
   request: GroupRequest;
@@ -52,20 +53,20 @@ export default function Groups(props: Readonly<GroupsProps>) {
   const { requests } = props;
   if (requests.length === 0) {
     return (
-      <div className="panel flex flex-col gap-4">
+      <Panel>
         <h3>Group requests</h3>
         <p>There are no pending requests.</p>
-      </div>
+      </Panel>
     );
   }
   return (
-    <div className="panel">
+    <Panel>
       <h3>Group requests</h3>
       <ul className="w-full table-auto">
         {requests.map(r => (
           <Row key={r.uuid} request={r} />
         ))}
       </ul>
-    </div>
+    </Panel>
   );
 }

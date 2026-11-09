@@ -7,7 +7,7 @@ import { UserIcon } from "@heroicons/react/24/solid";
 
 import { getSession, isUserAdmin } from "@/auth";
 import { Tab, TabGroup, TabList, TabPanels } from "@/components/tabs";
-import { Container } from "@/components/container";
+import { Container, Header, Section } from "@/components/layout";
 import { fetchMe } from "@/services/me";
 import { fetchUser, statusMFA } from "@/services/users";
 import {
@@ -67,11 +67,11 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
   const sshKeys = indigoUser?.sshKeys ?? [];
 
   return (
-    <section>
-      <header className="section-header flex items-center">
+    <Section>
+      <Header>
         <UserIcon className="size-5" />
         <h2 className="text-base font-normal">{user.name?.formatted}</h2>
-      </header>
+      </Header>
       <Container>
         <TabGroup>
           <TabList className="flex overflow-auto">
@@ -141,6 +141,6 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
           </TabPanels>
         </TabGroup>
       </Container>
-    </section>
+    </Section>
   );
 }

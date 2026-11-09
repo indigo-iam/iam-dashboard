@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { InboxArrowDownIcon } from "@heroicons/react/24/solid";
 
 import { getSession, isUserAdmin } from "@/auth";
-import { Container } from "@/components/container";
+import { Container, Header, Section } from "@/components/layout";
 import { fetchGroupsRequests } from "@/services/group-requests";
 import { fetchRegistrationRequests } from "@/services/registration";
 import { Groups, Registrations } from "./components";
@@ -25,8 +25,8 @@ export default async function Requests() {
   const totalRequests =
     groupRequests.totalResults + registrationRequests.length;
   return (
-    <section>
-      <header className="section-header items-center">
+    <Section>
+      <Header>
         <InboxArrowDownIcon className="size-5" />
         <h2 className="py-1 text-base font-normal">Requests</h2>
         <div
@@ -35,11 +35,11 @@ export default async function Requests() {
         >
           {totalRequests}
         </div>
-      </header>
+      </Header>
       <Container>
         <Registrations requests={registrationRequests} />
         <Groups requests={groupRequests.Resources} />
       </Container>
-    </section>
+    </Section>
   );
 }

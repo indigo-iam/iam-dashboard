@@ -12,6 +12,7 @@ import {
   useTabData,
   useTabIndex,
 } from "./context";
+import { Panel } from "../layout";
 
 export type TabPanelProps = {
   children: React.ReactNode;
@@ -19,13 +20,14 @@ export type TabPanelProps = {
 };
 
 export function TabPanel(props: Readonly<TabPanelProps>) {
-  const { children, className } = props;
+  const { children } = props;
   const { selectedIndex } = useTabData();
   const tabIndex = useTabIndex();
   const actions = useTabActions();
   const selected = selectedIndex === tabIndex;
   const panelId = `tab-panel${useId()}`;
-  const panelRef = useRef(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const outerClassName = props.className ? ` ${props.className}` : "";
 
   useEffect(() => {
     const panel = panelRef.current;
@@ -40,8 +42,8 @@ export function TabPanel(props: Readonly<TabPanelProps>) {
   }, [actions, panelRef]);
 
   return (
-    <div
-      className={`hidden data-selected:block ${className}`}
+    <Panel
+      className={"hidden data-selected:block" + outerClassName}
       tabIndex={-1}
       id={panelId}
       ref={panelRef}
@@ -49,7 +51,7 @@ export function TabPanel(props: Readonly<TabPanelProps>) {
       data-tab-index={tabIndex}
     >
       {children}
-    </div>
+    </Panel>
   );
 }
 

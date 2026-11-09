@@ -11,10 +11,10 @@ import { TokensPage } from "./tokens-page";
 
 function Fallback() {
   return (
-    <div className="panel">
+    <>
       <h2 className="py-2">Active Tokens</h2>
       <LoadingList />
-    </div>
+    </>
   );
 }
 
@@ -23,10 +23,10 @@ async function AsyncActiveTokens() {
   activeTokens = activeTokens.filter(t => !!t.value);
   if (activeTokens.length === 0) {
     return (
-      <div className="panel">
+      <>
         <h2 className="py-2">Active Tokens</h2>
         <p>There are no active tokens to show.</p>
-      </div>
+      </>
     );
   }
   return <TokensPage tokens={activeTokens} />;

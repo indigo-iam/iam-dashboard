@@ -84,7 +84,7 @@ async function Content(props: Readonly<ApprovedSitesProps>) {
 export function ApprovedSites(props: Readonly<ApprovedSitesProps>) {
   const { isAdmin } = props;
   return (
-    <TabPanel className="panel">
+    <TabPanel>
       <h2 className="py-2">Linked Apps and Websites</h2>
       <Suspense fallback={<LoadingList />}>
         <Content isAdmin={isAdmin} />

@@ -25,7 +25,7 @@ export default function GeneralSettings() {
   }
 
   return (
-    <CarouselPanel className="panel flex flex-col gap-2">
+    <CarouselPanel>
       <h2>General Settings</h2>
       <Field>
         <Label>Client Name</Label>

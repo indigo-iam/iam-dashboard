@@ -6,7 +6,7 @@ import { CubeIcon } from "@heroicons/react/24/solid";
 import { redirect } from "next/navigation";
 
 import { getSession, isUserAdmin } from "@/auth";
-import { Container } from "@/components/container";
+import { Container, Header, Section } from "@/components/layout";
 import { TabGroup, TabList, TabPanels, Tab } from "@/components/tabs";
 import { getClient } from "@/services/clients";
 import {
@@ -38,11 +38,11 @@ export default async function Client(props: Readonly<ClientPageProps>) {
   }
 
   return (
-    <section>
-      <header className="section-header">
+    <Section>
+      <Header>
         <CubeIcon className="size-5" />
         <h2 className="text-base font-normal">{client.client_name}</h2>
-      </header>
+      </Header>
       <Container>
         <TabGroup>
           <TabList className="flex overflow-auto">
@@ -68,6 +68,6 @@ export default async function Client(props: Readonly<ClientPageProps>) {
           </TabPanels>
         </TabGroup>
       </Container>
-    </section>
+    </Section>
   );
 }

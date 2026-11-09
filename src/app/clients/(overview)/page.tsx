@@ -8,7 +8,7 @@ import { PlusIcon, CubeIcon } from "@heroicons/react/24/solid";
 
 import { getSession, isUserAdmin } from "@/auth";
 import { ClientsTable } from "@/app/components/clients";
-import { Container } from "@/components/container";
+import { Container, Header, Panel, Section } from "@/components/layout";
 import { InputQuery } from "@/components/inputs";
 import { getClientsByAccount, getClientsPage } from "@/services/clients";
 import Paginator from "@/components/paginator";
@@ -52,8 +52,8 @@ export default async function Page(props: Readonly<PageProps>) {
   const numberOfPages = Math.ceil(clientPage.totalResults / count) || 1;
   const clients = clientPage.Resources;
   return (
-    <section>
-      <header className="section-header flex flex-wrap gap-2">
+    <Section>
+      <Header>
         <div className="flex grow items-center gap-2">
           <CubeIcon className="size-5" />
           <h2 className="text-base font-normal">
@@ -73,13 +73,13 @@ export default async function Page(props: Readonly<PageProps>) {
           aria-label="Search client"
         />
         <Buttons />
-      </header>
+      </Header>
       <Container>
-        <div className="panel">
+        <Panel>
           <ClientsTable clients={clients} isAdmin={isAdmin} />
-        </div>
+        </Panel>
         <Paginator numberOfPages={numberOfPages} />
       </Container>
-    </section>
+    </Section>
   );
 }

@@ -27,7 +27,7 @@ export async function UserClients(props: Readonly<UseClientsProps>) {
     Math.ceil(clientPage.totalResults / clientPage.itemsPerPage) || 1;
   const clients = clientPage.Resources;
   return (
-    <TabPanel className="space-y-4">
+    <TabPanel>
       <Link href="/clients/new">
         <Button variant="outline" type="button">
           New Client

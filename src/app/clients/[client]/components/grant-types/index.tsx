@@ -55,7 +55,7 @@ export default function GrantTypes(props: Readonly<GrantTypesProps>) {
   }
 
   return (
-    <TabPanel className="panel">
+    <TabPanel>
       <Form onSubmit={submit} className="space-y-4">
         <div className="space-y-4 divide-y">
           <MainGrantTypes

@@ -9,7 +9,3 @@
     @apply flex flex-col items-center;
   }
 }
-
-@utility content {
-  @apply mt-14 md:ml-80;
-}

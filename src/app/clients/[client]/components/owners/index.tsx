@@ -29,7 +29,7 @@ type OwnersProps = {
 export default function Owners(props: Readonly<OwnersProps>) {
   const { clientId, clientName } = props;
   return (
-    <TabPanel className="panel">
+    <TabPanel>
       <div className="flex flex-wrap items-center">
         <h3 className="grow py-2">Owners</h3>
         <AddOwnerButton clientId={clientId} clientName={clientName} />

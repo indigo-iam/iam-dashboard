@@ -48,7 +48,7 @@ export function General(props: Readonly<GeneralProps>) {
     isAdmin,
   } = props;
   return (
-    <TabPanel className="panel divide-y">
+    <TabPanel className="divide-y">
       <UserDetailsForm
         isMe={isMe}
         mfaEnabled={mfaEnabled}

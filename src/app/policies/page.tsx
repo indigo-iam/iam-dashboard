@@ -9,8 +9,8 @@ import { getSession, isUserAdmin } from "@/auth";
 import { settings } from "@/config";
 import { fetchScopePolicies } from "@/services/scope-policies";
 
+import { Container, Header, Panel, Section } from "@/components/layout";
 import { AddPolicyButton, PoliciesTable } from "./components";
-import { Container } from "@/components/container";
 
 const { IAM_DASHBOARD_SCOPE_POLICY_MODE } = settings;
 
@@ -31,19 +31,19 @@ export default async function Policies() {
   }
   const policies = await fetchScopePolicies();
   return (
-    <section>
-      <header className="section-header flex flex-wrap gap-2">
+    <Section>
+      <Header>
         <div className="flex grow gap-2">
           <ScaleIcon className="size-5" />
           <h2 className="text-base font-normal">Scope Policies</h2>
         </div>
         {IAM_DASHBOARD_SCOPE_POLICY_MODE === "readwrite" && <AddPolicyButton />}
-      </header>
+      </Header>
       <Container>
-        <div className="panel">
+        <Panel>
           <PoliciesTable policies={policies} />
-        </div>
+        </Panel>
       </Container>
-    </section>
+    </Section>
   );
 }

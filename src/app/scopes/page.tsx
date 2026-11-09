@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { ClipboardDocumentCheckIcon } from "@heroicons/react/24/solid";
 
 import { getSession, isUserAdmin } from "@/auth";
-import { Container } from "@/components/container";
+import { Container, Header, Panel, Section } from "@/components/layout";
 import Paginator from "@/components/paginator";
 import { InputQuery } from "@/components/inputs";
 import { fetchPaginatedScopes } from "@/services/scopes";
@@ -37,8 +37,8 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
   const scopes = await fetchPaginatedScopes(count, startIndex, query);
   const numberOfPages = Math.ceil(scopes.totalResults / scopes.itemsPerPage);
   return (
-    <section>
-      <header className="section-header flex flex-wrap gap-2">
+    <Section>
+      <Header>
         <div className="flex grow items-center gap-2">
           <ClipboardDocumentCheckIcon className="size-5" />
           <h2 className="text-base font-normal">Scopes</h2>
@@ -56,13 +56,13 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
           aria-label="Search scope"
         />
         <NewScopeButton />
-      </header>
+      </Header>
       <Container>
-        <div className="panel">
+        <Panel>
           <ScopesTable scopes={scopes.Resources} />
-        </div>
+        </Panel>
         <Paginator numberOfPages={numberOfPages} />
       </Container>
-    </section>
+    </Section>
   );
 }

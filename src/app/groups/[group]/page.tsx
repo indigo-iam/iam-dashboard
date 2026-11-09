@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { UserGroupIcon } from "@heroicons/react/24/solid";
 
 import { getSession, isUserAdmin } from "@/auth";
-import { Container } from "@/components/container";
+import { Container, Header, Section } from "@/components/layout";
 import { TabGroup, TabList, TabPanels, Tab } from "@/components/tabs";
 import { fetchGroup } from "@/services/groups";
 import {
@@ -62,14 +62,14 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
     searchParams?.pageMembers
   );
   return (
-    <section>
-      <header className="section-header">
+    <Section>
+      <Header>
         <div className="flex grow items-center gap-2">
           <UserGroupIcon className="size-5" />
           <h2 className="text-base font-normal">{groupName}</h2>
         </div>
         <EditGroupButton group={group} />
-      </header>
+      </Header>
       <Container>
         <TabGroup>
           <TabList className="flex overflow-auto">
@@ -104,6 +104,6 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
           </TabPanels>
         </TabGroup>
       </Container>
-    </section>
+    </Section>
   );
 }

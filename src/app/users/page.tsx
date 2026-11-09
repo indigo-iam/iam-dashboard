@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { UsersIcon } from "@heroicons/react/24/solid";
 
 import { getSession, isUserAdmin } from "@/auth";
-import { Container } from "@/components/container";
+import { Container, Header, Panel, Section } from "@/components/layout";
 import { InputQuery } from "@/components/inputs";
 import Paginator from "@/components/paginator";
 import { getUsersPage } from "@/services/users";
@@ -38,8 +38,8 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
   const numberOfPages = Math.ceil(usersPage.totalResults / count) || 1;
   const users = usersPage.Resources;
   return (
-    <section>
-      <header className="section-header flex flex-wrap items-center gap-2">
+    <Section>
+      <Header>
         <div className="flex grow items-center gap-2">
           <UsersIcon className="size-5" />
           <h2 className="text-base font-normal">Users</h2>
@@ -57,13 +57,13 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
           aria-label="Search user"
         />
         <AddUserButton />
-      </header>
+      </Header>
       <Container>
-        <div className="panel">
+        <Panel>
           <UsersTable users={users} />
-        </div>
+        </Panel>
         <Paginator numberOfPages={numberOfPages} />
       </Container>
-    </section>
+    </Section>
   );
 }

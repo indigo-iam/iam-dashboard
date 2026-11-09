@@ -34,7 +34,7 @@ export function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
     isAdmin,
   } = props;
   return (
-    <TabPanel className="space-y-6">
+    <TabPanel>
       <OidcAccounts
         userId={userId}
         oidcIds={oidcIds}

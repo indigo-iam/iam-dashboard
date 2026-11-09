@@ -4,8 +4,9 @@
 
 import { Registration } from "@/models/registration";
 import { dateToHuman } from "@/utils/dates";
-import RegistrationRequestsOptions from "./options";
+import { Panel } from "@/components/layout";
 import Link from "@/components/link";
+import RegistrationRequestsOptions from "./options";
 
 type RowProps = {
   request: Registration;
@@ -47,23 +48,23 @@ export default function Registrations(props: Readonly<RegistrationsProps>) {
   const { requests } = props;
   if (requests.length === 0) {
     return (
-      <div className="panel">
+      <Panel>
         <h3>Registration requests</h3>
         <p className="text-gray p-2 dark:text-white/60">
           There are no pending requests.
         </p>
-      </div>
+      </Panel>
     );
   }
 
   return (
-    <div className="panel">
+    <Panel>
       <h3>Registration requests</h3>
       <ul>
         {requests.map(r => (
           <Row key={r.uuid} request={r} />
         ))}
       </ul>
-    </div>
+    </Panel>
   );
 }

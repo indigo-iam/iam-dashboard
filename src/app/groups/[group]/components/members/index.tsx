@@ -22,7 +22,7 @@ export default async function Members(props: Readonly<MembersProps>) {
   const membersPage = await fetchGroupMembersPage(groupId, 1, 0);
   const numberOfPages = Math.ceil(membersPage.totalResults / count);
   return (
-    <TabPanel className="panel space-y-4">
+    <TabPanel>
       {isAdmin ? (
         <div className="flex flex-wrap">
           <div className="flex-items flex grow gap-2">

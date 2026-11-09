@@ -54,7 +54,7 @@ type GroupRequestProps = {
 export default function GroupRequests(props: Readonly<GroupRequestProps>) {
   const { user, isMe } = props;
   return (
-    <TabPanel className="panel">
+    <TabPanel>
       <h2>Group Requests</h2>
       <Suspense>
         <Content user={user} isMe={isMe} />

@@ -20,7 +20,7 @@ export default function OtherSettings() {
     actions.nextTab();
   }
   return (
-    <CarouselPanel className="panel flex flex-col gap-2">
+    <CarouselPanel>
       <h2>Other Settings</h2>
       <Field>
         <Label>Home Page</Label>

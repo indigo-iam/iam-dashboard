@@ -8,12 +8,11 @@ type ContainerProps = {
 };
 
 export function Container(props: Readonly<ContainerProps>) {
-  const { children } = props;
+  const outerClassName = props.className ? ` ${props.className}` : "";
   return (
     <div
-      className={`space-y-4 p-4 xl:max-w-5xl xl:min-w-3xl${props.className ? ` ${props.className}` : ""}`}
-    >
-      {children}
-    </div>
+      {...props}
+      className={"mx-auto w-full max-w-5xl space-y-4 p-4" + outerClassName}
+    />
   );
 }

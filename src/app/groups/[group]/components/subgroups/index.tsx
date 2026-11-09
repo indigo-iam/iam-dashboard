@@ -20,7 +20,7 @@ export default async function Subgroups(props: Readonly<SubgroupsProps>) {
   const subgroupsPage = await fetchSubgroupsPage(groupId, 1, 0);
   const numberOfPages = Math.ceil(subgroupsPage.totalResults / count);
   return (
-    <TabPanel className="panel space-y-4">
+    <TabPanel>
       <div className="flex flex-wrap gap-2">
         <div className="flex grow items-center gap-2">
           <h2>Subgroups</h2>

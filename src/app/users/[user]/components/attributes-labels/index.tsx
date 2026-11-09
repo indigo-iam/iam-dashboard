@@ -15,7 +15,7 @@ type AttributesProps = {
 export function AttributesAndLabels(props: Readonly<AttributesProps>) {
   const { userId, userFormattedName, isAdmin } = props;
   return (
-    <TabPanel className="space-y-4">
+    <TabPanel>
       <AttributesPanel userId={userId} isAdmin={isAdmin} />
       <LabelsPanel
         userId={userId}

@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { UserGroupIcon } from "@heroicons/react/24/solid";
 
 import { getSession, isUserAdmin } from "@/auth";
-import { Container } from "@/components/container";
+import { Container, Header, Panel, Section } from "@/components/layout";
 import { InputQuery } from "@/components/inputs";
 import Paginator from "@/components/paginator";
 import { fetchManagedGroups, getGroupsPage } from "@/services/groups";
@@ -39,8 +39,8 @@ async function AdminPage(props: Readonly<GroupsProps>) {
   const numberOfPages = Math.ceil(groupsPage.totalResults / count);
   const groups = groupsPage.Resources;
   return (
-    <section>
-      <header className="section-header flex flex-wrap gap-2">
+    <Section>
+      <Header>
         <div className="flex grow items-center gap-2">
           <UserGroupIcon className="size-5" />
           <h2 className="text-base font-normal">Groups</h2>
@@ -58,14 +58,14 @@ async function AdminPage(props: Readonly<GroupsProps>) {
           aria-label="Search group"
         />
         <AddGroupButton />
-      </header>
+      </Header>
       <Container>
-        <div className="panel">
+        <Panel>
           <AdminGroupsTable groups={groups} />
-        </div>
+        </Panel>
         <Paginator numberOfPages={numberOfPages} />
       </Container>
-    </section>
+    </Section>
   );
 }
 
@@ -80,8 +80,8 @@ async function UserPage() {
   const userFormattedName = me.name?.displayName ?? "unknown user";
   const userEmail = me.emails?.[0].value ?? "unknown email";
   return (
-    <section>
-      <header className="section-header flex flex-wrap gap-2">
+    <Section>
+      <Header>
         <div className="flex grow gap-2">
           <UserGroupIcon className="size-5" />
           <h2 className="text-base font-normal">My groups</h2>
@@ -92,34 +92,34 @@ async function UserPage() {
           userFormattedName={userFormattedName}
           userEmail={userEmail}
         />
-      </header>
-      <div className="container space-y-4">
-        <div className="panel">
+      </Header>
+      <Container>
+        <Panel>
           <h3 className="py-2">Groups</h3>
           {groups.length > 0 ? (
             <UserGroupsTable groupRefs={groups} />
           ) : (
             <p>You are not member of any groups.</p>
           )}
-        </div>
+        </Panel>
         {managedGroups.length > 0 && (
-          <div className="panel">
+          <Panel>
             <h3 className="py-2">Managed groups</h3>
             <UserManagedGroupsTable groups={managedGroups} />
-          </div>
+          </Panel>
         )}
         {requests.length > 0 && (
-          <div className="panel">
+          <Panel>
             <h3 className="py-2">Pending requests</h3>
             <GroupRequestsTable
               userId={me.id}
               requests={requests}
               isAdmin={false}
             />
-          </div>
+          </Panel>
         )}
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }
 

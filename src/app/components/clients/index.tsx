@@ -36,21 +36,20 @@ function Row(props: Readonly<RowProps>) {
           </Link>
           <div className="flex flex-col">
             {client.client_description && (
-              <p className="truncate text-sm font-light">
+              <p className="truncate text-sm font-light break-all">
                 {client.client_description}
               </p>
             )}
-
-            <div className="flex flex-col text-xs font-extralight">
-              <div className="flex items-center gap-1">
+            <div className="text-xs font-extralight">
+              <div className="flex w-full items-center gap-1">
                 <div className="lg:hidden">
                   <Status active={client.active} autoHide={true} />
                 </div>
-                <span className="whitespace-nowrap">{lastUsed}</span>
-                <span>•</span>
-                <span title={scopes} className="truncate">
+                <p title={scopes} className="truncate whitespace-nowrap">
+                  {lastUsed}
+                  <span>•</span>
                   {scopes}
-                </span>
+                </p>
               </div>
             </div>
           </div>
@@ -86,7 +85,7 @@ export function ClientsTable(props: Readonly<ClientsTableProps>) {
     );
   }
   return (
-    <ul className="w-full">
+    <ul>
       {clients.map(client => (
         <Row key={client.client_id} client={client} isAdmin={isAdmin} />
       ))}

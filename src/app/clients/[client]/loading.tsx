@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { CubeIcon } from "@heroicons/react/24/solid";
 
 import { getSession, isUserAdmin } from "@/auth";
-import { Container } from "@/components/container";
+import { Container } from "@/components/layout";
 import { TabGroup, TabList, TabPanels, Tab, TabPanel } from "@/components/tabs";
 import { LoadingList } from "@/components/loading";
 import { LoadingForm } from "@/components/loading/loading-form";

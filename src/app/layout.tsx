@@ -52,7 +52,7 @@ export default async function RootLayout(props: Readonly<RootLayoutProps>) {
                 <Header hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
                 <main>
                   <Sidebar hasRoleAdmin={hasRoleAdmin} isAdmin={isAdmin} />
-                  <div className="content">{children}</div>
+                  <div className="mt-14 md:ml-80">{children}</div>
                 </main>
               </ToasterProvider>
             </ProgressBarProvider>

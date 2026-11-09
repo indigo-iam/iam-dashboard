@@ -44,13 +44,13 @@ export default function RejectRequestModalProps(
         <ModalBody>
           <p>
             Are you sure you want to delete the request to join the group{" "}
-            <Link className="iam-link" href={`/groups/${request.groupUuid}`}>
+            <Link href={`/groups/${request.groupUuid}`}>
               {request.groupName}
             </Link>{" "}
             by the following user?
           </p>
           <Notice>
-            <Link className="iam-link" href={`/users/${request.userUuid}`}>
+            <Link href={`/users/${request.userUuid}`}>
               {request.userFullName}
             </Link>
           </Notice>
@@ -60,7 +60,7 @@ export default function RejectRequestModalProps(
             </p>
             <Field>
               <Label>Motivation</Label>
-              <Textarea name="motivation" className="iam-input" required />
+              <Textarea name="motivation" required />
             </Field>
           </div>
         </ModalBody>

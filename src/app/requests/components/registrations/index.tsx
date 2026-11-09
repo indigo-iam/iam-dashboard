@@ -25,7 +25,7 @@ function Row(props: Readonly<RowProps>) {
         <div>
           <p className="text-gray-950 dark:text-gray-100">
             User{" "}
-            <Link className="iam-link" href={`/users/${request.accountId}`}>
+            <Link href={`/users/${request.accountId}`}>
               {`${request.givenname} ${request.familyname}`} (
               <i>{request.username}</i>)
             </Link>{" "}

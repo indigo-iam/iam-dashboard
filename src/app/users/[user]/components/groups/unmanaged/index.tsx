@@ -27,9 +27,7 @@ function LinkView(props: Readonly<ViewProps>) {
   const { groupId, groupDisplay } = props;
   return (
     <div className="flex grow flex-col">
-      <Link className="iam-link" href={`/groups/${groupId}`}>
-        {groupDisplay}
-      </Link>
+      <Link href={`/groups/${groupId}`}>{groupDisplay}</Link>
       <p className="text-sm font-light">{groupId}</p>
     </div>
   );

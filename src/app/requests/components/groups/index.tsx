@@ -27,14 +27,11 @@ export function Row(props: Readonly<RowPros>) {
         <div className="grow">
           <p className="text-gray-950 dark:text-gray-100">
             User{" "}
-            <Link className="iam-link" href={`/users/${userUuid}`}>
+            <Link href={`/users/${userUuid}`}>
               {userFullName} (<i>{username}</i>)
             </Link>{" "}
             asked to join group{" "}
-            <Link className="iam-link" href={`/groups/${request.groupUuid}`}>
-              {groupName}
-            </Link>
-            .
+            <Link href={`/groups/${request.groupUuid}`}>{groupName}</Link>.
           </p>
           <p className="text-sm">
             Motivation: <q>{request.notes}</q>

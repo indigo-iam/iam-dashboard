@@ -25,9 +25,7 @@ function Row(props: Readonly<RowProps>) {
   return (
     <ListItem>
       <div className="flex w-0 grow flex-col">
-        <Link className="iam-link" href={`/users/${userId}`}>
-          {userFormattedName}
-        </Link>
+        <Link href={`/users/${userId}`}>{userFormattedName}</Link>
         <p className="truncate text-sm font-light">{userEmail}</p>
       </div>
       <ManagerOptions

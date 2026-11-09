@@ -38,14 +38,14 @@ export default function ApproveRegistrationRequestModal(
       <div className="space-y-4">
         <p>Are you sure you want to add the user to this organization?</p>
         <Notice>
-          <Link href={`/users/${request.uuid}`} className="iam-link">
+          <Link href={`/users/${request.uuid}`}>
             {`${request.givenname} ${request.familyname}`}
           </Link>
           <p className="text-sm">{request.email}</p>
         </Notice>
         <p> They provided the following motivation:</p>
       </div>
-      <Textarea className="iam-input" defaultValue={request.notes} disabled />
+      <Textarea defaultValue={request.notes} disabled />
     </ConfirmModal>
   );
 }

@@ -33,9 +33,7 @@ function ApprovedSite(props: Readonly<ApprovedSiteProps>) {
           <div className="flex grow flex-col gap-0.5 lg:w-0">
             <div className="text-gray-950 dark:text-white">
               {isAdmin ? (
-                <Link className="iam-link" href={`/clients/${clientId}`}>
-                  {clientName}
-                </Link>
+                <Link href={`/clients/${clientId}`}>{clientName}</Link>
               ) : (
                 <p>{clientName}</p>
               )}

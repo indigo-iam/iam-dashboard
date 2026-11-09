@@ -33,7 +33,7 @@ function Row(props: Readonly<RowProps>) {
     <ListItem>
       <div className="flex w-0 grow flex-col space-y-2 lg:flex-row lg:gap-16 lg:space-y-0">
         <div className="flex grow flex-col lg:w-0">
-          <Link className="iam-link" href={`/clients/${client.client_id}`}>
+          <Link href={`/clients/${client.client_id}`}>
             {client.client_name}
           </Link>
           <div className="flex flex-col">

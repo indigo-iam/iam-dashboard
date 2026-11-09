@@ -27,9 +27,7 @@ function Row(props: Readonly<RowProps>) {
     <ListItem>
       <div className="text-md flex grow flex-col break-all lg:flex-row">
         <div className="grow flex-col">
-          <Link href={`/users/${userId}`} className="iam-link">
-            {userFormattedName}
-          </Link>
+          <Link href={`/users/${userId}`}>{userFormattedName}</Link>
           <p className="text-sm font-light">{userEmail}</p>
         </div>
         <div className="my-auto flex flex-col">

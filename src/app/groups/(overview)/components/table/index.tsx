@@ -54,9 +54,7 @@ function Row(props: Readonly<RowProps>) {
     <ListItem>
       <div className="flex w-0 grow flex-col gap-0 break-all lg:flex-row lg:gap-2">
         <div className="flex flex-col lg:justify-center">
-          <Link className="iam-link" href={`/groups/${group.id}`}>
-            {group.displayName}
-          </Link>
+          <Link href={`/groups/${group.id}`}>{group.displayName}</Link>
           <div>
             <p className="truncate text-sm font-light">
               {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description}

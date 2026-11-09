@@ -25,9 +25,7 @@ function GroupRequestView(props: Readonly<GroupRequestViewProps>) {
       <div className="flex grow">
         <div>
           {isAdmin ? (
-            <Link className="iam-link" href={`/groups/${groupUuid}`}>
-              {groupName}
-            </Link>
+            <Link href={`/groups/${groupUuid}`}>{groupName}</Link>
           ) : (
             <p className="text-gray-950 dark:text-gray-100">{groupName}</p>
           )}

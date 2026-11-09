@@ -67,7 +67,6 @@ function PEMField() {
       <Label>Certificate</Label>
       <Textarea
         name="certificate"
-        className="iam-input w-full"
         required
         placeholder={placeholder}
         rows={3}
@@ -138,11 +137,7 @@ function RequestCertificateLinkingModal(
           {format === "pem" ? <PEMField /> : <IssuerField />}
           <Field>
             <Label>Optional Request Notes</Label>
-            <Textarea
-              name="notes"
-              className="iam-input w-full"
-              placeholder="Additional notes"
-            />
+            <Textarea name="notes" placeholder="Additional notes" />
           </Field>
         </ModalBody>
         <ModalFooter>
@@ -221,7 +216,6 @@ function LinkCertificateModal(props: Readonly<LinkCertificateModalProps>) {
         <Textarea
           name="certificate"
           placeholder="PEM encoded certificate..."
-          className="iam-input"
           required
           rows={8}
         />

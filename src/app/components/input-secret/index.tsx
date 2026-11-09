@@ -42,7 +42,7 @@ export function InputSecret(props: Readonly<InputSecretProps>) {
   };
 
   return (
-    <div className="iam-input flex divide-x p-0! font-mono text-sm">
+    <div className="flex divide-x p-0! font-mono text-sm">
       <Input type={isVisible ? "text" : "password"} readOnly value={value} />
       <div className="flex items-center rounded">
         <Button

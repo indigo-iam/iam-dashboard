@@ -74,10 +74,9 @@ function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
           </p>
           <Field>
             <Label htmlFor={inputId}>Endtime</Label>
-            <div className="iam-input flex items-center justify-between">
-              <input
+            <div className="iam-input flex items-center justify-between gap-2">
+              <Input
                 id={inputId}
-                className="grow bg-neutral-100 dark:bg-transparent" // hack for safari
                 name="endtime"
                 type="date"
                 value={endtime}
@@ -88,13 +87,13 @@ function EditEndtimeModal(props: Readonly<EditEndtimeModalProps>) {
               <Button
                 name="Clear"
                 variant="plain"
-                className="group relative cursor-pointer hover:text-gray-500"
+                className="group relative cursor-pointer text-neutral-400 hover:text-neutral-500 dark:text-gray-400 dark:hover:text-gray-300"
                 type="button"
                 onClick={clearEndtime}
                 ref={buttonRef}
                 disabled={disabled}
               >
-                <XCircleIcon className="size-4" />
+                <XCircleIcon className="size-5" />
               </Button>
             </div>
           </Field>

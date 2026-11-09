@@ -20,9 +20,7 @@ function Row(props: Readonly<RowProps>) {
   return (
     <ListItem>
       <div className="flex grow flex-col">
-        <Link className="iam-link" href={`/groups/${groupId}`}>
-          {groupName}
-        </Link>
+        <Link href={`/groups/${groupId}`}>{groupName}</Link>
         <p className="text-sm font-light">{groupId}</p>
       </div>
       <GroupOptions groupId={groupId} groupName={groupName} />

@@ -22,7 +22,7 @@ export function OwnersTable(props: Readonly<OwnersTableProps>) {
         return (
           <ListItem key={owner.id}>
             <div className="flex grow flex-col">
-              <Link className="iam-link" href={`/users/${owner.id}`}>
+              <Link href={`/users/${owner.id}`}>
                 {owner.name?.formatted ?? "Unknown name"}
               </Link>
               <p className="text-sm font-light">

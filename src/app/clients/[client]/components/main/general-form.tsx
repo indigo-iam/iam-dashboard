@@ -100,7 +100,6 @@ export function GeneralForm(props: Readonly<GeneralFormProps>) {
           <Label>Description</Label>
           <Textarea
             name="client_description"
-            className="iam-input"
             placeholder="Client description..."
             defaultValue={client.client_description}
           />

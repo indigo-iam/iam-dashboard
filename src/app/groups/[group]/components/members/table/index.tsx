@@ -21,9 +21,7 @@ function Row(props: Readonly<RowProps>) {
   return (
     <ListItem>
       <div className="flex w-0 grow flex-col">
-        <Link className="iam-link" href={`/users/${userId}`}>
-          {userDisplay}
-        </Link>
+        <Link href={`/users/${userId}`}>{userDisplay}</Link>
         <p className="truncate text-sm font-light">{userId}</p>
       </div>
       <MemberOptions

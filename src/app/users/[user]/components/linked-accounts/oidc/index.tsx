@@ -3,6 +3,9 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { OidcId } from "@/models/indigo-user";
+import { Panel } from "@/components/layout";
+import { ListItem, UnorderedList } from "@/components/list";
+
 import OidcOptions from "./options";
 import { LinkAccountButton } from "./link-account";
 
@@ -14,13 +17,13 @@ type OidcIdViewProps = {
 function OidcIdView(props: Readonly<OidcIdViewProps>) {
   const { userId, oidcId } = props;
   return (
-    <li className="iam-list-item">
+    <ListItem>
       <div className="flex grow flex-col">
         <p className="text-gray-950 dark:text-gray-100">{oidcId.issuer}</p>
         <p className="text-sm font-light">{oidcId.subject}</p>
       </div>
       <OidcOptions userId={userId} oidcId={oidcId} />
-    </li>
+    </ListItem>
   );
 }
 
@@ -34,7 +37,7 @@ type OidcAccountsProps = {
 export function OidcAccounts(props: Readonly<OidcAccountsProps>) {
   const { userId, userFormattedName, oidcIds, isAdmin } = props;
   return (
-    <div className="panel space-y-2">
+    <Panel>
       <div className="flex gap-2">
         <h2 className="grow">OpenID Connect/OAuth2</h2>
         {isAdmin && (
@@ -44,7 +47,7 @@ export function OidcAccounts(props: Readonly<OidcAccountsProps>) {
           />
         )}
       </div>
-      <ul className="w-full">
+      <UnorderedList>
         {oidcIds.length === 0 ? (
           <p className="pt-4">There are no linked accounts.</p>
         ) : (
@@ -52,7 +55,7 @@ export function OidcAccounts(props: Readonly<OidcAccountsProps>) {
             <OidcIdView key={oidcId.subject} userId={userId} oidcId={oidcId} />
           ))
         )}
-      </ul>
-    </div>
+      </UnorderedList>
+    </Panel>
   );
 }

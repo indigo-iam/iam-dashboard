@@ -2,9 +2,11 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { ListItem, UnorderedList } from "@/components/list";
 import { TabPanel } from "@/components/tabs";
 import { Client, Scope } from "@/models/client";
 import { fetchScopes } from "@/services/scopes";
+
 import { ScopeOptions } from "./options";
 import { AddScopeButton } from "./add-system-scopes";
 import { AddCustomScope } from "./add-custom-scope";
@@ -19,7 +21,7 @@ type SystemScopesProps = {
 function SystemScopes(props: Readonly<SystemScopesProps>) {
   const { client, scopes, isAdmin } = props;
   return scopes.map(s => (
-    <li className="iam-list-item" key={s.id}>
+    <ListItem key={s.id}>
       <div className="flex grow flex-col">
         <p className="text-gray-950 dark:text-gray-200">
           {s.restricted ? `${s.value} (restricted)` : s.value}
@@ -29,7 +31,7 @@ function SystemScopes(props: Readonly<SystemScopesProps>) {
       <div className="flex flex-col items-center">
         <ScopeOptions client={client} scope={s.value} isAdmin={isAdmin} />
       </div>
-    </li>
+    </ListItem>
   ));
 }
 
@@ -42,7 +44,7 @@ type CustomScopesProps = {
 function CustomScopes(props: Readonly<CustomScopesProps>) {
   const { client, scopes, isAdmin } = props;
   return scopes.map(s => (
-    <li className="iam-list-item" key={s}>
+    <ListItem key={s}>
       <div className="flex grow flex-col">
         <p className="text-gray-950 dark:text-gray-200">{s}</p>
         <p className="text-xs">(custom scope)</p>
@@ -50,7 +52,7 @@ function CustomScopes(props: Readonly<CustomScopesProps>) {
       <div className="flex flex-col items-center">
         <ScopeOptions client={client} scope={s} isAdmin={isAdmin} />
       </div>
-    </li>
+    </ListItem>
   ));
 }
 
@@ -90,7 +92,7 @@ export default async function Scopes(props: Readonly<ScopesProps>) {
         </div>
       </div>
       <div className="space-y-8 divide-y">
-        <ul className="flex flex-col gap-2">
+        <UnorderedList>
           <SystemScopes
             client={client}
             scopes={clientSystemScopes}
@@ -101,7 +103,7 @@ export default async function Scopes(props: Readonly<ScopesProps>) {
             scopes={customScopesNames}
             isAdmin={isAdmin}
           />
-        </ul>
+        </UnorderedList>
         <AdvancedSettings client={client} isAdmin={isAdmin} />
       </div>
     </TabPanel>

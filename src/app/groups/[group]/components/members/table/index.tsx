@@ -2,10 +2,12 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { fetchGroupMembersPage } from "@/services/groups";
-import MemberOptions from "./options";
-
 import Link from "next/link";
+
+import { ListItem, UnorderedList } from "@/components/list";
+import { fetchGroupMembersPage } from "@/services/groups";
+
+import MemberOptions from "./options";
 
 type RowProps = {
   userId: string;
@@ -17,7 +19,7 @@ type RowProps = {
 function Row(props: Readonly<RowProps>) {
   const { userId, userDisplay, groupId, groupDisplay } = props;
   return (
-    <li className="iam-list-item">
+    <ListItem>
       <div className="flex w-0 grow flex-col">
         <Link className="iam-link" href={`/users/${userId}`}>
           {userDisplay}
@@ -30,7 +32,7 @@ function Row(props: Readonly<RowProps>) {
         groupId={groupId}
         groupDisplay={groupDisplay}
       />
-    </li>
+    </ListItem>
   );
 }
 
@@ -46,7 +48,7 @@ export default async function Members(props: Readonly<MembersProps>) {
   const membersPage = await fetchGroupMembersPage(groupId, count, startIndex);
   const members = membersPage.Resources;
   return (
-    <ul className="w-full">
+    <UnorderedList>
       {members.map(member => (
         <Row
           key={member.value}
@@ -56,6 +58,6 @@ export default async function Members(props: Readonly<MembersProps>) {
           groupDisplay={groupDisplay}
         />
       ))}
-    </ul>
+    </UnorderedList>
   );
 }

@@ -2,9 +2,12 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import ScopeIcon from "@/app/components/scope-icon";
-import { Scope } from "@/models/client";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+
+import ScopeIcon from "@/app/components/scope-icon";
+import { ListItem, UnorderedList } from "@/components/list";
+import { Scope } from "@/models/client";
+
 import ScopeTypeSelect from "./scope-type-select";
 import ScopeOptions from "./options";
 
@@ -23,9 +26,9 @@ export default function ScopesTable(props: Readonly<ScopesTableProps>) {
     );
   }
   return (
-    <ul>
+    <UnorderedList>
       {scopes.map(scope => (
-        <li className="iam-list-item gap-2" key={scope.id}>
+        <ListItem key={scope.id}>
           <div className="flex grow flex-col gap-2 lg:flex-row lg:items-center lg:gap-0">
             <div className="flex grow flex-col lg:w-0">
               <div className="flex-inline flex items-center gap-2 text-gray-950 dark:text-gray-100">
@@ -37,8 +40,8 @@ export default function ScopesTable(props: Readonly<ScopesTableProps>) {
             <ScopeTypeSelect key={scope.id} scope={scope} />
           </div>
           <ScopeOptions scope={scope} />
-        </li>
+        </ListItem>
       ))}
-    </ul>
+    </UnorderedList>
   );
 }

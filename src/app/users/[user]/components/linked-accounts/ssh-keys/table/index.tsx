@@ -4,6 +4,8 @@
 
 import { SSHKey } from "@/models/indigo-user";
 import { dateToHuman } from "@/utils/dates";
+import { ListItem, UnorderedList } from "@/components/list";
+
 import SSHKeysOptions from "./options";
 
 type SSHKeyViewProps = {
@@ -17,7 +19,7 @@ function SSHKeyView(props: Readonly<SSHKeyViewProps>) {
     ? dateToHuman(new Date(sshKey.created))
     : "N/A";
   return (
-    <li className="iam-list-item overflow-hidden">
+    <ListItem>
       <div className="my-auto flex grow flex-col gap-1 truncate">
         <p className="text-lg text-gray-950 dark:text-gray-100">
           {sshKey.display}
@@ -30,7 +32,7 @@ function SSHKeyView(props: Readonly<SSHKeyViewProps>) {
         Created {createdAt}
       </div>
       <SSHKeysOptions userId={userId} sshKey={sshKey} />
-    </li>
+    </ListItem>
   );
 }
 
@@ -42,7 +44,7 @@ type TableProps = {
 export default function Table(props: Readonly<TableProps>) {
   const { userId, sshKeys } = props;
   return (
-    <ul className="w-full">
+    <UnorderedList className="w-full">
       {sshKeys.length === 0 ? (
         <p>There are no SSH keys.</p>
       ) : (
@@ -50,6 +52,6 @@ export default function Table(props: Readonly<TableProps>) {
           <SSHKeyView key={key.fingerprint} userId={userId} sshKey={key} />
         ))
       )}
-    </ul>
+    </UnorderedList>
   );
 }

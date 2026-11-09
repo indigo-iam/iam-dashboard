@@ -2,13 +2,16 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { Suspense } from "react";
+
 import Link from "@/components/link";
+import { ListItem, UnorderedList } from "@/components/list";
 import { LoadingList } from "@/components/loading";
 import { TabPanel } from "@/components/tabs";
 import { Site } from "@/models/sites";
 import { getApprovedSites } from "@/services/sites";
+
 import { ApprovedSiteOptions } from "./options";
-import { Suspense } from "react";
 
 type ApprovedSiteProps = {
   site: Site;
@@ -24,7 +27,7 @@ function ApprovedSite(props: Readonly<ApprovedSiteProps>) {
     site.authorizationDate
   ).toLocaleDateString();
   return (
-    <li className="iam-list-item">
+    <ListItem>
       <div className="flex w-0 grow flex-col">
         <div className="flex grow flex-col gap-0.5 lg:flex-row">
           <div className="flex grow flex-col gap-0.5 lg:w-0">
@@ -58,7 +61,7 @@ function ApprovedSite(props: Readonly<ApprovedSiteProps>) {
         </div>
       </div>
       <ApprovedSiteOptions site={site} />
-    </li>
+    </ListItem>
   );
 }
 
@@ -73,11 +76,11 @@ async function Content(props: Readonly<ApprovedSitesProps>) {
     return null;
   }
   return (
-    <ul>
+    <UnorderedList>
       {approvedSites.map(site => (
         <ApprovedSite site={site} key={site.id} isAdmin={isAdmin} />
       ))}
-    </ul>
+    </UnorderedList>
   );
 }
 

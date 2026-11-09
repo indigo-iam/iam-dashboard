@@ -3,6 +3,9 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { SamlId } from "@/models/indigo-user";
+import { Panel } from "@/components/layout";
+import { ListItem, UnorderedList } from "@/components/list";
+
 import SAMLOptions from "./options";
 
 type SamlIdViewProps = {
@@ -13,7 +16,7 @@ type SamlIdViewProps = {
 function SamlIdView(props: Readonly<SamlIdViewProps>) {
   const { userId, samlId } = props;
   return (
-    <li className="iam-list-item">
+    <ListItem>
       <div className="flex grow flex-col">
         <p className="break-all text-gray-950 dark:text-gray-100">
           {samlId.idpId}
@@ -22,7 +25,7 @@ function SamlIdView(props: Readonly<SamlIdViewProps>) {
         <p className="text-sm font-light">{samlId.attributeId}</p>
       </div>
       <SAMLOptions userId={userId} samlId={samlId} />
-    </li>
+    </ListItem>
   );
 }
 
@@ -33,20 +36,26 @@ type SamlAccountsProps = {
 
 export function SamlAccounts(props: Readonly<SamlAccountsProps>) {
   const { userId, samlIds } = props;
-  return (
-    <div className="panel space-y-2">
-      <h2>SAML</h2>
-      {samlIds.length === 0 ? (
+  if (samlIds.length === 0) {
+    return (
+      <Panel>
+        <h2>SAML</h2>
         <p className="pt-4">There are no linked accounts.</p>
-      ) : (
-        samlIds.map(samlId => (
+      </Panel>
+    );
+  }
+  return (
+    <Panel>
+      <h2>SAML</h2>
+      <UnorderedList>
+        {samlIds.map(samlId => (
           <SamlIdView
             key={samlId.attributeId}
             userId={userId}
             samlId={samlId}
           />
-        ))
-      )}
-    </div>
+        ))}
+      </UnorderedList>
+    </Panel>
   );
 }

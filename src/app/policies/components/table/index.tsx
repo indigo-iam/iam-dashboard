@@ -3,7 +3,9 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import Link from "@/components/link";
+import { ListItem, UnorderedList } from "@/components/list";
 import { ScopePolicy } from "@/models/scope-policies";
+
 import PolicyOptions from "./options";
 
 type RowProps = {
@@ -15,7 +17,7 @@ function Row(props: Readonly<RowProps>) {
   const { policy, readWrite } = props;
   const scopes = policy.scopes ? policy.scopes.join(" ") : "";
   return (
-    <li className="iam-list-item">
+    <ListItem>
       <Link
         className="flex grow flex-col text-gray-950 dark:text-gray-200"
         href={`/policies/${policy.id}`}
@@ -24,7 +26,7 @@ function Row(props: Readonly<RowProps>) {
         <p className="truncate text-sm font-light italic">{scopes}</p>
       </Link>
       {readWrite && <PolicyOptions policy={policy} />}
-    </li>
+    </ListItem>
   );
 }
 
@@ -35,10 +37,10 @@ type PoliciesTableProps = {
 export default function PoliciesTable(props: Readonly<PoliciesTableProps>) {
   const { policies } = props;
   return (
-    <ul className="overflow-x-auto">
+    <UnorderedList>
       {policies.map(policy => (
         <Row key={policy.id} policy={policy} />
       ))}
-    </ul>
+    </UnorderedList>
   );
 }

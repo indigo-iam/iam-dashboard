@@ -2,11 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { Suspense } from "react";
+
 import { TabPanel } from "@/components/tabs";
 import { getClientOwners } from "@/services/clients";
+
 import { OwnersTable } from "./table";
 import { AddOwnerButton } from "./add-owner-button";
-import { Suspense } from "react";
 
 type ContentProps = {
   clientId: string;

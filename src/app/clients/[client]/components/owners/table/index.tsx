@@ -3,7 +3,9 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import Link from "@/components/link";
+import { ListItem, UnorderedList } from "@/components/list";
 import { User } from "@/models/scim";
+
 import { OwnerOptions } from "./options";
 
 type OwnersTableProps = {
@@ -15,10 +17,10 @@ type OwnersTableProps = {
 export function OwnersTable(props: Readonly<OwnersTableProps>) {
   const { clientId, clientName, owners } = props;
   return (
-    <ul>
+    <UnorderedList>
       {owners.map(owner => {
         return (
-          <li key={owner.id} className="iam-list-item">
+          <ListItem key={owner.id}>
             <div className="flex grow flex-col">
               <Link className="iam-link" href={`/users/${owner.id}`}>
                 {owner.name?.formatted ?? "Unknown name"}
@@ -34,9 +36,9 @@ export function OwnersTable(props: Readonly<OwnersTableProps>) {
               clientId={clientId}
               clientName={clientName}
             />
-          </li>
+          </ListItem>
         );
       })}
-    </ul>
+    </UnorderedList>
   );
 }

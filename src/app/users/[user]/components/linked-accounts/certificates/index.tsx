@@ -2,8 +2,11 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { Panel } from "@/components/layout";
+import { ListItem, UnorderedList } from "@/components/list";
 import { Certificate } from "@/models/indigo-user";
 import { dateToHuman, getNow } from "@/utils/dates";
+
 import LinkCertificateButton from "./link-certificate-button";
 import { LinkProxyButton } from "./link-proxy-button/";
 import CertificateOptions from "./options";
@@ -26,7 +29,7 @@ function CertificateView(props: Readonly<CertificateViewProps>) {
     return [expired, dateToHuman(new Date(cert.proxyExpirationTime))];
   })();
   return (
-    <div className="iam-list-item items-center">
+    <ListItem>
       <div className="grow space-y-2">
         <p className="text-gray-950 dark:text-gray-200">{cert.display}</p>
         <div className="flex flex-col gap-0.5">
@@ -48,7 +51,34 @@ function CertificateView(props: Readonly<CertificateViewProps>) {
         userFormattedName={userFormattedName}
         certificate={cert}
       />
-    </div>
+    </ListItem>
+  );
+}
+
+type CertificateListProps = {
+  isAdmin: boolean;
+  userId: string;
+  userFormattedName: string;
+  certificates: Certificate[];
+};
+
+function CertificateList(props: Readonly<CertificateListProps>) {
+  const { isAdmin, userId, userFormattedName, certificates } = props;
+  if (certificates.length === 0) {
+    return <p>There are not linked certificates.</p>;
+  }
+  return (
+    <UnorderedList>
+      {certificates.map(cert => (
+        <CertificateView
+          isAdmin={isAdmin}
+          key={cert.subjectDn + cert.issuerDn}
+          userId={userId}
+          userFormattedName={userFormattedName}
+          cert={cert}
+        />
+      ))}
+    </UnorderedList>
   );
 }
 
@@ -65,7 +95,7 @@ export function Certificates(props: Readonly<CertificateProps>) {
   const { isMe, userId, userName, userFormattedName, certificates, isAdmin } =
     props;
   return (
-    <div className="panel space-y-2">
+    <Panel>
       <div className="flex flex-wrap justify-between">
         <h2>X.509 certificates</h2>
         <div className="flex gap-2">
@@ -85,19 +115,12 @@ export function Certificates(props: Readonly<CertificateProps>) {
           )}
         </div>
       </div>
-      {certificates.length === 0 ? (
-        <p>There are not linked certificates.</p>
-      ) : (
-        certificates.map(cert => (
-          <CertificateView
-            isAdmin={isAdmin}
-            key={cert.subjectDn + cert.issuerDn}
-            userId={userId}
-            userFormattedName={userFormattedName}
-            cert={cert}
-          />
-        ))
-      )}
-    </div>
+      <CertificateList
+        isAdmin={isAdmin}
+        userId={userId}
+        userFormattedName={userFormattedName}
+        certificates={certificates}
+      />
+    </Panel>
   );
 }

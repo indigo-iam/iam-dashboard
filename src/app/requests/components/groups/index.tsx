@@ -4,8 +4,10 @@
 
 import { GroupRequest } from "@/models/group-requests";
 import { dateToHuman } from "@/utils/dates";
-import Link from "@/components/link";
 import { Panel } from "@/components/layout";
+import Link from "@/components/link";
+import { ListItem, UnorderedList } from "@/components/list";
+
 import GroupRequestOptions from "./options";
 
 type RowPros = {
@@ -20,7 +22,7 @@ export function Row(props: Readonly<RowPros>) {
     : "N/A";
 
   return (
-    <li className="iam-list-item">
+    <ListItem>
       <div className="flex grow">
         <div className="grow">
           <p className="text-gray-950 dark:text-gray-100">
@@ -41,7 +43,7 @@ export function Row(props: Readonly<RowPros>) {
         </div>
       </div>
       <GroupRequestOptions request={request} />
-    </li>
+    </ListItem>
   );
 }
 
@@ -62,11 +64,11 @@ export default function Groups(props: Readonly<GroupsProps>) {
   return (
     <Panel>
       <h3>Group requests</h3>
-      <ul className="w-full table-auto">
+      <UnorderedList>
         {requests.map(r => (
           <Row key={r.uuid} request={r} />
         ))}
-      </ul>
+      </UnorderedList>
     </Panel>
   );
 }

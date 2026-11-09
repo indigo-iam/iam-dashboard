@@ -6,6 +6,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 import Link from "@/components/link";
 import { Status } from "@/components/badges";
+import { ListItem, UnorderedList } from "@/components/list";
 import { User } from "@/models/scim";
 import UserOptions from "./options";
 import { dateToHuman } from "@/utils/dates";
@@ -23,7 +24,7 @@ function Row(props: Readonly<RowProps>) {
     props;
   const created = userCreatedAt ? dateToHuman(new Date(userCreatedAt)) : "N/A";
   return (
-    <li className="iam-list-item lg:gap-2">
+    <ListItem>
       <div className="text-md flex grow flex-col break-all lg:flex-row">
         <div className="grow flex-col">
           <Link href={`/users/${userId}`} className="iam-link">
@@ -44,7 +45,7 @@ function Row(props: Readonly<RowProps>) {
         userEmail={userEmail}
         userIsActive={userIsActive}
       />
-    </li>
+    </ListItem>
   );
 }
 
@@ -63,7 +64,7 @@ export default function UsersTable(props: Readonly<UsersTableProps>) {
     );
   }
   return (
-    <ul className="w-full">
+    <UnorderedList>
       {users.map(user => (
         <Row
           key={user.id}
@@ -74,6 +75,6 @@ export default function UsersTable(props: Readonly<UsersTableProps>) {
           userCreatedAt={user.meta?.created}
         />
       ))}
-    </ul>
+    </UnorderedList>
   );
 }

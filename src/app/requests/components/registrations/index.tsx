@@ -6,6 +6,8 @@ import { Registration } from "@/models/registration";
 import { dateToHuman } from "@/utils/dates";
 import { Panel } from "@/components/layout";
 import Link from "@/components/link";
+import { ListItem, UnorderedList } from "@/components/list";
+
 import RegistrationRequestsOptions from "./options";
 
 type RowProps = {
@@ -18,7 +20,7 @@ function Row(props: Readonly<RowProps>) {
     ? dateToHuman(new Date(request.creationTime))
     : "N/A";
   return (
-    <li className="iam-list-item">
+    <ListItem>
       <div className="flex grow">
         <div>
           <p className="text-gray-950 dark:text-gray-100">
@@ -36,7 +38,7 @@ function Row(props: Readonly<RowProps>) {
         </div>
       </div>
       <RegistrationRequestsOptions request={request} />
-    </li>
+    </ListItem>
   );
 }
 
@@ -60,11 +62,11 @@ export default function Registrations(props: Readonly<RegistrationsProps>) {
   return (
     <Panel>
       <h3>Registration requests</h3>
-      <ul>
+      <UnorderedList>
         {requests.map(r => (
           <Row key={r.uuid} request={r} />
         ))}
-      </ul>
+      </UnorderedList>
     </Panel>
   );
 }

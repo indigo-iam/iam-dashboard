@@ -5,9 +5,11 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 import Link from "@/components/link";
+import { ListItem, UnorderedList } from "@/components/list";
 import { Status } from "@/components/badges";
 import { Client } from "@/models/client";
 import { dateToHuman } from "@/utils/dates";
+
 import ClientOptions from "./options";
 
 function sortScopes(scope: string) {
@@ -28,7 +30,7 @@ function Row(props: Readonly<RowProps>) {
     ? `Last used ${dateToHuman(new Date(client.last_used))}`
     : "Never used";
   return (
-    <li className="iam-list-item gap-2">
+    <ListItem>
       <div className="flex w-0 grow flex-col space-y-2 lg:flex-row lg:gap-16 lg:space-y-0">
         <div className="flex grow flex-col lg:w-0">
           <Link className="iam-link" href={`/clients/${client.client_id}`}>
@@ -65,7 +67,7 @@ function Row(props: Readonly<RowProps>) {
         clientDescription={client.client_description}
         active={client.active}
       />
-    </li>
+    </ListItem>
   );
 }
 
@@ -85,10 +87,10 @@ export function ClientsTable(props: Readonly<ClientsTableProps>) {
     );
   }
   return (
-    <ul>
+    <UnorderedList>
       {clients.map(client => (
         <Row key={client.client_id} client={client} isAdmin={isAdmin} />
       ))}
-    </ul>
+    </UnorderedList>
   );
 }

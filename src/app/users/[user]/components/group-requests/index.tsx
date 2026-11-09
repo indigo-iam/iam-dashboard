@@ -3,9 +3,12 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Suspense } from "react";
+
+import { ListItem, UnorderedList } from "@/components/list";
 import { TabPanel } from "@/components/tabs";
 import { fetchGroupsRequests } from "@/services/group-requests";
 import { User } from "@/models/scim";
+
 import GroupRequestOptions from "./options";
 
 type ContentProps = {
@@ -24,10 +27,10 @@ async function Content(props: Readonly<ContentProps>) {
   const groupRequests = result.Resources;
 
   return (
-    <ul className="iam-list-item w-full">
+    <UnorderedList>
       {groupRequests.map(req => {
         return (
-          <li className="flex flex-row" key={req.uuid}>
+          <ListItem key={req.uuid}>
             <div className="flex grow flex-col">
               <div className="inline-flex gap-1">
                 <span className="font-bold">Group Name:</span>
@@ -39,10 +42,10 @@ async function Content(props: Readonly<ContentProps>) {
               </div>
             </div>
             <GroupRequestOptions user={user} isMe={isMe} groupRequest={req} />
-          </li>
+          </ListItem>
         );
       })}
-    </ul>
+    </UnorderedList>
   );
 }
 

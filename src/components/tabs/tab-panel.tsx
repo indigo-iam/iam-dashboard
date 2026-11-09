@@ -17,10 +17,11 @@ import { Panel } from "../layout";
 export type TabPanelProps = {
   children: React.ReactNode;
   className?: string;
+  variant?: "plain";
 };
 
 export function TabPanel(props: Readonly<TabPanelProps>) {
-  const { children } = props;
+  const { children, variant } = props;
   const { selectedIndex } = useTabData();
   const tabIndex = useTabIndex();
   const actions = useTabActions();
@@ -44,6 +45,7 @@ export function TabPanel(props: Readonly<TabPanelProps>) {
   return (
     <Panel
       className={"hidden data-selected:block" + outerClassName}
+      variant={variant}
       tabIndex={-1}
       id={panelId}
       ref={panelRef}

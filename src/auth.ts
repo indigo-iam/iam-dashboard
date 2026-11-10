@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { settings } from "@/config";
+import { isBuilding, settings } from "@/config";
 import type { User as IamUser } from "@/models/scim";
 import { betterAuth } from "better-auth";
 import type { BetterAuthOptions, OAuth2Tokens } from "better-auth";
@@ -79,7 +79,9 @@ const indigoIam = () =>
     config: [
       {
         providerId: "indigo-iam",
-        discoveryUrl: discoveryUrl,
+        // Skip OIDC discovery while the app is being built: no requests are
+        // handled at that time and the provider may be offline.
+        discoveryUrl: isBuilding ? undefined : discoveryUrl,
         clientId: IAM_DASHBOARD_CLIENT_ID,
         clientSecret: IAM_DASHBOARD_CLIENT_SECRET,
         scopes: IAM_DASHBOARD_OIDC_ADMIN_SCOPES?.split(" "),

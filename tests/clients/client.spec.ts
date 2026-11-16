@@ -35,9 +35,10 @@ async function createNewClient(page: Page, client: Client) {
   await page.getByRole("button", { name: "Continue" }).click();
   const redirectUri = page.getByLabel("Redirect URIs", { exact: true });
   await redirectUri.fill(client.redirectUri);
+  await page.getByRole("button", { name: "Add", exact: true }).first().click();
   const postLogoutRedirectUri = page.getByLabel("Post Logout Redirect URIs");
   await postLogoutRedirectUri.fill(client.redirectUri);
-  await page.getByRole("button", { name: "Add", exact: true }).click();
+  await page.getByRole("button", { name: "Add", exact: true }).last().click();
 }
 
 async function saveNewClient(page: Page) {

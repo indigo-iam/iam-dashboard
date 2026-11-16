@@ -30,7 +30,7 @@ export function Form(props: FormProps) {
     if (event.defaultPrevented) {
       return;
     }
-    for (const callback of [...callbacks.current]) {
+    for (const callback of callbacks.current) {
       callback();
     }
   }

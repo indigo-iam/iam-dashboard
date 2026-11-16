@@ -49,18 +49,27 @@ export default function GrantTypes(props: Readonly<GrantTypesProps>) {
     const formData = new FormData(event.currentTarget);
     const grant_types = formData.getAll("grant_type") as GrantType[];
     const redirect_uris = formData.getAll("redirect_uris") as string[];
-    const requestBody: Client = { ...client, grant_types, redirect_uris };
+    const post_logout_redirect_uris = formData.getAll(
+      "post_logout_redirect_uris"
+    ) as string[];
+    const requestBody: Client = {
+      ...client,
+      grant_types,
+      redirect_uris,
+      post_logout_redirect_uris,
+    };
     const res = await editClient(requestBody, isAdmin);
     toast(res);
   }
 
   return (
     <TabPanel>
-      <Form onSubmit={submit} className="space-y-4">
+      <Form onSubmit={submit}>
         <div className="space-y-4 divide-y">
           <MainGrantTypes
             grantTypes={client.grant_types ?? []}
             redirectUris={client.redirect_uris ?? []}
+            postLogoutRedirectUris={client.post_logout_redirect_uris ?? []}
             onAuthGrantChange={setIsAuthGrantOk}
           />
           <OtherGrantTypes grantTypes={client.grant_types ?? []} />

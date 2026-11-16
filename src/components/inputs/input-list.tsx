@@ -132,7 +132,7 @@ export function InputList(props: Readonly<InputListProps>) {
       {errorMessage ? (
         <small className="text-danger">{errorMessage}</small>
       ) : null}
-      <ul className="mt-2">{listItems}</ul>
+      {listItems.length > 0 && <ul className="mt-2">{listItems}</ul>}
     </>
   );
 }

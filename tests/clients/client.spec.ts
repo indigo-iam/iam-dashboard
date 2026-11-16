@@ -10,6 +10,7 @@ type Client = {
   name: string;
   description: string;
   redirectUri: string;
+  postLogoutRedirectUri: string;
 };
 
 function randomClient(): Client {
@@ -17,6 +18,7 @@ function randomClient(): Client {
     name: `test-client-bot-${randomString(6)}`,
     description: "To be deleted",
     redirectUri: "https://www.abc.com",
+    postLogoutRedirectUri: "https://www.abc.com/logout",
   };
 }
 
@@ -31,9 +33,12 @@ async function createNewClient(page: Page, client: Client) {
   const clientDescription = page.getByLabel("Client Description");
   await clientDescription.fill(client.description);
   await page.getByRole("button", { name: "Continue" }).click();
-  const redirectUri = page.getByLabel("Redirect URIs");
+  const redirectUri = page.getByLabel("Redirect URIs", { exact: true });
   await redirectUri.fill(client.redirectUri);
-  await page.getByRole("button", { name: "Add", exact: true }).click();
+  await page.getByRole("button", { name: "Add", exact: true }).first().click();
+  const postLogoutRedirectUri = page.getByLabel("Post Logout Redirect URIs");
+  await postLogoutRedirectUri.fill(client.redirectUri);
+  await page.getByRole("button", { name: "Add", exact: true }).last().click();
 }
 
 async function saveNewClient(page: Page) {

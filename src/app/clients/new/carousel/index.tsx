@@ -42,6 +42,9 @@ export function NewClientCarousel(props: Readonly<NewClientCarouselProps>) {
     const formData = new FormData(event.currentTarget);
     const request: ClientRequest = {
       redirect_uris: formData.getAll("redirect_uris") as string[],
+      post_logout_redirect_uris: formData.getAll(
+        "post_logout_redirect_uris"
+      ) as string[],
       client_name: formData.get("client_name") as string,
       client_description: (formData.get("client_description") as string) ?? "",
       contacts: formData.getAll("contacts") as string[],

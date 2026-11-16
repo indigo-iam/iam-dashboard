@@ -91,7 +91,7 @@ export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
   const description = descriptions.get(selectedGrantType);
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-4">
       <Field>
         <Label>
           <div className="flex items-center gap-1">

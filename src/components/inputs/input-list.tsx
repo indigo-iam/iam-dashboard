@@ -9,6 +9,7 @@ import { PlusIcon, XMarkIcon } from "@heroicons/react/16/solid";
 
 import { Input } from "@/components/inputs";
 import { Button } from "@/components/buttons";
+import { useFormReset } from "../form";
 
 type InputListProps = {
   value?: string[];
@@ -38,6 +39,12 @@ export function InputList(props: Readonly<InputListProps>) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const isControlled = value !== undefined;
   const items = isControlled ? value : innerValue;
+
+  useFormReset(() => {
+    if (!isControlled) {
+      setInnerValue(defaultValue ?? []);
+    }
+  });
 
   function addItem(item: string) {
     const { value, error } = sanitizeValue(item);

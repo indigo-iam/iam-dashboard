@@ -16,6 +16,7 @@ export interface Scope extends RawScope {
 
 export interface ClientRequest {
   redirect_uris: string[];
+  post_logout_redirect_uris: string[];
   client_name: string;
   client_description: string;
   contacts: string[];
@@ -40,6 +41,7 @@ export interface ClientBase {
   created_at: number;
   last_used: number;
   redirect_uris: string[];
+  post_logout_redirect_uris: string[];
   dynamically_registered: boolean;
   status_changed_on?: number;
   error?: string;

@@ -19,18 +19,21 @@ import DeviceCode from "./device-code";
 type AuthenticationFlowSettingsProps = {
   grantType: GrantType;
   redirectUris: string[];
+  postLogoutRedirectUris: string[];
   onStatusChange?: (status: boolean) => void;
 };
 
 const AuthenticationFlowSettings = (
   props: Readonly<AuthenticationFlowSettingsProps>
 ) => {
-  const { redirectUris, grantType, onStatusChange } = props;
+  const { redirectUris, postLogoutRedirectUris, grantType, onStatusChange } =
+    props;
   switch (grantType) {
     case "authorization_code":
       return (
         <AuthorizationCode
           redirectUris={redirectUris}
+          postLogoutRedirectUris={postLogoutRedirectUris}
           onStatusChange={onStatusChange}
         />
       );
@@ -45,6 +48,7 @@ const AuthenticationFlowSettings = (
 
 type AuthenticationFlowProps = {
   redirectUris: string[];
+  postLogoutRedirectUris: string[];
   defaultValue?: string;
   onStatusChange?: (status: boolean) => void;
 };
@@ -65,7 +69,12 @@ const descriptions = new Map([
 ]);
 
 export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
-  const { redirectUris, defaultValue, onStatusChange } = props;
+  const {
+    redirectUris, //
+    postLogoutRedirectUris,
+    defaultValue,
+    onStatusChange,
+  } = props;
   const options = [
     { id: "authorization_code", name: "Authorization Code" },
     { id: "client_credentials", name: "Client Credentials" },
@@ -105,6 +114,7 @@ export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
       </Field>
       <AuthenticationFlowSettings
         redirectUris={redirectUris}
+        postLogoutRedirectUris={postLogoutRedirectUris}
         onStatusChange={onStatusChange}
         grantType={selectedGrantType as GrantType}
       />

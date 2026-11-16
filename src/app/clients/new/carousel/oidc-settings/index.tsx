@@ -64,7 +64,11 @@ export default function OIDCSettings(props: Readonly<OIDCSettingsProps>) {
   return (
     <CarouselPanel>
       <h2>OpenID Connect - OAuth 2</h2>
-      <AuthenticationFlow redirectUris={[]} onStatusChange={setAuthFlowOk} />
+      <AuthenticationFlow
+        redirectUris={[]}
+        postLogoutRedirectUris={[]}
+        onStatusChange={setAuthFlowOk}
+      />
       <Field>
         <Label>Client Authentication</Label>
         <ClientAuthentication

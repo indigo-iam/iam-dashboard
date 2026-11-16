@@ -21,7 +21,7 @@
     "react-dom": "^19"
   },
   "devDependencies": {
-    "@playwright/test": "^1.62.0",
+    "@playwright/test": "^1.65.0",
     "@tailwindcss/postcss": "^4.3",
     "@types/better-sqlite3": "^7.6",
     "@types/node": "^24",
@@ -34,5 +34,8 @@
     "prettier-plugin-tailwindcss": "^0",
     "tailwindcss": "^4.3",
     "typescript": "^6"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.11.1": true
   }
 }

@@ -11,17 +11,18 @@ import Table from "./table";
 type SSHKeysProps = {
   userId: string;
   sshKeys: SSHKey[];
+  isMe: boolean;
 };
 
 export function SSHKeys(props: Readonly<SSHKeysProps>) {
-  const { userId, sshKeys } = props;
+  const { userId, sshKeys, isMe } = props;
   return (
     <Panel>
       <div className="flex justify-between">
         <h2>SSH Keys</h2>
-        <AddSSHKeyButton userId={userId} />
+        {sshKeys.length > 0 && <AddSSHKeyButton userId={userId} />}
       </div>
-      <Table userId={userId} sshKeys={sshKeys} />
+      <Table userId={userId} sshKeys={sshKeys} isMe={isMe} />
     </Panel>
   );
 }

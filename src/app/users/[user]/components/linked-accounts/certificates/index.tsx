@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { IdentificationIcon } from "@heroicons/react/24/solid";
+
 import { Panel } from "@/components/layout";
 import { ListItem, UnorderedList } from "@/components/list";
 import { Certificate } from "@/models/indigo-user";
@@ -58,14 +60,34 @@ function CertificateView(props: Readonly<CertificateViewProps>) {
 type CertificateListProps = {
   isAdmin: boolean;
   userId: string;
+  userName: string;
   userFormattedName: string;
   certificates: Certificate[];
 };
 
 function CertificateList(props: Readonly<CertificateListProps>) {
-  const { isAdmin, userId, userFormattedName, certificates } = props;
+  const { isAdmin, userId, userName, userFormattedName, certificates } = props;
   if (certificates.length === 0) {
-    return <p>There are not linked certificates.</p>;
+    return (
+      <div className="flex flex-col items-center gap-4">
+        <IdentificationIcon className="size-16 text-gray-500 dark:text-gray-300" />
+        <div className="flex flex-col items-center gap-3">
+          <p className="text-sm">
+            {isAdmin
+              ? "Link a X.509 certificate to the user account"
+              : "Asks an administrator to link a X.509 certificate to your account"}
+          </p>
+          {isAdmin && (
+            <LinkCertificateButton
+              userId={userId}
+              userName={userName}
+              isAdmin={isAdmin}
+              variant="solid"
+            />
+          )}
+        </div>
+      </div>
+    );
   }
   return (
     <UnorderedList>
@@ -92,32 +114,35 @@ type CertificateProps = {
 };
 
 export function Certificates(props: Readonly<CertificateProps>) {
-  const { isMe, userId, userName, userFormattedName, certificates, isAdmin } =
-    props;
+  const {
+    isMe, //
+    userId,
+    userName,
+    userFormattedName,
+    certificates,
+    isAdmin,
+  } = props;
   return (
     <Panel>
       <div className="flex flex-wrap justify-between">
         <h2>X.509 certificates</h2>
         <div className="flex gap-2">
-          {isAdmin && (
+          {isAdmin && certificates.length > 0 && (
             <LinkCertificateButton
               userId={userId}
               userName={userName}
               isAdmin={isAdmin}
             />
           )}
-          {isMe && (
-            <LinkProxyButton
-              userId={userId}
-              userName={userName}
-              disabled={certificates.length === 0}
-            />
+          {isMe && certificates.length > 0 && (
+            <LinkProxyButton userId={userId} userName={userName} />
           )}
         </div>
       </div>
       <CertificateList
         isAdmin={isAdmin}
         userId={userId}
+        userName={userName}
         userFormattedName={userFormattedName}
         certificates={certificates}
       />

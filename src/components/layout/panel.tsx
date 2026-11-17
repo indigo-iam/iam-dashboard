@@ -16,7 +16,7 @@ export function Panel(props: Readonly<PanelProps>) {
       className={
         variant === "plain"
           ? outerClassName
-          : "space-y-4 rounded-lg border bg-white p-4 text-gray-500 sm:px-8 sm:py-4 dark:border dark:bg-gray-800 dark:text-gray-400" +
+          : "space-y-4 rounded-lg border bg-white p-4 text-gray-800 sm:px-8 sm:py-4 dark:border dark:bg-gray-800 dark:text-gray-400" +
             outerClassName
       }
     />

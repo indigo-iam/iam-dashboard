@@ -252,8 +252,8 @@ export const authConfig = (db: Database.Database) => {
       cookiePrefix: "indigo-iam",
     },
     telemetry: {
-      enabled: false
-    }
+      enabled: false,
+    },
   } satisfies BetterAuthOptions;
 };
 
@@ -280,7 +280,7 @@ type AuthInstance = ReturnType<typeof createAuth>;
 const buildAuthStub = new Proxy({} as AuthInstance, {
   get(_target, prop) {
     if (prop === "api") {
-      return { getSession: async () => null };
+      return { getSession: () => null };
     }
     throw new Error(
       `better-auth instance accessed during build (property '${String(

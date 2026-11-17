@@ -30,7 +30,7 @@ function Row(props: Readonly<RowProps>) {
     : "Never used";
   return (
     <ListItem>
-      <div className="flex w-0 grow flex-col space-y-2 lg:flex-row lg:gap-16 lg:space-y-0">
+      <div className="flex w-0 grow flex-col space-y-2 lg:flex-row lg:space-y-0">
         <div className="flex grow flex-col gap-1 lg:w-0">
           <div>
             <Link href={`/clients/${client.client_id}`}>
@@ -43,15 +43,13 @@ function Row(props: Readonly<RowProps>) {
             )}
           </div>
           <div className="flex flex-col">
-            <div className="text-xs font-light">
-              <div className="flex w-full items-center gap-1">
-                <div className="lg:hidden">
-                  <Status active={client.active} autoHide={true} />
-                </div>
-                <p title={scopes} className="max-w-full truncate">
-                  {lastUsed} · {scopes}
-                </p>
+            <div className="flex w-full items-center gap-1 text-xs font-light">
+              <div className="lg:hidden">
+                <Status active={client.active} autoHide={true} />
               </div>
+              <p title={scopes} className="max-w-full truncate">
+                {lastUsed} · {scopes}
+              </p>
             </div>
           </div>
         </div>

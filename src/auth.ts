@@ -251,6 +251,9 @@ export const authConfig = (db: Database.Database) => {
     advanced: {
       cookiePrefix: "indigo-iam",
     },
+    telemetry: {
+      enabled: false
+    }
   } satisfies BetterAuthOptions;
 };
 
@@ -262,8 +265,35 @@ function createAuth() {
   return betterAuth(authConfig(globalThis.db));
 }
 
+type AuthInstance = ReturnType<typeof createAuth>;
+
+// While `next build` runs, no requests are handled, so the real better-auth
+// instance is never created: betterAuth() requires a secret
+// (IAM_DASHBOARD_AUTH_SECRET) and refuses to start with a missing or default
+// secret while NODE_ENV is "production", which `next build` sets. The secret
+// is only provided at runtime.
+//
+// The only auth behavior reachable during the build is getSession(), called
+// by the root layout when the /_not-found fallback is prerendered: there is
+// no logged-in user at build time, so it reports no session. Any other
+// access to the stub fails loudly.
+const buildAuthStub = new Proxy({} as AuthInstance, {
+  get(_target, prop) {
+    if (prop === "api") {
+      return { getSession: async () => null };
+    }
+    throw new Error(
+      `better-auth instance accessed during build (property '${String(
+        prop
+      )}'); the auth instance is only created at runtime.`
+    );
+  },
+});
+
 // Cached on globalThis so the auth instance is computed only once per process
-export const auth = globalThis.cachedAuth ?? createAuth();
+export const auth: AuthInstance = isBuilding
+  ? buildAuthStub
+  : (globalThis.cachedAuth ?? createAuth());
 export type User = typeof auth.$Infer.Session.user;
 export type Session = typeof auth.$Infer.Session;
 

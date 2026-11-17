@@ -26,7 +26,7 @@ export default function Link(props: Readonly<LinkProps>) {
         variant === "plain"
           ? outerClassName
           : outerClassName +
-            " max-w-fit font-semibold tracking-wide text-gray-950 decoration-1 underline-offset-3 hover:text-blue-600 hover:underline dark:text-gray-100"
+            " max-w-fit text-base font-semibold text-gray-950 decoration-1 underline-offset-3 hover:text-blue-600 hover:underline dark:text-gray-100"
       }
       title={title}
       onClick={startProgressBar}

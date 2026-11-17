@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 
 import { getSession, isUserAdmin } from "@/auth";
 import { Header } from "@/app/components/header";
@@ -21,6 +22,8 @@ export const viewport: Viewport = {
   themeColor: "bg-sky-900",
 };
 
+const font = Inter();
+
 type RootLayoutProps = {
   children: React.ReactNode;
 };
@@ -31,7 +34,7 @@ export default async function RootLayout(props: Readonly<RootLayoutProps>) {
   if (!session) {
     return (
       <html lang="en">
-        <body className="body">
+        <body className={font.className}>
           <main>{children}</main>
         </body>
       </html>
@@ -42,7 +45,7 @@ export default async function RootLayout(props: Readonly<RootLayoutProps>) {
   const isAdmin = hasRoleAdmin ? await isUserAdmin() : false;
   return (
     <html lang="en">
-      <body>
+      <body className={font.className}>
         {/*id="app" is the node that Modal sets `inert` on while a dialog is open*/}
         <div id="app">
           <LoadingProvider>

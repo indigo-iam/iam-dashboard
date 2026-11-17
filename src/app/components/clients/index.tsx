@@ -31,25 +31,25 @@ function Row(props: Readonly<RowProps>) {
   return (
     <ListItem>
       <div className="flex w-0 grow flex-col space-y-2 lg:flex-row lg:gap-16 lg:space-y-0">
-        <div className="flex grow flex-col lg:w-0">
-          <Link href={`/clients/${client.client_id}`}>
-            {client.client_name}
-          </Link>
-          <div className="flex flex-col">
+        <div className="flex grow flex-col gap-1 lg:w-0">
+          <div>
+            <Link href={`/clients/${client.client_id}`}>
+              {client.client_name}
+            </Link>
             {client.client_description && (
               <p className="truncate text-sm font-light break-all">
                 {client.client_description}
               </p>
             )}
-            <div className="text-xs font-extralight">
+          </div>
+          <div className="flex flex-col">
+            <div className="text-xs font-light">
               <div className="flex w-full items-center gap-1">
                 <div className="lg:hidden">
                   <Status active={client.active} autoHide={true} />
                 </div>
-                <p title={scopes} className="truncate whitespace-nowrap">
-                  {lastUsed}
-                  <span>•</span>
-                  {scopes}
+                <p title={scopes} className="max-w-full truncate">
+                  {lastUsed} · {scopes}
                 </p>
               </div>
             </div>

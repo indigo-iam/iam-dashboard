@@ -254,7 +254,16 @@ export const authConfig = (db: Database.Database) => {
   } satisfies BetterAuthOptions;
 };
 
-export const auth = betterAuth(authConfig(globalThis.db));
+declare global {
+  var cachedAuth: ReturnType<typeof createAuth> | undefined;
+}
+
+function createAuth() {
+  return betterAuth(authConfig(globalThis.db));
+}
+
+// Cached on globalThis so the auth instance is computed only once per process
+export const auth = globalThis.cachedAuth ?? createAuth();
 export type User = typeof auth.$Infer.Session.user;
 export type Session = typeof auth.$Infer.Session;
 

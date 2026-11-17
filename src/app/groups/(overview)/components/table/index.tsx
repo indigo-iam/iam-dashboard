@@ -50,17 +50,22 @@ function Row(props: Readonly<RowProps>) {
   const created = group.meta?.created
     ? dateToHuman(new Date(group.meta.created))
     : "N/A";
+  const lastModified = group.meta?.lastModified
+    ? dateToHuman(new Date(group.meta.lastModified))
+    : "N/A";
   return (
     <ListItem>
       <div className="flex w-0 grow flex-col gap-0 break-all lg:flex-row lg:gap-2">
-        <div className="flex flex-col lg:justify-center">
-          <Link href={`/groups/${group.id}`}>{group.displayName}</Link>
+        <div className="flex flex-col gap-1 lg:justify-center">
           <div>
+            <Link href={`/groups/${group.id}`}>{group.displayName}</Link>
             <p className="truncate text-sm font-light">
-              {group["urn:indigo-dc:scim:schemas:IndigoGroup"].description}
+              {indigoGroup.description}
             </p>
-            <p className="text-xs font-light">Created {created}</p>
           </div>
+          <p className="text-xs font-light">
+            Created {created} · Last modified {lastModified}
+          </p>
         </div>
         <Labels group={group} />
       </div>

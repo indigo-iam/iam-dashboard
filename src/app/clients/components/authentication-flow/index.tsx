@@ -15,6 +15,7 @@ import { GrantType } from "@/models/openid-configuration";
 import AuthorizationCode from "./authorization-code";
 import ClientCredentials from "./client-credentials";
 import DeviceCode from "./device-code";
+import { useFormReset } from "@/components/form";
 
 type AuthenticationFlowSettingsProps = {
   grantType: GrantType;
@@ -90,6 +91,10 @@ export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
 
   const description = descriptions.get(selectedGrantType);
 
+  useFormReset(() => {
+    setSelectedGrantType(defaultOption);
+  });
+
   return (
     <div className="space-y-4">
       <Field>
@@ -101,7 +106,7 @@ export function AuthenticationFlow(props: Readonly<AuthenticationFlowProps>) {
         </Label>
         <Select
           name="grant_type"
-          defaultValue={defaultOption}
+          value={selectedGrantType}
           onChange={handleGrantTypeChange}
         >
           {options.map(option => (

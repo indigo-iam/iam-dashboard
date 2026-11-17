@@ -75,17 +75,17 @@ export function InputList(props: Readonly<InputListProps>) {
   }
 
   const listItems = items.map((item, index) => (
-    <li key={item} className="mt-1 flex flex-row items-center gap-2">
+    <li key={item} className="mt-1 flex flex-row items-center gap-2 last:mb-1">
       <button
         type="button"
         onClick={() => removeItem(index)}
-        className="bg-secondary-100 hover:bg-danger dark:bg-secondary/60 dark:text-danger/80 w-5 rounded hover:text-white"
+        className="bg-secondary-100 hover:bg-danger dark:bg-secondary/60 dark:text-danger/80 w-4 rounded hover:text-white"
         disabled={disabled}
       >
         <XMarkIcon />
       </button>
       <input
-        className="flex grow text-sm"
+        className="flex grow text-xs"
         defaultValue={item}
         name={name}
         required={required}

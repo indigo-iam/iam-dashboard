@@ -28,7 +28,7 @@ function Row(props: Readonly<RowProps>) {
       <div className="text-md flex grow flex-col break-all lg:flex-row">
         <div className="grow flex-col">
           <Link href={`/users/${userId}`}>{userFormattedName}</Link>
-          <p className="text-sm font-light">{userEmail}</p>
+          <p className="text-xs font-light">{userEmail}</p>
         </div>
         <div className="my-auto flex flex-col">
           <div className="flew-wrap flex items-center gap-2 lg:flex-col lg:items-end lg:gap-1">

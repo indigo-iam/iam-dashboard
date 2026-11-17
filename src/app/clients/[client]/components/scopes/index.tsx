@@ -23,10 +23,10 @@ function SystemScopes(props: Readonly<SystemScopesProps>) {
   return scopes.map(s => (
     <ListItem key={s.id}>
       <div className="flex grow flex-col">
-        <p className="text-gray-950 dark:text-gray-200">
+        <p className="text-gray-800 dark:text-gray-200">
           {s.restricted ? `${s.value} (restricted)` : s.value}
         </p>
-        <p className="text-xs">{s.description}</p>
+        <p className="text-xs font-light">{s.description}</p>
       </div>
       <div className="flex flex-col items-center">
         <ScopeOptions client={client} scope={s.value} isAdmin={isAdmin} />
@@ -46,8 +46,8 @@ function CustomScopes(props: Readonly<CustomScopesProps>) {
   return scopes.map(s => (
     <ListItem key={s}>
       <div className="flex grow flex-col">
-        <p className="text-gray-950 dark:text-gray-200">{s}</p>
-        <p className="text-xs">(custom scope)</p>
+        <p className="text-gray-800 dark:text-gray-200">{s}</p>
+        <p className="light text-xs">(custom scope)</p>
       </div>
       <div className="flex flex-col items-center">
         <ScopeOptions client={client} scope={s} isAdmin={isAdmin} />

@@ -69,16 +69,16 @@ export function Advanced(props: Readonly<AdvancedProps>) {
             codeChallengeMethod={codeChallengeMethod}
           />
           <Description>
-            <span className="font-semibold">None</span>: Code challenge is
+            <span className="font-medium">None</span>: Code challenge is
             rejected if provided.
             <br />
-            <span className="font-semibold">Optional</span>: Both plain and S256
+            <span className="font-medium">Optional</span>: Both plain and S256
             code challenges are accepted but not required.
             <br />
-            <span className="font-semibold">Plain code challenge</span>: Code
+            <span className="font-medium">Plain code challenge</span>: Code
             verifier is directly sent as code challenge without hashing.
             <br />
-            <span className="font-semibold">SHA-256</span>: Securely hashes the
+            <span className="font-medium">SHA-256</span>: Securely hashes the
             code verifier with SHA-256 before sending it (recommended).
           </Description>
         </Field>

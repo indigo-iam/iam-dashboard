@@ -10,6 +10,7 @@ services:
       context: .devcontainer/docker
     command: sleep infinity
     volumes:
+      - node_modules:/workspace/node_modules
       - .:/workspace:cached
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
@@ -18,7 +19,11 @@ services:
       IAM_DASHBOARD_BASE_PATH: /devcontainer
       NODE_EXTRA_CA_CERTS: /workspace/assets/trust/star_test_example_ca.pem
       PLAYWRIGHT_HTML_HOST: 0.0.0.0
+
       PLAYWRIGHT_HTML_PORT: 8901
     ports:
       - "8900:8900" # for npx playwright test --ui-host 0.0.0.0 --ui-port 8900
       - "8901:8901" # for playwright html report
+
+volumes:
+  node_modules:

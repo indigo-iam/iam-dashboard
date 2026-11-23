@@ -10,6 +10,7 @@ import { dateToHuman, getNow } from "@/utils/dates";
 import LinkCertificateButton from "./link-certificate-button";
 import { LinkProxyButton } from "./link-proxy-button/";
 import CertificateOptions from "./options";
+import { IdentificationIcon } from "@heroicons/react/24/outline";
 
 type CertificateViewProps = {
   isAdmin: boolean;
@@ -64,9 +65,6 @@ type CertificateListProps = {
 
 function CertificateList(props: Readonly<CertificateListProps>) {
   const { isAdmin, userId, userFormattedName, certificates } = props;
-  if (certificates.length === 0) {
-    return <p>There are not linked certificates.</p>;
-  }
   return (
     <UnorderedList>
       {certificates.map(cert => (
@@ -92,8 +90,38 @@ type CertificateProps = {
 };
 
 export function Certificates(props: Readonly<CertificateProps>) {
-  const { isMe, userId, userName, userFormattedName, certificates, isAdmin } =
-    props;
+  const {
+    isMe, //
+    userId,
+    userName,
+    userFormattedName,
+    certificates,
+    isAdmin,
+  } = props;
+
+  if (certificates.length === 0) {
+    return (
+      <Panel>
+        <h2>X.509 certificates</h2>
+        <div className="flex flex-col items-center">
+          <IdentificationIcon className="size-12" />
+          <p className="mb-2 text-sm">
+            {isMe && !isAdmin
+              ? "Ask to your organization administrator to link a X.509 certificate to your account."
+              : "Link a X.509 certificate to the user account."}
+          </p>
+          {isAdmin && (
+            <LinkCertificateButton
+              userId={userId}
+              userName={userName}
+              isAdmin={isAdmin}
+            />
+          )}
+        </div>
+      </Panel>
+    );
+  }
+
   return (
     <Panel>
       <div className="flex flex-wrap justify-between">
@@ -104,6 +132,7 @@ export function Certificates(props: Readonly<CertificateProps>) {
               userId={userId}
               userName={userName}
               isAdmin={isAdmin}
+              variant="outline"
             />
           )}
           {isMe && (

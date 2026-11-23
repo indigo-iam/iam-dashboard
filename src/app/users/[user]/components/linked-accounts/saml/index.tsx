@@ -7,6 +7,7 @@ import { Panel } from "@/components/layout";
 import { ListItem, UnorderedList } from "@/components/list";
 
 import SAMLOptions from "./options";
+import { BuildingLibraryIcon } from "@heroicons/react/24/outline";
 
 type SamlIdViewProps = {
   userId: string;
@@ -40,7 +41,12 @@ export function SamlAccounts(props: Readonly<SamlAccountsProps>) {
     return (
       <Panel>
         <h2>SAML</h2>
-        <p className="pt-4">There are no linked accounts.</p>
+        <div className="flex flex-col items-center gap-2">
+          <BuildingLibraryIcon className="size-12" />
+          <p className="text-sm">
+            There is no external account linked to your profile.
+          </p>
+        </div>
       </Panel>
     );
   }

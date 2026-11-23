@@ -14,18 +14,19 @@ type AssignGroupManagerButtonProps = {
   groupId: string;
   groupName: string;
   groupDescription?: string | null;
+  variant?: "solid" | "outline";
 };
 
 export default function AssignGroupManagerButton(
   props: Readonly<AssignGroupManagerButtonProps>
 ) {
-  const { groupId, groupName, groupDescription } = props;
+  const { groupId, groupName, groupDescription, variant } = props;
   const [show, setShow] = useState(false);
   const openModal = () => setShow(true);
   const closeModal = () => setShow(false);
   return (
     <>
-      <Button variant="outline" type="button" onClick={openModal}>
+      <Button variant={variant} type="button" onClick={openModal}>
         <UserGroupIcon className="size-4" />
         <span>Assign manager</span>
       </Button>

@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { UsersIcon } from "@heroicons/react/24/solid";
+
 import { TabPanel } from "@/components/tabs";
 import { fetchGroupManagers } from "@/services/groups";
 import ManagersTable from "./table";
@@ -28,11 +30,13 @@ export default async function Managers(props: Readonly<ManagersProps>) {
             {managers.length}
           </div>
         </div>
-        <AssignGroupManagerButton
-          groupId={groupId}
-          groupName={groupName}
-          groupDescription={groupDescription}
-        />
+        {managers.length > 0 && (
+          <AssignGroupManagerButton
+            groupId={groupId}
+            groupName={groupName}
+            groupDescription={groupDescription}
+          />
+        )}
       </div>
       {managers.length > 0 ? (
         <ManagersTable
@@ -41,7 +45,15 @@ export default async function Managers(props: Readonly<ManagersProps>) {
           managers={managers}
         />
       ) : (
-        <p>This group has no managers.</p>
+        <div className="flex flex-col items-center gap-2">
+          <UsersIcon className="size-16 text-gray-400" />
+          <p>This group has no manager</p>
+          <AssignGroupManagerButton
+            groupId={groupId}
+            groupName={groupName}
+            groupDescription={groupDescription}
+          />
+        </div>
       )}
     </TabPanel>
   );

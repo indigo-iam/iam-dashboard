@@ -48,17 +48,6 @@ type RegistrationsProps = {
 
 export default function Registrations(props: Readonly<RegistrationsProps>) {
   const { requests } = props;
-  if (requests.length === 0) {
-    return (
-      <Panel>
-        <h3>Registration requests</h3>
-        <p className="text-gray p-2 dark:text-white/60">
-          There are no pending requests.
-        </p>
-      </Panel>
-    );
-  }
-
   return (
     <Panel>
       <h3>Registration requests</h3>

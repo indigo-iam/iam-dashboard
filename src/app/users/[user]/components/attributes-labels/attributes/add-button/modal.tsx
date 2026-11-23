@@ -73,12 +73,13 @@ function ValidationView(props: Readonly<ValidationViewProps>) {
 
 interface AddAttributeModalProps extends ModalProps {
   userId: string;
+  isMe: boolean;
 }
 
 export default function AddAttributeModal(
   props: Readonly<AddAttributeModalProps>
 ) {
-  const { userId, show, onClose } = props;
+  const { userId, show, onClose, isMe } = props;
   const { startTransition } = useProgressBar();
   const [name, setName] = useState("");
   const [value, setValue] = useState("");
@@ -120,6 +121,10 @@ export default function AddAttributeModal(
   return (
     <Modal show={show} onClose={closeAndReset}>
       <ModalHeader>Add user attribute</ModalHeader>
+      <p>
+        {`Attributes provides additional information to ${isMe ? "your" : "the user"} profile and
+          characteristics.`}
+      </p>
       <Form onSubmit={submit} ref={formRef}>
         <ModalBody>
           <Field>

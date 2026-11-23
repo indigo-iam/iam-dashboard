@@ -11,19 +11,26 @@ import AddAttributeModal from "./modal";
 
 type AddButtonProps = {
   userId: string;
+  isMe: boolean;
+  variant?: "solid" | "outline";
 };
 
 export default function AddAttributeButton(props: Readonly<AddButtonProps>) {
-  const { userId } = props;
+  const { userId, isMe, variant } = props;
   const [show, setShow] = useState(false);
   const openModal = () => setShow(true);
   const closeModal = () => setShow(false);
   return (
     <>
-      <Button variant="outline" type="button" onClick={openModal}>
+      <Button variant={variant} type="button" onClick={openModal}>
         Add attribute
       </Button>
-      <AddAttributeModal show={show} onClose={closeModal} userId={userId} />
+      <AddAttributeModal
+        show={show}
+        onClose={closeModal}
+        userId={userId}
+        isMe={isMe}
+      />
     </>
   );
 }

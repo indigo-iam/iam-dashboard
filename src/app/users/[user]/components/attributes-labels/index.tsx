@@ -10,17 +10,19 @@ type AttributesProps = {
   userId: string;
   userFormattedName: string;
   isAdmin: boolean;
+  isMe: boolean;
 };
 
 export function AttributesAndLabels(props: Readonly<AttributesProps>) {
-  const { userId, userFormattedName, isAdmin } = props;
+  const { userId, userFormattedName, isAdmin, isMe } = props;
   return (
     <TabPanel variant="plain" className="space-y-4">
-      <AttributesPanel userId={userId} isAdmin={isAdmin} />
+      <AttributesPanel userId={userId} isAdmin={isAdmin} isMe={isMe} />
       <LabelsPanel
         userId={userId}
         userFormattedName={userFormattedName}
         isAdmin={isAdmin}
+        isMe={isMe}
       />
     </TabPanel>
   );

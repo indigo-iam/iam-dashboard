@@ -111,6 +111,7 @@ export default async function UserPage(props: Readonly<UserPageProps>) {
               userEmail={userEmail}
               userGroups={userGroups ?? []}
               isAdmin={isAdmin}
+              isMe={isMe}
             />
             {!isMe && (
               <UserClients

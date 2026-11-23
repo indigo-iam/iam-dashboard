@@ -2,8 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-
 import Link from "@/components/link";
 import { ListItem, UnorderedList } from "@/components/list";
 import { Status } from "@/components/badges";
@@ -78,14 +76,6 @@ type ClientsTableProps = {
 
 export function ClientsTable(props: Readonly<ClientsTableProps>) {
   const { clients, isAdmin } = props;
-  if (clients.length === 0) {
-    return (
-      <div className="flex flex-col items-center space-y-4">
-        <MagnifyingGlassIcon className="size-16 text-gray-400 dark:text-white/60" />
-        <span>No client found.</span>
-      </div>
-    );
-  }
   return (
     <UnorderedList>
       {clients.map(client => (

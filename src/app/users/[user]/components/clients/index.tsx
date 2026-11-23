@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import Link from "next/link";
+import { CubeTransparentIcon } from "@heroicons/react/24/solid";
 
 import { ClientsTable } from "@/app/components/clients";
 import { Button } from "@/components/buttons";
@@ -28,16 +29,32 @@ export async function UserClients(props: Readonly<UseClientsProps>) {
   const clients = clientPage.Resources;
   return (
     <TabPanel>
-      <Link href="/clients/new">
-        <Button variant="outline" type="button">
-          New Client
-        </Button>
-      </Link>
       <div className="panel space-y-4">
-        <h2>Owned Clients</h2>
+        <h2 className="flex items-center justify-between">
+          Clients
+          {clients.length > 0 && (
+            <Link href="/clients/new">
+              <Button variant="outline" type="button">
+                Create new client
+              </Button>
+            </Link>
+          )}
+        </h2>
         <div className="flex flex-col gap-4">
-          <ClientsTable clients={clients} isAdmin={isAdmin} />
-          <Paginator numberOfPages={numberOfPages} />
+          {clients.length > 0 ? (
+            <>
+              <ClientsTable clients={clients} isAdmin={isAdmin} />
+              <Paginator numberOfPages={numberOfPages} />
+            </>
+          ) : (
+            <div className="flex flex-col items-center gap-2">
+              <CubeTransparentIcon className="size-16 text-gray-400" />
+              <p>There are no clients associated to this account</p>
+              <Link href="/clients/new">
+                <Button type="button">Create new client</Button>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </TabPanel>

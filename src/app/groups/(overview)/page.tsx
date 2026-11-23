@@ -85,7 +85,7 @@ async function UserPage() {
       <Section>
         <Header>
           <UserGroupIcon className="size-5" />
-          <h2 className="text-base font-normal">MyGroups</h2>
+          <h2 className="text-base font-normal">My groups</h2>
         </Header>
         <Container>
           <div className="mt-16 flex items-center justify-between">

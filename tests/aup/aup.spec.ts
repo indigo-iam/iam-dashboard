@@ -51,7 +51,9 @@ testAdmin.describe("admin can create/edit/delete the AUP", () => {
     await confirmBtn.click();
     await dismissToast(page, "AUP deleted", "success");
     await expect(
-      page.getByText("AUP is not defined for this organization.")
+      page.getByRole("heading", {
+        name: "Create an Acceptable Usage Policy",
+      })
     ).toBeVisible();
   });
 
@@ -67,12 +69,15 @@ testAdmin.describe("admin can create/edit/delete the AUP", () => {
       await page.goto("./aup");
       const heading = page.getByRole("heading", {
         name: "Acceptable Usage Policy",
+        exact: true,
       });
       await expect(heading).toBeVisible();
 
       await testAdmin.step("AUP is initially not defined", async () => {
         await expect(
-          page.getByText("AUP is not defined for this organization")
+          page.getByRole("heading", {
+            name: "Create an Acceptable Usage Policy",
+          })
         ).toBeVisible();
       });
 

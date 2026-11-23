@@ -9,6 +9,7 @@ import { ListItem, UnorderedList } from "@/components/list";
 import { ScimReference } from "@/models/scim";
 import GroupOptions from "./options";
 import JoinGroupButton from "./join-group-button";
+import { Panel } from "@/components/layout";
 
 type ViewProps = {
   groupId: string;
@@ -86,7 +87,7 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
   } = props;
   if (!userGroups || userGroups.length === 0) {
     return (
-      <>
+      <Panel>
         <div className="flex justify-between">
           <h2>Joined group</h2>
         </div>
@@ -106,11 +107,11 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
             className="mx-auto"
           />
         </div>
-      </>
+      </Panel>
     );
   }
   return (
-    <div>
+    <Panel>
       <div className="flex justify-between">
         <h2>Joined groups</h2>
         <JoinGroupButton
@@ -134,6 +135,6 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
           />
         ))}
       </UnorderedList>
-    </div>
+    </Panel>
   );
 }

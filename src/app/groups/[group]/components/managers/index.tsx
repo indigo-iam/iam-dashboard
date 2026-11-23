@@ -46,9 +46,9 @@ export default async function Managers(props: Readonly<ManagersProps>) {
           managers={managers}
         />
       ) : (
-        <div className="flex flex-col items-center gap-2">
-          <UsersIcon className="size-16 text-gray-400" />
-          <p>This group has no manager</p>
+        <div className="flex flex-col items-center">
+          <UsersIcon className="size-16 text-slate-500 dark:text-gray-300" />
+          <p className="p-2 text-sm">This group has no manager</p>
           <AssignGroupManagerButton
             groupId={groupId}
             groupName={groupName}

@@ -34,7 +34,7 @@ export async function UserGroups(props: Readonly<UserGroupsProps>) {
   const requestsPage = await fetchGroupsRequests(userName);
   const requests = requestsPage.Resources;
   return (
-    <TabPanel>
+    <TabPanel variant="plain" className="space-y-4">
       <UnmanagedGroups
         userId={userId}
         userName={userName}

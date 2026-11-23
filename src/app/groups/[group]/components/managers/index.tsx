@@ -35,6 +35,7 @@ export default async function Managers(props: Readonly<ManagersProps>) {
             groupId={groupId}
             groupName={groupName}
             groupDescription={groupDescription}
+            variant="outline"
           />
         )}
       </div>

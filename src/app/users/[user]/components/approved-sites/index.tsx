@@ -12,6 +12,7 @@ import { Site } from "@/models/sites";
 import { getApprovedSites } from "@/services/sites";
 
 import { ApprovedSiteOptions } from "./options";
+import { ComputerDesktopIcon } from "@heroicons/react/24/outline";
 
 type ApprovedSiteProps = {
   site: Site;
@@ -71,7 +72,14 @@ async function Content(props: Readonly<ApprovedSitesProps>) {
   const { isAdmin } = props;
   const approvedSites = await getApprovedSites();
   if (approvedSites.length === 0) {
-    return null;
+    return (
+      <div className="flex flex-col items-center p-8">
+        <ComputerDesktopIcon className="size-12" />
+        <p className="mt-2 text-sm">
+          Applications that you gave the consent for are displayed here.
+        </p>
+      </div>
+    );
   }
   return (
     <UnorderedList>
@@ -86,7 +94,7 @@ export function ApprovedSites(props: Readonly<ApprovedSitesProps>) {
   const { isAdmin } = props;
   return (
     <TabPanel>
-      <h2 className="py-2">Linked Apps and Websites</h2>
+      <h2>Linked Apps and Websites</h2>
       <Suspense fallback={<LoadingList />}>
         <Content isAdmin={isAdmin} />
       </Suspense>

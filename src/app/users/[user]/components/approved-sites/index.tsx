@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Suspense } from "react";
+import { ComputerDesktopIcon } from "@heroicons/react/24/solid";
 
 import Link from "@/components/link";
 import { ListItem, UnorderedList } from "@/components/list";
@@ -12,7 +13,6 @@ import { Site } from "@/models/sites";
 import { getApprovedSites } from "@/services/sites";
 
 import { ApprovedSiteOptions } from "./options";
-import { ComputerDesktopIcon } from "@heroicons/react/24/outline";
 
 type ApprovedSiteProps = {
   site: Site;
@@ -73,9 +73,9 @@ async function Content(props: Readonly<ApprovedSitesProps>) {
   const approvedSites = await getApprovedSites();
   if (approvedSites.length === 0) {
     return (
-      <div className="flex flex-col items-center p-8">
-        <ComputerDesktopIcon className="size-12" />
-        <p className="mt-2 text-sm">
+      <div>
+        <ComputerDesktopIcon className="mx-auto size-16 text-slate-500 dark:text-gray-300" />
+        <p className="p-2 text-center text-sm">
           Applications that you gave the consent for are displayed here.
         </p>
       </div>

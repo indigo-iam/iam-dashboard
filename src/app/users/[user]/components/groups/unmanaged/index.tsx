@@ -86,32 +86,31 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
   } = props;
   if (!userGroups || userGroups.length === 0) {
     return (
-      <div className="panel space-y-4">
+      <>
         <div className="flex justify-between">
           <h2>Joined group</h2>
         </div>
-        <div className="space-y-2">
-          <UserGroupIcon className="mx-auto size-16 text-slate-700 dark:text-gray-300" />
-          <div className="flex flex-col items-center">
-            <p className="mb-2 text-sm">
-              {isMe
-                ? "You are not member of any group. Send a request to join your first group"
-                : "The user is not member of any group."}
-            </p>
-            <JoinGroupButton
-              userId={userId}
-              userName={userName}
-              userFormattedName={userFormattedName}
-              userEmail={userEmail}
-              isAdmin={isAdmin}
-            />
-          </div>
+        <div>
+          <UserGroupIcon className="mx-auto size-16 text-slate-500 dark:text-gray-300" />
+          <p className="p-2 text-center text-sm">
+            {isMe
+              ? "You are not member of any group. Send a request to join your first group"
+              : "The user is not member of any group."}
+          </p>
+          <JoinGroupButton
+            userId={userId}
+            userName={userName}
+            userFormattedName={userFormattedName}
+            userEmail={userEmail}
+            isAdmin={isAdmin}
+            className="mx-auto"
+          />
         </div>
-      </div>
+      </>
     );
   }
   return (
-    <div className="panel space-y-4">
+    <div>
       <div className="flex justify-between">
         <h2>Joined groups</h2>
         <JoinGroupButton

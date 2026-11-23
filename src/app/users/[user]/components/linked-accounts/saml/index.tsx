@@ -2,12 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { BuildingLibraryIcon } from "@heroicons/react/24/outline";
+
 import { SamlId } from "@/models/indigo-user";
 import { Panel } from "@/components/layout";
 import { ListItem, UnorderedList } from "@/components/list";
 
 import SAMLOptions from "./options";
-import { BuildingLibraryIcon } from "@heroicons/react/24/outline";
 
 type SamlIdViewProps = {
   userId: string;
@@ -41,9 +42,9 @@ export function SamlAccounts(props: Readonly<SamlAccountsProps>) {
     return (
       <Panel>
         <h2>SAML</h2>
-        <div className="flex flex-col items-center gap-2">
-          <BuildingLibraryIcon className="size-12" />
-          <p className="text-sm">
+        <div>
+          <BuildingLibraryIcon className="mx-auto size-12 text-slate-500 dark:text-gray-300" />
+          <p className="p-2 text-center text-sm">
             There is no external account linked to your profile.
           </p>
         </div>

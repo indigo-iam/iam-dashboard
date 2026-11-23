@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Suspense } from "react";
-import { TicketIcon } from "@heroicons/react/24/outline";
+import { TicketIcon } from "@heroicons/react/24/solid";
 
 import { TabPanel } from "@/components/tabs";
 import { LoadingList } from "@/components/loading";
@@ -27,9 +27,11 @@ async function AsyncActiveTokens() {
     return (
       <>
         <h2>Active Tokens</h2>
-        <div className="flex flex-col items-center p-8">
-          <TicketIcon className="size-12" />
-          <p className="mt-2 text-sm">There are no active tokens to show.</p>
+        <div>
+          <TicketIcon className="mx-auto size-16 text-slate-500 dark:text-gray-300" />
+          <p className="p-2 text-center text-sm">
+            There are no active tokens to show.
+          </p>
         </div>
       </>
     );

@@ -32,9 +32,9 @@ export async function LabelsPanel(props: Readonly<LabelsPanelProps>) {
       <Panel>
         <h2>Labels</h2>
         <div className="flex flex-col items-center">
-          <SwatchIcon className="size-12" />
-          <p className="mb-2 text-sm">
-            {`Add a label to ${isMe ? "your" : "the user"} account to identify your account`}
+          <SwatchIcon className="size-12 text-slate-500 dark:text-gray-300" />
+          <p className="p-2 text-sm">
+            {`Add a label to ${isMe ? "your" : "the user"} account to identify your account.`}
           </p>
           <AddLabelButton userId={userId} />
         </div>

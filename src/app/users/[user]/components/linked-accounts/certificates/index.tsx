@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { IdentificationIcon } from "@heroicons/react/24/outline";
+
 import { Panel } from "@/components/layout";
 import { ListItem, UnorderedList } from "@/components/list";
 import { Certificate } from "@/models/indigo-user";
@@ -10,7 +12,6 @@ import { dateToHuman, getNow } from "@/utils/dates";
 import LinkCertificateButton from "./link-certificate-button";
 import { LinkProxyButton } from "./link-proxy-button/";
 import CertificateOptions from "./options";
-import { IdentificationIcon } from "@heroicons/react/24/outline";
 
 type CertificateViewProps = {
   isAdmin: boolean;
@@ -104,8 +105,8 @@ export function Certificates(props: Readonly<CertificateProps>) {
       <Panel>
         <h2>X.509 certificates</h2>
         <div className="flex flex-col items-center">
-          <IdentificationIcon className="size-12" />
-          <p className="mb-2 text-sm">
+          <IdentificationIcon className="size-12 text-slate-500 dark:text-gray-300" />
+          <p className="p-2 text-sm">
             {isMe && !isAdmin
               ? "Ask to your organization administrator to link a X.509 certificate to your account."
               : "Link a X.509 certificate to the user account."}

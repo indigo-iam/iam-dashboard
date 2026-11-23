@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Suspense } from "react";
+import { UserCircleIcon } from "@heroicons/react/24/solid";
 
 import { TabPanel } from "@/components/tabs";
 import { getClientOwners } from "@/services/clients";
@@ -18,8 +19,40 @@ type ContentProps = {
 async function Content(props: Readonly<ContentProps>) {
   const { clientId, clientName } = props;
   const owners = await getClientOwners(clientId);
+  if (owners.length === 0) {
+    return (
+      <>
+        <h2 className="grow">Owners</h2>
+        <div>
+          <UserCircleIcon className="mx-auto size-16 text-slate-500 dark:text-gray-300" />
+          <p className="p-2 text-center text-sm">
+            Assign a user as owner of this client.
+          </p>
+          <AddOwnerButton
+            clientId={clientId}
+            clientName={clientName}
+            className="mx-auto"
+          />
+        </div>
+      </>
+    );
+  }
   return (
-    <OwnersTable owners={owners} clientId={clientId} clientName={clientName} />
+    <>
+      <div className="flex flex-wrap items-center justify-between">
+        <h2 className="grow">Owners</h2>
+        <AddOwnerButton
+          clientId={clientId}
+          clientName={clientName}
+          variant="outline"
+        />
+      </div>
+      <OwnersTable
+        owners={owners}
+        clientId={clientId}
+        clientName={clientName}
+      />
+    </>
   );
 }
 
@@ -32,10 +65,6 @@ export default function Owners(props: Readonly<OwnersProps>) {
   const { clientId, clientName } = props;
   return (
     <TabPanel>
-      <div className="flex flex-wrap items-center">
-        <h3 className="grow py-2">Owners</h3>
-        <AddOwnerButton clientId={clientId} clientName={clientName} />
-      </div>
       <Suspense fallback={<p>Loading owners...</p>}>
         <Content clientId={clientId} clientName={clientName} />
       </Suspense>

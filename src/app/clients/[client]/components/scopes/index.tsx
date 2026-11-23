@@ -79,7 +79,7 @@ export default async function Scopes(props: Readonly<ScopesProps>) {
   return (
     <TabPanel>
       <div className="flex flex-wrap items-center">
-        <h3 className="grow py-2">Active scopes</h3>
+        <h2 className="grow py-2">Active scopes</h2>
         <div className="inline-block">
           <div className="flex gap-2">
             <AddScopeButton

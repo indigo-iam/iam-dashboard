@@ -104,7 +104,7 @@ async function UserPage() {
                 userEmail={userEmail}
               />
             </div>
-            <UserGroupIcon className="size-2/4 text-gray-300 dark:text-gray-500" />
+            <UserGroupIcon className="size-36 flex-none text-gray-300 sm:size-48 md:size-48 lg:size-1/2 dark:text-gray-500" />
           </div>
         </Container>
       </Section>

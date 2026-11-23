@@ -17,7 +17,7 @@ export default function CreateButton() {
   return (
     <>
       <AupModal show={isShown} onClose={hide} />
-      <Button variant="outline" type="button" onClick={show}>
+      <Button type="button" onClick={show}>
         <PlusIcon className="my-auto size-5" />
         Create AUP
       </Button>

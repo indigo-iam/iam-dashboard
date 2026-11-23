@@ -2,12 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { redirect } from "next/navigation";
+import { DocumentTextIcon } from "@heroicons/react/24/solid";
+
 import { getSession, isUserAdmin } from "@/auth";
 import { fetchAUP } from "@/services/aup";
-import { AupView, CreateButton } from "./components/";
-import { DocumentTextIcon } from "@heroicons/react/24/solid";
-import { redirect } from "next/navigation";
 import { Container, Header, Panel, Section } from "@/components/layout";
+import { AupView, CreateButton } from "./components/";
 
 export default async function AUP() {
   const session = await getSession();
@@ -23,17 +24,23 @@ export default async function AUP() {
     return (
       <Section>
         <Header>
-          <div className="flex grow items-center gap-2">
-            <DocumentTextIcon className="size-5" />
-            <h2 className="text-base font-normal">Acceptable Usage Policy</h2>
-          </div>
-          <CreateButton />
+          <DocumentTextIcon className="size-5" />
+          <h2 className="text-base font-normal">Acceptable Usage Policy</h2>
         </Header>
-        <Container className="flex flex-col items-center">
-          <DocumentTextIcon className="mt-32 size-48 text-gray-500 dark:text-gray-300" />
-          <p className="text-center text-xl">
-            AUP is not defined for this organization.
-          </p>
+        <Container>
+          <div className="mt-16 flex items-center justify-between">
+            <div className="space-y-8">
+              <div className="space-y-2">
+                <h2>Create an Acceptable Usage Policy</h2>
+                <p className="text-gray-500">
+                  Create an Acceptable Usage Policy (AUP) for your organization.
+                  Users need to sign the AUP to use this service.
+                </p>
+              </div>
+              <CreateButton />
+            </div>
+            <DocumentTextIcon className="size-36 flex-none text-gray-300 sm:size-48 md:size-48 lg:size-96 dark:text-gray-500" />
+          </div>
         </Container>
       </Section>
     );

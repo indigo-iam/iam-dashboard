@@ -76,7 +76,7 @@ export default async function Page(props: Readonly<PageProps>) {
                 <Button type="button">Create new client</Button>
               </Link>
             </div>
-            <CubeTransparentIcon className="size-2/4 text-gray-300 dark:text-gray-500" />
+            <CubeTransparentIcon className="size-36 flex-none text-gray-300 sm:size-48 md:size-48 lg:size-1/2 dark:text-gray-500" />
           </div>
         </Container>
       </Section>

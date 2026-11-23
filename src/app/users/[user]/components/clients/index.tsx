@@ -29,21 +29,13 @@ export async function UserClients(props: Readonly<UseClientsProps>) {
   const clients = clientPage.Resources;
   if (clients.length === 0) {
     return (
-      <TabPanel variant="plain">
-        <div className="mt-16 flex items-center justify-between">
-          <div className="space-y-8">
-            <div className="space-y-2">
-              <h2>Create a new client</h2>
-              <p className="text-gray-500">
-                Create a client to register an application and manage how it
-                authenticates.
-              </p>
-            </div>
-            <Link href="/clients/new">
-              <Button type="button">Create new client</Button>
-            </Link>
-          </div>
-          <CubeTransparentIcon className="size-2/4 text-gray-300 dark:text-gray-500" />
+      <TabPanel>
+        <h2>Clients</h2>
+        <div>
+          <CubeTransparentIcon className="mx-auto size-16 text-gray-500 dark:text-gray-300" />
+          <p className="p-2 text-center text-sm">
+            Clients owned by the user are showed here.
+          </p>
         </div>
       </TabPanel>
     );

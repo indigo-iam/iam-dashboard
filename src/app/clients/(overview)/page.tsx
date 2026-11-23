@@ -13,6 +13,7 @@ import { InputQuery } from "@/components/inputs";
 import { getClientsByAccount, getClientsPage } from "@/services/clients";
 import Paginator from "@/components/paginator";
 import { Button } from "@/components/buttons";
+import { CubeTransparentIcon } from "@heroicons/react/24/outline";
 
 function Buttons() {
   return (
@@ -51,6 +52,37 @@ export default async function Page(props: Readonly<PageProps>) {
     : await getClientsByAccount(session.user.sub, count, startIndex, query);
   const numberOfPages = Math.ceil(clientPage.totalResults / count) || 1;
   const clients = clientPage.Resources;
+
+  if (clients.length === 0) {
+    return (
+      <Section>
+        <Header>
+          <CubeIcon className="size-5" />
+          <h2 className="text-base font-normal">
+            {isAdmin ? "Clients" : "My clients"}
+          </h2>
+        </Header>
+        <Container>
+          <div className="mt-16 flex items-center justify-between">
+            <div className="space-y-8">
+              <div className="space-y-2">
+                <h2>Create a new client</h2>
+                <p className="text-gray-500">
+                  Create a client to register an application and manage how it
+                  authenticates.
+                </p>
+              </div>
+              <Link href="/clients/new">
+                <Button type="button">Create new client</Button>
+              </Link>
+            </div>
+            <CubeTransparentIcon className="size-2/4 text-gray-300 dark:text-gray-500" />
+          </div>
+        </Container>
+      </Section>
+    );
+  }
+
   return (
     <Section>
       <Header>

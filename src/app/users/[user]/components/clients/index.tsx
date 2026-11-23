@@ -27,6 +27,28 @@ export async function UserClients(props: Readonly<UseClientsProps>) {
   const numberOfPages =
     Math.ceil(clientPage.totalResults / clientPage.itemsPerPage) || 1;
   const clients = clientPage.Resources;
+  if (clients.length === 0) {
+    return (
+      <TabPanel variant="plain">
+        <div className="mt-16 flex items-center justify-between">
+          <div className="space-y-8">
+            <div className="space-y-2">
+              <h2>Create a new client</h2>
+              <p className="text-gray-500">
+                Create a client to register an application and manage how it
+                authenticates.
+              </p>
+            </div>
+            <Link href="/clients/new">
+              <Button type="button">Create new client</Button>
+            </Link>
+          </div>
+          <CubeTransparentIcon className="size-2/4 text-gray-300 dark:text-gray-500" />
+        </div>
+      </TabPanel>
+    );
+  }
+
   return (
     <TabPanel>
       <div className="panel space-y-4">
@@ -41,20 +63,8 @@ export async function UserClients(props: Readonly<UseClientsProps>) {
           )}
         </h2>
         <div className="flex flex-col gap-4">
-          {clients.length > 0 ? (
-            <>
-              <ClientsTable clients={clients} isAdmin={isAdmin} />
-              <Paginator numberOfPages={numberOfPages} />
-            </>
-          ) : (
-            <div className="flex flex-col items-center gap-2">
-              <CubeTransparentIcon className="size-16 text-gray-400" />
-              <p>There are no clients associated to this account</p>
-              <Link href="/clients/new">
-                <Button type="button">Create new client</Button>
-              </Link>
-            </div>
-          )}
+          <ClientsTable clients={clients} isAdmin={isAdmin} />
+          <Paginator numberOfPages={numberOfPages} />
         </div>
       </div>
     </TabPanel>

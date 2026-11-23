@@ -74,12 +74,20 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
         <TabGroup>
           <TabList className="flex overflow-auto">
             <Tab>GENERAL</Tab>
+            <Tab>MEMBERS</Tab>
             <Tab>SUBGROUPS</Tab>
             {isAdmin && <Tab>MANAGERS</Tab>}
-            <Tab>MEMBERS</Tab>
           </TabList>
           <TabPanels>
             <GroupInfo group={group} />
+            <Members
+              groupId={groupId}
+              groupName={groupName}
+              groupDescription={groupDescription}
+              isAdmin={isAdmin}
+              count={countMembers}
+              page={pageMembers}
+            />
             <Subgroups
               groupId={groupId}
               groupName={groupName}
@@ -93,14 +101,6 @@ export default async function GroupPage(props: Readonly<GroupPageProps>) {
                 groupDescription={groupDescription}
               />
             )}
-            <Members
-              groupId={groupId}
-              groupName={groupName}
-              groupDescription={groupDescription}
-              isAdmin={isAdmin}
-              count={countMembers}
-              page={pageMembers}
-            />
           </TabPanels>
         </TabGroup>
       </Container>

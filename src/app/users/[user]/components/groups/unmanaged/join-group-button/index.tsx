@@ -17,16 +17,26 @@ type JoinGroupButtonProps = {
   userFormattedName: string;
   userEmail: string;
   isAdmin?: boolean;
+  variant?: "solid" | "outline";
+  className?: string;
 };
 
 export default function JoinGroupButton(props: Readonly<JoinGroupButtonProps>) {
-  const { userId, userName, userFormattedName, userEmail, isAdmin } = props;
+  const {
+    userId, //
+    userName,
+    userFormattedName,
+    userEmail,
+    isAdmin,
+    variant,
+    className,
+  } = props;
   const [show, setShow] = useState(false);
   const openModal = () => setShow(true);
   const closeModal = () => setShow(false);
   return (
     <>
-      <Button variant="outline" onClick={openModal}>
+      <Button variant={variant} onClick={openModal} className={className}>
         <UserPlusIcon className="size-4" />
         <span>{isAdmin ? "Assign to group" : "Join group"}</span>
       </Button>

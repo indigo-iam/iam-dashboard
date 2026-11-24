@@ -52,7 +52,7 @@ export default async function UsersPage(props: Readonly<UsersProps>) {
         </div>
         <InputQuery
           title="Search client"
-          placeholder="Type to search a user"
+          placeholder="Type to search for a user..."
           data-testid="search-user"
           aria-label="Search user"
         />

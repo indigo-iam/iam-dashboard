@@ -2,10 +2,9 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-
 import ScopeIcon from "@/app/components/scope-icon";
 import { ListItem, UnorderedList } from "@/components/list";
+import { NotFound } from "@/components/not-found";
 import { Scope } from "@/models/client";
 
 import ScopeTypeSelect from "./scope-type-select";
@@ -18,12 +17,7 @@ type ScopesTableProps = {
 export default function ScopesTable(props: Readonly<ScopesTableProps>) {
   const { scopes } = props;
   if (scopes.length === 0) {
-    return (
-      <div className="flex flex-col items-center space-y-4">
-        <MagnifyingGlassIcon className="size-16" />
-        <p>No scope found.</p>
-      </div>
-    );
+    return <NotFound />;
   }
   return (
     <UnorderedList>

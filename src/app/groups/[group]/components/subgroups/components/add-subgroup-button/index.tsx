@@ -12,18 +12,19 @@ import { Button } from "@/components/buttons";
 type AddSubgroupButtonProps = {
   rootGroupId: string;
   rootGroupName: string;
+  variant?: "solid" | "outline";
 };
 
 export default function AddSubgroupButton(
   props: Readonly<AddSubgroupButtonProps>
 ) {
-  const { rootGroupId, rootGroupName } = props;
+  const { rootGroupId, rootGroupName, variant} = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
   return (
     <>
-      <Button variant="outline" type="button" onClick={open}>
+      <Button variant={variant} type="button" onClick={open}>
         Add Subgroup
       </Button>
       <AddSubgroupModal

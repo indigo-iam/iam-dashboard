@@ -2,14 +2,15 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 import Link from "@/components/link";
 import { Status } from "@/components/badges";
+import { NotFound } from "@/components/not-found";
 import { ListItem, UnorderedList } from "@/components/list";
 import { User } from "@/models/scim";
-import UserOptions from "./options";
 import { dateToHuman } from "@/utils/dates";
+
+import UserOptions from "./options";
 
 type RowProps = {
   userId: string;
@@ -54,12 +55,7 @@ type UsersTableProps = {
 export default function UsersTable(props: Readonly<UsersTableProps>) {
   const { users } = props;
   if (users.length === 0) {
-    return (
-      <div className="flex flex-col items-center">
-        <MagnifyingGlassIcon className="size-16" />
-        <p className="p-2 dark:text-white/60">No user found.</p>
-      </div>
-    );
+    return <NotFound />;
   }
   return (
     <UnorderedList>

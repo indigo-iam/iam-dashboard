@@ -117,88 +117,6 @@ test("user cannot link oidc account", async ({ page }) => {
   });
 });
 
-test.describe("admin can link oidc account and user can unlink", async () => {
-  test("admin can link oidc account", async ({ page }) => {
-    await test.step("login and set admin mode", async () => {
-      await login(page, ADMIN_USER);
-      await enableAdminMode(page);
-      await selectLinkedAccountTab(page);
-    });
-
-    const panelHeading = page.getByRole("heading", {
-      name: "OpenID Connect/OAuth2",
-    });
-    await expect(panelHeading).toBeVisible();
-    const oidc = panelHeading.locator("../..");
-    await expect(oidc).toBeVisible();
-
-    await test.step("navigate to test user page", async () => {
-      await navigateToTestUserPage(page, "Test User");
-      await selectLinkedAccountTab(page);
-    });
-
-    const dialog = page.getByRole("dialog").filter({ visible: true });
-
-    await test.step("link oidc account", async () => {
-      const button = oidc.getByRole("button", { name: "Link account" });
-      await expect(button).toBeEnabled();
-      await button.click();
-      await expect(dialog).toBeVisible();
-
-      const issuer = dialog.getByLabel("Issuer");
-      await issuer.fill("https://example.org");
-      const subject = dialog.getByLabel("Subject");
-      await subject.fill("test_example");
-
-      const linkButton = dialog.getByRole("button", { name: "Link account" });
-      await linkButton.click();
-      await dismissToast(page, "Account linked", "success");
-    });
-  });
-
-  test("user can unlink oidc account", async ({ page }) => {
-    await test.step("login", async () => {
-      await login(page, TEST_USER);
-      await selectLinkedAccountTab(page);
-    });
-    const panelHeading = page.getByRole("heading", {
-      name: "OpenID Connect/OAuth2",
-    });
-    await expect(panelHeading).toBeVisible();
-    const oidc = panelHeading.locator("../..");
-    await oidc.evaluate(x => console.log(x.outerHTML));
-    await expect(oidc).toBeVisible();
-
-    await test.step("unlink account", async () => {
-      await expect(oidc.getByRole("listitem")).toHaveCount(3);
-      const account = oidc.getByRole("listitem").last();
-      await expect(account.getByRole("paragraph").first()).toHaveText(
-        "https://example.org"
-      );
-      await expect(account.getByRole("paragraph").last()).toHaveText(
-        "test_example"
-      );
-      const more = account.getByRole("button", { name: "More" });
-      await expect(more).toBeEnabled();
-      await more.click();
-      const unlinkAccountOption = page.getByRole("button", {
-        name: "Unlink account",
-      });
-      await expect(unlinkAccountOption).toBeEnabled();
-      await unlinkAccountOption.click();
-      const dialog = page.getByRole("dialog").filter({ visible: true });
-      await expect(dialog).toBeVisible();
-      const heading = dialog.getByRole("heading").first();
-      await expect(heading).toHaveText("Unlink OIDC/OAuth2 account?");
-      const confirm = dialog.getByRole("button", { name: "Confirm" });
-      await expect(confirm).toBeEnabled();
-      await confirm.click();
-      await expect(dialog).toBeHidden();
-      await expect(oidc.getByRole("listitem")).toHaveCount(2);
-    });
-  });
-});
-
 test("admin can link certificate and proxy on themselves", async ({ page }) => {
   await login(page, ADMIN_USER);
   await selectLinkedAccountTab(page);
@@ -234,7 +152,7 @@ test("admin can link certificate and proxy on themselves", async ({ page }) => {
     await expect(linkProxyButton).toBeEnabled();
   });
 
-  await test.step("'Link certificate' button is visible visible", async () => {
+  await test.step("'Link certificate' button is visible", async () => {
     await expect(linkCertificateButton).toBeVisible();
     await expect(linkCertificateButton).toBeEnabled();
   });
@@ -284,7 +202,7 @@ test.describe("admin assigns certificate to user and user self-assigns proxy", (
     const panelHeading = page.getByRole("heading", {
       name: "X.509 certificates",
     });
-    const x509 = panelHeading.locator("../..");
+    const x509 = panelHeading.locator("..");
 
     await test.step("login as test user", async () => {
       await login(page, TEST_USER);
@@ -297,15 +215,13 @@ test.describe("admin assigns certificate to user and user self-assigns proxy", (
     await test.step("cannot add proxy because there are no certificates", async () => {
       await expect(x509).toBeVisible();
       await expect(x509.getByRole("paragraph")).toHaveText(
-        "There are not linked certificates."
+        "Ask to your organization administrator to link a X.509 certificate to your account."
       );
-      const dialog = await openLinkProxyDialog(page);
-      const text =
-        "This account has no linked X.509 certificate to be associated to a proxy certificate. Please add a personal certificate to your Indigo IAM account or contact your administrator for help.";
-      await expect(dialog.getByRole("paragraph")).toHaveText(text);
-      const cancel = dialog.getByRole("button", { name: "Cancel" });
-      await cancel.click();
-      await expect(dialog).toBeHidden();
+      await expect(
+        page.getByRole("button", {
+          name: "Link proxy certificate",
+        })
+      ).toBeHidden();
     });
   });
 

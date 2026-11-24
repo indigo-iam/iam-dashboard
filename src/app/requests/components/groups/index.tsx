@@ -50,14 +50,6 @@ type GroupsProps = {
 
 export default function Groups(props: Readonly<GroupsProps>) {
   const { requests } = props;
-  if (requests.length === 0) {
-    return (
-      <Panel>
-        <h3>Group requests</h3>
-        <p>There are no pending requests.</p>
-      </Panel>
-    );
-  }
   return (
     <Panel>
       <h3>Group requests</h3>

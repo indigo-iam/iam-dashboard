@@ -13,16 +13,23 @@ import { AddOwnerModal } from "./modal";
 type AddOwnerButtonProps = {
   clientId: string;
   clientName: string;
+  className?: string;
+  variant?: "solid" | "outline";
 };
 
 export function AddOwnerButton(props: Readonly<AddOwnerButtonProps>) {
-  const { clientId, clientName } = props;
+  const { clientId, clientName, className, variant = "solid" } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
   return (
     <>
-      <Button variant="outline" type="button" onClick={open}>
+      <Button
+        variant={variant}
+        className={className}
+        type="button"
+        onClick={open}
+      >
         <PlusIcon className="size-4" />
         <span>Add owner</span>
       </Button>

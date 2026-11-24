@@ -2,11 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { UserGroupIcon } from "@heroicons/react/24/solid";
+
 import { TabPanel } from "@/components/tabs";
+import Paginator from "@/components/paginator";
+import { fetchSubgroupsPage } from "@/services/groups";
 import SubgroupsTable from "./components/table";
 import AddSubgroupButton from "./components/add-subgroup-button";
-import { fetchSubgroupsPage } from "@/services/groups";
-import Paginator from "@/components/paginator";
 
 type SubgroupsProps = {
   groupId: string;
@@ -31,7 +33,13 @@ export default async function Subgroups(props: Readonly<SubgroupsProps>) {
             {subgroupsPage.totalResults}
           </div>
         </div>
-        <AddSubgroupButton rootGroupId={groupId} rootGroupName={groupName} />
+        {subgroupsPage.totalResults > 0 && (
+          <AddSubgroupButton
+            variant="outline"
+            rootGroupId={groupId}
+            rootGroupName={groupName}
+          />
+        )}
       </div>
       {subgroupsPage.totalResults > 0 ? (
         <div>
@@ -39,7 +47,11 @@ export default async function Subgroups(props: Readonly<SubgroupsProps>) {
           <Paginator numberOfPages={numberOfPages} suffix="Subgroups" />
         </div>
       ) : (
-        <p>This group has no subgroups.</p>
+        <div className="flex flex-col items-center gap-2">
+          <UserGroupIcon className="size-16 text-gray-400" />
+          <p>This group has no subgroup</p>
+          <AddSubgroupButton rootGroupId={groupId} rootGroupName={groupName} />
+        </div>
       )}
     </TabPanel>
   );

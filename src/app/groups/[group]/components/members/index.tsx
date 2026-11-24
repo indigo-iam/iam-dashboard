@@ -2,11 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { UsersIcon } from "@heroicons/react/24/solid";
+
 import { TabPanel } from "@/components/tabs";
+import Paginator from "@/components/paginator";
 import { fetchGroupMembersPage } from "@/services/groups";
 import MembersTable from "./table";
 import AddMemberButton from "./add-button";
-import Paginator from "@/components/paginator";
 
 type MembersProps = {
   groupName: string;
@@ -34,11 +36,14 @@ export default async function Members(props: Readonly<MembersProps>) {
               {membersPage.totalResults}
             </div>
           </div>
-          <AddMemberButton
-            groupId={groupId}
-            groupName={groupName}
-            groupDescription={groupDescription}
-          />
+          {membersPage.totalResults > 0 && (
+            <AddMemberButton
+              groupId={groupId}
+              groupName={groupName}
+              groupDescription={groupDescription}
+              variant="outline"
+            />
+          )}
         </div>
       ) : (
         <h2 className="grow">Members</h2>
@@ -54,7 +59,15 @@ export default async function Members(props: Readonly<MembersProps>) {
           <Paginator numberOfPages={numberOfPages} suffix="Members" />
         </div>
       ) : (
-        <p>This group has no members.</p>
+        <div className="flex flex-col items-center gap-2">
+          <UsersIcon className="size-16 text-gray-400" />
+          <p>This group has no member</p>
+          <AddMemberButton
+            groupId={groupId}
+            groupName={groupName}
+            groupDescription={groupDescription}
+          />
+        </div>
       )}
     </TabPanel>
   );

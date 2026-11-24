@@ -13,18 +13,19 @@ type LinkButtonProps = {
   userId: string;
   userName: string;
   isAdmin: boolean;
+  variant?: "solid" | "outline";
 };
 
 export default function LinkCertificateButton(
   props: Readonly<LinkButtonProps>
 ) {
-  const { userId, userName, isAdmin } = props;
+  const { userId, userName, isAdmin, variant } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
   return (
     <>
-      <Button variant="outline" type="button" onClick={open}>
+      <Button variant={variant} type="button" onClick={open}>
         Link certificate
       </Button>
       <LinkCertificateModal

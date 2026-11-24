@@ -64,8 +64,9 @@ async function navigateToClientPage(page: Page, clientName: string) {
   const newClientBtn = page.getByRole("button", { name: "New client" });
   await expect(newClientBtn).toBeEnabled(); // wait for page fully loaded
   const searchbar = page
-    .getByPlaceholder("Type to search a client")
+    .getByPlaceholder("Type to search for a client...")
     .filter({ visible: true });
+  await expect(searchbar).toBeEnabled();
   await searchbar.pressSequentially(clientName);
   await expect(searchbar).toHaveValue(clientName);
   await page.waitForURL(`./clients?query=${clientName}`);
@@ -141,6 +142,9 @@ testAdmin(
 
     await testAdmin.step("return to clients page", async () => {
       await expect(page).toHaveURL("./clients");
+      await expect(
+        page.getByRole("button", { name: "New client" })
+      ).toBeEnabled();
     });
 
     await testAdmin.step("navigate to test client page", async () => {
@@ -224,6 +228,9 @@ testUser(
 
     await testUser.step("return to clients page", async () => {
       await expect(page).toHaveURL("./clients");
+      await expect(
+        page.getByRole("button", { name: "New client" })
+      ).toBeEnabled();
     });
 
     await testUser.step("navigate to test client page", async () => {

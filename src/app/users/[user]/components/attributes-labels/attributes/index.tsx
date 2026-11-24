@@ -2,24 +2,44 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { SquaresPlusIcon } from "@heroicons/react/24/outline";
+
 import { Panel } from "@/components/layout";
 import { fetchAttributes } from "@/services/users";
 import AddAttributeButton from "./add-button";
 import { AttributeView } from "./attribute-view";
 
-type AttributesContentProps = {
-  isAdmin: boolean;
+type AttributesPanelProps = {
   userId: string;
+  isAdmin: boolean;
+  isMe: boolean;
 };
 
-async function AttributesContent(props: Readonly<AttributesContentProps>) {
-  const { isAdmin, userId } = props;
+export async function AttributesPanel(props: Readonly<AttributesPanelProps>) {
+  const { userId, isAdmin, isMe } = props;
   const attributes = await fetchAttributes(userId);
   if (attributes.length === 0) {
-    return <p>No attribute found.</p>;
+    return (
+      <Panel>
+        <h2>Attributes</h2>
+        <div className="flex flex-col items-center">
+          <SquaresPlusIcon className="size-12 text-slate-500 dark:text-gray-300" />
+          <p className="p-2 text-sm">
+            {`Add an attribute to ${isMe ? "your" : "the user"} account to describe your profile characteristics.`}
+          </p>
+          <AddAttributeButton userId={userId} isMe={isMe} />
+        </div>
+      </Panel>
+    );
   }
   return (
-    <div className="flex w-full gap-2">
+    <Panel>
+      <div className="flex justify-between">
+        <h2>Attributes</h2>
+        {isAdmin && (
+          <AddAttributeButton userId={userId} variant="outline" isMe={isMe} />
+        )}
+      </div>
       {attributes.map(attr => (
         <AttributeView
           isAdmin={isAdmin}
@@ -28,24 +48,6 @@ async function AttributesContent(props: Readonly<AttributesContentProps>) {
           attr={attr}
         />
       ))}
-    </div>
-  );
-}
-
-type AttributesPanelProps = {
-  userId: string;
-  isAdmin: boolean;
-};
-
-export function AttributesPanel(props: Readonly<AttributesPanelProps>) {
-  const { userId, isAdmin } = props;
-  return (
-    <Panel>
-      <div className="flex justify-between">
-        <h2>Attributes</h2>
-        {isAdmin && <AddAttributeButton userId={userId} />}
-      </div>
-      <AttributesContent isAdmin={isAdmin} userId={userId} />
     </Panel>
   );
 }

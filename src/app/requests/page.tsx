@@ -10,6 +10,7 @@ import { Container, Header, Section } from "@/components/layout";
 import { fetchGroupsRequests } from "@/services/group-requests";
 import { fetchRegistrationRequests } from "@/services/registration";
 import { Groups, Registrations } from "./components";
+import { NoRequests } from "./components/no-requests";
 
 export default async function Requests() {
   const session = await getSession();
@@ -20,10 +21,9 @@ export default async function Requests() {
   if (!isAdmin) {
     redirect("/");
   }
-  const groupRequests = await fetchGroupsRequests();
+  const groupRequests = (await fetchGroupsRequests()).Resources;
   const registrationRequests = await fetchRegistrationRequests();
-  const totalRequests =
-    groupRequests.totalResults + registrationRequests.length;
+  const totalRequests = groupRequests.length + registrationRequests.length;
   return (
     <Section>
       <Header>
@@ -37,8 +37,11 @@ export default async function Requests() {
         </div>
       </Header>
       <Container>
-        <Registrations requests={registrationRequests} />
-        <Groups requests={groupRequests.Resources} />
+        {totalRequests === 0 && <NoRequests />}
+        {registrationRequests.length > 0 && (
+          <Registrations requests={registrationRequests} />
+        )}
+        {groupRequests.length > 0 && <Groups requests={groupRequests} />}
       </Container>
     </Section>
   );

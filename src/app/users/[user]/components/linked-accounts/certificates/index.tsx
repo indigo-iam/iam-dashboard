@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { IdentificationIcon } from "@heroicons/react/24/outline";
+
 import { Panel } from "@/components/layout";
 import { ListItem, UnorderedList } from "@/components/list";
 import { Certificate } from "@/models/indigo-user";
@@ -64,9 +66,6 @@ type CertificateListProps = {
 
 function CertificateList(props: Readonly<CertificateListProps>) {
   const { isAdmin, userId, userFormattedName, certificates } = props;
-  if (certificates.length === 0) {
-    return <p>There are not linked certificates.</p>;
-  }
   return (
     <UnorderedList>
       {certificates.map(cert => (
@@ -92,8 +91,38 @@ type CertificateProps = {
 };
 
 export function Certificates(props: Readonly<CertificateProps>) {
-  const { isMe, userId, userName, userFormattedName, certificates, isAdmin } =
-    props;
+  const {
+    isMe, //
+    userId,
+    userName,
+    userFormattedName,
+    certificates,
+    isAdmin,
+  } = props;
+
+  if (certificates.length === 0) {
+    return (
+      <Panel>
+        <h2>X.509 certificates</h2>
+        <div className="flex flex-col items-center">
+          <IdentificationIcon className="size-12 text-slate-500 dark:text-gray-300" />
+          <p className="p-2 text-sm">
+            {isMe && !isAdmin
+              ? "Ask to your organization administrator to link a X.509 certificate to your account."
+              : "Link a X.509 certificate to the user account."}
+          </p>
+          {isAdmin && (
+            <LinkCertificateButton
+              userId={userId}
+              userName={userName}
+              isAdmin={isAdmin}
+            />
+          )}
+        </div>
+      </Panel>
+    );
+  }
+
   return (
     <Panel>
       <div className="flex flex-wrap justify-between">
@@ -104,6 +133,7 @@ export function Certificates(props: Readonly<CertificateProps>) {
               userId={userId}
               userName={userName}
               isAdmin={isAdmin}
+              variant="outline"
             />
           )}
           {isMe && (

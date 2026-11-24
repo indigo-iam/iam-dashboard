@@ -45,13 +45,9 @@ export default function Table(props: Readonly<TableProps>) {
   const { userId, sshKeys } = props;
   return (
     <UnorderedList className="w-full">
-      {sshKeys.length === 0 ? (
-        <p>There are no SSH keys.</p>
-      ) : (
-        sshKeys.map(key => (
-          <SSHKeyView key={key.fingerprint} userId={userId} sshKey={key} />
-        ))
-      )}
+      {sshKeys.map(key => (
+        <SSHKeyView key={key.fingerprint} userId={userId} sshKey={key} />
+      ))}
     </UnorderedList>
   );
 }

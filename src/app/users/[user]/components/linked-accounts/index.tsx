@@ -50,7 +50,7 @@ export function LinkedAccounts(props: Readonly<LinkedAccountsProps>) {
         certificates={certificates}
         isAdmin={isAdmin}
       />
-      <SSHKeys userId={userId} sshKeys={sshKeys} />
+      <SSHKeys userId={userId} sshKeys={sshKeys} isMe={isMe} />
     </TabPanel>
   );
 }

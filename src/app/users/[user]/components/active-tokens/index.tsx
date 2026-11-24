@@ -3,10 +3,10 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Suspense } from "react";
+import { TicketIcon } from "@heroicons/react/24/solid";
 
 import { TabPanel } from "@/components/tabs";
 import { LoadingList } from "@/components/loading";
-import { Panel } from "@/components/layout";
 import { getActiveTokens } from "@/services/sites";
 
 import { TokensPage } from "./tokens-page";
@@ -25,10 +25,15 @@ async function AsyncActiveTokens() {
   activeTokens = activeTokens.filter(t => !!t.value);
   if (activeTokens.length === 0) {
     return (
-      <Panel>
-        <h2 className="py-2">Active Tokens</h2>
-        <p>There are no active tokens to show.</p>
-      </Panel>
+      <>
+        <h2>Active Tokens</h2>
+        <div>
+          <TicketIcon className="mx-auto size-16 text-slate-500 dark:text-gray-300" />
+          <p className="p-2 text-center text-sm">
+            There are no active tokens to show.
+          </p>
+        </div>
+      </>
     );
   }
   return <TokensPage tokens={activeTokens} />;
@@ -36,7 +41,7 @@ async function AsyncActiveTokens() {
 
 export function ActiveTokens() {
   return (
-    <TabPanel variant="plain" className="space-y-4">
+    <TabPanel>
       <Suspense fallback={<Fallback />}>
         <AsyncActiveTokens />
       </Suspense>

@@ -2,12 +2,13 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { GlobeAltIcon } from "@heroicons/react/24/outline";
+
 import { OidcId } from "@/models/indigo-user";
 import { Panel } from "@/components/layout";
 import { ListItem, UnorderedList } from "@/components/list";
 
 import OidcOptions from "./options";
-import { LinkAccountButton } from "./link-account";
 
 type OidcIdViewProps = {
   userId: string;
@@ -35,26 +36,29 @@ type OidcAccountsProps = {
 };
 
 export function OidcAccounts(props: Readonly<OidcAccountsProps>) {
-  const { userId, userFormattedName, oidcIds, isAdmin } = props;
+  const { userId, oidcIds } = props;
+  if (oidcIds.length === 0) {
+    return (
+      <Panel>
+        <h2>OpenID Connect/OAuth2</h2>
+        <div>
+          <GlobeAltIcon className="mx-auto size-12 text-slate-500 dark:text-gray-300" />
+          <p className="p-2 text-center text-sm">
+            There is no external account linked to your profile.
+          </p>
+        </div>
+      </Panel>
+    );
+  }
   return (
     <Panel>
       <div className="flex gap-2">
         <h2 className="grow">OpenID Connect/OAuth2</h2>
-        {isAdmin && (
-          <LinkAccountButton
-            userId={userId}
-            userFormattedName={userFormattedName}
-          />
-        )}
       </div>
       <UnorderedList>
-        {oidcIds.length === 0 ? (
-          <p className="pt-4">There are no linked accounts.</p>
-        ) : (
-          oidcIds.map(oidcId => (
-            <OidcIdView key={oidcId.subject} userId={userId} oidcId={oidcId} />
-          ))
-        )}
+        {oidcIds.map(oidcId => (
+          <OidcIdView key={oidcId.subject} userId={userId} oidcId={oidcId} />
+        ))}
       </UnorderedList>
     </Panel>
   );

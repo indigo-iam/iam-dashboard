@@ -4,11 +4,12 @@
 
 import { PlusIcon, CubeIcon } from "@heroicons/react/24/solid";
 
+import { isUserAdmin } from "@/auth";
 import { InputQuery } from "@/components/inputs";
 import Paginator from "@/components/paginator";
 import { Button } from "@/components/buttons";
 import { LoadingList } from "@/components/loading";
-import { isUserAdmin } from "@/auth";
+import { Container, Header, Panel, Section } from "@/components/layout";
 
 function Buttons() {
   return (
@@ -24,8 +25,8 @@ function Buttons() {
 export default async function Loading() {
   const isAdmin = await isUserAdmin();
   return (
-    <section>
-      <header className="section-header flex flex-wrap gap-2">
+    <Section>
+      <Header>
         <div className="flex grow items-center gap-2">
           <CubeIcon className="size-5" />
           <h2 className="text-base font-normal">
@@ -35,16 +36,18 @@ export default async function Loading() {
         <InputQuery
           disabled
           title="Search client"
-          placeholder="Type to search a client"
+          placeholder="Type to search for a client..."
           data-testid="search-client"
           aria-label="Search client"
         />
         <Buttons />
-      </header>
-      <div className="container space-y-4">
-        <LoadingList />
+      </Header>
+      <Container>
+        <Panel>
+          <LoadingList />
+        </Panel>
         <Paginator numberOfPages={0} />
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

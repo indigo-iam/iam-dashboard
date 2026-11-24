@@ -149,6 +149,10 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
   return (
     <Modal show={show} onClose={closeAndReset}>
       <ModalHeader>Add user label</ModalHeader>
+      <p>
+        Labels are used to classify users and associate them to groups and
+        organization, projects or categories.
+      </p>
       <Form onSubmit={submit} ref={formRef}>
         <ModalBody>
           <Field>
@@ -197,16 +201,17 @@ function AddLabelModal(props: Readonly<AddLabelModalProps>) {
 
 type AddLabelButtonProps = {
   userId: string;
+  variant?: "solid" | "outline";
 };
 
 export function AddLabelButton(props: Readonly<AddLabelButtonProps>) {
-  const { userId } = props;
+  const { userId, variant } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
   return (
     <>
-      <Button variant="outline" type="button" onClick={open}>
+      <Button variant={variant} type="button" onClick={open}>
         Add label
       </Button>
       <AddLabelModal userId={userId} show={show} onClose={close} />

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import { Suspense } from "react";
+import { ComputerDesktopIcon } from "@heroicons/react/24/solid";
 
 import Link from "@/components/link";
 import { ListItem, UnorderedList } from "@/components/list";
@@ -71,7 +72,14 @@ async function Content(props: Readonly<ApprovedSitesProps>) {
   const { isAdmin } = props;
   const approvedSites = await getApprovedSites();
   if (approvedSites.length === 0) {
-    return null;
+    return (
+      <div>
+        <ComputerDesktopIcon className="mx-auto size-16 text-slate-500 dark:text-gray-300" />
+        <p className="p-2 text-center text-sm">
+          Applications that you gave the consent for are displayed here.
+        </p>
+      </div>
+    );
   }
   return (
     <UnorderedList>
@@ -86,7 +94,7 @@ export function ApprovedSites(props: Readonly<ApprovedSitesProps>) {
   const { isAdmin } = props;
   return (
     <TabPanel>
-      <h2 className="py-2">Linked Apps and Websites</h2>
+      <h2>Linked Apps and Websites</h2>
       <Suspense fallback={<LoadingList />}>
         <Content isAdmin={isAdmin} />
       </Suspense>

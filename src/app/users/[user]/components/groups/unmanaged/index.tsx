@@ -2,11 +2,14 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
+import { UserGroupIcon } from "@heroicons/react/24/solid";
+
 import Link from "@/components/link";
 import { ListItem, UnorderedList } from "@/components/list";
 import { ScimReference } from "@/models/scim";
 import GroupOptions from "./options";
 import JoinGroupButton from "./join-group-button";
+import { Panel } from "@/components/layout";
 
 type ViewProps = {
   groupId: string;
@@ -68,6 +71,7 @@ type UserGroupsProps = {
   userEmail: string;
   userGroups?: ScimReference[];
   isAdmin?: boolean;
+  isMe: boolean;
 };
 
 export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
@@ -79,26 +83,35 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
     userEmail,
     userGroups,
     isAdmin,
+    isMe,
   } = props;
   if (!userGroups || userGroups.length === 0) {
     return (
-      <div className="panel space-y-4">
+      <Panel>
         <div className="flex justify-between">
-          <h2>Joined groups</h2>
+          <h2>Joined group</h2>
+        </div>
+        <div>
+          <UserGroupIcon className="mx-auto size-16 text-slate-500 dark:text-gray-300" />
+          <p className="p-2 text-center text-sm">
+            {isMe
+              ? "You are not member of any group. Send a request to join your first group"
+              : "The user is not member of any group."}
+          </p>
           <JoinGroupButton
             userId={userId}
             userName={userName}
             userFormattedName={userFormattedName}
             userEmail={userEmail}
             isAdmin={isAdmin}
+            className="mx-auto"
           />
         </div>
-        <p>No group found.</p>
-      </div>
+      </Panel>
     );
   }
   return (
-    <div className="panel space-y-4">
+    <Panel>
       <div className="flex justify-between">
         <h2>Joined groups</h2>
         <JoinGroupButton
@@ -107,6 +120,7 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
           userFormattedName={userFormattedName}
           userEmail={userEmail}
           isAdmin={isAdmin}
+          variant="outline"
         />
       </div>
       <UnorderedList>
@@ -121,6 +135,6 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
           />
         ))}
       </UnorderedList>
-    </div>
+    </Panel>
   );
 }

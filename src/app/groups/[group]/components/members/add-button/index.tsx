@@ -14,16 +14,17 @@ type AddMemberButtonProps = {
   groupId: string;
   groupName: string;
   groupDescription?: string | null;
+  variant?: "solid" | "outline";
 };
 
 export default function AddMemberButton(props: Readonly<AddMemberButtonProps>) {
-  const { groupId, groupName, groupDescription } = props;
+  const { groupId, groupName, groupDescription, variant } = props;
   const [show, setShow] = useState(false);
   const openModal = () => setShow(true);
   const closeModal = () => setShow(false);
   return (
     <>
-      <Button variant="outline" type="button" onClick={openModal}>
+      <Button variant={variant} type="button" onClick={openModal}>
         <UserPlusIcon className="size-4" />
         <span>Add member</span>
       </Button>

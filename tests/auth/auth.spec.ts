@@ -133,9 +133,11 @@ testAdmin(
     await testAdmin.step("'/aup' page is visible", async () => {
       await page.goto("./aup");
       await page.waitForURL("./aup");
-      const heading = page.getByRole("heading", {
-        name: "Acceptable Usage Policy",
-      });
+      const heading = page
+        .getByRole("heading", {
+          name: "Acceptable Usage Policy",
+        })
+        .first();
       await expect(heading).toBeVisible();
     });
 

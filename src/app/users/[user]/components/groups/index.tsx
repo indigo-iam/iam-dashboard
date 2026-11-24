@@ -17,6 +17,7 @@ type UserGroupsProps = {
   userEmail: string;
   userGroups: ScimReference[];
   isAdmin: boolean;
+  isMe: boolean;
 };
 
 export async function UserGroups(props: Readonly<UserGroupsProps>) {
@@ -28,11 +29,12 @@ export async function UserGroups(props: Readonly<UserGroupsProps>) {
     userEmail,
     userGroups,
     isAdmin,
+    isMe,
   } = props;
   const requestsPage = await fetchGroupsRequests(userName);
   const requests = requestsPage.Resources;
   return (
-    <TabPanel>
+    <TabPanel variant="plain" className="space-y-4">
       <UnmanagedGroups
         userId={userId}
         userName={userName}
@@ -41,6 +43,7 @@ export async function UserGroups(props: Readonly<UserGroupsProps>) {
         userEmail={userEmail}
         userGroups={userGroups}
         isAdmin={isAdmin}
+        isMe={isMe}
       />
       <ManagedGroups userId={userId} />
       {requests.length > 0 && (

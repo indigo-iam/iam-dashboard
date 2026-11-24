@@ -28,7 +28,10 @@ export function ProgressBar() {
       className="z-20 h-1.5 w-full bg-transparent opacity-0 data-[show='true']:opacity-100"
       data-show={!isProgressBarHidden}
     >
-      <div ref={barRef} className="h-full w-0 bg-blue-600" />
+      <div
+        ref={barRef}
+        className="easy-out h-full w-0 bg-blue-600 transition-all"
+      />
     </div>
   );
 }

@@ -13,7 +13,7 @@ import Table from "./table";
 type SSHKeysProps = {
   userId: string;
   sshKeys: SSHKey[];
-  isMe?: boolean;
+  isMe: boolean;
 };
 
 export function SSHKeys(props: Readonly<SSHKeysProps>) {
@@ -23,7 +23,7 @@ export function SSHKeys(props: Readonly<SSHKeysProps>) {
       <Panel>
         <h2>SSH Keys</h2>
         <div className="space-y-2">
-          <CommandLineIcon className="mx-auto size-12 text-slate-500 dark:text-gray-300" />
+          <CommandLineIcon className="mx-auto size-12 text-gray-400" />
           <div className="flex flex-col items-center">
             <p className="mb-2 text-sm">{`Link a public SSH key to ${isMe ? "your" : "the user"} account.`}</p>
             <AddSSHKeyButton userId={userId} />
@@ -37,8 +37,9 @@ export function SSHKeys(props: Readonly<SSHKeysProps>) {
       <div className="flex justify-between">
         <h2>SSH Keys</h2>
         <AddSSHKeyButton variant="outline" userId={userId} />
+        {sshKeys.length > 0 && <AddSSHKeyButton userId={userId} />}
       </div>
-      <Table userId={userId} sshKeys={sshKeys} />
+      <Table userId={userId} sshKeys={sshKeys} isMe={isMe} />
     </Panel>
   );
 }

@@ -43,7 +43,7 @@ export function SamlAccounts(props: Readonly<SamlAccountsProps>) {
       <Panel>
         <h2>SAML</h2>
         <div>
-          <BuildingLibraryIcon className="mx-auto size-12 text-slate-500 dark:text-gray-300" />
+          <BuildingLibraryIcon className="mx-auto size-12 text-gray-400" />
           <p className="p-2 text-center text-sm">
             There is no external account linked to your profile.
           </p>

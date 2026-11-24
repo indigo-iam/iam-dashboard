@@ -5,7 +5,6 @@
 "use client";
 
 import { useState } from "react";
-import { InformationCircleIcon } from "@heroicons/react/24/solid";
 
 import { Button } from "@/components/buttons";
 import { Form } from "@/components/form";
@@ -27,11 +26,10 @@ import { useToaster } from "@/components/toaster";
 type LinkProxyModalProps = ModalProps & {
   userId: string;
   userName: string;
-  disabled: boolean;
 };
 
 function LinkProxyModal(props: Readonly<LinkProxyModalProps>) {
-  const { show, onClose, userId, userName, disabled } = props;
+  const { show, onClose, userId, userName } = props;
   const [error, setError] = useState<string | null>(null);
   const { startTransition } = useProgressBar();
   const toast = useToaster();
@@ -39,30 +37,6 @@ function LinkProxyModal(props: Readonly<LinkProxyModalProps>) {
   function close() {
     setError(null);
     onClose();
-  }
-
-  if (disabled) {
-    return (
-      <Modal show={show} onClose={close}>
-        <ModalHeader>Link proxy certificate</ModalHeader>
-        <ModalBody>
-          <div className="flex w-full flex-row justify-center">
-            <InformationCircleIcon className="size-12" />
-          </div>
-          <p className="text-center">
-            This account has no linked X.509 certificate to be associated to a
-            proxy certificate. Please add a personal certificate to your Indigo
-            IAM account or contact your administrator for help.
-          </p>
-        </ModalBody>
-        <ModalFooter>
-          <Button variant="outline" type="reset" onClick={close}>
-            Cancel
-          </Button>
-          <Button disabled={disabled}>Confirm</Button>
-        </ModalFooter>
-      </Modal>
-    );
   }
 
   function submit(e: React.SubmitEvent<HTMLFormElement>) {
@@ -116,11 +90,10 @@ function LinkProxyModal(props: Readonly<LinkProxyModalProps>) {
 type LinkProxyButtonProps = {
   userId: string;
   userName: string;
-  disabled: boolean;
 };
 
 export function LinkProxyButton(props: Readonly<LinkProxyButtonProps>) {
-  const { userId, userName, disabled } = props;
+  const { userId, userName } = props;
   const [show, setShow] = useState(false);
   const open = () => setShow(true);
   const close = () => setShow(false);
@@ -134,7 +107,6 @@ export function LinkProxyButton(props: Readonly<LinkProxyButtonProps>) {
         onClose={close}
         userId={userId}
         userName={userName}
-        disabled={disabled}
       />
     </>
   );

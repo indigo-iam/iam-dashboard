@@ -2,12 +2,11 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-import Link from "next/link";
-
 import { ListItem, UnorderedList } from "@/components/list";
 import { fetchGroupMembersPage } from "@/services/groups";
 
 import MemberOptions from "./options";
+import Link from "@/components/link";
 
 type RowProps = {
   userId: string;
@@ -20,9 +19,9 @@ function Row(props: Readonly<RowProps>) {
   const { userId, userDisplay, groupId, groupDisplay } = props;
   return (
     <ListItem>
-      <div className="flex w-0 grow flex-col">
+      <div className="flex w-0 grow flex-col gap-1">
         <Link href={`/users/${userId}`}>{userDisplay}</Link>
-        <p className="truncate text-sm font-light">{userId}</p>
+        <p className="truncate text-xs font-light">{userId}</p>
       </div>
       <MemberOptions
         userId={userId}

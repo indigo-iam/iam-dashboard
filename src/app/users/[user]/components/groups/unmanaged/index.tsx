@@ -92,7 +92,7 @@ export default function UnmanagedGroups(props: Readonly<UserGroupsProps>) {
           <h2>Joined group</h2>
         </div>
         <div>
-          <UserGroupIcon className="mx-auto size-16 text-slate-500 dark:text-gray-300" />
+          <UserGroupIcon className="mx-auto size-16 text-gray-400" />
           <p className="p-2 text-center text-sm">
             {isMe
               ? "You are not member of any group. Send a request to join your first group"

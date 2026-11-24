@@ -60,12 +60,35 @@ function CertificateView(props: Readonly<CertificateViewProps>) {
 type CertificateListProps = {
   isAdmin: boolean;
   userId: string;
+  userName: string;
   userFormattedName: string;
   certificates: Certificate[];
 };
 
 function CertificateList(props: Readonly<CertificateListProps>) {
-  const { isAdmin, userId, userFormattedName, certificates } = props;
+  const { isAdmin, userId, userName, userFormattedName, certificates } = props;
+  if (certificates.length === 0) {
+    return (
+      <div className="flex flex-col items-center gap-4">
+        <IdentificationIcon className="size-16 text-gray-500 dark:text-gray-300" />
+        <div className="flex flex-col items-center gap-3">
+          <p className="text-sm">
+            {isAdmin
+              ? "Link a X.509 certificate to the user account"
+              : "Asks an administrator to link a X.509 certificate to your account"}
+          </p>
+          {isAdmin && (
+            <LinkCertificateButton
+              userId={userId}
+              userName={userName}
+              isAdmin={isAdmin}
+              variant="solid"
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
   return (
     <UnorderedList>
       {certificates.map(cert => (
@@ -105,7 +128,7 @@ export function Certificates(props: Readonly<CertificateProps>) {
       <Panel>
         <h2>X.509 certificates</h2>
         <div className="flex flex-col items-center">
-          <IdentificationIcon className="size-12 text-slate-500 dark:text-gray-300" />
+          <IdentificationIcon className="size-12 text-gray-400" />
           <p className="p-2 text-sm">
             {isMe && !isAdmin
               ? "Ask to your organization administrator to link a X.509 certificate to your account."
@@ -128,7 +151,7 @@ export function Certificates(props: Readonly<CertificateProps>) {
       <div className="flex flex-wrap justify-between">
         <h2>X.509 certificates</h2>
         <div className="flex gap-2">
-          {isAdmin && (
+          {isAdmin && certificates.length > 0 && (
             <LinkCertificateButton
               userId={userId}
               userName={userName}
@@ -136,18 +159,15 @@ export function Certificates(props: Readonly<CertificateProps>) {
               variant="outline"
             />
           )}
-          {isMe && (
-            <LinkProxyButton
-              userId={userId}
-              userName={userName}
-              disabled={certificates.length === 0}
-            />
+          {isMe && certificates.length > 0 && (
+            <LinkProxyButton userId={userId} userName={userName} />
           )}
         </div>
       </div>
       <CertificateList
         isAdmin={isAdmin}
         userId={userId}
+        userName={userName}
         userFormattedName={userFormattedName}
         certificates={certificates}
       />

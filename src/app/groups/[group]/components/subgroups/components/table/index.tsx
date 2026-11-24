@@ -13,9 +13,9 @@ function Row(props: Readonly<{ groupRef: ScimReference }>) {
   const { groupRef } = props;
   return (
     <ListItem>
-      <div className="flex w-0 grow flex-col">
+      <div className="flex w-0 grow flex-col gap-1">
         <Link href={`/groups/${groupRef.value}`}>{groupRef.display}</Link>
-        <p className="truncate text-sm font-light">{groupRef.value}</p>
+        <p className="truncate text-xs font-light">{groupRef.value}</p>
       </div>
       <SubgroupOptions groupRef={groupRef} />
     </ListItem>

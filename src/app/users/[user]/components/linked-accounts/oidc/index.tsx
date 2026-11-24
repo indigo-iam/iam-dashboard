@@ -42,7 +42,7 @@ export function OidcAccounts(props: Readonly<OidcAccountsProps>) {
       <Panel>
         <h2>OpenID Connect/OAuth2</h2>
         <div>
-          <GlobeAltIcon className="mx-auto size-12 text-slate-500 dark:text-gray-300" />
+          <GlobeAltIcon className="mx-auto size-12 text-gray-400" />
           <p className="p-2 text-center text-sm">
             There is no external account linked to your profile.
           </p>

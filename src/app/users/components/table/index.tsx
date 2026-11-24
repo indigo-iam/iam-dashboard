@@ -26,16 +26,22 @@ function Row(props: Readonly<RowProps>) {
   const created = userCreatedAt ? dateToHuman(new Date(userCreatedAt)) : "N/A";
   return (
     <ListItem>
-      <div className="text-md flex grow flex-col break-all lg:flex-row">
-        <div className="grow flex-col">
+      <div className="flex w-0 grow flex-col space-y-2 lg:flex-row lg:space-y-0">
+        <div className="flex grow flex-col gap-1 lg:w-0">
           <Link href={`/users/${userId}`}>{userFormattedName}</Link>
-          <p className="text-sm font-light">{userEmail}</p>
-        </div>
-        <div className="my-auto flex flex-col">
-          <div className="flew-wrap flex items-center gap-2 lg:flex-col lg:items-end lg:gap-1">
-            <Status active={userIsActive} autoHide={true} />
-            <p className="py-1 text-xs font-light lg:p-0">Created {created}</p>
+          <div className="flex flex-col">
+            <div className="flex w-full items-center gap-1 text-xs font-light">
+              <div className="lg:hidden">
+                <Status active={userIsActive} autoHide={true} />
+              </div>
+              <p className="max-w-full truncate">
+                {userEmail} · Created {created}
+              </p>
+            </div>
           </div>
+        </div>
+        <div className="hidden lg:flex lg:flex-col lg:items-end lg:justify-center">
+          <Status active={userIsActive} autoHide={true} />
         </div>
       </div>
       <UserOptions

@@ -49,13 +49,13 @@ export function InputSearch(props: Readonly<InputSearchProps>) {
   };
 
   return (
-    <div className="flex items-center gap-2 rounded-full border px-2 py-0.5 outline-blue-600 focus-within:outline">
+    <div className="flex items-center gap-2 rounded-full border px-2 py-1 outline-blue-600 focus-within:outline">
       <MagnifyingGlassIcon className="size-4 text-gray-400 dark:text-gray-500" />
       <Input
         onKeyUp={() => delayedSearch()}
         placeholder="Type to search..."
         value={value}
-        className="outline-hidden placeholder:text-gray-400 dark:text-white"
+        className="text-sm outline-hidden placeholder:text-gray-400 dark:text-white"
         onChange={e => setValue(e.currentTarget.value)}
         {...others}
       />

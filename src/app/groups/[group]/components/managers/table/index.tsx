@@ -24,9 +24,9 @@ function Row(props: Readonly<RowProps>) {
   const { userId, userFormattedName, userEmail, groupId, groupName } = props;
   return (
     <ListItem>
-      <div className="flex w-0 grow flex-col">
+      <div className="flex w-0 grow flex-col gap-1">
         <Link href={`/users/${userId}`}>{userFormattedName}</Link>
-        <p className="truncate text-sm font-light">{userEmail}</p>
+        <p className="truncate text-xs font-light">{userEmail}</p>
       </div>
       <ManagerOptions
         userId={userId}

@@ -28,7 +28,7 @@ async function AsyncActiveTokens() {
       <>
         <h2>Active Tokens</h2>
         <div>
-          <TicketIcon className="mx-auto size-16 text-slate-500 dark:text-gray-300" />
+          <TicketIcon className="mx-auto size-16 text-gray-400" />
           <p className="p-2 text-center text-sm">
             There are no active tokens to show.
           </p>

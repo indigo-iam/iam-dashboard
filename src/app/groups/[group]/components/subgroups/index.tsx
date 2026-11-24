@@ -49,7 +49,7 @@ export default async function Subgroups(props: Readonly<SubgroupsProps>) {
       ) : (
         <div className="flex flex-col items-center gap-2">
           <UserGroupIcon className="size-16 text-gray-400" />
-          <p>This group has no subgroup</p>
+          <p className="text-sm">This group has no subgroup.</p>
           <AddSubgroupButton rootGroupId={groupId} rootGroupName={groupName} />
         </div>
       )}

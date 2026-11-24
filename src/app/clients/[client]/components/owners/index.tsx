@@ -24,7 +24,7 @@ async function Content(props: Readonly<ContentProps>) {
       <>
         <h2 className="grow">Owners</h2>
         <div>
-          <UserCircleIcon className="mx-auto size-16 text-slate-500 dark:text-gray-300" />
+          <UserCircleIcon className="mx-auto size-16 text-gray-400" />
           <p className="p-2 text-center text-sm">
             Assign a user as owner of this client.
           </p>

@@ -25,7 +25,7 @@ export function OwnersTable(props: Readonly<OwnersTableProps>) {
               <Link href={`/users/${owner.id}`}>
                 {owner.name?.formatted ?? "Unknown name"}
               </Link>
-              <p className="text-sm font-light">
+              <p className="text-xs font-light">
                 {owner.emails?.[0].value ?? "Unknown email address"}
               </p>
             </div>

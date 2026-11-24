@@ -53,7 +53,7 @@ async function AdminPage(props: Readonly<GroupsProps>) {
         </div>
         <InputQuery
           title="Search group"
-          placeholder="Type to search a group"
+          placeholder="Type to search for a group..."
           data-testid="search-group"
           aria-label="Search group"
         />

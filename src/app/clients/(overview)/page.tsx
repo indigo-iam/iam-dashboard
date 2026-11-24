@@ -100,7 +100,7 @@ export default async function Page(props: Readonly<PageProps>) {
         </div>
         <InputQuery
           title="Search client"
-          placeholder="Type to search a client"
+          placeholder="Type to search for a client..."
           data-testid="search-client"
           aria-label="Search client"
         />

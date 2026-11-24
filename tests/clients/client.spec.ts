@@ -64,7 +64,7 @@ async function navigateToClientPage(page: Page, clientName: string) {
   const newClientBtn = page.getByRole("button", { name: "New client" });
   await expect(newClientBtn).toBeEnabled(); // wait for page fully loaded
   const searchbar = page
-    .getByPlaceholder("Type to search a client")
+    .getByPlaceholder("Type to search for a client...")
     .filter({ visible: true });
   await expect(searchbar).toBeEnabled();
   await searchbar.pressSequentially(clientName);

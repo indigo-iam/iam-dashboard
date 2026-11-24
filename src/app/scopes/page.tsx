@@ -51,7 +51,7 @@ export default async function Scopes(props: Readonly<ScopeProps>) {
         </div>
         <InputQuery
           title="Search scope"
-          placeholder="Type to search a scope"
+          placeholder="Type to search a for scope..."
           data-testid="search-scope"
           aria-label="Search scope"
         />

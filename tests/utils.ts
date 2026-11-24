@@ -42,7 +42,7 @@ export async function navigateToTestUserPage(page: Page, userName: string) {
   await page.goto("./users");
   const newUserBtn = page.getByRole("button", { name: "New user" });
   await expect(newUserBtn).toBeEnabled(); // wait for page fully loaded
-  const searchbar = page.getByPlaceholder("Type to search a user");
+  const searchbar = page.getByPlaceholder("Type to search for a user...");
   await searchbar.pressSequentially(userName);
   const testUser = page.getByRole("link").filter({ hasText: userName });
   const users = page.getByRole("listitem").filter({ visible: true });

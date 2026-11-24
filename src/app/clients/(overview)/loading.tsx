@@ -36,7 +36,7 @@ export default async function Loading() {
         <InputQuery
           disabled
           title="Search client"
-          placeholder="Type to search a client"
+          placeholder="Type to search for a client..."
           data-testid="search-client"
           aria-label="Search client"
         />

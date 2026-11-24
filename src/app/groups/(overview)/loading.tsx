@@ -9,6 +9,8 @@ import { getSession, isUserAdmin } from "@/auth";
 import { InputQuery } from "@/components/inputs";
 import { LoadingList } from "@/components/loading";
 import Paginator from "@/components/paginator";
+import { Container, Header, Panel, Section } from "@/components/layout";
+
 import { AddGroupButton } from "./components";
 
 export default async function GroupsPage() {
@@ -18,8 +20,8 @@ export default async function GroupsPage() {
   }
   const isAdmin = await isUserAdmin();
   return (
-    <section>
-      <header className="section-header flex flex-wrap gap-2">
+    <Section>
+      <Header>
         <div className="flex grow items-center gap-2">
           <UserGroupIcon className="size-5" />
           <h2 className="text-base font-normal">
@@ -33,11 +35,13 @@ export default async function GroupsPage() {
           aria-label="Search group"
         />
         <AddGroupButton />
-      </header>
-      <div className="container space-y-4">
-        <LoadingList />
+      </Header>
+      <Container>
+        <Panel>
+          <LoadingList />
+        </Panel>
         <Paginator numberOfPages={0} />
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

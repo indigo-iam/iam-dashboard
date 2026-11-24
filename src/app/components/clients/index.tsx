@@ -5,6 +5,7 @@
 import Link from "@/components/link";
 import { ListItem, UnorderedList } from "@/components/list";
 import { Status } from "@/components/badges";
+import { NotFound } from "@/components/not-found";
 import { Client } from "@/models/client";
 import { dateToHuman } from "@/utils/dates";
 
@@ -76,6 +77,9 @@ type ClientsTableProps = {
 
 export function ClientsTable(props: Readonly<ClientsTableProps>) {
   const { clients, isAdmin } = props;
+  if (clients.length === 0) {
+    return <NotFound />;
+  }
   return (
     <UnorderedList>
       {clients.map(client => (

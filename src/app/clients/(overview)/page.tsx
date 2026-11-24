@@ -53,7 +53,7 @@ export default async function Page(props: Readonly<PageProps>) {
   const numberOfPages = Math.ceil(clientPage.totalResults / count) || 1;
   const clients = clientPage.Resources;
 
-  if (clients.length === 0) {
+  if (clients.length === 0 && query === undefined) {
     return (
       <Section>
         <Header>

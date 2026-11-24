@@ -3,9 +3,9 @@
 // SPDX-License-Identifier: EUPL-1.2
 
 import Link from "@/components/link";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 import { ListItem, UnorderedList } from "@/components/list";
+import { NotFound } from "@/components/not-found";
 import { Group, ManagedGroup } from "@/models/groups";
 import { ScimReference } from "@/models/scim";
 import { dateToHuman } from "@/utils/dates";
@@ -80,12 +80,7 @@ type AdminGroupsTableProps = {
 export function AdminGroupsTable(props: Readonly<AdminGroupsTableProps>) {
   const { groups } = props;
   if (groups.length === 0) {
-    return (
-      <div className="flex flex-col items-center space-y-4">
-        <MagnifyingGlassIcon className="size-16 text-gray-400 dark:text-gray-300/80" />
-        <p>No group found.</p>
-      </div>
-    );
+    return <NotFound />;
   }
   return (
     <UnorderedList>

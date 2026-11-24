@@ -74,7 +74,7 @@ async function Content(props: Readonly<ApprovedSitesProps>) {
   if (approvedSites.length === 0) {
     return (
       <div>
-        <ComputerDesktopIcon className="mx-auto size-16 text-slate-500 dark:text-gray-300" />
+        <ComputerDesktopIcon className="mx-auto size-16 text-gray-400" />
         <p className="p-2 text-center text-sm">
           Applications that you gave the consent for are displayed here.
         </p>

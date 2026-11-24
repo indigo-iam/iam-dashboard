@@ -135,7 +135,7 @@ async function UserPage() {
             <UserGroupsTable groupRefs={groups} />
           ) : (
             <div className="flex flex-col items-center">
-              <UserGroupIcon className="size-12 text-slate-500 dark:text-gray-300" />
+              <UserGroupIcon className="size-12 text-gray-400" />
               <p className="p-2 text-sm">Send a request to join a group.</p>
               <JoinGroupButton
                 userId={userId}

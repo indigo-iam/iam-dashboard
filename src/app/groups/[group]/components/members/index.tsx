@@ -61,7 +61,7 @@ export default async function Members(props: Readonly<MembersProps>) {
       ) : (
         <div className="flex flex-col items-center gap-2">
           <UsersIcon className="size-16 text-gray-400" />
-          <p>This group has no member</p>
+          <p className="text-sm">This group has no member.</p>
           <AddMemberButton
             groupId={groupId}
             groupName={groupName}

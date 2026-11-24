@@ -23,7 +23,7 @@ export async function AttributesPanel(props: Readonly<AttributesPanelProps>) {
       <Panel>
         <h2>Attributes</h2>
         <div className="flex flex-col items-center">
-          <SquaresPlusIcon className="size-12 text-slate-500 dark:text-gray-300" />
+          <SquaresPlusIcon className="size-12 text-gray-400" />
           <p className="p-2 text-sm">
             {`Add an attribute to ${isMe ? "your" : "the user"} account to describe your profile characteristics.`}
           </p>

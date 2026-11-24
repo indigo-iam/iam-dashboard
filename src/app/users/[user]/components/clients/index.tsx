@@ -32,7 +32,7 @@ export async function UserClients(props: Readonly<UseClientsProps>) {
       <TabPanel>
         <h2>Clients</h2>
         <div>
-          <CubeTransparentIcon className="mx-auto size-16 text-gray-500 dark:text-gray-300" />
+          <CubeTransparentIcon className="mx-auto size-16 text-gray-400" />
           <p className="p-2 text-center text-sm">
             Clients owned by the user are showed here.
           </p>

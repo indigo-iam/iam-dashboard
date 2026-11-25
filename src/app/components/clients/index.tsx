@@ -53,17 +53,19 @@ function Row(props: Readonly<RowProps>) {
             </div>
           </div>
         </div>
-        <div className="hidden items-center lg:flex lg:flex-col lg:items-end lg:justify-center">
+      </div>
+      <div className="flex items-center">
+        <div className="hidden lg:block">
           <Status active={client.active} autoHide={true} />
         </div>
+        <ClientOptions
+          isAdmin={isAdmin}
+          clientId={client.client_id}
+          clientName={client.client_name}
+          clientDescription={client.client_description}
+          active={client.active}
+        />
       </div>
-      <ClientOptions
-        isAdmin={isAdmin}
-        clientId={client.client_id}
-        clientName={client.client_name}
-        clientDescription={client.client_description}
-        active={client.active}
-      />
     </ListItem>
   );
 }

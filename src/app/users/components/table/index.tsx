@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-
 import Link from "@/components/link";
 import { Status } from "@/components/badges";
 import { NotFound } from "@/components/not-found";
@@ -40,16 +39,18 @@ function Row(props: Readonly<RowProps>) {
             </div>
           </div>
         </div>
+      </div>
+      <div className="flex items-center">
         <div className="hidden lg:flex lg:flex-col lg:items-end lg:justify-center">
           <Status active={userIsActive} autoHide={true} />
         </div>
+        <UserOptions
+          userId={userId}
+          userFormattedName={userFormattedName}
+          userEmail={userEmail}
+          userIsActive={userIsActive}
+        />
       </div>
-      <UserOptions
-        userId={userId}
-        userFormattedName={userFormattedName}
-        userEmail={userEmail}
-        userIsActive={userIsActive}
-      />
     </ListItem>
   );
 }

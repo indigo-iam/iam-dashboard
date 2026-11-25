@@ -44,7 +44,7 @@ export default function DeleteClientModal(
       onClose={onClose}
       confirmButtonText="Delete"
       onConfirm={handleConfirm}
-      title={`Delete client?`}
+      title="Delete client?"
       danger={true}
     >
       <p className="text-center">

@@ -117,7 +117,7 @@ export function Toast(props: Readonly<ToastComponentProps>) {
         <div className="flex grow items-center gap-2">
           {type && <Icon toastType={type} />}
           <div>
-            <p className="text-normal font-light">{title}</p>
+            <p className="text-normal font-medium">{title}</p>
             {description && (
               <p className="block text-sm text-gray-500 dark:text-gray-300">
                 {description}

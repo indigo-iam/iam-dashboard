@@ -36,8 +36,7 @@ export function Input(props: Readonly<InputProps>) {
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     props.onChange?.(e);
-    const ref = innerRef.current;
-    if (ref && ref.checkValidity()) {
+    if (innerRef.current?.checkValidity()) {
       setInvalid(false);
     }
   }

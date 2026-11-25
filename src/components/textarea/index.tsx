@@ -32,8 +32,7 @@ export function Textarea(props: Readonly<TextareaProps>) {
 
   function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
     props.onChange?.(e);
-    const ref = innerRef.current;
-    if (ref && ref.checkValidity()) {
+    if (innerRef.current?.checkValidity()) {
       setInvalid(false);
     }
   }

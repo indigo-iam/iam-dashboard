@@ -33,6 +33,7 @@ export default function GeneralSettings() {
           title="Client Name"
           name="client_name"
           placeholder="The name of the client"
+          minLength={4}
           required
           onChange={handleClientNameChange}
         />

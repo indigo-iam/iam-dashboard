@@ -15,13 +15,8 @@ import { Group } from "@/models/groups";
 import { submitGroupRequest } from "@/services/group-requests";
 import { SearchGroups } from "./search-groups";
 
-import {
-  ClockIcon,
-  ListBulletIcon,
-  UserGroupIcon,
-} from "@heroicons/react/24/solid";
-
 import { useRef, useState } from "react";
+import { Notice } from "@/components/notices";
 
 type GroupViewProps = {
   group: Group;
@@ -30,29 +25,22 @@ type GroupViewProps = {
 function GroupView(props: Readonly<GroupViewProps>) {
   const { group } = props;
   const indigoGroup = group["urn:indigo-dc:scim:schemas:IndigoGroup"];
-  const { meta } = group;
-  const created = meta.created
-    ? new Date(meta.created).toLocaleDateString()
-    : "N/A";
   return (
-    <div className="flex flex-col gap-2">
-      <p className="flex items-center gap-2">
-        <UserGroupIcon className="size-5" />
-        <span className="text-lg font-bold">{group.displayName}</span>
+    <div className="space-y-4">
+      <p>
+        Send a request to join the following group and obtain access to its
+        resources. An administrator will review your request.
       </p>
-
-      <div className="flex flex-col">
-        {indigoGroup.description ? (
-          <p className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-            <ListBulletIcon className="size-4" />
-            <span>{indigoGroup.description}</span>
+      <Notice>
+        <div className="flex flex-col items-center">
+          <p>
+            <b>{group.displayName}</b>
           </p>
-        ) : null}
-        <p className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-          <ClockIcon className="size-4" />
-          <span>Created {created ?? "N/A"}</span>
-        </p>
-      </div>
+          {indigoGroup.description && (
+            <p className="text-sm">{indigoGroup.description}</p>
+          )}
+        </div>
+      </Notice>
     </div>
   );
 }
@@ -126,6 +114,7 @@ export function JoinGroupModal(props: Readonly<JoinGroupModalProps>) {
               placeholder="Explain why you want to be a member of group..."
               required={true}
               onChange={e => setMotivation(e.currentTarget.value)}
+              minLength={MIN_MOTIVATION_LENGTH}
             />
             <Description>
               {`This motivation will be show to the administrators that will manage your request. It must contain at least ${MIN_MOTIVATION_LENGTH} characters.`}
@@ -133,10 +122,15 @@ export function JoinGroupModal(props: Readonly<JoinGroupModalProps>) {
           </Field>
         </div>
       ) : (
-        <Field>
-          <Label>Select a group to join</Label>
-          <SearchGroups onSelect={setSelected} />
-        </Field>
+        <>
+          <p>
+            Send a request to join a group and obtain access to its resources.
+            An administrator will review your request.
+          </p>
+          <Field>
+            <SearchGroups onSelect={setSelected} />
+          </Field>
+        </>
       )}
     </ConfirmModal>
   );

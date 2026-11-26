@@ -18,13 +18,15 @@ function Row(props: Readonly<RowProps>) {
   const scopes = policy.scopes ? policy.scopes.join(" ") : "";
   return (
     <ListItem>
-      <Link
-        className="flex grow flex-col text-gray-950 dark:text-gray-200"
-        href={`/policies/${policy.id}`}
-      >
-        {policy.description}
-        <p className="truncate text-sm font-light italic">{scopes}</p>
-      </Link>
+      <div className="flex grow flex-col truncate whitespace-nowrap">
+        <Link
+          className="flex grow flex-col truncate text-gray-950 dark:text-gray-200"
+          href={`/policies/${policy.id}`}
+        >
+          {policy.description}
+        </Link>
+        <p className="text-sm font-light italic">{scopes}</p>
+      </div>
       {readWrite && <PolicyOptions policy={policy} />}
     </ListItem>
   );
@@ -32,14 +34,15 @@ function Row(props: Readonly<RowProps>) {
 
 type PoliciesTableProps = {
   policies: ScopePolicy[];
+  readWrite: boolean;
 };
 
 export default function PoliciesTable(props: Readonly<PoliciesTableProps>) {
-  const { policies } = props;
+  const { policies, readWrite } = props;
   return (
     <UnorderedList>
       {policies.map(policy => (
-        <Row key={policy.id} policy={policy} />
+        <Row key={policy.id} policy={policy} readWrite={readWrite} />
       ))}
     </UnorderedList>
   );

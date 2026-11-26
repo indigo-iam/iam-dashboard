@@ -40,7 +40,7 @@ function Row(props: Readonly<RowProps>) {
           </div>
         </div>
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center gap-1">
         <div className="hidden lg:flex lg:flex-col lg:items-end lg:justify-center">
           <Status active={userIsActive} autoHide={true} />
         </div>

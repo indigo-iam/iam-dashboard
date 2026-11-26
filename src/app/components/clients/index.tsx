@@ -54,7 +54,7 @@ function Row(props: Readonly<RowProps>) {
           </div>
         </div>
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center gap-1">
         <div className="hidden lg:block">
           <Status active={client.active} autoHide={true} />
         </div>

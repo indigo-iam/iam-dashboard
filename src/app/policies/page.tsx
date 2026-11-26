@@ -30,6 +30,7 @@ export default async function Policies() {
     redirect("/");
   }
   const policies = await fetchScopePolicies();
+  const readWrite = IAM_DASHBOARD_SCOPE_POLICY_MODE === "readwrite";
   return (
     <Section>
       <Header>
@@ -37,11 +38,11 @@ export default async function Policies() {
           <ScaleIcon className="size-5" />
           <h2 className="text-base font-normal">Scope Policies</h2>
         </div>
-        {IAM_DASHBOARD_SCOPE_POLICY_MODE === "readwrite" && <AddPolicyButton />}
+        {readWrite && <AddPolicyButton />}
       </Header>
       <Container>
         <Panel>
-          <PoliciesTable policies={policies} />
+          <PoliciesTable policies={policies} readWrite={readWrite} />
         </Panel>
       </Container>
     </Section>

@@ -14,7 +14,7 @@ export function ListItem(props: Readonly<ListItemProps>) {
   return (
     <li
       {...props}
-      className="flex flex-row items-center rounded-l-sm border-b border-l-4 border-l-transparent p-2 py-3 text-gray-500 transition last:border-transparent hover:bg-neutral-50 dark:text-gray-400 dark:hover:bg-neutral-200/10 lg:gap-2"
+      className="flex flex-row items-center gap-2 rounded-l-sm border-b border-l-4 border-l-transparent p-2 py-3 text-gray-500 transition last:border-transparent hover:bg-neutral-50 dark:text-gray-400 dark:hover:bg-neutral-200/10"
     />
   );
 }

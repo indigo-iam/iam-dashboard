@@ -44,6 +44,7 @@ export function InputList(props: Readonly<InputListProps>) {
     if (!isControlled) {
       setInnerValue(defaultValue ?? []);
     }
+    setInputValue("");
   });
 
   function addItem(item: string) {
@@ -110,9 +111,6 @@ export function InputList(props: Readonly<InputListProps>) {
   function handleClick() {
     addItem(inputValue);
     setInputValue("");
-    if (inputRef.current) {
-      inputRef.current.value = "";
-    }
   }
 
   return (
@@ -120,6 +118,7 @@ export function InputList(props: Readonly<InputListProps>) {
       <div className="flex gap-4">
         <Input
           ref={inputRef}
+          value={inputValue}
           onChange={event => setInputValue(event.target.value)}
           placeholder={placeholder}
           type={type}

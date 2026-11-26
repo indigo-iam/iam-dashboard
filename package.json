@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "PORT=3000 HOSTNAME=127.0.0.1 node .next/standalone/server.js",
     "playwright:install": "playwright install --with-deps",
-    "playwright:test": "playwright test --reporter=list",
+    "playwright:test": "CI=1 playwright test --reporter=list",
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {

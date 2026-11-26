@@ -22,6 +22,9 @@ export function InputQuery(props: Readonly<InputQueryProps>) {
   const setQuery = (query: string) => {
     const params = new URLSearchParams(searchParams);
     params.set("query", query);
+    if (params.has("page")) {
+      params.set("page", "1");
+    }
     router.push(`${pathname}?${params.toString()}`);
   };
 

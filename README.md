@@ -216,7 +216,7 @@ export IAM_DASHBOARD_AUTH_SECRET=$(openssl rand -base64 32)
 envsubst < .template.env > .env
 ```
 
-#### Add `redirect_uri`s
+#### Redirect URIs
 
 The NGINX reverse proxy shipped with this project, provides the following routes:
 
@@ -226,21 +226,12 @@ The NGINX reverse proxy shipped with this project, provides the following routes
 
 The `/ui` base path is used for end-to-end tests of the final docker image built
 for production IAM login service configure automatically the correct client.
-To enable the `/dev` and `/devcontainer` `redirect_uri`s:
 
-1. start the docker compose
-2. navigate to https://iam.test.example/ui and login with admin credentials
-3. enable the "Admin mode" and go to the Clients page.
-4. Search the `The INDIGO IAM dashboard` client
-5. Go to the Grant Types and add all the required redirect uris:
-   `https://iam.test.example/<BASE_URL>/api/auth/oauth2/callback/indigo-iam`
-   where `<BASE_URL>` can be `/dev` or `/devcontainer`.
-6. Save the client changes
-7. Edit your the `IAM_DASHBOARD_BASE_PATH` variable in your `.env` file
-   accordingly
-
-> Note: every time the IAM login service container is removed, for example with
-> `docker compose down`, the redirect uris must be reconfigured.
+The `/dev` and `/devcontainer` `redirect_uri`s are configured automatically
+setting the `dev` Spring profile in IAM Login Service runs with the `dev` (see
+[docker-compose.yaml](docker-compose.yaml)), which registers the dashboard
+client and its redirect URIs at boot, so no manual client configuration is
+required for local development or Dev Containers.
 
 ### Dev Containers
 

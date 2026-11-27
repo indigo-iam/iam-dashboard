@@ -60,16 +60,4 @@ export default defineConfig({
       use: { ...devices["iPhone 12"] },
     },
   ],
-
-  /* Run your local dev server before starting the tests */
-  // Remember to export NODE_EXTRA_CA_CERTS=assets/trust/star_test_example_ca.pem
-  webServer: {
-    command: process.env.IAM_DEVCONTAINER
-      ? "npm run dev"
-      : "docker compose up -d",
-    url: "https://iam.test.example",
-    reuseExistingServer: true,
-    timeout: 10 * 60000,
-    gracefulShutdown: { signal: "SIGTERM", timeout: 5000 },
-  },
 });

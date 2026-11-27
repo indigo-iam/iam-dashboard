@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
     env_file: .env
     environment:
-      IAM_JAVA_OPTS: -Dspring.profiles.active=h2-test,oidc,registration
+      IAM_JAVA_OPTS: -Dspring.profiles.active=h2-test,oidc,registration,dev
       TZ: Europe/Rome
       IAM_PORT: 8080
       IAM_HOST: iam.test.example
